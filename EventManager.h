@@ -3,10 +3,10 @@
 
 enum EventCategory
 {
-	AudioEvent = 0,
-	PlayerEvent,
-	EnemyEvent,
-	MapEvent
+	AUDIOEVENT = 0,
+	PLAYEREVENT,
+	ENEMYEVENT,
+	MAPEVENT
 };
 
 class Event
@@ -31,6 +31,6 @@ public:
 	void HandleEvent(Event* toHandle);
 
 private:
-	std::queue<Event> *EventQueue;
+	std::queue<Event*> *EventQueue;
 };
 

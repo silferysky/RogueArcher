@@ -7,7 +7,7 @@ EventCategory Event::getEventCat()
 
 EventManager::EventManager()
 {
-	EventQueue = new std::queue<Event>;
+	EventQueue = new std::queue<Event*>;
 }
 
 EventManager::~EventManager()
@@ -25,16 +25,24 @@ void EventManager::Update()
 	}
 }
 
-Event * EventManager::getQueueHead()
+Event* EventManager::getQueueHead()
 {
-	return EventQueue->front;
+	return EventQueue->front();
 }
 
 void EventManager::HandleEvent(Event* toHandle)
 {
 	switch (toHandle->getEventCat())
 	{
-
+	case AUDIOEVENT:
+		break;
+	case PLAYEREVENT:
+		break;
+	case ENEMYEVENT:
+		break;
+	case MAPEVENT:
+		break;
 	default:
+		break;
 	}
 }

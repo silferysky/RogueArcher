@@ -32,9 +32,6 @@
     <ClCompile Include="Scripts\InputManager.cpp" />
     <ClCompile Include="Scripts\Main.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="GAM200.rc" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{63B4A48E-83B8-4090-AC7E-1263A5B407D8}</ProjectGuid>
