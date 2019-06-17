@@ -26,13 +26,13 @@ void InputManager::UpdateState()
 	//Creates/Update the current state
 	//Reads in and puts the input in
 
-	MSG msg;
-	while (GetMessage())
+	//MSG msg;
+	//while (GetMessage())
 }
 
 void InputManager::HandleState()
 {
-
+	//TODO Movement/Action/Menu code
 }
 
 void InputManager::RemakeState()

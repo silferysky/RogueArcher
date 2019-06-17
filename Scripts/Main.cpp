@@ -1,8 +1,9 @@
 #include "Main.h"
 
-/*double gdt = 0.0;
+double gdt = 0.0;
 double t = 0.0;
-bool isFullscreen = true;
+SystemManager *SysManager = new SystemManager();
+/*bool isFullscreen = true;
 bool musicMute = false;
 bool soundMute = false;
 bool firstScreen = true;

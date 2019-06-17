@@ -25,7 +25,16 @@
     <ClInclude Include="Scripts\Resource.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
-    <ClInclude Include="EventManager.h">
+    <ClInclude Include="Scripts\EventManager.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\MemoryManager.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\System.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\SystemManager.h">
       <Filter>Systems</Filter>
     </ClInclude>
   </ItemGroup>
@@ -39,7 +48,16 @@
     <ClCompile Include="Scripts\Main.cpp">
       <Filter>Systems</Filter>
     </ClCompile>
-    <ClCompile Include="EventManager.cpp">
+    <ClCompile Include="Scripts\EventManager.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\MemoryManager.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\System.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\SystemManager.cpp">
       <Filter>Systems</Filter>
     </ClCompile>
   </ItemGroup>
