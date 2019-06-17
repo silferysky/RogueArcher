@@ -19,18 +19,24 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="EventManager.h" />
+    <ClInclude Include="Scripts\EventManager.h" />
     <ClInclude Include="Scripts\GameStateList.h" />
     <ClInclude Include="Scripts\GameStateManager.h" />
     <ClInclude Include="Scripts\InputManager.h" />
     <ClInclude Include="Scripts\Main.h" />
+    <ClInclude Include="Scripts\MemoryManager.h" />
     <ClInclude Include="Scripts\Resource.h" />
+    <ClInclude Include="Scripts\System.h" />
+    <ClInclude Include="Scripts\SystemManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="EventManager.cpp" />
+    <ClCompile Include="Scripts\EventManager.cpp" />
     <ClCompile Include="Scripts\GameStateManager.cpp" />
     <ClCompile Include="Scripts\InputManager.cpp" />
     <ClCompile Include="Scripts\Main.cpp" />
+    <ClCompile Include="Scripts\MemoryManager.cpp" />
+    <ClCompile Include="Scripts\System.cpp" />
+    <ClCompile Include="Scripts\SystemManager.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

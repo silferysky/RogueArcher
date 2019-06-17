@@ -1,6 +1,7 @@
 #pragma once
 #include <Windows.h>
 #include <map>
+#include "System.h"
 
 enum KeyPress
 {
@@ -85,7 +86,8 @@ struct KeyboardState
 	KeyPress Key[Count] = { UNDEF };
 };
 
-class InputManager
+class InputManager:
+	public System
 {
 public:
 	InputManager();

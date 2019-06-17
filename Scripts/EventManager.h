@@ -1,5 +1,6 @@
 #pragma once
 #include <queue>
+#include "System.h"
 
 enum EventCategory
 {
@@ -19,7 +20,8 @@ public:
 	EventCategory getEventCat();
 };
 
-class EventManager
+class EventManager :
+	public System
 {
 public:
 	EventManager();
