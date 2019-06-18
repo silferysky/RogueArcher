@@ -35,9 +35,9 @@ void Sound::Create(const char * filename, char counterCap, float playTimer)
 {
 	PlayCap = counterCap;
 	PlayTimer = playTimer;
-	FMOD_System_CreateSound(system, filename, FMOD_LOOP_OFF | FMOD_CREATESTREAM, 0, &fmodSound);
-	FmodErrorCheck(result);
-	FMOD_System_PlaySound(system, fmodSound, 0, true, &channel);
+	FMOD_System_CreateSound(_system, filename, FMOD_LOOP_OFF | FMOD_CREATESTREAM, 0, &_sound);
+	//FmodErrorCheck(_result);
+	FMOD_System_PlaySound(_system, _sound, 0, true, &_channel);
 }
 
 void Sound::init()
@@ -153,12 +153,12 @@ void Sound::CreateOneShot(const char * filename, FMOD_SOUND **sound)
 {
 	char * currentSound; //currently played sound
 	currentSound = (char *)filename;
-	if (possible && SoundOn) {
-		if (*sound != NULL)
+	if (_possible && _soundon) {
+		if (*sound != nullptr)
 		{
-			result = FMOD_Sound_Release(*sound);
+			_result = FMOD_Sound_Release(*sound);
 		}
-		result = FMOD_System_CreateSound(fmodsystem, currentSound, FMOD_LOOP_OFF | FMOD_2D, NULL, sound);
-		if (result != FMOD_OK) possible = false;
+		_result = FMOD_System_CreateSound(_system, currentSound, FMOD_LOOP_OFF | FMOD_2D, nullptr, sound);
+		if (_result != FMOD_OK) _possible = false;
 	}
 }
