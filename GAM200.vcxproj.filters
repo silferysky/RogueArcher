@@ -8,6 +8,12 @@
     <Filter Include="Systems">
       <UniqueIdentifier>{720125b1-fd03-4ad0-be57-66bebbe94904}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components">
+      <UniqueIdentifier>{a5d5a6bb-9849-4008-976f-ee24ee403053}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities">
+      <UniqueIdentifier>{9625a325-37cf-4799-a695-4dc1753bacd4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\GameStateList.h">
@@ -37,6 +43,12 @@
     <ClInclude Include="Scripts\SystemManager.h">
       <Filter>Systems</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\Component.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Entity.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\GameStateManager.cpp">
@@ -59,6 +71,12 @@
     </ClCompile>
     <ClCompile Include="Scripts\SystemManager.cpp">
       <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Component.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Entity.cpp">
+      <Filter>Entities</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

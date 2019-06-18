@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Scripts\Component.h" />
+    <ClInclude Include="Scripts\Entity.h" />
     <ClInclude Include="Scripts\EventManager.h" />
     <ClInclude Include="Scripts\GameStateList.h" />
     <ClInclude Include="Scripts\GameStateManager.h" />
@@ -30,6 +32,8 @@
     <ClInclude Include="Scripts\SystemManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Scripts\Component.cpp" />
+    <ClCompile Include="Scripts\Entity.cpp" />
     <ClCompile Include="Scripts\EventManager.cpp" />
     <ClCompile Include="Scripts\GameStateManager.cpp" />
     <ClCompile Include="Scripts\InputManager.cpp" />
