@@ -3,11 +3,14 @@
 
 System::System()
 {
+	ID = LASTSYS;
+	nextSys = nullptr;
 }
 
-System::System(SYSTEMID ID)
+System::System(SYSTEMID id)
 {
-	this->ID = ID;
+	ID = id;
+	nextSys = nullptr;
 	if (ID != MEMORYMANAGER && SysManager != nullptr)
 	{
 	}
