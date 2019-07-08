@@ -41,13 +41,13 @@ enum KeyPress
 	KeyX,
 	KeyY,
 	KeyZ,
+	KeyArrowUp,
+	KeyArrowDown,
+	KeyArrowLeft,
+	KeyArrowRight,
 	MB1,
 	MB2,
 	MB3, //Scrollwheel
-	ArrowUp,
-	ArrowDown,
-	ArrowLeft,
-	ArrowRight,
 	Spare0,
 	Spare1,
 	Spare2,
@@ -83,7 +83,7 @@ enum KeyFunction
 struct KeyboardState
 {
 	//Since COUNT is the last KeyPress, it will always be same value as size of KeyPress
-	KeyPress Key[Count] = { UNDEF };
+	int Key[Count] = { UNDEF };
 };
 
 class InputManager:

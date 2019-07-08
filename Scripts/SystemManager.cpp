@@ -22,6 +22,6 @@ void SystemManager::AddSystem(System* Sys)
 
 void SystemManager::DeleteSystem(SYSTEMID id)
 {
-	System* sys;
+	//System* sys;
 	//SystemList.erase(SystemList.ge]);
 }
