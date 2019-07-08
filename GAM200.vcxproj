@@ -113,6 +113,7 @@
     <Link>
       <AdditionalLibraryDirectories>C:\Visual Studio Repo\RogueArcher\RogueArcher\Dep\FMOD\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>fmod64_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

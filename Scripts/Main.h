@@ -17,3 +17,5 @@
 extern double t;
 extern double gdt;
 extern SystemManager *SysManager;
+
+int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow);
