@@ -16,6 +16,8 @@ public:
 	void DeleteSystem(SYSTEMID ID);
 	void ResetSystem(SYSTEMID ID);
 
+	System* GetSystem(SYSTEMID ID);
+
 private:
 	std::list<System*> SystemList;
 };
