@@ -4,16 +4,45 @@
 #include <fstream>
 #include <iostream>
 #include "Main.h"
+#include "InputManager.h"
 
 double t = 0.0;
-double gdt = 0.0;
+double gdt = 1.0;
+//SystemManager *SysManager = new SystemManager();
+InputManager *InputMger = new InputManager();
 
 static const int SCREEN_FULLSCREEN = 0;
 static const int SCREEN_WIDTH = 960;
 static const int SCREEN_HEIGHT = 540;
 
+//Use for console
+int main()
+{
+	int repeat = 0;
+	float timer = 0.0f;
+	timer += 0.00001f;
+ 	while (repeat < 100)
+	{
+		if (timer)
+		{
+			std::cout << "Count " << repeat << std::endl;
+			InputMger->UpdateState();
+			timer = 0.0f;
+			++repeat;
+		}
+	}
+	std::cin;
+	delete InputMger;
+	return 0;
+}
+
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
 {
+	if (_DEBUG)
+	{
+		std::cout << "HI" << std::endl;
+	}
+
 	// Enable run-time memory check for debug builds.
 #if defined(DEBUG) | defined(_DEBUG)
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
@@ -47,11 +76,12 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
 			if (gdt)
 			{
 				//AEInputUpdate();
+				InputMger->UpdateState();
 				//fpUpdate();
 				//fpDraw();
 
-				t += gdt;
-				gdt = 0;
+				//t += gdt;
+				//gdt = 0;
 			}
 			//AESysFrameEnd();
 		}
@@ -65,6 +95,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
 		_current = _next;
 	}
 	//AESysExit();
+	//delete SysManager;
+	std::cin.get();
 
 	return 0;
 }

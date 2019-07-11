@@ -22,6 +22,21 @@ void SystemManager::AddSystem(System* Sys)
 
 void SystemManager::DeleteSystem(SYSTEMID id)
 {
-	//System* sys;
-	//SystemList.erase(SystemList.ge]);
+	while (!SystemList.empty())
+		SystemList.pop_front();
+}
+
+void SystemManager::ResetSystem(SYSTEMID ID)
+{
+}
+
+System* SystemManager::GetSystem(SYSTEMID ID)
+{
+	std::list<System*>::iterator sysIt = SystemList.begin();
+	int count = 0;
+	while (count < (int)ID)
+	{
+		++sysIt;
+	}
+	return *sysIt;
 }

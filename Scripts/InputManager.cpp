@@ -10,7 +10,6 @@ InputManager::InputManager()
 	PrevKeyboardState = new KeyboardState;
 }
 
-
 InputManager::~InputManager()
 {
 	delete CurKeyboardState;
@@ -49,97 +48,99 @@ void InputManager::UpdateState()
 		}
 	}*/
 
-	if (GetKeyState('A'))
+	if (GetAsyncKeyState('A'))
 		++CurKeyboardState->Key[KeyA];
-	if (GetKeyState('B'))
+	if (GetAsyncKeyState('B'))
 		++CurKeyboardState->Key[KeyB];
-	if (GetKeyState('C'))
+	if (GetAsyncKeyState('C'))
 		++CurKeyboardState->Key[KeyC];
-	if (GetKeyState('D'))
+	if (GetAsyncKeyState('D'))
 		++CurKeyboardState->Key[KeyD];
-	if (GetKeyState('E'))
+	if (GetAsyncKeyState('E'))
 		++CurKeyboardState->Key[KeyE];
-	if (GetKeyState('F'))
+	if (GetAsyncKeyState('F'))
 		++CurKeyboardState->Key[KeyF];
-	if (GetKeyState('G'))
+	if (GetAsyncKeyState('G'))
 		++CurKeyboardState->Key[KeyG];
-	if (GetKeyState('H'))
+	if (GetAsyncKeyState('H'))
 		++CurKeyboardState->Key[KeyH];
-	if (GetKeyState('I'))
+	if (GetAsyncKeyState('I'))
 		++CurKeyboardState->Key[KeyI];
-	if (GetKeyState('J'))
+	if (GetAsyncKeyState('J'))
 		++CurKeyboardState->Key[KeyJ];
-	if (GetKeyState('K'))
+	if (GetAsyncKeyState('K'))
 		++CurKeyboardState->Key[KeyK];
-	if (GetKeyState('L'))
+	if (GetAsyncKeyState('L'))
 		++CurKeyboardState->Key[KeyL];
-	if (GetKeyState('M'))
+	if (GetAsyncKeyState('M'))
 		++CurKeyboardState->Key[KeyM];
-	if (GetKeyState('N'))
+	if (GetAsyncKeyState('N'))
 		++CurKeyboardState->Key[KeyN];
-	if (GetKeyState('O'))
+	if (GetAsyncKeyState('O'))
 		++CurKeyboardState->Key[KeyO];
-	if (GetKeyState('P'))
+	if (GetAsyncKeyState('P'))
 		++CurKeyboardState->Key[KeyP];
-	if (GetKeyState('Q'))
+	if (GetAsyncKeyState('Q'))
 		++CurKeyboardState->Key[KeyQ];
-	if (GetKeyState('R'))
+	if (GetAsyncKeyState('R'))
 		++CurKeyboardState->Key[KeyR];
-	if (GetKeyState('S'))
+	if (GetAsyncKeyState('S'))
 		++CurKeyboardState->Key[KeyS];
-	if (GetKeyState('T'))
+	if (GetAsyncKeyState('T'))
 		++CurKeyboardState->Key[KeyT];
-	if (GetKeyState('U'))
+	if (GetAsyncKeyState('U'))
 		++CurKeyboardState->Key[KeyU];
-	if (GetKeyState('V'))
+	if (GetAsyncKeyState('V'))
 		++CurKeyboardState->Key[KeyV];
-	if (GetKeyState('W'))
+	if (GetAsyncKeyState('W'))
 		++CurKeyboardState->Key[KeyW];
-	if (GetKeyState('X'))
+	if (GetAsyncKeyState('X'))
 		++CurKeyboardState->Key[KeyX];
-	if (GetKeyState('Y'))
+	if (GetAsyncKeyState('Y'))
 		++CurKeyboardState->Key[KeyY];
-	if (GetKeyState('Z'))
+	if (GetAsyncKeyState('Z'))
 		++CurKeyboardState->Key[KeyZ];
-	if (GetKeyState('0'))
+	if (GetAsyncKeyState('0'))
 		++CurKeyboardState->Key[Key0];
-	if (GetKeyState('1'))
+	if (GetAsyncKeyState('1'))
 		++CurKeyboardState->Key[Key1];
-	if (GetKeyState('2'))
+	if (GetAsyncKeyState('2'))
 		++CurKeyboardState->Key[Key2];
-	if (GetKeyState('3'))
+	if (GetAsyncKeyState('3'))
 		++CurKeyboardState->Key[Key3];
-	if (GetKeyState('4'))
+	if (GetAsyncKeyState('4'))
 		++CurKeyboardState->Key[Key4];
-	if (GetKeyState('5'))
+	if (GetAsyncKeyState('5'))
 		++CurKeyboardState->Key[Key5];
-	if (GetKeyState('6'))
+	if (GetAsyncKeyState('6'))
 		++CurKeyboardState->Key[Key6];
-	if (GetKeyState('7'))
+	if (GetAsyncKeyState('7'))
 		++CurKeyboardState->Key[Key7];
-	if (GetKeyState('8'))
+	if (GetAsyncKeyState('8'))
 		++CurKeyboardState->Key[Key8];
-	if (GetKeyState('9'))
+	if (GetAsyncKeyState('9'))
 		++CurKeyboardState->Key[Key9];
-	if (GetKeyState(VK_LBUTTON))
+	if (GetAsyncKeyState(VK_LBUTTON))
 		++CurKeyboardState->Key[MB1];
-	if (GetKeyState(VK_RBUTTON))
+	if (GetAsyncKeyState(VK_RBUTTON))
 		++CurKeyboardState->Key[MB2];
-	if (GetKeyState(VK_MBUTTON))
+	if (GetAsyncKeyState(VK_MBUTTON))
 		++CurKeyboardState->Key[MB3];
-	if (GetKeyState(VK_UP))
+	if (GetAsyncKeyState(VK_UP))
 		++CurKeyboardState->Key[KeyArrowUp];
-	if (GetKeyState(VK_DOWN))
+	if (GetAsyncKeyState(VK_DOWN))
 		++CurKeyboardState->Key[KeyArrowDown];
-	if (GetKeyState(VK_LEFT))
+	if (GetAsyncKeyState(VK_LEFT))
 		++CurKeyboardState->Key[KeyArrowLeft];
-	if (GetKeyState(VK_RIGHT))
+	if (GetAsyncKeyState(VK_RIGHT))
 		++CurKeyboardState->Key[KeyArrowRight];
-	
-	if (_DEBUG)
-		for (int i = 0; i < UNDEF; ++i)
-		{
 
+	if (_DEBUG)
+		for (int i = 0; i < Count; ++i)
+		{
+			int keyCount = 0;
+			keyCount += CurKeyboardState->Key[i];
+			std::cout << "Key " << i << ": " << keyCount << std::endl;
 		}
 	
 	//Do keyfunction inputs here
@@ -163,7 +164,7 @@ void InputManager::ResetState(KeyboardState *toReset)
 {
 	for (int i = 0; i < Count; ++i)
 	{
-		toReset->Key[i] = UNDEF;
+		toReset->Key[i] = 0;
 	}
 }
 

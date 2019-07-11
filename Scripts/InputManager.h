@@ -2,6 +2,7 @@
 #include <Windows.h>
 #include <map>
 #include "System.h"
+#include <iostream>
 
 enum KeyPress
 {
@@ -83,7 +84,7 @@ enum KeyFunction
 struct KeyboardState
 {
 	//Since COUNT is the last KeyPress, it will always be same value as size of KeyPress
-	int Key[Count] = { UNDEF };
+	int Key[Count] = { 0 };
 };
 
 class InputManager:
