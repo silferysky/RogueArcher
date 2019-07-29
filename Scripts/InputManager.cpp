@@ -8,6 +8,9 @@ InputManager::InputManager()
 {
 	CurKeyboardState = new KeyboardState;
 	PrevKeyboardState = new KeyboardState;
+	GameKeyConfig = new std::map<KeyPress, KeyFunction>;
+	MenuKeyConfig = new std::map<KeyPress, KeyFunction>;
+	ResetKeyBind();
 }
 
 InputManager::~InputManager()
@@ -120,6 +123,16 @@ void InputManager::UpdateState()
 		++CurKeyboardState->Key[Key8];
 	if (GetAsyncKeyState('9'))
 		++CurKeyboardState->Key[Key9];
+	if (GetAsyncKeyState(VK_ESCAPE))
+		++CurKeyboardState->Key[KeyEsc];
+	if (GetAsyncKeyState(VK_RETURN))
+		++CurKeyboardState->Key[KeyEnter];
+	if (GetAsyncKeyState(VK_SHIFT))
+		++CurKeyboardState->Key[KeyShift];
+	if (GetAsyncKeyState(VK_CONTROL))
+		++CurKeyboardState->Key[KeyCtrl];
+	if (GetAsyncKeyState(VK_BACK))
+		++CurKeyboardState->Key[KeyBackspace];
 	if (GetAsyncKeyState(VK_LBUTTON))
 		++CurKeyboardState->Key[MB1];
 	if (GetAsyncKeyState(VK_RBUTTON))
@@ -136,7 +149,7 @@ void InputManager::UpdateState()
 		++CurKeyboardState->Key[KeyArrowRight];
 
 	if (_DEBUG)
-		for (int i = 0; i < Count; ++i)
+		for (int i = 0; i < KeyCount; ++i)
 		{
 			int keyCount = 0;
 			keyCount += CurKeyboardState->Key[i];
@@ -144,12 +157,16 @@ void InputManager::UpdateState()
 		}
 	
 	//Do keyfunction inputs here
-	
+	HandleState();
 }
 
 void InputManager::HandleState()
 {
-	//TODO Movement/Action/Menu code
+	for (int i = 0; i < KeyCount; ++i)
+	{
+		int tempPos = -1;
+		//tempPos = KeyConfig
+	}
 }
 
 void InputManager::RemakeState()
@@ -162,10 +179,23 @@ void InputManager::RemakeState()
 
 void InputManager::ResetState(KeyboardState *toReset)
 {
-	for (int i = 0; i < Count; ++i)
+	for (int i = 0; i < KeyCount; ++i)
 	{
 		toReset->Key[i] = 0;
 	}
+}
+
+void InputManager::ResetState(FuncState * toReset)
+{
+	for (int i = 0; i < FuncCount; ++i)
+	{
+		toReset->Func[i] = 0;
+	}
+}
+
+FuncState* InputManager::getFuncState()
+{
+	return CurFuncState;
 }
 
 bool InputManager::KeyUp(KeyPress checkKey)
@@ -184,7 +214,7 @@ bool InputManager::KeyDown(KeyPress checkKey)
 
 bool InputManager::KeyDownAny()
 {
-	for (int i = 0; i < Count; ++i)
+	for (int i = 0; i < KeyCount; ++i)
 	{
 		if (CurKeyboardState->Key[i] > 0)
 			return true;
@@ -197,4 +227,32 @@ bool InputManager::KeyTriggered(KeyPress checkKey)
 	if (CurKeyboardState->Key[checkKey] > 0 && PrevKeyboardState->Key[checkKey] == 0)
 		return true;
 	return false;
+}
+
+void InputManager::ResetKeyBind()
+{
+	delete GameKeyConfig;
+	delete MenuKeyConfig;
+	std::map<KeyPress, KeyFunction> GameKeyBinding;
+	std::map<KeyPress, KeyFunction> MenuKeyBinding;
+
+	//For Game Key Config Binding
+	GameKeyBinding[KeyArrowUp] = MoveUp;
+	GameKeyBinding[KeyArrowDown] = MoveDown;
+	GameKeyBinding[KeyArrowLeft] = MoveLeft;
+	GameKeyBinding[KeyArrowRight] = MoveRight;
+	GameKeyBinding[KeyZ] = AttackBasic;
+	GameKeyBinding[KeyX] = Jump;
+	GameKeyBinding[KeyC] = Teleport;
+	GameKeyBinding[KeyEsc] = MenuOpen;
+
+	//For Menu Key Config Binding
+	MenuKeyBinding[KeyEsc] = MenuClose;
+	MenuKeyBinding[KeyZ] = MenuSelect;
+	MenuKeyBinding[KeyEnter] = MenuSelect;
+	MenuKeyBinding[KeyX] = MenuBack;
+	MenuKeyBinding[KeyBackspace] = MenuBack;
+
+	GameKeyConfig = &GameKeyBinding;
+	MenuKeyConfig = &MenuKeyBinding;
 }

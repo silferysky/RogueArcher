@@ -46,6 +46,11 @@ enum KeyPress
 	KeyArrowDown,
 	KeyArrowLeft,
 	KeyArrowRight,
+	KeyShift,
+	KeyCtrl,
+	KeyEnter,
+	KeyEsc,
+	KeyBackspace,
 	MB1,
 	MB2,
 	MB3, //Scrollwheel
@@ -59,7 +64,7 @@ enum KeyPress
 	Spare7,
 	Spare8,
 	Spare9,
-	Count, //Represents number of buttons
+	KeyCount, //Represents number of buttons
 	UNDEF //Represents no button pressed
 };
 
@@ -78,13 +83,21 @@ enum KeyFunction
 	MenuOpen,
 	MenuSelect,
 	MenuBack,
-	MenuCancel
+	MenuClose,
+
+	//Misc
+	FuncCount
 };
 
 struct KeyboardState
 {
 	//Since COUNT is the last KeyPress, it will always be same value as size of KeyPress
-	int Key[Count] = { 0 };
+	int Key[KeyCount] = { 0 };
+};
+
+struct FuncState
+{
+	int Func[FuncCount] = { 0 };
 };
 
 class InputManager:
@@ -104,8 +117,11 @@ public:
 	void RemakeState();
 	//Reset given state to be all null values
 	void ResetState(KeyboardState *toReset);
-
+	void ResetState(FuncState *toReset);
 	//Functions to check buttons, applies to other controllers
+	FuncState* getFuncState();
+
+	//Key Related
 
 	//Checks if key is not pressed
 	bool KeyUp(KeyPress checkKey);
@@ -116,8 +132,13 @@ public:
 	//Checks if key is just pressed
 	bool KeyTriggered(KeyPress checkKey);
 
+	//Reset Key bindings
+	void ResetKeyBind();
+
 private:
 	KeyboardState *CurKeyboardState;
 	KeyboardState *PrevKeyboardState;
-	std::map<KeyPress, KeyFunction> *KeyConfig;
+	std::map<KeyPress, KeyFunction> *GameKeyConfig;
+	std::map<KeyPress, KeyFunction> *MenuKeyConfig;
+	FuncState *CurFuncState;
 };

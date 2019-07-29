@@ -20,9 +20,9 @@ int main()
 {
 	int repeat = 0;
 	float timer = 0.0f;
-	timer += 0.00001f;
- 	while (repeat < 100)
+ 	while (repeat < 10)
 	{
+		timer += 0.0000000001f;
 		if (timer)
 		{
 			std::cout << "Count " << repeat << std::endl;
@@ -31,7 +31,7 @@ int main()
 			++repeat;
 		}
 	}
-	std::cin;
+	std::cin.get();
 	delete InputMger;
 	return 0;
 }
