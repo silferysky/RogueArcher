@@ -5,6 +5,7 @@
 #include <iostream>
 #include "Main.h"
 #include "InputManager.h"
+#include "RogueEngine.h"
 
 double t = 0.0;
 double gdt = 1.0;
@@ -18,6 +19,12 @@ static const int SCREEN_HEIGHT = 540;
 //Use for console
 int main()
 {
+	//Logger
+	Logger::InitLogger();
+	RE_CORE_TRACE("Init Core Logger");
+	RE_INFO("Hello");
+
+	//Main Debug
 	int repeat = 0;
 	float timer = 0.0f;
  	while (repeat < 100)
@@ -25,13 +32,16 @@ int main()
 		timer += 0.0000000001f;
 		if (timer)
 		{
-			std::cout << "Count " << repeat << std::endl;
+			//std::cout << "Count " << repeat << std::endl;
 			InputMger->UpdateState();
 			timer = 0.0f;
 			++repeat;
 		}
 	}
+
 	InputMger->DebugKeyInputs();
+	RE_INFO("PAUSE HERE FOR END");
+	RE_ERROR("THIS IS A ERROR MESSAGE BUT NO ERROR");
 	std::cin.get();
 	delete InputMger;
 	return 0;
