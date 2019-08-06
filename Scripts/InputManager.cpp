@@ -25,7 +25,47 @@ void InputManager::UpdateState()
 	*PrevKeyboardState = *CurKeyboardState;
 	ResetState(CurKeyboardState);
 
-	//Creates/Update the current state
+	AddToState();
+
+	//Do keyfunction inputs here
+	HandleState();
+}
+
+void InputManager::HandleState()
+{
+	for (int i = 0; i < KeyCount; ++i)
+	{
+		int tempPos = -1;
+		//tempPos = KeyConfig
+	}
+}
+
+void InputManager::RemakeState()
+{
+	delete CurKeyboardState;
+	delete PrevKeyboardState;
+	CurKeyboardState = new KeyboardState;
+	PrevKeyboardState = new KeyboardState;
+}
+
+void InputManager::ResetState(KeyboardState *toReset)
+{
+	for (int i = 0; i < KeyCount; ++i)
+	{
+		toReset->Key[i] = 0;
+	}
+}
+
+void InputManager::ResetState(FuncState * toReset)
+{
+	for (int i = 0; i < FuncCount; ++i)
+	{
+		toReset->Func[i] = 0;
+	}
+}
+
+void InputManager::AddToState()
+{
 	//Reads in and puts the input in
 
 	/*HWND hwnd;
@@ -148,48 +188,15 @@ void InputManager::UpdateState()
 	if (GetAsyncKeyState(VK_RIGHT))
 		++CurKeyboardState->Key[KeyArrowRight];
 
-	if (_DEBUG)
-		for (int i = 0; i < KeyCount; ++i)
-		{
-			int keyCount = 0;
-			keyCount += CurKeyboardState->Key[i];
-			std::cout << "Key " << i << ": " << keyCount << std::endl;
-		}
-	
-	//Do keyfunction inputs here
-	HandleState();
 }
 
-void InputManager::HandleState()
+void InputManager::DebugKeyInputs()
 {
 	for (int i = 0; i < KeyCount; ++i)
 	{
-		int tempPos = -1;
-		//tempPos = KeyConfig
-	}
-}
-
-void InputManager::RemakeState()
-{
-	delete CurKeyboardState;
-	delete PrevKeyboardState;
-	CurKeyboardState = new KeyboardState;
-	PrevKeyboardState = new KeyboardState;
-}
-
-void InputManager::ResetState(KeyboardState *toReset)
-{
-	for (int i = 0; i < KeyCount; ++i)
-	{
-		toReset->Key[i] = 0;
-	}
-}
-
-void InputManager::ResetState(FuncState * toReset)
-{
-	for (int i = 0; i < FuncCount; ++i)
-	{
-		toReset->Func[i] = 0;
+		int keyCount = 0;
+		keyCount += CurKeyboardState->Key[i];
+		std::cout << "Key " << (KeyPress)i << ": " << keyCount << std::endl;
 	}
 }
 

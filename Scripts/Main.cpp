@@ -20,7 +20,7 @@ int main()
 {
 	int repeat = 0;
 	float timer = 0.0f;
- 	while (repeat < 10)
+ 	while (repeat < 100)
 	{
 		timer += 0.0000000001f;
 		if (timer)
@@ -31,6 +31,7 @@ int main()
 			++repeat;
 		}
 	}
+	InputMger->DebugKeyInputs();
 	std::cin.get();
 	delete InputMger;
 	return 0;
@@ -40,7 +41,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
 {
 	if (_DEBUG)
 	{
-		std::cout << "HI" << std::endl;
+		std::cout << "DEBUG STATE ACTIVATE" << std::endl;
 	}
 
 	// Enable run-time memory check for debug builds.
@@ -96,6 +97,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
 	}
 	//AESysExit();
 	//delete SysManager;
+
 	std::cin.get();
 
 	return 0;
