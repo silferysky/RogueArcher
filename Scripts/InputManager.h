@@ -118,6 +118,10 @@ public:
 	//Reset given state to be all null values
 	void ResetState(KeyboardState *toReset);
 	void ResetState(FuncState *toReset);
+	//Add to current state only, not update it
+	void AddToState();
+	//To display the current keyboard state in debug
+	void DebugKeyInputs();
 	//Functions to check buttons, applies to other controllers
 	FuncState* getFuncState();
 
