@@ -5,78 +5,90 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Systems">
+    <Filter Include="RogueEngine">
+      <UniqueIdentifier>{f2913a8b-aa33-48bd-b5ba-6c6af812770d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RogueEngine\Systems">
       <UniqueIdentifier>{720125b1-fd03-4ad0-be57-66bebbe94904}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Components">
-      <UniqueIdentifier>{a5d5a6bb-9849-4008-976f-ee24ee403053}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Entities">
+    <Filter Include="RogueEngine\Entities">
       <UniqueIdentifier>{9625a325-37cf-4799-a695-4dc1753bacd4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RogueEngine\Components">
+      <UniqueIdentifier>{a5d5a6bb-9849-4008-976f-ee24ee403053}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\GameStateList.h">
-      <Filter>Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\GameStateManager.h">
-      <Filter>Systems</Filter>
+      <Filter>RogueEngine\Systems</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\InputManager.h">
-      <Filter>Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Main.h">
-      <Filter>Systems</Filter>
+      <Filter>RogueEngine\Systems</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Resource.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\EventManager.h">
-      <Filter>Systems</Filter>
+      <Filter>RogueEngine\Systems</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\MemoryManager.h">
-      <Filter>Systems</Filter>
+      <Filter>RogueEngine\Systems</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\System.h">
-      <Filter>Systems</Filter>
+      <Filter>RogueEngine\Systems</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\SystemManager.h">
-      <Filter>Systems</Filter>
+      <Filter>RogueEngine\Systems</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Component.h">
-      <Filter>Components</Filter>
+      <Filter>RogueEngine\Components</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Entity.h">
-      <Filter>Entities</Filter>
+      <Filter>RogueEngine\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\GameStateManager.h">
+      <Filter>RogueEngine\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Main.h">
+      <Filter>RogueEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Logger.h">
+      <Filter>RogueEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\RogueEngine.h">
+      <Filter>RogueEngine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Scripts\GameStateManager.cpp">
-      <Filter>Systems</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\InputManager.cpp">
-      <Filter>Systems</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Main.cpp">
-      <Filter>Systems</Filter>
+      <Filter>RogueEngine\Systems</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\EventManager.cpp">
-      <Filter>Systems</Filter>
+      <Filter>RogueEngine\Systems</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\MemoryManager.cpp">
-      <Filter>Systems</Filter>
+      <Filter>RogueEngine\Systems</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\System.cpp">
-      <Filter>Systems</Filter>
+      <Filter>RogueEngine\Systems</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\SystemManager.cpp">
-      <Filter>Systems</Filter>
+      <Filter>RogueEngine\Systems</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\Component.cpp">
-      <Filter>Components</Filter>
+      <Filter>RogueEngine\Components</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\Entity.cpp">
-      <Filter>Entities</Filter>
+      <Filter>RogueEngine\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\GameStateManager.cpp">
+      <Filter>RogueEngine\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Main.cpp">
+      <Filter>RogueEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Logger.cpp">
+      <Filter>RogueEngine</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
