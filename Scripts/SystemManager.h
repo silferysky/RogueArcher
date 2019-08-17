@@ -2,8 +2,8 @@
 #include <list>
 #include "System.h"
 #include "MemoryManager.h"
-#include "InputManager.h"
-#include "EventManager.h"
+//#include "InputManager.h"
+#include "EventDispatcher.h"
 //#include "AudioManager.h"
 
 class SystemManager

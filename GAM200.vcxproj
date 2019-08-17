@@ -19,12 +19,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Scripts\AppEvent.h" />
     <ClInclude Include="Scripts\Component.h" />
     <ClInclude Include="Scripts\Entity.h" />
-    <ClInclude Include="Scripts\EventManager.h" />
+    <ClInclude Include="Scripts\Event.h" />
+    <ClInclude Include="Scripts\EventDispatcher.h" />
     <ClInclude Include="Scripts\GameStateList.h" />
     <ClInclude Include="Scripts\GameStateManager.h" />
+    <ClInclude Include="Scripts\InputData.h" />
     <ClInclude Include="Scripts\InputManager.h" />
+    <ClInclude Include="Scripts\KeyEvent.h" />
     <ClInclude Include="Scripts\Logger.h" />
     <ClInclude Include="Scripts\Main.h" />
     <ClInclude Include="Scripts\MemoryManager.h" />
@@ -36,7 +40,6 @@
   <ItemGroup>
     <ClCompile Include="Scripts\Component.cpp" />
     <ClCompile Include="Scripts\Entity.cpp" />
-    <ClCompile Include="Scripts\EventManager.cpp" />
     <ClCompile Include="Scripts\GameStateManager.cpp" />
     <ClCompile Include="Scripts\InputManager.cpp" />
     <ClCompile Include="Scripts\Logger.cpp" />

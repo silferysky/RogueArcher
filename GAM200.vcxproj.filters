@@ -17,19 +17,22 @@
     <Filter Include="RogueEngine\Components">
       <UniqueIdentifier>{a5d5a6bb-9849-4008-976f-ee24ee403053}</UniqueIdentifier>
     </Filter>
+    <Filter Include="RogueEngine\Systems\EventSystem">
+      <UniqueIdentifier>{8ed8a40a-ae7c-43fa-aac3-45f06a6593ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RogueEngine\Systems\EventSystem\Events">
+      <UniqueIdentifier>{874017b0-c223-4a1e-9f81-5e68b60e39c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RogueEngine\Data">
+      <UniqueIdentifier>{a050a5c0-1c86-4d17-8448-e9c5d24c48f5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\GameStateList.h">
       <Filter>RogueEngine\Systems</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\InputManager.h">
-      <Filter>RogueEngine\Systems</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\Resource.h">
       <Filter>Resource Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\EventManager.h">
-      <Filter>RogueEngine\Systems</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\MemoryManager.h">
       <Filter>RogueEngine\Systems</Filter>
@@ -58,14 +61,26 @@
     <ClInclude Include="Scripts\RogueEngine.h">
       <Filter>RogueEngine</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\Event.h">
+      <Filter>RogueEngine\Systems\EventSystem\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\AppEvent.h">
+      <Filter>RogueEngine\Systems\EventSystem\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\KeyEvent.h">
+      <Filter>RogueEngine\Systems\EventSystem\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\EventDispatcher.h">
+      <Filter>RogueEngine\Systems\EventSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\InputManager.h">
+      <Filter>RogueEngine\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\InputData.h">
+      <Filter>RogueEngine\Data</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Scripts\InputManager.cpp">
-      <Filter>RogueEngine\Systems</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\EventManager.cpp">
-      <Filter>RogueEngine\Systems</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\MemoryManager.cpp">
       <Filter>RogueEngine\Systems</Filter>
     </ClCompile>
@@ -89,6 +104,9 @@
     </ClCompile>
     <ClCompile Include="Scripts\Logger.cpp">
       <Filter>RogueEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\InputManager.cpp">
+      <Filter>RogueEngine\Systems</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

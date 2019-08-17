@@ -5,8 +5,8 @@
 SystemManager::SystemManager()
 {
 	AddSystem(new MemoryManager());
-	AddSystem(new InputManager());
-	AddSystem(new EventManager());
+	//AddSystem(new InputManager());
+	AddSystem(new EventDispatcher());
 	//AddSystem(new AudioManager());
 }
 
