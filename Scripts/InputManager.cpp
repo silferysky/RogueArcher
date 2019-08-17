@@ -11,24 +11,36 @@ InputManager::InputManager()
 	GameKeyConfig = new std::map<KeyPress, KeyFunction>;
 	MenuKeyConfig = new std::map<KeyPress, KeyFunction>;
 	ResetKeyBind();
+
+	ResetState(CurKeyboardState);
+	ResetState(PrevKeyboardState);
 }
 
 InputManager::~InputManager()
 {
 	delete CurKeyboardState;
 	delete PrevKeyboardState;
+	delete GameKeyConfig;
+	delete MenuKeyConfig;
 }
 
 void InputManager::UpdateState()
 {
 	//Always do this first
-	*PrevKeyboardState = *CurKeyboardState;
-	ResetState(CurKeyboardState);
+	//Shallow add old keyboardstate details over to keep track of how long button is pressed
+	*PrevKeyboardState += *CurKeyboardState;
 
+	//Ensure state is empty
+	ResetState(CurKeyboardState);
+	//Detecting inputs
 	AddToState();
+
 
 	//Do keyfunction inputs here
 	HandleState();
+
+
+	//Always do this last
 }
 
 void InputManager::HandleState()
@@ -67,29 +79,6 @@ void InputManager::ResetState(FuncState * toReset)
 void InputManager::AddToState()
 {
 	//Reads in and puts the input in
-
-	/*HWND hwnd;
-	bool msgChecked = false;
-	MSG msg;
-
-	while (!msgChecked)
-	{
-		//Other checks are here too
-		msgChecked = true;
-
-		while (PeekMessage(&msg, hwnd, 0, 0, PM_REMOVE))
-		{
-			switch (msg.message)
-			{
-			case MK_LBUTTON:
-				break;
-			case MK_RBUTTON:
-				break;
-			case MK_MBUTTON:
-				break;
-			}
-		}
-	}*/
 
 	if (GetAsyncKeyState('A'))
 		++CurKeyboardState->Key[KeyA];
@@ -188,16 +177,33 @@ void InputManager::AddToState()
 	if (GetAsyncKeyState(VK_RIGHT))
 		++CurKeyboardState->Key[KeyArrowRight];
 
+	for (int i = 0; i < KeyCount; ++i)
+	{
+		if (CurKeyboardState->Key[i] != 0)
+		{
+			//Dispatching KeyEvent input
+			KeyPressEvent e((KeyPress)i, PrevKeyboardState->Key[i]);
+			eventDispatcher.AddEvent(e);
+
+			//Debug only
+			DebugKeyInputs((KeyPress)i);
+		}
+	}
 }
 
 void InputManager::DebugKeyInputs()
 {
 	for (int i = 0; i < KeyCount; ++i)
 	{
-		int keyCount = 0;
-		keyCount += CurKeyboardState->Key[i];
+		int keyCount =  PrevKeyboardState->Key[i] + CurKeyboardState->Key[i];
 		std::cout << "Key " << (KeyPress)i << ": " << keyCount << std::endl;
 	}
+}
+
+void InputManager::DebugKeyInputs(KeyPress key)
+{
+	int keyCount = PrevKeyboardState->Key[key] + CurKeyboardState->Key[key];
+	std::cout << "Key " << key << ": " << keyCount << std::endl;
 }
 
 FuncState* InputManager::getFuncState()
@@ -223,7 +229,7 @@ bool InputManager::KeyDownAny()
 {
 	for (int i = 0; i < KeyCount; ++i)
 	{
-		if (CurKeyboardState->Key[i] > 0)
+		if (KeyDown((KeyPress)i))
 			return true;
 	}
 	return false;
@@ -231,8 +237,19 @@ bool InputManager::KeyDownAny()
 
 bool InputManager::KeyTriggered(KeyPress checkKey)
 {
-	if (CurKeyboardState->Key[checkKey] > 0 && PrevKeyboardState->Key[checkKey] == 0)
-		return true;
+	if (KeyDown(checkKey))
+		if (PrevKeyboardState->Key[checkKey] == 0)
+			return true;
+	return false;
+}
+
+bool InputManager::KeyTriggeredAny()
+{
+	for (int i = 0; i < KeyCount; ++i)
+	{
+		if (KeyTriggered((KeyPress)i))
+			return true;
+	}
 	return false;
 }
 

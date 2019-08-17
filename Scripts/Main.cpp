@@ -4,13 +4,13 @@
 #include <fstream>
 #include <iostream>
 #include "Main.h"
+#include "KeyEvent.h"
 #include "InputManager.h"
-#include "RogueEngine.h"
 
 double t = 0.0;
 double gdt = 1.0;
 //SystemManager *SysManager = new SystemManager();
-InputManager *InputMger = new InputManager();
+//InputManager *InputMger = new InputManager();
 
 static const int SCREEN_FULLSCREEN = 0;
 static const int SCREEN_WIDTH = 960;
@@ -21,29 +21,32 @@ int main()
 {
 	//Logger
 	Logger::InitLogger();
+	InputManager* InputMgr = new InputManager();
 	RE_CORE_TRACE("Init Core Logger");
 	RE_INFO("Hello");
 
 	//Main Debug
 	int repeat = 0;
 	float timer = 0.0f;
- 	while (repeat < 100)
+ 	while (repeat < 5)
 	{
-		timer += 0.0000000001f;
-		if (timer)
+		InputMgr->UpdateState();
+
+		if (InputMgr->KeyTriggeredAny())
 		{
-			//std::cout << "Count " << repeat << std::endl;
-			InputMger->UpdateState();
-			timer = 0.0f;
 			++repeat;
+			//InputMgr->DebugKeyInputs();
 		}
 	}
 
-	InputMger->DebugKeyInputs();
+	//InputMger->DebugKeyInputs();
 	RE_INFO("PAUSE HERE FOR END");
 	RE_ERROR("THIS IS A ERROR MESSAGE BUT NO ERROR");
+
+	KeyPressEvent testEvent((KeyPress)KeyArrowRight, 10);
+	RE_INFO(testEvent.ToString());
 	std::cin.get();
-	delete InputMger;
+	delete InputMgr;
 	return 0;
 }
 
@@ -87,7 +90,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
 			if (gdt)
 			{
 				//AEInputUpdate();
-				InputMger->UpdateState();
+				//InputMger->UpdateState();
 				//fpUpdate();
 				//fpDraw();
 

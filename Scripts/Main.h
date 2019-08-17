@@ -1,4 +1,6 @@
 #pragma once
+
+#include "RogueEngine.h"
 #include "GameStateList.h"
 #include "GameStateManager.h"
 #include <Windows.h>
