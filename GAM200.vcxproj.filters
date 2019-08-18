@@ -79,6 +79,12 @@
     <ClInclude Include="Scripts\InputData.h">
       <Filter>RogueEngine\Data</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\EngineIO.h">
+      <Filter>RogueEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Library.h">
+      <Filter>RogueEngine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\MemoryManager.cpp">
@@ -107,6 +113,12 @@
     </ClCompile>
     <ClCompile Include="Scripts\InputManager.cpp">
       <Filter>RogueEngine\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\EngineIO.cpp">
+      <Filter>RogueEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Library.cpp">
+      <Filter>RogueEngine</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

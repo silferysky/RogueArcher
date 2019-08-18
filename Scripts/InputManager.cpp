@@ -20,8 +20,8 @@ InputManager::~InputManager()
 {
 	delete CurKeyboardState;
 	delete PrevKeyboardState;
-	delete GameKeyConfig;
-	delete MenuKeyConfig;
+	//delete GameKeyConfig;
+	//delete MenuKeyConfig;
 }
 
 void InputManager::UpdateState()
