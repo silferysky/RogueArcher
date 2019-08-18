@@ -6,6 +6,7 @@
 #include "Main.h"
 #include "KeyEvent.h"
 #include "InputManager.h"
+#include "EngineIO.h"
 
 double t = 0.0;
 double gdt = 1.0;
@@ -43,8 +44,21 @@ int main()
 	RE_INFO("PAUSE HERE FOR END");
 	RE_ERROR("THIS IS A ERROR MESSAGE BUT NO ERROR");
 
+	RE_INFO("TESTING HERE FOR A RANDOM EVENT");
 	KeyPressEvent testEvent((KeyPress)KeyArrowRight, 10);
 	RE_INFO(testEvent.ToString());
+	RE_INFO("END EVENT TEST");
+
+
+	RE_INFO("TESTING HERE FOR FILE IO");
+	EngineIO io;
+	io.WriteFile(FileIOTest);
+	io.ReadFile(FileIOTest);
+	io.WriteFile(PlayerStatsData);
+	io.ReadFile(PlayerStatsData);
+	io.WriteFile((FileIOID)999);
+	io.ReadFile((FileIOID)999);
+
 	std::cin.get();
 	delete InputMgr;
 	return 0;
