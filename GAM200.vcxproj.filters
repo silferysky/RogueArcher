@@ -28,6 +28,9 @@
     <ClInclude Include="EventManager.h">
       <Filter>Systems</Filter>
     </ClInclude>
+    <ClInclude Include="Collision.h" />
+    <ClInclude Include="Matrix33.h" />
+    <ClInclude Include="Vector2.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\GameStateManager.cpp">
@@ -42,6 +45,9 @@
     <ClCompile Include="EventManager.cpp">
       <Filter>Systems</Filter>
     </ClCompile>
+    <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="Matrix33.cpp" />
+    <ClCompile Include="Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GAM200.rc">
