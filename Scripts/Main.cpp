@@ -6,7 +6,7 @@
 #include "Main.h"
 #include "KeyEvent.h"
 #include "InputManager.h"
-#include "EngineIO.h"
+#include "Library.h"
 
 double t = 0.0;
 double gdt = 1.0;
@@ -51,13 +51,19 @@ int main()
 
 
 	RE_INFO("TESTING HERE FOR FILE IO");
-	EngineIO io;
-	io.WriteFile(FileIOTest);
-	io.ReadFile(FileIOTest);
-	io.WriteFile(PlayerStatsData);
+
+	Library testLibrary;
+	testLibrary.IOTest();
+
+	RE_INFO("END TEST IO");
+	
+	/*EngineIO io;
+	io.WriteFile(io.GetFileName(FileIOTest), "Hi\n!!!");
+	io.ReadFile(io.GetFileName(FileIOTest));
+	io.WriteFile(io.GetFileName(PlayerStatsData),);
 	io.ReadFile(PlayerStatsData);
-	io.WriteFile((FileIOID)999);
-	io.ReadFile((FileIOID)999);
+	io.WriteFile((LibraryID)999);
+	io.ReadFile((LibraryID)999);*/
 
 	std::cin.get();
 	delete InputMgr;
