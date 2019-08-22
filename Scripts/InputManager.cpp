@@ -6,32 +6,28 @@ enum KeyFunction;
 
 InputManager::InputManager()
 {
-	CurKeyboardState = new KeyboardState;
-	PrevKeyboardState = new KeyboardState;
-	GameKeyConfig = new std::map<KeyPress, KeyFunction>;
-	MenuKeyConfig = new std::map<KeyPress, KeyFunction>;
+	CurKeyboardState = KeyboardState();
+	PrevKeyboardState = KeyboardState();
+	GameKeyConfig = std::map<KeyPress, KeyFunction>();
+	MenuKeyConfig = std::map<KeyPress, KeyFunction>();
 	ResetKeyBind();
 
-	ResetState(CurKeyboardState);
-	ResetState(PrevKeyboardState);
+	ResetState(&CurKeyboardState);
+	ResetState(&PrevKeyboardState);
 }
 
 InputManager::~InputManager()
 {
-	delete CurKeyboardState;
-	delete PrevKeyboardState;
-	//delete GameKeyConfig;
-	//delete MenuKeyConfig;
 }
 
 void InputManager::UpdateState()
 {
 	//Always do this first
 	//Shallow add old keyboardstate details over to keep track of how long button is pressed
-	*PrevKeyboardState += *CurKeyboardState;
+	PrevKeyboardState += CurKeyboardState;
 
 	//Ensure state is empty
-	ResetState(CurKeyboardState);
+	ResetState(&CurKeyboardState);
 	//Detecting inputs
 	AddToState();
 
@@ -54,10 +50,8 @@ void InputManager::HandleState()
 
 void InputManager::RemakeState()
 {
-	delete CurKeyboardState;
-	delete PrevKeyboardState;
-	CurKeyboardState = new KeyboardState;
-	PrevKeyboardState = new KeyboardState;
+	CurKeyboardState = KeyboardState();
+	PrevKeyboardState = KeyboardState();
 }
 
 void InputManager::ResetState(KeyboardState *toReset)
@@ -81,108 +75,108 @@ void InputManager::AddToState()
 	//Reads in and puts the input in
 
 	if (GetAsyncKeyState('A'))
-		++CurKeyboardState->Key[KeyA];
+		++CurKeyboardState.Key[KeyA];
 	if (GetAsyncKeyState('B'))
-		++CurKeyboardState->Key[KeyB];
+		++CurKeyboardState.Key[KeyB];
 	if (GetAsyncKeyState('C'))
-		++CurKeyboardState->Key[KeyC];
+		++CurKeyboardState.Key[KeyC];
 	if (GetAsyncKeyState('D'))
-		++CurKeyboardState->Key[KeyD];
+		++CurKeyboardState.Key[KeyD];
 	if (GetAsyncKeyState('E'))
-		++CurKeyboardState->Key[KeyE];
+		++CurKeyboardState.Key[KeyE];
 	if (GetAsyncKeyState('F'))
-		++CurKeyboardState->Key[KeyF];
+		++CurKeyboardState.Key[KeyF];
 	if (GetAsyncKeyState('G'))
-		++CurKeyboardState->Key[KeyG];
+		++CurKeyboardState.Key[KeyG];
 	if (GetAsyncKeyState('H'))
-		++CurKeyboardState->Key[KeyH];
+		++CurKeyboardState.Key[KeyH];
 	if (GetAsyncKeyState('I'))
-		++CurKeyboardState->Key[KeyI];
+		++CurKeyboardState.Key[KeyI];
 	if (GetAsyncKeyState('J'))
-		++CurKeyboardState->Key[KeyJ];
+		++CurKeyboardState.Key[KeyJ];
 	if (GetAsyncKeyState('K'))
-		++CurKeyboardState->Key[KeyK];
+		++CurKeyboardState.Key[KeyK];
 	if (GetAsyncKeyState('L'))
-		++CurKeyboardState->Key[KeyL];
+		++CurKeyboardState.Key[KeyL];
 	if (GetAsyncKeyState('M'))
-		++CurKeyboardState->Key[KeyM];
+		++CurKeyboardState.Key[KeyM];
 	if (GetAsyncKeyState('N'))
-		++CurKeyboardState->Key[KeyN];
+		++CurKeyboardState.Key[KeyN];
 	if (GetAsyncKeyState('O'))
-		++CurKeyboardState->Key[KeyO];
+		++CurKeyboardState.Key[KeyO];
 	if (GetAsyncKeyState('P'))
-		++CurKeyboardState->Key[KeyP];
+		++CurKeyboardState.Key[KeyP];
 	if (GetAsyncKeyState('Q'))
-		++CurKeyboardState->Key[KeyQ];
+		++CurKeyboardState.Key[KeyQ];
 	if (GetAsyncKeyState('R'))
-		++CurKeyboardState->Key[KeyR];
+		++CurKeyboardState.Key[KeyR];
 	if (GetAsyncKeyState('S'))
-		++CurKeyboardState->Key[KeyS];
+		++CurKeyboardState.Key[KeyS];
 	if (GetAsyncKeyState('T'))
-		++CurKeyboardState->Key[KeyT];
+		++CurKeyboardState.Key[KeyT];
 	if (GetAsyncKeyState('U'))
-		++CurKeyboardState->Key[KeyU];
+		++CurKeyboardState.Key[KeyU];
 	if (GetAsyncKeyState('V'))
-		++CurKeyboardState->Key[KeyV];
+		++CurKeyboardState.Key[KeyV];
 	if (GetAsyncKeyState('W'))
-		++CurKeyboardState->Key[KeyW];
+		++CurKeyboardState.Key[KeyW];
 	if (GetAsyncKeyState('X'))
-		++CurKeyboardState->Key[KeyX];
+		++CurKeyboardState.Key[KeyX];
 	if (GetAsyncKeyState('Y'))
-		++CurKeyboardState->Key[KeyY];
+		++CurKeyboardState.Key[KeyY];
 	if (GetAsyncKeyState('Z'))
-		++CurKeyboardState->Key[KeyZ];
+		++CurKeyboardState.Key[KeyZ];
 	if (GetAsyncKeyState('0'))
-		++CurKeyboardState->Key[Key0];
+		++CurKeyboardState.Key[Key0];
 	if (GetAsyncKeyState('1'))
-		++CurKeyboardState->Key[Key1];
+		++CurKeyboardState.Key[Key1];
 	if (GetAsyncKeyState('2'))
-		++CurKeyboardState->Key[Key2];
+		++CurKeyboardState.Key[Key2];
 	if (GetAsyncKeyState('3'))
-		++CurKeyboardState->Key[Key3];
+		++CurKeyboardState.Key[Key3];
 	if (GetAsyncKeyState('4'))
-		++CurKeyboardState->Key[Key4];
+		++CurKeyboardState.Key[Key4];
 	if (GetAsyncKeyState('5'))
-		++CurKeyboardState->Key[Key5];
+		++CurKeyboardState.Key[Key5];
 	if (GetAsyncKeyState('6'))
-		++CurKeyboardState->Key[Key6];
+		++CurKeyboardState.Key[Key6];
 	if (GetAsyncKeyState('7'))
-		++CurKeyboardState->Key[Key7];
+		++CurKeyboardState.Key[Key7];
 	if (GetAsyncKeyState('8'))
-		++CurKeyboardState->Key[Key8];
+		++CurKeyboardState.Key[Key8];
 	if (GetAsyncKeyState('9'))
-		++CurKeyboardState->Key[Key9];
+		++CurKeyboardState.Key[Key9];
 	if (GetAsyncKeyState(VK_ESCAPE))
-		++CurKeyboardState->Key[KeyEsc];
+		++CurKeyboardState.Key[KeyEsc];
 	if (GetAsyncKeyState(VK_RETURN))
-		++CurKeyboardState->Key[KeyEnter];
+		++CurKeyboardState.Key[KeyEnter];
 	if (GetAsyncKeyState(VK_SHIFT))
-		++CurKeyboardState->Key[KeyShift];
+		++CurKeyboardState.Key[KeyShift];
 	if (GetAsyncKeyState(VK_CONTROL))
-		++CurKeyboardState->Key[KeyCtrl];
+		++CurKeyboardState.Key[KeyCtrl];
 	if (GetAsyncKeyState(VK_BACK))
-		++CurKeyboardState->Key[KeyBackspace];
+		++CurKeyboardState.Key[KeyBackspace];
 	if (GetAsyncKeyState(VK_LBUTTON))
-		++CurKeyboardState->Key[MB1];
+		++CurKeyboardState.Key[MB1];
 	if (GetAsyncKeyState(VK_RBUTTON))
-		++CurKeyboardState->Key[MB2];
+		++CurKeyboardState.Key[MB2];
 	if (GetAsyncKeyState(VK_MBUTTON))
-		++CurKeyboardState->Key[MB3];
+		++CurKeyboardState.Key[MB3];
 	if (GetAsyncKeyState(VK_UP))
-		++CurKeyboardState->Key[KeyArrowUp];
+		++CurKeyboardState.Key[KeyArrowUp];
 	if (GetAsyncKeyState(VK_DOWN))
-		++CurKeyboardState->Key[KeyArrowDown];
+		++CurKeyboardState.Key[KeyArrowDown];
 	if (GetAsyncKeyState(VK_LEFT))
-		++CurKeyboardState->Key[KeyArrowLeft];
+		++CurKeyboardState.Key[KeyArrowLeft];
 	if (GetAsyncKeyState(VK_RIGHT))
-		++CurKeyboardState->Key[KeyArrowRight];
+		++CurKeyboardState.Key[KeyArrowRight];
 
 	for (int i = 0; i < KeyCount; ++i)
 	{
-		if (CurKeyboardState->Key[i] != 0)
+		if (CurKeyboardState.Key[i] != 0)
 		{
 			//Dispatching KeyEvent input
-			KeyPressEvent e((KeyPress)i, PrevKeyboardState->Key[i]);
+			KeyPressEvent e((KeyPress)i, PrevKeyboardState.Key[i]);
 			eventDispatcher.AddEvent(e);
 
 			//Debug only
@@ -195,32 +189,32 @@ void InputManager::DebugKeyInputs()
 {
 	for (int i = 0; i < KeyCount; ++i)
 	{
-		int keyCount =  PrevKeyboardState->Key[i] + CurKeyboardState->Key[i];
+		int keyCount =  PrevKeyboardState.Key[i] + CurKeyboardState.Key[i];
 		std::cout << "Key " << (KeyPress)i << ": " << keyCount << std::endl;
 	}
 }
 
 void InputManager::DebugKeyInputs(KeyPress key)
 {
-	int keyCount = PrevKeyboardState->Key[key] + CurKeyboardState->Key[key];
+	int keyCount = PrevKeyboardState.Key[key] + CurKeyboardState.Key[key];
 	std::cout << "Key " << key << ": " << keyCount << std::endl;
 }
 
 FuncState* InputManager::getFuncState()
 {
-	return CurFuncState;
+	return &CurFuncState;
 }
 
 bool InputManager::KeyUp(KeyPress checkKey)
 {
-	if (CurKeyboardState->Key[checkKey] == false)
+	if (CurKeyboardState.Key[checkKey] == false)
 		return true;
 	return false;
 }
 
 bool InputManager::KeyDown(KeyPress checkKey)
 {
-	if (CurKeyboardState->Key[checkKey] > 0)
+	if (CurKeyboardState.Key[checkKey] > 0)
 		return true;
 	return false;
 }
@@ -238,7 +232,7 @@ bool InputManager::KeyDownAny()
 bool InputManager::KeyTriggered(KeyPress checkKey)
 {
 	if (KeyDown(checkKey))
-		if (PrevKeyboardState->Key[checkKey] == 0)
+		if (PrevKeyboardState.Key[checkKey] == 0)
 			return true;
 	return false;
 }
@@ -255,8 +249,6 @@ bool InputManager::KeyTriggeredAny()
 
 void InputManager::ResetKeyBind()
 {
-	delete GameKeyConfig;
-	delete MenuKeyConfig;
 	std::map<KeyPress, KeyFunction> GameKeyBinding;
 	std::map<KeyPress, KeyFunction> MenuKeyBinding;
 
@@ -277,6 +269,6 @@ void InputManager::ResetKeyBind()
 	MenuKeyBinding[KeyX] = MenuBack;
 	MenuKeyBinding[KeyBackspace] = MenuBack;
 
-	GameKeyConfig = &GameKeyBinding;
-	MenuKeyConfig = &MenuKeyBinding;
+	GameKeyConfig = GameKeyBinding;
+	MenuKeyConfig = MenuKeyBinding;
 }

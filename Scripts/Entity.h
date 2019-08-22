@@ -18,6 +18,5 @@ public:
 	
 private:
 	ENTITYID ID;
-	Entity* nextEnt;
 };
 
