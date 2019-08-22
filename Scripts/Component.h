@@ -15,6 +15,5 @@ public:
 
 private:
 	COMPONENTID ID;
-	Component* nextComp;
 };
 

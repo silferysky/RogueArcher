@@ -71,10 +71,10 @@ public:
 	void ResetKeyBind();
 
 private:
-	KeyboardState *CurKeyboardState;
-	KeyboardState *PrevKeyboardState;
-	std::map<KeyPress, KeyFunction> *GameKeyConfig;
-	std::map<KeyPress, KeyFunction> *MenuKeyConfig;
-	FuncState *CurFuncState;
+	KeyboardState CurKeyboardState;
+	KeyboardState PrevKeyboardState;
+	std::map<KeyPress, KeyFunction> GameKeyConfig;
+	std::map<KeyPress, KeyFunction> MenuKeyConfig;
+	FuncState CurFuncState;
 	int ButtonTrigger;
 };

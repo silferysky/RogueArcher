@@ -20,5 +20,4 @@ public:
 
 private:
 	SYSTEMID ID;
-	System* nextSys;
 };
