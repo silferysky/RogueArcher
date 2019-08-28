@@ -2,7 +2,6 @@
 #include <cstdlib>
 
 #include <fstream>
-#include <iostream>
 #include "Main.h"
 #include "KeyEvent.h"
 #include "InputManager.h"
@@ -11,7 +10,6 @@
 double t = 0.0;
 double gdt = 1.0;
 //SystemManager *SysManager = new SystemManager();
-//InputManager *InputMger = new InputManager();
 
 static const int SCREEN_FULLSCREEN = 0;
 static const int SCREEN_WIDTH = 960;
@@ -22,8 +20,10 @@ int main()
 {
 	//Logger
 	Logger::InitLogger();
-	InputManager* InputMgr = new InputManager();
 	RE_CORE_TRACE("Init Core Logger");
+
+	InputManager* InputMgr = new InputManager();
+	MemoryManager memManager;
 	RE_INFO("Hello");
 
 	//Main Debug
@@ -57,13 +57,30 @@ int main()
 
 	RE_INFO("END TEST IO");
 	
-	/*EngineIO io;
-	io.WriteFile(io.GetFileName(FileIOTest), "Hi\n!!!");
-	io.ReadFile(io.GetFileName(FileIOTest));
-	io.WriteFile(io.GetFileName(PlayerStatsData),);
-	io.ReadFile(PlayerStatsData);
-	io.WriteFile((LibraryID)999);
-	io.ReadFile((LibraryID)999);*/
+	RE_INFO("TEST ReMM (Rogue Engine Memory Manager)");
+	MemoryManager ReMM;
+
+	System s;
+	System s2;
+	Entity e;
+	Component c;
+
+	std::shared_ptr<System> ptr = std::make_shared<System>(s);
+
+	ReMM.AddIntoMemory(s);
+	ReMM.AddIntoMemory(s2);
+	ReMM.AddIntoMemory(e);
+	ReMM.AddIntoMemory(c);
+
+	std::string str("System Count: ");
+	str.append(std::to_string(ReMM.SysListCount()));
+	RE_INFO(str);
+
+	str.clear();
+	str.append("Use Count: ");
+	str.append(std::to_string(ReMM.GetSysList()[0].use_count()));
+
+	RE_INFO(str);
 
 	std::cin.get();
 	delete InputMgr;
