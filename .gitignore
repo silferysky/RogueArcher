@@ -34,3 +34,6 @@ x64/
 *.rar
 *.tar
 *.zip
+
+#include everything within#
+!/Dep/**/*
