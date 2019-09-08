@@ -3,7 +3,7 @@
 #include <string>
 #include <sstream>
 
-#define EvCatFlag(x) (1 << x) //Defines event category as x shifted by 1 bit
+#define EvCatFlag(x) (1 << x) //Defines event category as x shifted by 1 bit (since 0 is None)
 
 //Macros to help set Category/Type
 #define SET_EVENT_TYPE(type) static EventType GetStaticType() { return EventType::##type; } virtual EventType GetEventType() const override {return type;} virtual const char* GetEventName() const override { return #type; }
