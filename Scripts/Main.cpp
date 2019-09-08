@@ -7,6 +7,10 @@
 #include "InputManager.h"
 #include "Library.h"
 
+#include "Quad.h"
+#include "SOIL.h"
+GLuint texture[1];
+
 double t = 0.0;
 double gdt = 1.0;
 //SystemManager *SysManager = new SystemManager();
@@ -81,6 +85,55 @@ int main()
 	str.append(std::to_string(ReMM.GetSysList()[0].use_count()));
 
 	RE_INFO(str);
+
+	//Graphics Debug
+	
+	GLFWwindow* window;
+
+	/* Initialize the library */
+	if (!glfwInit())
+		return -1;
+
+	/* Create a windowed mode window and its OpenGL context */
+	window = glfwCreateWindow(640, 480, "Terence Dad Gay", NULL, NULL);
+	if (!window)
+	{
+		glfwTerminate();
+		return -1;
+	}
+
+	/* Make the window's context current */
+	glfwMakeContextCurrent(window);
+
+	/* Error check */
+	if (glewInit() != GLEW_OK)
+		std::cout << "Oh fuck" << std::endl;
+
+	std::cout << glGetString(GL_VERSION) << std::endl;
+
+	float vertex[8] = { -0.5f,  0.5f,
+						 0.5f,  0.5f,
+						 0.5f, -0.5f,
+						-0.5f, -0.5f, };
+
+	Quad test(vertex, "(1.0, 0.0, 0.0, 0.0)");
+
+	/* Loop until the user closes the window */
+	while (!glfwWindowShouldClose(window))
+	{
+		/* Render here */
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		test.Draw();
+
+		/* Swap front and back buffers */
+		glfwSwapBuffers(window);
+
+		/* Poll for and process events */
+		glfwPollEvents();
+	}
+
+	glfwTerminate();
 
 	std::cin.get();
 	delete InputMgr;
