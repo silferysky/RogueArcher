@@ -33,8 +33,8 @@ void GSM_Update()
 		fpUpdate = TestLevel_Update;
 		fpDraw = TestLevel_Draw;
 		fpFree = TestLevel_Free;
-		fpUnload = TestLevel_Unload;
-		break; */
+		fpUnload = TestLevel_Unload;*/
+		break;
 	case GS_QUIT:    // if quit is selected
 		_current = GS_QUIT;
 		break;
