@@ -4,10 +4,23 @@ x64/
 
 # Compiled source #
 ###################
+*.aps
+*.exe
+*.idb
+*.ipch
+*.lastbuildstate
+*.log
+*.tlog
+*.manifest
+*.obj
+*.pch
+*.pdb
+*.res
+*.sdf
+*.suo
+*.user
 *.com
 *.class
-*.dll
-*.exe
 *.o
 *.so
 
