@@ -97,6 +97,9 @@
     <ClInclude Include="Scripts\triangle.h">
       <Filter>RogueEngine\Systems\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="Collision.h" />
+    <ClInclude Include="Matrix33.h" />
+    <ClInclude Include="Vector2.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\MemoryManager.cpp">
@@ -141,5 +144,13 @@
     <ClCompile Include="Scripts\triangle.cpp">
       <Filter>RogueEngine\Systems\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="Matrix33.cpp" />
+    <ClCompile Include="Vector2.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GAM200.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

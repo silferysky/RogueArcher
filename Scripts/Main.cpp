@@ -83,8 +83,17 @@ int main()
 	str.clear();
 	str.append("Use Count: ");
 	str.append(std::to_string(ReMM.GetSysList()[0].use_count()));
-
+	
 	RE_INFO(str);
+	
+	if (!hWnd)
+	{
+		return FALSE;
+	}
+	
+	ShowWindow(hWnd, nCmdShow);
+	UpdateWindow(hWnd);
+
 
 	//Graphics Debug
 	
