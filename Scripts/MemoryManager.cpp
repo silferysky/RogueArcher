@@ -11,35 +11,35 @@ MemoryManager::MemoryManager()
 MemoryManager::~MemoryManager()
 {
 	RE_INFO("CLOSE MEMORY MANAGER");
-	//std::for_each(SysList.begin(), SysList.end(), DeleteSharedPtrTo<System>);
-	//std::for_each(EntList.begin(), EntList.end(), DeleteSharedPtrTo<Entity>);
-	//std::for_each(CmpList.begin(), CmpList.end(), DeleteSharedPtrTo<Component>);
+	//std::for_each(SysList.begin(), SysList.end(), DeleteSharedPtrTo<BaseSystem>);
+	//std::for_each(EntList.begin(), EntList.end(), DeleteSharedPtrTo<BaseEntity>);
+	//std::for_each(CmpList.begin(), CmpList.end(), DeleteSharedPtrTo<BaseComponent>);
 }
 
-void MemoryManager::AddIntoMemory(System &sys)
+void MemoryManager::AddIntoMemory(BaseSystem &sys)
 {
-	std::shared_ptr<System> ptr = std::make_shared<System>(sys);
+	std::shared_ptr<BaseSystem> ptr = std::make_shared<BaseSystem>(sys);
 	SysList.push_back(ptr);
 }
 
-void MemoryManager::AddIntoMemory(Entity &ent)
+void MemoryManager::AddIntoMemory(BaseEntity &ent)
 {
-	std::shared_ptr<Entity> ptr = std::make_shared<Entity>(ent);
+	std::shared_ptr<BaseEntity> ptr = std::make_shared<BaseEntity>(ent);
 	EntList.push_back(ptr);
 }
 
-void MemoryManager::AddIntoMemory(Component &cmp)
+void MemoryManager::AddIntoMemory(BaseComponent &cmp)
 {
-	std::shared_ptr<Component> ptr = std::make_shared<Component>(cmp);
+	std::shared_ptr<BaseComponent> ptr = std::make_shared<BaseComponent>(cmp);
 	CmpList.push_back(ptr);
 }
 
-void MemoryManager::RemoveFromMemory(System &sys)
+void MemoryManager::RemoveFromMemory(BaseSystem &sys)
 {
 	if (!SysList.size())
 		return;
 
-	std::shared_ptr<System> ptr(&sys);
+	std::shared_ptr<BaseSystem> ptr(&sys);
 	auto it = std::find(SysList.begin(), SysList.end(),	ptr);
 
 	//If item is found, check if unique. Only remove if unique
@@ -48,12 +48,12 @@ void MemoryManager::RemoveFromMemory(System &sys)
 			SysList.erase(it);
 }
 
-void MemoryManager::RemoveFromMemory(Entity &ent)
+void MemoryManager::RemoveFromMemory(BaseEntity &ent)
 {
 	if (!EntList.size())
 		return;
 
-	std::shared_ptr<Entity> ptr(&ent);
+	std::shared_ptr<BaseEntity> ptr(&ent);
 	auto it = std::find(EntList.begin(), EntList.end(), ptr);
 
 	//If item is found, check if unique. Only remove if unique
@@ -62,12 +62,12 @@ void MemoryManager::RemoveFromMemory(Entity &ent)
 			EntList.erase(it);
 }
 
-void MemoryManager::RemoveFromMemory(Component &cmp)
+void MemoryManager::RemoveFromMemory(BaseComponent &cmp)
 {
 	if (!CmpList.size())
 		return;
 
-	std::shared_ptr<Component> ptr(&cmp);
+	std::shared_ptr<BaseComponent> ptr(&cmp);
 	auto it = std::find(CmpList.begin(), CmpList.end(), ptr);
 
 	//If item is found, check if unique. Only remove if unique
@@ -91,17 +91,17 @@ size_t MemoryManager::CmpListCount()
 	return CmpList.size();
 }
 
-std::vector<std::shared_ptr<System>> MemoryManager::GetSysList()
+std::vector<std::shared_ptr<BaseSystem>> MemoryManager::GetSysList()
 {
 	return SysList;
 }
 
-std::vector<std::shared_ptr<Entity>> MemoryManager::GetEntList()
+std::vector<std::shared_ptr<BaseEntity>> MemoryManager::GetEntList()
 {
 	return EntList;
 }
 
-std::vector<std::shared_ptr<Component>> MemoryManager::GetCmpList()
+std::vector<std::shared_ptr<BaseComponent>> MemoryManager::GetCmpList()
 {
 	return CmpList;
 }
