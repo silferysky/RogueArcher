@@ -1,3 +1,5 @@
+#include "Vector2.h"
+
 class BC
 {
 	Vec2 m_centre;
