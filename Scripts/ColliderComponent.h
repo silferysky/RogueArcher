@@ -1,4 +1,7 @@
 #pragma once
+#include "AABB.h"
+#include "OBB.cpp"
+
 class ColliderComponent
 {
 	AABB m_alignedBox;
