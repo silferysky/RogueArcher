@@ -19,15 +19,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Scripts\AABB.h" />
     <ClInclude Include="Scripts\AppEvent.h" />
-    <ClInclude Include="Scripts\BC.h" />
-    <ClInclude Include="Scripts\ColliderComponent.h" />
     <ClInclude Include="Scripts\Component.h" />
     <ClInclude Include="Scripts\EngineIO.h" />
     <ClInclude Include="Scripts\Entity.h" />
     <ClInclude Include="Scripts\Event.h" />
     <ClInclude Include="Scripts\EventDispatcher.h" />
+    <ClInclude Include="Collision.h" />
+    <ClInclude Include="Matrix33.h" />
     <ClInclude Include="Scripts\GameStateList.h" />
     <ClInclude Include="Scripts\GameStateManager.h" />
     <ClInclude Include="Scripts\InputData.h" />
@@ -36,44 +35,36 @@
     <ClInclude Include="Scripts\Library.h" />
     <ClInclude Include="Scripts\Logger.h" />
     <ClInclude Include="Scripts\Main.h" />
-    <ClInclude Include="Scripts\Matrix33.h" />
     <ClInclude Include="Scripts\MemoryManager.h" />
-    <ClInclude Include="Scripts\PhysicsSystem.h" />
     <ClInclude Include="Scripts\Quad.h" />
     <ClInclude Include="Scripts\Resource.h" />
-    <ClInclude Include="Scripts\RigidbodyComponent.h" />
     <ClInclude Include="Scripts\RogueEngine.h" />
     <ClInclude Include="Scripts\shader.h" />
-    <ClInclude Include="Scripts\Shape.h" />
     <ClInclude Include="Scripts\System.h" />
+    <ClInclude Include="Scripts\SystemManager.h" />
     <ClInclude Include="Scripts\triangle.h" />
-    <ClInclude Include="Scripts\Vector2.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Scripts\AABB.cpp" />
-    <ClCompile Include="Scripts\BC.cpp" />
-    <ClCompile Include="Scripts\ColliderComponent.cpp" />
     <ClCompile Include="Scripts\Component.cpp" />
     <ClCompile Include="Scripts\EngineIO.cpp" />
     <ClCompile Include="Scripts\Entity.cpp" />
-    <ClCompile Include="Scripts\OBB.cpp" />
-    <ClCompile Include="Scripts\PhysicsSystem.cpp" />
-    <ClCompile Include="Scripts\RigidbodyComponent.cpp" />
-    <ClCompile Include="Scripts\Shape.cpp" />
-    <ClCompile Include="Scripts\Vector2.cpp" />
+    <ClInclude Include="Vector2.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="Matrix33.cpp" />
     <ClCompile Include="Scripts\GameStateManager.cpp" />
     <ClCompile Include="Scripts\InputManager.cpp" />
     <ClCompile Include="Scripts\Library.cpp" />
     <ClCompile Include="Scripts\Logger.cpp" />
     <ClCompile Include="Scripts\Main.cpp" />
-    <ClCompile Include="Scripts\Matrix33.cpp" />
     <ClCompile Include="Scripts\MemoryManager.cpp" />
     <ClCompile Include="Scripts\Quad.cpp" />
     <ClCompile Include="Scripts\shader.cpp" />
     <ClCompile Include="Scripts\System.cpp" />
+    <ClCompile Include="Scripts\SystemManager.cpp" />
     <ClCompile Include="Scripts\triangle.cpp" />
+    <ClCompile Include="Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GAM200.rc" />

@@ -1,7 +1,5 @@
 #pragma once
 
-#include "AABB.h"
-
 enum ShapeType // List of possible convex hulls
 {
 	SHAPE_NONE,
@@ -20,19 +18,15 @@ private:
 	float m_height;
 	float m_mass;
 	float m_inertia; // Moment of inertia
-	Vec2 m_centre;
-	AABB m_boundingBox;
-	BC m_boundingCircle;
+
 public:
-	Shape(ShapeType numSides = SHAPE_NONE, float w = 0.0f, float h = 0.0f, float m = 0.0f, float MoI = 0.0f, Vec2 c = Vec2())
-		: m_numSides{ numSides }, m_width{ w }, m_mass{ m }, m_inertia{ MoI }, m_centre { c }, m_boundingBox { AABB(Vec2(c.GetX - w/2, c.GetY + h/2), Vec2(c.GetX + w/2, c.GetY - h/2))},
-		m_boundingCircle { BC(c, m_width/2) }  
-	{
-	}
+	Shape(ShapeType numSides = SHAPE_NONE, float w = 0.0f, float h = 0.0f, float m = 0.0f, float MoI = 0.0f)
+		: m_numSides{ numSides }, m_width{ w }, m_mass{ m }, m_inertia{ MoI }
+	{}
 
 	virtual ~Shape();
 
-	inline void initShape(float w, float h, float m, float c);
+	inline void initShape(float w, float h, float m);
 	inline float calcInertia() const;
 
 	friend class RigidbodyComponent;
