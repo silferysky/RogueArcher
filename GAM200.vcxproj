@@ -25,6 +25,8 @@
     <ClInclude Include="Scripts\Entity.h" />
     <ClInclude Include="Scripts\Event.h" />
     <ClInclude Include="Scripts\EventDispatcher.h" />
+    <ClInclude Include="Collision.h" />
+    <ClInclude Include="Matrix33.h" />
     <ClInclude Include="Scripts\GameStateList.h" />
     <ClInclude Include="Scripts\GameStateManager.h" />
     <ClInclude Include="Scripts\InputData.h" />
@@ -46,6 +48,11 @@
     <ClCompile Include="Scripts\Component.cpp" />
     <ClCompile Include="Scripts\EngineIO.cpp" />
     <ClCompile Include="Scripts\Entity.cpp" />
+    <ClInclude Include="Vector2.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="Matrix33.cpp" />
     <ClCompile Include="Scripts\GameStateManager.cpp" />
     <ClCompile Include="Scripts\InputManager.cpp" />
     <ClCompile Include="Scripts\Library.cpp" />
@@ -57,6 +64,10 @@
     <ClCompile Include="Scripts\System.cpp" />
     <ClCompile Include="Scripts\SystemManager.cpp" />
     <ClCompile Include="Scripts\triangle.cpp" />
+    <ClCompile Include="Vector2.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GAM200.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
