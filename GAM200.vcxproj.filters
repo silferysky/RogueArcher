@@ -29,6 +29,9 @@
     <Filter Include="RogueEngine\Systems\Graphics">
       <UniqueIdentifier>{d11b3ae9-5aed-4e68-8791-7e74d89579b3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="RogueEngine\Systems\ECS">
+      <UniqueIdentifier>{629d965b-c364-483b-b07e-8a65dc3774f6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\GameStateList.h">
@@ -37,20 +40,8 @@
     <ClInclude Include="Scripts\Resource.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\MemoryManager.h">
-      <Filter>RogueEngine\Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\System.h">
-      <Filter>RogueEngine\Systems</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\SystemManager.h">
       <Filter>RogueEngine\Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Component.h">
-      <Filter>RogueEngine\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Entity.h">
-      <Filter>RogueEngine\Entities</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\GameStateManager.h">
       <Filter>RogueEngine\Systems</Filter>
@@ -97,23 +88,38 @@
     <ClInclude Include="Scripts\triangle.h">
       <Filter>RogueEngine\Systems\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\ComponentArray.h">
+      <Filter>RogueEngine\Systems\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\ComponentManager.h">
+      <Filter>RogueEngine\Systems\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Coordinator.h">
+      <Filter>RogueEngine\Systems\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\EntityManager.h">
+      <Filter>RogueEngine\Systems\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Types.h">
+      <Filter>RogueEngine\Systems\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\PhysicsComponent.h">
+      <Filter>RogueEngine\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\BaseSystem.h">
+      <Filter>RogueEngine\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\MemoryManager.h">
+      <Filter>RogueEngine\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\BaseEntity.h">
+      <Filter>RogueEngine\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\BaseComponent.h">
+      <Filter>RogueEngine\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Scripts\MemoryManager.cpp">
-      <Filter>RogueEngine\Systems</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\System.cpp">
-      <Filter>RogueEngine\Systems</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\SystemManager.cpp">
-      <Filter>RogueEngine\Systems</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Component.cpp">
-      <Filter>RogueEngine\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Entity.cpp">
-      <Filter>RogueEngine\Entities</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\GameStateManager.cpp">
       <Filter>RogueEngine\Systems</Filter>
     </ClCompile>
@@ -140,6 +146,18 @@
     </ClCompile>
     <ClCompile Include="Scripts\triangle.cpp">
       <Filter>RogueEngine\Systems\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\BaseSystem.cpp">
+      <Filter>RogueEngine\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\MemoryManager.cpp">
+      <Filter>RogueEngine\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\BaseEntity.cpp">
+      <Filter>RogueEngine\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\BaseComponent.cpp">
+      <Filter>RogueEngine\Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

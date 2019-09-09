@@ -5,35 +5,35 @@
 #include <memory>		//std::shared_ptr
 #include "RogueEngine.h"
 
-static class MemoryManager :
-	public System
+class MemoryManager :
+	public BaseSystem
 {
 public:
 	MemoryManager();
 	~MemoryManager();
 
-	void AddIntoMemory(System &sys);
-	void AddIntoMemory(Entity &ent);
-	void AddIntoMemory(Component &cmp);
+	void AddIntoMemory(BaseSystem &sys);
+	void AddIntoMemory(BaseEntity &ent);
+	void AddIntoMemory(BaseComponent &cmp);
 
-	void RemoveFromMemory(System &sys);
-	void RemoveFromMemory(Entity &ent);
-	void RemoveFromMemory(Component &cmp);
+	void RemoveFromMemory(BaseSystem &sys);
+	void RemoveFromMemory(BaseEntity &ent);
+	void RemoveFromMemory(BaseComponent &cmp);
 
 	size_t SysListCount();
 	size_t EntListCount();
 	size_t CmpListCount();
 
-	std::vector<std::shared_ptr<System>> GetSysList();
-	std::vector<std::shared_ptr<Entity>> GetEntList();
-	std::vector<std::shared_ptr<Component>> GetCmpList();
+	std::vector<std::shared_ptr<BaseSystem>> GetSysList();
+	std::vector<std::shared_ptr<BaseEntity>> GetEntList();
+	std::vector<std::shared_ptr<BaseComponent>> GetCmpList();
 
 	//template <typename T>
 	//void DeleteSharedPtrTo(std::shared_ptr<T> ptr) { delete ptr; }
 
 private:
-	std::vector<std::shared_ptr<System>> SysList;
-	std::vector<std::shared_ptr<Entity>> EntList;
-	std::vector<std::shared_ptr<Component>> CmpList;
+	std::vector<std::shared_ptr<BaseSystem>> SysList;
+	std::vector<std::shared_ptr<BaseEntity>> EntList;
+	std::vector<std::shared_ptr<BaseComponent>> CmpList;
 };
 

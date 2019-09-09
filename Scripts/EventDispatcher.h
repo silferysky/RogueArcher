@@ -4,7 +4,7 @@
 #include "Event.h"
 
 static class EventDispatcher :
-	public System
+	public BaseSystem
 {
 
 public:

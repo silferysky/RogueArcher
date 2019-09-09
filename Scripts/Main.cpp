@@ -5,6 +5,7 @@
 #include "Main.h"
 #include "KeyEvent.h"
 #include "InputManager.h"
+#include "MemoryManager.h"
 #include "Library.h"
 
 #include "Quad.h"
@@ -27,7 +28,6 @@ int main()
 	RE_CORE_TRACE("Init Core Logger");
 
 	InputManager* InputMgr = new InputManager();
-	MemoryManager memManager;
 	RE_INFO("Hello");
 
 	//Main Debug
@@ -64,12 +64,12 @@ int main()
 	RE_INFO("TEST ReMM (Rogue Engine Memory Manager)");
 	MemoryManager ReMM;
 
-	System s;
-	System s2;
-	Entity e;
-	Component c;
+	BaseSystem s;
+	BaseSystem s2;
+	BaseEntity e;
+	BaseComponent c;
 
-	std::shared_ptr<System> ptr = std::make_shared<System>(s);
+	std::shared_ptr<BaseSystem> ptr = std::make_shared<BaseSystem>(s);
 
 	ReMM.AddIntoMemory(s);
 	ReMM.AddIntoMemory(s2);
@@ -192,8 +192,10 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
 
 		//fpFree();
 
-		if (_next != GS_RESTART);
+		if (_next != GS_RESTART)
+		{
 			//fpUnload();
+		}
 
 		_previous = _current;
 		_current = _next;
