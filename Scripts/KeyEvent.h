@@ -9,7 +9,7 @@ class KeyEvent : public Event
 public:
 	SET_EVENT_CATEGORY(EventCatInput | EventCatKeyboard)
 
-	KeyPress GetKeyCode() { return KeyCode; };
+	inline KeyPress GetKeyCode() { return KeyCode; };
 
 protected:
 
