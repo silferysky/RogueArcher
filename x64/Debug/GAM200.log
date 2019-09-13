@@ -1,0 +1,1248 @@
+﻿  AABB.cpp
+d:\documents\github\roguearcher\physics\matrix3x3.h(63): error C2143: syntax error: missing ';' before '*'
+d:\documents\github\roguearcher\physics\matrix3x3.h(63): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\matrix3x3.h(63): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(51): error C2143: syntax error: missing ';' before '+'
+d:\documents\github\roguearcher\physics\vector.h(51): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(51): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(51): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(51): error C2803: 'operator +' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(52): error C2143: syntax error: missing ';' before '-'
+d:\documents\github\roguearcher\physics\vector.h(52): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(52): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(52): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(52): error C2803: 'operator -' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(53): error C2143: syntax error: missing ';' before '*'
+d:\documents\github\roguearcher\physics\vector.h(53): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(53): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(53): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(53): error C2803: 'operator *' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(54): error C2143: syntax error: missing ';' before '*'
+d:\documents\github\roguearcher\physics\vector.h(54): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(54): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(54): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(54): error C2803: 'operator *' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(55): error C2143: syntax error: missing ';' before '/'
+d:\documents\github\roguearcher\physics\vector.h(55): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(55): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(55): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(55): error C2803: 'operator /' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(55): error C2805: binary 'operator /' has too few parameters
+d:\documents\github\roguearcher\physics\vector.h(60): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(60): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(60): error C2146: syntax error: missing ';' before identifier 'Vec2NormalOf'
+d:\documents\github\roguearcher\physics\vector.h(62): error C2065: 'pResult': undeclared identifier
+d:\documents\github\roguearcher\physics\vector.h(62): error C2059: syntax error: 'const'
+d:\documents\github\roguearcher\physics\vector.h(64): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(64): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(66): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(66): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(68): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(68): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(70): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(70): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(72): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(72): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(74): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(74): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\obb.h(9): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\obb.h(9): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\obb.h(9): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(9): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\obb.h(10): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\obb.h(10): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\obb.h(10): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(10): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\obb.h(16): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\obb.h(16): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(16): error C2143: syntax error: missing ',' before '<'
+d:\documents\github\roguearcher\physics\obb.h(18): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\obb.h(18): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(18): error C2143: syntax error: missing ',' before '<'
+d:\documents\github\roguearcher\physics\obb.h(19): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(19): error C2146: syntax error: missing ')' before identifier 'sides'
+d:\documents\github\roguearcher\physics\obb.h(19): error C3646: 'sides': unknown override specifier
+d:\documents\github\roguearcher\physics\obb.h(19): error C2059: syntax error: ')'
+d:\documents\github\roguearcher\physics\polygon.h(21): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\polygon.h(21): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\polygon.h(21): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\polygon.h(21): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\polygon.h(29): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\polygon.h(29): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\polygon.h(29): error C7525: inline variables require at least '/std:c++17'
+d:\documents\github\roguearcher\physics\polygon.h(29): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\polygon.h(29): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\polygon.h(30): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\polygon.h(30): error C2061: syntax error: identifier 'vector'
+d:\documents\github\roguearcher\physics\collidable.h(5): error C2039: 'array': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\collidable.h(5): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\collidable.h(5): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\collidable.h(5): error C2039: 'unique_ptr': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\collidable.h(5): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2039: 'make_unique': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2065: 'make_unique': undeclared identifier
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2275: 'BaseCollider': illegal use of this type as an expression
+  d:\documents\github\roguearcher\physics\basecollider.h(3): note: see declaration of 'BaseCollider'
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2059: syntax error: ')'
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2612: trailing '}' illegal in base/member initializer list
+d:\documents\github\roguearcher\physics\collidable.h(8): error C2447: '{': missing function header (old-style formal list?)
+  BC.cpp
+d:\documents\github\roguearcher\physics\matrix3x3.h(63): error C2143: syntax error: missing ';' before '*'
+d:\documents\github\roguearcher\physics\matrix3x3.h(63): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\matrix3x3.h(63): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(51): error C2143: syntax error: missing ';' before '+'
+d:\documents\github\roguearcher\physics\vector.h(51): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(51): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(51): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(51): error C2803: 'operator +' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(52): error C2143: syntax error: missing ';' before '-'
+d:\documents\github\roguearcher\physics\vector.h(52): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(52): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(52): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(52): error C2803: 'operator -' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(53): error C2143: syntax error: missing ';' before '*'
+d:\documents\github\roguearcher\physics\vector.h(53): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(53): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(53): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(53): error C2803: 'operator *' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(54): error C2143: syntax error: missing ';' before '*'
+d:\documents\github\roguearcher\physics\vector.h(54): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(54): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(54): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(54): error C2803: 'operator *' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(55): error C2143: syntax error: missing ';' before '/'
+d:\documents\github\roguearcher\physics\vector.h(55): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(55): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(55): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(55): error C2803: 'operator /' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(55): error C2805: binary 'operator /' has too few parameters
+d:\documents\github\roguearcher\physics\vector.h(60): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(60): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(60): error C2146: syntax error: missing ';' before identifier 'Vec2NormalOf'
+d:\documents\github\roguearcher\physics\vector.h(62): error C2065: 'pResult': undeclared identifier
+d:\documents\github\roguearcher\physics\vector.h(62): error C2059: syntax error: 'const'
+d:\documents\github\roguearcher\physics\vector.h(64): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(64): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(66): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(66): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(68): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(68): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(70): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(70): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(72): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(72): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(74): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(74): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\obb.h(9): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\obb.h(9): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\obb.h(9): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(9): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\obb.h(10): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\obb.h(10): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\obb.h(10): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(10): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\obb.h(16): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\obb.h(16): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(16): error C2143: syntax error: missing ',' before '<'
+d:\documents\github\roguearcher\physics\obb.h(18): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\obb.h(18): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(18): error C2143: syntax error: missing ',' before '<'
+d:\documents\github\roguearcher\physics\obb.h(19): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(19): error C2146: syntax error: missing ')' before identifier 'sides'
+d:\documents\github\roguearcher\physics\obb.h(19): error C3646: 'sides': unknown override specifier
+d:\documents\github\roguearcher\physics\obb.h(19): error C2059: syntax error: ')'
+d:\documents\github\roguearcher\physics\polygon.h(21): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\polygon.h(21): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\polygon.h(21): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\polygon.h(21): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\polygon.h(29): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\polygon.h(29): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\polygon.h(29): error C7525: inline variables require at least '/std:c++17'
+d:\documents\github\roguearcher\physics\polygon.h(29): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\polygon.h(29): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\polygon.h(30): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\polygon.h(30): error C2061: syntax error: identifier 'vector'
+d:\documents\github\roguearcher\physics\collidable.h(5): error C2039: 'array': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\collidable.h(5): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\collidable.h(5): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\collidable.h(5): error C2039: 'unique_ptr': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\collidable.h(5): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2039: 'make_unique': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2065: 'make_unique': undeclared identifier
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2275: 'BaseCollider': illegal use of this type as an expression
+  d:\documents\github\roguearcher\physics\basecollider.h(3): note: see declaration of 'BaseCollider'
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2059: syntax error: ')'
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2612: trailing '}' illegal in base/member initializer list
+d:\documents\github\roguearcher\physics\collidable.h(8): error C2447: '{': missing function header (old-style formal list?)
+  Circle.cpp
+d:\documents\github\roguearcher\physics\matrix3x3.h(63): error C2143: syntax error: missing ';' before '*'
+d:\documents\github\roguearcher\physics\matrix3x3.h(63): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\matrix3x3.h(63): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(51): error C2143: syntax error: missing ';' before '+'
+d:\documents\github\roguearcher\physics\vector.h(51): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(51): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(51): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(51): error C2803: 'operator +' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(52): error C2143: syntax error: missing ';' before '-'
+d:\documents\github\roguearcher\physics\vector.h(52): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(52): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(52): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(52): error C2803: 'operator -' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(53): error C2143: syntax error: missing ';' before '*'
+d:\documents\github\roguearcher\physics\vector.h(53): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(53): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(53): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(53): error C2803: 'operator *' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(54): error C2143: syntax error: missing ';' before '*'
+d:\documents\github\roguearcher\physics\vector.h(54): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(54): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(54): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(54): error C2803: 'operator *' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(55): error C2143: syntax error: missing ';' before '/'
+d:\documents\github\roguearcher\physics\vector.h(55): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(55): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(55): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(55): error C2803: 'operator /' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(55): error C2805: binary 'operator /' has too few parameters
+d:\documents\github\roguearcher\physics\vector.h(60): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(60): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(60): error C2146: syntax error: missing ';' before identifier 'Vec2NormalOf'
+d:\documents\github\roguearcher\physics\vector.h(62): error C2065: 'pResult': undeclared identifier
+d:\documents\github\roguearcher\physics\vector.h(62): error C2059: syntax error: 'const'
+d:\documents\github\roguearcher\physics\vector.h(64): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(64): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(66): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(66): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(68): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(68): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(70): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(70): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(72): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(72): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(74): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(74): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\obb.h(9): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\obb.h(9): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\obb.h(9): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(9): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\obb.h(10): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\obb.h(10): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\obb.h(10): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(10): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\obb.h(16): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\obb.h(16): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(16): error C2143: syntax error: missing ',' before '<'
+d:\documents\github\roguearcher\physics\obb.h(18): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\obb.h(18): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(18): error C2143: syntax error: missing ',' before '<'
+d:\documents\github\roguearcher\physics\obb.h(19): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(19): error C2146: syntax error: missing ')' before identifier 'sides'
+d:\documents\github\roguearcher\physics\obb.h(19): error C3646: 'sides': unknown override specifier
+d:\documents\github\roguearcher\physics\obb.h(19): error C2059: syntax error: ')'
+d:\documents\github\roguearcher\physics\polygon.h(21): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\polygon.h(21): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\polygon.h(21): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\polygon.h(21): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\polygon.h(29): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\polygon.h(29): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\polygon.h(29): error C7525: inline variables require at least '/std:c++17'
+d:\documents\github\roguearcher\physics\polygon.h(29): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\polygon.h(29): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\polygon.h(30): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\polygon.h(30): error C2061: syntax error: identifier 'vector'
+d:\documents\github\roguearcher\physics\collidable.h(5): error C2039: 'array': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\collidable.h(5): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\collidable.h(5): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\collidable.h(5): error C2039: 'unique_ptr': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\collidable.h(5): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2039: 'make_unique': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2065: 'make_unique': undeclared identifier
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2275: 'BaseCollider': illegal use of this type as an expression
+  d:\documents\github\roguearcher\physics\basecollider.h(3): note: see declaration of 'BaseCollider'
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2059: syntax error: ')'
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2612: trailing '}' illegal in base/member initializer list
+d:\documents\github\roguearcher\physics\collidable.h(8): error C2447: '{': missing function header (old-style formal list?)
+  Collidable.cpp
+d:\documents\github\roguearcher\physics\matrix3x3.h(63): error C2143: syntax error: missing ';' before '*'
+d:\documents\github\roguearcher\physics\matrix3x3.h(63): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\matrix3x3.h(63): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(51): error C2143: syntax error: missing ';' before '+'
+d:\documents\github\roguearcher\physics\vector.h(51): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(51): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(51): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(51): error C2803: 'operator +' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(52): error C2143: syntax error: missing ';' before '-'
+d:\documents\github\roguearcher\physics\vector.h(52): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(52): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(52): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(52): error C2803: 'operator -' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(53): error C2143: syntax error: missing ';' before '*'
+d:\documents\github\roguearcher\physics\vector.h(53): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(53): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(53): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(53): error C2803: 'operator *' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(54): error C2143: syntax error: missing ';' before '*'
+d:\documents\github\roguearcher\physics\vector.h(54): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(54): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(54): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(54): error C2803: 'operator *' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(55): error C2143: syntax error: missing ';' before '/'
+d:\documents\github\roguearcher\physics\vector.h(55): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(55): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(55): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(55): error C2803: 'operator /' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(55): error C2805: binary 'operator /' has too few parameters
+d:\documents\github\roguearcher\physics\vector.h(60): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(60): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(60): error C2146: syntax error: missing ';' before identifier 'Vec2NormalOf'
+d:\documents\github\roguearcher\physics\vector.h(62): error C2065: 'pResult': undeclared identifier
+d:\documents\github\roguearcher\physics\vector.h(62): error C2059: syntax error: 'const'
+d:\documents\github\roguearcher\physics\vector.h(64): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(64): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(66): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(66): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(68): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(68): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(70): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(70): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(72): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(72): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(74): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(74): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\obb.h(9): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\obb.h(9): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\obb.h(9): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(9): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\obb.h(10): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\obb.h(10): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\obb.h(10): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(10): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\obb.h(16): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\obb.h(16): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(16): error C2143: syntax error: missing ',' before '<'
+d:\documents\github\roguearcher\physics\obb.h(18): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\obb.h(18): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(18): error C2143: syntax error: missing ',' before '<'
+d:\documents\github\roguearcher\physics\obb.h(19): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(19): error C2146: syntax error: missing ')' before identifier 'sides'
+d:\documents\github\roguearcher\physics\obb.h(19): error C3646: 'sides': unknown override specifier
+d:\documents\github\roguearcher\physics\obb.h(19): error C2059: syntax error: ')'
+d:\documents\github\roguearcher\physics\polygon.h(21): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\polygon.h(21): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\polygon.h(21): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\polygon.h(21): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\polygon.h(29): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\polygon.h(29): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\polygon.h(29): error C7525: inline variables require at least '/std:c++17'
+d:\documents\github\roguearcher\physics\polygon.h(29): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\polygon.h(29): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\polygon.h(30): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\polygon.h(30): error C2061: syntax error: identifier 'vector'
+d:\documents\github\roguearcher\physics\collidable.h(5): error C2039: 'array': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\collidable.h(5): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\collidable.h(5): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\collidable.h(5): error C2039: 'unique_ptr': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\collidable.h(5): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2039: 'make_unique': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2065: 'make_unique': undeclared identifier
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2275: 'BaseCollider': illegal use of this type as an expression
+  d:\documents\github\roguearcher\physics\basecollider.h(3): note: see declaration of 'BaseCollider'
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2059: syntax error: ')'
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2612: trailing '}' illegal in base/member initializer list
+d:\documents\github\roguearcher\physics\collidable.h(8): error C2447: '{': missing function header (old-style formal list?)
+d:\documents\github\roguearcher\physics\collidable.cpp(4): error C2084: function 'Collidable::Collidable(void)' already has a body
+  d:\documents\github\roguearcher\physics\collidable.h(7): note: see previous definition of '{ctor}'
+  Material.cpp
+d:\documents\github\roguearcher\physics\matrix3x3.h(63): error C2143: syntax error: missing ';' before '*'
+d:\documents\github\roguearcher\physics\matrix3x3.h(63): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\matrix3x3.h(63): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(51): error C2143: syntax error: missing ';' before '+'
+d:\documents\github\roguearcher\physics\vector.h(51): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(51): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(51): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(51): error C2803: 'operator +' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(52): error C2143: syntax error: missing ';' before '-'
+d:\documents\github\roguearcher\physics\vector.h(52): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(52): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(52): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(52): error C2803: 'operator -' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(53): error C2143: syntax error: missing ';' before '*'
+d:\documents\github\roguearcher\physics\vector.h(53): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(53): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(53): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(53): error C2803: 'operator *' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(54): error C2143: syntax error: missing ';' before '*'
+d:\documents\github\roguearcher\physics\vector.h(54): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(54): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(54): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(54): error C2803: 'operator *' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(55): error C2143: syntax error: missing ';' before '/'
+d:\documents\github\roguearcher\physics\vector.h(55): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(55): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(55): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(55): error C2803: 'operator /' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(55): error C2805: binary 'operator /' has too few parameters
+d:\documents\github\roguearcher\physics\vector.h(60): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(60): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(60): error C2146: syntax error: missing ';' before identifier 'Vec2NormalOf'
+d:\documents\github\roguearcher\physics\vector.h(62): error C2065: 'pResult': undeclared identifier
+d:\documents\github\roguearcher\physics\vector.h(62): error C2059: syntax error: 'const'
+d:\documents\github\roguearcher\physics\vector.h(64): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(64): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(66): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(66): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(68): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(68): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(70): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(70): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(72): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(72): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(74): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(74): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\obb.h(9): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\obb.h(9): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\obb.h(9): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(9): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\obb.h(10): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\obb.h(10): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\obb.h(10): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(10): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\obb.h(16): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\obb.h(16): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(16): error C2143: syntax error: missing ',' before '<'
+d:\documents\github\roguearcher\physics\obb.h(18): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\obb.h(18): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(18): error C2143: syntax error: missing ',' before '<'
+d:\documents\github\roguearcher\physics\obb.h(19): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(19): error C2146: syntax error: missing ')' before identifier 'sides'
+d:\documents\github\roguearcher\physics\obb.h(19): error C3646: 'sides': unknown override specifier
+d:\documents\github\roguearcher\physics\obb.h(19): error C2059: syntax error: ')'
+d:\documents\github\roguearcher\physics\polygon.h(21): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\polygon.h(21): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\polygon.h(21): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\polygon.h(21): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\polygon.h(29): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\polygon.h(29): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\polygon.h(29): error C7525: inline variables require at least '/std:c++17'
+d:\documents\github\roguearcher\physics\polygon.h(29): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\polygon.h(29): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\polygon.h(30): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\polygon.h(30): error C2061: syntax error: identifier 'vector'
+d:\documents\github\roguearcher\physics\collidable.h(5): error C2039: 'array': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\collidable.h(5): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\collidable.h(5): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\collidable.h(5): error C2039: 'unique_ptr': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\collidable.h(5): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2039: 'make_unique': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2065: 'make_unique': undeclared identifier
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2275: 'BaseCollider': illegal use of this type as an expression
+  d:\documents\github\roguearcher\physics\basecollider.h(3): note: see declaration of 'BaseCollider'
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2059: syntax error: ')'
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2612: trailing '}' illegal in base/member initializer list
+d:\documents\github\roguearcher\physics\collidable.h(8): error C2447: '{': missing function header (old-style formal list?)
+d:\documents\github\roguearcher\physics\material.cpp(3): error C2572: 'Material::Material': redefinition of default argument: parameter 1
+  d:\documents\github\roguearcher\physics\material.h(21): note: see declaration of 'Material::Material'
+d:\documents\github\roguearcher\physics\material.cpp(4): error C2397: conversion from 'MaterialList' to 'float' requires a narrowing conversion
+d:\documents\github\roguearcher\physics\material.cpp(3): warning C4244: 'initializing': conversion from 'MaterialList' to 'float', possible loss of data
+  Matrix3x3.cpp
+  OBB.cpp
+d:\documents\github\roguearcher\physics\matrix3x3.h(63): error C2143: syntax error: missing ';' before '*'
+d:\documents\github\roguearcher\physics\matrix3x3.h(63): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\matrix3x3.h(63): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(51): error C2143: syntax error: missing ';' before '+'
+d:\documents\github\roguearcher\physics\vector.h(51): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(51): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(51): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(51): error C2803: 'operator +' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(52): error C2143: syntax error: missing ';' before '-'
+d:\documents\github\roguearcher\physics\vector.h(52): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(52): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(52): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(52): error C2803: 'operator -' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(53): error C2143: syntax error: missing ';' before '*'
+d:\documents\github\roguearcher\physics\vector.h(53): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(53): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(53): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(53): error C2803: 'operator *' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(54): error C2143: syntax error: missing ';' before '*'
+d:\documents\github\roguearcher\physics\vector.h(54): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(54): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(54): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(54): error C2803: 'operator *' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(55): error C2143: syntax error: missing ';' before '/'
+d:\documents\github\roguearcher\physics\vector.h(55): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(55): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(55): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(55): error C2803: 'operator /' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(55): error C2805: binary 'operator /' has too few parameters
+d:\documents\github\roguearcher\physics\vector.h(60): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(60): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(60): error C2146: syntax error: missing ';' before identifier 'Vec2NormalOf'
+d:\documents\github\roguearcher\physics\vector.h(62): error C2065: 'pResult': undeclared identifier
+d:\documents\github\roguearcher\physics\vector.h(62): error C2059: syntax error: 'const'
+d:\documents\github\roguearcher\physics\vector.h(64): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(64): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(66): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(66): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(68): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(68): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(70): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(70): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(72): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(72): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(74): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(74): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\obb.h(9): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\obb.h(9): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\obb.h(9): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(9): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\obb.h(10): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\obb.h(10): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\obb.h(10): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(10): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\obb.h(16): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\obb.h(16): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(16): error C2143: syntax error: missing ',' before '<'
+d:\documents\github\roguearcher\physics\obb.h(18): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\obb.h(18): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(18): error C2143: syntax error: missing ',' before '<'
+d:\documents\github\roguearcher\physics\obb.h(19): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(19): error C2146: syntax error: missing ')' before identifier 'sides'
+d:\documents\github\roguearcher\physics\obb.h(19): error C3646: 'sides': unknown override specifier
+d:\documents\github\roguearcher\physics\obb.h(19): error C2059: syntax error: ')'
+d:\documents\github\roguearcher\physics\polygon.h(21): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\polygon.h(21): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\polygon.h(21): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\polygon.h(21): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\polygon.h(29): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\polygon.h(29): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\polygon.h(29): error C7525: inline variables require at least '/std:c++17'
+d:\documents\github\roguearcher\physics\polygon.h(29): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\polygon.h(29): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\polygon.h(30): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\polygon.h(30): error C2061: syntax error: identifier 'vector'
+d:\documents\github\roguearcher\physics\collidable.h(5): error C2039: 'array': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\collidable.h(5): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\collidable.h(5): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\collidable.h(5): error C2039: 'unique_ptr': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\collidable.h(5): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2039: 'make_unique': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2065: 'make_unique': undeclared identifier
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2275: 'BaseCollider': illegal use of this type as an expression
+  d:\documents\github\roguearcher\physics\basecollider.h(3): note: see declaration of 'BaseCollider'
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2059: syntax error: ')'
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2612: trailing '}' illegal in base/member initializer list
+d:\documents\github\roguearcher\physics\collidable.h(8): error C2447: '{': missing function header (old-style formal list?)
+d:\documents\github\roguearcher\physics\obb.cpp(17): error C2511: 'void OBB::update(const Vec2,const std::vector<Vec2,std::allocator<_Ty>> &,const PolygonList,const float,const float)': overloaded member function not found in 'OBB'
+          with
+          [
+              _Ty=Vec2
+          ]
+  d:\documents\github\roguearcher\physics\obb.h(4): note: see declaration of 'OBB'
+d:\documents\github\roguearcher\physics\obb.cpp(18): error C2660: 'OBB::updateVertices': function does not take 5 arguments
+  d:\documents\github\roguearcher\physics\obb.h(18): note: see declaration of 'OBB::updateVertices'
+d:\documents\github\roguearcher\physics\obb.cpp(19): error C2352: 'OBB::updateNormals': illegal call of non-static member function
+  d:\documents\github\roguearcher\physics\obb.h(19): note: see declaration of 'OBB::updateNormals'
+d:\documents\github\roguearcher\physics\obb.cpp(24): error C2511: 'void OBB::updateVertices(const Vec2,const std::vector<Vec2,std::allocator<_Ty>> &,const PolygonList,const float,const float)': overloaded member function not found in 'OBB'
+          with
+          [
+              _Ty=Vec2
+          ]
+  d:\documents\github\roguearcher\physics\obb.h(4): note: see declaration of 'OBB'
+d:\documents\github\roguearcher\physics\obb.cpp(31): error C2065: 'm_vertices': undeclared identifier
+d:\documents\github\roguearcher\physics\obb.cpp(31): error C2679: binary '*': no operator found which takes a right-hand operand of type 'const _Ty' (or there is no acceptable conversion)
+          with
+          [
+              _Ty=Vec2
+          ]
+  d:\documents\github\roguearcher\physics\vector.h(54): note: could be 'int operator *(float,const int)'
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: or       'int operator *(const Matrix3x3 &,const int)'
+  d:\documents\github\roguearcher\physics\matrix3x3.h(55): note: or       'Matrix3x3 operator *(const Matrix3x3 &,const Matrix3x3 &)'
+  d:\documents\github\roguearcher\physics\obb.cpp(31): note: while trying to match the argument list '(Mtx33, const _Ty)'
+          with
+          [
+              _Ty=Vec2
+          ]
+d:\documents\github\roguearcher\physics\obb.cpp(32): error C2065: 'm_vertices': undeclared identifier
+d:\documents\github\roguearcher\physics\obb.cpp(32): error C2679: binary '*': no operator found which takes a right-hand operand of type 'const _Ty' (or there is no acceptable conversion)
+          with
+          [
+              _Ty=Vec2
+          ]
+  d:\documents\github\roguearcher\physics\vector.h(54): note: could be 'int operator *(float,const int)'
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: or       'int operator *(const Matrix3x3 &,const int)'
+  d:\documents\github\roguearcher\physics\matrix3x3.h(55): note: or       'Matrix3x3 operator *(const Matrix3x3 &,const Matrix3x3 &)'
+  d:\documents\github\roguearcher\physics\obb.cpp(32): note: while trying to match the argument list '(Mtx33, const _Ty)'
+          with
+          [
+              _Ty=Vec2
+          ]
+d:\documents\github\roguearcher\physics\obb.cpp(33): error C2065: 'm_vertices': undeclared identifier
+d:\documents\github\roguearcher\physics\obb.cpp(39): error C2511: 'void OBB::updateNormals(const PolygonList)': overloaded member function not found in 'OBB'
+  d:\documents\github\roguearcher\physics\obb.h(4): note: see declaration of 'OBB'
+d:\documents\github\roguearcher\physics\obb.cpp(43): error C2065: 'm_normals': undeclared identifier
+d:\documents\github\roguearcher\physics\obb.cpp(43): error C2065: 'm_vertices': undeclared identifier
+d:\documents\github\roguearcher\physics\obb.cpp(43): error C3861: 'Vec2NormalOf': identifier not found
+d:\documents\github\roguearcher\physics\obb.cpp(45): error C2065: 'm_normals': undeclared identifier
+d:\documents\github\roguearcher\physics\obb.cpp(45): error C2065: 'm_vertices': undeclared identifier
+d:\documents\github\roguearcher\physics\obb.cpp(45): error C3861: 'Vec2NormalOf': identifier not found
+d:\documents\github\roguearcher\physics\obb.cpp(54): error C2065: 'm_vertices': undeclared identifier
+d:\documents\github\roguearcher\physics\obb.cpp(55): error C3312: no callable 'begin' function found for type 'unknown-type'
+d:\documents\github\roguearcher\physics\obb.cpp(55): error C3312: no callable 'end' function found for type 'unknown-type'
+d:\documents\github\roguearcher\physics\obb.cpp(56): error C2065: 'vertex': undeclared identifier
+d:\documents\github\roguearcher\physics\obb.cpp(70): error C2065: 'm_normals': undeclared identifier
+d:\documents\github\roguearcher\physics\obb.cpp(71): error C3312: no callable 'begin' function found for type 'unknown-type'
+d:\documents\github\roguearcher\physics\obb.cpp(71): error C3312: no callable 'end' function found for type 'unknown-type'
+d:\documents\github\roguearcher\physics\obb.cpp(72): error C2065: 'normal': undeclared identifier
+d:\documents\github\roguearcher\physics\obb.cpp(73): error C2065: 'normal': undeclared identifier
+d:\documents\github\roguearcher\physics\obb.cpp(79): error C2039: 'm_normals': is not a member of 'OBB'
+  d:\documents\github\roguearcher\physics\obb.h(4): note: see declaration of 'OBB'
+d:\documents\github\roguearcher\physics\obb.cpp(81): error C2065: 'normal': undeclared identifier
+d:\documents\github\roguearcher\physics\obb.cpp(82): error C2065: 'normal': undeclared identifier
+  PhysicsSystem.cpp
+d:\documents\github\roguearcher\physics\matrix3x3.h(63): error C2143: syntax error: missing ';' before '*'
+d:\documents\github\roguearcher\physics\matrix3x3.h(63): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\matrix3x3.h(63): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(51): error C2143: syntax error: missing ';' before '+'
+d:\documents\github\roguearcher\physics\vector.h(51): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(51): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(51): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(51): error C2803: 'operator +' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(52): error C2143: syntax error: missing ';' before '-'
+d:\documents\github\roguearcher\physics\vector.h(52): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(52): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(52): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(52): error C2803: 'operator -' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(53): error C2143: syntax error: missing ';' before '*'
+d:\documents\github\roguearcher\physics\vector.h(53): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(53): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(53): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(53): error C2803: 'operator *' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(54): error C2143: syntax error: missing ';' before '*'
+d:\documents\github\roguearcher\physics\vector.h(54): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(54): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(54): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(54): error C2803: 'operator *' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(55): error C2143: syntax error: missing ';' before '/'
+d:\documents\github\roguearcher\physics\vector.h(55): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(55): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(55): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(55): error C2803: 'operator /' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(55): error C2805: binary 'operator /' has too few parameters
+d:\documents\github\roguearcher\physics\vector.h(60): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(60): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(60): error C2146: syntax error: missing ';' before identifier 'Vec2NormalOf'
+d:\documents\github\roguearcher\physics\vector.h(62): error C2065: 'pResult': undeclared identifier
+d:\documents\github\roguearcher\physics\vector.h(62): error C2059: syntax error: 'const'
+d:\documents\github\roguearcher\physics\vector.h(64): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(64): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(66): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(66): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(68): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(68): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(70): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(70): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(72): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(72): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(74): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(74): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\obb.h(9): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\obb.h(9): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\obb.h(9): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(9): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\obb.h(10): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\obb.h(10): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\obb.h(10): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(10): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\obb.h(16): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\obb.h(16): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(16): error C2143: syntax error: missing ',' before '<'
+d:\documents\github\roguearcher\physics\obb.h(18): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\obb.h(18): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(18): error C2143: syntax error: missing ',' before '<'
+d:\documents\github\roguearcher\physics\obb.h(19): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(19): error C2146: syntax error: missing ')' before identifier 'sides'
+d:\documents\github\roguearcher\physics\obb.h(19): error C3646: 'sides': unknown override specifier
+d:\documents\github\roguearcher\physics\obb.h(19): error C2059: syntax error: ')'
+d:\documents\github\roguearcher\physics\polygon.h(21): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\polygon.h(21): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\polygon.h(21): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\polygon.h(21): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\polygon.h(29): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\polygon.h(29): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\polygon.h(29): error C7525: inline variables require at least '/std:c++17'
+d:\documents\github\roguearcher\physics\polygon.h(29): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\polygon.h(29): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\polygon.h(30): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\polygon.h(30): error C2061: syntax error: identifier 'vector'
+d:\documents\github\roguearcher\physics\collidable.h(5): error C2039: 'array': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\collidable.h(5): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\collidable.h(5): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\collidable.h(5): error C2039: 'unique_ptr': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\collidable.h(5): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2039: 'make_unique': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2065: 'make_unique': undeclared identifier
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2275: 'BaseCollider': illegal use of this type as an expression
+  d:\documents\github\roguearcher\physics\basecollider.h(3): note: see declaration of 'BaseCollider'
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2059: syntax error: ')'
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2612: trailing '}' illegal in base/member initializer list
+d:\documents\github\roguearcher\physics\collidable.h(8): error C2447: '{': missing function header (old-style formal list?)
+  Polygon.cpp
+d:\documents\github\roguearcher\physics\matrix3x3.h(63): error C2143: syntax error: missing ';' before '*'
+d:\documents\github\roguearcher\physics\matrix3x3.h(63): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\matrix3x3.h(63): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(51): error C2143: syntax error: missing ';' before '+'
+d:\documents\github\roguearcher\physics\vector.h(51): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(51): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(51): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(51): error C2803: 'operator +' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(52): error C2143: syntax error: missing ';' before '-'
+d:\documents\github\roguearcher\physics\vector.h(52): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(52): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(52): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(52): error C2803: 'operator -' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(53): error C2143: syntax error: missing ';' before '*'
+d:\documents\github\roguearcher\physics\vector.h(53): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(53): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(53): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(53): error C2803: 'operator *' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(54): error C2143: syntax error: missing ';' before '*'
+d:\documents\github\roguearcher\physics\vector.h(54): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(54): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(54): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(54): error C2803: 'operator *' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(55): error C2143: syntax error: missing ';' before '/'
+d:\documents\github\roguearcher\physics\vector.h(55): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(55): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(55): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(55): error C2803: 'operator /' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(55): error C2805: binary 'operator /' has too few parameters
+d:\documents\github\roguearcher\physics\vector.h(60): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(60): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(60): error C2146: syntax error: missing ';' before identifier 'Vec2NormalOf'
+d:\documents\github\roguearcher\physics\vector.h(62): error C2065: 'pResult': undeclared identifier
+d:\documents\github\roguearcher\physics\vector.h(62): error C2059: syntax error: 'const'
+d:\documents\github\roguearcher\physics\vector.h(64): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(64): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(66): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(66): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(68): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(68): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(70): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(70): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(72): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(72): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(74): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(74): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\obb.h(9): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\obb.h(9): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\obb.h(9): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(9): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\obb.h(10): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\obb.h(10): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\obb.h(10): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(10): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\obb.h(16): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\obb.h(16): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(16): error C2143: syntax error: missing ',' before '<'
+d:\documents\github\roguearcher\physics\obb.h(18): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\obb.h(18): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(18): error C2143: syntax error: missing ',' before '<'
+d:\documents\github\roguearcher\physics\obb.h(19): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(19): error C2146: syntax error: missing ')' before identifier 'sides'
+d:\documents\github\roguearcher\physics\obb.h(19): error C3646: 'sides': unknown override specifier
+d:\documents\github\roguearcher\physics\obb.h(19): error C2059: syntax error: ')'
+d:\documents\github\roguearcher\physics\polygon.h(21): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\polygon.h(21): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\polygon.h(21): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\polygon.h(21): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\polygon.h(29): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\polygon.h(29): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\polygon.h(29): error C7525: inline variables require at least '/std:c++17'
+d:\documents\github\roguearcher\physics\polygon.h(29): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\polygon.h(29): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\polygon.h(30): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\polygon.h(30): error C2061: syntax error: identifier 'vector'
+d:\documents\github\roguearcher\physics\collidable.h(5): error C2039: 'array': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\collidable.h(5): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\collidable.h(5): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\collidable.h(5): error C2039: 'unique_ptr': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\collidable.h(5): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2039: 'make_unique': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2065: 'make_unique': undeclared identifier
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2275: 'BaseCollider': illegal use of this type as an expression
+  d:\documents\github\roguearcher\physics\basecollider.h(3): note: see declaration of 'BaseCollider'
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2059: syntax error: ')'
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2612: trailing '}' illegal in base/member initializer list
+d:\documents\github\roguearcher\physics\collidable.h(8): error C2447: '{': missing function header (old-style formal list?)
+d:\documents\github\roguearcher\physics\polygon.cpp(4): error C2572: 'Polygon::Polygon': redefinition of default argument: parameter 1
+  d:\documents\github\roguearcher\physics\polygon.h(24): note: see declaration of 'Polygon::Polygon'
+  Rigidbody.cpp
+d:\documents\github\roguearcher\physics\matrix3x3.h(63): error C2143: syntax error: missing ';' before '*'
+d:\documents\github\roguearcher\physics\matrix3x3.h(63): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\matrix3x3.h(63): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(51): error C2143: syntax error: missing ';' before '+'
+d:\documents\github\roguearcher\physics\vector.h(51): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(51): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(51): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(51): error C2803: 'operator +' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(52): error C2143: syntax error: missing ';' before '-'
+d:\documents\github\roguearcher\physics\vector.h(52): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(52): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(52): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(52): error C2803: 'operator -' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(53): error C2143: syntax error: missing ';' before '*'
+d:\documents\github\roguearcher\physics\vector.h(53): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(53): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(53): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(53): error C2803: 'operator *' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(54): error C2143: syntax error: missing ';' before '*'
+d:\documents\github\roguearcher\physics\vector.h(54): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(54): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(54): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(54): error C2803: 'operator *' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(55): error C2143: syntax error: missing ';' before '/'
+d:\documents\github\roguearcher\physics\vector.h(55): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(55): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(55): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(55): error C2803: 'operator /' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(55): error C2805: binary 'operator /' has too few parameters
+d:\documents\github\roguearcher\physics\vector.h(60): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(60): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(60): error C2146: syntax error: missing ';' before identifier 'Vec2NormalOf'
+d:\documents\github\roguearcher\physics\vector.h(62): error C2065: 'pResult': undeclared identifier
+d:\documents\github\roguearcher\physics\vector.h(62): error C2059: syntax error: 'const'
+d:\documents\github\roguearcher\physics\vector.h(64): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(64): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(66): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(66): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(68): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(68): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(70): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(70): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(72): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(72): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(74): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(74): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\obb.h(9): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\obb.h(9): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\obb.h(9): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(9): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\obb.h(10): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\obb.h(10): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\obb.h(10): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(10): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\obb.h(16): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\obb.h(16): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(16): error C2143: syntax error: missing ',' before '<'
+d:\documents\github\roguearcher\physics\obb.h(18): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\obb.h(18): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(18): error C2143: syntax error: missing ',' before '<'
+d:\documents\github\roguearcher\physics\obb.h(19): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(19): error C2146: syntax error: missing ')' before identifier 'sides'
+d:\documents\github\roguearcher\physics\obb.h(19): error C3646: 'sides': unknown override specifier
+d:\documents\github\roguearcher\physics\obb.h(19): error C2059: syntax error: ')'
+d:\documents\github\roguearcher\physics\polygon.h(21): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\polygon.h(21): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\polygon.h(21): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\polygon.h(21): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\polygon.h(29): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\polygon.h(29): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\polygon.h(29): error C7525: inline variables require at least '/std:c++17'
+d:\documents\github\roguearcher\physics\polygon.h(29): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\polygon.h(29): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\polygon.h(30): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\polygon.h(30): error C2061: syntax error: identifier 'vector'
+d:\documents\github\roguearcher\physics\collidable.h(5): error C2039: 'array': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\collidable.h(5): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\collidable.h(5): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\collidable.h(5): error C2039: 'unique_ptr': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\collidable.h(5): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2039: 'make_unique': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2065: 'make_unique': undeclared identifier
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2275: 'BaseCollider': illegal use of this type as an expression
+  d:\documents\github\roguearcher\physics\basecollider.h(3): note: see declaration of 'BaseCollider'
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2059: syntax error: ')'
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2612: trailing '}' illegal in base/member initializer list
+d:\documents\github\roguearcher\physics\collidable.h(8): error C2447: '{': missing function header (old-style formal list?)
+d:\documents\github\roguearcher\physics\rigidbody.cpp(6): error C2678: binary '*': no operator found which takes a left-hand operand of type 'const float' (or there is no acceptable conversion)
+  d:\documents\github\roguearcher\physics\vector.h(54): note: could be 'int operator *(float,const int)'
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: or       'int operator *(const Matrix3x3 &,const int)'
+  d:\documents\github\roguearcher\physics\matrix3x3.h(55): note: or       'Matrix3x3 operator *(const Matrix3x3 &,const Matrix3x3 &)'
+  d:\documents\github\roguearcher\physics\rigidbody.cpp(6): note: while trying to match the argument list '(const float, const Vec2)'
+  Rotatable.cpp
+d:\documents\github\roguearcher\physics\matrix3x3.h(63): error C2143: syntax error: missing ';' before '*'
+d:\documents\github\roguearcher\physics\matrix3x3.h(63): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\matrix3x3.h(63): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(51): error C2143: syntax error: missing ';' before '+'
+d:\documents\github\roguearcher\physics\vector.h(51): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(51): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(51): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(51): error C2803: 'operator +' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(52): error C2143: syntax error: missing ';' before '-'
+d:\documents\github\roguearcher\physics\vector.h(52): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(52): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(52): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(52): error C2803: 'operator -' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(53): error C2143: syntax error: missing ';' before '*'
+d:\documents\github\roguearcher\physics\vector.h(53): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(53): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(53): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(53): error C2803: 'operator *' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(54): error C2143: syntax error: missing ';' before '*'
+d:\documents\github\roguearcher\physics\vector.h(54): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(54): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(54): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(54): error C2803: 'operator *' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(55): error C2143: syntax error: missing ';' before '/'
+d:\documents\github\roguearcher\physics\vector.h(55): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(55): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(55): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(55): error C2803: 'operator /' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(55): error C2805: binary 'operator /' has too few parameters
+d:\documents\github\roguearcher\physics\vector.h(60): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(60): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(60): error C2146: syntax error: missing ';' before identifier 'Vec2NormalOf'
+d:\documents\github\roguearcher\physics\vector.h(62): error C2065: 'pResult': undeclared identifier
+d:\documents\github\roguearcher\physics\vector.h(62): error C2059: syntax error: 'const'
+d:\documents\github\roguearcher\physics\vector.h(64): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(64): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(66): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(66): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(68): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(68): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(70): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(70): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(72): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(72): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(74): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(74): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\obb.h(9): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\obb.h(9): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\obb.h(9): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(9): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\obb.h(10): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\obb.h(10): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\obb.h(10): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(10): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\obb.h(16): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\obb.h(16): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(16): error C2143: syntax error: missing ',' before '<'
+d:\documents\github\roguearcher\physics\obb.h(18): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\obb.h(18): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(18): error C2143: syntax error: missing ',' before '<'
+d:\documents\github\roguearcher\physics\obb.h(19): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(19): error C2146: syntax error: missing ')' before identifier 'sides'
+d:\documents\github\roguearcher\physics\obb.h(19): error C3646: 'sides': unknown override specifier
+d:\documents\github\roguearcher\physics\obb.h(19): error C2059: syntax error: ')'
+d:\documents\github\roguearcher\physics\polygon.h(21): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\polygon.h(21): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\polygon.h(21): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\polygon.h(21): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\polygon.h(29): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\polygon.h(29): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\polygon.h(29): error C7525: inline variables require at least '/std:c++17'
+d:\documents\github\roguearcher\physics\polygon.h(29): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\polygon.h(29): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\polygon.h(30): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\polygon.h(30): error C2061: syntax error: identifier 'vector'
+d:\documents\github\roguearcher\physics\collidable.h(5): error C2039: 'array': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\collidable.h(5): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\collidable.h(5): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\collidable.h(5): error C2039: 'unique_ptr': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\collidable.h(5): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2039: 'make_unique': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2065: 'make_unique': undeclared identifier
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2275: 'BaseCollider': illegal use of this type as an expression
+  d:\documents\github\roguearcher\physics\basecollider.h(3): note: see declaration of 'BaseCollider'
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2059: syntax error: ')'
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2612: trailing '}' illegal in base/member initializer list
+d:\documents\github\roguearcher\physics\collidable.h(8): error C2447: '{': missing function header (old-style formal list?)
+  Shape.cpp
+d:\documents\github\roguearcher\physics\matrix3x3.h(63): error C2143: syntax error: missing ';' before '*'
+d:\documents\github\roguearcher\physics\matrix3x3.h(63): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\matrix3x3.h(63): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(51): error C2143: syntax error: missing ';' before '+'
+d:\documents\github\roguearcher\physics\vector.h(51): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(51): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(51): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(51): error C2803: 'operator +' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(52): error C2143: syntax error: missing ';' before '-'
+d:\documents\github\roguearcher\physics\vector.h(52): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(52): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(52): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(52): error C2803: 'operator -' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(53): error C2143: syntax error: missing ';' before '*'
+d:\documents\github\roguearcher\physics\vector.h(53): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(53): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(53): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(53): error C2803: 'operator *' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(54): error C2143: syntax error: missing ';' before '*'
+d:\documents\github\roguearcher\physics\vector.h(54): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(54): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(54): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(54): error C2803: 'operator *' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(55): error C2143: syntax error: missing ';' before '/'
+d:\documents\github\roguearcher\physics\vector.h(55): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(55): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(55): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(55): error C2803: 'operator /' must have at least one formal parameter of class type
+d:\documents\github\roguearcher\physics\vector.h(55): error C2805: binary 'operator /' has too few parameters
+d:\documents\github\roguearcher\physics\vector.h(60): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(60): error C2086: 'int Vector2D': redefinition
+  d:\documents\github\roguearcher\physics\matrix3x3.h(63): note: see declaration of 'Vector2D'
+d:\documents\github\roguearcher\physics\vector.h(60): error C2146: syntax error: missing ';' before identifier 'Vec2NormalOf'
+d:\documents\github\roguearcher\physics\vector.h(62): error C2065: 'pResult': undeclared identifier
+d:\documents\github\roguearcher\physics\vector.h(62): error C2059: syntax error: 'const'
+d:\documents\github\roguearcher\physics\vector.h(64): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(64): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(66): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(66): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(68): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(68): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(70): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(70): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(72): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(72): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\vector.h(74): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\vector.h(74): error C2143: syntax error: missing ',' before '&'
+d:\documents\github\roguearcher\physics\obb.h(9): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\obb.h(9): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\obb.h(9): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(9): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\obb.h(10): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\obb.h(10): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\obb.h(10): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(10): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\obb.h(16): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\obb.h(16): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(16): error C2143: syntax error: missing ',' before '<'
+d:\documents\github\roguearcher\physics\obb.h(18): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\obb.h(18): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(18): error C2143: syntax error: missing ',' before '<'
+d:\documents\github\roguearcher\physics\obb.h(19): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\obb.h(19): error C2146: syntax error: missing ')' before identifier 'sides'
+d:\documents\github\roguearcher\physics\obb.h(19): error C3646: 'sides': unknown override specifier
+d:\documents\github\roguearcher\physics\obb.h(19): error C2059: syntax error: ')'
+d:\documents\github\roguearcher\physics\polygon.h(21): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\polygon.h(21): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\polygon.h(21): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\polygon.h(21): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\polygon.h(29): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\polygon.h(29): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\polygon.h(29): error C7525: inline variables require at least '/std:c++17'
+d:\documents\github\roguearcher\physics\polygon.h(29): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\polygon.h(29): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\polygon.h(30): error C2039: 'vector': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\polygon.h(30): error C2061: syntax error: identifier 'vector'
+d:\documents\github\roguearcher\physics\collidable.h(5): error C2039: 'array': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\collidable.h(5): error C2143: syntax error: missing ';' before '<'
+d:\documents\github\roguearcher\physics\collidable.h(5): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\documents\github\roguearcher\physics\collidable.h(5): error C2039: 'unique_ptr': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\collidable.h(5): error C2238: unexpected token(s) preceding ';'
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2039: 'make_unique': is not a member of 'std'
+  d:\documents\github\roguearcher\predefined c++ types (compiler internal)(257): note: see declaration of 'std'
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2065: 'make_unique': undeclared identifier
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2275: 'BaseCollider': illegal use of this type as an expression
+  d:\documents\github\roguearcher\physics\basecollider.h(3): note: see declaration of 'BaseCollider'
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2059: syntax error: ')'
+d:\documents\github\roguearcher\physics\collidable.h(7): error C2612: trailing '}' illegal in base/member initializer list
+d:\documents\github\roguearcher\physics\collidable.h(8): error C2447: '{': missing function header (old-style formal list?)
+  Vector.cpp
+  BaseComponent.cpp
+  BaseEntity.cpp
+  BaseSystem.cpp
+  EngineIO.cpp
+d:\documents\github\roguearcher\scripts\logger.h(4): fatal error C1083: Cannot open include file: 'spdlog/spdlog.h': No such file or directory
+  GameStateManager.cpp
+  InputManager.cpp
+  Library.cpp
+d:\documents\github\roguearcher\scripts\logger.h(4): fatal error C1083: Cannot open include file: 'spdlog/spdlog.h': No such file or directory
+  Generating Code...
+  Compiling...
+  Logger.cpp
+d:\documents\github\roguearcher\scripts\logger.h(4): fatal error C1083: Cannot open include file: 'spdlog/spdlog.h': No such file or directory
+  Main.cpp
+d:\documents\github\roguearcher\scripts\logger.h(4): fatal error C1083: Cannot open include file: 'spdlog/spdlog.h': No such file or directory
+  MemoryManager.cpp
+d:\documents\github\roguearcher\scripts\logger.h(4): fatal error C1083: Cannot open include file: 'spdlog/spdlog.h': No such file or directory
+  Quad.cpp
+  shader.cpp
+  triangle.cpp
+d:\documents\github\roguearcher\scripts\triangle.cpp(53): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\documents\github\roguearcher\scripts\triangle.cpp(54): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  Generating Code...
