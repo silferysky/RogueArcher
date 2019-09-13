@@ -32,6 +32,9 @@
     <Filter Include="RogueEngine\Systems\ECS">
       <UniqueIdentifier>{629d965b-c364-483b-b07e-8a65dc3774f6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="RogueEngine\Library">
+      <UniqueIdentifier>{0c82b9be-67a8-466d-8268-83aed9336b0d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\GameStateList.h">
@@ -121,6 +124,12 @@
     <ClInclude Include="Scripts\GameEvent.h">
       <Filter>RogueEngine\Systems\EventSystem\Events</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\Math.h">
+      <Filter>RogueEngine\Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Sound.h">
+      <Filter>RogueEngine\Library</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\GameStateManager.cpp">
@@ -161,6 +170,12 @@
     </ClCompile>
     <ClCompile Include="Scripts\BaseComponent.cpp">
       <Filter>RogueEngine\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Math.cpp">
+      <Filter>RogueEngine\Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Sound.cpp">
+      <Filter>RogueEngine\Library</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -39,12 +39,14 @@
     <ClInclude Include="Scripts\Library.h" />
     <ClInclude Include="Scripts\Logger.h" />
     <ClInclude Include="Scripts\Main.h" />
+    <ClInclude Include="Scripts\Math.h" />
     <ClInclude Include="Scripts\MemoryManager.h" />
     <ClInclude Include="Scripts\PhysicsComponent.h" />
     <ClInclude Include="Scripts\Quad.h" />
     <ClInclude Include="Scripts\Resource.h" />
     <ClInclude Include="Scripts\RogueEngine.h" />
     <ClInclude Include="Scripts\shader.h" />
+    <ClInclude Include="Scripts\Sound.h" />
     <ClInclude Include="Scripts\SystemManager.h" />
     <ClInclude Include="Scripts\triangle.h" />
     <ClInclude Include="Scripts\Types.h" />
@@ -59,9 +61,11 @@
     <ClCompile Include="Scripts\Library.cpp" />
     <ClCompile Include="Scripts\Logger.cpp" />
     <ClCompile Include="Scripts\Main.cpp" />
+    <ClCompile Include="Scripts\Math.cpp" />
     <ClCompile Include="Scripts\MemoryManager.cpp" />
     <ClCompile Include="Scripts\Quad.cpp" />
     <ClCompile Include="Scripts\shader.cpp" />
+    <ClCompile Include="Scripts\Sound.cpp" />
     <ClCompile Include="Scripts\triangle.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
