@@ -1,12 +1,11 @@
-#include "Main.h"
+#include "Physics.h"
 
 /*****************************************************************************
 
 						ORIENTED BOUNDING BOX
 
 *****************************************************************************/
-OBB::OBB() : m_center{ 0 }, m_angle{ 0.0f }, m_scale{ 0.0f }, m_minOnAxis{ 0.0f }, m_maxOnAxis{ 0.0f }, // Conversion constructor
-m_sides{ SHAPE_NONE }
+OBB::OBB() : m_minOnAxis{ 0.0f }, m_maxOnAxis{ 0.0f } // Conversion constructor
 {}
 
 
@@ -14,50 +13,36 @@ OBB::~OBB()
 {}
 
 
-void OBB::initCollider(const std::vector<Vec2>& corners)
+inline void OBB::update(const Vec2 pos, const std::vector<Vec2>& relVerts, const PolygonList sides, const float angle, const float size)
 {
-	m_collider = corners;
-	m_sides = static_cast<ShapeType>(corners.size());
-
-	m_vertices.resize(m_collider.size());
-	m_normals.resize(m_collider.size());
+	updateVertices(pos, relVerts, sides, angle, size);
+	updateNormals(sides);
 }
 
 
-void OBB::updateCollider(const Vec2 pos, const float rot, const float size)
+inline void OBB::updateVertices(const Vec2 pos, const std::vector<Vec2>& relVerts, const PolygonList sides, const float angle, const float size)
 {
-	m_center = pos;
-	m_angle = rot;
-	m_scale = size;
-	updateVertices();
-	updateNormals();
-}
-
-
-void OBB::updateVertices()
-{
-
 	Mtx33 rot, sca;
-	Mtx33RotRad(rot, m_angle);
-	Mtx33Scale(sca, m_scale, m_scale);
+	Mtx33RotRad(rot, angle);
+	Mtx33Scale(sca, size, size);
 
-	for (int i = 0; i < m_sides; ++i)
+	for(int i = 0; i < sides; i++)
 	{
-		m_vertices[i] = rot * m_collider[i];
-		m_vertices[i] = sca * m_vertices[i];
-		m_vertices[i] = m_vertices[i] + m_center;
+		m_vertices[i] = rot * relVerts[i];
+		m_vertices[i] = sca * relVerts[i];
+		m_vertices[i] = m_vertices[i] + pos;
 	}
 }
 
 
-inline void OBB::updateNormals()
+inline void OBB::updateNormals(const PolygonList sides)
 {
-	int i = 0;
+	int i;
 
-	for (; i < m_sides - 1; ++i) // Traverse to the second last vertex
+	for (i = 0; i < sides - 1; ++i) // Traverse to the second last vertex
 		m_normals[i] = Vec2NormalOf(m_vertices[i + 1] - m_vertices[i]); // n1 till second last normal
 
-	m_normals[i] = Vec2NormalOf(m_vertices[0] - m_vertices[i]);
+	m_normals[i] = Vec2NormalOf(m_vertices[0] - m_vertices[i]); // Last normal
 }
 
 
@@ -80,7 +65,7 @@ void OBB::SATFindMinMax(const Vec2 &normal)
 }
 
 
-bool OBB::CollisionTest(OBB rhs)
+inline bool OBB::CollisionTest(OBB rhs)
 {
 	for (Vec2 normal : m_normals)
 	{
@@ -104,7 +89,7 @@ bool OBB::CollisionTest(OBB rhs)
 }
 
 
-bool OBB::checkOverlaps(const OBB &rhs) const
+inline bool OBB::checkOverlaps(const OBB &rhs) const
 {
 	return isBetweenBounds(rhs.m_minOnAxis, m_minOnAxis, m_maxOnAxis) || isBetweenBounds(m_minOnAxis, rhs.m_minOnAxis, rhs.m_maxOnAxis);
 }
