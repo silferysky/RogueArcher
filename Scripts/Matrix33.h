@@ -11,6 +11,7 @@ Reproduction or disclosure of this file or its contents without the
 prior written consent of DigiPen Institute of Technology is prohibited.
  */
 /******************************************************************************/
+#include "Vector2.h"
 
 #ifdef _MSC_VER
 // Supress warning: nonstandard extension used : nameless struct/union

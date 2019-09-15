@@ -1,7 +1,7 @@
 #include "Physics.h"
 
 
-Polygon::Polygon(PolygonList numSides = POLY_NONE)
+Polygon::Polygon(PolygonList numSides)
 	: m_numSides{ numSides }
 {}
 

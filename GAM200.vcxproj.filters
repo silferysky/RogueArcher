@@ -38,9 +38,6 @@
     <Filter Include="RogueEngine\Systems\Memory">
       <UniqueIdentifier>{c7c96828-3cac-4aeb-bc20-6a26e3a1a849}</UniqueIdentifier>
     </Filter>
-    <Filter Include="RogueEngine\Systems\Physics\Sprites">
-      <UniqueIdentifier>{bd0e46e0-5af7-4458-b9da-3f6a931851a0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="RogueEngine\Systems\ECS">
       <UniqueIdentifier>{629d965b-c364-483b-b07e-8a65dc3774f6}</UniqueIdentifier>
     </Filter>
@@ -52,6 +49,9 @@
     </Filter>
     <Filter Include="RogueEngine\Systems\I/O">
       <UniqueIdentifier>{04f37cb7-cc36-4083-9b39-54efe633ae0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RogueEngine\Systems\Physics\Polygons">
+      <UniqueIdentifier>{bd0e46e0-5af7-4458-b9da-3f6a931851a0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -161,13 +161,13 @@
       <Filter>RogueEngine\Systems\Collision</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Shape.h">
-      <Filter>RogueEngine\Systems\Physics\Sprites</Filter>
+      <Filter>RogueEngine\Systems\Physics\Polygons</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Circle.h">
-      <Filter>RogueEngine\Systems\Physics\Sprites</Filter>
+      <Filter>RogueEngine\Systems\Physics\Polygons</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Polygon.h">
-      <Filter>RogueEngine\Systems\Physics\Sprites</Filter>
+      <Filter>RogueEngine\Systems\Physics\Polygons</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\EngineIO.h">
       <Filter>RogueEngine\Systems\I/O</Filter>
@@ -241,13 +241,13 @@
       <Filter>RogueEngine\Systems\Collision</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\Shape.cpp">
-      <Filter>RogueEngine\Systems\Physics\Sprites</Filter>
+      <Filter>RogueEngine\Systems\Physics\Polygons</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\Circle.cpp">
-      <Filter>RogueEngine\Systems\Physics\Sprites</Filter>
+      <Filter>RogueEngine\Systems\Physics\Polygons</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\Polygon.cpp">
-      <Filter>RogueEngine\Systems\Physics\Sprites</Filter>
+      <Filter>RogueEngine\Systems\Physics\Polygons</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\EngineIO.cpp">
       <Filter>RogueEngine\Systems\I/O</Filter>

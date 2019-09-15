@@ -13,7 +13,7 @@ enum MaterialList
 
 class Material
 {
-	float m_material;
+	MaterialList m_material;
 	float m_density;
 	float m_friction;
 

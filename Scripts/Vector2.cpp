@@ -1,6 +1,5 @@
 #include "Vector2.h"
-#include "Matrix33.h"
-
+#include <cmath>
 
 Vector2D::Vector2D(const int num) : x{ static_cast<float>(num) }, y{ static_cast<float>(num) }
 {}
@@ -23,8 +22,8 @@ Vector2D::Vector2D(const Vector2D &vec)
 
 Vector2D& Vector2D::operator = (const int num)
 {
-	x = num;
-	y = num;
+	x = (float)num;
+	y = (float)num;
 
 	return *this;
 }
