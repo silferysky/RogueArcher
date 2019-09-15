@@ -44,6 +44,7 @@
     <ClInclude Include="Scripts\Logger.h" />
     <ClInclude Include="Scripts\Main.h" />
     <ClInclude Include="Scripts\Material.h" />
+    <ClInclude Include="Scripts\Matrix33.h" />
     <ClInclude Include="Scripts\MemoryManager.h" />
     <ClInclude Include="Scripts\OBB.h" />
     <ClInclude Include="Scripts\Physics.h" />
@@ -60,6 +61,7 @@
     <ClInclude Include="Scripts\SystemManager.h" />
     <ClInclude Include="Scripts\triangle.h" />
     <ClInclude Include="Scripts\Types.h" />
+    <ClInclude Include="Scripts\Vector2.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\AABB.cpp" />
@@ -76,6 +78,7 @@
     <ClCompile Include="Scripts\Logger.cpp" />
     <ClCompile Include="Scripts\Main.cpp" />
     <ClCompile Include="Scripts\Material.cpp" />
+    <ClCompile Include="Scripts\Matrix33.cpp" />
     <ClCompile Include="Scripts\MemoryManager.cpp" />
     <ClCompile Include="Scripts\OBB.cpp" />
     <ClCompile Include="Scripts\PhysicsSystem.cpp" />
@@ -86,6 +89,7 @@
     <ClCompile Include="Scripts\shader.cpp" />
     <ClCompile Include="Scripts\Shape.cpp" />
     <ClCompile Include="Scripts\triangle.cpp" />
+    <ClCompile Include="Scripts\Vector2.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
