@@ -48,12 +48,16 @@ typedef union Vector2D
 
 } Vec2, Point2D, Pt2;
 
+#ifdef _MSC_VER
+// Supress warning: nonstandard extension used : nameless struct/union
+#pragma warning( disable : 4201 )
+#endif
 
 // Binary operators
 Vector2D operator + (const Vector2D &lhs, const Vector2D &rhs);
 Vector2D operator - (const Vector2D &lhs, const Vector2D &rhs);
 Vector2D operator * (const Vector2D &lhs, float rhs);
-Vector2D operator * (float lhs, const Vector2D &rhs);
+Vector2D operator * (const float lhs, const Vector2D &rhs);
 Vector2D operator / (const Vector2D &lhs, float rhs);
 
 

@@ -30,7 +30,6 @@ void Library::IntepretIO(LibraryID id, std::string string)
 	case PlayerStatsData:
 	{
 		//To replace with actual data
-		int hp, atk, def;
 		std::stringstream data(string);
 		std::string segment;
 		std::vector<std::string> segmentList;

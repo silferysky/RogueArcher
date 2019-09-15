@@ -29,14 +29,14 @@ Reproduction or disclosure of this file or its contents without the
 prior written consent of DigiPen Institute of Technology is prohibited.
  */
  /******************************************************************************/
+#pragma once
 #include "Matrix33.h"
-#include "Vector2.h"
 #include <cmath>
+#define PI 3.14159265358f
+#define EPSILON 0.0001f
 
 const int LAST_COORD = 9; // Last coordinate of the 3x3 matrix.
 const int LAST_X = 3; // Last coordinate of a row/column
-//	const double PI = 3.14159265358f;
-//	const float EPSILON = 0.0001f;
 int i, j, k; // Iterators.
 float product; // Product of coordinates.
 
