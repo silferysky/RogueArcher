@@ -1,9 +1,11 @@
 #pragma once
-#include <vector>		//std::vector
+#include <map>			//std::map
 #include <algorithm>	//std::find
 #include <iterator>		//std::iterator
 #include <memory>		//std::shared_ptr
+#include <cstdlib>		//std::pair
 #include "RogueEngine.h"
+#include "MemoryType.h"
 
 class MemoryManager :
 	public BaseSystem
@@ -12,28 +14,49 @@ public:
 	MemoryManager();
 	~MemoryManager();
 
-	void AddIntoMemory(BaseSystem &sys);
-	void AddIntoMemory(BaseEntity &ent);
-	void AddIntoMemory(BaseComponent &cmp);
-
-	void RemoveFromMemory(BaseSystem &sys);
-	void RemoveFromMemory(BaseEntity &ent);
-	void RemoveFromMemory(BaseComponent &cmp);
-
-	size_t SysListCount();
-	size_t EntListCount();
-	size_t CmpListCount();
-
-	std::vector<std::shared_ptr<BaseSystem>> GetSysList();
-	std::vector<std::shared_ptr<BaseEntity>> GetEntList();
-	std::vector<std::shared_ptr<BaseComponent>> GetCmpList();
-
-	//template <typename T>
-	//void DeleteSharedPtrTo(std::shared_ptr<T> ptr) { delete ptr; }
+	static void add(const void* ptr, const size_t size, MemoryType memType);
+	static void remove(const void* ptr, MemoryType memType);
 
 private:
-	std::vector<std::shared_ptr<BaseSystem>> SysList;
-	std::vector<std::shared_ptr<BaseEntity>> EntList;
-	std::vector<std::shared_ptr<BaseComponent>> CmpList;
+
+	static std::map<const void*, const size_t> SystemMap;
+	static std::map<const void*, const size_t> EntityMap;
+	static std::map<const void*, const size_t> ComponentMap;
+
+	static size_t SystemAlloc;
+	static size_t EntityAlloc;
+	static size_t ComponentAlloc;
+
+	static size_t SystemAllocBytes;
+	static size_t EntityAllocBytes;
+	static size_t ComponentAllocBytes;
 };
 
+//For Generic overload new/delete
+void* operator new(size_t space, MemoryType mem)
+{
+	void* ptr = malloc(space);
+	MemoryManager::add(ptr, space, mem);
+
+	return ptr;
+}
+
+void* operator new[](size_t space, MemoryType mem)
+{
+	void* ptr = malloc(space);
+	MemoryManager::add(ptr, space, mem);
+
+	return ptr;
+}
+
+void operator delete(void* ptr, MemoryType mem)
+{
+	free(ptr);
+	MemoryManager::remove(ptr, mem);
+}
+
+void operator delete[](void* ptr, MemoryType mem)
+{
+	free(ptr);
+	MemoryManager::remove(ptr, mem);
+}
