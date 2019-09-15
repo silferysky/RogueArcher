@@ -30,64 +30,10 @@ int main()
 	InputManager* InputMgr = new InputManager();
 	RE_INFO("Hello");
 
-	//Main Debug
-	int repeat = 0;
-	float timer = 0.0f;
- 	while (repeat < 5)
-	{
-		InputMgr->UpdateState();
-
-		if (InputMgr->KeyTriggeredAny())
-		{
-			++repeat;
-			//InputMgr->DebugKeyInputs();
-		}
-	}
-
-	//InputMger->DebugKeyInputs();
-	RE_INFO("PAUSE HERE FOR END");
-	RE_ERROR("THIS IS A ERROR MESSAGE BUT NO ERROR");
-
-	RE_INFO("TESTING HERE FOR A RANDOM EVENT");
-	KeyPressEvent testEvent((KeyPress)KeyArrowRight, 10);
-	RE_INFO(testEvent.ToString());
-	RE_INFO("END EVENT TEST");
-
-
-	RE_INFO("TESTING HERE FOR FILE IO");
-
-	Library testLibrary;
-	testLibrary.IOTest();
-
-	RE_INFO("END TEST IO");
-	
-	RE_INFO("TEST ReMM (Rogue Engine Memory Manager)");
-	MemoryManager ReMM;
-
-	BaseSystem s;
-	BaseSystem s2;
-	BaseEntity e;
-	BaseComponent c;
-
-	std::shared_ptr<BaseSystem> ptr = std::make_shared<BaseSystem>(s);
-
-	ReMM.AddIntoMemory(s);
-	ReMM.AddIntoMemory(s2);
-	ReMM.AddIntoMemory(e);
-	ReMM.AddIntoMemory(c);
-
-	std::string str("System Count: ");
-	str.append(std::to_string(ReMM.SysListCount()));
-	RE_INFO(str);
-
-	str.clear();
-	str.append("Use Count: ");
-	str.append(std::to_string(ReMM.GetSysList()[0].use_count()));
-
-	RE_INFO(str);
-
+	//////////////////////////
 	//Graphics Debug
-	
+	////////////////////////
+
 	GLFWwindow* window;
 
 	/* Initialize the library */
@@ -134,6 +80,60 @@ int main()
 	}
 
 	glfwTerminate();
+
+	//Main Debug
+	RE_INFO("INPUT DEBUG");
+
+	int repeat = 0;
+	float timer = 0.0f;
+ 	while (repeat < 5)
+	{
+		InputMgr->UpdateState();
+
+		if (InputMgr->KeyTriggeredAny())
+		{
+			++repeat;
+			//InputMgr->DebugKeyInputs();
+		}
+	}
+
+	RE_INFO("TESTING HERE FOR A RANDOM EVENT");
+	KeyPressEvent testEvent((KeyPress)KeyArrowRight, 10);
+	RE_INFO(testEvent.ToString());
+	RE_INFO("END EVENT TEST");
+
+
+	RE_INFO("TESTING HERE FOR FILE IO");
+
+	Library testLibrary;
+	testLibrary.IOTest();
+
+	RE_INFO("END TEST IO");
+	
+	RE_INFO("TEST ReMM (Rogue Engine Memory Manager)");
+	MemoryManager ReMM;
+
+	BaseSystem s;
+	BaseSystem s2;
+	BaseEntity e;
+	BaseComponent c;
+
+	std::shared_ptr<BaseSystem> ptr = std::make_shared<BaseSystem>(s);
+
+	ReMM.AddIntoMemory(s);
+	ReMM.AddIntoMemory(s2);
+	ReMM.AddIntoMemory(e);
+	ReMM.AddIntoMemory(c);
+
+	std::string str("System Count: ");
+	str.append(std::to_string(ReMM.SysListCount()));
+	RE_INFO(str);
+
+	str.clear();
+	str.append("Use Count: ");
+	str.append(std::to_string(ReMM.GetSysList()[0].use_count()));
+
+	RE_INFO(str);
 
 	std::cin.get();
 	delete InputMgr;
