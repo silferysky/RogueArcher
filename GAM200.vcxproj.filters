@@ -35,6 +35,9 @@
     <Filter Include="RogueEngine\Library">
       <UniqueIdentifier>{0c82b9be-67a8-466d-8268-83aed9336b0d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="RogueEngine\Systems\Memory">
+      <UniqueIdentifier>{cc7d7c11-3e65-4230-aaef-5548ecec4c50}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\GameStateList.h">
@@ -112,9 +115,6 @@
     <ClInclude Include="Scripts\BaseSystem.h">
       <Filter>RogueEngine\Systems</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\MemoryManager.h">
-      <Filter>RogueEngine\Systems</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\BaseEntity.h">
       <Filter>RogueEngine\Entities</Filter>
     </ClInclude>
@@ -124,11 +124,14 @@
     <ClInclude Include="Scripts\GameEvent.h">
       <Filter>RogueEngine\Systems\EventSystem\Events</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Math.h">
-      <Filter>RogueEngine\Library</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\Sound.h">
       <Filter>RogueEngine\Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\MemoryManager.h">
+      <Filter>RogueEngine\Systems\Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\MemoryType.h">
+      <Filter>RogueEngine\Systems\Memory</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -162,20 +165,17 @@
     <ClCompile Include="Scripts\BaseSystem.cpp">
       <Filter>RogueEngine\Systems</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\MemoryManager.cpp">
-      <Filter>RogueEngine\Systems</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\BaseEntity.cpp">
       <Filter>RogueEngine\Entities</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\BaseComponent.cpp">
       <Filter>RogueEngine\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Math.cpp">
-      <Filter>RogueEngine\Library</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\Sound.cpp">
       <Filter>RogueEngine\Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\MemoryManager.cpp">
+      <Filter>RogueEngine\Systems\Memory</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

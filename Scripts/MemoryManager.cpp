@@ -5,8 +5,20 @@
 MemoryManager::MemoryManager()
 {
 	RE_INFO("INIT MEMORY MANAGER");
-}
 
+	//Resetting Systems
+	SystemAlloc = 0;
+	EntityAlloc = 0;
+	ComponentAlloc = 0;
+	SystemAllocBytes = 0;
+	EntityAllocBytes = 0;
+	ComponentAllocBytes = 0;
+
+	//Resetting Maps
+	SystemMap.clear();
+	EntityMap.clear();
+	ComponentMap.clear();
+}
 
 MemoryManager::~MemoryManager()
 {
@@ -16,93 +28,63 @@ MemoryManager::~MemoryManager()
 	//std::for_each(CmpList.begin(), CmpList.end(), DeleteSharedPtrTo<BaseComponent>);
 }
 
-void MemoryManager::AddIntoMemory(BaseSystem &sys)
+void MemoryManager::add(const void* ptr, const size_t size, MemoryType memType)
 {
-	std::shared_ptr<BaseSystem> ptr = std::make_shared<BaseSystem>(sys);
-	SysList.push_back(ptr);
+	switch (memType)
+	{
+	case MemorySystem:
+		RE_CORE_INFO("ADDING SYSTEM MEMORY TYPE");
+		++SystemAlloc;
+		SystemAllocBytes += size;
+		SystemMap.insert(std::pair<const void*, const size_t>(ptr, size));
+		break;
+	case MemoryEntity:
+		RE_CORE_INFO("ADDING ENTITY MEMORY TYPE");
+		++EntityAlloc;
+		EntityAllocBytes += size;
+		EntityMap.insert(std::pair<const void*, const size_t>(ptr, size));
+		break;
+	case MemoryComponent:
+		RE_CORE_INFO("ADDING COMPONENT MEMORY TYPE");
+		++ComponentAlloc;
+		ComponentAllocBytes += size;
+		ComponentMap.insert(std::pair<const void*, const size_t>(ptr, size));
+		break;
+	default:
+		RE_CORE_WARN("ADDING NONDEFINED MEMORY TYPE");
+		break;
+	}
 }
 
-void MemoryManager::AddIntoMemory(BaseEntity &ent)
+void MemoryManager::remove(const void* ptr, MemoryType memType)
 {
-	std::shared_ptr<BaseEntity> ptr = std::make_shared<BaseEntity>(ent);
-	EntList.push_back(ptr);
+	//TODO: Find a way to mitigate the use of MemoryType to prevent accidental deletes
+	size_t size;
+	switch (memType)
+	{
+	case MemorySystem:
+		RE_CORE_INFO("REMOVING SYSTEM MEMORY TYPE");
+		size = SystemMap[ptr];
+		--SystemAlloc;
+		SystemAllocBytes -= size;
+		SystemMap.erase(ptr);
+		break;
+	case MemoryEntity:
+		RE_CORE_INFO("REMOVING ENTITY MEMORY TYPE");
+		size = EntityMap[ptr];
+		--EntityAlloc;
+		EntityAllocBytes -= size;
+		EntityMap.erase(ptr);
+		break;
+	case MemoryComponent:
+		RE_CORE_INFO("REMOVING COMPONENT MEMORY TYPE");
+		size = ComponentMap[ptr];
+		--ComponentAlloc;
+		ComponentAllocBytes -= size;
+		ComponentMap.erase(ptr);
+		break;
+	default:
+		RE_CORE_WARN("REMOVING NONDEFINED MEMORY TYPE");
+		break;
+	}
 }
-
-void MemoryManager::AddIntoMemory(BaseComponent &cmp)
-{
-	std::shared_ptr<BaseComponent> ptr = std::make_shared<BaseComponent>(cmp);
-	CmpList.push_back(ptr);
-}
-
-void MemoryManager::RemoveFromMemory(BaseSystem &sys)
-{
-	if (!SysList.size())
-		return;
-
-	std::shared_ptr<BaseSystem> ptr(&sys);
-	auto it = std::find(SysList.begin(), SysList.end(),	ptr);
-
-	//If item is found, check if unique. Only remove if unique
-	if (it != SysList.end())
-		if (ptr.unique())
-			SysList.erase(it);
-}
-
-void MemoryManager::RemoveFromMemory(BaseEntity &ent)
-{
-	if (!EntList.size())
-		return;
-
-	std::shared_ptr<BaseEntity> ptr(&ent);
-	auto it = std::find(EntList.begin(), EntList.end(), ptr);
-
-	//If item is found, check if unique. Only remove if unique
-	if (it != EntList.end())
-		if(ptr.unique())
-			EntList.erase(it);
-}
-
-void MemoryManager::RemoveFromMemory(BaseComponent &cmp)
-{
-	if (!CmpList.size())
-		return;
-
-	std::shared_ptr<BaseComponent> ptr(&cmp);
-	auto it = std::find(CmpList.begin(), CmpList.end(), ptr);
-
-	//If item is found, check if unique. Only remove if unique
-	if (it != CmpList.end())
-		if(ptr.unique())
-			CmpList.erase(it);
-}
-
-size_t MemoryManager::SysListCount()
-{
-	return SysList.size();
-}
-
-size_t MemoryManager::EntListCount()
-{
-	return EntList.size();
-}
-
-size_t MemoryManager::CmpListCount()
-{
-	return CmpList.size();
-}
-
-std::vector<std::shared_ptr<BaseSystem>> MemoryManager::GetSysList()
-{
-	return SysList;
-}
-
-std::vector<std::shared_ptr<BaseEntity>> MemoryManager::GetEntList()
-{
-	return EntList;
-}
-
-std::vector<std::shared_ptr<BaseComponent>> MemoryManager::GetCmpList()
-{
-	return CmpList;
-}
-
