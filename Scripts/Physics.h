@@ -2,8 +2,8 @@
 
 
 // Math library
-#include "Matrix3x3.h"
-#include "Vector.h"
+#include "Matrix33.h"
+#include "Vector2.h"
 
 // Includes for physics.
 #include "PhysicsSystem.h"

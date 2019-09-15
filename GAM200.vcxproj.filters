@@ -178,6 +178,12 @@
     <ClInclude Include="Scripts\Logger.h">
       <Filter>RogueEngine\Systems\Debug</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\Matrix33.h">
+      <Filter>RogueEngine\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Vector2.h">
+      <Filter>RogueEngine\Data</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\GameStateManager.cpp">
@@ -251,6 +257,12 @@
     </ClCompile>
     <ClCompile Include="Scripts\Logger.cpp">
       <Filter>RogueEngine\Systems\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Matrix33.cpp">
+      <Filter>RogueEngine\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Vector2.cpp">
+      <Filter>RogueEngine\Data</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
