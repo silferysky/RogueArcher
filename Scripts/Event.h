@@ -26,8 +26,8 @@ enum EventType
 	KeyPressed,
 	KeyReleased,
 
-	MouseButtonPressed,
-	MouseButtonReleaseed,
+	MouseButtonPressed,			//To be combined with KeyPressed
+	MouseButtonReleaseed,		//To be combined with KeyReleased
 	MouseMoved,
 	MouseScrolled,
 

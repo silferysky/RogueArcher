@@ -70,6 +70,10 @@ public:
 	//Reset Key bindings
 	void ResetKeyBind();
 
+	//Creating Events
+	Event CreateKeyPressEvent(KeyPress key, int repeat = 0);
+	Event CreateKeyReleaseEvent(KeyPress key);
+
 private:
 	KeyboardState CurKeyboardState;
 	KeyboardState PrevKeyboardState;
