@@ -21,17 +21,16 @@ public:
 
 	void Update()
 	{
-		//Safety check
-		if (eventDispatcher.EventQueue->empty())
-			return;
-
-		//Queue is not empty here onwards
-		Event& nextEvent = GetQueueHead();
-		if (nextEvent.Handled())
+		//While queue is not empty, handle all events
+		while (!eventDispatcher.EventQueue->empty())
 		{
-			DispatchEvent(nextEvent);
+			Event& nextEvent = GetQueueHead();
+			if (nextEvent.Handled())
+			{
+				DispatchEvent(nextEvent);
+			}
+			EventQueue->pop();
 		}
-		EventQueue->pop();
 	}
 
 	//Dispatch sends it to the relavent system to execute event
