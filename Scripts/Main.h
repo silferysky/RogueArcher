@@ -6,6 +6,7 @@
 #include <Windows.h>
 #include "Resource.h"
 #include "SystemManager.h"
+#include "MemoryManager.h"
 
 #if _DEBUG
 #include <iostream>
