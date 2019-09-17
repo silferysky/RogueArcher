@@ -124,12 +124,6 @@
     <ClInclude Include="Scripts\GameEvent.h">
       <Filter>RogueEngine\Systems\EventSystem\Events</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Sound.h">
-      <Filter>RogueEngine\Library</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\MemoryManager.h">
-      <Filter>RogueEngine\Systems\Memory</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\MemoryType.h">
       <Filter>RogueEngine\Systems\Memory</Filter>
     </ClInclude>
@@ -170,12 +164,6 @@
     </ClCompile>
     <ClCompile Include="Scripts\BaseComponent.cpp">
       <Filter>RogueEngine\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Sound.cpp">
-      <Filter>RogueEngine\Library</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\MemoryManager.cpp">
-      <Filter>RogueEngine\Systems\Memory</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
