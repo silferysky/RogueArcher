@@ -25,7 +25,7 @@ class KeyPressEvent : public KeyEvent
 {
 public:
 
-	SET_EVENT_TYPE(KeyPressed)
+	SET_EVENT_TYPE(EvKeyPressed)
 
 	KeyPressEvent(KeyPress key, int repeatCount = 0)
 		: KeyEvent(key), RepeatCount(repeatCount) {}
@@ -46,7 +46,7 @@ class KeyReleaseEvent : public KeyEvent
 {
 public:
 
-	SET_EVENT_TYPE(KeyReleased)
+	SET_EVENT_TYPE(EvKeyReleased)
 
 	KeyReleaseEvent(KeyPress key)
 		: KeyEvent(key) {}
@@ -54,7 +54,7 @@ public:
 	std::string ToString() const override
 	{
 		std::stringstream ss;
-		ss << "KeyReleasedEvent: " << KeyCode;
+		ss << "EvKeyReleasedEvent: " << KeyCode;
 		return ss.str();
 	}
 };
@@ -62,7 +62,7 @@ public:
 class MousePressEvent : public KeyPressEvent
 {
 	SET_EVENT_CATEGORY(EventCatMouse | EventCatInput)
-	SET_EVENT_TYPE(MouseButtonPressed)
+	SET_EVENT_TYPE(EvMouseButtonPressed)
 
 	MousePressEvent(KeyPress key, int repeatCount = 0)
 		: KeyPressEvent(key, repeatCount) {}
@@ -80,7 +80,7 @@ class MouseReleaseEvent : public KeyReleaseEvent
 public:
 
 	SET_EVENT_CATEGORY(EventCatMouse | EventCatInput)
-	SET_EVENT_TYPE(MouseButtonReleaseed)
+	SET_EVENT_TYPE(EvMouseButtonReleased)
 
 	MouseReleaseEvent(KeyPress key)
 		: KeyReleaseEvent(key) {}
@@ -98,7 +98,7 @@ class MouseMoveEvent : public KeyEvent
 public:
 
 	SET_EVENT_CATEGORY(EventCatMouse)
-	SET_EVENT_TYPE(MouseMoved)
+	SET_EVENT_TYPE(EvMouseMoved)
 
 	inline float GetX() { return x; }
 	inline float GetY() { return y; }

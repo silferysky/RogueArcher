@@ -41,30 +41,30 @@ public:
 
 		switch (toHandle.GetEventType())
 		{
-		case EventTypeNone:
+		case EvTypeNone:
 			break;
-		case WindowClose:
+		case EvWindowClose:
 			exit(0);
 			break;
-		case WindowResize:
+		case EvWindowResize:
 			break;
-		case WindowFocus:
+		case EvWindowFocus:
 			break;
-		case WindowLostFocus:
+		case EvWindowLostFocus:
 			break;
-		case WindowMoved:
+		case EvWindowMoved:
 			break;
-		case KeyPressed:
+		case EvKeyPressed:
 			break;
-		case KeyReleased:
+		case EvKeyReleased:
 			break;
-		case MouseButtonPressed:
+		case EvMouseButtonPressed:
 			break;
-		case MouseButtonReleaseed:
+		case EvMouseButtonReleased:
 			break;
-		case MouseMoved:
+		case EvMouseMoved:
 			break;
-		case MouseScrolled:
+		case EvMouseScrolled:
 			break;
 		default:
 			break;

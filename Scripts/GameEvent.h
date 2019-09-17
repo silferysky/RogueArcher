@@ -23,7 +23,7 @@ public:
 		: EntityEvent(id), EnemyState(newState) {}
 
 	SET_EVENT_CATEGORY(EventCatEntChangeState)
-	SET_EVENT_TYPE(EntityChangeStateEvent)
+	SET_EVENT_TYPE(EvEntityChangeState)
 
 	inline int GetState() { return EnemyState; }
 
@@ -40,7 +40,7 @@ public:
 	virtual ~EntTeleportEvent() = default;
 
 	SET_EVENT_CATEGORY(EventCatEntMove)
-	SET_EVENT_TYPE(EntityTeleportEvent)
+	SET_EVENT_TYPE(EvEntityTeleport)
 
 	inline bool isAffectedByForce() { return AffectedByForce; }
 
@@ -55,7 +55,7 @@ public:
 		: EntTeleportEvent(id, forceAffected), xMovement(x), yMovement(y) {}
 
 	SET_EVENT_CATEGORY(EventCatEntMove)
-	SET_EVENT_TYPE(EntityMoveEvent)
+	SET_EVENT_TYPE(EvEntityMove)
 
 	inline float GetXMovement() { return xMovement; }
 	inline float GetYMovement() { return yMovement; }
@@ -84,7 +84,7 @@ public:
 	EntAttackingEvent(int id, int damage)
 		: EntAttackEvent(id, damage) {}
 
-	SET_EVENT_TYPE(EntityAttackingEvent)
+	SET_EVENT_TYPE(EvEntityAttacking)
 };
 
 class EntDamagedEvent : public EntAttackEvent
@@ -93,7 +93,7 @@ public:
 	EntDamagedEvent(int id, int damage)
 		: EntAttackEvent(id, damage) {}
 
-	SET_EVENT_TYPE(EntityDamagedEvent)
+	SET_EVENT_TYPE(EvEntityDamaged)
 };
 
 class EntDestroyEvent : public EntityEvent
@@ -103,5 +103,5 @@ public:
 		: EntityEvent(id) {}
 
 	SET_EVENT_CATEGORY(EventCatEntDestroy)
-	SET_EVENT_TYPE(EntityDestroyEvent)
+	SET_EVENT_TYPE(EvEntityDestroy)
 };

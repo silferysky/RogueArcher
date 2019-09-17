@@ -11,33 +11,33 @@
 
 enum EventType
 {
-	EventTypeNone = 0,
+	EvTypeNone = 0,
 
-	WindowClose,
-	WindowResize,
-	WindowFocus,
-	WindowLostFocus,
-	WindowMoved,
+	EvWindowClose,
+	EvWindowResize,
+	EvWindowFocus,
+	EvWindowLostFocus,
+	EvWindowMoved,
 
-	AppTick,
-	AppUpdate,
-	AppRender,
+	EvAppTick,
+	EvAppUpdate,
+	EvAppRender,
 
-	KeyPressed,
-	KeyReleased,
+	EvKeyPressed,
+	EvKeyReleased,
 
-	MouseButtonPressed,			//To be combined with KeyPressed
-	MouseButtonReleaseed,		//To be combined with KeyReleased
-	MouseMoved,
-	MouseScrolled,
+	EvMouseButtonPressed,			//To be combined with EvKeyPressed
+	EvMouseButtonReleased,		//To be combined with EvKeyReleased
+	EvMouseMoved,
+	EvMouseScrolled,
 
-	EntityChangeStateEvent,
+	EvEntityChangeState,
 
-	EntityMoveEvent,
-	EntityTeleportEvent,
-	EntityAttackingEvent,
-	EntityDamagedEvent,
-	EntityDestroyEvent
+	EvEntityMove,
+	EvEntityTeleport,
+	EvEntityAttacking,
+	EvEntityDamaged,
+	EvEntityDestroy
 };
 
 enum EventCategory

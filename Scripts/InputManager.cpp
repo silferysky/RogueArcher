@@ -43,8 +43,12 @@ void InputManager::HandleState()
 {
 	for (int i = 0; i < KeyCount; ++i)
 	{
-		int tempPos = -1;
-		//tempPos = KeyConfig
+		if (CurKeyboardState.Key[i] > 0)
+			CreateKeyPressEvent((KeyPress(i)), CurKeyboardState.Key[i]);
+		if (KeyReleased((KeyPress)i))
+		{
+			CreateKeyReleaseEvent((KeyPress)i);
+		}
 	}
 }
 
@@ -244,6 +248,14 @@ bool InputManager::KeyTriggeredAny()
 		if (KeyTriggered((KeyPress)i))
 			return true;
 	}
+	return false;
+}
+
+bool InputManager::KeyReleased(KeyPress checkKey)
+{
+	if (PrevKeyboardState.Key[checkKey] > 0)
+		if (KeyUp(checkKey))
+			return true;
 	return false;
 }
 

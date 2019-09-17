@@ -7,7 +7,7 @@
 #include "RogueEngine.h"
 #include "MemoryType.h"
 
-class MemoryManager :
+static class MemoryManager :
 	public BaseSystem
 {
 public:
@@ -51,12 +51,12 @@ void* operator new[](size_t space, MemoryType mem)
 
 void operator delete(void* ptr, MemoryType mem)
 {
-	free(ptr);
 	MemoryManager::remove(ptr, mem);
+	free(ptr);
 }
 
 void operator delete[](void* ptr, MemoryType mem)
 {
-	free(ptr);
 	MemoryManager::remove(ptr, mem);
+	free(ptr);
 }
