@@ -46,7 +46,9 @@ bool WriteToFile(const char* FileName, const char* DataTitle, T DataToChange)
 		std::ostringstream ss;
 		ss << DataToChange;
 
-		doc[DataTitle].SetString(rapidjson::GenericStringRef<char>(ss.str().c_str())); // = DataToChange;
+		std::string DataString(ss.str());
+
+		doc[DataTitle].SetString(rapidjson::GenericStringRef<char>(DataString.c_str()), doc.GetAllocator()); // = DataToChange;
 		std::ofstream ofs{ FileName };
 		if (!ofs.is_open())
 		{
