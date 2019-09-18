@@ -50,6 +50,7 @@ int main()
 	RE_INFO("TESTING HERE FOR A RANDOM EVENT");
 	KeyPressEvent testEvent((KeyPress)KeyArrowRight, 10);
 	RE_INFO(testEvent.ToString());
+	RE_INFO(testEvent.GetEventName());
 	RE_INFO("END EVENT TEST");
 
 	RE_INFO("TESTING HERE FOR FILE IO");

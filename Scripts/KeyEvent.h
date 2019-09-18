@@ -9,8 +9,11 @@ class KeyEvent : public Event
 public:
 	SET_EVENT_CATEGORY(EventCatInput | EventCatKeyboard)
 
-	inline KeyPress GetKeyCode() { return KeyCode; };
-	inline void SetKeyCode(KeyPress key) { KeyCode = key; }
+	virtual KeyPress GetKeyCode() const { return KeyCode; }
+	virtual const char* GetKeyName() const { return "None"; }
+
+	//This should not be used
+	inline void SetKeyCode(const KeyPress key) { KeyCode = key; }
 
 protected:
 
