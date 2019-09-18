@@ -43,3 +43,17 @@ void Quad::Draw()
 
 	glDrawArrays(GL_QUADS, 0, 4);
 }
+
+void Quad::RotateRight()
+{
+	float sin1 = (float)sin(10 * (PI / 180));
+	float cos1 = (float)cos(10 * (PI / 180));
+
+	for (int i = 0; i < 8; ++i)
+	{
+		if (i % 2)
+			_vertexpos[i] = _vertexpos[i - 1] * sin1 + _vertexpos[i] * cos1;
+		else
+			_vertexpos[i] = _vertexpos[i] * cos1 - _vertexpos[i + 1] * sin1;
+	}
+}

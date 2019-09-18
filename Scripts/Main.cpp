@@ -77,23 +77,21 @@ int main()
 
 		/* Poll for and process events */
 		glfwPollEvents();
-	}
 
-	glfwTerminate();
+		//Main Debug
+		RE_INFO("INPUT DEBUG");
 
-	//Main Debug
-	RE_INFO("INPUT DEBUG");
-
-	int repeat = 0;
-	float timer = 0.0f;
- 	while (repeat < 5)
-	{
-		InputMgr->UpdateState();
-
-		if (InputMgr->KeyTriggeredAny())
+		int repeat = 0;
+		float timer = 0.0f;
+		while (repeat < 5)
 		{
-			++repeat;
-			//InputMgr->DebugKeyInputs();
+			InputMgr->UpdateState();
+
+			if (InputMgr->KeyTriggeredAny())
+			{
+				++repeat;
+				//InputMgr->DebugKeyInputs();
+			}
 		}
 	}
 
@@ -136,6 +134,8 @@ int main()
 	RE_INFO(str);
 
 	std::cin.get();
+
+	glfwTerminate();
 	delete InputMgr;
 	return 0;
 }
