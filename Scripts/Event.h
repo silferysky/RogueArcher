@@ -70,6 +70,7 @@ public:
 	virtual const char* GetEventName() const { return "None"; };
 	virtual bool Handled() const { return isHandled; };
 	virtual std::string ToString() const { return GetEventName(); };
+	virtual ~Event() = default;
 
 	//Checker functions
 	inline bool InCategory(EventCategory cat) 
