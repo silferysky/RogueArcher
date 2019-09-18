@@ -127,6 +127,9 @@
     <ClInclude Include="Scripts\MemoryType.h">
       <Filter>RogueEngine\Systems\Memory</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\MemoryManager.h">
+      <Filter>RogueEngine\Systems\Memory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\GameStateManager.cpp">
@@ -164,6 +167,9 @@
     </ClCompile>
     <ClCompile Include="Scripts\BaseComponent.cpp">
       <Filter>RogueEngine\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\MemoryManager.cpp">
+      <Filter>RogueEngine\Systems\Memory</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

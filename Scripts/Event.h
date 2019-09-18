@@ -6,8 +6,9 @@
 #define EvCatFlag(x) (1 << x) //Defines event category as x shifted by 1 bit (since 0 is None)
 
 //Macros to help set Category/Type
-#define SET_EVENT_TYPE(type) static EventType GetStaticType() { return EventType::##type; } virtual EventType GetEventType() const override {return type;} virtual const char* GetEventName() const override { return #type; }
+#define SET_EVENT_TYPE(type) static EventType GetStaticType() { return EventType::##type; } virtual EventType GetEventType() const override { return type; } virtual const char* GetEventName() const override { return #type; }
 #define SET_EVENT_CATEGORY(cat) virtual int GetEventCat() const override {return cat;}
+#define stringify(name) #name
 
 enum EventType
 {
@@ -26,7 +27,7 @@ enum EventType
 	EvKeyPressed,
 	EvKeyReleased,
 
-	EvMouseButtonPressed,			//To be combined with EvKeyPressed
+	EvMouseButtonPressed,		//To be combined with EvKeyPressed
 	EvMouseButtonReleased,		//To be combined with EvKeyReleased
 	EvMouseMoved,
 	EvMouseScrolled,

@@ -1,6 +1,16 @@
 #include "MemoryManager.h"
 
-
+/***************Definition/Initialization of values*****************/
+std::map<const void*, const size_t> MemoryManager::SystemMap;
+std::map<const void*, const size_t> MemoryManager::EntityMap;
+std::map<const void*, const size_t> MemoryManager::ComponentMap;
+size_t MemoryManager::SystemAlloc;
+size_t MemoryManager::EntityAlloc;
+size_t MemoryManager::ComponentAlloc;
+size_t MemoryManager::SystemAllocBytes;
+size_t MemoryManager::EntityAllocBytes;
+size_t MemoryManager::ComponentAllocBytes;
+/********************************************************************/
 
 MemoryManager::MemoryManager()
 {

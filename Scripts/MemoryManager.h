@@ -1,13 +1,10 @@
 #pragma once
 #include <map>			//std::map
 #include <algorithm>	//std::find
-#include <iterator>		//std::iterator
-#include <memory>		//std::shared_ptr
-#include <cstdlib>		//std::pair
 #include "RogueEngine.h"
 #include "MemoryType.h"
 
-static class MemoryManager :
+class MemoryManager :
 	public BaseSystem
 {
 public:
