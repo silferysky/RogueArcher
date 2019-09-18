@@ -7,7 +7,7 @@ class WinCloseEvent : public Event
 public:
 	WinCloseEvent(){}
 	SET_EVENT_CATEGORY(EventCatApp)
-	SET_EVENT_TYPE(WindowClose)
+	SET_EVENT_TYPE(EvWindowClose)
 };
 
 class WinResizeEvent : public Event
@@ -20,7 +20,7 @@ public:
 	inline unsigned int GetHeight() { return WinHeight; }
 
 	SET_EVENT_CATEGORY(EventCatApp)
-	SET_EVENT_TYPE(WindowResize)
+	SET_EVENT_TYPE(EvWindowResize)
 
 private:
 	unsigned int WinWidth, WinHeight;
@@ -32,7 +32,7 @@ public:
 	WinFocusEvent(){}
 
 	SET_EVENT_CATEGORY(EventCatApp)
-	SET_EVENT_TYPE(WindowFocus)
+	SET_EVENT_TYPE(EvWindowFocus)
 };
 
 class WinLostFocusEvent : public Event
@@ -41,7 +41,7 @@ public:
 	WinLostFocusEvent(){}
 
 	SET_EVENT_CATEGORY(EventCatApp)
-	SET_EVENT_TYPE(WindowLostFocus)
+	SET_EVENT_TYPE(EvWindowLostFocus)
 };
 
 class WinMovedEvent : public Event
@@ -50,29 +50,29 @@ public:
 	WinMovedEvent(){}
 
 	SET_EVENT_CATEGORY(EventCatApp)
-	SET_EVENT_TYPE(WindowMoved)
+	SET_EVENT_TYPE(EvWindowMoved)
 };
 
-class AppTickEvent : public Event
+class EvAppTickEvent : public Event
 {
-	AppTickEvent() {}
+	EvAppTickEvent() {}
 
 	SET_EVENT_CATEGORY(EventCatApp)
-	SET_EVENT_TYPE(AppTick)
+	SET_EVENT_TYPE(EvAppTick)
 };
 
-class AppUpdateEvent : public Event
+class EvAppUpdateEvent : public Event
 {
-	AppUpdateEvent() {}
+	EvAppUpdateEvent() {}
 
 	SET_EVENT_CATEGORY(EventCatApp)
-	SET_EVENT_TYPE(AppUpdate)
+	SET_EVENT_TYPE(EvAppUpdate)
 };
 
-class AppRenderEvent : public Event
+class EvAppRenderEvent : public Event
 {
-	AppRenderEvent() {}
+	EvAppRenderEvent() {}
 
 	SET_EVENT_CATEGORY(EventCatApp)
-	SET_EVENT_TYPE(AppRender)
+	SET_EVENT_TYPE(EvAppRender)
 };
