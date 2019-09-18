@@ -11,35 +11,51 @@
 
 enum EventType
 {
-	EventTypeNone = 0,
+	EvTypeNone = 0,
 
-	WindowClose,
-	WindowResize,
-	WindowFocus,
-	WindowLostFocus,
-	WindowMoved,
+	EvWindowClose,
+	EvWindowResize,
+	EvWindowFocus,
+	EvWindowLostFocus,
+	EvWindowMoved,
 
-	AppTick,
-	AppUpdate,
-	AppRender,
+	EvAppTick,
+	EvAppUpdate,
+	EvAppRender,
 
-	KeyPressed,
-	KeyReleased,
+	EvKeyPressed,
+	EvKeyReleased,
 
-	MouseButtonPressed,
-	MouseButtonReleaseed,
-	MouseMoved,
-	MouseScrolled
+	EvMouseButtonPressed,			//To be combined with EvKeyPressed
+	EvMouseButtonReleased,		//To be combined with EvKeyReleased
+	EvMouseMoved,
+	EvMouseScrolled,
+
+	EvEntityChangeState,
+
+	EvEntityMove,
+	EvEntityTeleport,
+	EvEntityAttacking,
+	EvEntityDamaged,
+	EvEntityDestroy
 };
 
 enum EventCategory
 {
 	EventCatNone = 0,
-	EventCatApp			= EvCatFlag(0),			//Any event related to application (resize, movement etc)
-	EventCatInput		= EvCatFlag(1),			//Any input (keyboard/mouse)
-	EventCatKeyboard	= EvCatFlag(2),			//Only keyboard input
-	EventCatMouse 		= EvCatFlag(3),			//Only mouse input (Movement + click)
-	EventCatMouseButton	= EvCatFlag(4)			//Only mouse input (Click)
+	EventCatApp				= EvCatFlag(0),			//Any event related to application (resize, movement etc)
+	EventCatInput			= EvCatFlag(1),			//Any input (keyboard/mouse)
+	EventCatKeyboard		= EvCatFlag(2),			//Only keyboard input
+	EventCatMouse 			= EvCatFlag(3),			//Only mouse input (Movement + click)
+	EventCatMouseButton		= EvCatFlag(4),			//Only mouse input (Click)
+
+	EventCatEntAddCmp		= EvCatFlag(5),			//Adding component to entity
+
+	EventCatEntity			= EvCatFlag(6),			//For entity events
+	EventCatEntChangeState	= EvCatFlag(7),			//For entity behavior changing state
+	EventCatEntMove			= EvCatFlag(7),			//For entity movement/teleportation
+	EventCatEntAttack		= EvCatFlag(8),			//For entity attacking/taking damage
+	EventCatEntDestroy		= EvCatFlag(10)			//For completely removing entities
 };
 
 class Event

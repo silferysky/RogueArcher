@@ -21,17 +21,16 @@ public:
 
 	void Update()
 	{
-		//Safety check
-		if (eventDispatcher.EventQueue->empty())
-			return;
-
-		//Queue is not empty here onwards
-		Event& nextEvent = GetQueueHead();
-		if (nextEvent.Handled())
+		//While queue is not empty, handle all events
+		while (!eventDispatcher.EventQueue->empty())
 		{
-			DispatchEvent(nextEvent);
+			Event& nextEvent = GetQueueHead();
+			if (nextEvent.Handled())
+			{
+				DispatchEvent(nextEvent);
+			}
+			EventQueue->pop();
 		}
-		EventQueue->pop();
 	}
 
 	//Dispatch sends it to the relavent system to execute event
@@ -42,30 +41,30 @@ public:
 
 		switch (toHandle.GetEventType())
 		{
-		case EventTypeNone:
+		case EvTypeNone:
 			break;
-		case WindowClose:
+		case EvWindowClose:
 			exit(0);
 			break;
-		case WindowResize:
+		case EvWindowResize:
 			break;
-		case WindowFocus:
+		case EvWindowFocus:
 			break;
-		case WindowLostFocus:
+		case EvWindowLostFocus:
 			break;
-		case WindowMoved:
+		case EvWindowMoved:
 			break;
-		case KeyPressed:
+		case EvKeyPressed:
 			break;
-		case KeyReleased:
+		case EvKeyReleased:
 			break;
-		case MouseButtonPressed:
+		case EvMouseButtonPressed:
 			break;
-		case MouseButtonReleaseed:
+		case EvMouseButtonReleased:
 			break;
-		case MouseMoved:
+		case EvMouseMoved:
 			break;
-		case MouseScrolled:
+		case EvMouseScrolled:
 			break;
 		default:
 			break;

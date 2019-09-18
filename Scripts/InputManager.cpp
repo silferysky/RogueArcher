@@ -43,8 +43,12 @@ void InputManager::HandleState()
 {
 	for (int i = 0; i < KeyCount; ++i)
 	{
-		int tempPos = -1;
-		//tempPos = KeyConfig
+		if (CurKeyboardState.Key[i] > 0)
+			CreateKeyPressEvent((KeyPress(i)), CurKeyboardState.Key[i]);
+		if (KeyReleased((KeyPress)i))
+		{
+			CreateKeyReleaseEvent((KeyPress)i);
+		}
 	}
 }
 
@@ -247,6 +251,14 @@ bool InputManager::KeyTriggeredAny()
 	return false;
 }
 
+bool InputManager::KeyReleased(KeyPress checkKey)
+{
+	if (PrevKeyboardState.Key[checkKey] > 0)
+		if (KeyUp(checkKey))
+			return true;
+	return false;
+}
+
 void InputManager::ResetKeyBind()
 {
 	std::map<KeyPress, KeyFunction> GameKeyBinding;
@@ -271,4 +283,18 @@ void InputManager::ResetKeyBind()
 
 	GameKeyConfig = GameKeyBinding;
 	MenuKeyConfig = MenuKeyBinding;
+}
+
+Event InputManager::CreateKeyPressEvent(KeyPress key, int repeat)
+{
+	KeyPressEvent event(key, repeat);
+	eventDispatcher.AddEvent(event);
+	return event;
+}
+
+Event InputManager::CreateKeyReleaseEvent(KeyPress key)
+{
+	KeyReleaseEvent event(key);
+	eventDispatcher.AddEvent(event);
+	return event;
 }
