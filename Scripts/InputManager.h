@@ -1,7 +1,7 @@
 #pragma once
 #include <Windows.h>
 #include <map>
-#include "System.h"
+#include "BaseSystem.h"
 #include "EventDispatcher.h"
 #include "KeyEvent.h"
 #include "InputData.h"
@@ -30,8 +30,8 @@ struct FuncState
 	int Func[FuncCount] = { 0 };
 };
 
-class InputManager:
-	public System
+class InputManager
+	: public BaseSystem
 {
 public:
 	InputManager();

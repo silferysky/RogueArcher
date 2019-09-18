@@ -5,10 +5,15 @@
 #include "Main.h"
 #include "KeyEvent.h"
 #include "InputManager.h"
+#include "MemoryManager.h"
 #include "Library.h"
-
+#include "FileIO.h"
 #include "Quad.h"
 #include "SOIL.h"
+#include "imgui.h"
+#include "imgui_impl_opengl3.h"
+#include "imgui_impl_glfw.h"
+#include "ImguiLayer.h"
 GLuint texture[1];
 
 double t = 0.0;
@@ -22,12 +27,17 @@ static const int SCREEN_HEIGHT = 540;
 //Use for console
 int main()
 {
+	//WriteToFile("Resources/test.json", "angle z", 1);
+	ImGuiLayer::ImguiLayer Editor;
+	Editor.StartWindow();
+	Editor.UpdateWindow();
+	Editor.CloseWindow();
+
 	//Logger
-	Logger::InitLogger();
+	/*Logger::InitLogger();
 	RE_CORE_TRACE("Init Core Logger");
 
 	InputManager* InputMgr = new InputManager();
-	MemoryManager memManager;
 	RE_INFO("Hello");
 
 	//Main Debug
@@ -64,12 +74,12 @@ int main()
 	RE_INFO("TEST ReMM (Rogue Engine Memory Manager)");
 	MemoryManager ReMM;
 
-	System s;
-	System s2;
-	Entity e;
-	Component c;
+	BaseSystem s;
+	BaseSystem s2;
+	BaseEntity e;
+	BaseComponent c;
 
-	std::shared_ptr<System> ptr = std::make_shared<System>(s);
+	std::shared_ptr<BaseSystem> ptr = std::make_shared<BaseSystem>(s);
 
 	ReMM.AddIntoMemory(s);
 	ReMM.AddIntoMemory(s2);
@@ -86,57 +96,9 @@ int main()
 
 	RE_INFO(str);
 
-	//Graphics Debug
+	//Graphics Debug*/
 	
-	GLFWwindow* window;
 
-	/* Initialize the library */
-	if (!glfwInit())
-		return -1;
-
-	/* Create a windowed mode window and its OpenGL context */
-	window = glfwCreateWindow(640, 480, "Terence Dad Gay", NULL, NULL);
-	if (!window)
-	{
-		glfwTerminate();
-		return -1;
-	}
-
-	/* Make the window's context current */
-	glfwMakeContextCurrent(window);
-
-	/* Error check */
-	if (glewInit() != GLEW_OK)
-		std::cout << "Oh fuck" << std::endl;
-
-	std::cout << glGetString(GL_VERSION) << std::endl;
-
-	float vertex[8] = { -0.5f,  0.5f,
-						 0.5f,  0.5f,
-						 0.5f, -0.5f,
-						-0.5f, -0.5f, };
-
-	Quad test(vertex, "(1.0, 0.0, 0.0, 0.0)");
-
-	/* Loop until the user closes the window */
-	while (!glfwWindowShouldClose(window))
-	{
-		/* Render here */
-		glClear(GL_COLOR_BUFFER_BIT);
-
-		test.Draw();
-
-		/* Swap front and back buffers */
-		glfwSwapBuffers(window);
-
-		/* Poll for and process events */
-		glfwPollEvents();
-	}
-
-	glfwTerminate();
-
-	std::cin.get();
-	delete InputMgr;
 	return 0;
 }
 
@@ -192,8 +154,10 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
 
 		//fpFree();
 
-		if (_next != GS_RESTART);
+		if (_next != GS_RESTART)
+		{
 			//fpUnload();
+		}
 
 		_previous = _current;
 		_current = _next;
