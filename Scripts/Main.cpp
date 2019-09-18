@@ -7,6 +7,7 @@
 #include "InputManager.h"
 #include "MemoryManager.h"
 #include "Library.h"
+#include "FileIO.h"
 
 #include "Quad.h"
 #include "SOIL.h"
@@ -63,6 +64,8 @@ int main()
 						-0.5f, -0.5f, };
 
 	Quad test(vertex, "(1.0, 0.0, 0.0, 0.0)");
+
+	WriteToFile("Resources/test.json", "ip", 123);
 
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
