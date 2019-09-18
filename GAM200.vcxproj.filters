@@ -184,6 +184,9 @@
     <ClInclude Include="Scripts\Vector2.h">
       <Filter>RogueEngine\Data</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\FileIO.h">
+      <Filter>RogueEngine\Systems\I/O</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\GameStateManager.cpp">
@@ -263,6 +266,9 @@
     </ClCompile>
     <ClCompile Include="Scripts\Vector2.cpp">
       <Filter>RogueEngine\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\FileIO.cpp">
+      <Filter>RogueEngine\Systems\I/O</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

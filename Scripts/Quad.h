@@ -13,7 +13,7 @@ public:
 	~Quad() = default;
 
 	void Draw();
-	void Update();
+	void RotateRight();
 };
 
 #endif
