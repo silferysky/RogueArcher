@@ -1,8 +1,30 @@
 #pragma once
-#include <map>			//std::map
-#include <algorithm>	//std::find
+#include <list>					//std::list
+#include <memory>				//std::unique_ptr
 #include "RogueEngine.h"
 #include "MemoryType.h"
+
+#define MEM_SPACE 1024 * 1024
+#define MAX_CHUNK_SIZE 1024
+
+struct MemChunk
+{
+	int* chunkStart;
+	size_t size;
+
+	MemChunk()
+		:chunkStart(nullptr), size(0) {}
+
+	MemChunk(int* start, size_t sz)
+		:chunkStart(start), size(sz) {}
+
+	bool operator==(MemChunk chunk)
+	{
+		if (chunkStart == chunk.chunkStart)
+			return true;
+		return false;
+	}
+};
 
 class MemoryManager :
 	public BaseSystem
@@ -11,49 +33,41 @@ public:
 	MemoryManager();
 	~MemoryManager();
 
-	static void add(const void* ptr, const size_t size, MemoryType memType);
-	static void remove(const void* ptr, MemoryType memType);
+	static void*		Allocate(const size_t size);
+	static void			Deallocate(const int* ptr, const size_t size);
+	static bool			FindSpareChunk(const size_t size);
+	static MemChunk		FindUsedChunk(int* ptr);
+	static bool			CombineChunks();
 
 private:
 
-	static std::map<const void*, const size_t> SystemMap;
-	static std::map<const void*, const size_t> EntityMap;
-	static std::map<const void*, const size_t> ComponentMap;
-
-	static size_t SystemAlloc;
-	static size_t EntityAlloc;
-	static size_t ComponentAlloc;
-
-	static size_t SystemAllocBytes;
-	static size_t EntityAllocBytes;
-	static size_t ComponentAllocBytes;
+	static int* MemoryStart;
+	static int* MemoryCurrent;
+	static std::list<MemChunk> MemorySpare;
+	static std::list<MemChunk> MemoryUsed;
 };
 
 //For Generic overload new/delete
 void* operator new(size_t space, MemoryType mem)
 {
-	void* ptr = malloc(space);
-	MemoryManager::add(ptr, space, mem);
-
+	void* ptr = MemoryManager::Allocate(space);
 	return ptr;
 }
 
-void* operator new[](size_t space, MemoryType mem)
+void* operator new[](size_t space)
 {
-	void* ptr = malloc(space);
-	MemoryManager::add(ptr, space, mem);
-
+	void* ptr = MemoryManager::Allocate(space);
 	return ptr;
 }
 
-void operator delete(void* ptr, MemoryType mem)
+void operator delete(void* ptr)
 {
-	MemoryManager::remove(ptr, mem);
-	free(ptr);
+	MemChunk toDeallocate = MemoryManager::FindUsedChunk((int*)ptr);
+	MemoryManager::Deallocate(toDeallocate.chunkStart, toDeallocate.size);
 }
 
-void operator delete[](void* ptr, MemoryType mem)
+void operator delete[](void* ptr)
 {
-	MemoryManager::remove(ptr, mem);
-	free(ptr);
+	MemChunk toDeallocate = MemoryManager::FindUsedChunk((int*)ptr);
+	MemoryManager::Deallocate(toDeallocate.chunkStart, toDeallocate.size);
 }
