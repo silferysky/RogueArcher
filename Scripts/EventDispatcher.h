@@ -1,35 +1,34 @@
 #pragma once
 
 #include <queue>
-#include "Event.h"
+#include "EventListener.h"
 
 static class EventDispatcher :
 	public BaseSystem
 {
-
 public:
 
-	EventDispatcher() { EventQueue = new std::queue<Event>; }
-	~EventDispatcher() { delete EventQueue; }
+	EventDispatcher() { EventQueue = std::queue<Event>(); }
+	~EventDispatcher() { }
 
-	Event& GetQueueHead() { return EventQueue->front(); }
+	Event& GetQueueHead() { return EventQueue.front(); }
 
 	void AddEvent(Event& e)
 	{
-		EventQueue->push(e);
+		EventQueue.push(e);
 	}
 
 	void Update()
 	{
 		//While queue is not empty, handle all events
-		while (!eventDispatcher.EventQueue->empty())
+		while (!EventQueue.empty())
 		{
 			Event& nextEvent = GetQueueHead();
 			if (nextEvent.Handled())
 			{
 				DispatchEvent(nextEvent);
 			}
-			EventQueue->pop();
+			EventQueue.pop();
 		}
 	}
 
@@ -39,38 +38,49 @@ public:
 		//Is better to let individual systems handle events than handle all here
 		//Basically: Send a message to the relevant system to activate relavent function
 
-		switch (toHandle.GetEventType())
+		switch (toHandle.GetEventMsgType())
 		{
-		case EvTypeNone:
+		case MSG_BROADCAST:
+			for (std::map<SYSTEMID, BaseSystem*>::iterator it = EventListener::ListenerMap.begin(); it != EventListener::ListenerMap.end(); ++it) 
+			{
+				//Send to all
+			}
 			break;
-		case EvWindowClose:
-			exit(0);
-			break;
-		case EvWindowResize:
-			break;
-		case EvWindowFocus:
-			break;
-		case EvWindowLostFocus:
-			break;
-		case EvWindowMoved:
-			break;
-		case EvKeyPressed:
-			break;
-		case EvKeyReleased:
-			break;
-		case EvMouseButtonPressed:
-			break;
-		case EvMouseButtonReleased:
-			break;
-		case EvMouseMoved:
-			break;
-		case EvMouseScrolled:
+		case MSG_DIRECT:
+			switch (toHandle.GetEventType())
+			{
+			case EvTypeNone:
+				break;
+			case EvWindowClose:
+				exit(0);
+				break;
+			case EvWindowResize:
+				break;
+			case EvWindowFocus:
+				break;
+			case EvWindowLostFocus:
+				break;
+			case EvWindowMoved:
+				break;
+			case EvKeyPressed:
+				break;
+			case EvKeyReleased:
+				break;
+			case EvMouseButtonPressed:
+				break;
+			case EvMouseButtonReleased:
+				break;
+			case EvMouseMoved:
+				break;
+			case EvMouseScrolled:
+				break;
+			default:
+			}
 			break;
 		default:
-			break;
 		}
 	}
 
 private:
-	std::queue<Event> *EventQueue;
+	std::queue<Event> EventQueue;
 } eventDispatcher;

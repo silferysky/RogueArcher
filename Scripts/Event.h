@@ -8,6 +8,7 @@
 //Macros to help set Category/Type
 #define SET_EVENT_TYPE(type) static EventType GetStaticType() { return EventType::##type; } virtual EventType GetEventType() const override { return type; } virtual const char* GetEventName() const override { return #type; }
 #define SET_EVENT_CATEGORY(cat) virtual int GetEventCat() const override {return cat;}
+#define SET_EVENT_MSG_TYPE(type) virtual EventMessageType GetEventMsgType() const { return type; }
 #define stringify(name) #name
 
 enum EventType
@@ -59,6 +60,12 @@ enum EventCategory
 	EventCatEntDestroy		= EvCatFlag(10)			//For completely removing entities
 };
 
+enum EventMessageType
+{
+	MSG_BROADCAST = 0,
+	MSG_DIRECT
+};
+
 class Event
 {
 	friend class EventDispatcher;
@@ -68,6 +75,7 @@ public:
 	//Functions to override
 	virtual int GetEventCat() const { return (int)eventCat; };
 	virtual EventType GetEventType() const { return eventType; };
+	virtual EventMessageType GetEventMsgType() const { return eventMsgType; };
 	virtual const char* GetEventName() const { return "None"; };
 	virtual bool Handled() const { return isHandled; };
 	virtual std::string ToString() const { return GetEventName(); };
@@ -83,6 +91,7 @@ public:
 protected:
 	EventCategory eventCat;			//Event Category as based on the EventCategory enum
 	EventType eventType;			//Specific event type
+	EventMessageType eventMsgType;	//Specific message type
 	std::string eventName;			//Name of event
 	bool isHandled = false;			//If event is handled or not
 };

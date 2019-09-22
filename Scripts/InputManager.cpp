@@ -46,9 +46,7 @@ void InputManager::HandleState()
 		if (CurKeyboardState.Key[i] > 0)
 			CreateKeyPressEvent((KeyPress(i)), CurKeyboardState.Key[i]);
 		if (KeyReleased((KeyPress)i))
-		{
 			CreateKeyReleaseEvent((KeyPress)i);
-		}
 	}
 }
 
@@ -230,14 +228,14 @@ void InputManager::ResetKeyBind()
 	MenuKeyConfig = MenuKeyBinding;
 }
 
-Event InputManager::CreateKeyPressEvent(KeyPress key, int repeat)
+Event& InputManager::CreateKeyPressEvent(KeyPress key, int repeat)
 {
 	KeyPressEvent event(key, repeat);
 	eventDispatcher.AddEvent(event);
 	return event;
 }
 
-Event InputManager::CreateKeyReleaseEvent(KeyPress key)
+Event& InputManager::CreateKeyReleaseEvent(KeyPress key)
 {
 	KeyReleaseEvent event(key);
 	eventDispatcher.AddEvent(event);
