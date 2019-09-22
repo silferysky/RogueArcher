@@ -70,9 +70,6 @@
     <ClInclude Include="Scripts\KeyEvent.h">
       <Filter>RogueEngine\Systems\EventSystem\Events</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\EventDispatcher.h">
-      <Filter>RogueEngine\Systems\EventSystem</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\InputManager.h">
       <Filter>RogueEngine\Systems</Filter>
     </ClInclude>
@@ -129,6 +126,12 @@
     </ClInclude>
     <ClInclude Include="Scripts\MemoryManager.h">
       <Filter>RogueEngine\Systems\Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\EventDispatcher.h">
+      <Filter>RogueEngine\Systems\EventSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\EventListener.h">
+      <Filter>RogueEngine\Systems\EventSystem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

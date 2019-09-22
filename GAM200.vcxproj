@@ -30,6 +30,7 @@
     <ClInclude Include="Scripts\EntityManager.h" />
     <ClInclude Include="Scripts\Event.h" />
     <ClInclude Include="Scripts\EventDispatcher.h" />
+    <ClInclude Include="Scripts\EventListener.h" />
     <ClInclude Include="Scripts\GameEvent.h" />
     <ClInclude Include="Scripts\GameStateList.h" />
     <ClInclude Include="Scripts\GameStateManager.h" />
