@@ -17,7 +17,9 @@ class EventListener : public BaseEventListener
 {
 public:
 	virtual ~EventListener() override {};
-	virtual void Receive(const T& event) = 0;
+	//virtual void Receive(const T& event) = 0;
 
 	BaseSystem* SysListener = nullptr;
 };
+
+typedef void(*LISTENER_HANDLER)(const Event&);

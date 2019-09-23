@@ -14,7 +14,7 @@ public:
 	{ 
 		EventQueue = std::queue<Event>();
 		DelayedEventQueue = std::queue<Event>();
-		ListenerMap = std::map<SYSTEMID, std::vector<BaseEventListener*>>();
+		ListenerMap = std::map<SYSTEMID, LISTENER_HANDLER>();
 
 	}
 	~EventDispatcher() { }
@@ -36,62 +36,34 @@ public:
 			isCombiningQueue = true;
 	}
 
-	template <typename T>
-	void AddListener(BaseSystem* sys, EventListener<T> lis)
+	void AddListener(BaseSystem* sys, LISTENER_HANDLER handler)
 	{
 		SYSTEMID ID = sys->ID();
-
-		//Add a map key if not found
-		if (ListenerMap.find(ID) == ListenerMap.end())
-		{
-			std::vector<BaseEventListener*> newListener();
-			ListenerMap.insert(ID, newListener);
-			RE_CORE_INFO("Added new key to ListenerMap");
-		}
-
-		//Adding value into vector
-		lis->SysListener = sys;
-		ListenerMap[ID].push_back(lis);
-		RE_CORE_INFO("Added new data to ListenerMap key");
+		ListenerMap.insert(std::pair<SYSTEMID, LISTENER_HANDLER>(ID, handler));
+		RE_CORE_INFO("Added new key to ListenerMap");
+	}
+	void AddListener(SYSTEMID ID, LISTENER_HANDLER handler)
+	{
+		ListenerMap.insert(std::pair<SYSTEMID, LISTENER_HANDLER>(ID, handler));
+		RE_CORE_INFO("Added new key to ListenerMap");
 	}
 	//Removes all listeners in map
 	void RemoveAllListener()
 	{
-		for (int i = 0; i < (int)LASTSYS; ++i)
-		{
-			RemoveAllListener((SYSTEMID)i);
-		}
+		ListenerMap.clear();
 	}
-	//Removes all listeners in a system
-	void RemoveAllListener(SYSTEMID ID)
+	void RemoveListener(SYSTEMID ID, LISTENER_HANDLER handler)
 	{
-		//Saving an unsigned int to check if value is removed
-		size_t i = ListenerMap[ID].size();
-		//Clear vector in map
-		ListenerMap[ID].clear();
-
-		if (i > ListenerMap[ID].size())
-			RE_CORE_INFO("Removed key from ListenerMap");
-		else
-			RE_CORE_INFO("Attempted but failed to remove key from ListenerMap");
-	}
-	template <typename T>
-	void RemoveListener(SYSTEMID ID, EventListener<T> lis)
-	{
-		for (auto it = ListenerMap[ID].begin(); it != ListenerMap[ID].end(); ++it)
+		for (auto it = ListenerMap.begin(); it != ListenerMap.end(); ++it)
 		{
-			//Convert to same type
-			auto baseLis = reinterpret_cast<BaseEventListener*>(lis);
-			if (*it == baseLis)
+			if (it->first == ID)
 			{
-				ListenerMap[ID].erase(it);
-				return;
+				ListenerMap.erase(it);
 			}
 		}
-
 	}
 
-	std::map<SYSTEMID, std::vector<BaseEventListener*>> GetMap()
+	std::map<SYSTEMID, LISTENER_HANDLER> GetMap()
 	{
 		return ListenerMap;
 	}
@@ -126,8 +98,7 @@ public:
 	}
 
 	//Dispatch sends it to the relavent system to execute event
-	template <typename T>
-	void DispatchEvent(const T& toHandle)
+	void DispatchEvent(const Event& toHandle)
 	{
 		//Is better to let individual systems handle events than handle all here
 		//Basically: Send a message to the relevant system to activate relavent function
@@ -135,13 +106,7 @@ public:
 		auto sysIt = ListenerMap.begin();
 		while (sysIt != ListenerMap.end())
 		{
-			//baseLis is expected to be baseListener
-			for (auto *baseLis : sysIt->second)
-			{
-				auto *lis = reinterpret_cast<EventListener<T>*>(baseLis);
-				lis->Receive(toHandle);
-			}
-			//Move on to next system
+			(*sysIt->second)(toHandle);
 			++sysIt;
 		}
 	}
@@ -149,7 +114,7 @@ public:
 private:
 	std::queue<Event> EventQueue;
 	std::queue<Event> DelayedEventQueue;
-	std::map<SYSTEMID, std::vector<BaseEventListener*>> ListenerMap;
+	std::map<SYSTEMID, LISTENER_HANDLER> ListenerMap;
 	bool isCombiningQueue = false;
 
 } eventDispatcher;
