@@ -12,14 +12,40 @@ public:
 	~EventDispatcher() { }
 
 	Event& GetQueueHead() { return EventQueue.front(); }
+	Event& GetQueueHeadDelayed() { return DelayedEventQueue.front(); }
 
 	void AddEvent(Event& e)
 	{
 		EventQueue.push(e);
 	}
+	void AddEventDelayed(Event& e)
+	{
+		DelayedEventQueue.push(e);
+	}
+
+	void CombineQueue()
+	{
+		while (!DelayedEventQueue.empty())
+		{
+			EventQueue.push(DelayedEventQueue.front());
+			DelayedEventQueue.pop();
+		}
+	}
+	void CombineQueueCmd(Event& e)
+	{
+		if (e.GetEventType() == DelayedEventQueue.front().GetEventType() &&
+			e.GetEventName() == DelayedEventQueue.front().GetEventName())
+				isCombiningQueue = true;
+	}
 
 	void Update()
 	{
+		if (isCombiningQueue)
+		{
+			CombineQueue();
+			isCombiningQueue = false;
+		}
+
 		//While queue is not empty, handle all events
 		while (!EventQueue.empty())
 		{
@@ -83,4 +109,7 @@ public:
 
 private:
 	std::queue<Event> EventQueue;
+	std::queue<Event> DelayedEventQueue;
+	bool isCombiningQueue = false;
+
 } eventDispatcher;
