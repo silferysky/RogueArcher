@@ -6,6 +6,8 @@
 #include "KeyEvent.h"
 #include "InputManager.h"
 #include "Library.h"
+#include "EventDispatcher.h"
+#include "TestSystem.h"
 
 #include "Quad.h"
 #include "SOIL.h"
@@ -22,7 +24,7 @@ static const int SCREEN_HEIGHT = 540;
 //Use for console
 int main()
 {
-	//Logger
+	//Logger Start
 	Logger::InitLogger();
 	RE_CORE_TRACE("Init Core Logger");
 
@@ -43,11 +45,9 @@ int main()
 		}
 	}
 
-	//InputMger->DebugKeyInputs();
 	RE_INFO("PAUSE HERE FOR END");
-	RE_ERROR("THIS IS A ERROR MESSAGE BUT NO ERROR");
 
-	RE_INFO("TESTING HERE FOR A RANDOM EVENT");
+	RE_INFO("TESTING HERE FOR A EVENT DEBUG");
 	KeyPressEvent testEvent((KeyPress)KeyArrowRight, 10);
 	RE_INFO(testEvent.ToString());
 	RE_INFO(testEvent.GetEventName());
@@ -59,6 +59,15 @@ int main()
 	testLibrary.IOTest();
 
 	RE_INFO("END TEST IO");
+
+	RE_INFO("MANUAL TEST EVENT DISPATCHER");
+	TestSystem testSys = TestSystem((SYSTEMID)2);
+	testSys.Receive(testEvent);
+
+	RE_INFO("EVENT DISPATCHER TEST");
+	eventDispatcher.AddEvent(testEvent);
+	eventDispatcher.Update();
+	RE_INFO("EVENT DISPATCHER END");
 
 	//Graphics Debug
 	

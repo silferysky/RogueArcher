@@ -23,7 +23,7 @@ MemoryManager::~MemoryManager()
 
 void* MemoryManager::Allocate(const size_t size)
 {
-	int SpaceUsed = MemoryCurrent - MemoryStart + size;
+	size_t SpaceUsed = MemoryCurrent - MemoryStart + size;
 	bool AbortAllocate = false;
 
 	if (SpaceUsed > MEM_SPACE)
