@@ -62,12 +62,18 @@ void* operator new[](size_t space)
 
 void operator delete(void* ptr)
 {
-	MemChunk toDeallocate = MemoryManager::FindUsedChunk((int*)ptr);
-	MemoryManager::Deallocate(toDeallocate.chunkStart, toDeallocate.size);
+	if (ptr != nullptr)
+	{
+		MemChunk toDeallocate = MemoryManager::FindUsedChunk((int*)ptr);
+		MemoryManager::Deallocate(toDeallocate.chunkStart, toDeallocate.size);
+	}
 }
 
 void operator delete[](void* ptr)
 {
-	MemChunk toDeallocate = MemoryManager::FindUsedChunk((int*)ptr);
-	MemoryManager::Deallocate(toDeallocate.chunkStart, toDeallocate.size);
+	if (ptr != nullptr)
+	{
+		MemChunk toDeallocate = MemoryManager::FindUsedChunk((int*)ptr);
+		MemoryManager::Deallocate(toDeallocate.chunkStart, toDeallocate.size);
+	}
 }

@@ -124,14 +124,14 @@
     <ClInclude Include="Scripts\MemoryType.h">
       <Filter>RogueEngine\Systems\Memory</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\MemoryManager.h">
-      <Filter>RogueEngine\Systems\Memory</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\EventDispatcher.h">
       <Filter>RogueEngine\Systems\EventSystem</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\EventListener.h">
       <Filter>RogueEngine\Systems\EventSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\TestSystem.h">
+      <Filter>RogueEngine\Systems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -162,17 +162,11 @@
     <ClCompile Include="Scripts\triangle.cpp">
       <Filter>RogueEngine\Systems\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\BaseSystem.cpp">
-      <Filter>RogueEngine\Systems</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\BaseEntity.cpp">
       <Filter>RogueEngine\Entities</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\BaseComponent.cpp">
       <Filter>RogueEngine\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\MemoryManager.cpp">
-      <Filter>RogueEngine\Systems\Memory</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

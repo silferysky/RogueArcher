@@ -228,14 +228,14 @@ void InputManager::ResetKeyBind()
 	MenuKeyConfig = MenuKeyBinding;
 }
 
-Event& InputManager::CreateKeyPressEvent(KeyPress key, int repeat)
+Event InputManager::CreateKeyPressEvent(KeyPress key, int repeat)
 {
 	KeyPressEvent event(key, repeat);
 	eventDispatcher.AddEvent(event);
 	return event;
 }
 
-Event& InputManager::CreateKeyReleaseEvent(KeyPress key)
+Event InputManager::CreateKeyReleaseEvent(KeyPress key)
 {
 	KeyReleaseEvent event(key);
 	eventDispatcher.AddEvent(event);
