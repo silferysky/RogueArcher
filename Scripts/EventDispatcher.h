@@ -36,12 +36,6 @@ public:
 			isCombiningQueue = true;
 	}
 
-	void AddListener(BaseSystem* sys, LISTENER_HANDLER handler)
-	{
-		SYSTEMID ID = sys->ID();
-		ListenerMap.insert(std::pair<SYSTEMID, LISTENER_HANDLER>(ID, handler));
-		RE_CORE_INFO("Added new key to ListenerMap");
-	}
 	void AddListener(SYSTEMID ID, LISTENER_HANDLER handler)
 	{
 		ListenerMap.insert(std::pair<SYSTEMID, LISTENER_HANDLER>(ID, handler));
@@ -52,7 +46,7 @@ public:
 	{
 		ListenerMap.clear();
 	}
-	void RemoveListener(SYSTEMID ID, LISTENER_HANDLER handler)
+	void RemoveListener(SYSTEMID ID)
 	{
 		for (auto it = ListenerMap.begin(); it != ListenerMap.end(); ++it)
 		{
@@ -106,7 +100,7 @@ public:
 		auto sysIt = ListenerMap.begin();
 		while (sysIt != ListenerMap.end())
 		{
-			(*sysIt->second)(toHandle);
+			sysIt->second(toHandle);
 			++sysIt;
 		}
 	}
