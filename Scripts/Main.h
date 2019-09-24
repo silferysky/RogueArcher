@@ -12,12 +12,8 @@
 #endif
 
 //#defines
-
-#define WINAPI      __stdcall
-#define APIENTRY    WINAPI
-
 extern double t;
 extern double gdt;
 extern SystemManager *SysManager;
 
-int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow);
+int APIENTRY WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst, LPSTR lpszCmdLine, int nCmdShow);

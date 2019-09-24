@@ -13,6 +13,7 @@ public:
 	~Quad() = default;
 
 	void Draw();
+	void CreateShaders();
 	void RotateRight();
 };
 

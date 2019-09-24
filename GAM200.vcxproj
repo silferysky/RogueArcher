@@ -175,7 +175,7 @@
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)Dep\FMOD\lib;$(SolutionDir)Dep\SOIL;$(SolutionDir)Dep\GLFW\lib-vc2015;$(SolutionDir)Dep\glew-2.1.0\lib\Release\Win32</AdditionalLibraryDirectories>
       <AdditionalDependencies>fmod64_vc.lib;glfw3.lib;opengl32.lib;SOIL.lib;glew32.lib;glew32s.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
