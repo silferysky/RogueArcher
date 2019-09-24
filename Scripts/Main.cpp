@@ -128,7 +128,7 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	HWND  hWnd;				/* window */
 	MSG   msg;				/* message */
 
-	hWnd = CreateOpenGLWindow(const_cast<char*>("Terence Gay"), 0, 0, 640, 480, PFD_TYPE_RGBA, 0);
+	hWnd = CreateOpenGLWindow(const_cast<char*>("Rogue Engine"), 0, 0, 640, 480, PFD_TYPE_RGBA, 0);
 	if (hWnd == NULL)
 		exit(1);
 
@@ -200,7 +200,6 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	KeyPressEvent testEvent((KeyPress)KeyArrowRight, 10);
 	RE_INFO(testEvent.ToString());
 	RE_INFO("END EVENT TEST");
-
 
 	RE_INFO("TESTING HERE FOR FILE IO");
 
