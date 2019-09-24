@@ -65,6 +65,8 @@ int main()
 	testSys.Receive(testEvent);
 
 	RE_INFO("EVENT DISPATCHER TEST");
+	//LISTENER_HANDLER hand = testSys.Receive;
+	//eventDispatcher.AddListener(testSys.ID, hand);
 	eventDispatcher.AddEvent(testEvent);
 	eventDispatcher.Update();
 	RE_INFO("EVENT DISPATCHER END");

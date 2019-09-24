@@ -1,5 +1,6 @@
 #pragma once
 
+#include <functional>
 #include "RogueEngine.h"
 #include "Event.h"
 
@@ -11,15 +12,16 @@ public:
 	virtual ~BaseEventListener() {};
 };
 
-//EventListener listens to one single event only
-template<typename T>
+//EventListener denotes the derived class is actively listening for events
 class EventListener : public BaseEventListener
 {
 public:
 	virtual ~EventListener() override {};
-	//virtual void Receive(const T& event) = 0;
+	virtual void Receive(const Event& event) = 0;
 
 	BaseSystem* SysListener = nullptr;
 };
 
-typedef void(*LISTENER_HANDLER)(const Event&);
+using LISTENER_HANDLER = std::function<void(const Event&)>;
+#define ADD_LISTENER(id, func)	LISTENER_HANDLER hand = std::bind(&func, this, std::placeholders::_1); \
+								eventDispatcher.AddListener(id, hand)
