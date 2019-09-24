@@ -1,3 +1,5 @@
+#define _CRT_SECURE_NO_WARNINGS
+
 #include <cstdio>
 #include <cstdlib>
 
@@ -11,19 +13,139 @@
 
 #include "Quad.h"
 #include "SOIL.h"
+
 GLuint texture[1];
 
 double t = 0.0;
 double gdt = 1.0;
+bool off = true;
 //SystemManager *SysManager = new SystemManager();
 
 static const int SCREEN_FULLSCREEN = 0;
 static const int SCREEN_WIDTH = 960;
 static const int SCREEN_HEIGHT = 540;
 
-//Use for console
-int main()
+LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
+	static PAINTSTRUCT ps;
+	switch (uMsg)
+	{
+	case WM_PAINT:
+		BeginPaint(hWnd, &ps);
+		EndPaint(hWnd, &ps);
+		return 0;
+	case WM_SIZE:
+		glViewport(0, 0, LOWORD(lParam), HIWORD(lParam));
+		PostMessage(hWnd, WM_PAINT, 0, 0);
+		return 0;
+	case WM_DESTROY:
+		PostQuitMessage(0);
+		return 0;
+	case WM_RBUTTONUP:
+		off = false;
+		break;
+	}
+	return DefWindowProc(hWnd, uMsg, wParam, lParam);
+}
+
+HWND CreateOpenGLWindow(char* title, int x, int y, int width, int height,
+	BYTE type, DWORD flags)
+{
+	int         pf;
+	HDC         hDC;
+	HWND        hWnd;
+	WNDCLASS    wc;
+	PIXELFORMATDESCRIPTOR pfd{ 0 };
+	static HINSTANCE hInstance = 0;
+
+	/* only register the window class once - use hInstance as a flag. */
+	if (!hInstance) {
+		hInstance = GetModuleHandle(NULL);
+		wc.style = CS_OWNDC;
+		wc.lpfnWndProc = (WNDPROC)WndProc;
+		wc.cbClsExtra = 0;
+		wc.cbWndExtra = 0;
+		wc.hInstance = hInstance;
+		wc.hIcon = LoadIcon(NULL, IDI_WINLOGO);
+		wc.hCursor = LoadCursor(NULL, IDC_ARROW);
+		wc.hbrBackground = NULL;
+		wc.lpszMenuName = NULL;
+		wc.lpszClassName = "OpenGL";
+
+		if (!RegisterClass(&wc)) {
+			MessageBox(NULL, "RegisterClass() failed:  "
+				"Cannot register window class.", "Error", MB_OK);
+			return NULL;
+		}
+	}
+
+	hWnd = CreateWindow("OpenGL", title, WS_OVERLAPPEDWINDOW |
+		WS_CLIPSIBLINGS | WS_CLIPCHILDREN,
+		x, y, width, height, NULL, NULL, hInstance, NULL);
+
+	if (hWnd == NULL) {
+		MessageBox(NULL, "CreateWindow() failed:  Cannot create a window.",
+			"Error", MB_OK);
+		return NULL;
+	}
+
+	hDC = GetDC(hWnd);
+
+	memset(&pfd, 0, sizeof(pfd));
+	pfd.nSize = sizeof(pfd);
+	pfd.nVersion = 1;
+	pfd.dwFlags = PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | flags | PFD_GENERIC_ACCELERATED | PFD_DOUBLEBUFFER;
+	pfd.iPixelType = type;
+	pfd.cColorBits = 32;
+
+	pf = ChoosePixelFormat(hDC, &pfd);
+	if (pf == 0) {
+		MessageBox(NULL, "ChoosePixelFormat() failed:  "
+			"Cannot find a suitable pixel format.", "Error", MB_OK);
+		return 0;
+	}
+
+	if (SetPixelFormat(hDC, pf, &pfd) == FALSE) {
+		MessageBox(NULL, "SetPixelFormat() failed:  "
+			"Cannot set format specified.", "Error", MB_OK);
+		return 0;
+	}
+
+	DescribePixelFormat(hDC, pf, sizeof(PIXELFORMATDESCRIPTOR), &pfd);
+
+	//ReleaseDC(hWnd, hDC);
+
+	return hWnd;
+}
+
+//Use for console
+int APIENTRY
+WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
+	LPSTR lpszCmdLine, int nCmdShow)
+{
+	HDC   hDC;				/* device context */
+	HGLRC hRC;				/* opengl context */
+	HWND  hWnd;				/* window */
+	MSG   msg;				/* message */
+
+	hWnd = CreateOpenGLWindow(const_cast<char*>("Terence Gay"), 0, 0, 640, 480, PFD_TYPE_RGBA, 0);
+	if (hWnd == NULL)
+		exit(1);
+
+	hDC = GetDC(hWnd);
+	hRC = wglCreateContext(hDC);
+	wglMakeCurrent(hDC, hRC);
+
+	ShowWindow(hWnd, nCmdShow);
+
+	AllocConsole();
+	freopen("CONIN$", "r", stdin);
+	freopen("CONOUT$", "w", stdout);
+	freopen("CONOUT$", "w", stderr);
+
+	if (glewInit() != GLEW_OK)
+		return -1;
+
 	//Logger
 	Logger::InitLogger();
 	RE_CORE_TRACE("Init Core Logger");
@@ -33,28 +155,7 @@ int main()
 
 	//////////////////////////
 	//Graphics Debug
-	////////////////////////
-
-	GLFWwindow* window;
-
-	/* Initialize the library */
-	if (!glfwInit())
-		return -1;
-
-	/* Create a windowed mode window and its OpenGL context */
-	window = glfwCreateWindow(640, 480, "Terence Dad Gay", NULL, NULL);
-	if (!window)
-	{
-		glfwTerminate();
-		return -1;
-	}
-
-	/* Make the window's context current */
-	glfwMakeContextCurrent(window);
-
-	/* Error check */
-	if (glewInit() != GLEW_OK)
-		std::cout << "Oh fuck" << std::endl;
+	/////////////////////////
 
 	std::cout << glGetString(GL_VERSION) << std::endl;
 
@@ -64,22 +165,15 @@ int main()
 						-0.5f, -0.5f, };
 
 	Quad test(vertex, "(1.0, 0.0, 0.0, 0.0)");
+	test.CreateShaders();
 
-	WriteToFile("Resources/test.json", "ip", 123);
-
-	/* Loop until the user closes the window */
-	while (!glfwWindowShouldClose(window))
+	while (off)
 	{
-		/* Render here */
-		glClear(GL_COLOR_BUFFER_BIT);
-
-		test.Draw();
-
-		/* Swap front and back buffers */
-		glfwSwapBuffers(window);
-
-		/* Poll for and process events */
-		glfwPollEvents();
+		while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+		{
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
 
 		//Main Debug
 		RE_INFO("INPUT DEBUG");
@@ -96,6 +190,10 @@ int main()
 				//InputMgr->DebugKeyInputs();
 			}
 		}
+
+		glClear(GL_COLOR_BUFFER_BIT);
+		test.Draw();
+		SwapBuffers(hDC);
 	}
 
 	RE_INFO("TESTING HERE FOR A RANDOM EVENT");
@@ -138,12 +236,17 @@ int main()
 
 	std::cin.get();
 
-	glfwTerminate();
 	delete InputMgr;
-	return 0;
+
+	wglMakeCurrent(NULL, NULL);
+	ReleaseDC(hWnd, hDC);
+	wglDeleteContext(hRC);
+	DestroyWindow(hWnd);
+
+	return msg.wParam;
 }
 
-int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
+/* int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
 {
 	if (_DEBUG)
 	{
@@ -209,5 +312,5 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
 	std::cin.get();
 
 	return 0;
-}
+} */
 
