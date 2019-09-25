@@ -1,9 +1,20 @@
 #pragma once
 
+// Include all components
+#include "SpriteComponent.h"
+#include "../Physics/Rigidbody.h"
+#include "../Physics/Transform.h"
+#include "../Physics/Material.h"
+#include "../Physics/CircleCollider2D.h"
+//#include "../Physics/BoxCollider2D.h"
+
 enum COMPONENTID
 {
-	RIGIDBODY = 0,
-	SPRITE,
+	SPRITE = 0,
+	TRANSFORM,
+	RIGIDBODY,
+	BOXCOLLIDER2D,
+	CIRCLECOLLIDER2D,
 	LASTCOMP
 };
 

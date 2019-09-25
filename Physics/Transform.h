@@ -1,7 +1,7 @@
 #pragma once
-#include "REMath.h"
+#include "../Scripts/REMath.h"
 
-class Transform // : public BaseComponent
+class Transform : public BaseComponent
 {
 	Vec2 m_position;
 	Vec2 m_scale;
