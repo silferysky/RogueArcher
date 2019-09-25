@@ -14,8 +14,6 @@
 #include "Quad.h"
 #include "SOIL.h"
 
-GLuint texture[1];
-
 double t = 0.0;
 double gdt = 1.0;
 bool off = true;
@@ -24,6 +22,43 @@ bool off = true;
 static const int SCREEN_FULLSCREEN = 0;
 static const int SCREEN_WIDTH = 960;
 static const int SCREEN_HEIGHT = 540;
+
+GLuint texture[1];
+
+int LoadGLTextures()
+{
+	texture[0] = SOIL_load_OGL_texture
+	(
+		"test.bmp",
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_INVERT_Y
+	);
+
+	if (texture[0] == 0)
+		return false;
+
+	// Typical Texture Generation Using Data From The Bitmap
+	glBindTexture(GL_TEXTURE_2D, texture[0]);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	//glBindTexture(GL_TEXTURE_2D, 0); // 0 means no texture
+
+	return true;
+}
+
+int InitGL(GLvoid)                        // All Setup For OpenGL Goes Here
+{
+	if (!LoadGLTextures())                   // Jump To Texture Loading Routine ( NEW )
+		return 0;                            // If Texture Didn't Load Return FALSE ( NEW )
+
+	glEnable(GL_TEXTURE_2D);                 // Enable Texture Mapping ( NEW )
+	glShadeModel(GL_SMOOTH);                 // Enable Smooth Shading
+	glDepthFunc(GL_LEQUAL);                  // The Type Of Depth Testing To Do
+	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);          // Really Nice Perspective Calculations
+	return 1;                                // Initialization Went OK
+}
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -146,6 +181,9 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	if (glewInit() != GLEW_OK)
 		return -1;
 
+	if (!InitGL())
+		return -2;
+
 	//Logger
 	Logger::InitLogger();
 	RE_CORE_TRACE("Init Core Logger");
@@ -164,7 +202,7 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 						 0.5f, -0.5f,
 						-0.5f, -0.5f, };
 
-	Quad test(vertex, "(1.0, 0.0, 0.0, 0.0)");
+	Quad test(vertex);
 	test.CreateShaders();
 
 	while (off)
@@ -176,11 +214,11 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 		}
 
 		//Main Debug
-		RE_INFO("INPUT DEBUG");
+		// RE_INFO("INPUT DEBUG");
 
 		int repeat = 0;
 		float timer = 0.0f;
-		while (repeat < 5)
+		/* while (repeat < 5)
 		{
 			InputMgr->UpdateState();
 
@@ -189,9 +227,9 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 				++repeat;
 				//InputMgr->DebugKeyInputs();
 			}
-		}
-
-		glClear(GL_COLOR_BUFFER_BIT);
+		} */
+		glDisable(GL_DEPTH_TEST);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		test.Draw();
 		SwapBuffers(hDC);
 	}
