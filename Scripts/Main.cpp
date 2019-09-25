@@ -203,7 +203,6 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 						-0.5f, -0.5f, };
 
 	Quad test(vertex);
-	test.CreateShaders();
 
 	TestSystem sys = TestSystem();
 	KeyPressEvent ke(Key0);
