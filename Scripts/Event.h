@@ -8,7 +8,6 @@
 //Macros to help set Category/Type
 #define SET_EVENT_TYPE(type) static EventType GetStaticType() { return EventType::##type; } virtual EventType GetEventType() const override { return type; } virtual const char* GetEventName() const override { return #type; }
 #define SET_EVENT_CATEGORY(cat) virtual int GetEventCat() const override {return cat;}
-//#define SET_EVENT_MSG_TYPE(type) virtual EventMessageType GetEventMsgType() const { return type; }
 #define stringify(name) #name
 
 enum EventType
