@@ -3,6 +3,7 @@
 enum COMPONENTID
 {
 	RIGIDBODY = 0,
+	SPRITE,
 	LASTCOMP
 };
 

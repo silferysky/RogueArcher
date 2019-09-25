@@ -19,7 +19,7 @@ public:
 	inline void update(const Vec2 pos, const std::vector<Vec2>& relVerts, const PolygonList sides, const float angle, const float size);
 
 	inline void updateVertices(const Vec2 pos, const std::vector<Vec2>& relVerts, const PolygonList sides, const float angle, const float size);
-	inline void updateNormals(const PolygonList sides);
+	inline void updateNormals(const PolygonList &sides);
 
 	void SATFindMinMax(const Vec2 &normal);
 	inline bool CollisionTest(OBB rhs);

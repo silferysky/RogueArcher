@@ -35,7 +35,7 @@ inline void OBB::updateVertices(const Vec2 pos, const std::vector<Vec2>& relVert
 }
 
 
-inline void OBB::updateNormals(const PolygonList sides)
+inline void OBB::updateNormals(const PolygonList &sides)
 {
 	int i;
 

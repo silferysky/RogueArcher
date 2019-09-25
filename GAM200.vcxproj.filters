@@ -187,6 +187,9 @@
     <ClInclude Include="Scripts\FileIO.h">
       <Filter>RogueEngine\Systems\I/O</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\SpriteComponent.h">
+      <Filter>RogueEngine\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\GameStateManager.cpp">
