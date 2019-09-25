@@ -267,7 +267,7 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	wglDeleteContext(hRC);
 	DestroyWindow(hWnd);
 
-	return msg.wParam;
+	return (int)msg.wParam;
 }
 
 /* int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)

@@ -73,8 +73,8 @@ public:
 	void ResetKeyBind();
 
 	//Creating Events
-	Event* CreateKeyPressEvent(KeyPress key, int repeat = 0);
-	Event* CreateKeyReleaseEvent(KeyPress key);
+	void CreateKeyPressEvent(KeyPress key, int repeat = 0);
+	void CreateKeyReleaseEvent(KeyPress key);
 
 private:
 	KeyboardState CurKeyboardState;
