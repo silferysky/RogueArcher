@@ -15,8 +15,10 @@
 #include "SOIL.h"
 
 double t = 0.0;
-double gdt = 1.0;
+double gdt = 1.0; // 0.016? - Joel
 bool off = true;
+REEngine gEngine;
+
 //SystemManager *SysManager = new SystemManager();
 
 static const int SCREEN_FULLSCREEN = 0;
@@ -191,6 +193,12 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	InputManager* InputMgr = new InputManager();
 	RE_INFO("Hello");
 
+	////////////////////////////////////
+	// Create Engine Object (Testing)
+	////////////////////////////////////
+
+	gEngine.init();
+	
 	//////////////////////////
 	//Graphics Debug
 	/////////////////////////

@@ -1,6 +1,5 @@
 #pragma once
-
-#include "BaseComponent.h"
+#include "../Scripts/BaseComponent.h"
 
 struct SpriteComponent : public BaseComponent
 {
