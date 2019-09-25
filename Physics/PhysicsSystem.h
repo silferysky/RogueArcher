@@ -1,18 +1,22 @@
 #pragma once
-
+#include "CollisionManager.h"
+#include "Rigidbody.h"
+#include "Transform.h"
+#include "REMath.h"
 
 class PhysicsSystem
 {
-	void positionUpdate(const char* ID);
-	void collisionUpdate(const char* ID);
+	CollisionManager gColliderManager;
+	Vec2 m_gravity;
+
+	void positionUpdate(Rigidbody& rigidbody, Transform& transform, float dt);
+	void collisionUpdate(Rigidbody& rigidbody, float dt);
+	void applyForces(Rigidbody& rigidbody);
 
 public:
-	PhysicsSystem()
-	{}
+	PhysicsSystem() = default;
+	~PhysicsSystem() = default;
 
-	~PhysicsSystem()
-	{}
-
-	void init();
-	void update();
+	void init(const Vec2& gravity);
+	void update(float dt);
 };
