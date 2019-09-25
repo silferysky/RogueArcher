@@ -1,58 +1,66 @@
-#include "Physics.h"
+#pragma once
+#include "Rigidbody.h"
 
 
-void Rigidbody::computeForce(const float mass, const Vec2& gravity) // F = ma
-{
-	m_force = mass * gravity;
-}
-
-inline Vec2 Rigidbody::getVelocity() const
+Vec2 Rigidbody::getVelocity() const
 {
 	return m_velocity;
 }
 
-inline float Rigidbody::getMass() const
+float Rigidbody::getInvMass() const
 {
-	return m_mass;
+	return m_invMass;
 }
 
-inline float Rigidbody::getVolume() const
+float Rigidbody::getVolume() const
 {
 	return m_volume;
 }
 
-inline float Rigidbody::getAngle() const
+Vec2 Rigidbody::getAccForce() const
 {
-	return m_orientation;
+	return m_accForce;
 }
 
-inline Vec2 Rigidbody::getForce() const
+Vec2 Rigidbody::getAcceleration() const
 {
-	return m_force;
+	return m_acceleration;
 }
 
-inline void Rigidbody::setVelocity(const Vec2& vel)
+void Rigidbody::setVelocity(const Vec2& vel)
 {
 	m_velocity = vel;
 }
 
-inline void Rigidbody::setMass(float mass)
+void Rigidbody::offSetVelocity(const Vec2& vel)
 {
-	m_mass = mass;
+	m_velocity += vel;
 }
 
+void Rigidbody::setMass(float mass)
+{
+	if (mass < RE_EPSILON && mass > -RE_EPSILON)
+		throw("Mass is 0!");
 
-inline void Rigidbody::setVolume(float volume)
+	m_invMass = 1 / mass;
+}
+
+void Rigidbody::setVolume(float volume)
 {
 	m_volume = volume;
 }
 
-inline void Rigidbody::setAngle(float angle)
+void Rigidbody::addForce(const Vec2& force)
 {
-	m_orientation = angle;
+	m_accForce += force;
 }
 
-inline void Rigidbody::setForce(const Vec2& force)
+void Rigidbody::setAcceleration(const Vec2& accel)
 {
-	m_force = force;
+	m_acceleration = accel;
+}
+
+void Rigidbody::offSetAcceleration(const Vec2& accel)
+{
+	m_acceleration += accel;
 }

@@ -7,9 +7,9 @@
 #include "Main.h"
 #include "KeyEvent.h"
 #include "InputManager.h"
-#include "MemoryManager.h"
 #include "Library.h"
-#include "FileIO.h"
+#include "EventDispatcher.h"
+#include "TestSystem.h"
 
 #include "Quad.h"
 #include "SOIL.h"
@@ -203,7 +203,10 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 						-0.5f, -0.5f, };
 
 	Quad test(vertex);
+	test.CreateShaders();
 
+	TestSystem sys = TestSystem();
+	KeyPressEvent ke(Key0);
 	while (off)
 	{
 		while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
@@ -211,32 +214,32 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
-
 		//Main Debug
 		// RE_INFO("INPUT DEBUG");
 
 		int repeat = 0;
 		float timer = 0.0f;
-		/* while (repeat < 5)
+		while (repeat < 5)
 		{
 			InputMgr->UpdateState();
+			EventDispatcher::instance().Update();
 
-			if (InputMgr->KeyTriggeredAny())
+			//if (InputMgr->KeyTriggeredAny())
 			{
-				++repeat;
 				//InputMgr->DebugKeyInputs();
+				++repeat;
 			}
-		} */
-
+		}
 		glDisable(GL_DEPTH_TEST);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		test.Draw();
 		SwapBuffers(hDC);
 	}
 
-	RE_INFO("TESTING HERE FOR A RANDOM EVENT");
+	RE_INFO("TESTING HERE FOR A EVENT DEBUG");
 	KeyPressEvent testEvent((KeyPress)KeyArrowRight, 10);
 	RE_INFO(testEvent.ToString());
+	RE_INFO(testEvent.GetEventName());
 	RE_INFO("END EVENT TEST");
 
 	RE_INFO("TESTING HERE FOR FILE IO");
@@ -245,31 +248,15 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	testLibrary.IOTest();
 
 	RE_INFO("END TEST IO");
-	
-	RE_INFO("TEST ReMM (Rogue Engine Memory Manager)");
-	MemoryManager ReMM;
 
-	BaseSystem s;
-	BaseSystem s2;
-	BaseEntity e;
-	BaseComponent c;
+	RE_INFO("MANUAL TEST EVENT DISPATCHER");
+	TestSystem testSys = TestSystem((SYSTEMID)2);
+	testSys.Receive(testEvent);
 
-	std::shared_ptr<BaseSystem> ptr = std::make_shared<BaseSystem>(s);
-
-	ReMM.AddIntoMemory(s);
-	ReMM.AddIntoMemory(s2);
-	ReMM.AddIntoMemory(e);
-	ReMM.AddIntoMemory(c);
-
-	std::string str("System Count: ");
-	str.append(std::to_string(ReMM.SysListCount()));
-	RE_INFO(str);
-
-	str.clear();
-	str.append("Use Count: ");
-	str.append(std::to_string(ReMM.GetSysList()[0].use_count()));
-
-	RE_INFO(str);
+	RE_INFO("EVENT DISPATCHER TEST");
+	EventDispatcher::instance().AddEvent(testEvent);
+	EventDispatcher::instance().Update();
+	RE_INFO("EVENT DISPATCHER END");
 
 	std::cin.get();
 
@@ -280,7 +267,7 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	wglDeleteContext(hRC);
 	DestroyWindow(hWnd);
 
-	return msg.wParam;
+	return (int)msg.wParam;
 }
 
 /* int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)

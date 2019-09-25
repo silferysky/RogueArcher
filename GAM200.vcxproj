@@ -36,6 +36,8 @@
     <ClInclude Include="Scripts\Event.h" />
     <ClInclude Include="Scripts\EventDispatcher.h" />
     <ClInclude Include="Scripts\FileIO.h" />
+    <ClInclude Include="Scripts\EventListener.h" />
+    <ClInclude Include="Scripts\GameEvent.h" />
     <ClInclude Include="Scripts\GameStateList.h" />
     <ClInclude Include="Scripts\GameStateManager.h" />
     <ClInclude Include="Scripts\InputData.h" />
@@ -46,9 +48,9 @@
     <ClInclude Include="Scripts\Main.h" />
     <ClInclude Include="Scripts\Material.h" />
     <ClInclude Include="Scripts\Matrix33.h" />
-    <ClInclude Include="Scripts\MemoryManager.h" />
     <ClInclude Include="Scripts\OBB.h" />
     <ClInclude Include="Scripts\Physics.h" />
+    <ClInclude Include="Scripts\MemoryType.h" />
     <ClInclude Include="Scripts\PhysicsComponent.h" />
     <ClInclude Include="Scripts\PhysicsSystem.h" />
     <ClInclude Include="Scripts\Polygon.h" />
@@ -61,6 +63,7 @@
     <ClInclude Include="Scripts\Shape.h" />
     <ClInclude Include="Scripts\SpriteComponent.h" />
     <ClInclude Include="Scripts\SystemManager.h" />
+    <ClInclude Include="Scripts\TestSystem.h" />
     <ClInclude Include="Scripts\triangle.h" />
     <ClInclude Include="Scripts\Types.h" />
     <ClInclude Include="Scripts\Vector2.h" />
@@ -69,7 +72,6 @@
     <ClCompile Include="Scripts\AABB.cpp" />
     <ClCompile Include="Scripts\BaseComponent.cpp" />
     <ClCompile Include="Scripts\BaseEntity.cpp" />
-    <ClCompile Include="Scripts\BaseSystem.cpp" />
     <ClCompile Include="Scripts\BC.cpp" />
     <ClCompile Include="Scripts\Circle.cpp" />
     <ClCompile Include="Scripts\Collidable.cpp" />
@@ -82,7 +84,6 @@
     <ClCompile Include="Scripts\Main.cpp" />
     <ClCompile Include="Scripts\Material.cpp" />
     <ClCompile Include="Scripts\Matrix33.cpp" />
-    <ClCompile Include="Scripts\MemoryManager.cpp" />
     <ClCompile Include="Scripts\OBB.cpp" />
     <ClCompile Include="Scripts\PhysicsSystem.cpp" />
     <ClCompile Include="Scripts\Polygon.cpp" />
