@@ -1,28 +1,31 @@
 #pragma once
+#include <vector>
+#include "../Scripts/Matrix33.h"
+#include "Polygon.h"
 
-
-class OBB : public BaseCollider
+class OBB
 {
-	float m_minOnAxis; // To be used to test for collision
+	using VerticesList = std::vector<Vec2>;
+
+	// The minimum and maximum values crushed onto each axis
+	float m_minOnAxis;
 	float m_maxOnAxis;
 
-	std::vector<Vec2> m_vertices; // The positions of each vertex in the shape.
-	std::vector<Vec2> m_normals; // The normal vectors of each side.
-
+	VerticesList m_modelVertices;
+	VerticesList m_globalVertices; // The positions of each vertex in the shape.
+	VerticesList m_normals; // The normal vectors of each side.
 public:
-	OBB();
-	~OBB();
+	OBB() = default;
+	~OBB() = default;
 
-	inline void update(const Vec2 pos, const std::vector<Vec2>& relVerts, const PolygonList sides, const float angle, const float size);
+	float getMin() const;
+	float getMax() const;
+	VerticesList& globVerts(); // Get global Vertices
+	VerticesList& modelVerts();
+	VerticesList& normals();
 
-	inline void updateVertices(const Vec2 pos, const std::vector<Vec2>& relVerts, const PolygonList sides, const float angle, const float size);
-	inline void updateNormals(const PolygonList sides);
-
-	void SATFindMinMax(const Vec2 &normal);
-	inline bool CollisionTest(OBB rhs);
-
-	inline bool checkOverlaps(const OBB &rhs) const;
-	inline bool isBetweenBounds(float val, float lowerBound, float upperBound) const;
+	void setMin(float min);
+	void setMax(float max);
 };
 
 

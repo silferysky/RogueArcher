@@ -1,90 +1,37 @@
 #pragma once
+#include <Windows.h>
 #include <map>
-
-enum KeyPress
-{
-	Key0 = 0,
-	Key1,
-	Key2,
-	Key3,
-	Key4,
-	Key5,
-	Key6,
-	Key7,
-	Key8,
-	Key9,
-	KeyA,
-	KeyB,
-	KeyC,
-	KeyD,
-	KeyE,
-	KeyF,
-	KeyG,
-	KeyH,
-	KeyI,
-	KeyJ,
-	KeyK,
-	KeyL,
-	KeyM,
-	KeyN,
-	KeyO,
-	KeyP,
-	KeyQ,
-	KeyR,
-	KeyS,
-	KeyT,
-	KeyU,
-	KeyV,
-	KeyW,
-	KeyX,
-	KeyY,
-	KeyZ,
-	MB1,
-	MB2,
-	MB3, //Scrollwheel
-	ArrowUp,
-	ArrowDown,
-	ArrowLeft,
-	ArrowRight,
-	Spare0,
-	Spare1,
-	Spare2,
-	Spare3,
-	Spare4,
-	Spare5,
-	Spare6,
-	Spare7,
-	Spare8,
-	Spare9,
-	Count, //Represents number of buttons
-	UNDEF //Represents no button pressed
-};
-
-enum KeyFunction
-{
-	//This stores the default actions
-	MoveUp = 0,
-	MoveDown,
-	MoveLeft,
-	MoveRight,
-	Jump,
-	AttackBasic,
-	Teleport,
-
-	//For menu stuff
-	MenuOpen,
-	MenuSelect,
-	MenuBack,
-	MenuCancel
-};
+#include "BaseSystem.h"
+#include "EventDispatcher.h"
+#include "KeyEvent.h"
+#include "InputData.h"
+#include <iostream>
 
 struct KeyboardState
 {
 	//Since COUNT is the last KeyPress, it will always be same value as size of KeyPress
-	KeyPress Key[Count] = { UNDEF };
+	int Key[KeyCount] = { 0 };
+
+	//overloaded += operator. Checks if rhs has value. If rhs has value, add it, otherwise reset to 0
+	void operator+=(KeyboardState &rhs)
+	{
+		for (int i = 0; i < KeyCount; ++i)
+		{
+			if (rhs.Key[i] != 0)
+				Key[i] += rhs.Key[i];
+			else
+				Key[i] = 0;
+		}
+	}
+};
+
+struct FuncState
+{
+	int Func[FuncCount] = { 0 };
 };
 
 class InputManager
+	: public BaseSystem
 {
 public:
 	InputManager();
@@ -100,20 +47,40 @@ public:
 	void RemakeState();
 	//Reset given state to be all null values
 	void ResetState(KeyboardState *toReset);
-
+	void ResetState(FuncState *toReset);
+	//Add to current state only, not update it
+	void AddToState();
+	//To display the current keyboard state in debug
+	void DebugKeyInputs();
+	void DebugKeyInputs(KeyPress key);
 	//Functions to check buttons, applies to other controllers
+	FuncState* getFuncState();
+
+	//Key Related
 
 	//Checks if key is not pressed
 	bool KeyUp(KeyPress checkKey);
 	//Checks if key is down
 	bool KeyDown(KeyPress checkKey);
-	//Checks if any key is down
 	bool KeyDownAny();
 	//Checks if key is just pressed
 	bool KeyTriggered(KeyPress checkKey);
+	bool KeyTriggeredAny();
+	//Checks if key is just released
+	bool KeyReleased(KeyPress checkKey);
+
+	//Reset Key bindings
+	void ResetKeyBind();
+
+	//Creating Events
+	void CreateKeyPressEvent(KeyPress key, int repeat = 0);
+	void CreateKeyReleaseEvent(KeyPress key);
 
 private:
-	KeyboardState *CurKeyboardState;
-	KeyboardState *PrevKeyboardState;
-	std::map<KeyPress, KeyFunction> *KeyConfig;
+	KeyboardState CurKeyboardState;
+	KeyboardState PrevKeyboardState;
+	std::map<KeyPress, KeyFunction> GameKeyConfig;
+	std::map<KeyPress, KeyFunction> MenuKeyConfig;
+	FuncState CurFuncState;
+	int ButtonTrigger;
 };

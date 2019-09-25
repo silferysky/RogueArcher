@@ -1,185 +1,347 @@
+#define _CRT_SECURE_NO_WARNINGS
+
+#include <cstdio>
+#include <cstdlib>
+
+#include <fstream>
 #include "Main.h"
+#include "KeyEvent.h"
+#include "InputManager.h"
+#include "Library.h"
+#include "EventDispatcher.h"
+#include "TestSystem.h"
 
-/*double gdt = 0.0;
+#include "Quad.h"
+#include "SOIL.h"
+
 double t = 0.0;
-bool isFullscreen = true;
-bool musicMute = false;
-bool soundMute = false;
-bool firstScreen = true;
-bool transitLevel = false;*/
+double gdt = 1.0; // 0.016? - Joel
+bool off = true;
+REEngine gEngine;
 
-#define MAX_LOADSTRING 100
-// Global Variables:
-HINSTANCE hInst;                                // current instance
-WCHAR szTitle[MAX_LOADSTRING];                  // The title bar text
-WCHAR szWindowClass[MAX_LOADSTRING];            // the main window class name
+//SystemManager *SysManager = new SystemManager();
 
-// Forward declarations of functions included in this code module:
-ATOM                MyRegisterClass(HINSTANCE hInstance);
-BOOL                InitInstance(HINSTANCE, int);
-LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
-INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
+static const int SCREEN_FULLSCREEN = 0;
+static const int SCREEN_WIDTH = 960;
+static const int SCREEN_HEIGHT = 540;
 
-#if _DEBUG
-int memCounter = 0;
-#endif
+GLuint texture[1];
 
-int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
-                     _In_opt_ HINSTANCE hPrevInstance,
-                     _In_ LPWSTR    lpCmdLine,
-                     _In_ int       nCmdShow)
+int LoadGLTextures()
 {
-    UNREFERENCED_PARAMETER(hPrevInstance);
-    UNREFERENCED_PARAMETER(lpCmdLine);
+	texture[0] = SOIL_load_OGL_texture
+	(
+		"test.bmp",
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_INVERT_Y
+	);
 
-    // TODO: Place code here.
+	if (texture[0] == 0)
+		return false;
 
-    // Initialize global strings
-    LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
-    LoadStringW(hInstance, IDC_WINDOWSPROJECT1, szWindowClass, MAX_LOADSTRING);
-    MyRegisterClass(hInstance);
+	// Typical Texture Generation Using Data From The Bitmap
+	glBindTexture(GL_TEXTURE_2D, texture[0]);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-    // Perform application initialization:
-    if (!InitInstance (hInstance, nCmdShow))
-    {
-        return FALSE;
-    }
+	//glBindTexture(GL_TEXTURE_2D, 0); // 0 means no texture
 
-    HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_WINDOWSPROJECT1));
-
-    MSG msg;
-
-    // Main message loop:
-    while (GetMessage(&msg, nullptr, 0, 0))
-    {
-        if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
-        {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
-        }
-    }
-
-    return (int) msg.wParam;
+	return true;
 }
 
-//
-//  FUNCTION: MyRegisterClass()
-//
-//  PURPOSE: Registers the window class.
-//
-ATOM MyRegisterClass(HINSTANCE hInstance)
+int InitGL(GLvoid)                        // All Setup For OpenGL Goes Here
 {
-	WNDCLASSEXW wcex;
+	if (!LoadGLTextures())                   // Jump To Texture Loading Routine ( NEW )
+		return 0;                            // If Texture Didn't Load Return FALSE ( NEW )
 
-	wcex.cbSize = sizeof(WNDCLASSEX);
-
-	wcex.style = CS_HREDRAW | CS_VREDRAW;
-	wcex.lpfnWndProc = WndProc;
-	wcex.cbClsExtra = 0;
-	wcex.cbWndExtra = 0;
-	wcex.hInstance = hInstance;
-	wcex.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_WINDOWSPROJECT1));
-	wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
-	wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
-	wcex.lpszMenuName = MAKEINTRESOURCEW(IDC_WINDOWSPROJECT1);
-	wcex.lpszClassName = szWindowClass;
-	wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
-
-	return RegisterClassExW(&wcex);
+	glEnable(GL_TEXTURE_2D);                 // Enable Texture Mapping ( NEW )
+	glShadeModel(GL_SMOOTH);                 // Enable Smooth Shading
+	glDepthFunc(GL_LEQUAL);                  // The Type Of Depth Testing To Do
+	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);          // Really Nice Perspective Calculations
+	return 1;                                // Initialization Went OK
 }
 
-//
-//   FUNCTION: InitInstance(HINSTANCE, int)
-//
-//   PURPOSE: Saves instance handle and creates main window
-//
-//   COMMENTS:
-//
-//        In this function, we save the instance handle in a global variable and
-//        create and display the main program window.
-//
-BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
+LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-	hInst = hInstance; // Store instance handle in our global variable
-
-	HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-		CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
-
-	if (!hWnd)
+	static PAINTSTRUCT ps;
+	switch (uMsg)
 	{
-		return FALSE;
-	}
-	
-	ShowWindow(hWnd, nCmdShow);
-	UpdateWindow(hWnd);
-
-	return TRUE;
-}
-
-//
-//  FUNCTION: WndProc(HWND, UINT, WPARAM, LPARAM)
-//
-//  PURPOSE: Processes messages for the main window.
-//
-//  WM_COMMAND  - process the application menu
-//  WM_PAINT    - Paint the main window
-//  WM_DESTROY  - post a quit message and return
-//
-//
-LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
-{
-	switch (message)
-	{
-	case WM_COMMAND:
-	{
-		int wmId = LOWORD(wParam);
-		// Parse the menu selections:
-		switch (wmId)
-		{
-		case IDM_ABOUT:
-			DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
-			break;
-		case IDM_EXIT:
-			DestroyWindow(hWnd);
-			break;
-		default:
-			return DefWindowProc(hWnd, message, wParam, lParam);
-		}
-	}
-	break;
 	case WM_PAINT:
-	{
-		PAINTSTRUCT ps;
-		HDC hdc = BeginPaint(hWnd, &ps);
-		// TODO: Add any drawing code that uses hdc here...
+		BeginPaint(hWnd, &ps);
 		EndPaint(hWnd, &ps);
-	}
-	break;
+		return 0;
+	case WM_SIZE:
+		glViewport(0, 0, LOWORD(lParam), HIWORD(lParam));
+		PostMessage(hWnd, WM_PAINT, 0, 0);
+		return 0;
 	case WM_DESTROY:
 		PostQuitMessage(0);
+		return 0;
+	case WM_RBUTTONUP:
+		off = false;
 		break;
-	default:
-		return DefWindowProc(hWnd, message, wParam, lParam);
 	}
-	return 0;
+	return DefWindowProc(hWnd, uMsg, wParam, lParam);
 }
 
-// Message handler for about box.
-INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+HWND CreateOpenGLWindow(char* title, int x, int y, int width, int height,
+	BYTE type, DWORD flags)
 {
-	UNREFERENCED_PARAMETER(lParam);
-	switch (message)
-	{
-	case WM_INITDIALOG:
-		return (INT_PTR)TRUE;
+	int         pf;
+	HDC         hDC;
+	HWND        hWnd;
+	WNDCLASS    wc;
+	PIXELFORMATDESCRIPTOR pfd{ 0 };
+	static HINSTANCE hInstance = 0;
 
-	case WM_COMMAND:
-		if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
-		{
-			EndDialog(hDlg, LOWORD(wParam));
-			return (INT_PTR)TRUE;
+	/* only register the window class once - use hInstance as a flag. */
+	if (!hInstance) {
+		hInstance = GetModuleHandle(NULL);
+		wc.style = CS_OWNDC;
+		wc.lpfnWndProc = (WNDPROC)WndProc;
+		wc.cbClsExtra = 0;
+		wc.cbWndExtra = 0;
+		wc.hInstance = hInstance;
+		wc.hIcon = LoadIcon(NULL, IDI_WINLOGO);
+		wc.hCursor = LoadCursor(NULL, IDC_ARROW);
+		wc.hbrBackground = NULL;
+		wc.lpszMenuName = NULL;
+		wc.lpszClassName = "OpenGL";
+
+		if (!RegisterClass(&wc)) {
+			MessageBox(NULL, "RegisterClass() failed:  "
+				"Cannot register window class.", "Error", MB_OK);
+			return NULL;
 		}
-		break;
 	}
-	return (INT_PTR)FALSE;
+
+	hWnd = CreateWindow("OpenGL", title, WS_OVERLAPPEDWINDOW |
+		WS_CLIPSIBLINGS | WS_CLIPCHILDREN,
+		x, y, width, height, NULL, NULL, hInstance, NULL);
+
+	if (hWnd == NULL) {
+		MessageBox(NULL, "CreateWindow() failed:  Cannot create a window.",
+			"Error", MB_OK);
+		return NULL;
+	}
+
+	hDC = GetDC(hWnd);
+
+	memset(&pfd, 0, sizeof(pfd));
+	pfd.nSize = sizeof(pfd);
+	pfd.nVersion = 1;
+	pfd.dwFlags = PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | flags | PFD_GENERIC_ACCELERATED | PFD_DOUBLEBUFFER;
+	pfd.iPixelType = type;
+	pfd.cColorBits = 32;
+
+	pf = ChoosePixelFormat(hDC, &pfd);
+	if (pf == 0) {
+		MessageBox(NULL, "ChoosePixelFormat() failed:  "
+			"Cannot find a suitable pixel format.", "Error", MB_OK);
+		return 0;
+	}
+
+	if (SetPixelFormat(hDC, pf, &pfd) == FALSE) {
+		MessageBox(NULL, "SetPixelFormat() failed:  "
+			"Cannot set format specified.", "Error", MB_OK);
+		return 0;
+	}
+
+	DescribePixelFormat(hDC, pf, sizeof(PIXELFORMATDESCRIPTOR), &pfd);
+
+	//ReleaseDC(hWnd, hDC);
+
+	return hWnd;
 }
+
+//Use for console
+int APIENTRY
+WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
+	LPSTR lpszCmdLine, int nCmdShow)
+{
+	HDC   hDC;				/* device context */
+	HGLRC hRC;				/* opengl context */
+	HWND  hWnd;				/* window */
+	MSG   msg;				/* message */
+
+	hWnd = CreateOpenGLWindow(const_cast<char*>("Rogue Engine"), 0, 0, 640, 480, PFD_TYPE_RGBA, 0);
+	if (hWnd == NULL)
+		exit(1);
+
+	hDC = GetDC(hWnd);
+	hRC = wglCreateContext(hDC);
+	wglMakeCurrent(hDC, hRC);
+
+	ShowWindow(hWnd, nCmdShow);
+
+	AllocConsole();
+	freopen("CONIN$", "r", stdin);
+	freopen("CONOUT$", "w", stdout);
+	freopen("CONOUT$", "w", stderr);
+
+	if (glewInit() != GLEW_OK)
+		return -1;
+
+	if (!InitGL())
+		return -2;
+
+	//Logger
+	Logger::InitLogger();
+	RE_CORE_TRACE("Init Core Logger");
+
+	InputManager* InputMgr = new InputManager();
+	RE_INFO("Hello");
+
+	////////////////////////////////////
+	// Create Engine Object (Testing)
+	////////////////////////////////////
+
+	gEngine.init();
+	
+	//////////////////////////
+	//Graphics Debug
+	/////////////////////////
+
+	std::cout << glGetString(GL_VERSION) << std::endl;
+
+	float vertex[8] = { -0.5f,  0.5f,
+						 0.5f,  0.5f,
+						 0.5f, -0.5f,
+						-0.5f, -0.5f, };
+
+	Quad test(vertex);
+
+	TestSystem sys = TestSystem();
+	KeyPressEvent ke(Key0);
+	while (off)
+	{
+		while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+		{
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+		//Main Debug
+		// RE_INFO("INPUT DEBUG");
+
+		int repeat = 0;
+		float timer = 0.0f;
+		while (repeat < 5)
+		{
+			InputMgr->UpdateState();
+			EventDispatcher::instance().Update();
+
+			//if (InputMgr->KeyTriggeredAny())
+			{
+				//InputMgr->DebugKeyInputs();
+				++repeat;
+			}
+		}
+		glDisable(GL_DEPTH_TEST);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		test.Draw();
+		SwapBuffers(hDC);
+	}
+
+	RE_INFO("TESTING HERE FOR A EVENT DEBUG");
+	KeyPressEvent testEvent((KeyPress)KeyArrowRight, 10);
+	RE_INFO(testEvent.ToString());
+	RE_INFO(testEvent.GetEventName());
+	RE_INFO("END EVENT TEST");
+
+	RE_INFO("TESTING HERE FOR FILE IO");
+
+	Library testLibrary;
+	testLibrary.IOTest();
+
+	RE_INFO("END TEST IO");
+
+	RE_INFO("MANUAL TEST EVENT DISPATCHER");
+	TestSystem testSys = TestSystem((SYSTEMID)2);
+	testSys.Receive(testEvent);
+
+	RE_INFO("EVENT DISPATCHER TEST");
+	EventDispatcher::instance().AddEvent(testEvent);
+	EventDispatcher::instance().Update();
+	RE_INFO("EVENT DISPATCHER END");
+
+	std::cin.get();
+
+	delete InputMgr;
+
+	wglMakeCurrent(NULL, NULL);
+	ReleaseDC(hWnd, hDC);
+	wglDeleteContext(hRC);
+	DestroyWindow(hWnd);
+
+	return (int)msg.wParam;
+}
+
+/* int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
+{
+	if (_DEBUG)
+	{
+		std::cout << "DEBUG STATE ACTIVATE" << std::endl;
+	}
+
+	// Enable run-time memory check for debug builds.
+#if defined(DEBUG) | defined(_DEBUG)
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+#endif
+
+	GSM_Initialize(GS_TESTLEVEL);
+
+	while (_current != GS_QUIT)
+	{
+		if (_current != GS_RESTART) // if level is the same as previous
+		{
+			GSM_Update(); // update game state type
+			//fpLoad();     // load all assets required for new game state
+		}
+		else
+		{
+			// retains same game state as previous
+			_current = _previous;
+			_next = _previous;
+		}
+
+		//fpInit(); // initialize current game state
+
+		//The game loop
+		while (_current == _next)
+		{
+			//AESysFrameStart();
+			//gdt += AEFrameRateControllerGetFrameRate() / 60;
+
+			//If 1/60 of a second has passed
+			if (gdt)
+			{
+				//AEInputUpdate();
+				//InputMger->UpdateState();
+				//fpUpdate();
+				//fpDraw();
+
+				//t += gdt;
+				//gdt = 0;
+			}
+			//AESysFrameEnd();
+		}
+
+		//fpFree();
+
+		if (_next != GS_RESTART)
+		{
+			//fpUnload();
+		}
+
+		_previous = _current;
+		_current = _next;
+	}
+	//AESysExit();
+	//delete SysManager;
+
+	std::cin.get();
+
+	return 0;
+} */
+

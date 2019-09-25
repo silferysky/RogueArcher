@@ -23,7 +23,7 @@ public:
 	 char PlayCounter = 0;
 	 float PlayTimer = 0.0f;
 	 char PlayCap = 0;
-   void CreateOneShot(const char * filename, FMOD_SOUND **sound)
+	 void CreateOneShot(const char * filename, FMOD_SOUND **sound);
 	 void Create(const char* filename, char counterCap, float playTimer);
 	 void init(); //initialises sound
 	 void setvolume(float volume); //sets volume
