@@ -1,24 +1,21 @@
-#include "Physics.h"
+#include "PhysicsSystem.h"
 
 
 // Private member functions
-
-
-
-
-
-// Public member functions
-
-
-void PhysicsSystem::positionUpdate(const char* ID)
+void PhysicsSystem::applyForces(Rigidbody& rigidbody) // F = ma
 {
-	// Vec2 acceleration = forceComponents[ID].m_force / rigidbodyComponents[ID].m_mass;
-
-	// rigidbodyComponents[ID].m_velocity += acceleration * 0.016f; // dt
-	// transformComponents[ID].m_position += rigidbodyComponents[ID].m_velocity * 0.016f; // dt
+	rigidbody.setAcceleration(rigidbody.getAccForce() *rigidbody.getInvMass());
 }
 
-void PhysicsSystem::collisionUpdate(const char* ID)
+void PhysicsSystem::positionUpdate(Rigidbody& rigidbody, Transform& transform, float dt)
+{
+	rigidbody.setAcceleration(rigidbody.getAccForce() * rigidbody.getInvMass());
+
+	rigidbody.offSetVelocity(rigidbody.getAcceleration() * dt);
+	transform.offSetPosition(rigidbody.getVelocity() * dt);
+}
+
+void PhysicsSystem::collisionUpdate(Rigidbody& rigidbody, float dt)
 {
 	// For each pair/quad
 	// Check bc
@@ -28,14 +25,16 @@ void PhysicsSystem::collisionUpdate(const char* ID)
 
 // Public member functions 
 
-void PhysicsSystem::init()
-{}
-
-void PhysicsSystem::update()
+void PhysicsSystem::init(const Vec2& gravity)
 {
-	// Traverse unordered_map
+	m_gravity = gravity;
+}
+
+void PhysicsSystem::update(float dt)
+{
+	// Traverse array
 	//{
-		// Update forces (Freefall, impulse, torque)
+		// Update forces (impulse, torque)
 
 		// Apply forces
 
