@@ -12,6 +12,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
  */
 /******************************************************************************/
 #pragma once
+#include "REMath.h"
 #include "Vector2D.h"
 #include <cmath>
 
