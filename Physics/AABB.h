@@ -1,5 +1,5 @@
 #pragma once
-#include "../Scripts/Vector2D.h"
+#include "Vector2.h"
 
 class AABB // : public BaseComponent
 {

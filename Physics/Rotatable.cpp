@@ -1,4 +1,4 @@
-#include "Rotatable.h"
+#include "Physics.h"
 
 
 inline void Rotatable::computeMOI(float mass, float volume)

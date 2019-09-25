@@ -191,14 +191,6 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	InputManager* InputMgr = new InputManager();
 	RE_INFO("Hello");
 
-	////////////////////////////////////
-	// Create Engine Object (Testing)
-	////////////////////////////////////
-
-	REEngine gEngine;
-	gEngine.init();
-	auto& gCoordinator = gEngine.RECoordinator;
-
 	//////////////////////////
 	//Graphics Debug
 	/////////////////////////

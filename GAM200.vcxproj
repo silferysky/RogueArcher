@@ -19,26 +19,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="REEngine.h" />
-    <ClInclude Include="Physics\AABB.h" />
-    <ClInclude Include="Physics\BaseCollider.h" />
-    <ClInclude Include="Physics\Circle.h" />
-    <ClInclude Include="Physics\CircleCollider2D.h" />
-    <ClInclude Include="Physics\Collider.h" />
-    <ClInclude Include="Physics\CollisionManager.h" />
-    <ClInclude Include="Physics\Main.h" />
-    <ClInclude Include="Physics\Material.h" />
-    <ClInclude Include="Physics\OBB.h" />
-    <ClInclude Include="Physics\PhysicsSystem.h" />
-    <ClInclude Include="Physics\Polygon.h" />
-    <ClInclude Include="Physics\Rigidbody.h" />
-    <ClInclude Include="Physics\Rotatable.h" />
-    <ClInclude Include="Physics\Shape.h" />
-    <ClInclude Include="Physics\Transform.h" />
+    <ClInclude Include="Scripts\AABB.h" />
     <ClInclude Include="Scripts\AppEvent.h" />
+    <ClInclude Include="Scripts\BaseCollider.h" />
     <ClInclude Include="Scripts\BaseComponent.h" />
     <ClInclude Include="Scripts\BaseEntity.h" />
     <ClInclude Include="Scripts\BaseSystem.h" />
+    <ClInclude Include="Scripts\BC.h" />
+    <ClInclude Include="Scripts\Circle.h" />
+    <ClInclude Include="Scripts\Collidable.h" />
     <ClInclude Include="Scripts\ComponentArray.h" />
     <ClInclude Include="Scripts\ComponentManager.h" />
     <ClInclude Include="Scripts\Coordinator.h" />
@@ -57,37 +46,35 @@
     <ClInclude Include="Scripts\Library.h" />
     <ClInclude Include="Scripts\Logger.h" />
     <ClInclude Include="Scripts\Main.h" />
+    <ClInclude Include="Scripts\Material.h" />
     <ClInclude Include="Scripts\Matrix33.h" />
+    <ClInclude Include="Scripts\OBB.h" />
+    <ClInclude Include="Scripts\Physics.h" />
     <ClInclude Include="Scripts\MemoryType.h" />
+    <ClInclude Include="Scripts\PhysicsComponent.h" />
+    <ClInclude Include="Scripts\PhysicsSystem.h" />
+    <ClInclude Include="Scripts\Polygon.h" />
     <ClInclude Include="Scripts\Quad.h" />
-    <ClInclude Include="Scripts\REMath.h" />
     <ClInclude Include="Scripts\Resource.h" />
+    <ClInclude Include="Scripts\Rigidbody.h" />
     <ClInclude Include="Scripts\RogueEngine.h" />
+    <ClInclude Include="Scripts\Rotatable.h" />
     <ClInclude Include="Scripts\shader.h" />
+    <ClInclude Include="Scripts\Shape.h" />
     <ClInclude Include="Scripts\SpriteComponent.h" />
     <ClInclude Include="Scripts\SystemManager.h" />
     <ClInclude Include="Scripts\TestSystem.h" />
     <ClInclude Include="Scripts\triangle.h" />
     <ClInclude Include="Scripts\Types.h" />
-    <ClInclude Include="Scripts\Vector2D.h" />
+    <ClInclude Include="Scripts\Vector2.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="REEngine.cpp" />
-    <ClCompile Include="Physics\AABB.cpp" />
-    <ClCompile Include="Physics\Circle.cpp" />
-    <ClCompile Include="Physics\CircleCollider2D.cpp" />
-    <ClCompile Include="Physics\Collider.cpp" />
-    <ClCompile Include="Physics\CollisionManager.cpp" />
-    <ClCompile Include="Physics\Material.cpp" />
-    <ClCompile Include="Physics\OBB.cpp" />
-    <ClCompile Include="Physics\PhysicsSystem.cpp" />
-    <ClCompile Include="Physics\Polygon.cpp" />
-    <ClCompile Include="Physics\Rigidbody.cpp" />
-    <ClCompile Include="Physics\Rotatable.cpp" />
-    <ClCompile Include="Physics\Shape.cpp" />
-    <ClCompile Include="Physics\Transform.cpp" />
+    <ClCompile Include="Scripts\AABB.cpp" />
     <ClCompile Include="Scripts\BaseComponent.cpp" />
     <ClCompile Include="Scripts\BaseEntity.cpp" />
+    <ClCompile Include="Scripts\BC.cpp" />
+    <ClCompile Include="Scripts\Circle.cpp" />
+    <ClCompile Include="Scripts\Collidable.cpp" />
     <ClCompile Include="Scripts\EngineIO.cpp" />
     <ClCompile Include="Scripts\FileIO.cpp" />
     <ClCompile Include="Scripts\GameStateManager.cpp" />
@@ -95,12 +82,18 @@
     <ClCompile Include="Scripts\Library.cpp" />
     <ClCompile Include="Scripts\Logger.cpp" />
     <ClCompile Include="Scripts\Main.cpp" />
+    <ClCompile Include="Scripts\Material.cpp" />
     <ClCompile Include="Scripts\Matrix33.cpp" />
+    <ClCompile Include="Scripts\OBB.cpp" />
+    <ClCompile Include="Scripts\PhysicsSystem.cpp" />
+    <ClCompile Include="Scripts\Polygon.cpp" />
     <ClCompile Include="Scripts\Quad.cpp" />
-    <ClCompile Include="Scripts\REMath.cpp" />
+    <ClCompile Include="Scripts\Rigidbody.cpp" />
+    <ClCompile Include="Scripts\Rotatable.cpp" />
     <ClCompile Include="Scripts\shader.cpp" />
+    <ClCompile Include="Scripts\Shape.cpp" />
     <ClCompile Include="Scripts\triangle.cpp" />
-    <ClCompile Include="Scripts\Vector2D.cpp" />
+    <ClCompile Include="Scripts\Vector2.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
