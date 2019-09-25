@@ -203,7 +203,6 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 						-0.5f, -0.5f, };
 
 	Quad test(vertex);
-	test.CreateShaders();
 
 	while (off)
 	{
@@ -228,6 +227,7 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 				//InputMgr->DebugKeyInputs();
 			}
 		} */
+
 		glDisable(GL_DEPTH_TEST);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		test.Draw();

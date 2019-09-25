@@ -59,6 +59,7 @@
     <ClInclude Include="Scripts\Rotatable.h" />
     <ClInclude Include="Scripts\shader.h" />
     <ClInclude Include="Scripts\Shape.h" />
+    <ClInclude Include="Scripts\SpriteComponent.h" />
     <ClInclude Include="Scripts\SystemManager.h" />
     <ClInclude Include="Scripts\triangle.h" />
     <ClInclude Include="Scripts\Types.h" />
