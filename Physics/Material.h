@@ -1,4 +1,5 @@
 #pragma once
+#include "../Scripts/BaseComponent.h"
 
 enum MaterialList
 {
@@ -11,9 +12,9 @@ enum MaterialList
 	MAT_MAX
 };
 
-class Material
+class Material : public BaseComponent
 {
-	float m_material;
+	MaterialList m_material;
 	float m_density;
 	float m_friction;
 
