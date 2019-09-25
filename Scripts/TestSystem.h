@@ -12,7 +12,7 @@ public:
 		LISTENER_HANDLER hand = std::bind(&TestSystem::Receive, this, std::placeholders::_1);
 		EventDispatcher::instance().AddListener(id, hand); 
 	}
-	void Receive(const Event* ev) override 
+	void Receive(const Event& ev) override 
 	{ 
 		RE_INFO(ev.ToString());  
 		RE_CORE_INFO("TEST SYSTEM RECEIVED EVENT"); 
