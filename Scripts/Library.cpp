@@ -29,7 +29,6 @@ void Library::IntepretIO(LibraryID id, std::string string)
 		break;
 	case PlayerStatsData:
 	{
-		//To replace with actual data
 		std::stringstream data(string);
 		std::string segment;
 		std::vector<std::string> segmentList;

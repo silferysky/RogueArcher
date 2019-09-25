@@ -53,6 +53,12 @@
     <Filter Include="RogueEngine\Systems\Physics\Polygons">
       <UniqueIdentifier>{bd0e46e0-5af7-4458-b9da-3f6a931851a0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="RogueEngine\Library">
+      <UniqueIdentifier>{0c82b9be-67a8-466d-8268-83aed9336b0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RogueEngine\Systems\Memory">
+      <UniqueIdentifier>{cc7d7c11-3e65-4230-aaef-5548ecec4c50}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\GameStateList.h">
@@ -151,9 +157,6 @@
     <ClInclude Include="Scripts\InputManager.h">
       <Filter>RogueEngine\Systems\Input</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\MemoryManager.h">
-      <Filter>RogueEngine\Systems\Memory</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\SystemManager.h">
       <Filter>RogueEngine\Systems\ECS</Filter>
     </ClInclude>
@@ -187,6 +190,24 @@
     <ClInclude Include="Scripts\FileIO.h">
       <Filter>RogueEngine\Systems\I/O</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\MemoryType.h">
+      <Filter>RogueEngine\Systems\Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\EventDispatcher.h">
+      <Filter>RogueEngine\Systems\EventSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\TestSystem.h">
+      <Filter>RogueEngine\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\EventListener.h">
+      <Filter>RogueEngine\Systems\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\GameEvent.h">
+      <Filter>RogueEngine\Systems\Events\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\InputManager.h">
+      <Filter>RogueEngine\Systems\Input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\GameStateManager.cpp">
@@ -203,9 +224,6 @@
     </ClCompile>
     <ClCompile Include="Scripts\triangle.cpp">
       <Filter>RogueEngine\Systems\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\BaseSystem.cpp">
-      <Filter>RogueEngine\Systems</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\BaseEntity.cpp">
       <Filter>RogueEngine\Entities</Filter>
@@ -236,9 +254,6 @@
     </ClCompile>
     <ClCompile Include="Scripts\InputManager.cpp">
       <Filter>RogueEngine\Systems\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\MemoryManager.cpp">
-      <Filter>RogueEngine\Systems\Memory</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\OBB.cpp">
       <Filter>RogueEngine\Systems\Collision</Filter>
