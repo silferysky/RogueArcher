@@ -11,9 +11,9 @@ enum MaterialList
 	MAT_MAX
 };
 
-class Material : public BaseComponent
+class Material
 {
-	MaterialList m_material;
+	float m_material;
 	float m_density;
 	float m_friction;
 

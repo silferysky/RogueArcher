@@ -1,7 +1,7 @@
-#pragma once
-#include "Polygon.h"
+#include "Physics.h"
 
-Polygon::Polygon(PolygonList numSides)
+
+Polygon::Polygon(PolygonList numSides = POLY_NONE)
 	: m_numSides{ numSides }
 {}
 

@@ -31,7 +31,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
  /******************************************************************************/
 #pragma once
 #include "Matrix33.h"
-
+#include <cmath>
 #define PI 3.14159265358f
 #define EPSILON 0.0001f
 

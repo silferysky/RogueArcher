@@ -1,7 +1,5 @@
 #pragma once
-#include "../Physics/PhysicsSystem.h"
-//#include "GraphicsSystem.h"
-//#include rest of systems
+
 //class SystemManager;
 
 enum SYSTEMID
@@ -10,7 +8,6 @@ enum SYSTEMID
 	INPUTMANAGER,
 	EVENTMANAGER,
 	AUDIOMANAGER,
-	PHYSICSSYSTEM,
 	TESTSYSTEM,
 	LASTSYS
 };
