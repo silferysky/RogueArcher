@@ -1,23 +1,17 @@
 #pragma once
+#include "Vector2.h"
 
-class AABB : public BaseCollider
+class AABB // : public BaseComponent
 {
 	Vec2 m_min;
 	Vec2 m_max;
 
 public:
-	AABB() : m_min{ Vec2() }, m_max{ Vec2() }
-	{}
-	~AABB()
-	{}
+	AABB() = default;
+	~AABB() = default;
 
 	Vec2 getMin() const;
 	Vec2 getMax() const;
-	void setMin(float x, float y);
-	void setMax(float x, float y);
-
-	inline void update(const Vec2& pos, const float scale);
-	bool collisionTest(const AABB &rhs, const Vec2 &vel1, const Vec2 &vel2);
-	inline bool staticCollision(const AABB &rhs);
-	bool movingCollision(const AABB &rhs, const Vec2 &vel1, const Vec2 &vel2);
+	void setMin(const Vec2& min);
+	void setMax(const Vec2& max);
 };
