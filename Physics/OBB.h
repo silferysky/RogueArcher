@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include "Matrix33.h"
+#include "../Scripts/Matrix33.h"
 #include "Polygon.h"
 
 class OBB

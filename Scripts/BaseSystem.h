@@ -1,13 +1,12 @@
 #pragma once
 
-//class SystemManager;
-
 enum SYSTEMID
 {
 	MEMORYMANAGER = 0,
 	INPUTMANAGER,
 	EVENTMANAGER,
 	AUDIOMANAGER,
+	PHYSICSSYSTEM,
 	TESTSYSTEM,
 	LASTSYS
 };
