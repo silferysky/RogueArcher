@@ -22,6 +22,6 @@ public:
 	BaseSystem* SysListener = nullptr;
 };
 
-using LISTENER_HANDLER = std::function<void(const Event*)>;
+using LISTENER_HANDLER = std::function<void(const Event&)>;
 #define ADD_LISTENER(id, func)	LISTENER_HANDLER hand = std::bind(&func, this, std::placeholders::_1); \
 								eventDispatcher.AddListener(id, hand)
