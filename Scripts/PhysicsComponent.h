@@ -1,24 +1,19 @@
 #pragma once
 #include <cmath>
-#include "BaseComponent.h"
-
-struct PhysicsComponent : public BaseComponent
+struct Gravity
 {
-	struct Gravity
-	{
-		float force;
-	};
+	float force;
+};
 
-	struct RigidBody
-	{
-		float velocity;
-		float acceleration;
-	};
+struct RigidBody
+{
+	float velocity;
+	float acceleration;
+};
 
-	struct Transform
-	{
-		float position;
-		float rotation;
-		float scale;
-	};
-}
+struct Transform
+{
+	float position;
+	float rotation;
+	float scale;
+};
