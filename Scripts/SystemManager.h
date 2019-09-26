@@ -6,7 +6,7 @@
 class System
 {
 public:
-	std::set<Entity> REEntities;
+	std::set<std::uint32_t> REEntities;
 };
 
 class SystemManager
@@ -33,7 +33,7 @@ public:
 		RESignatures.insert({ typeName, signature });
 	}
 
-	void EntityDestroyed(Entity entity)
+	void EntityDestroyed(std::uint32_t entity)
 	{
 		// Erase a destroyed entity from all system lists
 		for (auto const& pair : RESystems)
@@ -45,7 +45,7 @@ public:
 		}
 	}
 
-	void EntitySignatureChanged(Entity entity, Signature entitySignature)
+	void EntitySignatureChanged(std::uint32_t entity, Signature entitySignature)
 	{
 		// Notify each system that an entity's signature changed
 		for (auto const& pair : RESystems)
@@ -54,12 +54,12 @@ public:
 			auto const& system = pair.second;
 			auto const& systemSignature = RESignatures[type];
 
-			// Entity signature matches system signature - insert into set
+			// std::uint32_t signature matches system signature - insert into set
 			if ((entitySignature & systemSignature) == systemSignature)
 			{
 				system->REEntities.insert(entity);
 			}
-			// Entity signature does not match system signature - erase from set
+			// std::uint32_t signature does not match system signature - erase from set
 			else
 			{
 				system->REEntities.erase(entity);
