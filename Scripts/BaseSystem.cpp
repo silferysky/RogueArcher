@@ -2,12 +2,12 @@
 
 BaseSystem::BaseSystem()
 {
-	_ID = LASTSYS;
+	ID = LASTSYS;
 }
 
 BaseSystem::BaseSystem(SYSTEMID id)
 {
-	_ID = id;
+	ID = id;
 }
 
 

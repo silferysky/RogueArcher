@@ -65,9 +65,9 @@ SPDLOG_INLINE void backtracer::foreach_pop(std::function<void(const details::log
     std::lock_guard<std::mutex> lock{mutex_};
     while (!messages_.empty())
     {
-        auto &front_msg = messages_.front();
-        fun(front_msg);
-        messages_.pop_front();
+        log_msg_buffer popped;
+        messages_.pop_front(popped);
+        fun(popped);
     }
 }
 } // namespace details
