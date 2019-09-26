@@ -43,11 +43,7 @@ public:
 
 	T& GetData(Entity entity)
 	{
-		auto idx = REEntityToIndexMap[entity];
-		if (idx >= 0 && idx < MAX_ENTITIES)
-			return REComponentArray[idx];
-		else
-			return REComponentArray[0];
+		return REComponentArray[REEntityToIndexMap[entity]];
 	}
 
 	void EntityDestroyed(Entity entity) override
