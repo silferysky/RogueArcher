@@ -1,9 +1,7 @@
 #pragma once
 #include <cmath>
 #include "Vector2D.h"
-#include <cmath>
 #include <algorithm>
-#include "Vector2D.h"
 #include "Matrix33.h"
 
 const double RE_EPSILON = 0.000001;
@@ -22,7 +20,6 @@ private:
     Vec2	m_normal;
   };
 public:
-
   //building line segment
   void BuildLineSegment(LineSegment &lineSegment,const Vec2 &pos,float scale,float dir);
   //calcuations

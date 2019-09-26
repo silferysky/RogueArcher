@@ -28,17 +28,17 @@ void PhysicsSystem::collisionUpdate(Rigidbody& rigidbody, float dt)
 void PhysicsSystem::init(const Vec2& gravity)
 {
 	m_gravity = gravity;
+
+	Signature signature;
+	signature.set(gEngine.RECoordinator.GetComponentType<Rigidbody>());
+	signature.set(gEngine.RECoordinator.GetComponentType<Transform>());
+	signature.set(gEngine.RECoordinator.GetComponentType<BoxCollider2D>());
+	signature.set(gEngine.RECoordinator.GetComponentType<CircleCollider2D>());
+	gEngine.RECoordinator.SetSystemSignature<PhysicsSystem>(signature);
 }
 
 void PhysicsSystem::update(float dt)
 {
-	Signature signature;
-	signature.set(gEngine.RECoordinator.GetComponentType<Rigidbody>());
-	signature.set(gEngine.RECoordinator.GetComponentType<Transform>());
-//	signature.set(gEngine.RECoordinator.GetComponentType<BoxCollider2D>());
-	signature.set(gEngine.RECoordinator.GetComponentType<CircleCollider2D>());
-	gEngine.RECoordinator.SetSystemSignature<PhysicsSystem>(signature);
-
 	// Traverse array
 	//{
 		// Update forces (impulse, torque)

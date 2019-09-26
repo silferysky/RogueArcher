@@ -1,8 +1,7 @@
 #pragma once
 #include "../Scripts/REMath.h"
-#include "../Scripts/BaseComponent.h"
 
-class Rigidbody : public BaseComponent
+class Rigidbody
 {
 	Vec2 m_acceleration;
 	Vec2 m_velocity;

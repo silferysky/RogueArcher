@@ -1,7 +1,6 @@
 #pragma once
-#include "../Scripts/BaseComponent.h"
 
-struct SpriteComponent : public BaseComponent
+struct SpriteComponent
 {
 	unsigned int shader;
 	unsigned int VAO;

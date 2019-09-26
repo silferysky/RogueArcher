@@ -1,9 +1,4 @@
 #include "REEngine.h"
-#include "SpriteComponent.h"
-#include "Physics/Rigidbody.h"
-#include "Physics/Transform.h"
-#include "Physics/CircleCollider2D.h"
-#include "Physics/PhysicsSystem.h"
 
 void REEngine::init()
 {
@@ -12,22 +7,21 @@ void REEngine::init()
 
 	// Register all components
 	RECoordinator.RegisterComponent<SpriteComponent>();
-	RECoordinator.RegisterComponent<Rigidbody>(); // TODO: Rename to RigidbodyComponent
-	RECoordinator.RegisterComponent<Transform>(); // TODO: ^
-//	RECoordinator.RegisterComponent<AABB>(); // Will combine AABB and OBB into BoxCollder2DComponent
-//	RECoordinator.RegisterComponent<OBB>();
+	RECoordinator.RegisterComponent<Rigidbody>(); 
+	RECoordinator.RegisterComponent<Transform>(); 
 	RECoordinator.RegisterComponent<CircleCollider2D>();
+	RECoordinator.RegisterComponent<BoxCollider2D>();
 
-	// Register all systems
-//	RECoordinator.RegisterSystem<GameStateManager();
-//	RECoordinator.RegisterSystem<GraphicsSystem>();
-//	RECoordinator.RegisterSystem<PhysicsSystem>();
-//	RECoordinator.RegisterSystem<SceneManager>();
+	// Register all systems and init them. System signatures will be set in their respective inits.
+	auto gPhysicsSystem = RECoordinator.RegisterSystem<PhysicsSystem>();
+	gPhysicsSystem->init();
+
+//	auto gGraphicsSystem = RECoordinator.RegisterSystem<GraphicsSystem>();
+//	auto sm = RECoordinator.RegisterSystem<SceneManager>();
 //  etc...
-
 }
 
 void REEngine::update()
 {
-
+	
 }

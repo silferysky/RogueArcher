@@ -32,6 +32,9 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #pragma once
 #include "Matrix33.h"
 
+#define PI 3.14159265358f
+#define EPSILON 0.0001f
+
 const int LAST_COORD = 9; // Last coordinate of the 3x3 matrix.
 const int LAST_X = 3; // Last coordinate of a row/column
 int i, j, k; // Iterators.
@@ -211,7 +214,7 @@ void Mtx33RotRad(Matrix3x3 &pResult, float angle)
 void Mtx33RotDeg(Matrix3x3 &pResult, float angle)
 {
 	// Convert angle to radian, then do rotation transformation in radians.
-	angle *= static_cast<float>(RE_PI / 180);
+	angle *= static_cast<float>(PI / 180);
 	Mtx33RotRad(pResult, angle);
 }
 
@@ -255,7 +258,7 @@ void Mtx33Inverse(Matrix3x3 &pResult, float &determinant, const Matrix3x3 &pMtx)
 	// Det = a(det12) - b(det02) + c(det01)
 	determinant = pMtx.m00 * det00 - pMtx.m01 * det01 + pMtx.m02 * det02;
 
-	if (determinant <= RE_EPSILON && determinant >= -RE_EPSILON)
+	if (determinant <= EPSILON && determinant >= -EPSILON)
 	{
 		pResult = NULL;
 		return;

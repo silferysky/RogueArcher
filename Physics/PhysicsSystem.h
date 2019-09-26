@@ -4,10 +4,10 @@
 #include "Rigidbody.h"
 #include "Transform.h"
 #include "../Scripts/REMath.h"
-#include "../Scripts/BaseSystem.h"
 #include "../Scripts/EventListener.h"
+#include "../BoxCollider2D.h"
 
-class PhysicsSystem : public BaseSystem, public EventListener
+class PhysicsSystem : public System
 {
 	CollisionManager gColliderManager;
 	Vec2 m_gravity;
@@ -20,7 +20,7 @@ public:
 	PhysicsSystem() = default;
 	~PhysicsSystem() = default;
 
-	// Init system with gravity (default 0,0)
+	// Init system with gravity (default 0.0f,0.0f)
 	void init(const Vec2& gravity = Vec2());
 	void update(float dt);
 
