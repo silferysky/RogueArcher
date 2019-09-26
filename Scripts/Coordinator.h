@@ -75,6 +75,10 @@ public:
 		return REComponentManager->GetComponentType<T>();
 	}
 
+	ComponentType GetComponentType(const char* name)
+	{
+		return REComponentManager->GetComponentType(name);
+	}
 
 	template<typename T>
 	std::shared_ptr<T> RegisterSystem()
@@ -86,6 +90,18 @@ public:
 	void SetSystemSignature(Signature signature)
 	{
 		RESystemManager->SetSignature<T>(signature);
+	}
+
+	template<typename T>
+	size_t Size() const
+	{
+		const char* typeName = typeid(T).name();
+		if (typeName == "EntityManager")
+			return REEntityManager->Size();
+		else if (typeName == "ComponentManager")
+			return REComponentManager->Size();
+		else
+			return 0;
 	}
 
 private:

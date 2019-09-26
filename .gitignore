@@ -1,0 +1,40 @@
+# Don't track these folders
+.vs/
+x64/
+
+# Compiled source #
+###################
+*.aps
+*.exe
+*.idb
+*.ipch
+*.lastbuildstate
+*.log
+*.tlog
+*.manifest
+*.obj
+*.pch
+*.pdb
+*.res
+*.sdf
+*.suo
+*.user
+*.com
+*.class
+*.o
+*.so
+
+# Packages #
+############
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+#include everything within#
+!/Dep/**/*
+!/Debug/glew32.dll

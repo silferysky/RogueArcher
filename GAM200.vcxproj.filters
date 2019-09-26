@@ -148,10 +148,6 @@
     <ClInclude Include="Scripts\SpriteComponent.h">
       <Filter>RogueEngine\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\EventListener.h" />
-    <ClInclude Include="Scripts\GameEvent.h" />
-    <ClInclude Include="Scripts\MemoryType.h" />
-    <ClInclude Include="Scripts\TestSystem.h" />
     <ClInclude Include="Physics\PhysicsSystem.h">
       <Filter>RogueEngine\Systems\Physics</Filter>
     </ClInclude>
@@ -206,6 +202,24 @@
     <ClInclude Include="Physics\CircleCollider2D.h">
       <Filter>RogueEngine\Systems\Physics\Collision</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\ObjectFactory.h">
+      <Filter>RogueEngine\Systems\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\EventListener.h">
+      <Filter>RogueEngine\Systems\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\GameEvent.h">
+      <Filter>RogueEngine\Systems\Events\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\MemoryType.h">
+      <Filter>RogueEngine\Systems\Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\TestSystem.h">
+      <Filter>RogueEngine\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\ComponentList.h">
+      <Filter>RogueEngine\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\GameStateManager.cpp">
@@ -225,9 +239,6 @@
     </ClCompile>
     <ClCompile Include="Scripts\BaseEntity.cpp">
       <Filter>RogueEngine\Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\BaseComponent.cpp">
-      <Filter>RogueEngine\Components</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\InputManager.cpp">
       <Filter>RogueEngine\Systems\Input</Filter>
@@ -294,6 +305,9 @@
     </ClCompile>
     <ClCompile Include="Physics\CircleCollider2D.cpp">
       <Filter>RogueEngine\Systems\Physics\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\ObjectFactory.cpp">
+      <Filter>RogueEngine\Systems\ECS</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
