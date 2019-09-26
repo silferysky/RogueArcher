@@ -15,8 +15,10 @@
 #include "SOIL.h"
 
 double t = 0.0;
-double gdt = 1.0;
+double gdt = 1.0; // 0.016? - Joel
 bool off = true;
+REEngine gEngine;
+
 //SystemManager *SysManager = new SystemManager();
 
 static const int SCREEN_FULLSCREEN = 0;
@@ -191,6 +193,12 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	InputManager* InputMgr = new InputManager();
 	RE_INFO("Hello");
 
+	////////////////////////////////////
+	// Create Engine Object (Testing)
+	////////////////////////////////////
+
+	gEngine.init();
+	
 	//////////////////////////
 	//Graphics Debug
 	/////////////////////////
@@ -203,7 +211,6 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 						-0.5f, -0.5f, };
 
 	Quad test(vertex);
-	test.CreateShaders();
 
 	TestSystem sys = TestSystem();
 	KeyPressEvent ke(Key0);
@@ -251,10 +258,10 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 
 	RE_INFO("MANUAL TEST EVENT DISPATCHER");
 	TestSystem testSys = TestSystem((SYSTEMID)2);
-	testSys.Receive(testEvent);
+	testSys.Receive(&testEvent);
 
 	RE_INFO("EVENT DISPATCHER TEST");
-	EventDispatcher::instance().AddEvent(testEvent);
+	EventDispatcher::instance().AddEvent(&testEvent);
 	EventDispatcher::instance().Update();
 	RE_INFO("EVENT DISPATCHER END");
 

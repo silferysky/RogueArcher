@@ -3,42 +3,37 @@
 
 Quad::Quad(float* vertexpos)
 {
-	for (int i = 0; i < 8; ++i)
-		_vertexpos[i] = *(vertexpos + i);
-}
+	for (int i = 0; i < 32; ++i)
+	{
+		_vertexpos[i] = vertices[i];
+	}
 
-void Quad::CreateShaders()
-{
 	std::string vertexShader = EngineIO::ReadFile("vertexShader.txt");
 
 	std::string fragmentShader = EngineIO::ReadFile("fragmentShader.txt");
 
-	shader = CreateShader(vertexShader, fragmentShader);
+	_shader = CreateShader(vertexShader, fragmentShader);
 
-	float vertices[] = {
-		// positions          // colors           // texture coords
-		0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
-		0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
-	   -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-	   -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left 
-	};
-	unsigned int indices[] = {  // note that we start from 0!
-		0, 1, 3,   // first triangle
-		1, 2, 3    // second triangle
-	};
+	/* for (int i = 0; i < 26; ++i)
+	{
+		if (!i % 8)
+		{
+			*(_vertexpos + i) = *(vertexpos + i);
+			*(_vertexpos + i + 1) = *(vertexpos + i + 1);
+		}
+	} */
 
-
-	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
-	glGenBuffers(1, &EBO);
+	glGenVertexArrays(1, &_VAO);
+	glGenBuffers(1, &_VBO);
+	glGenBuffers(1, &_EBO);
 	// bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
-	glBindVertexArray(VAO);
+	glBindVertexArray(_VAO);
 
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, _VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(_vertexpos), _vertexpos, GL_STATIC_DRAW);
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(quadIndices), quadIndices, GL_STATIC_DRAW);
 
 	// position attribute
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
@@ -56,9 +51,9 @@ void Quad::CreateShaders()
 
 void Quad::Draw()
 {
-	glBindVertexArray(VAO);
+	glBindVertexArray(_VAO);
 	// Use the shader program for drawing
-	glUseProgram(shader);
+	glUseProgram(_shader);
 
 	// TODO: Bind Texture
 

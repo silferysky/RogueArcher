@@ -4,7 +4,7 @@
 // Private member functions
 void PhysicsSystem::applyForces(Rigidbody& rigidbody) // F = ma
 {
-	rigidbody.setAcceleration(rigidbody.getAccForce() *rigidbody.getInvMass());
+	rigidbody.setAcceleration(rigidbody.getAccForce() * rigidbody.getInvMass());
 }
 
 void PhysicsSystem::positionUpdate(Rigidbody& rigidbody, Transform& transform, float dt)
@@ -32,6 +32,13 @@ void PhysicsSystem::init(const Vec2& gravity)
 
 void PhysicsSystem::update(float dt)
 {
+	Signature signature;
+	signature.set(gEngine.RECoordinator.GetComponentType<Rigidbody>());
+	signature.set(gEngine.RECoordinator.GetComponentType<Transform>());
+//	signature.set(gEngine.RECoordinator.GetComponentType<BoxCollider2D>());
+	signature.set(gEngine.RECoordinator.GetComponentType<CircleCollider2D>());
+	gEngine.RECoordinator.SetSystemSignature<PhysicsSystem>(signature);
+
 	// Traverse array
 	//{
 		// Update forces (impulse, torque)
@@ -54,4 +61,16 @@ void PhysicsSystem::update(float dt)
 		// Rest, Impulse, Torque
 
 	//}
+}
+
+
+// Setters
+void PhysicsSystem::setGravity(const Vec2& gravity)
+{
+	m_gravity = gravity;
+}
+
+const Vec2& PhysicsSystem::getGravity() const
+{
+	return m_gravity;
 }
