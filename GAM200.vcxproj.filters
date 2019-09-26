@@ -145,9 +145,6 @@
     <ClInclude Include="Scripts\FileIO.h">
       <Filter>RogueEngine\Systems\I/O</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\SpriteComponent.h">
-      <Filter>RogueEngine\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\EventListener.h" />
     <ClInclude Include="Scripts\GameEvent.h" />
     <ClInclude Include="Scripts\MemoryType.h" />
@@ -205,6 +202,10 @@
     </ClInclude>
     <ClInclude Include="Physics\CircleCollider2D.h">
       <Filter>RogueEngine\Systems\Physics\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="BoxCollider2D.h" />
+    <ClInclude Include="Scripts\SpriteComponent.h">
+      <Filter>RogueEngine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -295,5 +296,6 @@
     <ClCompile Include="Physics\CircleCollider2D.cpp">
       <Filter>RogueEngine\Systems\Physics\Collision</Filter>
     </ClCompile>
+    <ClCompile Include="BoxCollider2D.cpp" />
   </ItemGroup>
 </Project>

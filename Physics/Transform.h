@@ -1,14 +1,16 @@
 #pragma once
 #include "../Scripts/REMath.h"
-#include "../Scripts/BaseComponent.h"
 
-class Transform : public BaseComponent
+class Transform
 {
 	Vec2 m_position;
 	Vec2 m_scale;
 	float m_rotation;
 
 public:
+	Transform() = default;
+	~Transform() = default;
+
 	void setPosition(const Vec2& pos);
 	void offSetPosition(const Vec2& pos);
 	void setScale(const Vec2& scale);
