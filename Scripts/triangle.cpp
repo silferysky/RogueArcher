@@ -50,8 +50,8 @@ void Triangle::Draw()
 
 void Triangle::Update()
 {
-	float sin1 = sin(10*(PI/180));
-	float cos1 = cos(10*(PI/180));
+	float sin1 = (float)sin(10*(PI/180));
+	float cos1 = (float)cos(10*(PI/180));
 
 	for (int i = 0; i < 6; ++i)
 	{

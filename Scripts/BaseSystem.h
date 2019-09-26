@@ -1,23 +1,26 @@
 #pragma once
 
-//class SystemManager;
-
 enum SYSTEMID
 {
 	MEMORYMANAGER = 0,
 	INPUTMANAGER,
 	EVENTMANAGER,
 	AUDIOMANAGER,
+	PHYSICSSYSTEM,
+	TESTSYSTEM,
 	LASTSYS
 };
 
 class BaseSystem
 {
 public:
-	BaseSystem();
-	BaseSystem(SYSTEMID ID);
-	~BaseSystem();
+	BaseSystem() { _ID = LASTSYS; };
+	BaseSystem(SYSTEMID ID) {_ID = ID;}
+	~BaseSystem() {};
+
+	SYSTEMID ID() { return _ID; }
+	void ID(SYSTEMID id) { _ID = id; }
 
 private:
-	SYSTEMID ID;
+	SYSTEMID _ID;
 };
