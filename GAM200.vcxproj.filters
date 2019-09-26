@@ -223,9 +223,6 @@
     <ClCompile Include="Scripts\triangle.cpp">
       <Filter>RogueEngine\Systems\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\BaseSystem.cpp">
-      <Filter>RogueEngine\Systems</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\BaseEntity.cpp">
       <Filter>RogueEngine\Entities</Filter>
     </ClCompile>
