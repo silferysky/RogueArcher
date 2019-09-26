@@ -1,5 +1,7 @@
 #include "Physics.h"
 
+Rigidbody::Rigidbody()
+	:BaseComponent(CMP_RIGIDBODY) {}
 
 void Rigidbody::computeForce(const float mass, const Vec2& gravity) // F = ma
 {

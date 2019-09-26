@@ -2,12 +2,8 @@
 #include <iostream>
 #include <bitset>
 
-using Entity = std::uint32_t;
+const std::uint32_t MAX_ENTITIES = 5000;
 
-const Entity MAX_ENTITIES = 5000;
-
-using ComponentType = std::uint8_t;
-
-const ComponentType MAX_COMPONENTS = 32;
+const std::uint8_t MAX_COMPONENTS = 32;
 
 using Signature = std::bitset<MAX_COMPONENTS>;

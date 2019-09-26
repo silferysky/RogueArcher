@@ -16,12 +16,12 @@ public:
 	}
 
 
-	Entity CreateEntity()
+	std::uint32_t CreateEntity()
 	{
 		return REEntityManager->CreateEntity();
 	}
 
-	void DestroyEntity(Entity entity)
+	void DestroyEntity(std::uint32_t entity)
 	{
 		REEntityManager->DestroyEntity(entity);
 
@@ -39,7 +39,7 @@ public:
 	}
 
 	template<typename T>
-	void AddComponent(Entity entity, T component)
+	void AddComponent(std::uint32_t entity, T component)
 	{
 		REComponentManager->AddComponent<T>(entity, component);
 
@@ -51,7 +51,7 @@ public:
 	}
 
 	template<typename T>
-	void RemoveComponent(Entity entity)
+	void RemoveComponent(std::uint32_t entity)
 	{
 		std::cout << "component removed from entity"<<std::endl;
 		REComponentManager->RemoveComponent<T>(entity);
@@ -64,13 +64,13 @@ public:
 	}
 
 	template<typename T>
-	T& GetComponent(Entity entity)
+	T& GetComponent(std::uint32_t entity)
 	{
 		return REComponentManager->GetComponent<T>(entity);
 	}
 
 	template<typename T>
-	ComponentType GetComponentType()
+	std::uint8_t GetComponentType()
 	{
 		return REComponentManager->GetComponentType<T>();
 	}

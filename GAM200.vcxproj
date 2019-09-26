@@ -20,18 +20,25 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\AABB.h" />
+    <ClInclude Include="Scripts\AnimationComponent.h" />
     <ClInclude Include="Scripts\AppEvent.h" />
     <ClInclude Include="Scripts\BaseCollider.h" />
     <ClInclude Include="Scripts\BaseComponent.h" />
     <ClInclude Include="Scripts\BaseEntity.h" />
     <ClInclude Include="Scripts\BaseSystem.h" />
     <ClInclude Include="Scripts\BC.h" />
+    <ClInclude Include="Scripts\CameraComponent.h" />
     <ClInclude Include="Scripts\Circle.h" />
     <ClInclude Include="Scripts\Collidable.h" />
+    <ClInclude Include="Scripts\Collider.h" />
     <ClInclude Include="Scripts\ComponentArray.h" />
+    <ClInclude Include="Scripts\ComponentList.h" />
     <ClInclude Include="Scripts\ComponentManager.h" />
     <ClInclude Include="Scripts\Coordinator.h" />
+    <ClInclude Include="Scripts\EmitterComponent.h" />
     <ClInclude Include="Scripts\EngineIO.h" />
+    <ClInclude Include="Scripts\EntityList.h" />
+    <ClInclude Include="Scripts\EntityType.h" />
     <ClInclude Include="Scripts\EntityManager.h" />
     <ClInclude Include="Scripts\Event.h" />
     <ClInclude Include="Scripts\EventDispatcher.h" />
@@ -47,11 +54,14 @@
     <ClInclude Include="Scripts\Logger.h" />
     <ClInclude Include="Scripts\Main.h" />
     <ClInclude Include="Scripts\Material.h" />
+    <ClInclude Include="Scripts\MaterialList.h" />
     <ClInclude Include="Scripts\Matrix33.h" />
     <ClInclude Include="Scripts\OBB.h" />
+    <ClInclude Include="Scripts\ObjectFactory.h" />
+    <ClInclude Include="Scripts\ParticleComponent.h" />
     <ClInclude Include="Scripts\Physics.h" />
     <ClInclude Include="Scripts\MemoryType.h" />
-    <ClInclude Include="Scripts\PhysicsComponent.h" />
+    <ClInclude Include="Scripts\PhysicsMaterial.h" />
     <ClInclude Include="Scripts\PhysicsSystem.h" />
     <ClInclude Include="Scripts\Polygon.h" />
     <ClInclude Include="Scripts\Quad.h" />
@@ -61,16 +71,17 @@
     <ClInclude Include="Scripts\Rotatable.h" />
     <ClInclude Include="Scripts\shader.h" />
     <ClInclude Include="Scripts\Shape.h" />
+    <ClInclude Include="Scripts\SpriteComponent.h" />
     <ClInclude Include="Scripts\SystemManager.h" />
     <ClInclude Include="Scripts\TestSystem.h" />
+    <ClInclude Include="Scripts\TextComponent.h" />
+    <ClInclude Include="Scripts\TransformComponent.h" />
     <ClInclude Include="Scripts\triangle.h" />
     <ClInclude Include="Scripts\Types.h" />
     <ClInclude Include="Scripts\Vector2.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\AABB.cpp" />
-    <ClCompile Include="Scripts\BaseComponent.cpp" />
-    <ClCompile Include="Scripts\BaseEntity.cpp" />
     <ClCompile Include="Scripts\BC.cpp" />
     <ClCompile Include="Scripts\Circle.cpp" />
     <ClCompile Include="Scripts\Collidable.cpp" />

@@ -14,7 +14,7 @@ void Library::IntepretIO(LibraryID id, std::string string)
 {
 	switch (id)
 	{
-	case ComponentID:
+	case ComponentType:
 	case EntityID:
 	case SystemID:
 		break;
@@ -73,8 +73,8 @@ std::string Library::GetFileName(LibraryID id)
 {
 	switch (id)
 	{
-	case ComponentID:
-		return "DATA/ComponentID.txt";
+	case ComponentType:
+		return "DATA/ComponentType.txt";
 		break;
 	case EntityID:
 		return "DATA/EntityID.txt";

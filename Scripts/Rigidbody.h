@@ -1,7 +1,8 @@
 #pragma once
+#include "BaseComponent.h"
+#include "Vector2.h"
 
-
-class Rigidbody // : public BaseComponent
+class Rigidbody : public BaseComponent
 {
 	Vec2 m_velocity;
 	Vec2 m_force;
@@ -11,7 +12,7 @@ class Rigidbody // : public BaseComponent
 	float m_orientation;
 
 public:
-	Rigidbody() = default;
+	Rigidbody();
 	~Rigidbody() = default;
 
 	void computeForce(const float mass, const Vec2& gravity);
