@@ -10,6 +10,7 @@
 #include "Library.h"
 #include "EventDispatcher.h"
 #include "TestSystem.h"
+#include "ObjectFactory.h"
 
 #include "Quad.h"
 #include "SOIL.h"
@@ -212,8 +213,16 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 
 	Quad test(vertex);
 
+	RE_INFO("TEST OBJECT FACTORY");
+	int objInLevel = gEngine.RECoordinator.Size<EntityManager>();
+	RE_INFO(objInLevel);
+	ObjectFactory objFac;
+	objFac.SaveLevel("Level 1");
+	objFac.LoadLevel("Level 1");
+	RE_INFO(objInLevel);
+
+
 	TestSystem sys = TestSystem();
-	KeyPressEvent ke(Key0);
 	while (off)
 	{
 		while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
