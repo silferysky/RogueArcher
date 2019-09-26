@@ -17,20 +17,50 @@
     <Filter Include="RogueEngine\Components">
       <UniqueIdentifier>{a5d5a6bb-9849-4008-976f-ee24ee403053}</UniqueIdentifier>
     </Filter>
-    <Filter Include="RogueEngine\Systems\EventSystem">
-      <UniqueIdentifier>{8ed8a40a-ae7c-43fa-aac3-45f06a6593ca}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="RogueEngine\Systems\EventSystem\Events">
-      <UniqueIdentifier>{874017b0-c223-4a1e-9f81-5e68b60e39c5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="RogueEngine\Data">
       <UniqueIdentifier>{a050a5c0-1c86-4d17-8448-e9c5d24c48f5}</UniqueIdentifier>
     </Filter>
     <Filter Include="RogueEngine\Systems\Graphics">
       <UniqueIdentifier>{d11b3ae9-5aed-4e68-8791-7e74d89579b3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="RogueEngine\Systems\Physics">
+      <UniqueIdentifier>{b287f5c9-4fd6-4555-a072-9e44eaea785d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RogueEngine\Systems\Input">
+      <UniqueIdentifier>{3a918ea4-3468-4a85-9107-f225a7c6b8cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RogueEngine\Systems\Events">
+      <UniqueIdentifier>{8ed8a40a-ae7c-43fa-aac3-45f06a6593ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RogueEngine\Systems\Events\Events">
+      <UniqueIdentifier>{874017b0-c223-4a1e-9f81-5e68b60e39c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RogueEngine\Systems\Memory">
+      <UniqueIdentifier>{c7c96828-3cac-4aeb-bc20-6a26e3a1a849}</UniqueIdentifier>
+    </Filter>
     <Filter Include="RogueEngine\Systems\ECS">
       <UniqueIdentifier>{629d965b-c364-483b-b07e-8a65dc3774f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RogueEngine\Systems\Debug">
+      <UniqueIdentifier>{dd569528-c110-4600-89f9-e2702d70a3fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RogueEngine\Systems\I/O">
+      <UniqueIdentifier>{04f37cb7-cc36-4083-9b39-54efe633ae0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RogueEngine\Systems\Physics\Polygons">
+      <UniqueIdentifier>{bd0e46e0-5af7-4458-b9da-3f6a931851a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RogueEngine\Systems\Physics\Collision">
+      <UniqueIdentifier>{e4319b4b-0961-4d86-8ff7-4c14b6b262b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RogueEngine\Systems\Physics\Physics Components">
+      <UniqueIdentifier>{846770d4-715c-44f0-88bf-591217db1294}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RogueEngine\Math">
+      <UniqueIdentifier>{22b537b5-886e-4043-b876-1c95ad7a8bc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RogueEngine\Core">
+      <UniqueIdentifier>{4fe8da6f-c39e-45a1-9802-b4b7e3bd135e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -40,44 +70,29 @@
     <ClInclude Include="Scripts\Resource.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\SystemManager.h">
-      <Filter>RogueEngine\Systems</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\GameStateManager.h">
       <Filter>RogueEngine\Systems</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Main.h">
       <Filter>RogueEngine</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Logger.h">
-      <Filter>RogueEngine</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\RogueEngine.h">
       <Filter>RogueEngine</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Event.h">
-      <Filter>RogueEngine\Systems\EventSystem\Events</Filter>
+      <Filter>RogueEngine\Systems\Events\Events</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\AppEvent.h">
-      <Filter>RogueEngine\Systems\EventSystem\Events</Filter>
+      <Filter>RogueEngine\Systems\Events\Events</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\KeyEvent.h">
-      <Filter>RogueEngine\Systems\EventSystem\Events</Filter>
+      <Filter>RogueEngine\Systems\Events\Events</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\EventDispatcher.h">
-      <Filter>RogueEngine\Systems\EventSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\InputManager.h">
-      <Filter>RogueEngine\Systems</Filter>
+      <Filter>RogueEngine\Systems\Events</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\InputData.h">
       <Filter>RogueEngine\Data</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\EngineIO.h">
-      <Filter>RogueEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Library.h">
-      <Filter>RogueEngine</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Quad.h">
       <Filter>RogueEngine\Systems\Graphics</Filter>
@@ -103,13 +118,7 @@
     <ClInclude Include="Scripts\Types.h">
       <Filter>RogueEngine\Systems\ECS</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\PhysicsComponent.h">
-      <Filter>RogueEngine\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\BaseSystem.h">
-      <Filter>RogueEngine\Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\MemoryManager.h">
       <Filter>RogueEngine\Systems</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\BaseEntity.h">
@@ -118,24 +127,91 @@
     <ClInclude Include="Scripts\BaseComponent.h">
       <Filter>RogueEngine\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\InputManager.h">
+      <Filter>RogueEngine\Systems\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\SystemManager.h">
+      <Filter>RogueEngine\Systems\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\EngineIO.h">
+      <Filter>RogueEngine\Systems\I/O</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Library.h">
+      <Filter>RogueEngine\Systems\I/O</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Logger.h">
+      <Filter>RogueEngine\Systems\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\FileIO.h">
+      <Filter>RogueEngine\Systems\I/O</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\SpriteComponent.h">
+      <Filter>RogueEngine\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\EventListener.h" />
+    <ClInclude Include="Scripts\GameEvent.h" />
+    <ClInclude Include="Scripts\MemoryType.h" />
+    <ClInclude Include="Scripts\TestSystem.h" />
+    <ClInclude Include="Physics\PhysicsSystem.h">
+      <Filter>RogueEngine\Systems\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\BaseCollider.h">
+      <Filter>RogueEngine\Systems\Physics\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\OBB.h">
+      <Filter>RogueEngine\Systems\Physics\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\CollisionManager.h">
+      <Filter>RogueEngine\Systems\Physics\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\Collider.h">
+      <Filter>RogueEngine\Systems\Physics\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\AABB.h">
+      <Filter>RogueEngine\Systems\Physics\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\Circle.h">
+      <Filter>RogueEngine\Systems\Physics\Polygons</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\Polygon.h">
+      <Filter>RogueEngine\Systems\Physics\Polygons</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\Shape.h">
+      <Filter>RogueEngine\Systems\Physics\Polygons</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\Material.h">
+      <Filter>RogueEngine\Systems\Physics\Physics Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\Transform.h">
+      <Filter>RogueEngine\Systems\Physics\Physics Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\Rotatable.h">
+      <Filter>RogueEngine\Systems\Physics\Physics Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\Rigidbody.h">
+      <Filter>RogueEngine\Systems\Physics\Physics Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Vector2D.h">
+      <Filter>RogueEngine\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Matrix33.h">
+      <Filter>RogueEngine\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\REMath.h">
+      <Filter>RogueEngine\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="REEngine.h">
+      <Filter>RogueEngine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\CircleCollider2D.h">
+      <Filter>RogueEngine\Systems\Physics\Collision</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\GameStateManager.cpp">
       <Filter>RogueEngine\Systems</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\Main.cpp">
-      <Filter>RogueEngine</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Logger.cpp">
-      <Filter>RogueEngine</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\InputManager.cpp">
-      <Filter>RogueEngine\Systems</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\EngineIO.cpp">
-      <Filter>RogueEngine</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Library.cpp">
       <Filter>RogueEngine</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\Quad.cpp">
@@ -147,17 +223,77 @@
     <ClCompile Include="Scripts\triangle.cpp">
       <Filter>RogueEngine\Systems\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\BaseSystem.cpp">
-      <Filter>RogueEngine\Systems</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\MemoryManager.cpp">
-      <Filter>RogueEngine\Systems</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\BaseEntity.cpp">
       <Filter>RogueEngine\Entities</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\BaseComponent.cpp">
       <Filter>RogueEngine\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\InputManager.cpp">
+      <Filter>RogueEngine\Systems\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\EngineIO.cpp">
+      <Filter>RogueEngine\Systems\I/O</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Library.cpp">
+      <Filter>RogueEngine\Systems\I/O</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Logger.cpp">
+      <Filter>RogueEngine\Systems\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\FileIO.cpp">
+      <Filter>RogueEngine\Systems\I/O</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\PhysicsSystem.cpp">
+      <Filter>RogueEngine\Systems\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\OBB.cpp">
+      <Filter>RogueEngine\Systems\Physics\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\CollisionManager.cpp">
+      <Filter>RogueEngine\Systems\Physics\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\Collider.cpp">
+      <Filter>RogueEngine\Systems\Physics\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\AABB.cpp">
+      <Filter>RogueEngine\Systems\Physics\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\Circle.cpp">
+      <Filter>RogueEngine\Systems\Physics\Polygons</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\Polygon.cpp">
+      <Filter>RogueEngine\Systems\Physics\Polygons</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\Shape.cpp">
+      <Filter>RogueEngine\Systems\Physics\Polygons</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\Material.cpp">
+      <Filter>RogueEngine\Systems\Physics\Physics Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\Transform.cpp">
+      <Filter>RogueEngine\Systems\Physics\Physics Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\Rotatable.cpp">
+      <Filter>RogueEngine\Systems\Physics\Physics Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\Rigidbody.cpp">
+      <Filter>RogueEngine\Systems\Physics\Physics Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Vector2D.cpp">
+      <Filter>RogueEngine\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Matrix33.cpp">
+      <Filter>RogueEngine\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\REMath.cpp">
+      <Filter>RogueEngine\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="REEngine.cpp">
+      <Filter>RogueEngine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\CircleCollider2D.cpp">
+      <Filter>RogueEngine\Systems\Physics\Collision</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
