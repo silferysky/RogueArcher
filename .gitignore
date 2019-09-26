@@ -23,7 +23,6 @@ x64/
 *.class
 *.o
 *.so
-*.ilk
 
 # Packages #
 ############

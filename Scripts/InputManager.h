@@ -66,15 +66,9 @@ public:
 	//Checks if key is just pressed
 	bool KeyTriggered(KeyPress checkKey);
 	bool KeyTriggeredAny();
-	//Checks if key is just released
-	bool KeyReleased(KeyPress checkKey);
 
 	//Reset Key bindings
 	void ResetKeyBind();
-
-	//Creating Events
-	void CreateKeyPressEvent(KeyPress key, int repeat = 0);
-	void CreateKeyReleaseEvent(KeyPress key);
 
 private:
 	KeyboardState CurKeyboardState;

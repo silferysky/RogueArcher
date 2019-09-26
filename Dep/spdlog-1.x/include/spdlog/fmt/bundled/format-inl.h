@@ -698,7 +698,7 @@ FMT_API bool grisu_format(Double value, buffer<char>& buf, int precision,
       buf.push_back('0');
     } else {
       exp = -precision;
-      buf.resize(to_unsigned(precision));
+      buf.resize(precision);
       std::uninitialized_fill_n(buf.data(), precision, '0');
     }
     return true;

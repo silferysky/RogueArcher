@@ -1,41 +1,114 @@
 #include "FileIO.h"
 
-
-	bool RESerialiser::ReadFromFile(const char* FileName)
+bool WriteToFile(const char* FileName, const char* DataTitle, const char* DataToChange)
+{
 	{
-		FILE* pFile = nullptr;
-		fopen_s(&pFile, FileName, "r");
-		if (!pFile)
+		std::ifstream ifs{ FileName };
+		if (!ifs.is_open())
 		{
+			std::cerr << "Could not open file for reading!\n";
 			return EXIT_FAILURE;
 		}
-		char buffer[65536];
-		rapidjson::FileReadStream is(pFile, buffer, sizeof(buffer));
-		rapidjson::Document document;
-		document.ParseStream<0, rapidjson::UTF8<>, rapidjson::FileReadStream>(is);
-		fclose(pFile);
+
+		rapidjson::IStreamWrapper Wrapper{ ifs };
+
+		rapidjson::Document doc{};
+		doc.ParseStream(Wrapper);
+
+		rapidjson::StringBuffer buffer{};
+		rapidjson::Writer<rapidjson::StringBuffer> writer{ buffer };
+		doc.Accept(writer);
+
+		if (doc.HasParseError())
+		{
+			std::cout << "Error  : " << doc.GetParseError() << '\n'
+				<< "Offset : " << doc.GetErrorOffset() << '\n';
+			return EXIT_FAILURE;
+		}
+
+		const std::string jsonStr{ buffer.GetString() };
+
+		std::cout << jsonStr << '\n';
+
+		doc[DataTitle].SetString(rapidjson::GenericStringRef<char>(DataToChange));// = DataToChange;
+		std::ofstream ofs{ FileName };
+		if (!ofs.is_open())
+		{
+			std::cerr << "Could not open file for writing!\n";
+			return EXIT_FAILURE;
+		}
+
+		rapidjson::OStreamWrapper osw{ ofs };
+		rapidjson::Writer<rapidjson::OStreamWrapper> writer2{ osw };
+		doc.Accept(writer2);
+
 		return EXIT_SUCCESS;
 	}
+}
 
-	rapidjson::Document RESerialiser::DeserialiseFromFile(const char* FileName)
+bool WriteToFilePretty(const char* FileName, const char* DataTitle, const char* DataToChange)
+{
 	{
-		FILE* pFile = nullptr;
-		fopen_s(&pFile, FileName, "r");
-		if (!pFile)
+		std::ifstream ifs{ FileName };
+		if (!ifs.is_open())
 		{
-			return nullptr;
+			std::cerr << "Could not open file for reading!\n";
+			return EXIT_FAILURE;
 		}
-		char buffer[65536];
-		rapidjson::FileReadStream is(pFile, buffer, sizeof(buffer));
-		fclose(pFile);
-		rapidjson::Document document;
-		document.ParseStream<0, rapidjson::UTF8<>, rapidjson::FileReadStream>(is);
-		return document;
+
+		rapidjson::IStreamWrapper Wrapper{ ifs };
+
+		rapidjson::Document doc{};
+		doc.ParseStream(Wrapper);
+
+		rapidjson::StringBuffer buffer{};
+		rapidjson::Writer<rapidjson::StringBuffer> writer{ buffer };
+		doc.Accept(writer);
+
+		if (doc.HasParseError())
+		{
+			std::cout << "Error  : " << doc.GetParseError() << '\n'
+				<< "Offset : " << doc.GetErrorOffset() << '\n';
+			return EXIT_FAILURE;
+		}
+
+		const std::string jsonStr{ buffer.GetString() };
+
+		std::cout << jsonStr << '\n';
+
+		doc[DataTitle].SetString(rapidjson::GenericStringRef<char>(DataToChange));// = DataToChange;
+		std::ofstream ofs{ FileName };
+		if (!ofs.is_open())
+		{
+			std::cerr << "Could not open file for writing!\n";
+			return EXIT_FAILURE;
+		}
+
+		rapidjson::OStreamWrapper osw{ ofs };
+		rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer2{ osw };
+		doc.Accept(writer2);
+
+		return EXIT_SUCCESS;
 	}
-	bool RESerialiser::IfFileExists(const char* FileName)
+}
+
+bool ReadFromFile(const char* FileName)
+{
+	FILE* pFile = nullptr;
+	fopen_s(&pFile,FileName, "r");
+	if (!pFile)
 	{
-		std::ifstream file(FileName);
-		return file.good();
+		return EXIT_FAILURE;
 	}
+	char buffer[65536];
+	rapidjson::FileReadStream is(pFile, buffer, sizeof(buffer));
+	rapidjson::Document document;
+	document.ParseStream<0, rapidjson::UTF8<>, rapidjson::FileReadStream>(is);
+	return EXIT_SUCCESS;
+}
 
-
+bool IfFileExists(const char* FileName)
+{
+	std::ifstream file(FileName);
+	return file.good();
+}
