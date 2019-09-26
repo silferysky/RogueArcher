@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../REEngine.h"
+#include "RogueEngine.h"
 #include "GameStateList.h"
 #include "GameStateManager.h"
 #include <Windows.h>
@@ -12,8 +12,12 @@
 #endif
 
 //#defines
+
+#define WINAPI      __stdcall
+#define APIENTRY    WINAPI
+
 extern double t;
 extern double gdt;
-extern REEngine gEngine;
+extern SystemManager *SysManager;
 
-int APIENTRY WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst, LPSTR lpszCmdLine, int nCmdShow);
+int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow);

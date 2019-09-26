@@ -1,7 +1,7 @@
 #pragma once
+#include <list>
 #include "EngineIO.h"
 #include <sstream>
-#include <vector>
 
 enum LibraryID
 {

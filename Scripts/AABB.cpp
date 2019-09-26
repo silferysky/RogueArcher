@@ -1,32 +1,25 @@
-#include "Physics.h"
+#include "Main.h"
 
 Vec2 AABB::getMin() const
 {
-	return m_min;
+	return min;
 }
 
 Vec2 AABB::getMax() const
 {
-	return m_max;
+	return max;
 }
 
-void AABB::setMin(float x, float y)
+void AABB::setMin(const float x, const float y)
 {
-	m_min.x = x;
-	m_min.y = y;
+	min.x = x;
+	min.y = y;
 }
 
-void AABB::setMax(float x, float y)
+void AABB::setMax(const float x, const float y)
 {
-	m_max.x = x;
-	m_max.y = y;
-}
-
-// Update the bounding box's m_min and m_max.
-inline void AABB::update(const Vec2& pos, const float scale)
-{
-	setMin(-0.5f * scale + pos.x, -0.5f * scale + pos.y);
-	setMax(0.5f * scale + pos.x, 0.5f * scale + pos.y);
+	max.x = x;
+	max.y = y;
 }
 
 /**************************************************************************/
@@ -35,7 +28,7 @@ Checks for static collision, then checks for moving collision.
 Returns a boolean.
 */
 /**************************************************************************/
-bool AABB::collisionTest(const AABB &rhs, const Vec2 &vel1, const Vec2 &vel2)
+bool AABB::CollisionTest(const AABB &rhs, const Vec2 &vel1, const Vec2 &vel2)
 {
 	if (!staticCollision(rhs))
 		return movingCollision(rhs, vel1, vel2);
@@ -53,12 +46,12 @@ Returns a boolean.
 inline bool AABB::staticCollision(const AABB &rhs)
 {
 	// Static collision check
-	// Check for m_min and m_max values and elim_minate false scenarios
-	if (m_max.x < rhs.m_min.x || m_min.x > rhs.m_max.x)
+	// Check for min and max values and eliminate false scenarios
+	if (max.x < rhs.min.x || min.x > rhs.max.x)
 		return false;
 
 	// There's overlap on x. Check for overlap on y.
-	if (m_max.y < rhs.m_min.y || m_min.y > rhs.m_max.y)
+	if (max.y < rhs.min.y || min.y > rhs.max.y)
 		return false;
 
 	return true;
@@ -77,7 +70,7 @@ bool AABB::movingCollision(const AABB &rhs, const Vec2 &vel1, const Vec2 &vel2)
 	// Calculate new relative velocity Vb using vel2
 	Vec2 Vb;
 	float tFirst = 0;
-	float tLast = 0.016f; //deltaTime
+	float tLast = 0.016f;//deltaTime
 
 	Vb.x = vel2.x - vel1.x;
 	Vb.y = vel2.y - vel1.y;
@@ -91,22 +84,22 @@ bool AABB::movingCollision(const AABB &rhs, const Vec2 &vel1, const Vec2 &vel2)
 	if (Vb.x < 0) // Obj2 is moving to the left
 	{
 		// If obj1 is on the right of obj2
-		if (m_min.x > rhs.m_max.x)
+		if (min.x > rhs.max.x)
 		{
 			// Obj2 is moving away from obj1, no possible collision (CASE 1)
 			return false;
 		}
 		//	If obj1 is on the left of obj2 (CASE 4)
-		if (m_max.x < rhs.m_min.x)
+		if (max.x < rhs.min.x)
 		{
 			// Calculate the time of collision between obj1.x and obj2.x by dividing
 			// the distance between the objs by relative velocity
-			tFirst = (m_max.x - rhs.m_min.x) / Vb.x > tFirst ? (m_max.x - rhs.m_min.x) / Vb.x : tFirst;
+			tFirst = (max.x - rhs.min.x) / Vb.x > tFirst ? (max.x - rhs.min.x) / Vb.x : tFirst;
 		}
-		if (m_min.x < rhs.m_max.x)
+		if (min.x < rhs.max.x)
 		{
 			// Calculate the time it takes from now to when obj2.x exits obj1.x
-			tLast = (m_min.x - rhs.m_max.x) / Vb.x < tLast ? (m_min.x - rhs.m_max.x) / Vb.x : tLast;
+			tLast = (min.x - rhs.max.x) / Vb.x < tLast ? (min.x - rhs.max.x) / Vb.x : tLast;
 		}
 
 		// If time taken to enter is longer than time taken to exit (negative time), no collision possible
@@ -117,19 +110,19 @@ bool AABB::movingCollision(const AABB &rhs, const Vec2 &vel1, const Vec2 &vel2)
 	else if (Vb.x > 0) // Obj2 is moving towards the right
 	{
 		// Check if obj1 is on the right of obj2 (CASE 2)
-		if (m_min.x > rhs.m_max.x)
+		if (min.x > rhs.max.x)
 		{
 			// Calculate the time of collision for x-axis
-			tFirst = (m_min.x - rhs.m_max.x) / Vb.x > tFirst ? (m_min.x - rhs.m_max.x) / Vb.x : tFirst;
+			tFirst = (min.x - rhs.max.x) / Vb.x > tFirst ? (min.x - rhs.max.x) / Vb.x : tFirst;
 		}
-		if (m_max.x > rhs.m_min.x)
+		if (max.x > rhs.min.x)
 		{
 			// Calculate the time it takes from now to end of collision for x-axis
-			tLast = (m_max.x - rhs.m_min.x) / Vb.x < tLast ? (m_max.x - rhs.m_min.x) / Vb.x : tLast;
+			tLast = (max.x - rhs.min.x) / Vb.x < tLast ? (max.x - rhs.min.x) / Vb.x : tLast;
 		}
 
 		// Check if obj1 is on the left of obj2 (CASE 3)
-		if (m_max.x < rhs.m_min.x)
+		if (max.x < rhs.min.x)
 		{
 			// Obj2 is moving away from obj1, no possible collision
 			return false;
@@ -140,7 +133,7 @@ bool AABB::movingCollision(const AABB &rhs, const Vec2 &vel1, const Vec2 &vel2)
 			return false;
 	}
 
-	else if (m_max.x < rhs.m_min.x || m_min.x > rhs.m_max.x)
+	else if (max.x < rhs.min.x || min.x > rhs.max.x)
 		return false;
 
 	// ===================================
@@ -149,22 +142,22 @@ bool AABB::movingCollision(const AABB &rhs, const Vec2 &vel1, const Vec2 &vel2)
 	if (Vb.y < 0) // Obj2 is moving to the left
 	{
 		// If obj1 is on the right of obj2
-		if (m_min.y > rhs.m_max.y)
+		if (min.y > rhs.max.y)
 		{
 			// Obj2 is moving away from obj1, no possible collision (CASE 1)
 			return false;
 		}
 		//	If obj1 is on the left of obj2 (CASE 4)
-		if (m_max.y < rhs.m_min.y)
+		if (max.y < rhs.min.y)
 		{
 			// Calculate the time of collision between obj1.y and obj2.y by dividing
 			// the distance between the objs by relative velocity
-			tFirst = (m_max.y - rhs.m_min.y) / Vb.y > tFirst ? (m_max.y - rhs.m_min.y) / Vb.y : tFirst;
+			tFirst = (max.y - rhs.min.y) / Vb.y > tFirst ? (max.y - rhs.min.y) / Vb.y : tFirst;
 		}
-		if (m_min.y < rhs.m_max.y)
+		if (min.y < rhs.max.y)
 		{
 			// Calculate the time it takes from now to when obj2.y exits obj1.y
-			tLast = (m_min.y - rhs.m_max.y) / Vb.y < tLast ? (m_min.y - rhs.m_max.y) / Vb.y : tLast;
+			tLast = (min.y - rhs.max.y) / Vb.y < tLast ? (min.y - rhs.max.y) / Vb.y : tLast;
 		}
 
 		// If time taken to enter is longer than time taken to exit, no collision possible
@@ -176,19 +169,19 @@ bool AABB::movingCollision(const AABB &rhs, const Vec2 &vel1, const Vec2 &vel2)
 	else if (Vb.y > 0) // Obj2 is moving towards the right
 	{
 		// Check if obj1 is on the right of obj2 (CASE 2)
-		if (m_min.y > rhs.m_max.y)
+		if (min.y > rhs.max.y)
 		{
 			// Calculate the time of collision for x-axis
-			tFirst = (m_min.y - rhs.m_max.y) / Vb.y > tFirst ? (m_min.y - rhs.m_max.y) / Vb.y : tFirst;
+			tFirst = (min.y - rhs.max.y) / Vb.y > tFirst ? (min.y - rhs.max.y) / Vb.y : tFirst;
 		}
-		if (m_max.y > rhs.m_min.y)
+		if (max.y > rhs.min.y)
 		{
 			// Calculate the time it takes from now to end of collision for x-axis
-			tLast = (m_max.y - rhs.m_min.y) / Vb.y < tLast ? (m_max.y - rhs.m_min.y) / Vb.y : tLast;
+			tLast = (max.y - rhs.min.y) / Vb.y < tLast ? (max.y - rhs.min.y) / Vb.y : tLast;
 		}
 
 		// Check if obj1 is on the left of obj2 (CASE 3)
-		if (m_max.y < rhs.m_min.y)
+		if (max.y < rhs.min.y)
 		{
 			// Obj2 is moving away from obj1, no possible collision
 			return false;
@@ -199,7 +192,7 @@ bool AABB::movingCollision(const AABB &rhs, const Vec2 &vel1, const Vec2 &vel2)
 			return false;
 	}
 
-	else if (m_max.y < rhs.m_min.y || m_min.y > rhs.m_max.y)
+	else if (max.y < rhs.min.y || min.y > rhs.max.y)
 		return false;
 
 	// No more possibilities, the rectangles intersect

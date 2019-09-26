@@ -50,17 +50,8 @@
 #ifdef __linux__
 #include <sys/syscall.h> //Use gettid() syscall under linux to get thread id
 
-#elif defined(_AIX)
-#include <pthread.h> // for pthread_getthreadid_np
-
-#elif defined(__DragonFly__) || defined(__FreeBSD__)
-#include <pthread_np.h> // for pthread_getthreadid_np
-
-#elif defined(__NetBSD__)
-#include <lwp.h> // for _lwp_self
-
-#elif defined(__sun)
-#include <thread.h> // for thr_self
+#elif defined(__FreeBSD__)
+#include <sys/thr.h> //Use thr_self() syscall under FreeBSD to get thread id
 #endif
 
 #endif // unix
@@ -173,11 +164,6 @@ SPDLOG_INLINE int remove(const filename_t &filename) SPDLOG_NOEXCEPT
 #endif
 }
 
-SPDLOG_INLINE int remove_if_exists(const filename_t &filename) SPDLOG_NOEXCEPT
-{
-    return file_exists(filename) ? remove(filename) : 0;
-}
-
 SPDLOG_INLINE int rename(const filename_t &filename1, const filename_t &filename2) SPDLOG_NOEXCEPT
 {
 #if defined(_WIN32) && defined(SPDLOG_WCHAR_FILENAMES)
@@ -187,7 +173,7 @@ SPDLOG_INLINE int rename(const filename_t &filename1, const filename_t &filename
 #endif
 }
 
-// Return true if file exists
+// Return if file exists
 SPDLOG_INLINE bool file_exists(const filename_t &filename) SPDLOG_NOEXCEPT
 {
 #ifdef _WIN32
@@ -230,7 +216,7 @@ SPDLOG_INLINE size_t filesize(FILE *f)
 #else // unix
     int fd = fileno(f);
 // 64 bits(but not in osx or cygwin, where fstat64 is deprecated)
-#if (defined(__linux__) || defined(__sun) || defined(_AIX)) && (defined(__LP64__) || defined(_LP64))
+#if !defined(__FreeBSD__) && !defined(__APPLE__) && (defined(__x86_64__) || defined(__ppc64__)) && !defined(__CYGWIN__)
     struct stat64 st;
     if (::fstat64(fd, &st) == 0)
     {
@@ -325,14 +311,10 @@ SPDLOG_INLINE size_t _thread_id() SPDLOG_NOEXCEPT
 #define SYS_gettid __NR_gettid
 #endif
     return static_cast<size_t>(syscall(SYS_gettid));
-#elif defined(_AIX) || defined(__DragonFly__) || defined(__FreeBSD__)
-    return static_cast<size_t>(pthread_getthreadid_np());
-#elif defined(__NetBSD__)
-    return static_cast<size_t>(_lwp_self());
-#elif defined(__OpenBSD__)
-    return static_cast<size_t>(getthrid());
-#elif defined(__sun)
-    return static_cast<size_t>(thr_self());
+#elif defined(__FreeBSD__)
+    long tid;
+    thr_self(&tid);
+    return static_cast<size_t>(tid);
 #elif __APPLE__
     uint64_t tid;
     pthread_threadid_np(nullptr, &tid);
@@ -397,7 +379,7 @@ SPDLOG_INLINE bool is_color_terminal() SPDLOG_NOEXCEPT
     return true;
 #else
     static constexpr std::array<const char *, 14> Terms = {
-        {"ansi", "color", "console", "cygwin", "gnome", "konsole", "kterm", "linux", "msys", "putty", "rxvt", "screen", "vt100", "xterm"}};
+        "ansi", "color", "console", "cygwin", "gnome", "konsole", "kterm", "linux", "msys", "putty", "rxvt", "screen", "vt100", "xterm"};
 
     const char *env_p = std::getenv("TERM");
     if (env_p == nullptr)
@@ -424,7 +406,7 @@ SPDLOG_INLINE bool in_terminal(FILE *file) SPDLOG_NOEXCEPT
 }
 
 #if (defined(SPDLOG_WCHAR_TO_UTF8_SUPPORT) || defined(SPDLOG_WCHAR_FILENAMES)) && defined(_WIN32)
-SPDLOG_INLINE void wstr_to_utf8buf(wstring_view_t wstr, memory_buf_t &target)
+SPDLOG_INLINE void wstr_to_utf8buf(basic_string_view_t<wchar_t> wstr, memory_buf_t &target)
 {
     if (wstr.size() > static_cast<size_t>(std::numeric_limits<int>::max()))
     {
