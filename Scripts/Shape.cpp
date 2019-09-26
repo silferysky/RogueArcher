@@ -1,16 +1,14 @@
-#include "Shape.h"
-
+#include "Physics.h"
 
 Shape::~Shape()
 {
 }
 
-void Shape::initShape(float w, float h, float m, float c)
+void Shape::initShape(float w, float h, float m)
 {
 	m_width = w;
 	m_height = h;
 	m_mass = m;
-	m_center = c;
 
 	m_inertia = calcInertia();
 }

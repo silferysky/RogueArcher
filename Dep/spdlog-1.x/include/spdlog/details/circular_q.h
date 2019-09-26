@@ -18,9 +18,9 @@ class circular_q
     std::vector<T> v_;
 
 public:
-    using item_type = T;
+    using value_type = T;
 
-    // empty cir
+    // empty ctor - create a disabled queue with no elements allocated at all
     circular_q() = default;
 
     explicit circular_q(size_t max_items)
@@ -60,15 +60,23 @@ public:
         }
     }
 
+    // Return reference to the front item.
+    // If there are no elements in the container, the behavior is undefined.
+    const T &front() const
+    {
+        return v_[head_];
+    }
+
+    T &front()
+    {
+        return v_[head_];
+    }
+
     // Pop item from front.
     // If there are no elements in the container, the behavior is undefined.
-    void pop_front(T &popped_item)
+    void pop_front()
     {
-        if (max_items_ > 0)
-        {
-            popped_item = std::move(v_[head_]);
-            head_ = (head_ + 1) % max_items_;
-        }
+        head_ = (head_ + 1) % max_items_;
     }
 
     bool empty() const
@@ -79,7 +87,11 @@ public:
     bool full() const
     {
         // head is ahead of the tail by 1
-        return ((tail_ + 1) % max_items_) == head_;
+        if (max_items_ > 0)
+        {
+            return ((tail_ + 1) % max_items_) == head_;
+        }
+        return false;
     }
 
     size_t overrun_counter() const
