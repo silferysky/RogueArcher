@@ -91,7 +91,7 @@ public:
 			Event* nextEvent = GetQueueHead();
 			DispatchEvent(nextEvent);
 			EventQueue.pop();
-			//delete nextEvent;
+			delete nextEvent;
 		}
 	}
 
