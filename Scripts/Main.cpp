@@ -228,7 +228,7 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 		// RE_INFO("INPUT DEBUG");
 
 		int repeat = 0;
-		float timer = 0.0f;
+		float timer2 = 0.0f;
 		while (repeat < 5)
 		{
 			InputMgr->UpdateState();
@@ -246,6 +246,7 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 		SwapBuffers(hDC);
 		auto stop = timer.now();
 		dt = std::chrono::duration_cast<std::chrono::microseconds>(stop - start).count() / 1000.0f;
+		std::cout << dt << std::endl;
 	}
 
 	RE_INFO("TESTING HERE FOR A EVENT DEBUG");
