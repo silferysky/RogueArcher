@@ -22,7 +22,7 @@ public:
 	}
 
 	template<typename T>
-	std::uint8_t GetComponentType()
+	ComponentType GetComponentType()
 	{
 		const char* typeName = typeid(T).name();
 
@@ -30,25 +30,25 @@ public:
 	}
 
 	template<typename T>
-	void AddComponent(std::uint8_t entity, T component)
+	void AddComponent(Entity entity, T component)
 	{
 		std::cout<<"components added to system"<<std::endl;
 		GetComponentArray<T>()->InsertData(entity, component);
 	}
 
 	template<typename T>
-	void RemoveComponent(std::uint8_t entity)
+	void RemoveComponent(Entity entity)
 	{
 		GetComponentArray<T>()->RemoveData(entity);
 	}
 
 	template<typename T>
-	T& GetComponent(std::uint8_t entity)
+	T& GetComponent(Entity entity)
 	{
 		return GetComponentArray<T>()->GetData(entity);
 	}
 
-	void EntityDestroyed(std::uint8_t entity)
+	void EntityDestroyed(Entity entity)
 	{
 		// Notify each component array that an entity has been destroyed
 		// If it has a component for that entity, it will remove it
@@ -70,8 +70,10 @@ private:
 		return std::static_pointer_cast<ComponentArray<T>>(REComponentArrays[typeName]);
 	}
 
-	std::uint8_t RENextComponentType{};
-	std::unordered_map<const char*, std::uint8_t> REComponentTypes{};
+	ComponentType RENextComponentType{};
+
+	std::unordered_map<const char*, ComponentType> REComponentTypes{};
+
 	std::unordered_map<const char*, std::shared_ptr<BaseComponentArray>> REComponentArrays{};
 
 };

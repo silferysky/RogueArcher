@@ -9,24 +9,24 @@ class EntityManager
 public:
 	EntityManager()
 	{
-		for (std::uint32_t entity = 0; entity < MAX_ENTITIES; ++entity)
+		for (Entity entity = 0; entity < MAX_ENTITIES; ++entity)
 		{
 			REAvailableEntities.push(entity);
 		}
 	}
 
-	std::uint32_t CreateEntity()
+	Entity CreateEntity()
 	{
 
 		// Take an ID from the front of the queue
-		std::uint32_t id = REAvailableEntities.front();
+		Entity id = REAvailableEntities.front();
 		REAvailableEntities.pop();
 		++RECurrentEntityCount;
 		std::cout << "Entities Created" << std::endl;
 		return id;
 	}
 
-	void DestroyEntity(std::uint32_t entity)
+	void DestroyEntity(Entity entity)
 	{
 		std::cout << "Entities Destroyed" << std::endl;
 		// Invalidate the destroyed entity's signature
@@ -37,19 +37,19 @@ public:
 		--RECurrentEntityCount;
 	}
 
-	void SetSignature(std::uint32_t entity, Signature signature)
+	void SetSignature(Entity entity, Signature signature)
 	{
 		RESignatures[entity] = signature;
 	}
 
-	Signature GetSignature(std::uint32_t entity)
+	Signature GetSignature(Entity entity)
 	{
 		return RESignatures[entity];
 	}
 
 private:
 
-	std::queue<std::uint32_t> REAvailableEntities{};
+	std::queue<Entity> REAvailableEntities{};
 
 	std::array<Signature, MAX_ENTITIES> RESignatures{};
 

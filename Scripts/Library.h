@@ -6,7 +6,7 @@
 enum LibraryID
 {
 	//For Specifically individual segments
-	ComponentType = 0,
+	ComponentID = 0,
 	EntityID,
 	SystemID,
 
