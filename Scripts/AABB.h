@@ -1,24 +1,23 @@
-class AABB
+#pragma once
+
+class AABB : public BaseCollider
 {
-	Vec2 min;
-	Vec2 max;
+	Vec2 m_min;
+	Vec2 m_max;
 
 public:
-	AABB() : min{ Vec2() }, max{ Vec2() }
+	AABB() : m_min{ Vec2() }, m_max{ Vec2() }
 	{}
-	
-	AABB(Vec2 _min, Vec2 _max) : min{ _min }, max{ _max }
-	{}
-	
 	~AABB()
 	{}
 
 	Vec2 getMin() const;
 	Vec2 getMax() const;
-	void setMin(const float x, const float y);
-	void setMax(const float x, const float y);
+	void setMin(float x, float y);
+	void setMax(float x, float y);
 
-	bool CollisionTest(const AABB &rhs, const Vec2 &vel1, const Vec2 &vel2);
+	inline void update(const Vec2& pos, const float scale);
+	bool collisionTest(const AABB &rhs, const Vec2 &vel1, const Vec2 &vel2);
 	inline bool staticCollision(const AABB &rhs);
 	bool movingCollision(const AABB &rhs, const Vec2 &vel1, const Vec2 &vel2);
 };

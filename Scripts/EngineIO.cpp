@@ -13,7 +13,7 @@ std::string EngineIO::ReadFile(std::string FileName)
 		while (std::getline(iStream, line))
 		{
 			toReturnStr.append(line);
-			toReturnStr.append("\f");
+			toReturnStr.append("\n");
 		}
 	}
 	else

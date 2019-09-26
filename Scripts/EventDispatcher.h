@@ -1,77 +1,117 @@
 #pragma once
 
 #include <queue>
-#include "Event.h"
+#include <map>
+#include <vector>
+#include "EventListener.h"
 
-static class EventDispatcher :
+class EventDispatcher :
 	public BaseSystem
 {
-
 public:
 
-	EventDispatcher() { EventQueue = new std::queue<Event>; }
-	~EventDispatcher() { delete EventQueue; }
+	EventDispatcher() 
+	{ 
+		EventQueue = std::queue<Event*>();
+		DelayedEventQueue = std::queue<Event*>();
+		ListenerMap = std::map<SYSTEMID, LISTENER_HANDLER>();
 
-	Event& GetQueueHead() { return EventQueue->front(); }
+	}
+	~EventDispatcher() { }
 
-	void AddEvent(Event& e)
+	static EventDispatcher& instance()
 	{
-		EventQueue->push(e);
+		static EventDispatcher instance;
+		return instance;
+	}
+
+	Event* GetQueueHead() { return EventQueue.front(); }
+	Event* GetQueueHeadDelayed() { return DelayedEventQueue.front(); }
+	void CombineQueue()
+	{
+		while (!DelayedEventQueue.empty())
+		{
+			EventQueue.push(DelayedEventQueue.front());
+			DelayedEventQueue.pop();
+		}
+	}
+	void CombineQueueCmd(Event& e)
+	{
+		if (e.GetEventType() == DelayedEventQueue.front()->GetEventType() &&
+			e.GetEventName() == DelayedEventQueue.front()->GetEventName())
+			isCombiningQueue = true;
+	}
+
+	void AddListener(SYSTEMID ID, LISTENER_HANDLER handler)
+	{
+		ListenerMap.insert(std::pair<SYSTEMID, LISTENER_HANDLER>(ID, handler));
+		RE_CORE_INFO("Added new key to ListenerMap");
+	}
+	//Removes all listeners in map
+	void RemoveAllListener()
+	{
+		ListenerMap.clear();
+	}
+	void RemoveListener(SYSTEMID ID)
+	{
+		for (auto it = ListenerMap.begin(); it != ListenerMap.end(); ++it)
+		{
+			if (it->first == ID)
+			{
+				ListenerMap.erase(it);
+			}
+		}
+	}
+
+	std::map<SYSTEMID, LISTENER_HANDLER> GetMap()
+	{
+		return ListenerMap;
+	}
+
+	void AddEvent(Event* e)
+	{
+		EventQueue.push(e);
+	}
+	void AddEventDelayed(Event* e)
+	{
+		DelayedEventQueue.push(e);
 	}
 
 	void Update()
 	{
-		//Safety check
-		if (eventDispatcher.EventQueue->empty())
-			return;
-
-		//Queue is not empty here onwards
-		Event& nextEvent = GetQueueHead();
-		if (nextEvent.Handled())
+		if (isCombiningQueue)
 		{
-			DispatchEvent(nextEvent);
+			CombineQueue();
+			isCombiningQueue = false;
 		}
-		EventQueue->pop();
+
+		//While queue is not empty, handle all events
+		while (!EventQueue.empty())
+		{
+			Event* nextEvent = GetQueueHead();
+			DispatchEvent(nextEvent);
+			EventQueue.pop();
+			delete nextEvent;
+		}
 	}
 
 	//Dispatch sends it to the relavent system to execute event
-	void DispatchEvent(Event& toHandle)
+	void DispatchEvent(Event* toHandle)
 	{
 		//Is better to let individual systems handle events than handle all here
 		//Basically: Send a message to the relevant system to activate relavent function
 
-		switch (toHandle.GetEventType())
+		auto sysIt = ListenerMap.begin();
+		while (sysIt != ListenerMap.end())
 		{
-		case EventTypeNone:
-			break;
-		case WindowClose:
-			exit(0);
-			break;
-		case WindowResize:
-			break;
-		case WindowFocus:
-			break;
-		case WindowLostFocus:
-			break;
-		case WindowMoved:
-			break;
-		case KeyPressed:
-			break;
-		case KeyReleased:
-			break;
-		case MouseButtonPressed:
-			break;
-		case MouseButtonReleaseed:
-			break;
-		case MouseMoved:
-			break;
-		case MouseScrolled:
-			break;
-		default:
-			break;
+			sysIt->second(toHandle);
+			++sysIt;
 		}
 	}
 
 private:
-	std::queue<Event> *EventQueue;
-} eventDispatcher;
+	std::queue<Event*> EventQueue;
+	std::queue<Event*> DelayedEventQueue;
+	std::map<SYSTEMID, LISTENER_HANDLER> ListenerMap;
+	bool isCombiningQueue = false;
+};
