@@ -3,7 +3,7 @@
 #include "Rigidbody.h"
 #include "AABB.h"
 #include "OBB.h"
-#include "CircleCollider.h"
+#include "CircleCollider2D.h"
 
 class CollisionManager
 {

@@ -12,7 +12,9 @@ prior written consent of DigiPen Institute of Technology is prohibited.
  */
 /******************************************************************************/
 #pragma once
-#include "Vector2.h"
+#include "REMath.h"
+#include "Vector2D.h"
+#include <cmath>
 
 #ifdef _MSC_VER
 // Supress warning: nonstandard extension used : nameless struct/union
