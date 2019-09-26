@@ -2,7 +2,7 @@
 
 #include <cstdio>
 #include <cstdlib>
-
+#include <ctime>
 #include <fstream>
 #include "Main.h"
 #include "KeyEvent.h"
@@ -10,11 +10,11 @@
 #include "Library.h"
 #include "EventDispatcher.h"
 #include "TestSystem.h"
-
+#include <chrono>
 #include "Quad.h"
 #include "SOIL.h"
 
-double t = 0.0;
+float dt;
 double gdt = 1.0; // 0.016? - Joel
 bool off = true;
 REEngine gEngine;
@@ -186,6 +186,7 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	if (!InitGL())
 		return -2;
 
+
 	//Logger
 	Logger::InitLogger();
 	RE_CORE_TRACE("Init Core Logger");
@@ -216,6 +217,8 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	KeyPressEvent ke(Key0);
 	while (off)
 	{
+		std::chrono::high_resolution_clock timer;
+		auto start = timer.now(); 
 		while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
 		{
 			TranslateMessage(&msg);
@@ -241,6 +244,8 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		test.Draw();
 		SwapBuffers(hDC);
+		auto stop = timer.now();
+		dt = std::chrono::duration_cast<std::chrono::microseconds>(stop - start).count() / 1000.0f;
 	}
 
 	RE_INFO("TESTING HERE FOR A EVENT DEBUG");

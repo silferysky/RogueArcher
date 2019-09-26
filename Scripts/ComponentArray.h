@@ -25,6 +25,8 @@ public:
 
 	void RemoveData(Entity entity)
 	{
+		if (!RESize)
+			return;
 		// Copy element at end into deleted element's place to maintain density
 		size_t indexOfRemovedEntity = REEntityToIndexMap[entity];
 		size_t indexOfLastElement = RESize - 1;
