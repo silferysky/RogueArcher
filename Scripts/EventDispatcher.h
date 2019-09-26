@@ -12,8 +12,8 @@ public:
 
 	EventDispatcher() 
 	{ 
-		EventQueue = std::queue<Event>();
-		DelayedEventQueue = std::queue<Event>();
+		EventQueue = std::queue<Event*>();
+		DelayedEventQueue = std::queue<Event*>();
 		ListenerMap = std::map<SYSTEMID, LISTENER_HANDLER>();
 
 	}
@@ -25,8 +25,8 @@ public:
 		return instance;
 	}
 
-	Event& GetQueueHead() { return EventQueue.front(); }
-	Event& GetQueueHeadDelayed() { return DelayedEventQueue.front(); }
+	Event* GetQueueHead() { return EventQueue.front(); }
+	Event* GetQueueHeadDelayed() { return DelayedEventQueue.front(); }
 	void CombineQueue()
 	{
 		while (!DelayedEventQueue.empty())
@@ -37,8 +37,8 @@ public:
 	}
 	void CombineQueueCmd(Event& e)
 	{
-		if (e.GetEventType() == DelayedEventQueue.front().GetEventType() &&
-			e.GetEventName() == DelayedEventQueue.front().GetEventName())
+		if (e.GetEventType() == DelayedEventQueue.front()->GetEventType() &&
+			e.GetEventName() == DelayedEventQueue.front()->GetEventName())
 			isCombiningQueue = true;
 	}
 
@@ -68,11 +68,11 @@ public:
 		return ListenerMap;
 	}
 
-	void AddEvent(Event& e)
+	void AddEvent(Event* e)
 	{
 		EventQueue.push(e);
 	}
-	void AddEventDelayed(Event& e)
+	void AddEventDelayed(Event* e)
 	{
 		DelayedEventQueue.push(e);
 	}
@@ -88,14 +88,15 @@ public:
 		//While queue is not empty, handle all events
 		while (!EventQueue.empty())
 		{
-			Event& nextEvent = GetQueueHead();
+			Event* nextEvent = GetQueueHead();
 			DispatchEvent(nextEvent);
 			EventQueue.pop();
+			//delete nextEvent;
 		}
 	}
 
 	//Dispatch sends it to the relavent system to execute event
-	void DispatchEvent(const Event& toHandle)
+	void DispatchEvent(Event* toHandle)
 	{
 		//Is better to let individual systems handle events than handle all here
 		//Basically: Send a message to the relevant system to activate relavent function
@@ -109,8 +110,8 @@ public:
 	}
 
 private:
-	std::queue<Event> EventQueue;
-	std::queue<Event> DelayedEventQueue;
+	std::queue<Event*> EventQueue;
+	std::queue<Event*> DelayedEventQueue;
 	std::map<SYSTEMID, LISTENER_HANDLER> ListenerMap;
 	bool isCombiningQueue = false;
 };

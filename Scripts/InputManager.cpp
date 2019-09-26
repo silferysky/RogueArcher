@@ -230,12 +230,12 @@ void InputManager::ResetKeyBind()
 
 void InputManager::CreateKeyPressEvent(KeyPress key, int repeat)
 {
-	KeyPressEvent event(key, repeat);
+	KeyPressEvent* event = new KeyPressEvent(key, repeat);
 	EventDispatcher::instance().AddEvent(event);
 }
 
 void InputManager::CreateKeyReleaseEvent(KeyPress key)
 {
-	KeyReleaseEvent event(key);
+	KeyPressEvent* event = new KeyPressEvent(key);
 	EventDispatcher::instance().AddEvent(event);
 }

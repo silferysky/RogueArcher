@@ -258,10 +258,10 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 
 	RE_INFO("MANUAL TEST EVENT DISPATCHER");
 	TestSystem testSys = TestSystem((SYSTEMID)2);
-	testSys.Receive(testEvent);
+	testSys.Receive(&testEvent);
 
 	RE_INFO("EVENT DISPATCHER TEST");
-	EventDispatcher::instance().AddEvent(testEvent);
+	EventDispatcher::instance().AddEvent(&testEvent);
 	EventDispatcher::instance().Update();
 	RE_INFO("EVENT DISPATCHER END");
 
