@@ -29,18 +29,22 @@ void PhysicsSystem::init(const Vec2& gravity)
 {
 	m_gravity = gravity;
 
+	// Add components to signature
 	Signature signature;
-	signature.set(gEngine.RECoordinator.GetComponentType<Rigidbody>());
-	signature.set(gEngine.RECoordinator.GetComponentType<Transform>());
-	signature.set(gEngine.RECoordinator.GetComponentType<BoxCollider2D>());
-	signature.set(gEngine.RECoordinator.GetComponentType<CircleCollider2D>());
-	gEngine.RECoordinator.SetSystemSignature<PhysicsSystem>(signature);
+	signature.set(gEngine.m_coordinator.GetComponentType<Rigidbody>());
+	signature.set(gEngine.m_coordinator.GetComponentType<Transform>());
+	signature.set(gEngine.m_coordinator.GetComponentType<BoxCollider2D>());
+//	signature.set(gEngine.m_coordinator.GetComponentType<CircleCollider2D>());
+	
+	// Set physics system signature.
+	gEngine.m_coordinator.SetSystemSignature<PhysicsSystem>(signature);
 }
 
 void PhysicsSystem::update(float dt)
 {
-	// Traverse array
-	//{
+	// For all entities
+	for(auto entity : m_entities)
+	{
 		// Update forces (impulse, torque)
 
 		// Apply forces
@@ -60,7 +64,7 @@ void PhysicsSystem::update(float dt)
 		// Collision Response
 		// Rest, Impulse, Torque
 
-	//}
+	}
 }
 
 

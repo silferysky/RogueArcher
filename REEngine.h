@@ -12,7 +12,7 @@
 class REEngine
 {
 public:
-	Coordinator RECoordinator;
+	Coordinator m_coordinator;
 	REEngine() = default;
 	~REEngine() = default;
 
