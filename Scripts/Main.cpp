@@ -217,8 +217,8 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	int objInLevel = gEngine.RECoordinator.Size<EntityManager>();
 	RE_INFO(objInLevel);
 	ObjectFactory objFac;
-	objFac.SaveLevel("Level 1");
-	objFac.LoadLevel("Level 1");
+	objFac.SaveLevel("Resources/Level 1.json");
+	//objFac.LoadLevel("Level 1");
 	RE_INFO(objInLevel);
 
 
