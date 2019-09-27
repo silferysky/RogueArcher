@@ -6,7 +6,7 @@
 class System
 {
 public:
-	std::set<Entity> REEntities;
+	std::set<Entity> m_entities;
 };
 
 class SystemManager
@@ -40,7 +40,7 @@ public:
 		{
 			auto const& system = pair.second;
 
-			system->REEntities.erase(entity);
+			system->m_entities.erase(entity);
 			std::cout << "Entities Removed from system" << std::endl;
 		}
 	}
@@ -57,12 +57,12 @@ public:
 			// Entity signature matches system signature - insert into set
 			if ((entitySignature & systemSignature) == systemSignature)
 			{
-				system->REEntities.insert(entity);
+				system->m_entities.insert(entity);
 			}
 			// Entity signature does not match system signature - erase from set
 			else
 			{
-				system->REEntities.erase(entity);
+				system->m_entities.erase(entity);
 			}
 		}
 	}
