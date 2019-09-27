@@ -5,7 +5,7 @@
 void ObjectFactory::SaveLevel(const char* fileName, const char* filePath)
 {
 	int entCount = gEngine.RECoordinator.Size<EntityManager>();
-	m_Serialiser.WriteToFile(fileName, "EntityCount", entCount);
+	m_Serialiser.WriteToFile(fileName, "EntCount", entCount);
 
 	for (uint32_t i = 0; i < entCount; ++i)
 	{
@@ -19,12 +19,14 @@ void ObjectFactory::LoadLevel(const char* fileName, const char* filePath)
 	rapidjson::Document level = m_Serialiser.DeserialiseFromFile(fileName);
 	int entCount;
 	float curEntSig;
+	std::stringstream sig;
 	entCount = level["EntityCount"].GetInt();
 
 	for (int i = 0; i < entCount; ++i)
 	{
 		Entity curEnt = gEngine.RECoordinator.CreateEntity();
-		curEntSig = level["Sig" + i].GetFloat();
+		sig << "Sig" << i;
+		curEntSig = level[sig.str().c_str()].GetFloat();
 		for (int j = 0; j < MAX_COMPONENTS; ++j)
 		{
 			if (curEntSig >= 1.0f)
