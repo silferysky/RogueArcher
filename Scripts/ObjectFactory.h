@@ -3,6 +3,7 @@
 #include "RogueEngine.h"
 #include "Coordinator.h"
 #include "FileIO.h"
+#include "ComponentList.h"
 
 class ObjectFactory
 {
@@ -15,3 +16,7 @@ public:
 private:
 	ComponentType GetCmpType(int index) const;
 };
+
+#define CLEARSTRING(s) s.clear(); s.str("")
+#define SETSTRING(str, i1, cmp, i2) str << "e" << i1 << cmp << i2
+#define CLEARNSETSTR(s, i1, cmp, i2) s.clear(); s.str(""); SETSTRING(s, i1, cmp, i2)
