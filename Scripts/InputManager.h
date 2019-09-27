@@ -10,12 +10,12 @@
 struct KeyboardState
 {
 	//Since COUNT is the last KeyPress, it will always be same value as size of KeyPress
-	int Key[KeyCount] = { 0 };
+	int Key[(int)KeyPress::KeyCount] = { 0 };
 
 	//overloaded += operator. Checks if rhs has value. If rhs has value, add it, otherwise reset to 0
 	void operator+=(KeyboardState &rhs)
 	{
-		for (int i = 0; i < KeyCount; ++i)
+		for (int i = 0; i < (int)KeyPress::KeyCount; ++i)
 		{
 			if (rhs.Key[i] != 0)
 				Key[i] += rhs.Key[i];
