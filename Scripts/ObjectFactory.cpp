@@ -3,8 +3,8 @@
 
 void ObjectFactory::SaveLevel(const char* fileName)
 {
-	Entity entCount = (Entity)gEngine.RECoordinator.Size("Entity");
-	EntityManager* em = &gEngine.RECoordinator.GetEntityManager();
+	Entity entCount = (Entity)gEngine.m_coordinator.Size("Entity");
+	EntityManager* em = &gEngine.m_coordinator.GetEntityManager();
 	m_Serialiser.WriteToFile(fileName, "EntCount", (int)entCount);
 
 	for (Entity i = 0; i < entCount; ++i)
@@ -23,10 +23,10 @@ void ObjectFactory::SaveLevel(const char* fileName)
 		m_Serialiser.WriteToFile(fileName, cstr, convertSig);
 
 		//TODO: Change it to more dynamic
-		SpriteComponent s = gEngine.RECoordinator.GetComponent<SpriteComponent>(i);
-		Rigidbody r = gEngine.RECoordinator.GetComponent<Rigidbody>(i);
-		Transform t = gEngine.RECoordinator.GetComponent<Transform>(i);
-		CircleCollider2D c = gEngine.RECoordinator.GetComponent<CircleCollider2D>(i);
+		SpriteComponent s = gEngine.m_coordinator.GetComponent<SpriteComponent>(i);
+		Rigidbody r = gEngine.m_coordinator.GetComponent<Rigidbody>(i);
+		Transform t = gEngine.m_coordinator.GetComponent<Transform>(i);
+		CircleCollider2D c = gEngine.m_coordinator.GetComponent<CircleCollider2D>(i);
 
 		//Copypasta for each new variable//
 		varNum = 0;
@@ -102,7 +102,7 @@ void ObjectFactory::LoadLevel(const char* fileName)
 		std::stringstream strstream;
 		std::string stdstr;
 		const char* cstr;
-		Entity curEnt = gEngine.RECoordinator.CreateEntity();
+		Entity curEnt = gEngine.m_coordinator.CreateEntity();
 
 		//cstr will go out of scope if you choose to do strstream.str().c_str()
 		//This is the proper (Non macro) way of setting the string
@@ -124,7 +124,7 @@ void ObjectFactory::LoadLevel(const char* fileName)
 			CLEARNSETSTR(strstream, i, "sc", 3);
 			s.EBO = (unsigned int)level[cstr].GetInt();
 
-			gEngine.RECoordinator.AddComponent(curEnt, s);
+			gEngine.m_coordinator.AddComponent(curEnt, s);
 			--curEntSig;
 		}
 		curEntSig /= 2;
@@ -155,7 +155,7 @@ void ObjectFactory::LoadLevel(const char* fileName)
 			CLEARNSETSTR(strstream, i, "rbc", 5);
 			r.setVolume(level[cstr].GetFloat());
 
-			gEngine.RECoordinator.AddComponent(curEnt, r);
+			gEngine.m_coordinator.AddComponent(curEnt, r);
 			--curEntSig;
 		}
 		curEntSig /= 2;
@@ -178,7 +178,7 @@ void ObjectFactory::LoadLevel(const char* fileName)
 			t.setScale(Vec2(x, y));
 			t.setRotation(level[cstr].GetFloat());
 
-			gEngine.RECoordinator.AddComponent(curEnt, t);
+			gEngine.m_coordinator.AddComponent(curEnt, t);
 			--curEntSig;
 		}
 		curEntSig /= 2;
@@ -191,7 +191,7 @@ void ObjectFactory::LoadLevel(const char* fileName)
 			CLEARNSETSTR(strstream, i, "ccc", 0);
 			cc.setRadius(level[cstr].GetFloat());
 
-			gEngine.RECoordinator.AddComponent(curEnt, cc);
+			gEngine.m_coordinator.AddComponent(curEnt, cc);
 			--curEntSig;
 		}
 		curEntSig /= 2;
@@ -226,7 +226,7 @@ ComponentType ObjectFactory::GetCmpType(int index) const
 		return 0;
 	}
 
-	return gEngine.RECoordinator.GetComponentType(cmpName);
+	return gEngine.m_coordinator.GetComponentType(cmpName);
 }
 
 

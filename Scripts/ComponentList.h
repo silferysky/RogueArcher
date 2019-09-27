@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../SpriteComponent.h"
+#include "SpriteComponent.h"
 #include "../Physics/Rigidbody.h"
 #include "../Physics/Transform.h"
 #include "../Physics/CircleCollider2D.h"
