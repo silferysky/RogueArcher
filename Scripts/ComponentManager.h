@@ -28,6 +28,10 @@ public:
 
 		return REComponentTypes[typeName];
 	}
+	ComponentType GetComponentType(const char* typeName)
+	{
+		return REComponentTypes[typeName];
+	}
 
 	template<typename T>
 	void AddComponent(Entity entity, T component)
@@ -59,6 +63,11 @@ public:
 			component->EntityDestroyed(entity);
 			std::cout << "Components Removed" << std::endl;
 		}
+	}
+
+	size_t Size() const
+	{
+		return RENextComponentType;
 	}
 
 private:

@@ -1,4 +1,5 @@
 #include "REEngine.h"
+#include "Scripts/ComponentList.h"
 
 void REEngine::init()
 {

@@ -40,6 +40,7 @@
     <ClInclude Include="Scripts\BaseEntity.h" />
     <ClInclude Include="Scripts\BaseSystem.h" />
     <ClInclude Include="Scripts\ComponentArray.h" />
+    <ClInclude Include="Scripts\ComponentList.h" />
     <ClInclude Include="Scripts\ComponentManager.h" />
     <ClInclude Include="Scripts\Coordinator.h" />
     <ClInclude Include="Scripts\EngineIO.h" />
@@ -59,6 +60,7 @@
     <ClInclude Include="Scripts\Main.h" />
     <ClInclude Include="Scripts\Matrix33.h" />
     <ClInclude Include="Scripts\MemoryType.h" />
+    <ClInclude Include="Scripts\ObjectFactory.h" />
     <ClInclude Include="Scripts\Quad.h" />
     <ClInclude Include="Scripts\REMath.h" />
     <ClInclude Include="Scripts\Resource.h" />
@@ -87,7 +89,6 @@
     <ClCompile Include="Physics\Rotatable.cpp" />
     <ClCompile Include="Physics\Shape.cpp" />
     <ClCompile Include="Physics\Transform.cpp" />
-    <ClCompile Include="Scripts\BaseComponent.cpp" />
     <ClCompile Include="Scripts\BaseEntity.cpp" />
     <ClCompile Include="Scripts\EngineIO.cpp" />
     <ClCompile Include="Scripts\FileIO.cpp" />
@@ -97,6 +98,7 @@
     <ClCompile Include="Scripts\Logger.cpp" />
     <ClCompile Include="Scripts\Main.cpp" />
     <ClCompile Include="Scripts\Matrix33.cpp" />
+    <ClCompile Include="Scripts\ObjectFactory.cpp" />
     <ClCompile Include="Scripts\Quad.cpp" />
     <ClCompile Include="Scripts\REMath.cpp" />
     <ClCompile Include="Scripts\shader.cpp" />

@@ -6,7 +6,7 @@
 class TestSystem : public BaseSystem, public EventListener
 {
 public:
-	TestSystem(SYSTEMID id = TESTSYSTEM) 
+	TestSystem(SYSTEMID id = SYSTEMID::TESTSYSTEM) 
 		: BaseSystem(id) 
 	{
 		LISTENER_HANDLER hand = std::bind(&TestSystem::Receive, this, std::placeholders::_1);
