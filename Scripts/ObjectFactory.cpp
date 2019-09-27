@@ -2,19 +2,33 @@
 #include "ObjectFactory.h"
 #include "ComponentList.h"
 
-void ObjectFactory::SaveLevel(const char* fileName, const char* filePath)
+void ObjectFactory::SaveLevel(const char* fileName)
 {
-	int entCount = gEngine.RECoordinator.Size<EntityManager>();
+	Entity entCount = gEngine.RECoordinator.Size("Entity");
+	EntityManager* em = &gEngine.RECoordinator.GetEntityManager();
 	m_Serialiser.WriteToFile(fileName, "EntCount", entCount);
 
-	for (uint32_t i = 0; i < entCount; ++i)
+	for (Entity i = 0; i < entCount; ++i)
 	{
-		
+		std::stringstream varName;
+		varName << "Signature" << i;
+		int convertSig = em->GetSignature(i).to_ulong();
+		m_Serialiser.WriteToFile(fileName, varName.str().c_str(), convertSig);
+
+		//TODO: Change it to more dynamic
+		//SpriteComponent s = gEngine.RECoordinator.GetComponent<SpriteComponent>(i);
+		//Rigidbody r = gEngine.RECoordinator.GetComponent<Rigidbody>(i);
+		//Transform t = gEngine.RECoordinator.GetComponent<Transform>(i);
+		//CircleCollider2D c = gEngine.RECoordinator.GetComponent<CircleCollider2D>(i);
+
+		//varName.clear();
+		//varName << "e" << i;
+		//RE_INFO(varName);
 	}
 
 	RE_INFO("LEVEL SAVED");
 }
-void ObjectFactory::LoadLevel(const char* fileName, const char* filePath)
+void ObjectFactory::LoadLevel(const char* fileName)
 {
 	rapidjson::Document level = m_Serialiser.DeserialiseFromFile(fileName);
 	int entCount;
@@ -31,7 +45,7 @@ void ObjectFactory::LoadLevel(const char* fileName, const char* filePath)
 		{
 			if (curEntSig >= 1.0f)
 			{
-				gEngine.RECoordinator.AddComponent(curEnt, GetTypeName(j));
+				//gEngine.RECoordinator.AddComponent(curEnt, GetTypeName(j));
 				--curEntSig;
 			}
 			curEntSig *= 2;
@@ -39,7 +53,7 @@ void ObjectFactory::LoadLevel(const char* fileName, const char* filePath)
 	}
 }
 
-ComponentType ObjectFactory::GetTypeName(int index) const
+ComponentType ObjectFactory::GetCmpType(int index) const
 {
 	const char * cmpName;
 	switch (index)
@@ -58,6 +72,8 @@ ComponentType ObjectFactory::GetTypeName(int index) const
 
 	return gEngine.RECoordinator.GetComponentType(cmpName);
 }
+
+
 
 /* test for joel in case he forget/ put in main.cpp
 	RESerialiser Serialiser;

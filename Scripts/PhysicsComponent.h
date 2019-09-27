@@ -21,4 +21,4 @@ struct PhysicsComponent : public BaseComponent
 		float rotation;
 		float scale;
 	};
-}
+};

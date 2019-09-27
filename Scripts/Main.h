@@ -7,6 +7,9 @@
 #include "Resource.h"
 #include "SystemManager.h"
 
+//Temp for test
+#include "ComponentList.h"
+
 #if _DEBUG
 #include <iostream>
 #endif
