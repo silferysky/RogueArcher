@@ -16,6 +16,7 @@
 
 float dt;
 double gdt = 1.0; // 0.016? - Joel
+const float FPS = 1 / 60;
 bool off = true;
 REEngine gEngine;
 
@@ -216,9 +217,9 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	TestSystem sys = TestSystem();
 	KeyPressEvent ke(Key0);
 	float wasteTimer;
+	std::chrono::high_resolution_clock timer;
 	while (off)
 	{
-		std::chrono::high_resolution_clock timer;
 		auto start = timer.now(); 
 		while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
 		{
@@ -248,7 +249,7 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 		auto stop = timer.now();
 		dt = std::chrono::duration_cast<std::chrono::microseconds>(stop - start).count() / 1000000.0f;
 		wasteTimer = dt;
-		while (wasteTimer < 0.01666666f)
+		while (wasteTimer <= FPS)
 		{
 			stop = timer.now();
 			wasteTimer = std::chrono::duration_cast<std::chrono::microseconds>(stop - start).count() / 1000000.0f;
