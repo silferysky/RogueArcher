@@ -13,6 +13,7 @@
 #include <chrono>
 #include "Quad.h"
 #include "SOIL.h"
+#include "VSync.h"
 
 float dt;
 double gdt = 1.0; // 0.016? - Joel
@@ -165,7 +166,7 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	HGLRC hRC;				/* opengl context */
 	HWND  hWnd;				/* window */
 	MSG   msg;				/* message */
-
+	setVSync(0);
 	hWnd = CreateOpenGLWindow(const_cast<char*>("Rogue Engine"), 0, 0, 640, 480, PFD_TYPE_RGBA, 0);
 	if (hWnd == NULL)
 		exit(1);
