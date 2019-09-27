@@ -57,7 +57,7 @@ public:
 	std::string ToString() const override
 	{
 		std::stringstream ss;
-		ss << "EvKeyReleasedEvent: " << (int)KeyCode;
+		ss << "KeyReleasedEvent: " << (int)KeyCode;
 		return ss.str();
 	}
 };

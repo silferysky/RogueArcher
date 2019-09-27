@@ -236,6 +236,6 @@ void InputManager::CreateKeyPressEvent(KeyPress key, int repeat)
 
 void InputManager::CreateKeyReleaseEvent(KeyPress key)
 {
-	KeyPressEvent* event = new KeyPressEvent(key);
+	KeyReleaseEvent* event = new KeyReleaseEvent(key);
 	EventDispatcher::instance().AddEvent(event);
 }

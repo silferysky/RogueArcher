@@ -11,12 +11,6 @@
     <Filter Include="RogueEngine\Systems">
       <UniqueIdentifier>{720125b1-fd03-4ad0-be57-66bebbe94904}</UniqueIdentifier>
     </Filter>
-    <Filter Include="RogueEngine\Entities">
-      <UniqueIdentifier>{9625a325-37cf-4799-a695-4dc1753bacd4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="RogueEngine\Components">
-      <UniqueIdentifier>{a5d5a6bb-9849-4008-976f-ee24ee403053}</UniqueIdentifier>
-    </Filter>
     <Filter Include="RogueEngine\Data">
       <UniqueIdentifier>{a050a5c0-1c86-4d17-8448-e9c5d24c48f5}</UniqueIdentifier>
     </Filter>
@@ -61,6 +55,12 @@
     </Filter>
     <Filter Include="RogueEngine\Core">
       <UniqueIdentifier>{4fe8da6f-c39e-45a1-9802-b4b7e3bd135e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RogueEngine\Systems\ECS\Entities">
+      <UniqueIdentifier>{9625a325-37cf-4799-a695-4dc1753bacd4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RogueEngine\Systems\ECS\Components">
+      <UniqueIdentifier>{a5d5a6bb-9849-4008-976f-ee24ee403053}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -122,10 +122,10 @@
       <Filter>RogueEngine\Systems</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\BaseEntity.h">
-      <Filter>RogueEngine\Entities</Filter>
+      <Filter>RogueEngine\Systems\ECS\Entities</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\BaseComponent.h">
-      <Filter>RogueEngine\Components</Filter>
+      <Filter>RogueEngine\Systems\ECS\Components</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\InputManager.h">
       <Filter>RogueEngine\Systems\Input</Filter>
@@ -145,10 +145,6 @@
     <ClInclude Include="Scripts\FileIO.h">
       <Filter>RogueEngine\Systems\I/O</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\EventListener.h" />
-    <ClInclude Include="Scripts\GameEvent.h" />
-    <ClInclude Include="Scripts\MemoryType.h" />
-    <ClInclude Include="Scripts\TestSystem.h" />
     <ClInclude Include="Physics\PhysicsSystem.h">
       <Filter>RogueEngine\Systems\Physics</Filter>
     </ClInclude>
@@ -207,6 +203,27 @@
     <ClInclude Include="Scripts\SpriteComponent.h">
       <Filter>RogueEngine</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\EventListener.h">
+      <Filter>RogueEngine\Systems\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\GameEvent.h">
+      <Filter>RogueEngine\Systems\Events\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\ComponentList.h">
+      <Filter>RogueEngine\Systems\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\MemoryType.h">
+      <Filter>RogueEngine\Systems\Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\ObjectFactory.h">
+      <Filter>RogueEngine\Systems\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\TestSystem.h">
+      <Filter>RogueEngine\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\VSync.h">
+      <Filter>RogueEngine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\GameStateManager.cpp">
@@ -225,10 +242,7 @@
       <Filter>RogueEngine\Systems\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\BaseEntity.cpp">
-      <Filter>RogueEngine\Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\BaseComponent.cpp">
-      <Filter>RogueEngine\Components</Filter>
+      <Filter>RogueEngine\Systems\ECS\Entities</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\InputManager.cpp">
       <Filter>RogueEngine\Systems\Input</Filter>
@@ -297,5 +311,11 @@
       <Filter>RogueEngine\Systems\Physics\Collision</Filter>
     </ClCompile>
     <ClCompile Include="BoxCollider2D.cpp" />
+    <ClCompile Include="Scripts\ObjectFactory.cpp">
+      <Filter>RogueEngine\Systems\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\VSync.cpp">
+      <Filter>RogueEngine</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
