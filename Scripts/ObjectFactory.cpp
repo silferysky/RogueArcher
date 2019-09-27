@@ -196,7 +196,16 @@ void ObjectFactory::LoadLevel(const char* fileName)
 		}
 		curEntSig /= 2;
 		///////////////////////////////////
+
+
+		//ADD NEW COMPONENT LOADING HERE, BASED ON BITMAP
+
+
 	}
+	RE_INFO("LEVEL LOADED");
+	std::stringstream infoStr;
+	infoStr << entCount << " ENTITIES LOADED";
+	RE_INFO(infoStr.str());
 
 }
 

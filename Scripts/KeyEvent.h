@@ -38,7 +38,7 @@ public:
 	std::string ToString() const override
 	{
 		std::stringstream ss;
-		ss << "KeyPressEvent: " << KeyCode << " with " << RepeatCount << " repeats.";
+		ss << "KeyPressEvent: " << (int)KeyCode << " with " << RepeatCount << " repeats.";
 		return ss.str();
 	}
 
@@ -57,7 +57,7 @@ public:
 	std::string ToString() const override
 	{
 		std::stringstream ss;
-		ss << "EvKeyReleasedEvent: " << KeyCode;
+		ss << "EvKeyReleasedEvent: " << (int)KeyCode;
 		return ss.str();
 	}
 };
@@ -73,7 +73,7 @@ class MousePressEvent : public KeyPressEvent
 	std::string ToString() const override
 	{
 		std::stringstream ss;
-		ss << "MousePressEvent: " << KeyCode << " with " << RepeatCount << " repeats.";
+		ss << "MousePressEvent: " << (int)KeyCode << " with " << RepeatCount << " repeats.";
 		return ss.str();
 	}
 };
@@ -91,7 +91,7 @@ public:
 	std::string ToString() const override
 	{
 		std::stringstream ss;
-		ss << "MouseReleaseEvent: " << KeyCode;
+		ss << "MouseReleaseEvent: " << (int)KeyCode;
 		return ss.str();
 	}
 };
@@ -106,13 +106,13 @@ public:
 	inline float GetX() { return x; }
 	inline float GetY() { return y; }
 
-	MouseMoveEvent(float xPos, float yPos, KeyPress key = UNDEF)
+	MouseMoveEvent(float xPos, float yPos, KeyPress key = KeyPress::UNDEF)
 		: KeyEvent(key), x(xPos), y(yPos) {}
 
 	std::string ToString() const override
 	{
 		std::stringstream ss;
-		ss << "MouseMoveEvent: " << KeyCode << " to (" << x << "," << y << ")";
+		ss << "MouseMoveEvent: " << (int)KeyCode << " to (" << x << "," << y << ")";
 		return ss.str();
 	}
 

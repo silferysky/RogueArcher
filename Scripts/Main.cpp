@@ -214,11 +214,15 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	Quad test(vertex);
 
 	RE_INFO("TEST OBJECT FACTORY");
+	std::stringstream debugStr;
 	size_t objInLevel = gEngine.RECoordinator.Size("Entity");
-	RE_INFO(objInLevel);
+	debugStr << "Number of entities at start: " << objInLevel;
+	RE_INFO(debugStr.str());
 	ObjectFactory objFac;
 	objFac.LoadLevel("Resources/Level 1.json");
-	Entity e1 = gEngine.RECoordinator.CreateEntity();
+
+	//This section is commented out to prevent issues when spawning entities
+	/*Entity e1 = gEngine.RECoordinator.CreateEntity();
 	SpriteComponent s;
 	Rigidbody r;
 	Transform t;
@@ -242,7 +246,8 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	gEngine.RECoordinator.AddComponent(e1, t);
 	gEngine.RECoordinator.AddComponent(e1, cc);
 	RE_INFO(gEngine.RECoordinator.GetEntityManager().GetSignature(e1).to_ulong());
-	/* This is used as a "macro" to reset values in json file
+
+	This is used as a "macro" to reset values in json file
 	gEngine.RECoordinator.AddComponent(e2, s);
 	gEngine.RECoordinator.AddComponent(e2, r);
 	gEngine.RECoordinator.AddComponent(e2, t);
@@ -260,7 +265,11 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	gEngine.RECoordinator.AddComponent(e5, t);
 	gEngine.RECoordinator.AddComponent(e5, cc);*/
 	objFac.SaveLevel("Resources/Level 1.json");
-	RE_INFO(objInLevel);
+	debugStr.clear();
+	debugStr.str(""); 
+	objInLevel = gEngine.RECoordinator.Size("Entity");
+	debugStr << "Number of entities at end: " << objInLevel;
+	RE_INFO(debugStr.str());
 
 
 	TestSystem sys = TestSystem();
@@ -294,7 +303,7 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	}
 
 	RE_INFO("TESTING HERE FOR A EVENT DEBUG");
-	KeyPressEvent testEvent((KeyPress)KeyArrowRight, 10);
+	KeyPressEvent testEvent(KeyPress::KeyArrowRight, 10);
 	RE_INFO(testEvent.ToString());
 	RE_INFO(testEvent.GetEventName());
 	RE_INFO("END EVENT TEST");
