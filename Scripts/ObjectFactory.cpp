@@ -3,18 +3,24 @@
 
 void ObjectFactory::SaveLevel(const char* fileName)
 {
-	Entity entCount = gEngine.RECoordinator.Size("Entity");
+	Entity entCount = (Entity)gEngine.RECoordinator.Size("Entity");
 	EntityManager* em = &gEngine.RECoordinator.GetEntityManager();
-	m_Serialiser.WriteToFile(fileName, "EntCount", entCount);
+	m_Serialiser.WriteToFile(fileName, "EntCount", (int)entCount);
 
 	for (Entity i = 0; i < entCount; ++i)
 	{
 		std::stringstream varName;
-		varName << "Signature" << i;
-		int convertSig = em->GetSignature(i).to_ulong();
+		std::string stdstr;
+		const char* cstr;
 		int varNum = 0;
+		int convertSig = em->GetSignature(i).to_ulong();
 
-		m_Serialiser.WriteToFile(fileName, varName.str().c_str(), convertSig);
+		//cstr will go out of scope if you choose to do strstream.str().c_str()
+		//This is the proper (Non macro) way of setting the string
+		varName << "Signature" << i;
+		stdstr = varName.str();
+		cstr = stdstr.c_str();
+		m_Serialiser.WriteToFile(fileName, cstr, convertSig);
 
 		//TODO: Change it to more dynamic
 		SpriteComponent s = gEngine.RECoordinator.GetComponent<SpriteComponent>(i);
@@ -25,61 +31,61 @@ void ObjectFactory::SaveLevel(const char* fileName)
 		//Copypasta for each new variable//
 		varNum = 0;
 		CLEARNSETSTR(varName, i, "sc", varNum);
-		m_Serialiser.WriteToFile(fileName, varName.str().c_str(), s.shader);
+		m_Serialiser.WriteToFile(fileName, cstr, (int)s.shader);
 		++varNum;
 		CLEARNSETSTR(varName, i, "sc", varNum);
-		m_Serialiser.WriteToFile(fileName, varName.str().c_str(), s.VAO);
+		m_Serialiser.WriteToFile(fileName, cstr, (int)s.VAO);
 		++varNum;
 		CLEARNSETSTR(varName, i, "sc", varNum);
-		m_Serialiser.WriteToFile(fileName, varName.str().c_str(), s.VBO);
+		m_Serialiser.WriteToFile(fileName, cstr, (int)s.VBO);
 		++varNum;
 		CLEARNSETSTR(varName, i, "sc", varNum);
-		m_Serialiser.WriteToFile(fileName, varName.str().c_str(), s.EBO);
+		m_Serialiser.WriteToFile(fileName, cstr, (int)s.EBO);
 		///////////////////////////////////
 
 		//Copypasta for each new variable//
 		varNum = 0;
 		CLEARNSETSTR(varName, i, "rbc", varNum);
-		m_Serialiser.WriteToFile(fileName, varName.str().c_str(), (float)r.getAcceleration().x);
+		m_Serialiser.WriteToFile(fileName, cstr, (float)r.getAcceleration().x);
 		++varNum;
 		CLEARNSETSTR(varName, i, "rbc", varNum);
-		m_Serialiser.WriteToFile(fileName, varName.str().c_str(), (float)r.getAcceleration().y);
+		m_Serialiser.WriteToFile(fileName, cstr, (float)r.getAcceleration().y);
 		++varNum;
 		CLEARNSETSTR(varName, i, "rbc", varNum);
-		m_Serialiser.WriteToFile(fileName, varName.str().c_str(), (float)r.getVelocity().x);
+		m_Serialiser.WriteToFile(fileName, cstr, (float)r.getVelocity().x);
 		++varNum;
 		CLEARNSETSTR(varName, i, "rbc", varNum);
-		m_Serialiser.WriteToFile(fileName, varName.str().c_str(), (float)r.getVelocity().y);
+		m_Serialiser.WriteToFile(fileName, cstr, (float)r.getVelocity().y);
 		++varNum;
 		CLEARNSETSTR(varName, i, "rbc", varNum);
-		m_Serialiser.WriteToFile(fileName, varName.str().c_str(), r.getInvMass());
+		m_Serialiser.WriteToFile(fileName, cstr, r.getInvMass());
 		++varNum;
 		CLEARNSETSTR(varName, i, "rbc", varNum);
-		m_Serialiser.WriteToFile(fileName, varName.str().c_str(), r.getVolume());
+		m_Serialiser.WriteToFile(fileName, cstr, r.getVolume());
 		///////////////////////////////////
 
 		//Copypasta for each new variable//
 		varNum = 0;
 		CLEARNSETSTR(varName, i, "tc", varNum);
-		m_Serialiser.WriteToFile(fileName, varName.str().c_str(), t.getPosition().x);
+		m_Serialiser.WriteToFile(fileName, cstr, t.getPosition().x);
 		++varNum;
 		CLEARNSETSTR(varName, i, "tc", varNum);
-		m_Serialiser.WriteToFile(fileName, varName.str().c_str(), t.getPosition().y);
+		m_Serialiser.WriteToFile(fileName, cstr, t.getPosition().y);
 		++varNum;
 		CLEARNSETSTR(varName, i, "tc", varNum);
-		m_Serialiser.WriteToFile(fileName, varName.str().c_str(), t.getScale().x);
+		m_Serialiser.WriteToFile(fileName, cstr, t.getScale().x);
 		++varNum;
 		CLEARNSETSTR(varName, i, "tc", varNum);
-		m_Serialiser.WriteToFile(fileName, varName.str().c_str(), t.getScale().y);
+		m_Serialiser.WriteToFile(fileName, cstr, t.getScale().y);
 		++varNum;
 		CLEARNSETSTR(varName, i, "tc", varNum);
-		m_Serialiser.WriteToFile(fileName, varName.str().c_str(), t.getRotation());
+		m_Serialiser.WriteToFile(fileName, cstr, t.getRotation());
 		///////////////////////////////////
 
 		//Copypasta for each new variable//
 		varNum = 0;
 		CLEARNSETSTR(varName, i, "ccc", varNum);
-		m_Serialiser.WriteToFile(fileName, varName.str().c_str(), c.getRadius());
+		m_Serialiser.WriteToFile(fileName, cstr, c.getRadius());
 		///////////////////////////////////
 	}
 
@@ -88,29 +94,35 @@ void ObjectFactory::SaveLevel(const char* fileName)
 void ObjectFactory::LoadLevel(const char* fileName)
 {
 	rapidjson::Document level = m_Serialiser.DeserialiseFromFile(fileName);
-	int entCount;
 	int curEntSig;
-	entCount = level["EntCount"].GetInt();
+	int entCount = level["EntCount"].GetInt();
 
 	for (int i = 0; i < entCount; ++i)
 	{
-		std::stringstream str;
+		std::stringstream strstream;
+		std::string stdstr;
+		const char* cstr;
 		Entity curEnt = gEngine.RECoordinator.CreateEntity();
-		str << "Signature" << i;
-		curEntSig = level[str.str().c_str()].GetInt();
+
+		//cstr will go out of scope if you choose to do strstream.str().c_str()
+		//This is the proper (Non macro) way of setting the string
+		strstream << "Signature" << i;
+		stdstr = strstream.str();
+		cstr = stdstr.c_str();
+		curEntSig = level[cstr].GetInt();
 
 		//Copypasta for each new variable//
 		if (curEntSig % 2 == 1)
 		{
 			SpriteComponent s;
-			CLEARNSETSTR(str, i, "sc", 0);
-			s.shader = (unsigned int)level[str.str().c_str()].GetInt();
-			CLEARNSETSTR(str, i, "sc", 1);
-			s.VAO = (unsigned int)level[str.str().c_str()].GetInt();
-			CLEARNSETSTR(str, i, "sc", 2);
-			s.VBO = (unsigned int)level[str.str().c_str()].GetInt();
-			CLEARNSETSTR(str, i, "sc", 3);
-			s.EBO = (unsigned int)level[str.str().c_str()].GetInt();
+			CLEARNSETSTR(strstream, i, "sc", 0);
+			s.shader = (unsigned int)level[cstr].GetInt();
+			CLEARNSETSTR(strstream, i, "sc", 1);
+			s.VAO = (unsigned int)level[cstr].GetInt();
+			CLEARNSETSTR(strstream, i, "sc", 2);
+			s.VBO = (unsigned int)level[cstr].GetInt();
+			CLEARNSETSTR(strstream, i, "sc", 3);
+			s.EBO = (unsigned int)level[cstr].GetInt();
 
 			gEngine.RECoordinator.AddComponent(curEnt, s);
 			--curEntSig;
@@ -123,25 +135,25 @@ void ObjectFactory::LoadLevel(const char* fileName)
 		{
 			Rigidbody r;
 			float x, y;
-			CLEARNSETSTR(str, i, "rbc", 0);
-			x = level[str.str().c_str()].GetFloat();
-			CLEARNSETSTR(str, i, "rbc", 1);
-			y = level[str.str().c_str()].GetFloat();
+			CLEARNSETSTR(strstream, i, "rbc", 0);
+			x = level[cstr].GetFloat();
+			CLEARNSETSTR(strstream, i, "rbc", 1);
+			y = level[cstr].GetFloat();
 			r.setAcceleration(Vec2(x, y));
-			CLEARNSETSTR(str, i, "rbc", 2);
-			x = level[str.str().c_str()].GetFloat();
-			CLEARNSETSTR(str, i, "rbc", 3);
-			y = level[str.str().c_str()].GetFloat();
+			CLEARNSETSTR(strstream, i, "rbc", 2);
+			x = level[cstr].GetFloat();
+			CLEARNSETSTR(strstream, i, "rbc", 3);
+			y = level[cstr].GetFloat();
 			r.setVelocity(Vec2(x, y));
-			//CLEARNSETSTR(str, i, "rbc", 4);
-			//x = level[str.str().c_str()].GetInt();
-			//CLEARNSETSTR(str, i, "rbc", 5);
-			//y = level[str.str().c_str()].GetInt();
+			//CLEARNSETSTR(strstream, i, "rbc", 4);
+			//x = level[cstr].GetInt();
+			//CLEARNSETSTR(strstream, i, "rbc", 5);
+			//y = level[cstr].GetInt();
 			//r.getAccForce(Vec2(x, y));
-			CLEARNSETSTR(str, i, "rbc", 4);
-			r.setMass(level[str.str().c_str()].GetInt());
-			CLEARNSETSTR(str, i, "rbc", 5);
-			r.setVolume(level[str.str().c_str()].GetInt());
+			CLEARNSETSTR(strstream, i, "rbc", 4);
+			r.setMass(level[cstr].GetFloat());
+			CLEARNSETSTR(strstream, i, "rbc", 5);
+			r.setVolume(level[cstr].GetFloat());
 
 			gEngine.RECoordinator.AddComponent(curEnt, r);
 			--curEntSig;
@@ -154,17 +166,17 @@ void ObjectFactory::LoadLevel(const char* fileName)
 		{
 			Transform t;
 			float x, y;
-			CLEARNSETSTR(str, i, "tc", 0);
-			x = level[str.str().c_str()].GetFloat();
-			CLEARNSETSTR(str, i, "tc", 1);
-			y = level[str.str().c_str()].GetFloat();
+			CLEARNSETSTR(strstream, i, "tc", 0);
+			x = level[cstr].GetFloat();
+			CLEARNSETSTR(strstream, i, "tc", 1);
+			y = level[cstr].GetFloat();
 			t.setPosition(Vec2(x, y));
-			CLEARNSETSTR(str, i, "tc", 2);
-			x = level[str.str().c_str()].GetFloat();
-			CLEARNSETSTR(str, i, "tc", 3);
-			y = level[str.str().c_str()].GetFloat();
+			CLEARNSETSTR(strstream, i, "tc", 2);
+			x = level[cstr].GetFloat();
+			CLEARNSETSTR(strstream, i, "tc", 3);
+			y = level[cstr].GetFloat();
 			t.setScale(Vec2(x, y));
-			t.setRotation(level[str.str().c_str()].GetFloat());
+			t.setRotation(level[cstr].GetFloat());
 
 			gEngine.RECoordinator.AddComponent(curEnt, t);
 			--curEntSig;
@@ -176,10 +188,10 @@ void ObjectFactory::LoadLevel(const char* fileName)
 		if (curEntSig % 2 == 1)
 		{
 			CircleCollider2D cc;
-			CLEARNSETSTR(str, i, "ccc", 0);
-			cc.setRadius(level[str.str().c_str()].GetFloat());
+			CLEARNSETSTR(strstream, i, "ccc", 0);
+			cc.setRadius(level[cstr].GetFloat());
 
-			gEngine.RECoordinator.AddComponent(curEnt, t);
+			gEngine.RECoordinator.AddComponent(curEnt, cc);
 			--curEntSig;
 		}
 		curEntSig /= 2;

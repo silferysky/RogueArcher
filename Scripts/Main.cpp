@@ -218,15 +218,48 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	RE_INFO(objInLevel);
 	ObjectFactory objFac;
 	objFac.LoadLevel("Resources/Level 1.json");
-	/*/Entity e1 = gEngine.RECoordinator.CreateEntity();
+	Entity e1 = gEngine.RECoordinator.CreateEntity();
 	SpriteComponent s;
-	Transform t;
 	Rigidbody r;
+	Transform t;
+	CircleCollider2D cc;
+
+	s.shader = 0;
+	s.VAO = 0;
+	s.VBO = 0;
+	s.EBO = 0;
+	t.setPosition(Vec2(0.0f, 0.0f));
+	t.setScale(Vec2(0.0f, 0.0f));
+	t.setRotation(0.0f);
+	cc.setRadius(0.0f);
+	r.setAcceleration(Vec2(0.0f, 0.0f));
+	r.setMass(1.0f);
+	r.setVelocity(Vec2(0.0f, 0.0f));
+	r.setVolume(0.0f);
+
 	gEngine.RECoordinator.AddComponent(e1, s);
+	gEngine.RECoordinator.AddComponent(e1, r);
 	gEngine.RECoordinator.AddComponent(e1, t);
-	gEngine.RECoordinator.AddComponent(e1, r);*/
+	gEngine.RECoordinator.AddComponent(e1, cc);
+	RE_INFO(gEngine.RECoordinator.GetEntityManager().GetSignature(e1).to_ulong());
+	/* This is used as a "macro" to reset values in json file
+	gEngine.RECoordinator.AddComponent(e2, s);
+	gEngine.RECoordinator.AddComponent(e2, r);
+	gEngine.RECoordinator.AddComponent(e2, t);
+	gEngine.RECoordinator.AddComponent(e2, cc);
+	gEngine.RECoordinator.AddComponent(e3, s);
+	gEngine.RECoordinator.AddComponent(e3, r);
+	gEngine.RECoordinator.AddComponent(e3, t);
+	gEngine.RECoordinator.AddComponent(e3, cc);
+	gEngine.RECoordinator.AddComponent(e4, s);
+	gEngine.RECoordinator.AddComponent(e4, r);
+	gEngine.RECoordinator.AddComponent(e4, t);
+	gEngine.RECoordinator.AddComponent(e4, cc);
+	gEngine.RECoordinator.AddComponent(e5, s);
+	gEngine.RECoordinator.AddComponent(e5, r);
+	gEngine.RECoordinator.AddComponent(e5, t);
+	gEngine.RECoordinator.AddComponent(e5, cc);*/
 	objFac.SaveLevel("Resources/Level 1.json");
-	//objFac.LoadLevel("Level 1");
 	RE_INFO(objInLevel);
 
 

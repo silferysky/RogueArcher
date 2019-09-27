@@ -54,11 +54,11 @@ public:
 			//}
 			if (std::is_same<T, int>())
 			{
-				doc[DataTitle].SetInt(DataToChange);
+				doc[DataTitle].SetInt((int)DataToChange);
 			}
 			else if (std::is_same<T, float>())
 			{
-				doc[DataTitle].SetFloat(DataToChange);
+				doc[DataTitle].SetFloat((float)DataToChange);
 			}
 			else
 			{
