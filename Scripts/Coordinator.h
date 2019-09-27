@@ -92,16 +92,19 @@ public:
 		RESystemManager->SetSignature<T>(signature);
 	}
 
-	template<typename T>
-	size_t Size() const
+	size_t Size(const char* name) const
 	{
-		const char* typeName = typeid(T).name();
-		if (typeName == "EntityManager")
+		if (name == "Entity")
 			return REEntityManager->Size();
-		else if (typeName == "ComponentManager")
+		else if (name == "Component")
 			return REComponentManager->Size();
 		else
 			return 0;
+	}
+
+	EntityManager& GetEntityManager() const
+	{
+		return *REEntityManager;
 	}
 
 private:

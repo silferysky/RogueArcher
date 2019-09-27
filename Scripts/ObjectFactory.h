@@ -9,9 +9,9 @@ class ObjectFactory
 	RESerialiser m_Serialiser;
 
 public:
-	void SaveLevel(const char* fileName, const char* filePath = nullptr);
-	void LoadLevel(const char* fileName, const char* filePath = nullptr);
+	void SaveLevel(const char* fileName);
+	void LoadLevel(const char* fileName);
 
 private:
-	ComponentType GetTypeName(int index) const;
+	ComponentType GetCmpType(int index) const;
 };
