@@ -1,6 +1,6 @@
 #pragma once
 
-enum KeyPress
+enum class KeyPress
 {
 	Key0 = 0,
 	Key1,
