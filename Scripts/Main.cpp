@@ -217,13 +217,14 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	size_t objInLevel = gEngine.RECoordinator.Size("Entity");
 	RE_INFO(objInLevel);
 	ObjectFactory objFac;
-	Entity e1 = gEngine.RECoordinator.CreateEntity();
-	Entity e2 = gEngine.RECoordinator.CreateEntity();
+	objFac.LoadLevel("Resources/Level 1.json");
+	/*/Entity e1 = gEngine.RECoordinator.CreateEntity();
 	SpriteComponent s;
 	Transform t;
+	Rigidbody r;
 	gEngine.RECoordinator.AddComponent(e1, s);
-	gEngine.RECoordinator.AddComponent(e2, s);
 	gEngine.RECoordinator.AddComponent(e1, t);
+	gEngine.RECoordinator.AddComponent(e1, r);*/
 	objFac.SaveLevel("Resources/Level 1.json");
 	//objFac.LoadLevel("Level 1");
 	RE_INFO(objInLevel);

@@ -1,6 +1,5 @@
 #pragma once
 #include "ObjectFactory.h"
-#include "ComponentList.h"
 
 void ObjectFactory::SaveLevel(const char* fileName)
 {
@@ -13,17 +12,75 @@ void ObjectFactory::SaveLevel(const char* fileName)
 		std::stringstream varName;
 		varName << "Signature" << i;
 		int convertSig = em->GetSignature(i).to_ulong();
+		int varNum = 0;
+
 		m_Serialiser.WriteToFile(fileName, varName.str().c_str(), convertSig);
 
 		//TODO: Change it to more dynamic
-		//SpriteComponent s = gEngine.RECoordinator.GetComponent<SpriteComponent>(i);
-		//Rigidbody r = gEngine.RECoordinator.GetComponent<Rigidbody>(i);
-		//Transform t = gEngine.RECoordinator.GetComponent<Transform>(i);
-		//CircleCollider2D c = gEngine.RECoordinator.GetComponent<CircleCollider2D>(i);
+		SpriteComponent s = gEngine.RECoordinator.GetComponent<SpriteComponent>(i);
+		Rigidbody r = gEngine.RECoordinator.GetComponent<Rigidbody>(i);
+		Transform t = gEngine.RECoordinator.GetComponent<Transform>(i);
+		CircleCollider2D c = gEngine.RECoordinator.GetComponent<CircleCollider2D>(i);
 
-		//varName.clear();
-		//varName << "e" << i;
-		//RE_INFO(varName);
+		//Copypasta for each new variable//
+		varNum = 0;
+		CLEARNSETSTR(varName, i, "sc", varNum);
+		m_Serialiser.WriteToFile(fileName, varName.str().c_str(), s.shader);
+		++varNum;
+		CLEARNSETSTR(varName, i, "sc", varNum);
+		m_Serialiser.WriteToFile(fileName, varName.str().c_str(), s.VAO);
+		++varNum;
+		CLEARNSETSTR(varName, i, "sc", varNum);
+		m_Serialiser.WriteToFile(fileName, varName.str().c_str(), s.VBO);
+		++varNum;
+		CLEARNSETSTR(varName, i, "sc", varNum);
+		m_Serialiser.WriteToFile(fileName, varName.str().c_str(), s.EBO);
+		///////////////////////////////////
+
+		//Copypasta for each new variable//
+		varNum = 0;
+		CLEARNSETSTR(varName, i, "rbc", varNum);
+		m_Serialiser.WriteToFile(fileName, varName.str().c_str(), (float)r.getAcceleration().x);
+		++varNum;
+		CLEARNSETSTR(varName, i, "rbc", varNum);
+		m_Serialiser.WriteToFile(fileName, varName.str().c_str(), (float)r.getAcceleration().y);
+		++varNum;
+		CLEARNSETSTR(varName, i, "rbc", varNum);
+		m_Serialiser.WriteToFile(fileName, varName.str().c_str(), (float)r.getVelocity().x);
+		++varNum;
+		CLEARNSETSTR(varName, i, "rbc", varNum);
+		m_Serialiser.WriteToFile(fileName, varName.str().c_str(), (float)r.getVelocity().y);
+		++varNum;
+		CLEARNSETSTR(varName, i, "rbc", varNum);
+		m_Serialiser.WriteToFile(fileName, varName.str().c_str(), r.getInvMass());
+		++varNum;
+		CLEARNSETSTR(varName, i, "rbc", varNum);
+		m_Serialiser.WriteToFile(fileName, varName.str().c_str(), r.getVolume());
+		///////////////////////////////////
+
+		//Copypasta for each new variable//
+		varNum = 0;
+		CLEARNSETSTR(varName, i, "tc", varNum);
+		m_Serialiser.WriteToFile(fileName, varName.str().c_str(), t.getPosition().x);
+		++varNum;
+		CLEARNSETSTR(varName, i, "tc", varNum);
+		m_Serialiser.WriteToFile(fileName, varName.str().c_str(), t.getPosition().y);
+		++varNum;
+		CLEARNSETSTR(varName, i, "tc", varNum);
+		m_Serialiser.WriteToFile(fileName, varName.str().c_str(), t.getScale().x);
+		++varNum;
+		CLEARNSETSTR(varName, i, "tc", varNum);
+		m_Serialiser.WriteToFile(fileName, varName.str().c_str(), t.getScale().y);
+		++varNum;
+		CLEARNSETSTR(varName, i, "tc", varNum);
+		m_Serialiser.WriteToFile(fileName, varName.str().c_str(), t.getRotation());
+		///////////////////////////////////
+
+		//Copypasta for each new variable//
+		varNum = 0;
+		CLEARNSETSTR(varName, i, "ccc", varNum);
+		m_Serialiser.WriteToFile(fileName, varName.str().c_str(), c.getRadius());
+		///////////////////////////////////
 	}
 
 	RE_INFO("LEVEL SAVED");
@@ -32,25 +89,103 @@ void ObjectFactory::LoadLevel(const char* fileName)
 {
 	rapidjson::Document level = m_Serialiser.DeserialiseFromFile(fileName);
 	int entCount;
-	float curEntSig;
-	std::stringstream sig;
-	entCount = level["EntityCount"].GetInt();
+	int curEntSig;
+	entCount = level["EntCount"].GetInt();
 
 	for (int i = 0; i < entCount; ++i)
 	{
+		std::stringstream str;
 		Entity curEnt = gEngine.RECoordinator.CreateEntity();
-		sig << "Sig" << i;
-		curEntSig = level[sig.str().c_str()].GetFloat();
-		for (int j = 0; j < MAX_COMPONENTS; ++j)
+		str << "Signature" << i;
+		curEntSig = level[str.str().c_str()].GetInt();
+
+		//Copypasta for each new variable//
+		if (curEntSig % 2 == 1)
 		{
-			if (curEntSig >= 1.0f)
-			{
-				//gEngine.RECoordinator.AddComponent(curEnt, GetTypeName(j));
-				--curEntSig;
-			}
-			curEntSig *= 2;
+			SpriteComponent s;
+			CLEARNSETSTR(str, i, "sc", 0);
+			s.shader = (unsigned int)level[str.str().c_str()].GetInt();
+			CLEARNSETSTR(str, i, "sc", 1);
+			s.VAO = (unsigned int)level[str.str().c_str()].GetInt();
+			CLEARNSETSTR(str, i, "sc", 2);
+			s.VBO = (unsigned int)level[str.str().c_str()].GetInt();
+			CLEARNSETSTR(str, i, "sc", 3);
+			s.EBO = (unsigned int)level[str.str().c_str()].GetInt();
+
+			gEngine.RECoordinator.AddComponent(curEnt, s);
+			--curEntSig;
 		}
+		curEntSig /= 2;
+		///////////////////////////////////
+
+		//Copypasta for each new variable//
+		if (curEntSig % 2 == 1)
+		{
+			Rigidbody r;
+			float x, y;
+			CLEARNSETSTR(str, i, "rbc", 0);
+			x = level[str.str().c_str()].GetFloat();
+			CLEARNSETSTR(str, i, "rbc", 1);
+			y = level[str.str().c_str()].GetFloat();
+			r.setAcceleration(Vec2(x, y));
+			CLEARNSETSTR(str, i, "rbc", 2);
+			x = level[str.str().c_str()].GetFloat();
+			CLEARNSETSTR(str, i, "rbc", 3);
+			y = level[str.str().c_str()].GetFloat();
+			r.setVelocity(Vec2(x, y));
+			//CLEARNSETSTR(str, i, "rbc", 4);
+			//x = level[str.str().c_str()].GetInt();
+			//CLEARNSETSTR(str, i, "rbc", 5);
+			//y = level[str.str().c_str()].GetInt();
+			//r.getAccForce(Vec2(x, y));
+			CLEARNSETSTR(str, i, "rbc", 4);
+			r.setMass(level[str.str().c_str()].GetInt());
+			CLEARNSETSTR(str, i, "rbc", 5);
+			r.setVolume(level[str.str().c_str()].GetInt());
+
+			gEngine.RECoordinator.AddComponent(curEnt, r);
+			--curEntSig;
+		}
+		curEntSig /= 2;
+		///////////////////////////////////
+		
+		//Copypasta for each new variable//
+		if (curEntSig % 2 == 1)
+		{
+			Transform t;
+			float x, y;
+			CLEARNSETSTR(str, i, "tc", 0);
+			x = level[str.str().c_str()].GetFloat();
+			CLEARNSETSTR(str, i, "tc", 1);
+			y = level[str.str().c_str()].GetFloat();
+			t.setPosition(Vec2(x, y));
+			CLEARNSETSTR(str, i, "tc", 2);
+			x = level[str.str().c_str()].GetFloat();
+			CLEARNSETSTR(str, i, "tc", 3);
+			y = level[str.str().c_str()].GetFloat();
+			t.setScale(Vec2(x, y));
+			t.setRotation(level[str.str().c_str()].GetFloat());
+
+			gEngine.RECoordinator.AddComponent(curEnt, t);
+			--curEntSig;
+		}
+		curEntSig /= 2;
+		///////////////////////////////////
+
+		//Copypasta for each new variable//
+		if (curEntSig % 2 == 1)
+		{
+			CircleCollider2D cc;
+			CLEARNSETSTR(str, i, "ccc", 0);
+			cc.setRadius(level[str.str().c_str()].GetFloat());
+
+			gEngine.RECoordinator.AddComponent(curEnt, t);
+			--curEntSig;
+		}
+		curEntSig /= 2;
+		///////////////////////////////////
 	}
+
 }
 
 ComponentType ObjectFactory::GetCmpType(int index) const

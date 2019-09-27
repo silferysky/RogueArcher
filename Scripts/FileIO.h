@@ -44,7 +44,7 @@ public:
 
 			const std::string jsonStr{ buffer.GetString() };
 
-			std::cout << jsonStr << '\n';
+			//std::cout << jsonStr << '\n';
 
 			std::ostringstream ss;
 			ss << DataToChange;
