@@ -13,17 +13,17 @@ public:
 class WinResizeEvent : public Event
 {
 public:
-	WinResizeEvent(unsigned int width, unsigned int height)
-		: WinWidth(width), WinHeight(height){}
+	WinResizeEvent(unsigned int wigDeltaTimeh, unsigned int height)
+		: WinWigDeltaTimeh(wigDeltaTimeh), WinHeight(height){}
 
-	inline unsigned int GetWidth() { return WinWidth; }
+	inline unsigned int GetWigDeltaTimeh() { return WinWigDeltaTimeh; }
 	inline unsigned int GetHeight() { return WinHeight; }
 
 	SET_EVENT_CATEGORY(EventCatApp)
 	SET_EVENT_TYPE(EvWindowResize)
 
 private:
-	unsigned int WinWidth, WinHeight;
+	unsigned int WinWigDeltaTimeh, WinHeight;
 };
 
 class WinFocusEvent : public Event

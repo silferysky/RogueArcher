@@ -1,35 +1,34 @@
 #include "PhysicsSystem.h"
 
-
-// Private member functions
+//-------------------------------------------------------//
+//              PRIVATE MEMBER FUNCTIONS					 //
+//-------------------------------------------------------//
 void PhysicsSystem::applyForces(Rigidbody& rigidbody) // F = ma
 {
-	rigidbody.setAcceleration(rigidbody.getAccForce() * rigidbody.getInvMass());
+	rigidbody.offSetAcceleration(rigidbody.getAccForce() * rigidbody.getInvMass());
 }
 
-void PhysicsSystem::positionUpdate(Rigidbody& rigidbody, Transform& transform, float dt)
-{
-	rigidbody.setAcceleration(rigidbody.getAccForce() * rigidbody.getInvMass());
+PhysicsSystem::PhysicsSystem()
+	: m_colliderManager{}, m_gravity{0, -9.81}
+{}
 
-	rigidbody.offSetVelocity(rigidbody.getAcceleration() * dt);
-	transform.offSetPosition(rigidbody.getVelocity() * dt);
+void PhysicsSystem::integrateAcceleration(Rigidbody& rigidbody, Transform& transform)
+{
+	rigidbody.offSetAcceleration(m_gravity);
+	Vec2 vel = rigidbody.getAcceleration() * gDeltaTime;
+	vel *= static_cast<float>(std::pow(rigidbody.getDamping(), gDeltaTime));
+	rigidbody.offSetVelocity(vel);
+	transform.offSetPosition(rigidbody.getVelocity() * gDeltaTime);
+
 }
 
-void PhysicsSystem::collisionUpdate(Rigidbody& rigidbody, float dt)
+
+//-------------------------------------------------------//
+//              PUBLIC MEMBER FUNCTIONS					 //
+//-------------------------------------------------------//
+void PhysicsSystem::init()
 {
-	// For each pair/quad
-	// Check bc
-	// Check aabb/obb
-}
-
-
-// Public member functions 
-
-void PhysicsSystem::init(const Vec2& gravity)
-{
-	m_gravity = gravity;
-
-	// Add components to signature
+	// Add components to signature.
 	Signature signature;
 	signature.set(gEngine.m_coordinator.GetComponentType<Rigidbody>());
 	signature.set(gEngine.m_coordinator.GetComponentType<Transform>());
@@ -40,30 +39,39 @@ void PhysicsSystem::init(const Vec2& gravity)
 	gEngine.m_coordinator.SetSystemSignature<PhysicsSystem>(signature);
 }
 
-void PhysicsSystem::update(float dt)
+void PhysicsSystem::update()
 {
 	// For all entities
 	for(auto entity : m_entities)
 	{
-		// Update forces (impulse, torque)
+		auto& rigidbody = gEngine.m_coordinator.GetComponent<Rigidbody>(entity);
+		auto& transform = gEngine.m_coordinator.GetComponent<Transform>(entity);
+		auto& boxCollider = gEngine.m_coordinator.GetComponent<BoxCollider2D>(entity);
+		auto& circleCollider = gEngine.m_coordinator.GetComponent<CircleCollider2D>(entity);
 
-		// Apply forces
+		// Reset accForce
+		rigidbody.setAccForce(Vec2());
+
+		// Apply accForce (Forces are added if necessary)
+		applyForces(rigidbody);
 
 		// Update positions
-		// positionUpdate("key");
+		integrateAcceleration(rigidbody, transform);
 
 		// Update collidables
+		m_colliderManager.updateAABB(boxCollider.m_aabb, transform);
+		m_colliderManager.updateOBB(boxCollider.m_obb, transform);
 	
 		// Conduct spatial partitioning
-
-		// Test AABB/OBB Collision
 		
-		// Do appropriate collision tests
-		// collisionUpdate();
+		// Test AABB/OBB Collision
+		// gColliderManager.checkCollisions()
 
-		// Collision Response
+		// Collision Response (Contact, forces, etc)
 		// Rest, Impulse, Torque
-
+		
+		std::cout << "HI" << std::endl;
+		std::cout << "Entity's pos:" << transform.getPosition() << std::endl;
 	}
 }
 

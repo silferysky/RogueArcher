@@ -12,17 +12,15 @@
 #include "TestSystem.h"
 #include <chrono>
 #include "ObjectFactory.h"
-
 #include "GraphicsSystem.h"
 #include "VSync.h"
+#include "Quad.h"
+#include "SOIL.h"
 
-float dt;
-double gdt = 1.0; // 0.016? - Joel
+float gDeltaTime;
+bool gameIsRunning = true;
 const float FPS = 1 / 60;
-bool off = true;
 REEngine gEngine;
-
-//SystemManager *SysManager = new SystemManager();
 
 static const int SCREEN_FULLSCREEN = 0;
 static const int SCREEN_WIDTH = 960;
@@ -82,7 +80,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		PostQuitMessage(0);
 		return 0;
 	case WM_RBUTTONUP:
-		off = false;
+		gameIsRunning = false;
 		break;
 	}
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);
@@ -278,7 +276,7 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	TestSystem sys = TestSystem();
 	float wasteTimer;
 	std::chrono::high_resolution_clock timer;
-	while (off)
+	while (gameIsRunning)
 	{
 		auto start = timer.now(); 
 		while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
@@ -288,6 +286,9 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 		}
 		//Main Debug
 		// RE_INFO("INPUT DEBUG");
+
+		// Update engine.
+		gEngine.update();
 
 		int repeat = 0;
 		//float timer2 = 0.0f;
@@ -307,8 +308,8 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 		test.Draw();
 		SwapBuffers(hDC);
 		auto stop = timer.now();
-		dt = std::chrono::duration_cast<std::chrono::microseconds>(stop - start).count() / 1000000.0f;
-		wasteTimer = dt;
+		gDeltaTime = std::chrono::duration_cast<std::chrono::microseconds>(stop - start).count() / 1000000.0f;
+		wasteTimer = gDeltaTime;
 		while (wasteTimer <= FPS)
 		{
 			stop = timer.now();
