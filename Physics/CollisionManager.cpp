@@ -6,7 +6,7 @@
 //_________________________________________________________________________|
 //_________________________________________________________________________|
 // Update the bounding box's m_min and m_max.
-void CollisionManager::updateAABB(const Transform& transform, AABB& collider)
+void CollisionManager::updateAABB(AABB& collider, const Transform& transform)
 {
 	collider.setMin(Vec2{ -HALF_SCALE * transform.getScale().x + transform.getPosition().x,
 						  -HALF_SCALE * transform.getScale().y + transform.getPosition().y });

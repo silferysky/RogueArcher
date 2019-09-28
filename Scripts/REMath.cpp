@@ -135,10 +135,10 @@ float REMath::REDistPointToCircle(Vec2& pPos, Vec2& pCenter, float radius)
 	return result;
 }
 
-float REMath::REDistPointToRectangle(Vec2& pPos, Vec2& pRect, float width, float height)
+float REMath::REDistPointToRectangle(Vec2& pPos, Vec2& pRect, float wigDeltaTimeh, float height)
 {
 	float dx, dy;
-	dx = REMax(abs(pPos.x - pRect.x) - width / 2, 0.0f);
+	dx = REMax(abs(pPos.x - pRect.x) - wigDeltaTimeh / 2, 0.0f);
 	dy = REMax(abs(pPos.x - pRect.x) - height / 2, 0.0f);
 	return (dx * dx + dy * dy);
 }
