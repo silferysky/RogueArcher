@@ -21,7 +21,7 @@ float gDeltaTime;
 bool gameIsRunning = true;
 const float FPS = 1 / 60;
 REEngine gEngine;
-
+//const char* FileName = "/Resources/test.json";
 static const int SCREEN_FULLSCREEN = 0;
 static const int SCREEN_WIDTH = 960;
 static const int SCREEN_HEIGHT = 540;
@@ -165,8 +165,18 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	HGLRC hRC;				/* opengl context */
 	HWND  hWnd;				/* window */
 	MSG   msg;				/* message */
-	
-	hWnd = CreateOpenGLWindow(const_cast<char*>("Rogue Engine"), 0, 0, 640, 480, PFD_TYPE_RGBA, 0);
+	RESerialiser Serialiser;
+	rapidjson::Document Windows = Serialiser.DeserialiseFromFile("Resources/Windows.json");
+	int x,y,height,width,byte,flags;
+	const char* Window;
+	x = Windows["x"].GetInt();
+	y = Windows["y"].GetInt();
+	height = Windows["height"].GetInt();
+	width = Windows["width"].GetInt();
+	byte = Windows["byte"].GetInt();
+	flags = Windows["flags"].GetInt();
+	Window = Windows["title"].GetString();
+	hWnd = CreateOpenGLWindow(const_cast<char*>(Window), x, y, width, height, byte, flags);
 	if (hWnd == NULL)
 		exit(1);
 
@@ -316,7 +326,7 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 			wasteTimer = std::chrono::duration_cast<std::chrono::microseconds>(stop - start).count() / 1000000.0f;
 		}
 
-		std::cout << "FPS: " << 1 / wasteTimer << std::endl;
+		//std::cout << "FPS: " << 1 / wasteTimer << std::endl;
 	}
 
 	RE_INFO("TESTING HERE FOR A EVENT DEBUG");
