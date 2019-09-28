@@ -225,16 +225,16 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	objFac.LoadLevel("Resources/Level 1.json");
 
 	//This section is commented out to prevent issues when spawning entities
-	/*Entity e1 = gEngine.m_coordinator.CreateEntity();
+	Entity e1 = gEngine.m_coordinator.CreateEntity();
+	Entity e2 = gEngine.m_coordinator.CreateEntity();
+	Entity e3 = gEngine.m_coordinator.CreateEntity();
+	Entity e4 = gEngine.m_coordinator.CreateEntity();
+	Entity e5 = gEngine.m_coordinator.CreateEntity();
 	SpriteComponent s;
 	Rigidbody r;
 	Transform t;
 	CircleCollider2D cc;
 
-	s.shader = 0;
-	s.VAO = 0;
-	s.VBO = 0;
-	s.EBO = 0;
 	t.setPosition(Vec2(0.0f, 0.0f));
 	t.setScale(Vec2(0.0f, 0.0f));
 	t.setRotation(0.0f);
@@ -250,7 +250,7 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	gEngine.m_coordinator.AddComponent(e1, cc);
 	RE_INFO(gEngine.m_coordinator.GetEntityManager().GetSignature(e1).to_ulong());
 
-	This is used as a "macro" to reset values in json file
+	//This is used as a "macro" to reset values in json file
 	gEngine.m_coordinator.AddComponent(e2, s);
 	gEngine.m_coordinator.AddComponent(e2, r);
 	gEngine.m_coordinator.AddComponent(e2, t);
@@ -266,8 +266,8 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	gEngine.m_coordinator.AddComponent(e5, s);
 	gEngine.m_coordinator.AddComponent(e5, r);
 	gEngine.m_coordinator.AddComponent(e5, t);
-	gEngine.m_coordinator.AddComponent(e5, cc);*/
-	objFac.SaveLevel("Resources/Level 1.json");
+	gEngine.m_coordinator.AddComponent(e5, cc);
+	//objFac.SaveLevel("Resources/Level 1.json");
 	debugStr.clear();
 	debugStr.str(""); 
 	objInLevel = gEngine.m_coordinator.Size("Entity");
