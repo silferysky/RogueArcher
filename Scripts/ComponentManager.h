@@ -2,6 +2,7 @@
 #include <unordered_map>
 #include "EntityManager.h"
 #include "ComponentArray.h"
+#include "ComponentList.h"
 
 class ComponentManager
 {
@@ -37,7 +38,7 @@ public:
 	template<typename T>
 	void AddComponent(Entity entity, T component)
 	{
-		std::cout<<"components added to system"<<std::endl;
+		RE_CORE_INFO("components added to system\n");
 		GetComponentArray<T>()->InsertData(entity, component);
 	}
 
@@ -62,7 +63,7 @@ public:
 			auto const& component = pair.second;
 
 			component->EntityDestroyed(entity);
-			std::cout << "Components Removed" << std::endl;
+			RE_CORE_INFO("Components Removed\n");
 		}
 	}
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "Scripts/Coordinator.h"
+#include "Scripts/Logger.h"
 
 class REEngine
 {

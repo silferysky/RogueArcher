@@ -14,7 +14,6 @@ PhysicsSystem::PhysicsSystem()
 
 void PhysicsSystem::integrateAcceleration(Rigidbody& rigidbody, Transform& transform)
 {
-	rigidbody.offSetAcceleration(m_gravity);
 	Vec2 vel = rigidbody.getAcceleration() * gDeltaTime;
 	vel *= static_cast<float>(std::pow(rigidbody.getDamping(), gDeltaTime));
 	rigidbody.offSetVelocity(vel);
@@ -37,6 +36,12 @@ void PhysicsSystem::init()
 	
 	// Set physics system signature.
 	gEngine.m_coordinator.SetSystemSignature<PhysicsSystem>(signature);
+
+	for (auto entity : m_entities)
+	{
+		auto& rigidbodyCmp = gEngine.m_coordinator.GetComponent<Rigidbody>(entity);
+		rigidbodyCmp.setAcceleration(m_gravity);
+	}
 }
 
 void PhysicsSystem::update()
@@ -61,7 +66,7 @@ void PhysicsSystem::update()
 		// Update collidables
 		m_colliderManager.updateAABB(boxCollider.m_aabb, transform);
 		m_colliderManager.updateOBB(boxCollider.m_obb, transform);
-	
+
 		// Conduct spatial partitioning
 		
 		// Test AABB/OBB Collision
@@ -70,8 +75,7 @@ void PhysicsSystem::update()
 		// Collision Response (Contact, forces, etc)
 		// Rest, Impulse, Torque
 		
-		std::cout << "HI" << std::endl;
-		std::cout << "Entity's pos:" << transform.getPosition() << std::endl;
+//		std::cout << "Entity " << entity << "'s pos: " << transform.getPosition() << std::endl;
 	}
 }
 

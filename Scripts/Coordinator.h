@@ -1,26 +1,26 @@
 #pragma once
 #include "SystemManager.h"
 #include "ComponentManager.h"
+#include "EntityManager.h"
 
-#include "SpriteComponent.h"
-#include "../Physics/Rigidbody.h"
-#include "../Physics/Transform.h"
-#include "../Physics/CircleCollider2D.h"
-#include "../BoxCollider2D.h"
+#include "GraphicsSystem.h"
 #include "../Physics/PhysicsSystem.h"
 
+// Forward declaration
+class PhysicsSystem;
 
 class Coordinator
 {
 public:
+	Coordinator()
+		: m_entityManager{ std::make_unique<EntityManager>() },
+		  m_componentManager{ std::make_unique<ComponentManager>() },
+		  m_systemManager{ std::make_unique<SystemManager>() },
+		  m_activeEntities{MAX_ENTITIES}
+	{}
 
 	void Init()
 	{
-		// Create managers
-		REComponentManager = std::make_unique<ComponentManager>();
-		REEntityManager = std::make_unique<EntityManager>();
-		RESystemManager = std::make_unique<SystemManager>();
-
 		// Register all components
 		RegisterComponent<SpriteComponent>();
 		RegisterComponent<Rigidbody>();
@@ -28,124 +28,132 @@ public:
 		RegisterComponent<CircleCollider2D>();
 		RegisterComponent<BoxCollider2D>();
 
-		m_activeEntities.reserve(MAX_ENTITIES - 1);
-
+		// Register all systems.
+		auto PhysSystem = RegisterSystem<PhysicsSystem>();
+//		RegisterSystem<GraphicsSystem>();
+		
 		// Create entities (Temporary component creation)
-		for (auto& entity : m_activeEntities)
+		for (auto entity : m_activeEntities)
 		{
 			entity = CreateEntity();
-			AddComponent<SpriteComponent>(entity, SpriteComponent{});
+		//	AddComponent<SpriteComponent>(entity, SpriteComponent{});
 			AddComponent<Rigidbody>(entity, Rigidbody{});
 			AddComponent<Transform>(entity, Transform{});
 			AddComponent<BoxCollider2D>(entity, BoxCollider2D{});
 		}
+
+		// Init systems and system signatures will be set in their respective inits.
+		initSystems();
+
 	}
 
-	void initSystems()
-	{
-		RESystemManager->initSystems();
-	}
 
 	void update()
 	{
 		//...
-		RESystemManager->updateSystems();
+		m_systemManager->updateSystems();
 	}
 
 	Entity CreateEntity()
 	{
-		return REEntityManager->CreateEntity();
+		return m_entityManager->CreateEntity();
 	}
 
 	void DestroyEntity(Entity entity)
 	{
-		REEntityManager->DestroyEntity(entity);
+		m_entityManager->DestroyEntity(entity);
 
-		REComponentManager->EntityDestroyed(entity);
+		m_componentManager->EntityDestroyed(entity);
 
-		RESystemManager->EntityDestroyed(entity);
+		m_systemManager->EntityDestroyed(entity);
 	}
 
 	template<typename T>
 	void RegisterComponent()
 	{
-		REComponentManager->RegisterComponent<T>();
-		std::cout << "Components Created" << std::endl;
+		const char* typeName = typeid(T).name();
+		m_componentManager->RegisterComponent<T>();
+		RE_CORE_INFO(typeName, "'s ", "Components Created\n");
 	}
 
 	template<typename T>
 	void AddComponent(Entity entity, T component)
 	{
-		REComponentManager->AddComponent<T>(entity, component);
+		m_componentManager->AddComponent<T>(entity, component);
 
-		auto signature = REEntityManager->GetSignature(entity);
-		signature.set(REComponentManager->GetComponentType<T>(), true);
-		REEntityManager->SetSignature(entity, signature);
+		auto signature = m_entityManager->GetSignature(entity);
+		signature.set(m_componentManager->GetComponentType<T>(), true);
+		m_entityManager->SetSignature(entity, signature);
 
-		RESystemManager->EntitySignatureChanged(entity, signature);
+		m_systemManager->EntitySignatureChanged(entity, signature);
 	}
 
 	template<typename T>
 	void RemoveComponent(Entity entity)
 	{
 		std::cout << "component removed from entity"<<std::endl;
-		REComponentManager->RemoveComponent<T>(entity);
+		m_componentManager->RemoveComponent<T>(entity);
 
-		auto signature = REEntityManager->GetSignature(entity);
-		signature.set(REComponentManager->GetComponentType<T>(), false);
-		REEntityManager->SetSignature(entity, signature);
+		auto signature = m_entityManager->GetSignature(entity);
+		signature.set(m_componentManager->GetComponentType<T>(), false);
+		m_entityManager->SetSignature(entity, signature);
 
-		RESystemManager->EntitySignatureChanged(entity, signature);
+		m_systemManager->EntitySignatureChanged(entity, signature);
 	}
 
 	template<typename T>
 	T& GetComponent(Entity entity)
 	{
-		return REComponentManager->GetComponent<T>(entity);
+		return m_componentManager->GetComponent<T>(entity);
 	}
 
 	template<typename T>
 	ComponentType GetComponentType()
 	{
-		return REComponentManager->GetComponentType<T>();
+		return m_componentManager->GetComponentType<T>();
 	}
 
 	ComponentType GetComponentType(const char* typeName)
 	{
-		return REComponentManager->GetComponentType(typeName);
+		return m_componentManager->GetComponentType(typeName);
 	}
 
 	template<typename T>
 	std::shared_ptr<T> RegisterSystem()
 	{
-		return RESystemManager->RegisterSystem<T>();
+		return m_systemManager->RegisterSystem<T>();
 	}
 
 	template<typename T>
 	void SetSystemSignature(Signature signature)
 	{
-		RESystemManager->SetSignature<T>(signature);
+		m_systemManager->SetSignature<T>(signature);
 	}
 
 	size_t Size(const char* name) const
 	{
 		if (name == "Entity")
-			return REEntityManager->Size();
+			return m_entityManager->Size();
 		else if (name == "Component")
-			return REComponentManager->Size();
+			return m_componentManager->Size();
 		else
 			return 0;
 	}
 
 	EntityManager& GetEntityManager() const
 	{
-		return *REEntityManager;
+		return *m_entityManager;
 	}
 
 private:
-	std::unique_ptr<ComponentManager> REComponentManager;
-	std::unique_ptr<EntityManager> REEntityManager;
-	std::unique_ptr<SystemManager> RESystemManager;
+	void initSystems()
+	{
+		m_systemManager->initSystems();
+	}
+
+	std::unique_ptr<ComponentManager> m_componentManager;
+	std::unique_ptr<EntityManager> m_entityManager;
+	std::unique_ptr<SystemManager> m_systemManager;
 
 	std::vector<Entity> m_activeEntities;
 };
