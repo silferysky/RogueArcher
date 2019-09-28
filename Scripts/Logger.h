@@ -9,6 +9,8 @@ class Logger
 {
 public:
 
+	Logger() { InitLogger(); }
+
 	//Initializer for Logger
 	static void InitLogger();
 

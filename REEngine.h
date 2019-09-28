@@ -5,6 +5,7 @@
 class REEngine
 {
 public:
+	Logger m_log;
 	Coordinator m_coordinator;
 	REEngine() = default;
 	~REEngine() = default;
