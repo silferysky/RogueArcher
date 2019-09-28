@@ -200,9 +200,6 @@
       <Filter>RogueEngine\Systems\Physics\Collision</Filter>
     </ClInclude>
     <ClInclude Include="BoxCollider2D.h" />
-    <ClInclude Include="Scripts\SpriteComponent.h">
-      <Filter>RogueEngine</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\EventListener.h">
       <Filter>RogueEngine\Systems\Events</Filter>
     </ClInclude>
@@ -223,6 +220,12 @@
     </ClInclude>
     <ClInclude Include="Scripts\VSync.h">
       <Filter>RogueEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\GraphicsSystem.h">
+      <Filter>RogueEngine\Systems\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\SpriteComponent.h">
+      <Filter>RogueEngine\Systems\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -316,6 +319,12 @@
     </ClCompile>
     <ClCompile Include="Scripts\VSync.cpp">
       <Filter>RogueEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\GraphicsSystem.cpp">
+      <Filter>RogueEngine\Systems\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\SpriteComponent.cpp">
+      <Filter>RogueEngine\Systems\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

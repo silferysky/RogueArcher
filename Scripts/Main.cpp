@@ -13,8 +13,7 @@
 #include <chrono>
 #include "ObjectFactory.h"
 
-#include "Quad.h"
-#include "SOIL.h"
+#include "GraphicsSystem.h"
 #include "VSync.h"
 
 float dt;
@@ -44,7 +43,7 @@ int LoadGLTextures()
 	if (texture[0] == 0)
 		return false;
 
-	// Typical Texture Generation Using Data From The Bitmap
+	// Generate texture
 	glBindTexture(GL_TEXTURE_2D, texture[0]);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);

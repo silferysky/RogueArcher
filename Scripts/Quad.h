@@ -36,7 +36,6 @@ public:
 	~Quad() = default;
 
 	void Draw();
-	void RotateRight();
 };
 
 #endif
