@@ -5,24 +5,24 @@
 
 class OBB
 {
-	using VerticesList = std::vector<Vec2>;
+	using VertexList = std::vector<Vec2>;
 
 	// The minimum and maximum values crushed onto each axis
 	float m_minOnAxis;
 	float m_maxOnAxis;
 
-	VerticesList m_modelVertices;
-	VerticesList m_globalVertices; // The positions of each vertex in the shape.
-	VerticesList m_normals; // The normal vectors of each side.
+	VertexList m_modelVertices;
+	VertexList m_globalVertices; // The positions of each vertex in the shape.
+	VertexList m_normals; // The normal vectors of each side.
 public:
-	OBB() = default;
+	OBB(const VertexList& model = VertexList());
 	~OBB() = default;
 
 	float getMin() const;
 	float getMax() const;
-	VerticesList& globVerts(); // Get global Vertices
-	VerticesList& modelVerts();
-	VerticesList& normals();
+	VertexList& globVerts(); // Get global Vertices
+	VertexList& modelVerts();
+	VertexList& normals();
 
 	void setMin(float min);
 	void setMax(float max);
