@@ -38,3 +38,7 @@ x64/
 #include everything within#
 !/Dep/**/*
 !/Debug/glew32.dll
+
+#ignore specifically these files#
+log/ClientFileLog.txt
+log/CoreFileLog.txt
