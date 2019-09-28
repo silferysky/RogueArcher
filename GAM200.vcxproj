@@ -52,6 +52,7 @@
     <ClInclude Include="Scripts\GameEvent.h" />
     <ClInclude Include="Scripts\GameStateList.h" />
     <ClInclude Include="Scripts\GameStateManager.h" />
+    <ClInclude Include="Scripts\GraphicsSystem.h" />
     <ClInclude Include="Scripts\InputData.h" />
     <ClInclude Include="Scripts\InputManager.h" />
     <ClInclude Include="Scripts\KeyEvent.h" />
@@ -94,6 +95,7 @@
     <ClCompile Include="Scripts\EngineIO.cpp" />
     <ClCompile Include="Scripts\FileIO.cpp" />
     <ClCompile Include="Scripts\GameStateManager.cpp" />
+    <ClCompile Include="Scripts\GraphicsSystem.cpp" />
     <ClCompile Include="Scripts\InputManager.cpp" />
     <ClCompile Include="Scripts\Library.cpp" />
     <ClCompile Include="Scripts\Logger.cpp" />
@@ -103,6 +105,7 @@
     <ClCompile Include="Scripts\Quad.cpp" />
     <ClCompile Include="Scripts\REMath.cpp" />
     <ClCompile Include="Scripts\shader.cpp" />
+    <ClCompile Include="Scripts\SpriteComponent.cpp" />
     <ClCompile Include="Scripts\triangle.cpp" />
     <ClCompile Include="Scripts\Vector2D.cpp" />
     <ClCompile Include="Scripts\VSync.cpp" />

@@ -31,16 +31,16 @@ void ObjectFactory::SaveLevel(const char* fileName)
 		//Copypasta for each new variable//
 		varNum = 0;
 		CLEARNSETSTR(varName, i, "sc", varNum);
-		m_Serialiser.WriteToFile(fileName, cstr, (int)s.shader);
+		m_Serialiser.WriteToFile(fileName, cstr, (int)s.m_shader);
 		++varNum;
 		CLEARNSETSTR(varName, i, "sc", varNum);
-		m_Serialiser.WriteToFile(fileName, cstr, (int)s.VAO);
+		m_Serialiser.WriteToFile(fileName, cstr, (int)s.m_VAO);
 		++varNum;
 		CLEARNSETSTR(varName, i, "sc", varNum);
-		m_Serialiser.WriteToFile(fileName, cstr, (int)s.VBO);
+		m_Serialiser.WriteToFile(fileName, cstr, (int)s.m_VBO);
 		++varNum;
 		CLEARNSETSTR(varName, i, "sc", varNum);
-		m_Serialiser.WriteToFile(fileName, cstr, (int)s.EBO);
+		m_Serialiser.WriteToFile(fileName, cstr, (int)s.m_EBO);
 		///////////////////////////////////
 
 		//Copypasta for each new variable//
@@ -116,13 +116,13 @@ void ObjectFactory::LoadLevel(const char* fileName)
 		{
 			SpriteComponent s;
 			CLEARNSETSTR(strstream, i, "sc", 0);
-			s.shader = (unsigned int)level[cstr].GetInt();
+			s.m_shader = (unsigned int)level[cstr].GetInt();
 			CLEARNSETSTR(strstream, i, "sc", 1);
-			s.VAO = (unsigned int)level[cstr].GetInt();
+			s.m_VAO = (unsigned int)level[cstr].GetInt();
 			CLEARNSETSTR(strstream, i, "sc", 2);
-			s.VBO = (unsigned int)level[cstr].GetInt();
+			s.m_VBO = (unsigned int)level[cstr].GetInt();
 			CLEARNSETSTR(strstream, i, "sc", 3);
-			s.EBO = (unsigned int)level[cstr].GetInt();
+			s.m_EBO = (unsigned int)level[cstr].GetInt();
 
 			gEngine.m_coordinator.AddComponent(curEnt, s);
 			--curEntSig;
