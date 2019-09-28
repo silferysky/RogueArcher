@@ -217,6 +217,9 @@
     <ClInclude Include="Scripts\ObjectFactory.h">
       <Filter>RogueEngine\Systems</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\Config.h">
+      <Filter>RogueEngine\Data</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\GameStateManager.cpp">
@@ -315,6 +318,9 @@
     </ClCompile>
     <ClCompile Include="Scripts\ObjectFactory.cpp">
       <Filter>RogueEngine\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Config.cpp">
+      <Filter>RogueEngine\Data</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

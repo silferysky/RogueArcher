@@ -16,10 +16,9 @@
 #include "VSync.h"
 #include "Quad.h"
 #include "SOIL.h"
-
+#include "Config.h"
 float gDeltaTime;
 bool gameIsRunning = true;
-const float FPS = 1 / 60;
 REEngine gEngine;
 //const char* FileName = "/Resources/test.json";
 static const int SCREEN_FULLSCREEN = 0;
@@ -165,18 +164,10 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	HGLRC hRC;				/* opengl context */
 	HWND  hWnd;				/* window */
 	MSG   msg;				/* message */
-	RESerialiser Serialiser;
-	rapidjson::Document Windows = Serialiser.DeserialiseFromFile("Resources/Windows.json");
-	int x,y,height,width,byte,flags;
-	const char* Window;
-	x = Windows["x"].GetInt();
-	y = Windows["y"].GetInt();
-	height = Windows["height"].GetInt();
-	width = Windows["width"].GetInt();
-	byte = Windows["byte"].GetInt();
-	flags = Windows["flags"].GetInt();
-	Window = Windows["title"].GetString();
-	hWnd = CreateOpenGLWindow(const_cast<char*>(Window), x, y, width, height, byte, flags);
+	REConfig config;
+	config.ConfigInit();
+
+	hWnd = CreateOpenGLWindow(const_cast<char*>("Rogue Engine"), config.GetX(), config.GetY(), config.GetWidth(), config.GetHeight(), config.GetByte(), config.GetFlags());
 	if (hWnd == NULL)
 		exit(1);
 
@@ -258,10 +249,12 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		test.Draw();
 		SwapBuffers(hDC);
+
 		auto stop = timer.now();
 		gDeltaTime = std::chrono::duration_cast<std::chrono::microseconds>(stop - start).count() / 1000000.0f;
 		wasteTimer = gDeltaTime;
-		while (wasteTimer <= FPS)
+		//config.SetFPS(30);
+		while (wasteTimer <= config.GetFPS())
 		{
 			stop = timer.now();
 			wasteTimer = std::chrono::duration_cast<std::chrono::microseconds>(stop - start).count() / 1000000.0f;
