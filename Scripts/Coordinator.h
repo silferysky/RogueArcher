@@ -34,7 +34,7 @@ public:
 		for (auto& entity : m_activeEntities)
 		{
 			entity = CreateEntity();
-			AddComponent<SpriteComponent>(entity, SpriteComponent{ 0, 0, 0, 0 });
+			AddComponent<SpriteComponent>(entity, SpriteComponent{});
 			AddComponent<Rigidbody>(entity, Rigidbody{});
 			AddComponent<Transform>(entity, Transform{});
 			AddComponent<BoxCollider2D>(entity, BoxCollider2D{});
@@ -108,6 +108,11 @@ public:
 	ComponentType GetComponentType()
 	{
 		return REComponentManager->GetComponentType<T>();
+	}
+
+	ComponentType GetComponentType(const char* typeName)
+	{
+		return REComponentManager->GetComponentType(typeName);
 	}
 
 	template<typename T>
