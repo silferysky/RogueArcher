@@ -9,7 +9,7 @@ void PhysicsSystem::applyForces(Rigidbody& rigidbody) // F = ma
 }
 
 PhysicsSystem::PhysicsSystem()
-	: m_colliderManager{}, m_gravity{0, -9.81}
+	: m_colliderManager{}, m_gravity{0.0f, -9.81f}
 {}
 
 void PhysicsSystem::integrateAcceleration(Rigidbody& rigidbody, Transform& transform)

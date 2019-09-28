@@ -28,6 +28,7 @@ public:
 
 		return REComponentTypes[typeName];
 	}
+
 	ComponentType GetComponentType(const char* typeName)
 	{
 		return REComponentTypes[typeName];
