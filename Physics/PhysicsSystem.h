@@ -22,6 +22,7 @@ public:
 
 	void init();
 	void update() override;
+	void receive(Event* ev) override;
 
 	void setGravity(const Vec2& gravity);
 	const Vec2& getGravity() const;

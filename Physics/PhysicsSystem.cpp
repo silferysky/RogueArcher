@@ -46,6 +46,8 @@ void PhysicsSystem::init()
 
 void PhysicsSystem::update()
 {
+//	RE_CORE_INFO("Running Update");
+
 	// For all entities
 	for(auto entity : m_entities)
 	{
@@ -75,10 +77,15 @@ void PhysicsSystem::update()
 		// Collision Response (Contact, forces, etc)
 		// Rest, Impulse, Torque
 		
-//		std::cout << "Entity " << entity << "'s pos: " << transform.getPosition() << std::endl;
+		//	std::cout << "Entity " << entity << "'s pos: " << transform.getPosition() << std::endl;
 	}
 }
 
+void PhysicsSystem::receive(Event* ev)
+{
+	RE_INFO(ev->ToString());
+	RE_CORE_INFO("TEST SYSTEM RECEIVED EVENT");
+}
 
 // Setters
 void PhysicsSystem::setGravity(const Vec2& gravity)
