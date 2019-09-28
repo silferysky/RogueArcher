@@ -42,6 +42,7 @@
     <ClInclude Include="Scripts\ComponentArray.h" />
     <ClInclude Include="Scripts\ComponentList.h" />
     <ClInclude Include="Scripts\ComponentManager.h" />
+    <ClInclude Include="Scripts\Config.h" />
     <ClInclude Include="Scripts\Coordinator.h" />
     <ClInclude Include="Scripts\EngineIO.h" />
     <ClInclude Include="Scripts\EntityManager.h" />
@@ -92,6 +93,7 @@
     <ClCompile Include="Physics\Shape.cpp" />
     <ClCompile Include="Physics\Transform.cpp" />
     <ClCompile Include="Scripts\BaseEntity.cpp" />
+    <ClCompile Include="Scripts\Config.cpp" />
     <ClCompile Include="Scripts\EngineIO.cpp" />
     <ClCompile Include="Scripts\FileIO.cpp" />
     <ClCompile Include="Scripts\GameStateManager.cpp" />
