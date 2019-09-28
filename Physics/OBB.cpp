@@ -1,5 +1,13 @@
 #include "OBB.h"
 
+OBB::OBB(const OBB::VertexList& model)
+	: m_minOnAxis{ 0.0f },
+	m_maxOnAxis{ 0.0f },
+	m_modelVertices{ model },
+	m_globalVertices{ OBB::VertexList(model.size()) },
+	m_normals{ OBB::VertexList(model.size()) }
+{}
+
 float OBB::getMin() const
 {
 	return m_minOnAxis;
@@ -10,17 +18,17 @@ float OBB::getMax() const
 	return m_maxOnAxis;
 }
 
-OBB::VerticesList& OBB::globVerts()
+OBB::VertexList& OBB::globVerts()
 {
 	return m_globalVertices;
 }
 
-OBB::VerticesList& OBB::modelVerts()
+OBB::VertexList& OBB::modelVerts()
 {
 	return m_modelVertices;
 }
 
-OBB::VerticesList& OBB::normals()
+OBB::VertexList& OBB::normals()
 {
 	return m_normals;
 }

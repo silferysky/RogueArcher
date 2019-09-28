@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BoxCollider2D.h" />
+    <ClInclude Include="Physics\PhysicsSystem.h" />
     <ClInclude Include="REEngine.h" />
     <ClInclude Include="Physics\AABB.h" />
     <ClInclude Include="Physics\BaseCollider.h" />
@@ -29,7 +30,6 @@
     <ClInclude Include="Physics\CollisionManager.h" />
     <ClInclude Include="Physics\Material.h" />
     <ClInclude Include="Physics\OBB.h" />
-    <ClInclude Include="Physics\PhysicsSystem.h" />
     <ClInclude Include="Physics\Polygon.h" />
     <ClInclude Include="Physics\Rigidbody.h" />
     <ClInclude Include="Physics\Rotatable.h" />
@@ -77,6 +77,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BoxCollider2D.cpp" />
+    <ClCompile Include="Physics\PhysicsSystem.cpp" />
     <ClCompile Include="REEngine.cpp" />
     <ClCompile Include="Physics\AABB.cpp" />
     <ClCompile Include="Physics\Circle.cpp" />
@@ -85,7 +86,6 @@
     <ClCompile Include="Physics\CollisionManager.cpp" />
     <ClCompile Include="Physics\Material.cpp" />
     <ClCompile Include="Physics\OBB.cpp" />
-    <ClCompile Include="Physics\PhysicsSystem.cpp" />
     <ClCompile Include="Physics\Polygon.cpp" />
     <ClCompile Include="Physics\Rigidbody.cpp" />
     <ClCompile Include="Physics\Rotatable.cpp" />

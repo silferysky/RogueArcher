@@ -3,6 +3,7 @@
 #include <queue>
 #include <bitset>
 #include <array>
+#include "Logger.h"
 
 class EntityManager
 {
@@ -17,18 +18,17 @@ public:
 
 	Entity CreateEntity()
 	{
-
 		// Take an ID from the front of the queue
 		Entity id = REAvailableEntities.front();
 		REAvailableEntities.pop();
 		++RECurrentEntityCount;
-		std::cout << "Entities Created" << std::endl;
+		RE_CORE_INFO("Entities Created");
 		return id;
 	}
 
 	void DestroyEntity(Entity entity)
 	{
-		std::cout << "Entities Destroyed" << std::endl;
+		RE_CORE_INFO("Entities Destroyed");
 		// Invalidate the destroyed entity's signature
 		RESignatures[entity].reset();
 
