@@ -17,6 +17,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #pragma warning( disable : 4201 )
 #endif
 #include <cmath>
+#include <iostream>
 
 typedef union Vector2D
 {
@@ -53,6 +54,9 @@ typedef union Vector2D
 // Supress warning: nonstandard extension used : nameless struct/union
 #pragma warning( disable : 4201 )
 #endif
+
+// << Operator
+std::ostream& operator << (std::ostream& os, const Vec2& vec);
 
 // Binary operators
 Vector2D operator + (const Vector2D &lhs, const Vector2D &rhs);

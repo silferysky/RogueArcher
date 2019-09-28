@@ -102,12 +102,21 @@ Vector2D Vector2D::operator -() const
 	return result;
 }
 
+/**************************************************************************/
+/*!
+	Outputs the values of x and y in the vector.
+ */
+ /**************************************************************************/
+std::ostream& operator<<(std::ostream& os, const Vec2& vec)
+{
+	return os << "(" << vec.x << "," << vec.y << ")";
+}
 
 /**************************************************************************/
 /*!
 	Binary addition operator of a vector lhs from the vector rhs.
  */
- /**************************************************************************/
+/**************************************************************************/
 Vector2D operator + (const Vector2D &lhs, const Vector2D &rhs)
 {
 	Vector2D result;

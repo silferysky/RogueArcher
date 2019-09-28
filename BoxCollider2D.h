@@ -4,6 +4,7 @@
 
 class BoxCollider2D
 {
+public:
 	AABB m_aabb;
 	OBB m_obb;
 };

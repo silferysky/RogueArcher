@@ -16,10 +16,10 @@ class Material
 	MaterialList m_material;
 	float m_density;
 	float m_friction;
+	float m_damping;
 
 public:
 	Material(MaterialList material = MAT_NONE);
 	~Material();
-
 };
 

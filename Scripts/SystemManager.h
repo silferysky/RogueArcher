@@ -7,6 +7,9 @@ class System
 {
 public:
 	std::set<Entity> m_entities;
+	virtual void init() = 0;
+	virtual void update() = 0;
+	virtual ~System() = default;
 };
 
 class SystemManager
@@ -22,6 +25,22 @@ public:
 		RESystems.insert({ typeName, system });
 		std::cout << "System Registered" << std::endl;
 		return system;
+	}
+
+	void initSystems()
+	{
+		for (auto system : RESystems)
+		{
+			system.second->init();
+		}
+	}
+
+	void updateSystems()
+	{
+		for (auto system : RESystems)
+		{
+			system.second->update();
+		}
 	}
 
 	template<typename T>
