@@ -165,7 +165,7 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	HGLRC hRC;				/* opengl context */
 	HWND  hWnd;				/* window */
 	MSG   msg;				/* message */
-	//setVSync(0);
+	
 	hWnd = CreateOpenGLWindow(const_cast<char*>("Rogue Engine"), 0, 0, 640, 480, PFD_TYPE_RGBA, 0);
 	if (hWnd == NULL)
 		exit(1);
@@ -187,7 +187,7 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	if (!InitGL())
 		return -2;
 
-
+	setVSync(1);
 	//Logger
 	Logger::InitLogger();
 	RE_CORE_TRACE("Init Core Logger");
