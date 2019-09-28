@@ -8,7 +8,6 @@
 
 class GraphicsSystem : public System
 {
-	ComponentManager* gComponentManager;
 public:
 	GraphicsSystem() = default;
 	~GraphicsSystem() = default;
