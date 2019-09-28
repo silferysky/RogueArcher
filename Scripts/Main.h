@@ -16,7 +16,6 @@ class REEngine;
 
 //Externs
 extern REEngine gEngine;
-extern double t;
-extern double gdt;
+extern float gDeltaTime;
 
 int APIENTRY WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst, LPSTR lpszCmdLine, int nCmdShow);

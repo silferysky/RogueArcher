@@ -2,7 +2,7 @@
 
 #include <cstdio>
 #include <cstdlib>
-
+#include <ctime>
 #include <fstream>
 #include "Main.h"
 #include "KeyEvent.h"
@@ -10,16 +10,13 @@
 #include "Library.h"
 #include "EventDispatcher.h"
 #include "TestSystem.h"
-
+#include <chrono>
 #include "Quad.h"
 #include "SOIL.h"
 
-double t = 0.0;
-double gdt = 1.0; // 0.016? - Joel
-bool off = true;
+float gDeltaTime;
+bool gameIsRunning = true;
 REEngine gEngine;
-
-//SystemManager *SysManager = new SystemManager();
 
 static const int SCREEN_FULLSCREEN = 0;
 static const int SCREEN_WIDTH = 960;
@@ -79,7 +76,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		PostQuitMessage(0);
 		return 0;
 	case WM_RBUTTONUP:
-		off = false;
+		gameIsRunning = false;
 		break;
 	}
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);
@@ -186,6 +183,7 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	if (!InitGL())
 		return -2;
 
+
 	//Logger
 	Logger::InitLogger();
 	RE_CORE_TRACE("Init Core Logger");
@@ -214,8 +212,11 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 
 	TestSystem sys = TestSystem();
 	KeyPressEvent ke(Key0);
-	while (off)
+	float wasteTimer;
+	while (gameIsRunning)
 	{
+		std::chrono::high_resolution_clock timer;
+		auto start = timer.now(); 
 		while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
 		{
 			TranslateMessage(&msg);
@@ -224,8 +225,11 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 		//Main Debug
 		// RE_INFO("INPUT DEBUG");
 
+		// Update engine.
+		gEngine.update();
+
 		int repeat = 0;
-		float timer = 0.0f;
+		//float timer2 = 0.0f;
 		while (repeat < 5)
 		{
 			InputMgr->UpdateState();
@@ -241,6 +245,14 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		test.Draw();
 		SwapBuffers(hDC);
+		auto stop = timer.now();
+		gDeltaTime = std::chrono::duration_cast<std::chrono::microseconds>(stop - start).count() / 1000000.0f;
+		wasteTimer = gDeltaTime;
+		while (wasteTimer < 0.01666666f)
+		{
+			stop = timer.now();
+			wasteTimer = std::chrono::duration_cast<std::chrono::microseconds>(stop - start).count() / 1000000.0f;
+		}
 	}
 
 	RE_INFO("TESTING HERE FOR A EVENT DEBUG");
@@ -258,10 +270,10 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 
 	RE_INFO("MANUAL TEST EVENT DISPATCHER");
 	TestSystem testSys = TestSystem((SYSTEMID)2);
-	testSys.Receive(testEvent);
+	testSys.Receive(&testEvent);
 
 	RE_INFO("EVENT DISPATCHER TEST");
-	EventDispatcher::instance().AddEvent(testEvent);
+	EventDispatcher::instance().AddEvent(&testEvent);
 	EventDispatcher::instance().Update();
 	RE_INFO("EVENT DISPATCHER END");
 

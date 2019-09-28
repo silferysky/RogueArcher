@@ -1,7 +1,7 @@
 #include "GameStateList.h"
 #pragma once
 
-//typedef void(*FPU)(double dt);
+//typedef void(*FPU)(double gDeltaTime);
 
 typedef void(*FP)(void);
 

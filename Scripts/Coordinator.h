@@ -1,20 +1,56 @@
 #pragma once
-#include "EntityManager.h"
-#include "ComponentArray.h"
 #include "SystemManager.h"
 #include "ComponentManager.h"
+
+#include "SpriteComponent.h"
+#include "../Physics/Rigidbody.h"
+#include "../Physics/Transform.h"
+#include "../Physics/CircleCollider2D.h"
+#include "../BoxCollider2D.h"
+#include "../Physics/PhysicsSystem.h"
+
 
 class Coordinator
 {
 public:
+
 	void Init()
 	{
-		// Create pointers to each manager
+		// Create managers
 		REComponentManager = std::make_unique<ComponentManager>();
 		REEntityManager = std::make_unique<EntityManager>();
 		RESystemManager = std::make_unique<SystemManager>();
+
+		// Register all components
+		RegisterComponent<SpriteComponent>();
+		RegisterComponent<Rigidbody>();
+		RegisterComponent<Transform>();
+		RegisterComponent<CircleCollider2D>();
+		RegisterComponent<BoxCollider2D>();
+
+		m_activeEntities.reserve(MAX_ENTITIES - 1);
+
+		// Create entities (Temporary component creation)
+		for (auto& entity : m_activeEntities)
+		{
+			entity = CreateEntity();
+			AddComponent<SpriteComponent>(entity, SpriteComponent{ 0, 0, 0, 0 });
+			AddComponent<Rigidbody>(entity, Rigidbody{});
+			AddComponent<Transform>(entity, Transform{});
+			AddComponent<BoxCollider2D>(entity, BoxCollider2D{});
+		}
 	}
 
+	void initSystems()
+	{
+		RESystemManager->initSystems();
+	}
+
+	void update()
+	{
+		//...
+		RESystemManager->updateSystems();
+	}
 
 	Entity CreateEntity()
 	{
@@ -29,7 +65,6 @@ public:
 
 		RESystemManager->EntityDestroyed(entity);
 	}
-
 
 	template<typename T>
 	void RegisterComponent()
@@ -75,7 +110,6 @@ public:
 		return REComponentManager->GetComponentType<T>();
 	}
 
-
 	template<typename T>
 	std::shared_ptr<T> RegisterSystem()
 	{
@@ -88,8 +122,11 @@ public:
 		RESystemManager->SetSignature<T>(signature);
 	}
 
+
 private:
 	std::unique_ptr<ComponentManager> REComponentManager;
 	std::unique_ptr<EntityManager> REEntityManager;
 	std::unique_ptr<SystemManager> RESystemManager;
+
+	std::vector<Entity> m_activeEntities;
 };

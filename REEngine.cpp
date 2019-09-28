@@ -2,26 +2,18 @@
 
 void REEngine::init()
 {
-	// Allocate memory for manager objects
-	RECoordinator.Init();
-
-	// Register all components
-	RECoordinator.RegisterComponent<SpriteComponent>();
-	RECoordinator.RegisterComponent<Rigidbody>(); 
-	RECoordinator.RegisterComponent<Transform>(); 
-	RECoordinator.RegisterComponent<CircleCollider2D>();
-	RECoordinator.RegisterComponent<BoxCollider2D>();
+	m_coordinator.Init();
 
 	// Register all systems and init them. System signatures will be set in their respective inits.
-	auto gPhysicsSystem = RECoordinator.RegisterSystem<PhysicsSystem>();
-	gPhysicsSystem->init();
-
-//	auto gGraphicsSystem = RECoordinator.RegisterSystem<GraphicsSystem>();
-//	auto sm = RECoordinator.RegisterSystem<SceneManager>();
+	auto pPhysicsSystem = m_coordinator.RegisterSystem<PhysicsSystem>();
+//	auto gGraphicsSystem = m_coordinator.RegisterSystem<GraphicsSystem>();
+//	auto sm = m_coordinator.RegisterSystem<SceneManager>();
 //  etc...
+	
+	m_coordinator.initSystems();
 }
 
 void REEngine::update()
 {
-	
+	m_coordinator.update();
 }

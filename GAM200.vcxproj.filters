@@ -38,9 +38,6 @@
     <Filter Include="RogueEngine\Systems\Memory">
       <UniqueIdentifier>{c7c96828-3cac-4aeb-bc20-6a26e3a1a849}</UniqueIdentifier>
     </Filter>
-    <Filter Include="RogueEngine\Systems\ECS">
-      <UniqueIdentifier>{629d965b-c364-483b-b07e-8a65dc3774f6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="RogueEngine\Systems\Debug">
       <UniqueIdentifier>{dd569528-c110-4600-89f9-e2702d70a3fd}</UniqueIdentifier>
     </Filter>
@@ -61,6 +58,9 @@
     </Filter>
     <Filter Include="RogueEngine\Core">
       <UniqueIdentifier>{4fe8da6f-c39e-45a1-9802-b4b7e3bd135e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RogueEngine\Core\ECS">
+      <UniqueIdentifier>{629d965b-c364-483b-b07e-8a65dc3774f6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -104,19 +104,19 @@
       <Filter>RogueEngine\Systems\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\ComponentArray.h">
-      <Filter>RogueEngine\Systems\ECS</Filter>
+      <Filter>RogueEngine\Core\ECS</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\ComponentManager.h">
-      <Filter>RogueEngine\Systems\ECS</Filter>
+      <Filter>RogueEngine\Core\ECS</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Coordinator.h">
-      <Filter>RogueEngine\Systems\ECS</Filter>
+      <Filter>RogueEngine\Core\ECS</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\EntityManager.h">
-      <Filter>RogueEngine\Systems\ECS</Filter>
+      <Filter>RogueEngine\Core\ECS</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Types.h">
-      <Filter>RogueEngine\Systems\ECS</Filter>
+      <Filter>RogueEngine\Core\ECS</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\BaseSystem.h">
       <Filter>RogueEngine\Systems</Filter>
@@ -131,7 +131,7 @@
       <Filter>RogueEngine\Systems\Input</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\SystemManager.h">
-      <Filter>RogueEngine\Systems\ECS</Filter>
+      <Filter>RogueEngine\Core\ECS</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\EngineIO.h">
       <Filter>RogueEngine\Systems\I/O</Filter>
@@ -203,9 +203,11 @@
     <ClInclude Include="Physics\CircleCollider2D.h">
       <Filter>RogueEngine\Systems\Physics\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="BoxCollider2D.h" />
     <ClInclude Include="Scripts\SpriteComponent.h">
       <Filter>RogueEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="BoxCollider2D.h">
+      <Filter>RogueEngine\Systems\Physics\Collision</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -296,6 +298,8 @@
     <ClCompile Include="Physics\CircleCollider2D.cpp">
       <Filter>RogueEngine\Systems\Physics\Collision</Filter>
     </ClCompile>
-    <ClCompile Include="BoxCollider2D.cpp" />
+    <ClCompile Include="BoxCollider2D.cpp">
+      <Filter>RogueEngine\Systems\Physics\Collision</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
