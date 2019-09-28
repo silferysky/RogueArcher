@@ -3,6 +3,7 @@
 #include "EntityManager.h"
 #include "ComponentArray.h"
 #include "ComponentList.h"
+#include "Logger.h"
 
 class ComponentManager
 {
@@ -38,10 +39,12 @@ public:
 	template<typename T>
 	void AddComponent(Entity entity, T component)
 	{
-		RE_CORE_INFO("components added to system\n");
+		std::stringstream out;
+		out << "Entity " << entity << "'s " << typeid(T).name() << " added!";
+		RE_CORE_INFO(out.str());
 		GetComponentArray<T>()->InsertData(entity, component);
 	}
-
+	
 	template<typename T>
 	void RemoveComponent(Entity entity)
 	{

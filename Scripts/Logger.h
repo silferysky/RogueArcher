@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory.h>
+#include <sstream>
 #include "spdlog/spdlog.h"
 
 class Logger

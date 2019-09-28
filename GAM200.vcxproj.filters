@@ -190,7 +190,6 @@
     <ClInclude Include="Scripts\BaseComponent.h" />
     <ClInclude Include="Scripts\BaseEntity.h" />
     <ClInclude Include="Scripts\ComponentList.h" />
-    <ClInclude Include="Scripts\ObjectFactory.h" />
     <ClInclude Include="Scripts\SystemManager.h">
       <Filter>RogueEngine\Core\ECS</Filter>
     </ClInclude>
@@ -214,6 +213,9 @@
     </ClInclude>
     <ClInclude Include="Physics\PhysicsSystem.h">
       <Filter>RogueEngine\Systems\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\ObjectFactory.h">
+      <Filter>RogueEngine\Systems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -305,12 +307,14 @@
       <Filter>RogueEngine\Systems\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\BaseEntity.cpp" />
-    <ClCompile Include="Scripts\ObjectFactory.cpp" />
     <ClCompile Include="BoxCollider2D.cpp">
       <Filter>RogueEngine\Systems\Physics\Components</Filter>
     </ClCompile>
     <ClCompile Include="Physics\PhysicsSystem.cpp">
       <Filter>RogueEngine\Systems\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\ObjectFactory.cpp">
+      <Filter>RogueEngine\Systems</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
