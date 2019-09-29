@@ -33,14 +33,14 @@ void ObjectFactory::SaveLevel(const char* fileName)
 		CLEARNSETSTR(varName, i, "sc", varNum);
 		m_Serialiser.WriteToFile(fileName, cstr, (int)s.getShader());
 		++varNum;
-		/* CLEARNSETSTR(varName, i, "sc", varNum);
+		CLEARNSETSTR(varName, i, "sc", varNum);
 		m_Serialiser.WriteToFile(fileName, cstr, (int)s.getVAO());
 		++varNum;
 		CLEARNSETSTR(varName, i, "sc", varNum);
 		m_Serialiser.WriteToFile(fileName, cstr, (int)s.getVBO());
 		++varNum;
 		CLEARNSETSTR(varName, i, "sc", varNum);
-		m_Serialiser.WriteToFile(fileName, cstr, (int)s.getEBO()); */
+		m_Serialiser.WriteToFile(fileName, cstr, (int)s.getEBO());
 		///////////////////////////////////
 
 		//Copypasta for each new variable//
