@@ -236,9 +236,9 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 
 	RE_INFO(debugStr.str());
 
-	//ObjectFactory objFac;
+	ObjectFactory objFac;
 	//ObjectFactory::LoadLevel("Resources/TestJsonFileCreator.json");
-	ObjectFactory::LoadLevel("Resources/Level 1.json");
+	objFac.LoadLevel("Resources/Level 1.json");
 
 	////This section is commented out to prevent issues when spawning entities
 	///*Entity e1 = gEngine.m_coordinator.CreateEntity();
