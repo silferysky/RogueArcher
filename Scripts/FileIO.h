@@ -32,7 +32,7 @@ public:
 			doc.ParseStream(Wrapper);
 
 			rapidjson::StringBuffer buffer{};
-			rapidjson::Writer<rapidjson::StringBuffer> writer{ buffer };
+			rapidjson::PrettyWriter<rapidjson::StringBuffer> writer{ buffer };
 			doc.Accept(writer);
 
 			if (doc.HasParseError())
@@ -73,7 +73,7 @@ public:
 			}
 
 			rapidjson::OStreamWrapper osw{ ofs };
-			rapidjson::Writer<rapidjson::OStreamWrapper> writer2{ osw };
+			rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer2{ osw };
 			doc.Accept(writer2);
 
 			return EXIT_SUCCESS;

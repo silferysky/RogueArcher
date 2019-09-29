@@ -42,3 +42,4 @@ x64/
 #ignore specifically these files#
 log/ClientFileLog.txt
 log/CoreFileLog.txt
+Resources/TestJsonFileCreator.json
