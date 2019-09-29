@@ -1,6 +1,6 @@
 #pragma once
-#include "./Physics/AABB.h"
-#include "./Physics/OBB.h"
+#include "AABB.h"
+#include "OBB.h"
 
 class BoxCollider2D
 {

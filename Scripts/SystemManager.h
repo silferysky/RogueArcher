@@ -10,8 +10,8 @@ class System
 {
 public:
 	std::set<Entity> m_entities;
+	
 	System() = default;
-
 	virtual void init() = 0;
 	virtual void update() = 0;
 	virtual void receive(Event* ev) = 0;
@@ -89,6 +89,8 @@ public:
 			if ((entitySignature & systemSignature) == systemSignature)
 			{
 				// Signature matched.
+				out.clear();
+				out.str("");
 				out << "Entity " << entity << "'s signature matches.  " << "Adding to " << type << ".";
 				RE_CORE_INFO(out.str());
 				system->m_entities.insert(entity);
@@ -96,7 +98,8 @@ public:
 			// Entity signature does not match system signature - erase from set
 			else
 			{
-				out.flush();
+				out.clear();
+				out.str("");
 				out << "Entity " << entity << "'s signature does not match. " << "Removed from " << type << ".";
 				RE_CORE_INFO(out.str());
 				system->m_entities.erase(entity);
@@ -105,7 +108,6 @@ public:
 	}
 
 private:
-
 	std::unordered_map<const char*, Signature> RESignatures{};
 	std::unordered_map<const char*, std::shared_ptr<System>> RESystems{};
 };

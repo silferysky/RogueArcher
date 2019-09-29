@@ -1,8 +1,6 @@
 #pragma once
-#include "Main.h"
-#include "RogueEngine.h"
+#include "REEngine.h"
 #include "FileIO.h"
-#include "ComponentList.h"
 
 class ObjectFactory
 {

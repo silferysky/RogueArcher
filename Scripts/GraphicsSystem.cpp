@@ -45,5 +45,5 @@ void GraphicsSystem::update()
 void GraphicsSystem::receive(Event* ev)
 {
 	RE_INFO(ev->ToString());
-	RE_CORE_INFO("TEST SYSTEM RECEIVED EVENT");
+	RE_CORE_INFO("PHYSICS SYSTEM RECEIVED EVENT");
 }

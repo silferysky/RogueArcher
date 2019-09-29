@@ -97,9 +97,6 @@
     <ClInclude Include="Scripts\triangle.h">
       <Filter>RogueEngine\Systems\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\BaseSystem.h">
-      <Filter>RogueEngine\Systems</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\InputManager.h">
       <Filter>RogueEngine\Systems\Input</Filter>
     </ClInclude>
@@ -160,9 +157,6 @@
     <ClInclude Include="Scripts\REMath.h">
       <Filter>RogueEngine\Math</Filter>
     </ClInclude>
-    <ClInclude Include="REEngine.h">
-      <Filter>RogueEngine\Core</Filter>
-    </ClInclude>
     <ClInclude Include="Physics\CircleCollider2D.h">
       <Filter>RogueEngine\Systems\Physics\Collision</Filter>
     </ClInclude>
@@ -191,9 +185,6 @@
     <ClInclude Include="Scripts\SystemManager.h">
       <Filter>RogueEngine\Core\ECS</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Types.h">
-      <Filter>RogueEngine\Core\ECS</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\EntityManager.h">
       <Filter>RogueEngine\Core\ECS</Filter>
     </ClInclude>
@@ -206,9 +197,6 @@
     <ClInclude Include="Scripts\ComponentArray.h">
       <Filter>RogueEngine\Core\ECS</Filter>
     </ClInclude>
-    <ClInclude Include="BoxCollider2D.h">
-      <Filter>RogueEngine\Systems\Physics\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Physics\PhysicsSystem.h">
       <Filter>RogueEngine\Systems\Physics</Filter>
     </ClInclude>
@@ -217,6 +205,21 @@
     </ClInclude>
     <ClInclude Include="Scripts\Config.h">
       <Filter>RogueEngine\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\SystemList.h">
+      <Filter>RogueEngine\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\FileManager.h">
+      <Filter>RogueEngine\Systems\I/O</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Types.h">
+      <Filter>RogueEngine\Core\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\BoxCollider2D.h">
+      <Filter>RogueEngine\Systems\Physics\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\REEngine.h">
+      <Filter>RogueEngine\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -292,9 +295,6 @@
     <ClCompile Include="Scripts\REMath.cpp">
       <Filter>RogueEngine\Math</Filter>
     </ClCompile>
-    <ClCompile Include="REEngine.cpp">
-      <Filter>RogueEngine\Core</Filter>
-    </ClCompile>
     <ClCompile Include="Physics\CircleCollider2D.cpp">
       <Filter>RogueEngine\Systems\Physics\Collision</Filter>
     </ClCompile>
@@ -307,9 +307,6 @@
     <ClCompile Include="Scripts\SpriteComponent.cpp">
       <Filter>RogueEngine\Systems\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="BoxCollider2D.cpp">
-      <Filter>RogueEngine\Systems\Physics\Components</Filter>
-    </ClCompile>
     <ClCompile Include="Physics\PhysicsSystem.cpp">
       <Filter>RogueEngine\Systems\Physics</Filter>
     </ClCompile>
@@ -318,6 +315,15 @@
     </ClCompile>
     <ClCompile Include="Scripts\Config.cpp">
       <Filter>RogueEngine\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\BoxCollider2D.cpp">
+      <Filter>RogueEngine\Systems\Physics\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\REEngine.cpp">
+      <Filter>RogueEngine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\FileManager.cpp">
+      <Filter>RogueEngine\Systems\I/O</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

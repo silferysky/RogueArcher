@@ -6,7 +6,7 @@
 #include "EventListener.h"
 
 class EventDispatcher :
-	public BaseSystem
+	public SystemList
 {
 public:
 
