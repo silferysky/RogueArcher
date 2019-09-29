@@ -25,43 +25,6 @@ static const int SCREEN_FULLSCREEN = 0;
 static const int SCREEN_WIDTH = 960;
 static const int SCREEN_HEIGHT = 540;
 
-GLuint texture[1];
-
-int LoadGLTextures()
-{
-	texture[0] = SOIL_load_OGL_texture
-	(
-		"test.bmp",
-		SOIL_LOAD_AUTO,
-		SOIL_CREATE_NEW_ID,
-		SOIL_FLAG_INVERT_Y
-	);
-
-	if (texture[0] == 0)
-		return false;
-
-	// Generate texture
-	glBindTexture(GL_TEXTURE_2D, texture[0]);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-	//glBindTexture(GL_TEXTURE_2D, 0); // 0 means no texture
-
-	return true;
-}
-
-int InitGL(GLvoid)                        // All Setup For OpenGL Goes Here
-{
-	if (!LoadGLTextures())                   // Jump To Texture Loading Routine ( NEW )
-		return 0;                            // If Texture Didn't Load Return FALSE ( NEW )
-
-	glEnable(GL_TEXTURE_2D);                 // Enable Texture Mapping ( NEW )
-	glShadeModel(GL_SMOOTH);                 // Enable Smooth Shading
-	glDepthFunc(GL_LEQUAL);                  // The Type Of Depth Testing To Do
-	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);          // Really Nice Perspective Calculations
-	return 1;                                // Initialization Went OK
-}
-
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	static PAINTSTRUCT ps;
@@ -182,12 +145,6 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	freopen("CONOUT$", "w", stdout);
 	freopen("CONOUT$", "w", stderr);
 
-	if (glewInit() != GLEW_OK)
-		return -1;
-
-	if (!InitGL())
-		return -2;
-
 	setVSync(1);
 	//Logger
 	Logger::InitLogger();
@@ -207,13 +164,6 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	/////////////////////////
 
 	std::cout << glGetString(GL_VERSION) << std::endl;
-
-	float vertex[8] = { -0.5f,  0.5f,
-						 0.5f,  0.5f,
-						 0.5f, -0.5f,
-						-0.5f, -0.5f, };
-
-	Quad test(vertex);
 
 	TestSystem sys = TestSystem();
 	float wasteTimer;
@@ -247,7 +197,6 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 		}
 		glDisable(GL_DEPTH_TEST);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		test.Draw();
 		SwapBuffers(hDC);
 
 		auto stop = timer.now();

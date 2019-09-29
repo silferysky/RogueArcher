@@ -13,5 +13,7 @@ public:
 	~GraphicsSystem() = default;
 
 	void init();
-	void update(float dt);
+	void update() override;
+
+	void receive(Event* ev);
 };
