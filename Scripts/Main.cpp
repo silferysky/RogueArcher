@@ -150,7 +150,7 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 
 	setVSync(1);
 	//Logger
-	//Logger::InitLogger();
+	Logger::InitLogger();
 	//RE_CORE_TRACE("Init Core Logger");
 	InputManager* InputMgr = new InputManager();
 	RE_INFO("Logging App info succeeded");
@@ -183,6 +183,17 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 
 	RE_INFO(debugStr.str());
 	gObjectFactory.LoadLevel("Resources/Level 1.json");
+
+	debugStr.clear();
+	debugStr.str("");
+	/*debugStr << "Entity 0's Signature: " << gEngine.m_coordinator.GetEntityManager().GetSignature(0).to_ulong();
+	RE_INFO(debugStr.str());
+
+	debugStr.clear();
+	debugStr.str("");
+	debugStr << "Entity 1's Signature: " << gEngine.m_coordinator.GetEntityManager().GetSignature(1).to_ulong();
+	RE_INFO(debugStr.str());*/
+
 	gObjectFactory.SaveLevel("Resources/Level 1.json");
 
 	objInLevel = gEngine.m_coordinator.Size("Entity");
@@ -238,7 +249,7 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 			wasteTimer = std::chrono::duration_cast<std::chrono::microseconds>(stop - start).count() / 1000000.0f;
 		}
 
-		std::cout << "FPS: " << 1 / wasteTimer << std::endl;
+	//	std::cout << "FPS: " << 1 / wasteTimer << std::endl;
 	}
 
 	RE_INFO("TESTING HERE FOR A EVENT DEBUG");

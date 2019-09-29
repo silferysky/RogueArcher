@@ -97,6 +97,7 @@ void ObjectFactory::LoadLevel(const char* fileName)
 	rapidjson::Document level = m_Serialiser.DeserialiseFromFile(fileName);
 	int curEntSig;
 	int entCount = level["EntCount"].GetInt();
+	std::stringstream debugStr;
 
 	for (int i = 0; i < entCount; ++i)
 	{
@@ -108,6 +109,7 @@ void ObjectFactory::LoadLevel(const char* fileName)
 		//cstr will go out of scope if you choose to do strstream.str().c_str()
 		//This is the proper (Non macro) way of setting the string
 		strstream << "Signature" << i;
+
 		stdstr = strstream.str();
 		cstr = stdstr.c_str();
 		curEntSig = level[cstr].GetInt();
@@ -204,6 +206,10 @@ void ObjectFactory::LoadLevel(const char* fileName)
 		//ADD NEW COMPONENT LOADING HERE, BASED ON BITMAP
 
 
+		debugStr.clear();
+		debugStr.str("");
+		debugStr << "Entity " << i << "'s Signature: " << gEngine.m_coordinator.GetEntityManager().GetSignature(i).to_ulong();
+		RE_INFO(debugStr.str());
 	}
 	RE_INFO("LEVEL LOADED");
 	std::stringstream infoStr;
