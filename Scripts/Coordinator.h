@@ -23,24 +23,40 @@ public:
 
 	void Init()
 	{
+		RE_CORE_INFO("===============COORDINATOR INIT===============");
+
 		// Register all systems.
+		RE_CORE_INFO("-----------START REGISTERING SYSTEMS----------");
+
 		auto PhysSystem = RegisterSystem<PhysicsSystem>();
 		auto graphics = RegisterSystem<GraphicsSystem>();
 
+		RE_CORE_INFO("-----------END REGISTERING SYSTEMS------------\n\n");
+
 		// Init systems and system signatures will be set in their respective inits.
+		RE_CORE_INFO("----------START INITIALIZING SYSTEMS----------");
+
 		initSystems();
 
+		RE_CORE_INFO("-----------END INITIALIZING SYSTEMS-----------\n\n");
+
 		// Register all components
+		RE_CORE_INFO("---------START REGISTERING COMPONENTS---------");
+
 		RegisterComponent<SpriteComponent>();
 		RegisterComponent<Rigidbody>();
 		RegisterComponent<Transform>();
 		RegisterComponent<CircleCollider2D>();
 		RegisterComponent<BoxCollider2D>();
+
+		RE_CORE_INFO("----------END REGISTERING COMPONENTS----------\n\n");
 	}
 
 	void update()
 	{
 		//...
+	//	RE_CORE_INFO("\n===============COORDINATOR UPDATE===============");
+	//	RE_CORE_INFO("\n-----------UPDATING SYSTEMS-----------");
 		m_systemManager->updateSystems();
 	}
 
