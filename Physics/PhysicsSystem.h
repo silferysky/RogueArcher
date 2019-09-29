@@ -16,7 +16,7 @@ class PhysicsSystem : public System
 	void applyForces(Rigidbody& rigidbody);
 
 public:
-	PhysicsSystem();
+	PhysicsSystem(Vec2 gravity = { 0.0f, -9.81f });
 	~PhysicsSystem() = default;
 
 	void init();

@@ -18,7 +18,7 @@ public:
 		m_componentManager{ std::make_unique<ComponentManager>() },
 		m_systemManager{ std::make_unique<SystemManager>() },
 		m_fileManager{ std::make_unique<FileManager>() },
-		m_activeEntities{}
+		m_activeEntities{MAX_ENTITIES}
 	{}
 
 	void Init()
@@ -157,5 +157,5 @@ private:
 	std::unique_ptr<EntityManager> m_entityManager;
 	std::unique_ptr<SystemManager> m_systemManager;
 	std::unique_ptr<FileManager> m_fileManager;
-	std::array<Entity, MAX_ENTITIES> m_activeEntities;
+	std::vector<Entity> m_activeEntities;
 };

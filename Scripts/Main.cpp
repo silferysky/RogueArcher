@@ -134,7 +134,7 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	MSG   msg;				/* message */
 	REConfig config;
 	config.ConfigInit();
-	hWnd = CreateOpenGLWindow(const_cast<char*>("Rogue Engine"), config.GetX(), config.GetY(), config.GetWidth(), config.GetHeight(), config.GetByte(), config.GetFlags());
+	hWnd = CreateOpenGLWindow(const_cast<char*>(config.GetTitle().c_str()), config.GetX(), config.GetY(), config.GetWidth(), config.GetHeight(), config.GetByte(), config.GetFlags());
 	if (hWnd == NULL)
 		exit(1);
 
@@ -235,7 +235,7 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 			wasteTimer = std::chrono::duration_cast<std::chrono::microseconds>(stop - start).count() / 1000000.0f;
 		}
 
-		//std::cout << "FPS: " << 1 / wasteTimer << std::endl;
+		std::cout << "FPS: " << 1 / wasteTimer << std::endl;
 	}
 
 	RE_INFO("TESTING HERE FOR A EVENT DEBUG");

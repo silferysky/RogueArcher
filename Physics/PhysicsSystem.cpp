@@ -8,8 +8,8 @@ void PhysicsSystem::applyForces(Rigidbody& rigidbody) // F = ma
 	rigidbody.offSetAcceleration(rigidbody.getAccForce() * rigidbody.getInvMass());
 }
 
-PhysicsSystem::PhysicsSystem()
-	: m_colliderManager{}, m_gravity{0.0f, -9.81f}
+PhysicsSystem::PhysicsSystem(Vec2 gravity)
+	: m_colliderManager{}, m_gravity{gravity}
 {}
 
 void PhysicsSystem::integrateAcceleration(Rigidbody& rigidbody, Transform& transform)
@@ -36,12 +36,6 @@ void PhysicsSystem::init()
 	
 	// Set physics system signature.
 	gEngine.m_coordinator.SetSystemSignature<PhysicsSystem>(signature);
-
-	for (auto entity : m_entities)
-	{
-		auto& rigidbodyCmp = gEngine.m_coordinator.GetComponent<Rigidbody>(entity);
-		rigidbodyCmp.setAcceleration(m_gravity);
-	}
 }
 
 void PhysicsSystem::update()
