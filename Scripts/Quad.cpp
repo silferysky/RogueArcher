@@ -1,5 +1,5 @@
 #include "Quad.h"
-#include "EngineIO.h"
+#include "BasicIO.h"
 
 Quad::Quad(float* vertexpos)
 {
@@ -8,9 +8,9 @@ Quad::Quad(float* vertexpos)
 		_vertexpos[i] = vertices[i];
 	}
 
-	std::string vertexShader = EngineIO::ReadFile("vertexShader.txt");
+	std::string vertexShader = BasicIO::ReadFile("vertexShader.txt");
 
-	std::string fragmentShader = EngineIO::ReadFile("fragmentShader.txt");
+	std::string fragmentShader = BasicIO::ReadFile("fragmentShader.txt");
 
 	_shader = CreateShader(vertexShader, fragmentShader);
 
