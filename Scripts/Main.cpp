@@ -224,10 +224,8 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	Quad test(vertex);
 
 	RE_INFO("TEST FILEWRITER");
-	BasicIO::WriteJsonFile("Resources/TestJsonFileCreator.json", 5);
+	BasicIO::WriteJsonFile("Resources/TestJsonFileCreator.json", 1);
 
-	ObjectFactory objFac;
-	//objFac.LoadLevel("Resources/TestJsonFileCreator.json");
 
 	RE_INFO("TEST OBJECT FACTORY");
 	std::stringstream debugStr;
@@ -237,8 +235,10 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	debugStr << "Number of entities at start: " << objInLevel;
 
 	RE_INFO(debugStr.str());
-	
-	//objFac.LoadLevel("Resources/Level 1.json");
+
+	//ObjectFactory objFac;
+	//ObjectFactory::LoadLevel("Resources/TestJsonFileCreator.json");
+	ObjectFactory::LoadLevel("Resources/Level 1.json");
 
 	////This section is commented out to prevent issues when spawning entities
 	///*Entity e1 = gEngine.m_coordinator.CreateEntity();
