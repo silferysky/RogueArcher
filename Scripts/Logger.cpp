@@ -24,10 +24,10 @@ void Logger::InitLogger()
 	//RE_FileLogger = spdlog::rotating_logger_mt("RE_FileLogger", "../logs/logfile", 10 * 1024 * 1024, 3);
 
 	//Create a simple file logger (sink)
-	RE_CoreFileLogger = spdlog::basic_logger_mt("CoreFileLogger", "log/CoreFileLog.txt");
+	RE_CoreFileLogger = spdlog::basic_logger_mt("CoreFileLogger", "log/CoreFileLog.txt", true);
 	RE_CoreFileLogger->set_level(spdlog::level::trace);
 
 	//Create a simple file logger (sink)
-	RE_ClientFileLogger = spdlog::basic_logger_mt("ClientFileLogger", "log/ClientFileLog.txt");
+	RE_ClientFileLogger = spdlog::basic_logger_mt("ClientFileLogger", "log/ClientFileLog.txt",true);
 	RE_ClientFileLogger->set_level(spdlog::level::trace);
 }
