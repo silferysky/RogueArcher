@@ -106,9 +106,6 @@
     <ClInclude Include="Scripts\EngineIO.h">
       <Filter>RogueEngine\Systems\I/O</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Library.h">
-      <Filter>RogueEngine\Systems\I/O</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\Logger.h">
       <Filter>RogueEngine\Systems\Debug</Filter>
     </ClInclude>
@@ -187,8 +184,6 @@
     <ClInclude Include="Scripts\SpriteComponent.h">
       <Filter>RogueEngine\Systems\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\BaseComponent.h" />
-    <ClInclude Include="Scripts\BaseEntity.h" />
     <ClInclude Include="Scripts\ComponentList.h" />
     <ClInclude Include="Scripts\ObjectFactory.h" />
     <ClInclude Include="Scripts\SystemManager.h">
@@ -239,9 +234,6 @@
       <Filter>RogueEngine\Systems\Input</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\EngineIO.cpp">
-      <Filter>RogueEngine\Systems\I/O</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Library.cpp">
       <Filter>RogueEngine\Systems\I/O</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\Logger.cpp">
@@ -307,7 +299,6 @@
     <ClCompile Include="Scripts\SpriteComponent.cpp">
       <Filter>RogueEngine\Systems\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\BaseEntity.cpp" />
     <ClCompile Include="Scripts\ObjectFactory.cpp" />
     <ClCompile Include="BoxCollider2D.cpp">
       <Filter>RogueEngine\Systems\Physics\Components</Filter>
