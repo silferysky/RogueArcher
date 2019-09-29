@@ -1,7 +1,6 @@
 #pragma once
 #include "Main.h"
 #include "RogueEngine.h"
-#include "Coordinator.h"
 #include "FileIO.h"
 #include "ComponentList.h"
 

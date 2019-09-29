@@ -36,8 +36,6 @@
     <ClInclude Include="Physics\Shape.h" />
     <ClInclude Include="Physics\Transform.h" />
     <ClInclude Include="Scripts\AppEvent.h" />
-    <ClInclude Include="Scripts\BaseComponent.h" />
-    <ClInclude Include="Scripts\BaseEntity.h" />
     <ClInclude Include="Scripts\BaseSystem.h" />
     <ClInclude Include="Scripts\ComponentArray.h" />
     <ClInclude Include="Scripts\ComponentList.h" />
@@ -92,7 +90,6 @@
     <ClCompile Include="Physics\Rotatable.cpp" />
     <ClCompile Include="Physics\Shape.cpp" />
     <ClCompile Include="Physics\Transform.cpp" />
-    <ClCompile Include="Scripts\BaseEntity.cpp" />
     <ClCompile Include="Scripts\Config.cpp" />
     <ClCompile Include="Scripts\EngineIO.cpp" />
     <ClCompile Include="Scripts\FileIO.cpp" />

@@ -2,7 +2,6 @@
 #include "SystemManager.h"
 #include "ComponentManager.h"
 #include "EntityManager.h"
-//#include "ObjectFactory.h"
 #include "GraphicsSystem.h"
 #include "../Physics/PhysicsSystem.h"
 #include "Logger.h"
@@ -10,7 +9,6 @@
 // Forward declaration
 class PhysicsSystem;
 class GraphicsSystem;
-//class ObjectFactory;
 
 class Coordinator
 {
@@ -165,51 +163,6 @@ private:
 		//
 		//RE_CORE_INFO(debugStr.str());
 		//objFac.LoadLevel("Resources/Level 1.json");
-
-		//This section is commented out to prevent issues when spawning entities
-		/*Entity e1 = gEngine.m_coordinator.CreateEntity();
-		SpriteComponent s;
-		Rigidbody r;
-		Transform t;
-		CircleCollider2D cc;
-
-		s.set = 0;
-		s.VAO = 0;
-		s.VBO = 0;
-		s.EBO = 0;
-		t.setPosition(Vec2(0.0f, 0.0f));
-		t.setScale(Vec2(0.0f, 0.0f));
-		t.setRotation(0.0f);
-		cc.setRadius(0.0f);
-		r.setAcceleration(Vec2(0.0f, 0.0f));
-		r.setMass(1.0f);
-		r.setVelocity(Vec2(0.0f, 0.0f));
-		r.setVolume(0.0f);
-
-		gEngine.m_coordinator.AddComponent(e1, s);
-		gEngine.m_coordinator.AddComponent(e1, r);
-		gEngine.m_coordinator.AddComponent(e1, t);
-		gEngine.m_coordinator.AddComponent(e1, cc);
-		RE_INFO(gEngine.m_coordinator.GetEntityManager().GetSignature(e1).to_ulong());
-
-		This is used as a "macro" to reset values in json file
-		gEngine.m_coordinator.AddComponent(e2, s);
-		gEngine.m_coordinator.AddComponent(e2, r);
-		gEngine.m_coordinator.AddComponent(e2, t);
-		gEngine.m_coordinator.AddComponent(e2, cc);
-		gEngine.m_coordinator.AddComponent(e3, s);
-		gEngine.m_coordinator.AddComponent(e3, r);
-		gEngine.m_coordinator.AddComponent(e3, t);
-		gEngine.m_coordinator.AddComponent(e3, cc);
-		gEngine.m_coordinator.AddComponent(e4, s);
-		gEngine.m_coordinator.AddComponent(e4, r);
-		gEngine.m_coordinator.AddComponent(e4, t);
-		gEngine.m_coordinator.AddComponent(e4, cc);
-		gEngine.m_coordinator.AddComponent(e5, s);
-		gEngine.m_coordinator.AddComponent(e5, r);
-		gEngine.m_coordinator.AddComponent(e5, t);
-		gEngine.m_coordinator.AddComponent(e5, cc);*/
-	
 		//objFac.SaveLevel("Resources/Level 1.json");
 		//objInLevel = Size("Entity");
 		//debugStr << "Number of entities at end: " << objInLevel;
@@ -219,7 +172,5 @@ private:
 	std::unique_ptr<ComponentManager> m_componentManager;
 	std::unique_ptr<EntityManager> m_entityManager;
 	std::unique_ptr<SystemManager> m_systemManager;
-
-	//ObjectFactory objFac;
 	std::vector<Entity> m_activeEntities;
 };

@@ -17,9 +17,12 @@
 #include "Quad.h"
 #include "SOIL.h"
 #include "Config.h"
+
 float gDeltaTime;
 bool gameIsRunning = true;
 REEngine gEngine;
+ObjectFactory gObjectFactory;
+
 //const char* FileName = "/Resources/test.json";
 static const int SCREEN_FULLSCREEN = 0;
 static const int SCREEN_WIDTH = 960;
