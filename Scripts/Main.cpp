@@ -11,16 +11,16 @@
 #include "EventDispatcher.h"
 #include "TestSystem.h"
 #include <chrono>
-#include "ObjectFactory.h"
 #include "GraphicsSystem.h"
 #include "VSync.h"
 #include "Quad.h"
 #include "SOIL.h"
 #include "Config.h"
 
+
+REEngine gEngine;
 float gDeltaTime;
 bool gameIsRunning = true;
-REEngine gEngine;
 ObjectFactory gObjectFactory;
 
 //const char* FileName = "/Resources/test.json";
@@ -167,6 +167,28 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	/////////////////////////
 
 	std::cout << glGetString(GL_VERSION) << std::endl;
+
+	//---------------------------------------------------------------//
+	//	Generate entities (Can't use object factory in coordinator)	 //
+	//---------------------------------------------------------------//
+	RE_CORE_INFO("Generating entities...");
+
+	std::stringstream debugStr;
+	size_t objInLevel = gEngine.m_coordinator.Size("Entity");
+	debugStr << "Number of entities at start: " << objInLevel;
+
+	RE_INFO(debugStr.str());
+	gObjectFactory.LoadLevel("Resources/Level 1.json");
+	gObjectFactory.SaveLevel("Resources/Level 1.json");
+
+	objInLevel = gEngine.m_coordinator.Size("Entity");
+	debugStr.clear();
+	debugStr.str("");
+	debugStr << "Number of entities at end: " << objInLevel;
+	RE_INFO(debugStr.str());
+
+	RE_CORE_INFO("Entity generation complete");
+
 
 	TestSystem sys = TestSystem();
 	float wasteTimer;

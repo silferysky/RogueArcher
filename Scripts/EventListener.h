@@ -4,7 +4,7 @@
 #include "RogueEngine.h"
 #include "Event.h"
 
-class BaseSystem;
+class SystemList;
 //Used to override template events
 class BaseEventListener
 {
@@ -19,7 +19,7 @@ public:
 	virtual ~EventListener() override {};
 	virtual void Receive(Event* event) = 0;
 
-	BaseSystem* SysListener = nullptr;
+	SystemList* SysListener = nullptr;
 };
 
 using LISTENER_HANDLER = std::function<void(Event*)>;

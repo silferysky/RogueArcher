@@ -1,4 +1,5 @@
 #include "SpriteComponent.h"
+#include "REEngine.h"
 
 SpriteComponent::SpriteComponent()
 {
@@ -53,9 +54,8 @@ SpriteComponent::SpriteComponent()
 		SOIL_FLAG_INVERT_Y
 	);
 
-	std::string vertexShader = EngineIO::ReadFile("vertexShader.txt");
-
-	std::string fragmentShader = EngineIO::ReadFile("fragmentShader.txt");
+	std::string vertexShader = *gEngine.m_coordinator.getVertexShader();
+	std::string fragmentShader = *gEngine.m_coordinator.getFragmentShader();
 
 	m_shader = CreateShader(vertexShader, fragmentShader);
 }

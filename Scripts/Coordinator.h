@@ -2,9 +2,9 @@
 #include "SystemManager.h"
 #include "ComponentManager.h"
 #include "EntityManager.h"
+#include "FileManager.h"
 #include "GraphicsSystem.h"
 #include "../Physics/PhysicsSystem.h"
-#include "Logger.h"
 
 // Forward declaration
 class PhysicsSystem;
@@ -15,9 +15,10 @@ class Coordinator
 public:
 	Coordinator()
 		: m_entityManager{ std::make_unique<EntityManager>() },
-		  m_componentManager{ std::make_unique<ComponentManager>() },
-		  m_systemManager{ std::make_unique<SystemManager>() },
-		  m_activeEntities{MAX_ENTITIES}
+		m_componentManager{ std::make_unique<ComponentManager>() },
+		m_systemManager{ std::make_unique<SystemManager>() },
+		m_fileManager{ std::make_unique<FileManager>() },
+		m_activeEntities{}
 	{}
 
 	void Init()
@@ -35,17 +36,6 @@ public:
 		RegisterComponent<Transform>();
 		RegisterComponent<CircleCollider2D>();
 		RegisterComponent<BoxCollider2D>();
-
-		// Create entities (Temporary component creation)
-		for (auto entity : m_activeEntities)
-		{
-			entity = CreateEntity();
-		 	AddComponent<SpriteComponent>(entity, SpriteComponent{});
-			AddComponent<Rigidbody>(entity, Rigidbody{});
-			AddComponent<Transform>(entity, Transform{});
-			AddComponent<BoxCollider2D>(entity, BoxCollider2D{});
-		}
-
 	}
 
 	void update()
@@ -82,7 +72,7 @@ public:
 	void AddComponent(Entity entity, T component)
 	{
 		m_componentManager->AddComponent<T>(entity, component);
-
+		
 		auto signature = m_entityManager->GetSignature(entity);
 		signature.set(m_componentManager->GetComponentType<T>(), true);
 		m_entityManager->SetSignature(entity, signature);
@@ -93,7 +83,7 @@ public:
 	template<typename T>
 	void RemoveComponent(Entity entity)
 	{
-		std::cout << "component removed from entity"<<std::endl;
+		std::cout << "component removed from entity" << std::endl;
 		m_componentManager->RemoveComponent<T>(entity);
 
 		auto signature = m_entityManager->GetSignature(entity);
@@ -136,10 +126,10 @@ public:
 	{
 		if (name == "Entity")
 			return m_entityManager->Size();
-		else if (name == "Component")
+		if (name == "Component")
 			return m_componentManager->Size();
-		else
-			return 0;
+
+		return 0;
 	}
 
 	EntityManager& GetEntityManager() const
@@ -147,30 +137,25 @@ public:
 		return *m_entityManager;
 	}
 
+	std::shared_ptr<std::string> getVertexShader() const
+	{
+		return m_fileManager->getVertexShader();
+	}
+
+	std::shared_ptr<std::string> getFragmentShader() const
+	{
+		return m_fileManager->getFragmentShader();
+	}
+	
 private:
 	void initSystems()
 	{
 		m_systemManager->initSystems();
 	}
 
-//	void generateEntities()
-//	{
-		//RE_CORE_INFO("TEST OBJECT FACTORY");
-		//std::stringstream debugStr;
-		//size_t objInLevel = Size("Entity");
-		//
-		//debugStr << "Number of entities at start: " << objInLevel;
-		//
-		//RE_CORE_INFO(debugStr.str());
-		//objFac.LoadLevel("Resources/Level 1.json");
-		//objFac.SaveLevel("Resources/Level 1.json");
-		//objInLevel = Size("Entity");
-		//debugStr << "Number of entities at end: " << objInLevel;
-		//RE_INFO(debugStr.str());
-	//}
-
 	std::unique_ptr<ComponentManager> m_componentManager;
 	std::unique_ptr<EntityManager> m_entityManager;
 	std::unique_ptr<SystemManager> m_systemManager;
-	std::vector<Entity> m_activeEntities;
+	std::unique_ptr<FileManager> m_fileManager;
+	std::array<Entity, MAX_ENTITIES> m_activeEntities;
 };

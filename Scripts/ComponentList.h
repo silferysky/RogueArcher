@@ -4,8 +4,7 @@
 #include "../Physics/Rigidbody.h"
 #include "../Physics/Transform.h"
 #include "../Physics/CircleCollider2D.h"
-#include "../BoxCollider2D.h"
-#include "../Physics/PhysicsSystem.h"
+#include "../Physics/BoxCollider2D.h"
 
 enum COMPONENTID
 {

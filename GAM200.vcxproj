@@ -19,9 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BoxCollider2D.h" />
+    <ClInclude Include="Physics\BoxCollider2D.h" />
     <ClInclude Include="Physics\PhysicsSystem.h" />
-    <ClInclude Include="REEngine.h" />
     <ClInclude Include="Physics\AABB.h" />
     <ClInclude Include="Physics\BaseCollider.h" />
     <ClInclude Include="Physics\Circle.h" />
@@ -36,7 +35,9 @@
     <ClInclude Include="Physics\Shape.h" />
     <ClInclude Include="Physics\Transform.h" />
     <ClInclude Include="Scripts\AppEvent.h" />
-    <ClInclude Include="Scripts\BaseSystem.h" />
+    <ClInclude Include="Scripts\FileManager.h" />
+    <ClInclude Include="Scripts\REEngine.h" />
+    <ClInclude Include="Scripts\SystemList.h" />
     <ClInclude Include="Scripts\ComponentArray.h" />
     <ClInclude Include="Scripts\ComponentList.h" />
     <ClInclude Include="Scripts\ComponentManager.h" />
@@ -75,9 +76,8 @@
     <ClInclude Include="Scripts\VSync.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BoxCollider2D.cpp" />
+    <ClCompile Include="Physics\BoxCollider2D.cpp" />
     <ClCompile Include="Physics\PhysicsSystem.cpp" />
-    <ClCompile Include="REEngine.cpp" />
     <ClCompile Include="Physics\AABB.cpp" />
     <ClCompile Include="Physics\Circle.cpp" />
     <ClCompile Include="Physics\CircleCollider2D.cpp" />
@@ -93,6 +93,7 @@
     <ClCompile Include="Scripts\Config.cpp" />
     <ClCompile Include="Scripts\EngineIO.cpp" />
     <ClCompile Include="Scripts\FileIO.cpp" />
+    <ClCompile Include="Scripts\FileManager.cpp" />
     <ClCompile Include="Scripts\GameStateManager.cpp" />
     <ClCompile Include="Scripts\GraphicsSystem.cpp" />
     <ClCompile Include="Scripts\InputManager.cpp" />
@@ -102,6 +103,7 @@
     <ClCompile Include="Scripts\Matrix33.cpp" />
     <ClCompile Include="Scripts\ObjectFactory.cpp" />
     <ClCompile Include="Scripts\Quad.cpp" />
+    <ClCompile Include="Scripts\REEngine.cpp" />
     <ClCompile Include="Scripts\REMath.cpp" />
     <ClCompile Include="Scripts\shader.cpp" />
     <ClCompile Include="Scripts\SpriteComponent.cpp" />

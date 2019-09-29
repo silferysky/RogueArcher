@@ -1,12 +1,11 @@
 #pragma once
 #include "../Scripts/Main.h"
+#include "../Scripts/REMath.h"
+#include "../Scripts/EventListener.h"
 #include "CollisionManager.h"
 #include "Rigidbody.h"
 #include "Transform.h"
-#include "../Scripts/REMath.h"
-#include "../Scripts/EventListener.h"
-#include "../BoxCollider2D.h"
-#include <iostream>
+#include "BoxCollider2D.h"
 
 class PhysicsSystem : public System
 {
