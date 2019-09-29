@@ -178,14 +178,14 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 
 	RE_INFO("TEST OBJECT FACTORY");
 	std::stringstream debugStr;
-	size_t objInLevel = gEngine.m_coordinator.Size("Entity");
+	size_t objInLevel = gObjectFactory.GetActiveEntity().size();
 	debugStr << "Number of entities at start: " << objInLevel;
 
 	RE_INFO(debugStr.str());
 	gObjectFactory.LoadLevel("Resources/Level 1.json");
 	gObjectFactory.SaveLevel("Resources/Level 1.json");
 
-	objInLevel = gEngine.m_coordinator.Size("Entity");
+	objInLevel = gObjectFactory.GetActiveEntity().size();
 	debugStr.clear();
 	debugStr.str("");
 	debugStr << "Number of entities at end: " << objInLevel;

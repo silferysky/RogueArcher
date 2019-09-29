@@ -54,11 +54,6 @@ public:
 		return RESignatures[entity];
 	}
 
-	size_t Size() const
-	{
-		return REActiveEntityCount;
-	}
-
 private:
 
 	std::queue<Entity> REAvailableEntities{};

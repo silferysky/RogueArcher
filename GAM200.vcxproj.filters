@@ -213,12 +213,15 @@
     </ClInclude>
     <ClInclude Include="Scripts\REEngine.h">
       <Filter>RogueEngine\Core</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="Scripts\ComponentList.h">
       <Filter>RogueEngine\Core\ECS</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\BasicIO.h">
       <Filter>RogueEngine\Systems\I/O</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\BaseSystem.h">
+      <Filter>RogueEngine\Systems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
