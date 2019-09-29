@@ -28,6 +28,7 @@ static const int SCREEN_FULLSCREEN = 0;
 static const int SCREEN_WIDTH = 960;
 static const int SCREEN_HEIGHT = 540;
 
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	static PAINTSTRUCT ps;
@@ -121,6 +122,7 @@ HWND CreateOpenGLWindow(char* title, int x, int y, int width, int height,
 	return hWnd;
 }
 
+
 //Use for console
 int APIENTRY
 WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
@@ -132,7 +134,6 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	MSG   msg;				/* message */
 	REConfig config;
 	config.ConfigInit();
-
 	hWnd = CreateOpenGLWindow(const_cast<char*>("Rogue Engine"), config.GetX(), config.GetY(), config.GetWidth(), config.GetHeight(), config.GetByte(), config.GetFlags());
 	if (hWnd == NULL)
 		exit(1);

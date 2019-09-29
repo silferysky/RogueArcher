@@ -5,7 +5,8 @@ class REConfig
 {
 public:
 	void ConfigInit();
-	//const char* GetWindow();
+	char* GetTitle();
+	bool GetSound();
 	int GetX();
 	int GetY();
 	int GetHeight();
@@ -20,9 +21,10 @@ public:
 	int SetByte(int newbyte);
 	int SetFlags(int newflags);
 	float SetFPS(int FPSset);
-	
+	bool SetSound(bool NewSound);
 private:
 	float FPS = 1 / 60;
 	int x = 0, y = 0, height = 0, width = 0, byte = 0, flags = 0;
-	//const char* Window = "";
+	const char* title = "";
+	bool sound = true;
 };

@@ -12,6 +12,18 @@ void REConfig::ConfigInit()
 	width = Windows["width"].GetInt();
 	byte = Windows["byte"].GetInt();
 	flags = Windows["flags"].GetInt();
+	title = Windows["title"].GetString();
+	sound = Windows["sound"].GetBool();
+}
+
+char* REConfig::GetTitle()
+{
+	return const_cast<char*>(title);
+}
+
+bool REConfig::GetSound()
+{
+	return sound;
 }
 
 
@@ -90,6 +102,12 @@ float REConfig::SetFPS(int FPSset)
 {
 	FPS = 1 / float(FPSset);
 	return FPS;
+}
+
+bool REConfig::SetSound(bool NewSound)
+{
+	sound = NewSound;
+	return NewSound;
 }
 
 
