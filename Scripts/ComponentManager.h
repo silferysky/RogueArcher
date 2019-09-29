@@ -16,14 +16,14 @@ public:
 		// Add this component type to the component type map
 		REComponentTypes.insert({ typeName, RENextComponentType });
 		
-		if(typeName == "SpriteComponent")
+		if(typeName == "class SpriteComponent")
 			RE_CORE_TRACE("Creating sprite components...");
 		
 		// Create a ComponentArray pointer and add it to the component arrays map
 		REComponentArrays.insert({ typeName, std::make_shared<ComponentArray<T>>() });
 		
 
-		if (typeName == "SpriteComponent")
+		if (typeName == "class SpriteComponent")
 			RE_CORE_TRACE("Sprite components created!");
 		
 		// Increment the value so that the next component registered will be different
