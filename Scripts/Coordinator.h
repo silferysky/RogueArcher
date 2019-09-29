@@ -122,16 +122,6 @@ public:
 		m_systemManager->SetSignature<T>(signature);
 	}
 
-	size_t Size(const char* name) const
-	{
-		if (name == "Entity")
-			return m_entityManager->Size();
-		if (name == "Component")
-			return m_componentManager->Size();
-
-		return 0;
-	}
-
 	EntityManager& GetEntityManager() const
 	{
 		return *m_entityManager;
