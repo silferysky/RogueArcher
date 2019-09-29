@@ -29,7 +29,8 @@ void ObjectFactory::SaveLevel(const char* fileName)
 		CircleCollider2D c = gEngine.m_coordinator.GetComponent<CircleCollider2D>(i);
 
 		//Copypasta for each new variable//
-		varNum = 0;
+		//SpriteComponent does not need to save values, so just save signature
+		/*varNum = 0;
 		CLEARNSETSTR(varName, i, "sc", varNum);
 		m_Serialiser.WriteToFile(fileName, cstr, (int)s.getShader());
 		++varNum;
@@ -40,7 +41,7 @@ void ObjectFactory::SaveLevel(const char* fileName)
 		m_Serialiser.WriteToFile(fileName, cstr, (int)s.getVBO());
 		++varNum;
 		CLEARNSETSTR(varName, i, "sc", varNum);
-		m_Serialiser.WriteToFile(fileName, cstr, (int)s.getEBO());
+		m_Serialiser.WriteToFile(fileName, cstr, (int)s.getEBO());*/
 		///////////////////////////////////
 
 		//Copypasta for each new variable//
@@ -114,6 +115,8 @@ void ObjectFactory::LoadLevel(const char* fileName)
 		//Copypasta for each new variable//
 		if (curEntSig % 2 == 1)
 		{
+			//SpriteComponent does not need to load values, so ignore
+			//Still need to -- though, since signature does contain it
 			/* SpriteComponent s;
 			CLEARNSETSTR(strstream, i, "sc", 0);
 			s.m_shader = (unsigned int)level[cstr].GetInt();
@@ -124,8 +127,8 @@ void ObjectFactory::LoadLevel(const char* fileName)
 			CLEARNSETSTR(strstream, i, "sc", 3);
 			s.m_EBO = (unsigned int)level[cstr].GetInt();
 
-			gEngine.m_coordinator.AddComponent(curEnt, s);
-			--curEntSig; */
+			gEngine.m_coordinator.AddComponent(curEnt, s);*/
+			--curEntSig;
 		}
 		curEntSig /= 2;
 		///////////////////////////////////

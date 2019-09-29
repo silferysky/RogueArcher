@@ -7,7 +7,6 @@
 #include "Main.h"
 #include "KeyEvent.h"
 #include "InputManager.h"
-#include "Library.h"
 #include "EventDispatcher.h"
 #include "TestSystem.h"
 #include <chrono>
@@ -151,9 +150,8 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 
 	setVSync(1);
 	//Logger
-	Logger::InitLogger();
-	RE_CORE_TRACE("Core Logger Initialized");
-
+	//Logger::InitLogger();
+	//RE_CORE_TRACE("Init Core Logger");
 	InputManager* InputMgr = new InputManager();
 	RE_INFO("Logging App info succeeded");
 
@@ -174,6 +172,11 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	//---------------------------------------------------------------//
 	RE_CORE_INFO("Generating entities...");
 
+	RE_INFO("TEST FILEWRITER");
+	BasicIO::WriteJsonFile("Resources/TestJsonFileCreator.json", 1);
+
+
+	RE_INFO("TEST OBJECT FACTORY");
 	std::stringstream debugStr;
 	size_t objInLevel = gEngine.m_coordinator.Size("Entity");
 	debugStr << "Number of entities at start: " << objInLevel;
@@ -243,13 +246,6 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	RE_INFO(testEvent.ToString());
 	RE_INFO(testEvent.GetEventName());
 	RE_INFO("END EVENT TEST");
-
-	RE_INFO("TESTING HERE FOR FILE IO");
-
-	Library testLibrary;
-	testLibrary.IOTest();
-
-	RE_INFO("END TEST IO");
 
 	RE_INFO("MANUAL TEST EVENT DISPATCHER");
 	TestSystem testSys = TestSystem((SYSTEMID)2);
