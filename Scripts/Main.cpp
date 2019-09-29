@@ -223,6 +223,12 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 
 	Quad test(vertex);
 
+	RE_INFO("TEST FILEWRITER");
+	BasicIO::WriteJsonFile("Resources/TestJsonFileCreator.json", 5);
+
+	ObjectFactory objFac;
+	//objFac.LoadLevel("Resources/TestJsonFileCreator.json");
+
 	RE_INFO("TEST OBJECT FACTORY");
 	std::stringstream debugStr;
 
@@ -232,7 +238,6 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 
 	RE_INFO(debugStr.str());
 	
-	//ObjectFactory objFac;
 	//objFac.LoadLevel("Resources/Level 1.json");
 
 	////This section is commented out to prevent issues when spawning entities
@@ -278,6 +283,7 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	//gEngine.m_coordinator.AddComponent(e5, r);
 	//gEngine.m_coordinator.AddComponent(e5, t);
 	//gEngine.m_coordinator.AddComponent(e5, cc);*/
+
 	//objFac.SaveLevel("Resources/Level 1.json");
 	//debugStr.clear();
 	//debugStr.str(""); 

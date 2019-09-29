@@ -103,9 +103,6 @@
     <ClInclude Include="Scripts\InputManager.h">
       <Filter>RogueEngine\Systems\Input</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\EngineIO.h">
-      <Filter>RogueEngine\Systems\I/O</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\Logger.h">
       <Filter>RogueEngine\Systems\Debug</Filter>
     </ClInclude>
@@ -184,8 +181,6 @@
     <ClInclude Include="Scripts\SpriteComponent.h">
       <Filter>RogueEngine\Systems\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\ComponentList.h" />
-    <ClInclude Include="Scripts\ObjectFactory.h" />
     <ClInclude Include="Scripts\SystemManager.h">
       <Filter>RogueEngine\Core\ECS</Filter>
     </ClInclude>
@@ -213,6 +208,15 @@
     <ClInclude Include="Scripts\MemoryManager.h">
       <Filter>RogueEngine\Systems\Memory</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\ObjectFactory.h">
+      <Filter>RogueEngine\Core\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\ComponentList.h">
+      <Filter>RogueEngine\Core\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\BasicIO.h">
+      <Filter>RogueEngine\Systems\I/O</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\GameStateManager.cpp">
@@ -232,9 +236,6 @@
     </ClCompile>
     <ClCompile Include="Scripts\InputManager.cpp">
       <Filter>RogueEngine\Systems\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\EngineIO.cpp">
-      <Filter>RogueEngine\Systems\I/O</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\Logger.cpp">
       <Filter>RogueEngine\Systems\Debug</Filter>
@@ -299,7 +300,6 @@
     <ClCompile Include="Scripts\SpriteComponent.cpp">
       <Filter>RogueEngine\Systems\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\ObjectFactory.cpp" />
     <ClCompile Include="BoxCollider2D.cpp">
       <Filter>RogueEngine\Systems\Physics\Components</Filter>
     </ClCompile>
@@ -308,6 +308,12 @@
     </ClCompile>
     <ClCompile Include="Scripts\MemoryManager.cpp">
       <Filter>RogueEngine\Systems\Memory</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\ObjectFactory.cpp">
+      <Filter>RogueEngine\Core\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\BasicIO.cpp">
+      <Filter>RogueEngine\Systems\I/O</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

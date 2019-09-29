@@ -20,9 +20,9 @@ void SpriteComponent::setTexture(const char* texture)
 
 void SpriteComponent::setShader(std::string vShader, std::string fShader)
 {
-	std::string vertexShader = EngineIO::ReadFile("vertexShader.txt");
+	std::string vertexShader = BasicIO::ReadFile("vertexShader.txt");
 
-	std::string fragmentShader = EngineIO::ReadFile("fragmentShader.txt");
+	std::string fragmentShader = BasicIO::ReadFile("fragmentShader.txt");
 
 	m_shader = CreateShader(vertexShader, fragmentShader);
 }

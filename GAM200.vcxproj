@@ -37,11 +37,11 @@
     <ClInclude Include="Physics\Transform.h" />
     <ClInclude Include="Scripts\AppEvent.h" />
     <ClInclude Include="Scripts\BaseSystem.h" />
+    <ClInclude Include="Scripts\BasicIO.h" />
     <ClInclude Include="Scripts\ComponentArray.h" />
     <ClInclude Include="Scripts\ComponentList.h" />
     <ClInclude Include="Scripts\ComponentManager.h" />
     <ClInclude Include="Scripts\Coordinator.h" />
-    <ClInclude Include="Scripts\EngineIO.h" />
     <ClInclude Include="Scripts\EntityManager.h" />
     <ClInclude Include="Scripts\Event.h" />
     <ClInclude Include="Scripts\EventDispatcher.h" />
@@ -89,7 +89,7 @@
     <ClCompile Include="Physics\Rotatable.cpp" />
     <ClCompile Include="Physics\Shape.cpp" />
     <ClCompile Include="Physics\Transform.cpp" />
-    <ClCompile Include="Scripts\EngineIO.cpp" />
+    <ClCompile Include="Scripts\BasicIO.cpp" />
     <ClCompile Include="Scripts\FileIO.cpp" />
     <ClCompile Include="Scripts\GameStateManager.cpp" />
     <ClCompile Include="Scripts\GraphicsSystem.cpp" />

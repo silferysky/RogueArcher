@@ -15,7 +15,7 @@ public:
 	void Receive(Event* ev) override 
 	{
 		RE_INFO(ev->ToString());  
-		RE_CORE_INFO("TEST SYSTEM RECEIVED EVENT"); 
+		//RE_CORE_INFO("TEST SYSTEM RECEIVED EVENT"); 
 	}
 };
 

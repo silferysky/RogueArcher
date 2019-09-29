@@ -17,7 +17,6 @@
 		fclose(pFile);
 		return EXIT_SUCCESS;
 	}
-
 	rapidjson::Document RESerialiser::DeserialiseFromFile(const char* FileName)
 	{
 		FILE* pFile = nullptr;
