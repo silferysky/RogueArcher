@@ -7,7 +7,6 @@
 #include "Main.h"
 #include "KeyEvent.h"
 #include "InputManager.h"
-#include "Library.h"
 #include "EventDispatcher.h"
 #include "TestSystem.h"
 #include <chrono>
@@ -338,13 +337,6 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	RE_INFO(testEvent.ToString());
 	RE_INFO(testEvent.GetEventName());
 	RE_INFO("END EVENT TEST");
-
-	RE_INFO("TESTING HERE FOR FILE IO");
-
-	Library testLibrary;
-	testLibrary.IOTest();
-
-	RE_INFO("END TEST IO");
 
 	RE_INFO("MANUAL TEST EVENT DISPATCHER");
 	TestSystem testSys = TestSystem((SYSTEMID)2);
