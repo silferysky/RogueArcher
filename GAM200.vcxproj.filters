@@ -187,8 +187,6 @@
     <ClInclude Include="Scripts\SpriteComponent.h">
       <Filter>RogueEngine\Systems\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\BaseComponent.h" />
-    <ClInclude Include="Scripts\BaseEntity.h" />
     <ClInclude Include="Scripts\ComponentList.h" />
     <ClInclude Include="Scripts\SystemManager.h">
       <Filter>RogueEngine\Core\ECS</Filter>
@@ -309,7 +307,6 @@
     <ClCompile Include="Scripts\SpriteComponent.cpp">
       <Filter>RogueEngine\Systems\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\BaseEntity.cpp" />
     <ClCompile Include="BoxCollider2D.cpp">
       <Filter>RogueEngine\Systems\Physics\Components</Filter>
     </ClCompile>
