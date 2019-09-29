@@ -2,15 +2,16 @@
 #include "shader.h"
 #include "EngineIO.h"
 #include "SOIL.h"
+#include "../Scripts/Quad.h"
 
 class SpriteComponent
 {
+public:
 	GLuint m_texture = 0;
 	unsigned int m_shader = 0;
-	unsigned int m_VAO = 0;
-	unsigned int m_VBO = 0;
-	unsigned int m_EBO = 0;
-public:
+	GLuint m_VAO = 0;
+	GLuint m_VBO = 0;
+	GLuint m_EBO = 0;
 	SpriteComponent();
 	~SpriteComponent() = default;
 
@@ -19,7 +20,7 @@ public:
 
 	GLuint getTexture() const;
 	unsigned int getShader() const;
-	unsigned int getVAO() const;
-	unsigned int getVBO() const;
-	unsigned int getEBO() const;
+	GLuint getVAO() const;
+	GLuint getVBO() const;
+	GLuint getEBO() const;
 };

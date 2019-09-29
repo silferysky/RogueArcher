@@ -9,6 +9,7 @@
 
 // Forward declaration
 class PhysicsSystem;
+class GraphicsSystem;
 //class ObjectFactory;
 
 class Coordinator
@@ -23,6 +24,13 @@ public:
 
 	void Init()
 	{
+		// Register all systems.
+		auto PhysSystem = RegisterSystem<PhysicsSystem>();
+		auto graphics = RegisterSystem<GraphicsSystem>();
+
+		// Init systems and system signatures will be set in their respective inits.
+		initSystems();
+
 		// Register all components
 		RegisterComponent<SpriteComponent>();
 		RegisterComponent<Rigidbody>();
@@ -30,22 +38,16 @@ public:
 		RegisterComponent<CircleCollider2D>();
 		RegisterComponent<BoxCollider2D>();
 
-		// Register all systems.
-		auto PhysSystem = RegisterSystem<PhysicsSystem>();
-//		RegisterSystem<GraphicsSystem>();
-		
 		// Create entities (Temporary component creation)
 		for (auto entity : m_activeEntities)
 		{
 			entity = CreateEntity();
-		//	AddComponent<SpriteComponent>(entity, SpriteComponent{});
+		 	AddComponent<SpriteComponent>(entity, SpriteComponent{});
 			AddComponent<Rigidbody>(entity, Rigidbody{});
 			AddComponent<Transform>(entity, Transform{});
 			AddComponent<BoxCollider2D>(entity, BoxCollider2D{});
 		}
 
-		// Init systems and system signatures will be set in their respective inits.
-		initSystems();
 	}
 
 	void update()
