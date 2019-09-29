@@ -5,8 +5,8 @@ FileManager::FileManager()
 	: m_vertexShader{ std::make_shared<std::string>() },
 	  m_fragmentShader{ std::make_shared<std::string>() }
 {
-	*m_vertexShader = EngineIO::ReadFile("vertexShader.txt");
-	*m_fragmentShader = EngineIO::ReadFile("fragmentShader.txt");
+	*m_vertexShader = BasicIO::ReadFile("vertexShader.txt");
+	*m_fragmentShader = BasicIO::ReadFile("fragmentShader.txt");
 }
 
 std::shared_ptr<std::string> FileManager::getVertexShader()
