@@ -199,7 +199,7 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	setVSync(1);
 	//Logger
 	//Logger::InitLogger();
-	RE_CORE_TRACE("Init Core Logger");
+	//RE_CORE_TRACE("Init Core Logger");
 
 	InputManager* InputMgr = new InputManager();
 	RE_INFO("Hello");

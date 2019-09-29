@@ -1,10 +1,12 @@
 #pragma once
 #include "Logger.h"
 
+////////////Declarations for static objects////////////
 std::shared_ptr<spdlog::logger> Logger::RE_CoreLogger;
 std::shared_ptr<spdlog::logger> Logger::RE_ClientLogger;
 std::shared_ptr<spdlog::logger> Logger::RE_CoreFileLogger;
 std::shared_ptr<spdlog::logger> Logger::RE_ClientFileLogger;
+///////////////////////////////////////////////////////
 
 void Logger::InitLogger()
 {
