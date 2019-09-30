@@ -37,10 +37,10 @@ public:
 		RE_CORE_INFO("---------START REGISTERING COMPONENTS---------");
 
 		RegisterComponent<SpriteComponent>();
-		RegisterComponent<Rigidbody>();
-		RegisterComponent<Transform>();
-		RegisterComponent<CircleCollider2D>();
-		RegisterComponent<BoxCollider2D>();
+		RegisterComponent<RigidbodyComponent>();
+		RegisterComponent<TransformComponent>();
+		RegisterComponent<CircleCollider2DComponent>();
+		RegisterComponent<BoxCollider2DComponent>();
 
 		RE_CORE_INFO("----------END REGISTERING COMPONENTS----------\n\n");
 

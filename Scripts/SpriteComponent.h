@@ -3,7 +3,7 @@
 #include "BasicIO.h"
 #include "SOIL.h"
 #include "../Scripts/Quad.h"
-#include "../Physics//Transform.h"
+#include "../Physics/TransformComponent.h"
 
 class SpriteComponent
 {
@@ -25,7 +25,7 @@ public:
 	void setTexture(const char* texture);
 	void setShader(std::string vShader, std::string fShader);
 
-	void draw(Transform* transform) const;
+	void draw(TransformComponent* transform) const;
 
 	GLuint getTexture() const;
 	unsigned int getShader() const;
