@@ -87,15 +87,15 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	size_t objInLevel = gObjectFactory.GetActiveEntity().size();
 	debugStr << "Number of entities at start: " << objInLevel;
 
+	//BasicIO::WriteJsonFile("Resources/Level 1.json", 8);
+
 	RE_INFO(debugStr.str());
 	gObjectFactory.LoadLevel("Resources/Level 1.json");
 
 	debugStr.clear();
 	debugStr.str("");
-	/*debugStr << "Entity 0's Signature: " << gEngine.m_coordinator.GetEntityManager().GetSignature(0).to_ulong();
-	RE_INFO(debugStr.str());
 
-	debugStr.clear();
+	/*debugStr.clear();
 	debugStr.str("");
 	debugStr << "Entity 1's Signature: " << gEngine.m_coordinator.GetEntityManager().GetSignature(1).to_ulong();
 	RE_INFO(debugStr.str());*/
