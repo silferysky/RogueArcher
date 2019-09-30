@@ -1,0 +1,9 @@
+#pragma once
+
+#include <Windows.h>
+#include "Main.h"
+
+LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+HWND CreateOpenGLWindow(char* title, int x, int y, int width, int height,
+	BYTE type, DWORD flags);
+

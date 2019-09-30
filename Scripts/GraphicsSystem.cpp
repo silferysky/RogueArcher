@@ -7,6 +7,7 @@ void GraphicsSystem::init()
 	// Add components to signature
 	Signature signature;
 	signature.set(gEngine.m_coordinator.GetComponentType<SpriteComponent>());
+	signature.set(gEngine.m_coordinator.GetComponentType<BoxCollider2D>());
 	signature.set(gEngine.m_coordinator.GetComponentType<Transform>());
 
 	// Set graphics system signature
@@ -28,6 +29,7 @@ void GraphicsSystem::update()
 	{
 		auto& sprite = gEngine.m_coordinator.GetComponent<SpriteComponent>(entity);
 		auto& transform = gEngine.m_coordinator.GetComponent<Transform>(entity);
+		auto& collider = gEngine.m_coordinator.GetComponent<BoxCollider2D>(entity);
 
 		//draw
 		glBindVertexArray(sprite.getVAO());
@@ -45,5 +47,5 @@ void GraphicsSystem::update()
 void GraphicsSystem::receive(Event* ev)
 {
 	RE_INFO(ev->ToString());
-	RE_CORE_INFO("PHYSICS SYSTEM RECEIVED EVENT");
+	RE_CORE_INFO("GRAPHICS SYSTEM RECEIVED EVENT");
 }

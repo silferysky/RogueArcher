@@ -16,9 +16,9 @@ void REConfig::ConfigInit()
 	sound = Windows["sound"].GetBool();
 }
 
-char* REConfig::GetTitle()
+std::string REConfig::GetTitle()
 {
-	return const_cast<char*>(title);
+	return title;
 }
 
 bool REConfig::GetSound()

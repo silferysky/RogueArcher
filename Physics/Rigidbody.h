@@ -12,7 +12,9 @@ class Rigidbody
 	float m_damping;
 
 public:
-	Rigidbody(float mass = 1.0f, float volume = 1.0f, float damping = 0.99f);
+	Rigidbody(float mass = 1.0f,
+			  float volume = 1.0f,
+			  float damping = 0.99f);
 	~Rigidbody() = default;
 
 	Vec2 getVelocity() const;
