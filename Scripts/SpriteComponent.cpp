@@ -65,7 +65,7 @@ void SpriteComponent::setShader(std::string vShader, std::string fShader)
 	m_shader = CreateShader(vertexShader, fragmentShader);
 }
 
-void SpriteComponent::draw(Transform* transform) const
+void SpriteComponent::draw(TransformComponent* transform) const
 {
 	float left = transform->getPosition().x - transform->getScale().x;
 	float right = transform->getPosition().x + transform->getScale().x;
