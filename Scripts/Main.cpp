@@ -87,6 +87,8 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	size_t objInLevel = gObjectFactory.GetActiveEntity().size();
 	debugStr << "Number of entities at start: " << objInLevel;
 
+	//BasicIO::WriteJsonFile("Resources/Level 1.json", 8);
+
 	RE_INFO(debugStr.str());
 	gObjectFactory.LoadLevel("Resources/Level 1.json");
 
