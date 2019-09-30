@@ -88,13 +88,7 @@
     <ClInclude Include="Scripts\InputData.h">
       <Filter>RogueEngine\Data</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Quad.h">
-      <Filter>RogueEngine\Systems\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\shader.h">
-      <Filter>RogueEngine\Systems\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\triangle.h">
       <Filter>RogueEngine\Systems\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\InputManager.h">
@@ -234,13 +228,7 @@
     <ClCompile Include="Scripts\Main.cpp">
       <Filter>RogueEngine</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Quad.cpp">
-      <Filter>RogueEngine\Systems\Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\shader.cpp">
-      <Filter>RogueEngine\Systems\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\triangle.cpp">
       <Filter>RogueEngine\Systems\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\InputManager.cpp">
