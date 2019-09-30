@@ -178,7 +178,7 @@ void ObjectFactory::SaveLevel(const char* fileName)
 		Rigidbody r = gEngine.m_coordinator.GetComponent<Rigidbody>(i);
 		Transform t = gEngine.m_coordinator.GetComponent<Transform>(i);
 		CircleCollider2D cc = gEngine.m_coordinator.GetComponent<CircleCollider2D>(i);
-		BoxCollider2D bc = gEngine.m_coordinator.GetComponent<BoxCollider2D>(i);
+		//BoxCollider2D bc = gEngine.m_coordinator.GetComponent<BoxCollider2D>(i);
 
 		//Copypasta for each new variable//
 		//SpriteComponent does not need to save values, so just save signature
@@ -236,19 +236,19 @@ void ObjectFactory::SaveLevel(const char* fileName)
 		///////////////////////////////////
 
 		//Copypasta for each new variable//
-		varNum = 0;
-		CLEARNSETSTR(varName, i, "bcc", varNum);
-		m_Serialiser.WriteToFile(fileName, cstr, bc.m_obb.getSize());
-		++varNum;
-		for (std::vector<Vec2>::iterator it; (size_t)varNum < bc.m_obb.getSize(); ++it)
-		{
-			CLEARNSETSTR(varName, i, "bcc", varNum);
-			m_Serialiser.WriteToFile(fileName, cstr, it->x);
-			++varNum;
-			CLEARNSETSTR(varName, i, "bcc", varNum);
-			m_Serialiser.WriteToFile(fileName, cstr, it->y);
-			++varNum;
-		}
+		//varNum = 0;
+		//CLEARNSETSTR(varName, i, "bcc", varNum);
+		//m_Serialiser.WriteToFile(fileName, cstr, bc.m_obb.getSize());
+		//++varNum;
+		//for (std::vector<Vec2>::iterator it; (size_t)varNum < bc.m_obb.getSize(); ++it)
+		//{
+		//	CLEARNSETSTR(varName, i, "bcc", varNum);
+		//	m_Serialiser.WriteToFile(fileName, cstr, it->x);
+		//	++varNum;
+		//	CLEARNSETSTR(varName, i, "bcc", varNum);
+		//	m_Serialiser.WriteToFile(fileName, cstr, it->y);
+		//	++varNum;
+		//}
 		///////////////////////////////////
 	}
 

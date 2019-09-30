@@ -5,12 +5,12 @@
 #include "ComponentArray.h"
 #include "Logger.h"
 #include "Event.h"
-
+#include <cassert>
 class System
 {
 public:
 	std::set<Entity> m_entities;
-	
+
 	System() = default;
 	virtual void init() = 0;
 	virtual void update() = 0;
@@ -25,7 +25,7 @@ public:
 	std::shared_ptr<T> RegisterSystem()
 	{
 		const char* typeName = typeid(T).name();
-
+		assert(RESystems.find(typeName) == RESystems.end() && "Registering system more than once.");
 		// Create a pointer to the system and return it so it can be used externally
 		auto pSystem = std::make_shared<T>();
 		RESystems.insert({ typeName, pSystem });
@@ -59,9 +59,6 @@ public:
 
 		// Set the signature for this system
 		RESignatures.insert({ typeName, signature });
-		std::stringstream out;
-		out << typeName << "'s signature set to " << signature;
-		RE_CORE_INFO(out.str());
 	}
 
 	void EntityDestroyed(Entity entity)
@@ -87,7 +84,7 @@ public:
 			auto const& system = pair.second;
 			auto const& systemSignature = RESignatures[type];
 
-			
+
 			// Entity signature matches system signature - insert into set
 			if ((entitySignature & systemSignature) == systemSignature)
 			{
@@ -103,7 +100,7 @@ public:
 			{
 				out.clear();
 				out.str("");
-				out << "Entity " << entity << "'s signature does not match. " << type << " not added.";
+				out << "Entity " << entity << "'s signature does not match. " << "Removed from " << type << ".";
 				RE_CORE_INFO(out.str());
 				system->m_entities.erase(entity);
 			}
