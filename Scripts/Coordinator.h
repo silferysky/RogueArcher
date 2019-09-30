@@ -37,10 +37,10 @@ public:
 		RE_CORE_INFO("---------START REGISTERING COMPONENTS---------");
 
 		RegisterComponent<SpriteComponent>();
-		RegisterComponent<Rigidbody>();
-		RegisterComponent<Transform>();
-		RegisterComponent<CircleCollider2D>();
-		RegisterComponent<BoxCollider2D>();
+		RegisterComponent<RigidbodyComponent>();
+		RegisterComponent<TransformComponent>();
+		RegisterComponent<CircleCollider2DComponent>();
+		RegisterComponent<BoxCollider2DComponent>();
 
 		RE_CORE_INFO("----------END REGISTERING COMPONENTS----------\n\n");
 
@@ -56,8 +56,6 @@ public:
 	void update()
 	{
 		//...
-	//	RE_CORE_INFO("\n===============COORDINATOR UPDATE===============");
-	//	RE_CORE_INFO("\n-----------UPDATING SYSTEMS-----------");
 		m_systemManager->updateSystems();
 	}
 
@@ -122,11 +120,6 @@ public:
 		return m_componentManager->GetComponentType<T>();
 	}
 
-	ComponentType GetComponentType(const char* typeName)
-	{
-		return m_componentManager->GetComponentType(typeName);
-	}
-
 	template<typename T>
 	std::shared_ptr<T> RegisterSystem()
 	{
@@ -154,6 +147,12 @@ public:
 		return m_fileManager->getFragmentShader();
 	}
 	
+	template <typename T>
+	bool CheckIfComponentExists(Entity entity)
+	{
+		return m_entityManager->GetSignature(entity).test(GetComponentType<T>());
+	}
+
 private:
 	void initSystems()
 	{
