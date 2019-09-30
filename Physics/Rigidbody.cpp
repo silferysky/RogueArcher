@@ -2,6 +2,15 @@
 #include "Rigidbody.h"
 
 
+Rigidbody::Rigidbody(float mass, float volume, float damping)
+	: m_acceleration{ Vec2() },
+	  m_velocity{ Vec2() },
+	  m_accForce{ Vec2() },
+	  m_invMass{ 1/mass },
+	  m_volume{ volume },
+	  m_damping{ damping }
+{}
+
 Vec2 Rigidbody::getVelocity() const
 {
 	return m_velocity;
@@ -25,6 +34,11 @@ Vec2 Rigidbody::getAccForce() const
 Vec2 Rigidbody::getAcceleration() const
 {
 	return m_acceleration;
+}
+
+void Rigidbody::setAccForce(const Vec2& accforce)
+{
+	m_accForce = accforce;
 }
 
 void Rigidbody::setVelocity(const Vec2& vel)
@@ -63,4 +77,14 @@ void Rigidbody::setAcceleration(const Vec2& accel)
 void Rigidbody::offSetAcceleration(const Vec2& accel)
 {
 	m_acceleration += accel;
+}
+
+float Rigidbody::getDamping() const
+{
+	return m_damping;
+}
+
+void Rigidbody::setDamping(float damping)
+{
+	m_damping = damping;
 }

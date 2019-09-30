@@ -1,12 +1,16 @@
 #include "CollisionManager.h"
 #include <iostream>
+
+CollisionManager::CollisionManager()
+	: HALF_SCALE{ 0.5f }
+{}
 //_________________________________________________________________________
 //_________________________________________________________________________|
 //_____________________Axis-Aligned Bounding Box___________________________|
 //_________________________________________________________________________|
 //_________________________________________________________________________|
 // Update the bounding box's m_min and m_max.
-void CollisionManager::updateAABB(const Transform& transform, AABB& collider)
+void CollisionManager::updateAABB(AABB& collider, const Transform& transform)
 {
 	collider.setMin(Vec2{ -HALF_SCALE * transform.getScale().x + transform.getPosition().x,
 						  -HALF_SCALE * transform.getScale().y + transform.getPosition().y });
@@ -200,8 +204,8 @@ void printOBBGlobs(OBB& obb)
 void CollisionManager::initOBB(OBB& obb, const std::vector<Vec2>& modelVertices)
 {
 	obb.modelVerts() = modelVertices;
-	obb.globVerts() = modelVertices;
-	obb.normals() = modelVertices;
+	obb.globVerts().reserve(modelVertices.size());
+	obb.normals().reserve(modelVertices.size());
 }
 
 
@@ -231,6 +235,9 @@ void CollisionManager::updateNormals(OBB& obb)
 {
 	size_t i;
 	size_t max_sides = obb.modelVerts().size();
+
+	if (max_sides == 0)
+		return;
 
 	for (i = 0; i < max_sides - 1; ++i) // Traverse to the second last vertex
 		obb.normals()[i] = Vec2NormalOf(obb.globVerts()[i + 1] - obb.globVerts()[i]); // n1 till second last normal

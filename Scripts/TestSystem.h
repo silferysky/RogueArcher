@@ -1,13 +1,13 @@
 #pragma once
 #include "Logger.h"
-#include "BaseSystem.h"
+#include "SystemList.h"
 #include "EventDispatcher.h"
 
-class TestSystem : public BaseSystem, public EventListener
+class TestSystem : public SystemList, public EventListener
 {
 public:
 	TestSystem(SYSTEMID id = SYSTEMID::TESTSYSTEM) 
-		: BaseSystem(id) 
+		: SystemList(id) 
 	{
 		LISTENER_HANDLER hand = std::bind(&TestSystem::Receive, this, std::placeholders::_1);
 		EventDispatcher::instance().AddListener(id, hand); 
@@ -15,7 +15,7 @@ public:
 	void Receive(Event* ev) override 
 	{
 		RE_INFO(ev->ToString());  
-		RE_CORE_INFO("TEST SYSTEM RECEIVED EVENT"); 
+		//RE_CORE_INFO("TEST SYSTEM RECEIVED EVENT"); 
 	}
 };
 

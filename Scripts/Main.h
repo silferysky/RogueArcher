@@ -1,25 +1,21 @@
 #pragma once
 
-#include "../REEngine.h"
+#include "REEngine.h"
+#include "ObjectFactory.h"
 #include "GameStateList.h"
 #include <Windows.h>
 #include "Resource.h"
-
-//Temp for test
 #include "ComponentList.h"
 
 #if _DEBUG
 #include <iostream>
 #endif
 
-//#defines
-
-// Forward Declaration
 class REEngine;
+class ObjectFactory;
 
-//Externs
 extern REEngine gEngine;
-extern double t;
-extern double gdt;
+extern ObjectFactory gObjectFactory;
+extern float gDeltaTime;
 
 int APIENTRY WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst, LPSTR lpszCmdLine, int nCmdShow);

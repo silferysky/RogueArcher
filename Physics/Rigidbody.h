@@ -9,9 +9,12 @@ class Rigidbody
 
 	float m_invMass;
 	float m_volume;
+	float m_damping;
 
 public:
-	Rigidbody() = default;
+	Rigidbody(float mass = 1.0f,
+			  float volume = 1.0f,
+			  float damping = 0.99f);
 	~Rigidbody() = default;
 
 	Vec2 getVelocity() const;
@@ -19,7 +22,9 @@ public:
 	Vec2 getAcceleration() const;
 	float getInvMass() const;
 	float getVolume() const;
+	float getDamping() const;
 
+	void setAccForce(const Vec2& accforce);
 	void setVelocity(const Vec2& vel);
 	void offSetVelocity(const Vec2& vel);
 	void setMass(float mass);
@@ -27,4 +32,6 @@ public:
 	void addForce(const Vec2& force);
 	void setAcceleration(const Vec2& accel);
 	void offSetAcceleration(const Vec2& accel);
+	void setDamping(float damping);
+
 };
