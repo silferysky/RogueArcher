@@ -2,7 +2,7 @@
 #include "AABB.h"
 #include "OBB.h"
 
-class BoxCollider2D
+class BoxCollider2DComponent
 {
 public:
 	AABB m_aabb;

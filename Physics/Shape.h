@@ -20,6 +20,6 @@ public:
 	inline void initShape(float w, float h, float m);
 	inline float calcInertia() const;
 
-	friend class Rigidbody;
+	friend class RigidbodyComponent;
 	friend class PhysicsSystem;
 };
