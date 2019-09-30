@@ -22,18 +22,12 @@ void GraphicsSystem::update()
 	{
 		auto& sprite = gEngine.m_coordinator.GetComponent<SpriteComponent>(entity);
 		auto& transform = gEngine.m_coordinator.GetComponent<Transform>(entity);
-		auto& collider = gEngine.m_coordinator.GetComponent<BoxCollider2D>(entity);
+		//auto& collider = gEngine.m_coordinator.GetComponent<BoxCollider2D>(entity);
 
-		//draw
-		glBindVertexArray(sprite.getVAO());
+		glDisable(GL_DEPTH_TEST);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		// Use the shader program for drawing
-		glUseProgram(sprite.getShader());
-
-		// Draw the Mesh
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-		// Unbind after drawing
-		glBindVertexArray(0);
+		sprite.draw(&transform);
 	}
 }
 

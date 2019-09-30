@@ -3,21 +3,85 @@
 
 SpriteComponent::SpriteComponent()
 {
-	glGenVertexArrays(1, &m_VAO);
+	m_texture = SOIL_load_OGL_texture
+	(
+		"test.bmp",
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_INVERT_Y
+	);
+
+	if (m_texture == 0)
+		std::cout << "fuck" << std::endl;
+
+	glBindTexture(GL_TEXTURE_2D, m_texture);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	std::string vertexShader = BasicIO::ReadFile("vertexShader.txt");
+	std::string fragmentShader = BasicIO::ReadFile("fragmentShader.txt");
+
+	m_shader = CreateShader(vertexShader, fragmentShader);
+
 	glGenBuffers(1, &m_VBO);
+	glGenVertexArrays(1, &m_VAO);
 	glGenBuffers(1, &m_EBO);
 
 	glBindVertexArray(m_VAO);
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 
-	/* float left = transform.getPosition().x - transform.getScale().x;
-	float right = transform.getPosition().x + transform.getScale().x;
+	glGenVertexArrays(1, &m_VAO);
+	glGenBuffers(1, &m_VBO);
+	glGenBuffers(1, &m_EBO);
 
-	float top = transform.getPosition().y - transform.getScale().y;
-	float bottom = transform.getPosition().y + transform.getScale().y; */
+	// bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
+	glBindVertexArray(m_VAO);
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+}
+
+void SpriteComponent::setTexture(const char* texture)
+{
+	m_texture = SOIL_load_OGL_texture
+	(
+		texture,
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_INVERT_Y
+	);
+
+	glBindTexture(GL_TEXTURE_2D, m_texture);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+}
+
+void SpriteComponent::setShader(std::string vShader, std::string fShader)
+{
+	std::string vertexShader = BasicIO::ReadFile(vShader);
+
+	std::string fragmentShader = BasicIO::ReadFile(fShader);
+
+	m_shader = CreateShader(vertexShader, fragmentShader);
+}
+
+void SpriteComponent::draw(Transform* transform) const
+{
+	float left = transform->getPosition().x - transform->getScale().x;
+	float right = transform->getPosition().x + transform->getScale().x;
+
+	float top = transform->getPosition().y + transform->getScale().y;
+	float bottom = transform->getPosition().y - transform->getScale().y;
 
 	float _vertexpos[] =
+	/* {
+		// positions          // colors           // texture coords
+		right,  top, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
+		right, bottom, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
+	   left, bottom, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
+	   left,  top, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left 
+	}; */
+
 	{
 		// positions          // colors           // texture coords
 		0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
@@ -34,50 +98,26 @@ SpriteComponent::SpriteComponent()
 	// position attribute
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
-
 	// color attribute
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
-
 	// texture coord attribute
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
 	glEnableVertexAttribArray(2);
 
-	glBindBuffer(GL_ARRAY_BUFFER, 0); //Reset
-	glBindVertexArray(0); //Reset
+	glBindBuffer(GL_ARRAY_BUFFER, 0);//Reset
+	glBindVertexArray(0);//Reset
 
-	m_texture = SOIL_load_OGL_texture
-	(
-		"../../test.bmp",
-		SOIL_LOAD_AUTO,
-		SOIL_CREATE_NEW_ID,
-		SOIL_FLAG_INVERT_Y
-	);
+	//draw
+	glBindVertexArray(m_VAO);
 
-	std::string vertexShader = *gEngine.m_coordinator.getVertexShader();
-	std::string fragmentShader = *gEngine.m_coordinator.getFragmentShader();
+	// Use the shader program for drawing
+	glUseProgram(m_shader);
 
-	m_shader = CreateShader(vertexShader, fragmentShader);
-}
-
-void SpriteComponent::setTexture(const char* texture)
-{
-	m_texture = SOIL_load_OGL_texture
-	(
-		texture,
-		SOIL_LOAD_AUTO,
-		SOIL_CREATE_NEW_ID,
-		SOIL_FLAG_INVERT_Y
-	);
-}
-
-void SpriteComponent::setShader(std::string vShader, std::string fShader)
-{
-	std::string vertexShader = BasicIO::ReadFile(vShader);
-
-	std::string fragmentShader = BasicIO::ReadFile(fShader);
-
-	m_shader = CreateShader(vertexShader, fragmentShader);
+	// Draw the Mesh
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+	// Unbind after drawing
+	glBindVertexArray(0);
 }
 
 GLuint SpriteComponent::getTexture() const
