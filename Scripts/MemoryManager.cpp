@@ -106,7 +106,7 @@ void* MemoryManager::Allocate(const size_t size)
 		{ 
 			if (it->chunkStart == chunkToReturn.chunkStart)
 			{
-				MemorySpare.remove(*it);
+				//MemorySpare.remove(*it);
 				break;
 			}
 		}
@@ -136,21 +136,21 @@ void MemoryManager::Deallocate(int* ptr, const size_t size)
 	}
 }
 
-//bool MemoryManager::FindSpareChunk(const size_t size)
-//{
-//	//Search through all chunks
-//	for (auto &i : MemorySpare)
-//	{
-//		//If inappropriate size, ignore. Otherwise break and return true
-//		if (size > i.size)
-//			continue;
-//		return true;
-//	}
-//
-//	//If all chunks have been iterated through, it means no chunks found
-//	return false;
-//}
-//
+bool MemoryManager::FindSpareChunk(const size_t size)
+{
+	//Search through all chunks
+	for (auto &i : MemorySpare)
+	{
+		//If inappropriate size, ignore. Otherwise break and return true
+		if (size > i.size)
+			continue;
+		return true;
+	}
+
+	//If all chunks have been iterated through, it means no chunks found
+	return false;
+}
+
 MemChunk& MemoryManager::FindUsedChunk(int* ptr)
 {
 	for (auto &i : MemoryUsed)
@@ -165,41 +165,41 @@ MemChunk& MemoryManager::FindUsedChunk(int* ptr)
 	return empty;
 }
 
-//bool MemoryManager::CombineChunks()
-//{
-//	//Boolean to return, if chunks managed to combine
-//	bool chunksCombined = false;
-//	int index_1 = 0;
-//	//For each chunk in Memory
-//	for (auto &i : MemorySpare)
-//	{
-//		int index_2 = 0;
-//		//Check through all other chunks
-//		for (auto &j : MemorySpare)
-//		{
-//			//If chunk is the same, or before it, skip
-//			if (index_1 >= index_2)
-//			{
-//				++index_2;
-//				continue;
-//			}
-//
-//			//Check only future chunks 
-//			if (i.chunkStart + i.size == j.chunkStart)
-//			{
-//				chunksCombined = true;
-//				i.size += j.size;
-//				MemorySpare.remove(j);
-//			}
-//			else
-//				++index_2;
-//		}
-//
-//		++index_1;
-//	}
-//
-//	return chunksCombined;
-//}
+bool MemoryManager::CombineChunks()
+{
+	//Boolean to return, if chunks managed to combine
+	bool chunksCombined = false;
+	int index_1 = 0;
+	//For each chunk in Memory
+	for (auto &i : MemorySpare)
+	{
+		int index_2 = 0;
+		//Check through all other chunks
+		for (auto &j : MemorySpare)
+		{
+			//If chunk is the same, or before it, skip
+			if (index_1 >= index_2)
+			{
+				++index_2;
+				continue;
+			}
+
+			//Check only future chunks 
+			if (i.chunkStart + i.size == j.chunkStart)
+			{
+				chunksCombined = true;
+				i.size += j.size;
+				//MemorySpare.remove(j);
+			}
+			else
+				++index_2;
+		}
+
+		++index_1;
+	}
+
+	return chunksCombined;
+}
 
 bool MemChunk::operator==(MemChunk rhs)
 {

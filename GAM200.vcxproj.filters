@@ -193,9 +193,6 @@
     <ClInclude Include="Physics\PhysicsSystem.h">
       <Filter>RogueEngine\Systems\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\ObjectFactory.h">
-      <Filter>RogueEngine\Systems</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\Config.h">
       <Filter>RogueEngine\Data</Filter>
     </ClInclude>
@@ -225,6 +222,12 @@
     </ClInclude>
     <ClInclude Include="Scripts\BaseSystem.h">
       <Filter>RogueEngine\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\ObjectFactory.h">
+      <Filter>RogueEngine\Core\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\MemoryManager.h">
+      <Filter>RogueEngine\Systems\Memory</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -309,9 +312,6 @@
     <ClCompile Include="Physics\PhysicsSystem.cpp">
       <Filter>RogueEngine\Systems\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\ObjectFactory.cpp">
-      <Filter>RogueEngine\Systems</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\Config.cpp">
       <Filter>RogueEngine\Data</Filter>
     </ClCompile>
@@ -329,6 +329,12 @@
     </ClCompile>
     <ClCompile Include="Scripts\WindowHelper.cpp">
       <Filter>RogueEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\ObjectFactory.cpp">
+      <Filter>RogueEngine\Core\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\MemoryManager.cpp">
+      <Filter>RogueEngine\Systems\Memory</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

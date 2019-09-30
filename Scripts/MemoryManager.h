@@ -18,12 +18,7 @@ struct MemChunk
 	MemChunk(int* start, size_t sz)
 		:chunkStart(start), size(sz) {}
 
-	bool operator==(MemChunk chunk)
-	{
-		if (chunkStart == chunk.chunkStart)
-			return true;
-		return false;
-	}
+	bool operator==(MemChunk chunk); 
 };
 
 class MemoryManager
@@ -32,47 +27,49 @@ public:
 	MemoryManager();
 	~MemoryManager();
 
+	static MemoryManager& instance();
+
 	static void*		Allocate(const size_t size);
 	static void			Deallocate(int* ptr, const size_t size);
 	static bool			FindSpareChunk(const size_t size);
-	static MemChunk*	FindUsedChunk(int* ptr);
+	static MemChunk&	FindUsedChunk(int* ptr);
 	static bool			CombineChunks();
+
+	//For Generic overload new/delete
+	void* operator new(size_t space)
+	{
+		void* ptr = MemoryManager::instance().Allocate(space);
+		return ptr;
+	}
+
+	void* operator new[](size_t space)
+	{
+		void* ptr = MemoryManager::instance().Allocate(space);
+		return ptr;
+	}
+
+	void operator delete(void* ptr)
+	{
+		if (ptr != nullptr)
+		{
+			MemChunk* toDeallocate = &MemoryManager::instance().FindUsedChunk((int*)ptr);
+			MemoryManager::Deallocate(toDeallocate->chunkStart, toDeallocate->size);
+		}
+	}
+
+	void operator delete[](void* ptr)
+	{
+		if (ptr != nullptr)
+		{
+			MemChunk* toDeallocate = &MemoryManager::instance().FindUsedChunk((int*)ptr);
+			MemoryManager::Deallocate(toDeallocate->chunkStart, toDeallocate->size);
+		}
+	}
 
 private:
 
 	static int* MemoryStart;
 	static int* MemoryCurrent;
-	static std::list<MemChunk*> MemorySpare;
-	static std::list<MemChunk*> MemoryUsed;
+	static std::list<MemChunk> MemorySpare;
+	static std::list<MemChunk> MemoryUsed;
 };
-
-//For Generic overload new/delete
-void* operator new(size_t space, MemoryType mem)
-{
-	void* ptr = MemoryManager::Allocate(space);
-	return ptr;
-}
-
-void* operator new[](size_t space, MemoryType mem)
-{
-	void* ptr = MemoryManager::Allocate(space);
-	return ptr;
-}
-
-void operator delete(void* ptr, MemoryType mem)
-{
-	if (ptr != nullptr)
-	{
-		MemChunk* toDeallocate = MemoryManager::FindUsedChunk((int*)ptr);
-		MemoryManager::Deallocate(toDeallocate->chunkStart, toDeallocate->size);
-	}
-}
-
-void operator delete[](void* ptr, MemoryType mem)
-{
-	if (ptr != nullptr)
-	{
-		MemChunk* toDeallocate = MemoryManager::FindUsedChunk((int*)ptr);
-		MemoryManager::Deallocate(toDeallocate->chunkStart, toDeallocate->size);
-	}
-}
