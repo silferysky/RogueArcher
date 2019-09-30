@@ -1,28 +1,27 @@
 #pragma once
 #include "../Scripts/Main.h"
+#include "../Scripts/REMath.h"
+#include "../Scripts/EventListener.h"
 #include "CollisionManager.h"
 #include "Rigidbody.h"
 #include "Transform.h"
-#include "../Scripts/REMath.h"
-#include "../Scripts/EventListener.h"
-#include "../BoxCollider2D.h"
+#include "BoxCollider2D.h"
 
 class PhysicsSystem : public System
 {
-	CollisionManager gColliderManager;
+	CollisionManager m_colliderManager;
 	Vec2 m_gravity;
 
-	void positionUpdate(Rigidbody& rigidbody, Transform& transform, float dt);
-	void collisionUpdate(Rigidbody& rigidbody, float dt);
+	void integrateAcceleration(Rigidbody& rigidbody, Transform& transform);
 	void applyForces(Rigidbody& rigidbody);
 
 public:
-	PhysicsSystem() = default;
+	PhysicsSystem(Vec2 gravity = { 0.0f, -9.81f });
 	~PhysicsSystem() = default;
 
-	// Init system with gravity (default 0.0f,0.0f)
-	void init(const Vec2& gravity = Vec2());
-	void update(float dt);
+	void init();
+	void update() override;
+	void receive(Event* ev) override;
 
 	void setGravity(const Vec2& gravity);
 	const Vec2& getGravity() const;

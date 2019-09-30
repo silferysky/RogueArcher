@@ -2,6 +2,8 @@
 #include <unordered_map>
 #include "EntityManager.h"
 #include "ComponentArray.h"
+#include "ComponentList.h"
+#include "Logger.h"
 
 class ComponentManager
 {
@@ -14,9 +16,21 @@ public:
 		// Add this component type to the component type map
 		REComponentTypes.insert({ typeName, RENextComponentType });
 		
+		std::stringstream out;
+		out.clear();
+		out.str("");
+		out << "Creating " << typeName << "s...";
+		RE_CORE_INFO(out.str());
+		
 		// Create a ComponentArray pointer and add it to the component arrays map
 		REComponentArrays.insert({ typeName, std::make_shared<ComponentArray<T>>() });
+		
 
+		out.clear();
+		out.str("");
+		out << "Array of " << MAX_ENTITIES << " " << typeName << "s created!";
+		RE_CORE_INFO(out.str());
+		
 		// Increment the value so that the next component registered will be different
 		++RENextComponentType;
 	}
@@ -28,6 +42,7 @@ public:
 
 		return REComponentTypes[typeName];
 	}
+
 	ComponentType GetComponentType(const char* typeName)
 	{
 		return REComponentTypes[typeName];
@@ -36,10 +51,12 @@ public:
 	template<typename T>
 	void AddComponent(Entity entity, T component)
 	{
-		std::cout<<"components added to system"<<std::endl;
+		std::stringstream out;
+		out << "Entity " << entity << "'s " << typeid(T).name() << " added!";
+		RE_CORE_INFO(out.str());
 		GetComponentArray<T>()->InsertData(entity, component);
 	}
-
+	
 	template<typename T>
 	void RemoveComponent(Entity entity)
 	{
@@ -61,7 +78,7 @@ public:
 			auto const& component = pair.second;
 
 			component->EntityDestroyed(entity);
-			std::cout << "Components Removed" << std::endl;
+			RE_CORE_INFO("Components Removed\n");
 		}
 	}
 

@@ -11,12 +11,12 @@ enum class SYSTEMID
 	LASTSYS
 };
 
-class BaseSystem
+class SystemList
 {
 public:
-	BaseSystem(SYSTEMID ID = SYSTEMID::LASTSYS)
+	SystemList(SYSTEMID ID = SYSTEMID::LASTSYS)
 		: _ID{ ID } {};
-	~BaseSystem() {};
+	~SystemList() {};
 
 	SYSTEMID ID() { return _ID; }
 	void ID(SYSTEMID id) { _ID = id; }

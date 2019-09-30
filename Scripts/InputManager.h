@@ -1,7 +1,7 @@
 #pragma once
 #include <Windows.h>
 #include <map>
-#include "BaseSystem.h"
+#include "SystemList.h"
 #include "EventDispatcher.h"
 #include "KeyEvent.h"
 #include "InputData.h"
@@ -31,7 +31,7 @@ struct FuncState
 };
 
 class InputManager
-	: public BaseSystem
+	: public SystemList
 {
 public:
 	InputManager();

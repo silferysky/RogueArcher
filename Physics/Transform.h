@@ -3,8 +3,8 @@
 
 class Transform
 {
-	Vec2 m_position;
-	Vec2 m_scale;
+	Vec2 m_position = Vec2(0.0f, 0.0f);
+	Vec2 m_scale = Vec2(0.5f, 0.5f);
 	float m_rotation;
 
 public:

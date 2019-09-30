@@ -17,15 +17,11 @@
 		fclose(pFile);
 		return EXIT_SUCCESS;
 	}
-
 	rapidjson::Document RESerialiser::DeserialiseFromFile(const char* FileName)
 	{
 		FILE* pFile = nullptr;
 		fopen_s(&pFile, FileName, "r");
-		if (!pFile)
-		{
-			return nullptr;
-		}
+		assert(pFile);
 		char buffer[65536];
 		rapidjson::FileReadStream is(pFile, buffer, sizeof(buffer));
 		fclose(pFile);

@@ -1,114 +1,168 @@
 #pragma once
-#include "EntityManager.h"
-#include "ComponentArray.h"
 #include "SystemManager.h"
 #include "ComponentManager.h"
+#include "EntityManager.h"
+#include "FileManager.h"
+#include "GraphicsSystem.h"
+#include "../Physics/PhysicsSystem.h"
+
+// Forward declaration
+class PhysicsSystem;
+class GraphicsSystem;
 
 class Coordinator
 {
 public:
+	Coordinator()
+		: m_entityManager{ std::make_unique<EntityManager>() },
+		  m_componentManager{ std::make_unique<ComponentManager>() },
+		  m_systemManager{ std::make_unique<SystemManager>() },
+		  m_fileManager{ std::make_unique<FileManager>() },
+		  m_activeEntities{MAX_ENTITIES}
+	{}
+
 	void Init()
 	{
-		// Create pointers to each manager
-		REComponentManager = std::make_unique<ComponentManager>();
-		REEntityManager = std::make_unique<EntityManager>();
-		RESystemManager = std::make_unique<SystemManager>();
+		RE_CORE_INFO("===============COORDINATOR INIT===============");
+
+		// Register all systems.
+		RE_CORE_INFO("-----------START REGISTERING SYSTEMS----------");
+
+		auto PhysSystem = RegisterSystem<PhysicsSystem>();
+		auto graphics = RegisterSystem<GraphicsSystem>();
+
+		RE_CORE_INFO("-----------END REGISTERING SYSTEMS------------\n\n");
+
+		// Register all components
+		RE_CORE_INFO("---------START REGISTERING COMPONENTS---------");
+
+		RegisterComponent<SpriteComponent>();
+		RegisterComponent<Rigidbody>();
+		RegisterComponent<Transform>();
+		RegisterComponent<CircleCollider2D>();
+		RegisterComponent<BoxCollider2D>();
+
+		RE_CORE_INFO("----------END REGISTERING COMPONENTS----------\n\n");
+
+		// Init systems and system signatures will be set in their respective inits.
+		RE_CORE_INFO("----------START INITIALIZING SYSTEMS----------");
+
+		initSystems();
+
+		RE_CORE_INFO("-----------END INITIALIZING SYSTEMS-----------\n\n");
+
 	}
 
+	void update()
+	{
+		//...
+	//	RE_CORE_INFO("\n===============COORDINATOR UPDATE===============");
+	//	RE_CORE_INFO("\n-----------UPDATING SYSTEMS-----------");
+		m_systemManager->updateSystems();
+	}
 
 	Entity CreateEntity()
 	{
-		return REEntityManager->CreateEntity();
+		return m_entityManager->CreateEntity();
 	}
 
 	void DestroyEntity(Entity entity)
 	{
-		REEntityManager->DestroyEntity(entity);
+		m_entityManager->DestroyEntity(entity);
 
-		REComponentManager->EntityDestroyed(entity);
+		m_componentManager->EntityDestroyed(entity);
 
-		RESystemManager->EntityDestroyed(entity);
+		m_systemManager->EntityDestroyed(entity);
 	}
-
 
 	template<typename T>
 	void RegisterComponent()
 	{
-		REComponentManager->RegisterComponent<T>();
-		std::cout << "Components Created" << std::endl;
+		const char* typeName = typeid(T).name();
+		m_componentManager->RegisterComponent<T>();
+		std::stringstream output;
+		output << typeName << " registered!";
+		RE_CORE_INFO(output.str());
 	}
 
 	template<typename T>
 	void AddComponent(Entity entity, T component)
 	{
-		REComponentManager->AddComponent<T>(entity, component);
+		m_componentManager->AddComponent<T>(entity, component);
+		
+		auto signature = m_entityManager->GetSignature(entity);
+		signature.set(m_componentManager->GetComponentType<T>(), true);
+		m_entityManager->SetSignature(entity, signature);
 
-		auto signature = REEntityManager->GetSignature(entity);
-		signature.set(REComponentManager->GetComponentType<T>(), true);
-		REEntityManager->SetSignature(entity, signature);
-
-		RESystemManager->EntitySignatureChanged(entity, signature);
+		m_systemManager->EntitySignatureChanged(entity, signature);
 	}
 
 	template<typename T>
 	void RemoveComponent(Entity entity)
 	{
-		std::cout << "component removed from entity"<<std::endl;
-		REComponentManager->RemoveComponent<T>(entity);
+		std::cout << "component removed from entity" << std::endl;
+		m_componentManager->RemoveComponent<T>(entity);
 
-		auto signature = REEntityManager->GetSignature(entity);
-		signature.set(REComponentManager->GetComponentType<T>(), false);
-		REEntityManager->SetSignature(entity, signature);
+		auto signature = m_entityManager->GetSignature(entity);
+		signature.set(m_componentManager->GetComponentType<T>(), false);
+		m_entityManager->SetSignature(entity, signature);
 
-		RESystemManager->EntitySignatureChanged(entity, signature);
+		m_systemManager->EntitySignatureChanged(entity, signature);
 	}
 
 	template<typename T>
 	T& GetComponent(Entity entity)
 	{
-		return REComponentManager->GetComponent<T>(entity);
+		return m_componentManager->GetComponent<T>(entity);
 	}
 
 	template<typename T>
 	ComponentType GetComponentType()
 	{
-		return REComponentManager->GetComponentType<T>();
+		return m_componentManager->GetComponentType<T>();
 	}
 
-	ComponentType GetComponentType(const char* name)
+	ComponentType GetComponentType(const char* typeName)
 	{
-		return REComponentManager->GetComponentType(name);
+		return m_componentManager->GetComponentType(typeName);
 	}
 
 	template<typename T>
 	std::shared_ptr<T> RegisterSystem()
 	{
-		return RESystemManager->RegisterSystem<T>();
+		return m_systemManager->RegisterSystem<T>();
 	}
 
 	template<typename T>
 	void SetSystemSignature(Signature signature)
 	{
-		RESystemManager->SetSignature<T>(signature);
-	}
-
-	size_t Size(const char* name) const
-	{
-		if (name == "Entity")
-			return REEntityManager->Size();
-		else if (name == "Component")
-			return REComponentManager->Size();
-		else
-			return 0;
+		m_systemManager->SetSignature<T>(signature);
 	}
 
 	EntityManager& GetEntityManager() const
 	{
-		return *REEntityManager;
+		return *m_entityManager;
 	}
 
+	std::shared_ptr<std::string> getVertexShader() const
+	{
+		return m_fileManager->getVertexShader();
+	}
+
+	std::shared_ptr<std::string> getFragmentShader() const
+	{
+		return m_fileManager->getFragmentShader();
+	}
+	
 private:
-	std::unique_ptr<ComponentManager> REComponentManager;
-	std::unique_ptr<EntityManager> REEntityManager;
-	std::unique_ptr<SystemManager> RESystemManager;
+	void initSystems()
+	{
+		m_systemManager->initSystems();
+	}
+
+	std::unique_ptr<ComponentManager> m_componentManager;
+	std::unique_ptr<EntityManager> m_entityManager;
+	std::unique_ptr<SystemManager> m_systemManager;
+	std::unique_ptr<FileManager> m_fileManager;
+	std::vector<Entity> m_activeEntities;
 };

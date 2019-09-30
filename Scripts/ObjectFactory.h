@@ -1,9 +1,6 @@
 #pragma once
-#include "Main.h"
-#include "RogueEngine.h"
-#include "Coordinator.h"
+#include "REEngine.h"
 #include "FileIO.h"
-#include "ComponentList.h"
 
 class ObjectFactory
 {
@@ -13,8 +10,11 @@ public:
 	void SaveLevel(const char* fileName);
 	void LoadLevel(const char* fileName);
 
+	std::vector<Entity> GetActiveEntity() const;
+
 private:
 	ComponentType GetCmpType(int index) const;
+	std::vector<Entity> m_activeEntities;
 };
 
 //MACROS FOR OBJECT FACTORY

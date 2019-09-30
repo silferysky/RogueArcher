@@ -26,25 +26,24 @@ struct MemChunk
 	}
 };
 
-class MemoryManager :
-	public BaseSystem
+class MemoryManager
 {
 public:
 	MemoryManager();
 	~MemoryManager();
 
 	static void*		Allocate(const size_t size);
-	static void			Deallocate(const int* ptr, const size_t size);
+	static void			Deallocate(int* ptr, const size_t size);
 	static bool			FindSpareChunk(const size_t size);
-	static MemChunk		FindUsedChunk(int* ptr);
+	static MemChunk*	FindUsedChunk(int* ptr);
 	static bool			CombineChunks();
 
 private:
 
 	static int* MemoryStart;
 	static int* MemoryCurrent;
-	static std::list<MemChunk> MemorySpare;
-	static std::list<MemChunk> MemoryUsed;
+	static std::list<MemChunk*> MemorySpare;
+	static std::list<MemChunk*> MemoryUsed;
 };
 
 //For Generic overload new/delete
@@ -54,26 +53,26 @@ void* operator new(size_t space, MemoryType mem)
 	return ptr;
 }
 
-void* operator new[](size_t space)
+void* operator new[](size_t space, MemoryType mem)
 {
 	void* ptr = MemoryManager::Allocate(space);
 	return ptr;
 }
 
-void operator delete(void* ptr)
+void operator delete(void* ptr, MemoryType mem)
 {
 	if (ptr != nullptr)
 	{
-		MemChunk toDeallocate = MemoryManager::FindUsedChunk((int*)ptr);
-		MemoryManager::Deallocate(toDeallocate.chunkStart, toDeallocate.size);
+		MemChunk* toDeallocate = MemoryManager::FindUsedChunk((int*)ptr);
+		MemoryManager::Deallocate(toDeallocate->chunkStart, toDeallocate->size);
 	}
 }
 
-void operator delete[](void* ptr)
+void operator delete[](void* ptr, MemoryType mem)
 {
 	if (ptr != nullptr)
 	{
-		MemChunk toDeallocate = MemoryManager::FindUsedChunk((int*)ptr);
-		MemoryManager::Deallocate(toDeallocate.chunkStart, toDeallocate.size);
+		MemChunk* toDeallocate = MemoryManager::FindUsedChunk((int*)ptr);
+		MemoryManager::Deallocate(toDeallocate->chunkStart, toDeallocate->size);
 	}
 }
