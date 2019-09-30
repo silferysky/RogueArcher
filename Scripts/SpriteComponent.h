@@ -2,7 +2,6 @@
 #include "shader.h"
 #include "BasicIO.h"
 #include "SOIL.h"
-#include "../Scripts/Quad.h"
 #include "../Physics/TransformComponent.h"
 
 class SpriteComponent
