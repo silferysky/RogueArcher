@@ -1,11 +1,17 @@
 #include "MemoryManager.h"
 
-/***************Definition/Initialization of values*****************/
+///***************Definition/Initialization of values*****************/
 int* MemoryManager::MemoryStart;
 int* MemoryManager::MemoryCurrent;
-std::list<MemChunk*> MemoryManager::MemorySpare; 
-std::list<MemChunk*> MemoryManager::MemoryUsed; 
+std::list<MemChunk> MemoryManager::MemorySpare; 
+std::list<MemChunk> MemoryManager::MemoryUsed; 
 /*******************************************************************/
+
+MemoryManager& MemoryManager::instance()
+{
+	static MemoryManager instance;
+	return instance;
+}
 
 MemoryManager::MemoryManager()
 {
@@ -33,7 +39,7 @@ void* MemoryManager::Allocate(const size_t size)
 	if (SpaceUsed > MEM_SPACE)
 	{
 		//Attempt to save space by combining chunks
-		while(CombineChunks());
+		//while(CombineChunks());
 
 		//Check for empty spaces in List that fits the size
 		AbortAllocate = true;
@@ -60,32 +66,33 @@ void* MemoryManager::Allocate(const size_t size)
 
 	//Set default memory slot, assign to MemoryCurrent
 	MemChunk chunk(MemoryCurrent, MAX_CHUNK_SIZE);
-	MemChunk* chunkToReturn = &chunk;
+	MemChunk chunkToReturn = chunk;
 
 	//Search through list to see if an available chunk is found
 	//If an available chunk is found, MemoryCurrent and size will be updated to the chunk
 	for (auto& i : MemorySpare)
 	{
 		//If perfect match, no need to iterate through, break out of loop
-		if (i->size == size)
+		if (i.size == size)
 		{
 			chunkToReturn = i;
 			break;
 		}
 		//If not perfect match, but still larger, use smallest chunk found
-		else if (i->size > size)
+		else if (i.size > size)
 		{
-			if (chunkToReturn->size > i->size)
+			if (chunkToReturn.size > i.size)
 				chunkToReturn = i;
 		}
 	}
 
 	//Incrementing Memory
 	//If no available chunks found, allocated memory goes to MemoryCurrent. Increment so no space is left
-	if (chunkToReturn->chunkStart == MemoryCurrent)
+	if (chunkToReturn.chunkStart == MemoryCurrent)
 	{
+		MemChunk newChunk(MemoryCurrent, size);
+		MemoryUsed.push_back(newChunk);
 		MemoryCurrent += size;
-		MemoryUsed.push_back(&MemChunk(MemoryCurrent, size));
 	}
 	else
 	{
@@ -95,14 +102,25 @@ void* MemoryManager::Allocate(const size_t size)
 
 		//Removing chunk from memory, adding to MemoryUsed. Using size instead of chunkToReturn size
 		//since size might not be identical
-		MemorySpare.remove(chunkToReturn);
-		MemoryUsed.push_front(&MemChunk(chunkToReturn->chunkStart, size));
+		for (auto it = MemorySpare.begin(); it != MemorySpare.end(); ++it)
+		{ 
+			if (it->chunkStart == chunkToReturn.chunkStart)
+			{
+				MemorySpare.remove(*it);
+				break;
+			}
+		}
+		MemChunk newChunk(chunkToReturn.chunkStart, size);
+		MemoryUsed.push_front(newChunk);
 
-		if (chunkToReturn->size != size)
-			MemorySpare.push_front(&MemChunk(chunkToReturn->chunkStart + size, chunkToReturn->size - size));
+		if (chunkToReturn.size != size)
+		{
+			MemChunk spareChunk(chunkToReturn.chunkStart + size, chunkToReturn.size - size);
+			MemorySpare.push_front(spareChunk);
+		}
 	}
 
-	return chunkToReturn->chunkStart;
+	return chunkToReturn.chunkStart;
 	
 }
 
@@ -114,62 +132,78 @@ void MemoryManager::Deallocate(int* ptr, const size_t size)
 		newChunk.chunkStart = (int*)ptr;
 		newChunk.size = size;
 
-		MemorySpare.push_front(&newChunk);
+		MemorySpare.push_front(newChunk);
 	}
 }
 
-bool MemoryManager::FindSpareChunk(const size_t size)
-{
-	//Search through all chunks
-	for (auto &i : MemorySpare)
-	{
-		//If inappropriate size, ignore. Otherwise break and return true
-		if (size > i->size)
-			continue;
-		return true;
-	}
-
-	//If all chunks have been iterated through, it means no chunks found
-	return false;
-}
-
-MemChunk* MemoryManager::FindUsedChunk(int* ptr)
+//bool MemoryManager::FindSpareChunk(const size_t size)
+//{
+//	//Search through all chunks
+//	for (auto &i : MemorySpare)
+//	{
+//		//If inappropriate size, ignore. Otherwise break and return true
+//		if (size > i.size)
+//			continue;
+//		return true;
+//	}
+//
+//	//If all chunks have been iterated through, it means no chunks found
+//	return false;
+//}
+//
+MemChunk& MemoryManager::FindUsedChunk(int* ptr)
 {
 	for (auto &i : MemoryUsed)
 	{
 		//Look for the correct position
-		if (i->chunkStart == ptr)
+		if (i.chunkStart == ptr)
 			return i;
 	}
 
 	//If none found, ignore and return nullptr
-	return nullptr;
+	MemChunk empty = MemChunk();
+	return empty;
 }
 
-bool MemoryManager::CombineChunks()
+//bool MemoryManager::CombineChunks()
+//{
+//	//Boolean to return, if chunks managed to combine
+//	bool chunksCombined = false;
+//	int index_1 = 0;
+//	//For each chunk in Memory
+//	for (auto &i : MemorySpare)
+//	{
+//		int index_2 = 0;
+//		//Check through all other chunks
+//		for (auto &j : MemorySpare)
+//		{
+//			//If chunk is the same, or before it, skip
+//			if (index_1 >= index_2)
+//			{
+//				++index_2;
+//				continue;
+//			}
+//
+//			//Check only future chunks 
+//			if (i.chunkStart + i.size == j.chunkStart)
+//			{
+//				chunksCombined = true;
+//				i.size += j.size;
+//				MemorySpare.remove(j);
+//			}
+//			else
+//				++index_2;
+//		}
+//
+//		++index_1;
+//	}
+//
+//	return chunksCombined;
+//}
+
+bool MemChunk::operator==(MemChunk rhs)
 {
-	//Boolean to return, if chunks managed to combine
-	bool chunksCombined = false;
-
-	//For each chunk in Memory
-	for (auto &i : MemorySpare)
-	{
-		//Check through all other chunks
-		for (auto &j : MemorySpare)
-		{
-			//If chunk is the same, or before it, skip
-			if (&i == &j)
-				continue;
-
-			//Check only future chunks 
-			if (i->chunkStart + i->size == j->chunkStart)
-			{
-				chunksCombined = true;
-				i->size += j->size;
-				MemorySpare.remove(j);
-			}
-		}
-	}
-
-	return chunksCombined;
+	if (chunkStart == rhs.chunkStart)
+		return true;
+	return false;
 }
