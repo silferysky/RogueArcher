@@ -3,17 +3,17 @@
 #include "../Scripts/REMath.h"
 #include "../Scripts/EventListener.h"
 #include "CollisionManager.h"
-#include "Rigidbody.h"
-#include "Transform.h"
-#include "BoxCollider2D.h"
+#include "RigidbodyComponent.h"
+#include "TransformComponent.h"
+#include "BoxCollider2DComponent.h"
 
 class PhysicsSystem : public System
 {
 	CollisionManager m_colliderManager;
 	Vec2 m_gravity;
 
-	void integrateAcceleration(Rigidbody& rigidbody, Transform& transform);
-	void applyForces(Rigidbody& rigidbody);
+	void integrateAcceleration(RigidbodyComponent& rigidbody, TransformComponent& transform);
+	void applyForces(RigidbodyComponent& rigidbody);
 
 public:
 	PhysicsSystem(Vec2 gravity = { 0.0f, -9.81f });

@@ -1,10 +1,10 @@
 #pragma once
 
 #include "SpriteComponent.h"
-#include "../Physics/Rigidbody.h"
-#include "../Physics/Transform.h"
-#include "../Physics/CircleCollider2D.h"
-#include "../Physics/BoxCollider2D.h"
+#include "../Physics/RigidbodyComponent.h"
+#include "../Physics/TransformComponent.h"
+#include "../Physics/CircleCollider2DComponent.h"
+#include "../Physics/BoxCollider2DComponent.h"
 
 enum COMPONENTID
 {

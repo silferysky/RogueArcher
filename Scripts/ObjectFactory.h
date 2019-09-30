@@ -13,7 +13,6 @@ public:
 	std::vector<Entity> GetActiveEntity() const;
 
 private:
-	ComponentType GetCmpType(int index) const;
 	std::vector<Entity> m_activeEntities;
 };
 

@@ -64,7 +64,7 @@ void Quad::Draw()
 	//glm::mat4 transform{ 1.0f };
 	//transform = glm::rotate(transform, timer, glm::vec3(0.0f, 0.0f, 1.0f));
 
-	// Send Transform Matrix to the shader program
+	// Send TransformComponent Matrix to the shader program
 	//glUniformMatrix4fv(transformLoc, 1, GL_FALSE, &transform[0][0]);
 
 	// Draw the Mesh
