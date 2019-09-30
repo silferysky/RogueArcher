@@ -1,7 +1,7 @@
 #pragma once
 #include "../Scripts/REMath.h"
 
-class Rigidbody
+class RigidbodyComponent
 {
 	Vec2 m_acceleration;
 	Vec2 m_velocity;
@@ -12,10 +12,10 @@ class Rigidbody
 	float m_damping;
 
 public:
-	Rigidbody(float mass = 1.0f,
+	RigidbodyComponent(float mass = 1.0f,
 			  float volume = 1.0f,
 			  float damping = 0.99f);
-	~Rigidbody() = default;
+	~RigidbodyComponent() = default;
 
 	Vec2 getVelocity() const;
 	Vec2 getAccForce() const;

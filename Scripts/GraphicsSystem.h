@@ -1,6 +1,6 @@
 #pragma once
 #include "../Scripts/Main.h"
-#include "../Physics/Transform.h"
+#include "../Physics/TransformComponent.h"
 #include "../Scripts/REMath.h"
 #include "../Scripts/EventListener.h"
 

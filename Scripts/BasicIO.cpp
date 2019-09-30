@@ -60,7 +60,7 @@ void BasicIO::WriteJsonFile(std::string FileName, size_t numOfEnt)
 		//For SpriteComponent
 		//Nothing
 
-		//For Rigidbody
+		//For RigidbodyComponent
 		for (size_t j = 0; j < 6; ++j)
 		{
 			strcat_s(writeStr, ",\"e");
@@ -70,7 +70,7 @@ void BasicIO::WriteJsonFile(std::string FileName, size_t numOfEnt)
 			strcat_s(writeStr, "\":0.0");
 		}
 
-		//For Transform
+		//For TransformComponent
 		for (size_t j = 0; j < 5; ++j)
 		{
 			strcat_s(writeStr, ",\"e");

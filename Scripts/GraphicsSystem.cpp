@@ -7,8 +7,8 @@ void GraphicsSystem::init()
 	// Add components to signature
 	Signature signature;
 	signature.set(gEngine.m_coordinator.GetComponentType<SpriteComponent>());
-//	signature.set(gEngine.m_coordinator.GetComponentType<BoxCollider2D>());
-	signature.set(gEngine.m_coordinator.GetComponentType<Transform>());
+	signature.set(gEngine.m_coordinator.GetComponentType<BoxCollider2DComponent>());
+	signature.set(gEngine.m_coordinator.GetComponentType<TransformComponent>());
 
 	// Set graphics system signature
 	gEngine.m_coordinator.SetSystemSignature<GraphicsSystem>(signature);
@@ -21,8 +21,8 @@ void GraphicsSystem::update()
 	for (auto entity : m_entities)
 	{
 		auto& sprite = gEngine.m_coordinator.GetComponent<SpriteComponent>(entity);
-		auto& transform = gEngine.m_coordinator.GetComponent<Transform>(entity);
-		auto& collider = gEngine.m_coordinator.GetComponent<BoxCollider2D>(entity);
+		auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(entity);
+		auto& collider = gEngine.m_coordinator.GetComponent<BoxCollider2DComponent>(entity);
 
 		//draw
 		glBindVertexArray(sprite.getVAO());
