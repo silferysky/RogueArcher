@@ -5,7 +5,7 @@ class REConfig
 {
 public:
 	void ConfigInit();
-	char* GetTitle();
+	std::string GetTitle();
 	bool GetSound();
 	int GetX();
 	int GetY();
@@ -25,6 +25,6 @@ public:
 private:
 	float FPS = 1 / 60;
 	int x = 0, y = 0, height = 0, width = 0, byte = 0, flags = 0;
-	const char* title = "";
+	std::string title = "";
 	bool sound = true;
 };

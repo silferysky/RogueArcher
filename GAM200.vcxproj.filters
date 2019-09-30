@@ -220,6 +220,9 @@
     <ClInclude Include="Scripts\BasicIO.h">
       <Filter>RogueEngine\Systems\I/O</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\WindowHelper.h">
+      <Filter>RogueEngine</Filter>
+    </ClInclude>
     <ClInclude Include="Scripts\BaseSystem.h">
       <Filter>RogueEngine\Systems</Filter>
     </ClInclude>
@@ -323,6 +326,9 @@
     </ClCompile>
     <ClCompile Include="Scripts\BasicIO.cpp">
       <Filter>RogueEngine\Systems\I/O</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\WindowHelper.cpp">
+      <Filter>RogueEngine</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

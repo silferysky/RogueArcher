@@ -1,5 +1,6 @@
 #pragma once
 #include "ObjectFactory.h"
+#include <bitset>
 
 void ObjectFactory::SaveLevel(const char* fileName)
 {
@@ -99,8 +100,9 @@ void ObjectFactory::SaveLevel(const char* fileName)
 void ObjectFactory::LoadLevel(const char* fileName)
 {
 	rapidjson::Document level = m_Serialiser.DeserialiseFromFile(fileName);
-	int curEntSig;
+	Signature curEntSig;
 	int entCount = level["EntCount"].GetInt();
+	std::stringstream debugStr;
 
 	for (int i = 0; i < entCount; ++i)
 	{
@@ -112,12 +114,13 @@ void ObjectFactory::LoadLevel(const char* fileName)
 		//cstr will go out of scope if you choose to do strstream.str().c_str()
 		//This is the proper (Non macro) way of setting the string
 		strstream << "Signature" << i;
+
 		stdstr = strstream.str();
 		cstr = stdstr.c_str();
 		curEntSig = level[cstr].GetInt();
 
 		//Copypasta for each new variable//
-		if (curEntSig % 2 == 1)
+		if (curEntSig.test(0))
 		{
 			//SpriteComponent does not need to load values, so ignore
 			//Still need to -- though, since signature does contain it
@@ -132,13 +135,11 @@ void ObjectFactory::LoadLevel(const char* fileName)
 			s.m_EBO = (unsigned int)level[cstr].GetInt();*/
 
 			gEngine.m_coordinator.AddComponent(curEnt, s);
-			--curEntSig;
 		}
-		curEntSig /= 2;
 		///////////////////////////////////
 
 		//Copypasta for each new variable//
-		if (curEntSig % 2 == 1)
+		if (curEntSig.test(1))
 		{
 			Rigidbody r;
 			float x, y;
@@ -163,13 +164,11 @@ void ObjectFactory::LoadLevel(const char* fileName)
 			r.setVolume(level[cstr].GetFloat());
 
 			gEngine.m_coordinator.AddComponent(curEnt, r);
-			--curEntSig;
 		}
-		curEntSig /= 2;
 		///////////////////////////////////
 		
 		//Copypasta for each new variable//
-		if (curEntSig % 2 == 1)
+		if (curEntSig.test(2))
 		{
 			Transform t;
 			float x, y;
@@ -186,29 +185,29 @@ void ObjectFactory::LoadLevel(const char* fileName)
 			t.setRotation(level[cstr].GetFloat());
 
 			gEngine.m_coordinator.AddComponent(curEnt, t);
-			--curEntSig;
 		}
-		curEntSig /= 2;
 		///////////////////////////////////
 
 		//Copypasta for each new variable//
-		if (curEntSig % 2 == 1)
+		if (curEntSig.test(3))
 		{
 			CircleCollider2D cc;
 			CLEARNSETSTR(strstream, i, "ccc", 0);
 			cc.setRadius(level[cstr].GetFloat());
 
 			gEngine.m_coordinator.AddComponent(curEnt, cc);
-			--curEntSig;
 		}
-		curEntSig /= 2;
 		///////////////////////////////////
 
 
 		//ADD NEW COMPONENT LOADING HERE, BASED ON BITMAP
-
 		//Finally add Entity reference to entity vector
 		m_activeEntities.push_back(curEnt);
+
+		debugStr.clear();
+		debugStr.str("");
+		debugStr << "Entity " << i << "'s Signature: " << gEngine.m_coordinator.GetEntityManager().GetSignature(i).to_ulong();
+		RE_INFO(debugStr.str());
 	}
 	RE_INFO("LEVEL LOADED");
 	std::stringstream infoStr;
