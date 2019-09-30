@@ -46,15 +46,17 @@ void BasicIO::WriteJsonFile(std::string FileName, size_t numOfEnt)
 	strcat_s(writeStr, "{\"EntCount\":");
 	strcat_s(writeStr, std::to_string(numOfEnt).c_str());
 
+	//For Signature
 	for (size_t i = 0; i < numOfEnt; ++i)
 	{
-		//For Signature
 		strcat_s(writeStr, ",\"Signature");
 		strcat_s(writeStr, std::to_string(i).c_str());
 		strcat_s(writeStr, "\":0");
+	}
 
-		//For each component
-
+	//For each component
+	for (size_t i = 0; i < numOfEnt; ++i)
+	{
 		//For SpriteComponent
 		//Nothing
 
@@ -82,6 +84,20 @@ void BasicIO::WriteJsonFile(std::string FileName, size_t numOfEnt)
 		strcat_s(writeStr, ",\"e");
 		strcat_s(writeStr, std::to_string(i).c_str());
 		strcat_s(writeStr, "ccc0\":0.0");
+
+		//For Box Collider
+		strcat_s(writeStr, ",\"e");
+		strcat_s(writeStr, std::to_string(i).c_str());
+		strcat_s(writeStr, "bcc0\":0");
+		for (size_t j = 1; j < 9; ++j)
+		{
+			strcat_s(writeStr, ",\"e");
+			strcat_s(writeStr, std::to_string(i).c_str());
+			strcat_s(writeStr, "bcc");
+			strcat_s(writeStr, std::to_string(j).c_str());
+			strcat_s(writeStr, "\":0.0");
+		}
+		strcat_s(writeStr, "\n");
 	}
 	strcat_s(writeStr, "}");
 

@@ -5,8 +5,14 @@ OBB::OBB(const OBB::VertexList& model)
 	m_maxOnAxis{ 0.0f },
 	m_modelVertices{ model },
 	m_globalVertices{ OBB::VertexList(model.size()) },
-	m_normals{ OBB::VertexList(model.size()) }
+	m_normals{ OBB::VertexList(model.size()) },
+	m_size{ model.size() }
 {}
+
+size_t OBB::getSize() const
+{
+	return m_size;
+}
 
 float OBB::getMin() const
 {
@@ -31,6 +37,11 @@ OBB::VertexList& OBB::modelVerts()
 OBB::VertexList& OBB::normals()
 {
 	return m_normals;
+}
+
+void OBB::setSize(size_t size)
+{
+	m_size = size;
 }
 
 void OBB::setMin(float min)

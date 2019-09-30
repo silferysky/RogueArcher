@@ -1,101 +1,9 @@
 #pragma once
 #include "ObjectFactory.h"
 #include <bitset>
-
-void ObjectFactory::SaveLevel(const char* fileName)
-{
-	Entity entCount = m_activeEntities.size();
-	EntityManager* em = &gEngine.m_coordinator.GetEntityManager();
-	m_Serialiser.WriteToFile(fileName, "EntCount", (int)entCount);
-	
-	std::vector<Entity>::iterator entIt = m_activeEntities.begin();
-	for (int i = 0; i < entCount; ++i)
-	{
-		std::stringstream varName;
-		std::string stdstr;
-		const char* cstr;
-		int varNum = 0;
-		int convertSig = em->GetSignature(*entIt).to_ulong();
-
-		//cstr will go out of scope if you choose to do strstream.str().c_str()
-		//This is the proper (Non macro) way of setting the string
-		varName << "Signature" << i;
-		stdstr = varName.str();
-		cstr = stdstr.c_str();
-		m_Serialiser.WriteToFile(fileName, cstr, convertSig);
-
-		//TODO: Change it to more dynamic
-		SpriteComponent s = gEngine.m_coordinator.GetComponent<SpriteComponent>(i);
-		Rigidbody r = gEngine.m_coordinator.GetComponent<Rigidbody>(i);
-		Transform t = gEngine.m_coordinator.GetComponent<Transform>(i);
-		CircleCollider2D c = gEngine.m_coordinator.GetComponent<CircleCollider2D>(i);
-
-		//Copypasta for each new variable//
-		//SpriteComponent does not need to save values, so just save signature
-		/*varNum = 0;
-		CLEARNSETSTR(varName, i, "sc", varNum);
-		m_Serialiser.WriteToFile(fileName, cstr, (int)s.getShader());
-		++varNum;
-		CLEARNSETSTR(varName, i, "sc", varNum);
-		m_Serialiser.WriteToFile(fileName, cstr, (int)s.getVAO());
-		++varNum;
-		CLEARNSETSTR(varName, i, "sc", varNum);
-		m_Serialiser.WriteToFile(fileName, cstr, (int)s.getVBO());
-		++varNum;
-		CLEARNSETSTR(varName, i, "sc", varNum);
-		m_Serialiser.WriteToFile(fileName, cstr, (int)s.getEBO());*/
-		///////////////////////////////////
-
-		//Copypasta for each new variable//
-		varNum = 0;
-		CLEARNSETSTR(varName, i, "rbc", varNum);
-		m_Serialiser.WriteToFile(fileName, cstr, (float)r.getAcceleration().x);
-		++varNum;
-		CLEARNSETSTR(varName, i, "rbc", varNum);
-		m_Serialiser.WriteToFile(fileName, cstr, (float)r.getAcceleration().y);
-		++varNum;
-		CLEARNSETSTR(varName, i, "rbc", varNum);
-		m_Serialiser.WriteToFile(fileName, cstr, (float)r.getVelocity().x);
-		++varNum;
-		CLEARNSETSTR(varName, i, "rbc", varNum);
-		m_Serialiser.WriteToFile(fileName, cstr, (float)r.getVelocity().y);
-		++varNum;
-		CLEARNSETSTR(varName, i, "rbc", varNum);
-		m_Serialiser.WriteToFile(fileName, cstr, r.getInvMass());
-		++varNum;
-		CLEARNSETSTR(varName, i, "rbc", varNum);
-		m_Serialiser.WriteToFile(fileName, cstr, r.getVolume());
-		///////////////////////////////////
-
-		//Copypasta for each new variable//
-		varNum = 0;
-		CLEARNSETSTR(varName, i, "tc", varNum);
-		m_Serialiser.WriteToFile(fileName, cstr, t.getPosition().x);
-		++varNum;
-		CLEARNSETSTR(varName, i, "tc", varNum);
-		m_Serialiser.WriteToFile(fileName, cstr, t.getPosition().y);
-		++varNum;
-		CLEARNSETSTR(varName, i, "tc", varNum);
-		m_Serialiser.WriteToFile(fileName, cstr, t.getScale().x);
-		++varNum;
-		CLEARNSETSTR(varName, i, "tc", varNum);
-		m_Serialiser.WriteToFile(fileName, cstr, t.getScale().y);
-		++varNum;
-		CLEARNSETSTR(varName, i, "tc", varNum);
-		m_Serialiser.WriteToFile(fileName, cstr, t.getRotation());
-		///////////////////////////////////
-
-		//Copypasta for each new variable//
-		varNum = 0;
-		CLEARNSETSTR(varName, i, "ccc", varNum);
-		m_Serialiser.WriteToFile(fileName, cstr, c.getRadius());
-		///////////////////////////////////
-
-		++entIt;
-	}
-
-	RE_INFO("LEVEL SAVED");
-}
+#include <random>
+#define RAND_LARGE 500
+#define RAND_SMALL 10
 
 void ObjectFactory::LoadLevel(const char* fileName)
 {
@@ -166,7 +74,7 @@ void ObjectFactory::LoadLevel(const char* fileName)
 			gEngine.m_coordinator.AddComponent(curEnt, r);
 		}
 		///////////////////////////////////
-		
+
 		//Copypasta for each new variable//
 		if (curEntSig.test(2))
 		{
@@ -197,8 +105,36 @@ void ObjectFactory::LoadLevel(const char* fileName)
 
 			gEngine.m_coordinator.AddComponent(curEnt, cc);
 		}
+
 		///////////////////////////////////
 
+		//Copypasta for each new variable//
+		if (curEntSig.test(4))
+		{
+			std::vector<Vec2> vecVec;
+			float x, y;
+			size_t size, varNum = 0;
+			CLEARNSETSTR(strstream, i, "bcc", varNum);
+			size = (size_t)level[cstr].GetInt();
+			++varNum;
+
+			for (size_t vertCount = 0; vertCount < size; ++vertCount)
+			{
+				CLEARNSETSTR(strstream, i, "bcc", varNum);
+				x = level[cstr].GetFloat();
+				++varNum;
+				CLEARNSETSTR(strstream, i, "bcc", varNum);
+				y = level[cstr].GetFloat();
+				++varNum;
+				vecVec.push_back(Vec2(x, y));
+			}
+
+			BoxCollider2D bc;
+			bc.m_obb = OBB(vecVec);
+			bc.m_obb.setSize(size);
+			gEngine.m_coordinator.AddComponent(curEnt, bc);
+		}
+		///////////////////////////////////
 
 		//ADD NEW COMPONENT LOADING HERE, BASED ON BITMAP
 		//Finally add Entity reference to entity vector
@@ -216,6 +152,109 @@ void ObjectFactory::LoadLevel(const char* fileName)
 
 }
 
+void ObjectFactory::SaveLevel(const char* fileName)
+{
+	Entity entCount = m_activeEntities.size();
+	EntityManager* em = &gEngine.m_coordinator.GetEntityManager();
+	m_Serialiser.WriteToFile(fileName, "EntCount", (int)entCount);
+
+	for (int i = 0; i < entCount; ++i)
+	{
+		std::stringstream varName;
+		std::string stdstr;
+		const char* cstr;
+		int varNum = 0;
+		int convertSig = em->GetSignature(i).to_ulong();
+
+		//cstr will go out of scope if you choose to do strstream.str().c_str()
+		//This is the proper (Non macro) way of setting the string
+		varName << "Signature" << i;
+		stdstr = varName.str();
+		cstr = stdstr.c_str();
+		m_Serialiser.WriteToFile(fileName, cstr, convertSig);
+
+		//TODO: Change it to more dynamic
+		SpriteComponent s = gEngine.m_coordinator.GetComponent<SpriteComponent>(i);
+		Rigidbody r = gEngine.m_coordinator.GetComponent<Rigidbody>(i);
+		Transform t = gEngine.m_coordinator.GetComponent<Transform>(i);
+		CircleCollider2D cc = gEngine.m_coordinator.GetComponent<CircleCollider2D>(i);
+		BoxCollider2D bc = gEngine.m_coordinator.GetComponent<BoxCollider2D>(i);
+
+		//Copypasta for each new variable//
+		//SpriteComponent does not need to save values, so just save signature
+		///////////////////////////////////
+
+		//Copypasta for each new variable//
+		varNum = 0;
+		CLEARNSETSTR(varName, i, "rbc", varNum);
+		m_Serialiser.WriteToFile(fileName, cstr, (float)r.getAcceleration().x);
+		++varNum;
+		CLEARNSETSTR(varName, i, "rbc", varNum);
+		m_Serialiser.WriteToFile(fileName, cstr, (float)r.getAcceleration().y);
+		++varNum;
+		CLEARNSETSTR(varName, i, "rbc", varNum);
+		m_Serialiser.WriteToFile(fileName, cstr, (float)r.getVelocity().x);
+		++varNum;
+		CLEARNSETSTR(varName, i, "rbc", varNum);
+		m_Serialiser.WriteToFile(fileName, cstr, (float)r.getVelocity().y);
+		++varNum;
+		CLEARNSETSTR(varName, i, "rbc", varNum);
+		m_Serialiser.WriteToFile(fileName, cstr, r.getInvMass());
+		++varNum;
+		CLEARNSETSTR(varName, i, "rbc", varNum);
+		m_Serialiser.WriteToFile(fileName, cstr, r.getVolume());
+		///////////////////////////////////
+
+		//Copypasta for each new variable//
+		//Creating a random value for each transform component value
+		std::random_device rd;
+		std::mt19937 gen(rd());		//For random seed
+		std::uniform_int_distribution<> distribution_L(-RAND_LARGE, RAND_LARGE);
+		std::uniform_int_distribution<> distribution_S(-RAND_SMALL, RAND_SMALL);
+
+		varNum = 0;
+		CLEARNSETSTR(varName, i, "tc", varNum);
+		m_Serialiser.WriteToFile(fileName, cstr, distribution_L(gen));
+		++varNum;
+		CLEARNSETSTR(varName, i, "tc", varNum);
+		m_Serialiser.WriteToFile(fileName, cstr, distribution_L(gen));
+		++varNum;
+		CLEARNSETSTR(varName, i, "tc", varNum);
+		m_Serialiser.WriteToFile(fileName, cstr, distribution_S(gen));
+		++varNum;
+		CLEARNSETSTR(varName, i, "tc", varNum);
+		m_Serialiser.WriteToFile(fileName, cstr, distribution_S(gen));
+		++varNum;
+		CLEARNSETSTR(varName, i, "tc", varNum);
+		m_Serialiser.WriteToFile(fileName, cstr, distribution_L(gen));
+		///////////////////////////////////
+
+		//Copypasta for each new variable//
+		varNum = 0;
+		CLEARNSETSTR(varName, i, "ccc", varNum);
+		m_Serialiser.WriteToFile(fileName, cstr, cc.getRadius());
+		///////////////////////////////////
+
+		//Copypasta for each new variable//
+		varNum = 0;
+		CLEARNSETSTR(varName, i, "bcc", varNum);
+		m_Serialiser.WriteToFile(fileName, cstr, bc.m_obb.getSize());
+		++varNum;
+		for (std::vector<Vec2>::iterator it; (size_t)varNum < bc.m_obb.getSize(); ++it)
+		{
+			CLEARNSETSTR(varName, i, "bcc", varNum);
+			m_Serialiser.WriteToFile(fileName, cstr, it->x);
+			++varNum;
+			CLEARNSETSTR(varName, i, "bcc", varNum);
+			m_Serialiser.WriteToFile(fileName, cstr, it->y);
+			++varNum;
+		}
+		///////////////////////////////////
+	}
+
+	RE_INFO("LEVEL SAVED");
+}
+
 std::vector<Entity> ObjectFactory::GetActiveEntity() const
 {
 	return m_activeEntities;
@@ -223,7 +262,7 @@ std::vector<Entity> ObjectFactory::GetActiveEntity() const
 
 ComponentType ObjectFactory::GetCmpType(int index) const
 {
-	const char * cmpName;
+	const char* cmpName;
 	switch (index)
 	{
 	case 0:
