@@ -74,20 +74,12 @@ void SpriteComponent::draw(TransformComponent* transform) const
 	float bottom = transform->getPosition().y - transform->getScale().y;
 
 	float _vertexpos[] =
-	/* {
+	{
 		// positions          // colors           // texture coords
 		right,  top, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
 		right, bottom, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
 	   left, bottom, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
 	   left,  top, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left 
-	}; */
-
-	{
-		// positions          // colors           // texture coords
-		0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
-		0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
-	   -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-	   -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left 
 	};
 
 	glBufferData(GL_ARRAY_BUFFER, sizeof(_vertexpos), _vertexpos, GL_STATIC_DRAW);
