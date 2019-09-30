@@ -4,7 +4,7 @@
 #include <bitset>
 #include <array>
 #include "Logger.h"
-
+#include <cassert>
 class EntityManager
 {
 public:
@@ -19,6 +19,7 @@ public:
 	Entity CreateEntity()
 	{
 		// Take an ID from the front of the queue
+		assert(REActiveEntityCount < MAX_ENTITIES && "Too many entities in existence.");
 		Entity id = REAvailableEntities.front();
 		REAvailableEntities.pop();
 		++REActiveEntityCount;
@@ -32,6 +33,7 @@ public:
 
 	void DestroyEntity(Entity entity)
 	{
+		assert(entity < MAX_ENTITIES && "Entity out of range.");
 		// Invalidate the destroyed entity's signature
 		RESignatures[entity].reset();
 
@@ -46,11 +48,13 @@ public:
 
 	void SetSignature(Entity entity, Signature signature)
 	{
+		assert(entity < MAX_ENTITIES && "Entity out of range.");
 		RESignatures[entity] = signature;
 	}
 
 	Signature GetSignature(Entity entity)
 	{
+		assert(entity < MAX_ENTITIES && "Entity out of range.");
 		return RESignatures[entity];
 	}
 

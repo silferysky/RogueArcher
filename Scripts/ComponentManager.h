@@ -4,6 +4,7 @@
 #include "ComponentArray.h"
 #include "ComponentList.h"
 #include "Logger.h"
+#include <cassert>
 
 class ComponentManager
 {
@@ -12,25 +13,26 @@ public:
 	void RegisterComponent()
 	{
 		const char* typeName = typeid(T).name();
+		assert(REComponentTypes.find(typeName) == REComponentTypes.end() && "Registering component type more than once.");
 
 		// Add this component type to the component type map
 		REComponentTypes.insert({ typeName, RENextComponentType });
-		
+
 		std::stringstream out;
 		out.clear();
 		out.str("");
 		out << "Creating " << typeName << "s...";
 		RE_CORE_INFO(out.str());
-		
+
 		// Create a ComponentArray pointer and add it to the component arrays map
 		REComponentArrays.insert({ typeName, std::make_shared<ComponentArray<T>>() });
-		
+
 
 		out.clear();
 		out.str("");
 		out << "Array of " << MAX_ENTITIES << " " << typeName << "s created!";
 		RE_CORE_INFO(out.str());
-		
+
 		// Increment the value so that the next component registered will be different
 		++RENextComponentType;
 	}
@@ -39,7 +41,7 @@ public:
 	ComponentType GetComponentType()
 	{
 		const char* typeName = typeid(T).name();
-
+		assert(REComponentTypes.find(typeName) != REComponentTypes.end() && "Component not registered before use.");
 		return REComponentTypes[typeName];
 	}
 
@@ -56,7 +58,7 @@ public:
 		RE_CORE_INFO(out.str());
 		GetComponentArray<T>()->InsertData(entity, component);
 	}
-	
+
 	template<typename T>
 	void RemoveComponent(Entity entity)
 	{
@@ -92,7 +94,9 @@ private:
 	template<typename T>
 	std::shared_ptr<ComponentArray<T>> GetComponentArray()
 	{
+
 		const char* typeName = typeid(T).name();
+		assert(REComponentTypes.find(typeName) != REComponentTypes.end() && "Component not registered before use.");
 		return std::static_pointer_cast<ComponentArray<T>>(REComponentArrays[typeName]);
 	}
 
