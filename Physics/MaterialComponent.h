@@ -11,7 +11,7 @@ enum MaterialList
 	MAT_MAX
 };
 
-class Material
+class MaterialComponent
 {
 	MaterialList m_material;
 	float m_density;
@@ -19,7 +19,7 @@ class Material
 	float m_damping;
 
 public:
-	Material(MaterialList material = MAT_NONE);
-	~Material();
+	MaterialComponent(MaterialList material = MAT_NONE);
+	~MaterialComponent();
 };
 

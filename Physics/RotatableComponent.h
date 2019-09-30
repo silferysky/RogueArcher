@@ -1,6 +1,6 @@
 #pragma once
 
-class Rotatable
+class RotatableComponent
 {
 	float m_angularVel;
 	float m_torque;

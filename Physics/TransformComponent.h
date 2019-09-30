@@ -1,15 +1,15 @@
 #pragma once
 #include "../Scripts/REMath.h"
 
-class Transform
+class TransformComponent
 {
 	Vec2 m_position = Vec2(0.0f, 0.0f);
 	Vec2 m_scale = Vec2(0.5f, 0.5f);
 	float m_rotation;
 
 public:
-	Transform() = default;
-	~Transform() = default;
+	TransformComponent() = default;
+	~TransformComponent() = default;
 
 	void setPosition(const Vec2& pos);
 	void offSetPosition(const Vec2& pos);
