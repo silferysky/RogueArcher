@@ -3,6 +3,7 @@
 #include "BasicIO.h"
 #include "SOIL.h"
 #include "../Physics/TransformComponent.h"
+#include "../TextureManager.h"
 
 class SpriteComponent
 {
@@ -13,7 +14,7 @@ class SpriteComponent
 	};
 
 	GLuint m_texture = 0;
-	unsigned int m_shader = 0;
+	GLuint m_shader = 0;
 	GLuint m_VAO = 0;
 	GLuint m_VBO = 0;
 	GLuint m_EBO = 0;
@@ -27,7 +28,7 @@ public:
 	void draw(TransformComponent* transform) const;
 
 	GLuint getTexture() const;
-	unsigned int getShader() const;
+	GLuint getShader() const;
 	GLuint getVAO() const;
 	GLuint getVBO() const;
 	GLuint getEBO() const;

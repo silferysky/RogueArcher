@@ -73,6 +73,7 @@
     <ClInclude Include="Scripts\Vector2D.h" />
     <ClInclude Include="Scripts\VSync.h" />
     <ClInclude Include="Scripts\WindowHelper.h" />
+    <ClInclude Include="TextureManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Physics\BoxCollider2DComponent.cpp" />
@@ -107,6 +108,7 @@
     <ClCompile Include="Scripts\Vector2D.cpp" />
     <ClCompile Include="Scripts\VSync.cpp" />
     <ClCompile Include="Scripts\WindowHelper.cpp" />
+    <ClCompile Include="TextureManager.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
