@@ -1,6 +1,9 @@
 #pragma once
 #include "ObjectFactory.h"
 #include <bitset>
+#include <random>
+#define RAND_LARGE 500
+#define RAND_SMALL 10
 
 void ObjectFactory::LoadLevel(const char* fileName)
 {
@@ -203,21 +206,27 @@ void ObjectFactory::SaveLevel(const char* fileName)
 		///////////////////////////////////
 
 		//Copypasta for each new variable//
+		//Creating a random value for each transform component value
+		std::random_device rd;
+		std::mt19937 gen(rd());		//For random seed
+		std::uniform_int_distribution<> distribution_L(-RAND_LARGE, RAND_LARGE);
+		std::uniform_int_distribution<> distribution_S(-RAND_SMALL, RAND_SMALL);
+
 		varNum = 0;
 		CLEARNSETSTR(varName, i, "tc", varNum);
-		m_Serialiser.WriteToFile(fileName, cstr, t.getPosition().x);
+		m_Serialiser.WriteToFile(fileName, cstr, distribution_L(gen));
 		++varNum;
 		CLEARNSETSTR(varName, i, "tc", varNum);
-		m_Serialiser.WriteToFile(fileName, cstr, t.getPosition().y);
+		m_Serialiser.WriteToFile(fileName, cstr, distribution_L(gen));
 		++varNum;
 		CLEARNSETSTR(varName, i, "tc", varNum);
-		m_Serialiser.WriteToFile(fileName, cstr, t.getScale().x);
+		m_Serialiser.WriteToFile(fileName, cstr, distribution_S(gen));
 		++varNum;
 		CLEARNSETSTR(varName, i, "tc", varNum);
-		m_Serialiser.WriteToFile(fileName, cstr, t.getScale().y);
+		m_Serialiser.WriteToFile(fileName, cstr, distribution_S(gen));
 		++varNum;
 		CLEARNSETSTR(varName, i, "tc", varNum);
-		m_Serialiser.WriteToFile(fileName, cstr, t.getRotation());
+		m_Serialiser.WriteToFile(fileName, cstr, distribution_L(gen));
 		///////////////////////////////////
 
 		//Copypasta for each new variable//
