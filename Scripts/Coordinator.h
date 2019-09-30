@@ -18,6 +18,7 @@ public:
 		  m_componentManager{ std::make_unique<ComponentManager>() },
 		  m_systemManager{ std::make_unique<SystemManager>() },
 		  m_fileManager{ std::make_unique<FileManager>() },
+		  m_textureManager{ std::make_unique<TextureManager>() },
 		  m_activeEntities{MAX_ENTITIES}
 	{}
 
@@ -71,6 +72,11 @@ public:
 		m_componentManager->EntityDestroyed(entity);
 
 		m_systemManager->EntityDestroyed(entity);
+	}
+
+	GLuint loadTexture(const char* texture)
+	{
+		return m_textureManager->loadTexture(texture);
 	}
 
 	template<typename T>
@@ -163,5 +169,6 @@ private:
 	std::unique_ptr<EntityManager> m_entityManager;
 	std::unique_ptr<SystemManager> m_systemManager;
 	std::unique_ptr<FileManager> m_fileManager;
+	std::unique_ptr<TextureManager> m_textureManager;
 	std::vector<Entity> m_activeEntities;
 };
