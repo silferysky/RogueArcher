@@ -177,6 +177,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Dep\FMOD\inc;$(SolutionDir)Dep\spdlog-1.x\include;$(SolutionDir)Dep\SOIL\include;$(SolutionDir)Dep\GLFW\include;$(SolutionDir)Dep\glew-2.1.0\include;$(SolutionDir)Dep\rapidjson-master\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)Dep\FMOD\lib;$(SolutionDir)Dep\SOIL\Win32;$(SolutionDir)Dep\GLFW\lib-vc2015;$(SolutionDir)Dep\glew-2.1.0\lib\Release\Win32</AdditionalLibraryDirectories>
@@ -190,6 +191,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Dep\FMOD\inc;$(SolutionDir)Dep\spdlog-1.x\include;$(SolutionDir)Dep\SOIL\include;$(SolutionDir)Dep\GLFW\include;$(SolutionDir)Dep\glew-2.1.0\include;$(SolutionDir)Dep\rapidjson-master\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)Dep\FMOD\lib;$(SolutionDir)Dep\SOIL\x64;$(SolutionDir)Dep\GLFW\lib-vc2015;$(SolutionDir)Dep\glew-2.1.0\lib\Release\x64</AdditionalLibraryDirectories>
@@ -206,6 +208,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Dep\FMOD\inc;$(SolutionDir)Dep\spdlog-1.x\include;$(SolutionDir)Dep\SOIL\include;$(SolutionDir)Dep\GLFW\include;$(SolutionDir)Dep\glew-2.1.0\include;$(SolutionDir)Dep\rapidjson-master\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -223,6 +226,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Dep\FMOD\inc;$(SolutionDir)Dep\spdlog-1.x\include;$(SolutionDir)Dep\SOIL\include;$(SolutionDir)Dep\GLFW\include;$(SolutionDir)Dep\glew-2.1.0\include;$(SolutionDir)Dep\rapidjson-master\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
