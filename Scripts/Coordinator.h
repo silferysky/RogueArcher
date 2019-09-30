@@ -15,10 +15,10 @@ class Coordinator
 public:
 	Coordinator()
 		: m_entityManager{ std::make_unique<EntityManager>() },
-		m_componentManager{ std::make_unique<ComponentManager>() },
-		m_systemManager{ std::make_unique<SystemManager>() },
-		m_fileManager{ std::make_unique<FileManager>() },
-		m_activeEntities{MAX_ENTITIES}
+		  m_componentManager{ std::make_unique<ComponentManager>() },
+		  m_systemManager{ std::make_unique<SystemManager>() },
+		  m_fileManager{ std::make_unique<FileManager>() },
+		  m_activeEntities{MAX_ENTITIES}
 	{}
 
 	void Init()
@@ -33,13 +33,6 @@ public:
 
 		RE_CORE_INFO("-----------END REGISTERING SYSTEMS------------\n\n");
 
-		// Init systems and system signatures will be set in their respective inits.
-		RE_CORE_INFO("----------START INITIALIZING SYSTEMS----------");
-
-		initSystems();
-
-		RE_CORE_INFO("-----------END INITIALIZING SYSTEMS-----------\n\n");
-
 		// Register all components
 		RE_CORE_INFO("---------START REGISTERING COMPONENTS---------");
 
@@ -50,6 +43,14 @@ public:
 		RegisterComponent<BoxCollider2D>();
 
 		RE_CORE_INFO("----------END REGISTERING COMPONENTS----------\n\n");
+
+		// Init systems and system signatures will be set in their respective inits.
+		RE_CORE_INFO("----------START INITIALIZING SYSTEMS----------");
+
+		initSystems();
+
+		RE_CORE_INFO("-----------END INITIALIZING SYSTEMS-----------\n\n");
+
 	}
 
 	void update()

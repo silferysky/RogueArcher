@@ -59,6 +59,9 @@ public:
 
 		// Set the signature for this system
 		RESignatures.insert({ typeName, signature });
+		std::stringstream out;
+		out << typeName << "'s signature set to " << signature;
+		RE_CORE_INFO(out.str());
 	}
 
 	void EntityDestroyed(Entity entity)
@@ -100,7 +103,7 @@ public:
 			{
 				out.clear();
 				out.str("");
-				out << "Entity " << entity << "'s signature does not match. " << "Removed from " << type << ".";
+				out << "Entity " << entity << "'s signature does not match. " << type << " not added.";
 				RE_CORE_INFO(out.str());
 				system->m_entities.erase(entity);
 			}

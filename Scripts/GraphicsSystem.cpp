@@ -7,19 +7,12 @@ void GraphicsSystem::init()
 	// Add components to signature
 	Signature signature;
 	signature.set(gEngine.m_coordinator.GetComponentType<SpriteComponent>());
-	signature.set(gEngine.m_coordinator.GetComponentType<BoxCollider2D>());
+//	signature.set(gEngine.m_coordinator.GetComponentType<BoxCollider2D>());
 	signature.set(gEngine.m_coordinator.GetComponentType<Transform>());
 
 	// Set graphics system signature
 	gEngine.m_coordinator.SetSystemSignature<GraphicsSystem>(signature);
 
-	glEnable(GL_TEXTURE_2D);						   // Texture Mapping
-	glShadeModel(GL_SMOOTH);						   // Smooth shading
-	glDepthFunc(GL_LEQUAL);							   // Depth testing type
-	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Perspective Calculations
-
-	if (glewInit() != GLEW_OK)
-		std::cout << "GLEW broke" << std::endl;
 }
 
 void GraphicsSystem::update()

@@ -31,7 +31,7 @@ void PhysicsSystem::init()
 	Signature signature;
 	signature.set(gEngine.m_coordinator.GetComponentType<Rigidbody>());
 	signature.set(gEngine.m_coordinator.GetComponentType<Transform>());
-	signature.set(gEngine.m_coordinator.GetComponentType<BoxCollider2D>());
+//	signature.set(gEngine.m_coordinator.GetComponentType<BoxCollider2D>());
 //	signature.set(gEngine.m_coordinator.GetComponentType<CircleCollider2D>());
 	
 	// Set physics system signature.
