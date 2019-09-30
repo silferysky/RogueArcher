@@ -7,6 +7,8 @@ class OBB
 {
 	using VertexList = std::vector<Vec2>;
 
+	size_t m_size;
+
 	// The minimum and maximum values crushed onto each axis
 	float m_minOnAxis;
 	float m_maxOnAxis;
@@ -18,12 +20,14 @@ public:
 	OBB(const VertexList& model = VertexList());
 	~OBB() = default;
 
+	size_t getSize() const;
 	float getMin() const;
 	float getMax() const;
 	VertexList& globVerts(); // Get global Vertices
 	VertexList& modelVerts();
 	VertexList& normals();
 
+	void setSize(size_t size);
 	void setMin(float min);
 	void setMax(float max);
 };
