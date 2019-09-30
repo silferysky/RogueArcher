@@ -15,6 +15,7 @@
 #include "Quad.h"
 #include "SOIL.h"
 #include "Config.h"
+#include "WindowHelper.h"
 
 
 REEngine gEngine;
@@ -26,101 +27,6 @@ ObjectFactory gObjectFactory;
 static const int SCREEN_FULLSCREEN = 0;
 static const int SCREEN_WIDTH = 960;
 static const int SCREEN_HEIGHT = 540;
-
-
-LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
-{
-	static PAINTSTRUCT ps;
-	switch (uMsg)
-	{
-	case WM_PAINT:
-		BeginPaint(hWnd, &ps);
-		EndPaint(hWnd, &ps);
-		return 0;
-	case WM_SIZE:
-		glViewport(0, 0, LOWORD(lParam), HIWORD(lParam));
-		PostMessage(hWnd, WM_PAINT, 0, 0);
-		return 0;
-	case WM_DESTROY:
-		PostQuitMessage(0);
-		return 0;
-	case WM_RBUTTONUP:
-		gameIsRunning = false;
-		break;
-	}
-	return DefWindowProc(hWnd, uMsg, wParam, lParam);
-}
-
-HWND CreateOpenGLWindow(char* title, int x, int y, int width, int height,
-	BYTE type, DWORD flags)
-{
-	int         pf;
-	HDC         hDC;
-	HWND        hWnd;
-	WNDCLASS    wc;
-	PIXELFORMATDESCRIPTOR pfd{ 0 };
-	static HINSTANCE hInstance = 0;
-
-	/* only register the window class once - use hInstance as a flag. */
-	if (!hInstance) {
-		hInstance = GetModuleHandle(NULL);
-		wc.style = CS_OWNDC;
-		wc.lpfnWndProc = (WNDPROC)WndProc;
-		wc.cbClsExtra = 0;
-		wc.cbWndExtra = 0;
-		wc.hInstance = hInstance;
-		wc.hIcon = LoadIcon(NULL, IDI_WINLOGO);
-		wc.hCursor = LoadCursor(NULL, IDC_ARROW);
-		wc.hbrBackground = NULL;
-		wc.lpszMenuName = NULL;
-		wc.lpszClassName = "OpenGL";
-
-		if (!RegisterClass(&wc)) {
-			MessageBox(NULL, "RegisterClass() failed:  "
-				"Cannot register window class.", "Error", MB_OK);
-			return NULL;
-		}
-	}
-
-	hWnd = CreateWindow("OpenGL", title, WS_OVERLAPPEDWINDOW |
-		WS_CLIPSIBLINGS | WS_CLIPCHILDREN,
-		x, y, width, height, NULL, NULL, hInstance, NULL);
-
-	if (hWnd == NULL) {
-		MessageBox(NULL, "CreateWindow() failed:  Cannot create a window.",
-			"Error", MB_OK);
-		return NULL;
-	}
-
-	hDC = GetDC(hWnd);
-
-	memset(&pfd, 0, sizeof(pfd));
-	pfd.nSize = sizeof(pfd);
-	pfd.nVersion = 1;
-	pfd.dwFlags = PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | flags | PFD_GENERIC_ACCELERATED | PFD_DOUBLEBUFFER;
-	pfd.iPixelType = type;
-	pfd.cColorBits = 32;
-
-	pf = ChoosePixelFormat(hDC, &pfd);
-	if (pf == 0) {
-		MessageBox(NULL, "ChoosePixelFormat() failed:  "
-			"Cannot find a suitable pixel format.", "Error", MB_OK);
-		return 0;
-	}
-
-	if (SetPixelFormat(hDC, pf, &pfd) == FALSE) {
-		MessageBox(NULL, "SetPixelFormat() failed:  "
-			"Cannot set format specified.", "Error", MB_OK);
-		return 0;
-	}
-
-	DescribePixelFormat(hDC, pf, sizeof(PIXELFORMATDESCRIPTOR), &pfd);
-
-	//ReleaseDC(hWnd, hDC);
-
-	return hWnd;
-}
-
 
 //Use for console
 int APIENTRY
@@ -278,72 +184,4 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 
 	return (int)msg.wParam;
 }
-
-/* int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
-{
-	if (_DEBUG)
-	{
-		std::cout << "DEBUG STATE ACTIVATE" << std::endl;
-	}
-
-	// Enable run-time memory check for debug builds.
-#if defined(DEBUG) | defined(_DEBUG)
-	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-#endif
-
-	GSM_Initialize(GS_TESTLEVEL);
-
-	while (_current != GS_QUIT)
-	{
-		if (_current != GS_RESTART) // if level is the same as previous
-		{
-			GSM_Update(); // update game state type
-			//fpLoad();     // load all assets required for new game state
-		}
-		else
-		{
-			// retains same game state as previous
-			_current = _previous;
-			_next = _previous;
-		}
-
-		//fpInit(); // initialize current game state
-
-		//The game loop
-		while (_current == _next)
-		{
-			//AESysFrameStart();
-			//gdt += AEFrameRateControllerGetFrameRate() / 60;
-
-			//If 1/60 of a second has passed
-			if (gdt)
-			{
-				//AEInputUpdate();
-				//InputMger->UpdateState();
-				//fpUpdate();
-				//fpDraw();
-
-				//t += gdt;
-				//gdt = 0;
-			}
-			//AESysFrameEnd();
-		}
-
-		//fpFree();
-
-		if (_next != GS_RESTART)
-		{
-			//fpUnload();
-		}
-
-		_previous = _current;
-		_current = _next;
-	}
-	//AESysExit();
-	//delete SysManager;
-
-	std::cin.get();
-
-	return 0;
-} */
 
