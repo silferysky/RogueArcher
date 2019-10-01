@@ -38,6 +38,7 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	MSG   msg;				/* message */
 	REConfig config;
 	config.ConfigInit();
+
 	hWnd = CreateOpenGLWindow(const_cast<char*>(config.GetTitle().c_str()), config.GetX(), config.GetY(), config.GetWidth(), config.GetHeight(), config.GetByte(), config.GetFlags());
 	if (hWnd == NULL)
 		exit(1);
