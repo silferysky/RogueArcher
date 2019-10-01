@@ -58,11 +58,11 @@ void SpriteComponent::setShader(std::string vShader, std::string fShader)
 
 void SpriteComponent::draw(TransformComponent* transform) const
 {
-	float left = transform->getPosition().x - transform->getScale().x;
-	float right = transform->getPosition().x + transform->getScale().x;
+	float left = -transform->getPosition().x * transform->getScale().x;
+	float right = transform->getPosition().x * transform->getScale().x;
 
-	float top = transform->getPosition().y + transform->getScale().y;
-	float bottom = transform->getPosition().y - transform->getScale().y;
+	float top = transform->getPosition().y * transform->getScale().y;
+	float bottom = -transform->getPosition().y * transform->getScale().y;
 
 	float _vertexpos[] =
 	/* {
@@ -83,9 +83,6 @@ void SpriteComponent::draw(TransformComponent* transform) const
 
 	glBufferData(GL_ARRAY_BUFFER, sizeof(_vertexpos), _vertexpos, GL_STATIC_DRAW);
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(quadIndices), quadIndices, GL_STATIC_DRAW);
-
 	// position attribute
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
@@ -105,8 +102,11 @@ void SpriteComponent::draw(TransformComponent* transform) const
 	// Use the shader program for drawing
 	glUseProgram(m_shader);
 
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(quadIndices), quadIndices, GL_STATIC_DRAW);
+
 	// Draw the Mesh
-	//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	// Unbind after drawing
 	glBindVertexArray(0);
 }
