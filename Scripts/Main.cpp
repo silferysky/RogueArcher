@@ -108,7 +108,7 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 
 	RE_CORE_INFO("Entity generation complete");
 
-
+	InputManager* inputMgr = new InputManager();
 	TestSystem sys = TestSystem();
 	float wasteTimer;
 	std::chrono::high_resolution_clock timer;
@@ -125,20 +125,9 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 
 		// Update engine.
 		gEngine.update();
+		inputMgr->update();
+		EventDispatcher::instance().update();
 
-		int repeat = 0;
-		//float timer2 = 0.0f;
-		while (repeat < 5)
-		{
-			InputMgr->update();
-			EventDispatcher::instance().update();
-
-			//if (InputMgr->KeyTriggeredAny())
-			{
-				//InputMgr->DebugKeyInputs();
-				++repeat;
-			}
-		}
 		SwapBuffers(hDC);
 
 		auto stop = timer.now();
