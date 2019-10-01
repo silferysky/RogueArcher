@@ -54,11 +54,6 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	freopen("CONOUT$", "w", stderr);
 
 	setVSync(1);
-	//Logger
-	Logger::InitLogger();
-	//RE_CORE_TRACE("Init Core Logger");
-	InputManager* InputMgr = new InputManager();
-	RE_INFO("Logging App info succeeded");
 
 	////////////////////////////////////
 	// Create Engine Object (Testing)
@@ -93,11 +88,6 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	debugStr.clear();
 	debugStr.str("");
 
-	/*debugStr.clear();
-	debugStr.str("");
-	debugStr << "Entity 1's Signature: " << gEngine.m_coordinator.GetEntityManager().GetSignature(1).to_ulong();
-	RE_INFO(debugStr.str());*/
-
 	gObjectFactory.SaveLevel("Resources/Level 1.json");
 
 	objInLevel = gObjectFactory.GetActiveEntity().size();
@@ -126,19 +116,6 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 		// Update engine.
 		gEngine.update();
 
-		int repeat = 0;
-		//float timer2 = 0.0f;
-		while (repeat < 5)
-		{
-			InputMgr->update();
-			EventDispatcher::instance().update();
-
-			//if (InputMgr->KeyTriggeredAny())
-			{
-				//InputMgr->DebugKeyInputs();
-				++repeat;
-			}
-		}
 		SwapBuffers(hDC);
 
 		auto stop = timer.now();
@@ -154,24 +131,7 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	//	std::cout << "FPS: " << 1 / wasteTimer << std::endl;
 	}
 
-	RE_INFO("TESTING HERE FOR A EVENT DEBUG");
-	KeyPressEvent testEvent(KeyPress::KeyArrowRight, 10);
-	RE_INFO(testEvent.ToString());
-	RE_INFO(testEvent.GetEventName());
-	RE_INFO("END EVENT TEST");
-
-	RE_INFO("MANUAL TEST EVENT DISPATCHER");
-	TestSystem testSys = TestSystem((SystemID)2);
-	testSys.receive(&testEvent);
-
-	RE_INFO("EVENT DISPATCHER TEST");
-	EventDispatcher::instance().AddEvent(&testEvent);
-	EventDispatcher::instance().update();
-	RE_INFO("EVENT DISPATCHER END");
-
 	std::cin.get();
-
-	delete InputMgr;
 
 	wglMakeCurrent(NULL, NULL);
 	ReleaseDC(hWnd, hDC);
