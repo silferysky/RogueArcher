@@ -13,8 +13,6 @@ void REEngine::init()
 		std::cout << "GLEW broke" << std::endl;
 
 	m_coordinator.Init();
-	m_inputManager.init();
-	m_eventDispatcher.init();
 
 }
 
@@ -22,6 +20,4 @@ void REEngine::update()
 {
 //	RE_CORE_INFO("Engine update");
 	m_coordinator.update();
-	m_inputManager.update();
-	m_eventDispatcher.update();
 }
