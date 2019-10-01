@@ -49,5 +49,7 @@ private:
 #define RE_ERROR(...)			Logger::instance().GetClientLogger()->error(__VA_ARGS__);	Logger::GetClientFileLogger()->error(__VA_ARGS__)
 //#define RE_FATAL(...)			Logger::instance().GetClientLogger()->fatal(__VA_ARGS__);	Logger::GetClientFileLogger()->fatal(__VA_ARGS__)
 
+#define CLEARSTRING(s) s.clear(); s.str("")
+
 //The point of using instance() in the first set of commands is to ensure Logger is initialized
 //Afterwards, no need to get the instance again (since it is static function anyway)

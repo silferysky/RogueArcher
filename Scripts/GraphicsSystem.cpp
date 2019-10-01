@@ -4,6 +4,8 @@
 
 void GraphicsSystem::init()
 {
+	LISTENER_HANDLER hand = std::bind(&GraphicsSystem::receive, this, std::placeholders::_1);
+	EventDispatcher::instance().AddListener(SystemID::id_GRAPHICSSYSTEM, hand);
 	// Add components to signature
 	Signature signature;
 	signature.set(gEngine.m_coordinator.GetComponentType<SpriteComponent>());
@@ -33,6 +35,16 @@ void GraphicsSystem::update()
 
 void GraphicsSystem::receive(Event* ev)
 {
-	RE_INFO(ev->ToString());
-	RE_CORE_INFO("GRAPHICS SYSTEM RECEIVED EVENT");
+	//RE_CORE_INFO("GRAPHICS");
+	switch (ev->GetEventType())
+	{
+	case EventType::EvKeyPressed:
+	{
+		KeyPressEvent* EvPressKey = dynamic_cast<KeyPressEvent*>(ev);
+		//DoStuffHere with events
+		return;
+	}
+	default:
+		return;
+	}
 }
