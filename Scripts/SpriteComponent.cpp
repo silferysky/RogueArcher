@@ -34,13 +34,7 @@ SpriteComponent::SpriteComponent()
 
 void SpriteComponent::setTexture(const char* texture)
 {
-	m_texture = SOIL_load_OGL_texture
-	(
-		texture,
-		SOIL_LOAD_AUTO,
-		SOIL_CREATE_NEW_ID,
-		SOIL_FLAG_INVERT_Y
-	);
+	m_texture = gEngine.m_coordinator.loadTexture("test.bmp");
 
 	glBindTexture(GL_TEXTURE_2D, m_texture);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -58,11 +52,11 @@ void SpriteComponent::setShader(std::string vShader, std::string fShader)
 
 void SpriteComponent::draw(TransformComponent* transform) const
 {
-	float left = -0.5 * transform->getScale().x + transform->getPosition().x;
-	float right = 0.5 * transform->getScale().x + transform->getPosition().x;
+	float left = -1.0 * transform->getScale().x + transform->getPosition().x;
+	float right = 1.0 * transform->getScale().x + transform->getPosition().x;
 
-	float top = 0.5 * transform->getScale().y + transform->getPosition().y;
-	float bottom = -0.5 * transform->getScale().y + transform->getPosition().y;
+	float top = 1.0 * transform->getScale().y + transform->getPosition().y;
+	float bottom = -1.0 * transform->getScale().y + transform->getPosition().y;
 
 	float _vertexpos[] =
 	{
