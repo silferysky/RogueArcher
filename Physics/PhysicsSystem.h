@@ -6,7 +6,9 @@
 #include "RigidbodyComponent.h"
 #include "TransformComponent.h"
 #include "BoxCollider2DComponent.h"
+#include "../Scripts/Timer.h"
 
+class Timer;
 class PhysicsSystem : public System, public EventListener
 {
 	CollisionManager m_colliderManager;

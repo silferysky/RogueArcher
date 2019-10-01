@@ -223,6 +223,9 @@
     <ClInclude Include="TextureManager.h">
       <Filter>RogueEngine\Systems\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\Timer.h">
+      <Filter>RogueEngine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\GameStateManager.cpp">
@@ -320,6 +323,9 @@
     </ClCompile>
     <ClCompile Include="Physics\BoxCollider2DComponent.cpp">
       <Filter>RogueEngine\Systems\Physics\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Timer.cpp">
+      <Filter>RogueEngine</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
