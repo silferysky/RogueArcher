@@ -58,11 +58,11 @@ void SpriteComponent::setShader(std::string vShader, std::string fShader)
 
 void SpriteComponent::draw(TransformComponent* transform) const
 {
-	float left = -transform->getPosition().x * transform->getScale().x;
-	float right = transform->getPosition().x * transform->getScale().x;
+	float left = -0.5 * transform->getScale().x + transform->getPosition().x;
+	float right = 0.5 * transform->getScale().x + transform->getPosition().x;
 
-	float top = transform->getPosition().y * transform->getScale().y;
-	float bottom = -transform->getPosition().y * transform->getScale().y;
+	float top = 0.5 * transform->getScale().y + transform->getPosition().y;
+	float bottom = -0.5 * transform->getScale().y + transform->getPosition().y;
 
 	float _vertexpos[] =
 	/* {

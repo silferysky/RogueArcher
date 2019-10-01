@@ -98,7 +98,7 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	debugStr << "Entity 1's Signature: " << gEngine.m_coordinator.GetEntityManager().GetSignature(1).to_ulong();
 	RE_INFO(debugStr.str());*/
 
-	gObjectFactory.SaveLevel("Resources/Level 1.json");
+	//gObjectFactory.SaveLevel("Resources/Level 1.json");
 
 	objInLevel = gObjectFactory.GetActiveEntity().size();
 	debugStr.clear();
