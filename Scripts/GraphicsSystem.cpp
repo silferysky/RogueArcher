@@ -8,7 +8,7 @@ void GraphicsSystem::init()
 	Signature signature;
 	signature.set(gEngine.m_coordinator.GetComponentType<SpriteComponent>());
 //	signature.set(gEngine.m_coordinator.GetComponentType<BoxCollider2D>());
-	signature.set(gEngine.m_coordinator.GetComponentType<Transform>());
+	signature.set(gEngine.m_coordinator.GetComponentType<TransformComponent>());
 
 	// Set graphics system signature
 	gEngine.m_coordinator.SetSystemSignature<GraphicsSystem>(signature);
@@ -21,7 +21,7 @@ void GraphicsSystem::update()
 	for (auto entity : m_entities)
 	{
 		auto& sprite = gEngine.m_coordinator.GetComponent<SpriteComponent>(entity);
-		auto& transform = gEngine.m_coordinator.GetComponent<Transform>(entity);
+		auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(entity);
 		//auto& collider = gEngine.m_coordinator.GetComponent<BoxCollider2D>(entity);
 
 		glDisable(GL_DEPTH_TEST);
