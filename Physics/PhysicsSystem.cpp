@@ -51,7 +51,7 @@ void PhysicsSystem::update()
 
 		// Reset accForce
 		rigidbody.setAccForce(Vec2());
-		std::cout << rigidbody.getAcceleration() << std::endl;
+		//std::cout << rigidbody.getAcceleration() << std::endl;
 
 		// Apply accForce (Forces are added if necessary)
 		applyForces(rigidbody);
@@ -71,7 +71,7 @@ void PhysicsSystem::update()
 		// Collision Response (Contact, forces, etc)
 		// Rest, Impulse, Torque
 		
-		std::cout << "Entity " << entity << "'s pos: " << transform.getPosition() << std::endl;
+		//std::cout << "Entity " << entity << "'s pos: " << transform.getPosition() << std::endl;
 	}
 }
 

@@ -12,7 +12,6 @@
 #include <chrono>
 #include "GraphicsSystem.h"
 #include "VSync.h"
-#include "Quad.h"
 #include "SOIL.h"
 #include "Config.h"
 #include "WindowHelper.h"
