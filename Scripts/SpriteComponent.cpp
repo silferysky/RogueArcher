@@ -34,13 +34,7 @@ SpriteComponent::SpriteComponent()
 
 void SpriteComponent::setTexture(const char* texture)
 {
-	m_texture = SOIL_load_OGL_texture
-	(
-		texture,
-		SOIL_LOAD_AUTO,
-		SOIL_CREATE_NEW_ID,
-		SOIL_FLAG_INVERT_Y
-	);
+	m_texture = gEngine.m_coordinator.loadTexture(texture);
 
 	glBindTexture(GL_TEXTURE_2D, m_texture);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -58,28 +52,28 @@ void SpriteComponent::setShader(std::string vShader, std::string fShader)
 
 void SpriteComponent::draw(TransformComponent* transform) const
 {
-	float left = -transform->getPosition().x * transform->getScale().x;
-	float right = transform->getPosition().x * transform->getScale().x;
+	float left = -0.5 * transform->getScale().x + transform->getPosition().x;
+	float right = 0.5 * transform->getScale().x + transform->getPosition().x;
 
-	float top = transform->getPosition().y * transform->getScale().y;
-	float bottom = -transform->getPosition().y * transform->getScale().y;
+	float top = 0.5 * transform->getScale().y + transform->getPosition().y;
+	float bottom = -0.5 * transform->getScale().y + transform->getPosition().y;
 
 	float _vertexpos[] =
-	/* {
+	{
 		// positions          // colors           // texture coords
 		right,  top, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
 		right, bottom, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
 	   left, bottom, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
 	   left,  top, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left 
-	}; */
+	};
 
-	{
+	/* {
 	// positions          // colors           // texture coords
 	0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, // top right
 		0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, // bottom right
 		-0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, // bottom left
 		-0.5f, 0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f  // top left 
-	};
+	}; */
 
 	glBufferData(GL_ARRAY_BUFFER, sizeof(_vertexpos), _vertexpos, GL_STATIC_DRAW);
 

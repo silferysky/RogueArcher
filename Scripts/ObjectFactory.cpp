@@ -53,7 +53,7 @@ void ObjectFactory::LoadLevel(const char* fileName)
 			const char* path;
 			CLEARNSETSTR(strstream, entity, "sc", 0);
 			path = level[cstr].GetString();
-			s.setTexture(path);
+			//s.setTexture(path);
 			
 			gEngine.m_coordinator.AddComponent(curEnt, s);
 		}
