@@ -152,11 +152,6 @@ void ObjectFactory::LoadLevel(const char* fileName)
 void ObjectFactory::SaveLevel(const char* fileName)
 {
 	Entity entCount = static_cast<Entity>(m_activeEntities.size());
-
-	//Does a check for possible errors
-	if (static_cast<int>(entCount) > MAX_SAVE_ENTITY)
-		entCount = static_cast<Entity>(MAX_SAVE_ENTITY);
-
 	EntityManager* em = &gEngine.m_coordinator.GetEntityManager();
 	m_Serialiser.WriteToFile(fileName, "EntCount", (int)entCount);
 
@@ -256,24 +251,6 @@ void ObjectFactory::SaveLevel(const char* fileName)
 				++varNum;
 			}
 		}
-	}
-
-	//If no entities are detected, temporarily create two. First is Background. Second is Movable character
-	if (static_cast<int>(entCount) < 2)
-	{
-		Signature curSignature;
-		std::stringstream ss;
-		std::string stdstr;
-		const char* cstr;
-
-		//For Background
-		ss << "Signature0";
-		SETSSTOSTR(ss);
-		curSignature = SIGNATURE_SPRITECOMPONENT + SIGNATURE_TRANSFORMCOMPONENT;
-		m_Serialiser.WriteToFile(fileName, cstr, static_cast<int>(curSignature.to_ulong()));
-
-		CLEARSTRING(ss);
-		ss << "Signature1";
 	}
 
 	RE_INFO("LEVEL SAVED");

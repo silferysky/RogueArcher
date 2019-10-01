@@ -21,6 +21,8 @@ public:
 		  m_systemManager{ std::make_unique<SystemManager>() },
 		  m_fileManager{ std::make_unique<FileManager>() },
 		  m_textureManager{ std::make_unique<TextureManager>() },
+		  m_eventManager{ std::make_unique<EventDispatcher>() },
+		  m_inputManager{ std::make_unique<InputManager>() },
 		  m_activeEntities{MAX_ENTITIES}
 	{}
 
@@ -174,5 +176,7 @@ private:
 	std::unique_ptr<SystemManager> m_systemManager;
 	std::unique_ptr<FileManager> m_fileManager;
 	std::unique_ptr<TextureManager> m_textureManager;
+	std::unique_ptr<EventDispatcher> m_eventManager;
+	std::unique_ptr<InputManager> m_inputManager;
 	std::vector<Entity> m_activeEntities;
 };

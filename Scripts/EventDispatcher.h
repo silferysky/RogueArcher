@@ -14,15 +14,17 @@ public:
 	EventDispatcher() = default;
 	~EventDispatcher() = default;
 
+	void init()
+	{
+		EventQueue = std::queue<Event*>();
+		DelayedEventQueue = std::queue<Event*>();
+		ListenerMap = std::map<SystemID, LISTENER_HANDLER>();
+	}
 
 	static EventDispatcher& instance()
 	{
 		static EventDispatcher instance;
 		return instance;
-	}
-	void init()
-	{
-		EventDispatcher::instance();
 	}
 
 	Event* GetQueueHead() { return EventQueue.front(); }
