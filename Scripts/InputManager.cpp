@@ -6,6 +6,7 @@ enum KeyFunction;
 
 InputManager::InputManager()
 {
+	//init();
 }
 
 InputManager::~InputManager()

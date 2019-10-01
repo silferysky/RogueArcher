@@ -86,11 +86,11 @@ void PhysicsSystem::receive(Event* ev)
 		KeyPressEvent* EvPressKey = dynamic_cast<KeyPressEvent*>(ev);
 		if (EvPressKey->GetKeyCode() == KeyPress::KeyA)
 		{
-			//RE_INFO("Move Left!");
+			RE_INFO("Move Left!");
 		}
 		else if (EvPressKey->GetKeyCode() == KeyPress::KeyD)
 		{
-			//RE_INFO("Move Right!");
+			RE_INFO("Move Right!");
 		}
 		return;
 	}
