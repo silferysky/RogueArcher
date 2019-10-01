@@ -1,7 +1,7 @@
 #include "SpriteComponent.h"
 #include "REEngine.h"
 
-SpriteComponent::SpriteComponent()
+SpriteComponent::SpriteComponent(TransformComponent* transform)
 {
 	m_texture = gEngine.m_coordinator.loadTexture("test.bmp");
 
@@ -14,22 +14,46 @@ SpriteComponent::SpriteComponent()
 
 	m_shader = CreateShader(vertexShader, fragmentShader);
 
-	glGenBuffers(1, &m_VBO);
-	glGenVertexArrays(1, &m_VAO);
-	glGenBuffers(1, &m_EBO);
-
-	glBindVertexArray(m_VAO);
-
-	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-
-	glGenVertexArrays(1, &m_VAO);
-	glGenBuffers(1, &m_VBO);
-	glGenBuffers(1, &m_EBO);
-
 	// bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
+	glGenBuffers(1, &m_VBO);
+	glGenVertexArrays(1, &m_VAO);
+	glGenBuffers(1, &m_EBO);
+
 	glBindVertexArray(m_VAO);
 
+	float left = -1.0 * transform->getScale().x + transform->getPosition().x;
+	float right = 1.0 * transform->getScale().x + transform->getPosition().x;
+
+	float top = 1.0 * transform->getScale().y + transform->getPosition().y;
+	float bottom = -1.0 * transform->getScale().y + transform->getPosition().y;
+
+	float _vertexpos[] =
+	{
+		// positions          // colors           // texture coords
+		right,  top, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
+		right, bottom, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
+	   left, bottom, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
+	   left,  top, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left 
+	};
+
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(_vertexpos), _vertexpos, GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(quadIndices), quadIndices, GL_STATIC_DRAW);
+
+	// position attribute
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+	// color attribute
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
+	// texture coord attribute
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+	glEnableVertexAttribArray(2);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);//Reset
+	glBindVertexArray(0);//Reset
 }
 
 void SpriteComponent::setTexture(const char* texture)
@@ -52,57 +76,18 @@ void SpriteComponent::setShader(std::string vShader, std::string fShader)
 
 void SpriteComponent::draw(TransformComponent* transform) const
 {
-	float left = -1.0 * transform->getScale().x + transform->getPosition().x;
-	float right = 1.0 * transform->getScale().x + transform->getPosition().x;
-
-	float top = 1.0 * transform->getScale().y + transform->getPosition().y;
-	float bottom = -1.0 * transform->getScale().y + transform->getPosition().y;
-
-	float _vertexpos[] =
-	{
-		// positions          // colors           // texture coords
-		right,  top, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
-		right, bottom, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
-	   left, bottom, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-	   left,  top, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left 
-	};
-
-	/*{
-	// positions          // colors           // texture coords
-	1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, // top right
-		1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, // bottom right
-		-1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, // bottom left
-		-1.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f  // top left 
-	};*/
-
-	glBufferData(GL_ARRAY_BUFFER, sizeof(_vertexpos), _vertexpos, GL_STATIC_DRAW);
-
-	// position attribute
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-	// color attribute
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(1);
-	// texture coord attribute
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-	glEnableVertexAttribArray(2);
-
-	glBindBuffer(GL_ARRAY_BUFFER, 0);//Reset
-	glBindVertexArray(0);//Reset
-
 	//draw
-	glBindVertexArray(m_VAO);
-
+	
 	// Use the shader program for drawing
 	glUseProgram(m_shader);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(quadIndices), quadIndices, GL_STATIC_DRAW);
+	glBindVertexArray(m_VAO);
 
 	// Draw the Mesh
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-	// Unbind after drawing
+	//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+	// Unbind VAO after drawing
 	glBindVertexArray(0);
+
 }
 
 GLuint SpriteComponent::getTexture() const

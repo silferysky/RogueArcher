@@ -4,14 +4,23 @@
 #include <map>
 #include "SOIL.h"
 
+// to properly compare texture paths
+struct str_cmp
+{
+	bool operator()(char const* lhs, char const* rhs) const
+	{
+		return std::strcmp(lhs, rhs) < 0;
+	}
+};
+
 class TextureManager
 {
-	std::map<const char*, GLuint> textureMap;
+	std::map<const char*, GLuint, str_cmp> textureMap;
 public:
 	TextureManager() = default;
 	~TextureManager() = default;
 
-	std::map<const char*, GLuint> getTextureMap() const
+	std::map<const char*, GLuint, str_cmp> getTextureMap() const
 	{
 		return textureMap;
 	}
@@ -33,7 +42,8 @@ public:
 
 			textureMap.emplace(texture, newTexture);
 
-			return newTexture;
+			auto itr = textureMap.find(texture);
+			return itr->second;
 		}
 	}
 };

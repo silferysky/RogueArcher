@@ -6,6 +6,7 @@ void GraphicsSystem::init()
 	
 	LISTENER_HANDLER hand = std::bind(&GraphicsSystem::receive, this, std::placeholders::_1);
 	EventDispatcher::instance().AddListener(SystemID::id_GRAPHICSSYSTEM, hand);
+
 	// Add components to signature
 	Signature signature;
 	signature.set(gEngine.m_coordinator.GetComponentType<SpriteComponent>());
@@ -28,7 +29,7 @@ void GraphicsSystem::update()
 		auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(entity);
 		//auto& collider = gEngine.m_coordinator.GetComponent<BoxCollider2D>(entity);
 
-		glDisable(GL_DEPTH_TEST);
+		//glDisable(GL_DEPTH_TEST);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		sprite.draw(&transform);

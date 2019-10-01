@@ -19,8 +19,10 @@ class SpriteComponent
 	GLuint m_VBO = 0;
 	GLuint m_EBO = 0;
 public:
-	SpriteComponent();
+	SpriteComponent() = default;
 	~SpriteComponent() = default;
+
+	SpriteComponent(TransformComponent* transform);
 
 	void setTexture(const char* texture);
 	void setShader(std::string vShader, std::string fShader);
