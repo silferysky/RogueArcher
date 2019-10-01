@@ -14,15 +14,35 @@ SpriteComponent::SpriteComponent() : m_transformMat{ 1.0 }
 
 	m_shader = CreateShader(vertexShader, fragmentShader);
 
-	// bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
-	glGenBuffers(1, &m_VBO);
-	glGenVertexArrays(1, &m_VAO);
-	glGenBuffers(1, &m_EBO);
+	//GLint projectionLocation = glGetUniformLocation(m_shader, "projection");
+	//glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, glm::value_ptr(m_transformMat));
 
+	// bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
+	glGenVertexArrays(1, &m_VAO);
 	glBindVertexArray(m_VAO);
 
+
+	glGenBuffers(1, &m_VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), quadVertices, GL_STATIC_DRAW);
+
+	glGenBuffers(1, &m_EBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(quadIndices), quadIndices, GL_STATIC_DRAW);
+
+
+	// position attribute
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+	// color attribute
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
+	// texture coord attribute
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+	glEnableVertexAttribArray(2);
+	//glBindBuffer(GL_ARRAY_BUFFER, 0); //Reset
+	glBindVertexArray(0); //Reset
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 }
 
@@ -46,50 +66,35 @@ void SpriteComponent::setShader(std::string vShader, std::string fShader)
 
 void SpriteComponent::draw(TransformComponent* transform) const
 {
-	float left = -1.0 * transform->getScale().x + transform->getPosition().x;
-	float right = 1.0 * transform->getScale().x + transform->getPosition().x;
-
-	float top = 1.0 * transform->getScale().y + transform->getPosition().y;
-	float bottom = -1.0 * transform->getScale().y + transform->getPosition().y;
-
-	float _vertexpos[] =
+	for (auto j = 0; j < 10; ++j)
 	{
-		// positions          // colors           // texture coords
-		right,  top, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
-		right, bottom, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
-	   left, bottom, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-	   left,  top, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left 
-	};
+		static int i = 0;
+		++i;
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(_vertexpos), _vertexpos, GL_STATIC_DRAW);
+		auto a = glm::mat4(1.0f);
 
-	// position attribute
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-	// color attribute
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(1);
-	// texture coord attribute
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-	glEnableVertexAttribArray(2);
+		a = glm::translate(a, { transform->getPosition().x * (i % 5) * 100, transform->getPosition().y * (i % 5) * 100, 0.0f });
+		auto lol = transform->getPosition().x;
+		a = glm::scale(a, glm::vec3(100, 100, 1.0f));
 
-	//glBindBuffer(GL_ARRAY_BUFFER, 0);//Reset
-	glBindVertexArray(0);//Reset
+		//draw
+		// Use the shader program for drawing
 
-	//draw
-	// Use the shader program for drawing
-	glUseProgram(m_shader);
+		auto b = glm::ortho(-1920.f / 2, 1920.f / 2, -1080.f / 2, 1080.f / 2, -1000.f, 1000.f);//glm::mat4(1.0f);
+		glUseProgram(m_shader);
 
-	GLint transformLocation = glGetUniformLocation(m_shader, "transform");
-	glUniformMatrix4fv(transformLocation, 1, GL_FALSE, glm::value_ptr(m_transformMat));
+		GLint projLocation = glGetUniformLocation(m_shader, "projection");
+		glUniformMatrix4fv(projLocation, 1, GL_FALSE, &b[0][0]);
 
-	glBindVertexArray(m_VAO);
+		GLint transformLocation = glGetUniformLocation(m_shader, "transform");
+		glUniformMatrix4fv(transformLocation, 1, GL_FALSE, &a[0][0]);
 
-	// Draw the Mesh
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-	// Unbind VAO after drawing
-	glBindVertexArray(0);
+		glBindVertexArray(m_VAO);
+		// Draw the Mesh
+		glDrawElements(GL_TRIANGLE_FAN, 6, GL_UNSIGNED_INT, 0);
+		// Unbind VAO after drawing
+		glBindVertexArray(0);
+	}
 }
 
 GLuint SpriteComponent::getTexture() const
