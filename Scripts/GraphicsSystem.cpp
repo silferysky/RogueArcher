@@ -52,8 +52,6 @@ void GraphicsSystem::receive(Event* ev)
 				auto& sprite = gEngine.m_coordinator.GetComponent<SpriteComponent>(entity);
 
 				sprite.m_transformMat = glm::rotate(sprite.m_transformMat, (GLfloat)glfwGetTime() * -0.5f, glm::vec3(0.0f, 0.0f, 1.0f));
-				//GLint transformLocation = glGetUniformLocation(sprite.getShader(), "transform");
-				//glUniformMatrix4fv(transformLocation, 1, GL_FALSE, glm::value_ptr(sprite.m_transformMat));
 			}
 			RE_INFO("Rotated!");
 		}
