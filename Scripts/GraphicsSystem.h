@@ -2,9 +2,9 @@
 #include "../Scripts/Main.h"
 #include "../Physics/TransformComponent.h"
 #include "../Scripts/REMath.h"
-#include "../Scripts/EventListener.h"
+#include "../Scripts/EventDispatcher.h"
 
-class GraphicsSystem : public System
+class GraphicsSystem : public System, public EventListener
 {
 public:
 	GraphicsSystem() = default;

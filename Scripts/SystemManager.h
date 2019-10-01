@@ -5,16 +5,18 @@
 #include "ComponentArray.h"
 #include "Logger.h"
 #include "Event.h"
+#include "SystemList.h"
 #include <cassert>
 class System
 {
 public:
 	std::set<Entity> m_entities;
+	SystemID m_systemID;
+
 
 	System() = default;
 	virtual void init() = 0;
 	virtual void update() = 0;
-	virtual void receive(Event* ev) = 0;
 	virtual ~System() = default;
 };
 

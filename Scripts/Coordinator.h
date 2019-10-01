@@ -5,6 +5,8 @@
 #include "FileManager.h"
 #include "GraphicsSystem.h"
 #include "../Physics/PhysicsSystem.h"
+#include "InputManager.h"
+#include "EventDispatcher.h"
 
 // Forward declaration
 class PhysicsSystem;
@@ -31,6 +33,8 @@ public:
 
 		auto PhysSystem = RegisterSystem<PhysicsSystem>();
 		auto graphics = RegisterSystem<GraphicsSystem>();
+		auto InputSystem = RegisterSystem<InputManager>();
+		auto EventSystem = RegisterSystem<EventDispatcher>();
 
 		RE_CORE_INFO("-----------END REGISTERING SYSTEMS------------\n\n");
 
