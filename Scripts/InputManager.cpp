@@ -6,6 +6,14 @@ enum KeyFunction;
 
 InputManager::InputManager()
 {
+}
+
+InputManager::~InputManager()
+{
+}
+
+void InputManager::init()
+{
 	CurKeyboardState = KeyboardState();
 	PrevKeyboardState = KeyboardState();
 	GameKeyConfig = std::map<KeyPress, KeyFunction>();
@@ -16,11 +24,7 @@ InputManager::InputManager()
 	ResetState(&PrevKeyboardState);
 }
 
-InputManager::~InputManager()
-{
-}
-
-void InputManager::UpdateState()
+void InputManager::update()
 {
 	//Always do this first
 	//Shallow add old keyboardstate details over to keep track of how long button is pressed

@@ -130,8 +130,8 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 		//float timer2 = 0.0f;
 		while (repeat < 5)
 		{
-			InputMgr->UpdateState();
-			EventDispatcher::instance().Update();
+			InputMgr->update();
+			EventDispatcher::instance().update();
 
 			//if (InputMgr->KeyTriggeredAny())
 			{
@@ -161,12 +161,12 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	RE_INFO("END EVENT TEST");
 
 	RE_INFO("MANUAL TEST EVENT DISPATCHER");
-	TestSystem testSys = TestSystem((SYSTEMID)2);
-	testSys.Receive(&testEvent);
+	TestSystem testSys = TestSystem((SystemID)2);
+	testSys.receive(&testEvent);
 
 	RE_INFO("EVENT DISPATCHER TEST");
 	EventDispatcher::instance().AddEvent(&testEvent);
-	EventDispatcher::instance().Update();
+	EventDispatcher::instance().update();
 	RE_INFO("EVENT DISPATCHER END");
 
 	std::cin.get();

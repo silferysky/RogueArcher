@@ -1,26 +1,13 @@
 #pragma once
 
-enum class SYSTEMID
+enum class SystemID
 {
-	MEMORYMANAGER = 0,
-	INPUTMANAGER,
-	EVENTMANAGER,
-	AUDIOMANAGER,
-	PHYSICSSYSTEM,
-	TESTSYSTEM,
-	LASTSYS
-};
-
-class SystemList
-{
-public:
-	SystemList(SYSTEMID ID = SYSTEMID::LASTSYS)
-		: _ID{ ID } {};
-	~SystemList() {};
-
-	SYSTEMID ID() { return _ID; }
-	void ID(SYSTEMID id) { _ID = id; }
-
-private:
-	SYSTEMID _ID;
+	id_MEMORYMANAGER = 0,
+	id_INPUTMANAGER,
+	id_EVENTMANAGER,
+	id_GRAPHICSSYSTEM,
+	id_AUDIOMANAGER,
+	id_PHYSICSSYSTEM,
+	id_TESTSYSTEM,
+	id_LASTSYS
 };
