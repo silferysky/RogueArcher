@@ -26,6 +26,8 @@ void PhysicsSystem::integrateAcceleration(RigidbodyComponent& rigidbody, Transfo
 //-------------------------------------------------------//
 void PhysicsSystem::init()
 {
+	LISTENER_HANDLER hand = std::bind(&PhysicsSystem::receive, this, std::placeholders::_1);
+	EventDispatcher::instance().AddListener(SystemID::id_PHYSICSSYSTEM, hand);
 	// Add components to signature.
 	Signature signature;
 	signature.set(gEngine.m_coordinator.GetComponentType<RigidbodyComponent>());
@@ -77,8 +79,24 @@ void PhysicsSystem::update()
 
 void PhysicsSystem::receive(Event* ev)
 {
-	RE_INFO(ev->ToString());
-	RE_CORE_INFO("TEST SYSTEM RECEIVED EVENT");
+	switch (ev->GetEventType())
+	{
+	case EventType::EvKeyPressed:
+	{
+		KeyPressEvent* EvPressKey = dynamic_cast<KeyPressEvent*>(ev);
+		if (EvPressKey->GetKeyCode() == KeyPress::KeyA)
+		{
+			RE_INFO("Move Left!");
+		}
+		else if (EvPressKey->GetKeyCode() == KeyPress::KeyD)
+		{
+			RE_INFO("Move Right!");
+		}
+		return;
+	}
+	default:
+		return;
+	}
 }
 
 // Setters
