@@ -34,7 +34,7 @@ SpriteComponent::SpriteComponent()
 
 void SpriteComponent::setTexture(const char* texture)
 {
-	m_texture = gEngine.m_coordinator.loadTexture("test.bmp");
+	m_texture = gEngine.m_coordinator.loadTexture(texture);
 
 	glBindTexture(GL_TEXTURE_2D, m_texture);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
