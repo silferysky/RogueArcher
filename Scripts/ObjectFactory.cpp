@@ -27,8 +27,11 @@ void ObjectFactory::LoadLevel(const char* fileName)
 	backgroundTransform.setScale(Vec2(0.5f, 0.5f));
 	backgroundTransform.setRotation(0.0f);
 
+	RigidbodyComponent backgroundRigidbody = RigidbodyComponent();
+
 	gEngine.m_coordinator.AddComponent(backgroundEnt, backgroundSprite);
 	gEngine.m_coordinator.AddComponent(backgroundEnt, backgroundTransform);
+	gEngine.m_coordinator.AddComponent(backgroundEnt, backgroundRigidbody);
 	m_activeEntities.push_back(backgroundEnt);
 
 	for (Entity entity = 0; entity < entCount; ++entity)

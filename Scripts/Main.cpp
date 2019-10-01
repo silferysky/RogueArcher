@@ -112,6 +112,7 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	TestSystem sys = TestSystem();
 	float wasteTimer;
 	std::chrono::high_resolution_clock timer;
+	config.SetFPS(60);
 	while (gameIsRunning)
 	{
 		auto start = timer.now(); 
@@ -129,18 +130,17 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 		EventDispatcher::instance().update();
 
 		SwapBuffers(hDC);
-
 		auto stop = timer.now();
-		gDeltaTime = std::chrono::duration_cast<std::chrono::microseconds>(stop - start).count() / 1000000.0f;
-		wasteTimer = gDeltaTime;
+		wasteTimer = std::chrono::duration_cast<std::chrono::microseconds>(stop - start).count() / 1000000.0f;
+		gDeltaTime = wasteTimer;
 		//config.SetFPS(30);
-		while (wasteTimer <= config.GetFPS())
+		while (gDeltaTime <= config.GetFPS())
 		{
 			stop = timer.now();
-			wasteTimer = std::chrono::duration_cast<std::chrono::microseconds>(stop - start).count() / 1000000.0f;
+			gDeltaTime = std::chrono::duration_cast<std::chrono::microseconds>(stop - start).count() / 1000000.0f;
 		}
 
-	//	std::cout << "FPS: " << 1 / wasteTimer << std::endl;
+	//	std::cout << "FPS: " << 1 / gDeltaTime << std::endl;
 	}
 
 	std::cin.get();

@@ -51,7 +51,7 @@ void GraphicsSystem::receive(Event* ev)
 			{
 				auto& sprite = gEngine.m_coordinator.GetComponent<SpriteComponent>(entity);
 
-				sprite.m_transformMat = glm::rotate(sprite.m_transformMat, (GLfloat)glfwGetTime() * -0.5f, glm::vec3(0.0f, 0.0f, 1.0f));
+				sprite.m_transformMat = glm::rotate(sprite.m_transformMat, (GLfloat)RE_PI/2 * gDeltaTime, glm::vec3(0.0f, 0.0f, 1.0f));
 			}
 			RE_INFO("Rotated!");
 		}
