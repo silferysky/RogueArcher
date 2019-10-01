@@ -89,19 +89,38 @@ public:
 			if ((entitySignature & systemSignature) == systemSignature)
 			{
 				// Signature matched.
-				out.clear();
-				out.str("");
-				out << "Entity " << entity << "'s signature matches.  " << "Adding to " << type << ".";
+				CLEARSTRING(out);
+				out << "Entity " << entity << "'s signature matches.";
 				RE_CORE_INFO(out.str());
-				system->m_entities.insert(entity);
+				
+				if (system->m_entities.insert(entity).second)
+				{
+					CLEARSTRING(out);
+					out << "Entity added to " << type << ".";
+					RE_CORE_INFO(out.str());
+				}
+				else
+				{
+					CLEARSTRING(out);
+					out << "Entity already exists in " << type << ".";
+					RE_CORE_INFO(out.str());
+				}
 			}
-			// Entity signature does not match system signature - erase from set
+			// Entity signature does not match system signature - erase from set/don't add
 			else
 			{
-				out.clear();
-				out.str("");
-				out << "Entity " << entity << "'s signature does not match. " << "Removed from " << type << ".";
+				CLEARSTRING(out);
+				out << "Signature " << entity << " does not match " << type << ".";
 				RE_CORE_INFO(out.str());
+
+				if (system->m_entities.find(entity) != system->m_entities.end()) // If entity exists
+				{
+					RE_CORE_INFO("Entity removed to system");
+				}
+				else
+				{
+					RE_CORE_INFO("Entity not added to system");
+				}
 				system->m_entities.erase(entity);
 			}
 		}
