@@ -108,7 +108,7 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 
 	RE_CORE_INFO("Entity generation complete");
 
-
+	InputManager* inputMgr = new InputManager();
 	TestSystem sys = TestSystem();
 	float wasteTimer;
 	std::chrono::high_resolution_clock timer;
@@ -125,20 +125,9 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 
 		// Update engine.
 		gEngine.update();
+		inputMgr->update();
+		EventDispatcher::instance().update();
 
-		int repeat = 0;
-		//float timer2 = 0.0f;
-		while (repeat < 5)
-		{
-			InputMgr->UpdateState();
-			EventDispatcher::instance().Update();
-
-			//if (InputMgr->KeyTriggeredAny())
-			{
-				//InputMgr->DebugKeyInputs();
-				++repeat;
-			}
-		}
 		SwapBuffers(hDC);
 
 		auto stop = timer.now();
@@ -153,21 +142,6 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 
 	//	std::cout << "FPS: " << 1 / wasteTimer << std::endl;
 	}
-
-	RE_INFO("TESTING HERE FOR A EVENT DEBUG");
-	KeyPressEvent testEvent(KeyPress::KeyArrowRight, 10);
-	RE_INFO(testEvent.ToString());
-	RE_INFO(testEvent.GetEventName());
-	RE_INFO("END EVENT TEST");
-
-	RE_INFO("MANUAL TEST EVENT DISPATCHER");
-	TestSystem testSys = TestSystem((SYSTEMID)2);
-	testSys.Receive(&testEvent);
-
-	RE_INFO("EVENT DISPATCHER TEST");
-	EventDispatcher::instance().AddEvent(&testEvent);
-	EventDispatcher::instance().Update();
-	RE_INFO("EVENT DISPATCHER END");
 
 	std::cin.get();
 

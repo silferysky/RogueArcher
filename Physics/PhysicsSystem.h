@@ -7,7 +7,7 @@
 #include "TransformComponent.h"
 #include "BoxCollider2DComponent.h"
 
-class PhysicsSystem : public System
+class PhysicsSystem : public System, public EventListener
 {
 	CollisionManager m_colliderManager;
 	Vec2 m_gravity;

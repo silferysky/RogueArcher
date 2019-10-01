@@ -1,5 +1,6 @@
 #pragma once
 #include "BasicIO.h"
+#define BUFFER_SIZE 10000
 
 std::string BasicIO::ReadFile(std::string FileName)
 {
@@ -42,9 +43,14 @@ void BasicIO::WriteFile(std::string FileName, std::string strToWrite)
 
 void BasicIO::WriteJsonFile(std::string FileName, size_t numOfEnt)
 {
-	char writeStr[3000] = { 0 };
+	char writeStr[BUFFER_SIZE] = { 0 };
+
+	//For EntCount
 	strcat_s(writeStr, "{\"EntCount\":");
 	strcat_s(writeStr, std::to_string(numOfEnt).c_str());
+
+	//For Background Texture
+	strcat_s(writeStr, ",\"BackgroundTexture\": \"\"");
 
 	//For Signature
 	for (size_t i = 0; i < numOfEnt; ++i)
@@ -58,6 +64,9 @@ void BasicIO::WriteJsonFile(std::string FileName, size_t numOfEnt)
 	for (size_t i = 0; i < numOfEnt; ++i)
 	{
 		//For SpriteComponent
+		strcat_s(writeStr, ",\"e");
+		strcat_s(writeStr, std::to_string(i).c_str());
+		strcat_s(writeStr, "sc0\":\"\"");
 		//Nothing
 
 		//For RigidbodyComponent
@@ -67,7 +76,10 @@ void BasicIO::WriteJsonFile(std::string FileName, size_t numOfEnt)
 			strcat_s(writeStr, std::to_string(i).c_str());
 			strcat_s(writeStr, "rbc");
 			strcat_s(writeStr, std::to_string(j).c_str());
-			strcat_s(writeStr, "\":0.0");
+			if (j == 4 || j == 5)
+				strcat_s(writeStr, "\":1.0");
+			else
+				strcat_s(writeStr, "\":0.0");
 		}
 
 		//For TransformComponent
@@ -77,7 +89,10 @@ void BasicIO::WriteJsonFile(std::string FileName, size_t numOfEnt)
 			strcat_s(writeStr, std::to_string(i).c_str());
 			strcat_s(writeStr, "tc");
 			strcat_s(writeStr, std::to_string(j).c_str());
-			strcat_s(writeStr, "\":0.0");
+			if (j == 2 || j == 3)
+				strcat_s(writeStr, "\":0.5");
+			else
+				strcat_s(writeStr, "\":0.0");
 		}
 
 		//For CircleCollider
