@@ -43,7 +43,9 @@ void PhysicsSystem::update()
 {
 //	RE_CORE_INFO("Running Update");
 
+	Timer TimerSystem;
 	// For all entities
+	TimerSystem.TimerInit("Physics System");
 	for(auto entity : m_entities)
 	{
 		auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
@@ -75,6 +77,7 @@ void PhysicsSystem::update()
 		
 		//std::cout << "Entity " << entity << "'s pos: " << transform.getPosition() << std::endl;
 	}
+	TimerSystem.TimerEnd("Physics System");
 }
 
 void PhysicsSystem::receive(Event* ev)

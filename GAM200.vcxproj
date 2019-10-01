@@ -69,6 +69,7 @@
     <ClInclude Include="Scripts\SpriteComponent.h" />
     <ClInclude Include="Scripts\SystemManager.h" />
     <ClInclude Include="Scripts\TestSystem.h" />
+    <ClInclude Include="Scripts\Timer.h" />
     <ClInclude Include="Scripts\Types.h" />
     <ClInclude Include="Scripts\Vector2D.h" />
     <ClInclude Include="Scripts\VSync.h" />
@@ -105,6 +106,7 @@
     <ClCompile Include="Scripts\REMath.cpp" />
     <ClCompile Include="Scripts\shader.cpp" />
     <ClCompile Include="Scripts\SpriteComponent.cpp" />
+    <ClCompile Include="Scripts\Timer.cpp" />
     <ClCompile Include="Scripts\Vector2D.cpp" />
     <ClCompile Include="Scripts\VSync.cpp" />
     <ClCompile Include="Scripts\WindowHelper.cpp" />

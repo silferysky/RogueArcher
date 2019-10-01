@@ -1,9 +1,9 @@
 #include "GraphicsSystem.h"
 
 // Public member functions 
-
 void GraphicsSystem::init()
 {
+	
 	LISTENER_HANDLER hand = std::bind(&GraphicsSystem::receive, this, std::placeholders::_1);
 	EventDispatcher::instance().AddListener(SystemID::id_GRAPHICSSYSTEM, hand);
 
@@ -20,6 +20,8 @@ void GraphicsSystem::init()
 
 void GraphicsSystem::update()
 {
+	Timer TimeSystem;
+	TimeSystem.TimerInit("Graphics System");
 	// For all entities
 	for (auto entity : m_entities)
 	{
@@ -33,6 +35,7 @@ void GraphicsSystem::update()
 		sprite.draw(&transform);
 
 	}
+	TimeSystem.TimerEnd("Graphics System");
 }
 
 void GraphicsSystem::receive(Event* ev)
