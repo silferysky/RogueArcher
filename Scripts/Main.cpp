@@ -143,21 +143,6 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	//	std::cout << "FPS: " << 1 / wasteTimer << std::endl;
 	}
 
-	RE_INFO("TESTING HERE FOR A EVENT DEBUG");
-	KeyPressEvent testEvent(KeyPress::KeyArrowRight, 10);
-	RE_INFO(testEvent.ToString());
-	RE_INFO(testEvent.GetEventName());
-	RE_INFO("END EVENT TEST");
-
-	RE_INFO("MANUAL TEST EVENT DISPATCHER");
-	TestSystem testSys = TestSystem((SystemID)2);
-	testSys.receive(&testEvent);
-
-	RE_INFO("EVENT DISPATCHER TEST");
-	EventDispatcher::instance().AddEvent(&testEvent);
-	EventDispatcher::instance().update();
-	RE_INFO("EVENT DISPATCHER END");
-
 	std::cin.get();
 
 	delete InputMgr;

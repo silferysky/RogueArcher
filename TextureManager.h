@@ -11,6 +11,11 @@ public:
 	TextureManager() = default;
 	~TextureManager() = default;
 
+	std::map<const char*, GLuint> getTextureMap() const
+	{
+		return textureMap;
+	}
+
 	GLuint loadTexture(const char* texture)
 	{
 		auto itr = textureMap.find(texture);

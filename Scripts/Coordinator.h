@@ -143,6 +143,11 @@ public:
 		return *m_entityManager;
 	}
 
+	TextureManager& GetTextureManager() const
+	{
+		return *m_textureManager;
+	}
+
 	std::shared_ptr<std::string> getVertexShader() const
 	{
 		return m_fileManager->getVertexShader();
