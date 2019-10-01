@@ -24,7 +24,7 @@ void ObjectFactory::LoadLevel(const char* fileName)
 
 	TransformComponent backgroundTransform = TransformComponent();
 	backgroundTransform.setPosition(Vec2(0.0f, 0.0f));
-	backgroundTransform.setScale(Vec2(2.0f, 2.0f));
+	backgroundTransform.setScale(Vec2(1.0f, 1.0f));
 	backgroundTransform.setRotation(0.0f);
 
 	gEngine.m_coordinator.AddComponent(backgroundEnt, backgroundSprite);
