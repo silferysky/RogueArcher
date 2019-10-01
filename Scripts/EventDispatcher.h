@@ -4,25 +4,25 @@
 #include <map>
 #include <vector>
 #include "EventListener.h"
+#include "SystemManager.h"
 
 class EventDispatcher :
-	public SystemList
+	public System
 {
 public:
 
-	EventDispatcher() 
-	{ 
-		EventQueue = std::queue<Event*>();
-		DelayedEventQueue = std::queue<Event*>();
-		ListenerMap = std::map<SYSTEMID, LISTENER_HANDLER>();
+	EventDispatcher() = default;
+	~EventDispatcher() = default;
 
-	}
-	~EventDispatcher() { }
 
 	static EventDispatcher& instance()
 	{
 		static EventDispatcher instance;
 		return instance;
+	}
+	void init()
+	{
+		EventDispatcher::instance();
 	}
 
 	Event* GetQueueHead() { return EventQueue.front(); }
@@ -42,9 +42,9 @@ public:
 			isCombiningQueue = true;
 	}
 
-	void AddListener(SYSTEMID ID, LISTENER_HANDLER handler)
+	void AddListener(SystemID ID, LISTENER_HANDLER handler)
 	{
-		ListenerMap.insert(std::pair<SYSTEMID, LISTENER_HANDLER>(ID, handler));
+		ListenerMap.insert(std::pair<SystemID, LISTENER_HANDLER>(ID, handler));
 		RE_CORE_INFO("Added new key to ListenerMap");
 	}
 	//Removes all listeners in map
@@ -52,7 +52,7 @@ public:
 	{
 		ListenerMap.clear();
 	}
-	void RemoveListener(SYSTEMID ID)
+	void RemoveListener(SystemID ID)
 	{
 		for (auto it = ListenerMap.begin(); it != ListenerMap.end(); ++it)
 		{
@@ -63,7 +63,7 @@ public:
 		}
 	}
 
-	std::map<SYSTEMID, LISTENER_HANDLER> GetMap()
+	std::map<SystemID, LISTENER_HANDLER> GetMap()
 	{
 		return ListenerMap;
 	}
@@ -77,7 +77,7 @@ public:
 		DelayedEventQueue.push(e);
 	}
 
-	void Update()
+	void update()
 	{
 		if (isCombiningQueue)
 		{
@@ -112,6 +112,6 @@ public:
 private:
 	std::queue<Event*> EventQueue;
 	std::queue<Event*> DelayedEventQueue;
-	std::map<SYSTEMID, LISTENER_HANDLER> ListenerMap;
+	std::map<SystemID, LISTENER_HANDLER> ListenerMap;
 	bool isCombiningQueue = false;
 };
