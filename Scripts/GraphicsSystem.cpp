@@ -3,6 +3,7 @@
 // Public member functions 
 void GraphicsSystem::init()
 {
+	
 	LISTENER_HANDLER hand = std::bind(&GraphicsSystem::receive, this, std::placeholders::_1);
 	EventDispatcher::instance().AddListener(SystemID::id_GRAPHICSSYSTEM, hand);
 
@@ -50,7 +51,7 @@ void GraphicsSystem::receive(Event* ev)
 			{
 				auto& sprite = gEngine.m_coordinator.GetComponent<SpriteComponent>(entity);
 
-				sprite.m_transformMat = glm::rotate_slow(sprite.m_transformMat, (GLfloat)glfwGetTime() * -0.5f, glm::vec3(0.0f, 0.0f, 1.0f));
+				sprite.m_transformMat = glm::rotate(sprite.m_transformMat, (GLfloat)RE_PI/2 * gDeltaTime, glm::vec3(0.0f, 0.0f, 1.0f));
 			}
 			RE_INFO("Rotated!");
 		}
@@ -61,7 +62,7 @@ void GraphicsSystem::receive(Event* ev)
 			{
 				auto& sprite = gEngine.m_coordinator.GetComponent<SpriteComponent>(entity);
 
-				sprite.m_transformMat = glm::scale_slow(sprite.m_transformMat, glm::vec3(1.5f, 1.5f, 1.5f));
+				sprite.m_transformMat = glm::scale_slow(sprite.m_transformMat, glm::vec3(0.99f, 0.99f, 0.99f));
 			}
 			RE_INFO("Scaled!");
 		}

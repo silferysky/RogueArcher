@@ -18,7 +18,7 @@ void Timer::TimerEnd(const char* System)
 	}
 	for (auto it = time.begin(); it != time.end(); ++it)
 	{
-		std::cout << it->first << " " << it->second << std::endl;
+//		std::cout << it->first << " " << it->second << std::endl;
 	}
 
 
