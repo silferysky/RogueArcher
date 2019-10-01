@@ -106,7 +106,7 @@ void SpriteComponent::draw(TransformComponent* transform) const
 	glUseProgram(m_shader);
 
 	// Draw the Mesh
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+	//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	// Unbind after drawing
 	glBindVertexArray(0);
 }
