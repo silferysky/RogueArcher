@@ -5,6 +5,7 @@
 #include "EventDispatcher.h"
 #include "KeyEvent.h"
 #include "InputData.h"
+#include "SystemManager.h"
 #include <iostream>
 
 struct KeyboardState
@@ -31,16 +32,19 @@ struct FuncState
 };
 
 class InputManager
-	: public SystemList
+	: public System
 {
 public:
 	InputManager();
 	~InputManager();
 
+	//Initialization
+	void init();
+
 	//State management
 
 	//Updates current and previous keyboard state
-	void UpdateState();
+	void update();
 	//Handles the current keyboard state
 	void HandleState();
 	//Hard reset keyboard states
