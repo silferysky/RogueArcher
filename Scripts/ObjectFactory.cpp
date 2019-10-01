@@ -23,7 +23,7 @@ void ObjectFactory::LoadLevel(const char* fileName)
 	backgroundSprite.setTexture(backgroundStr.c_str());
 
 	TransformComponent backgroundTransform = TransformComponent();
-	backgroundTransform.setPosition(Vec2(-1.0f, 0.0f));
+	backgroundTransform.setPosition(Vec2(-0.5f, 0.0f));
 	backgroundTransform.setScale(Vec2(0.5f, 0.5f));
 	backgroundTransform.setRotation(0.0f);
 
