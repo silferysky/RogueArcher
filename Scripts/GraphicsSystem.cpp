@@ -40,13 +40,23 @@ void GraphicsSystem::update()
 
 void GraphicsSystem::receive(Event* ev)
 {
-	//RE_CORE_INFO("GRAPHICS");
 	switch (ev->GetEventType())
 	{
 	case EventType::EvKeyPressed:
 	{
 		KeyPressEvent* EvPressKey = dynamic_cast<KeyPressEvent*>(ev);
-		//DoStuffHere with events
+		if (EvPressKey->GetKeyCode() == KeyPress::KeyR)
+		{
+			for (auto entity : m_entities)
+			{
+				auto& sprite = gEngine.m_coordinator.GetComponent<SpriteComponent>(entity);
+
+				sprite.m_transformMat = glm::rotate(sprite.m_transformMat, (GLfloat)glfwGetTime() * -0.5f, glm::vec3(0.0f, 0.0f, 1.0f));
+				//GLint transformLocation = glGetUniformLocation(sprite.getShader(), "transform");
+				//glUniformMatrix4fv(transformLocation, 1, GL_FALSE, glm::value_ptr(sprite.m_transformMat));
+			}
+			RE_INFO("Rotated!");
+		}
 		return;
 	}
 	default:
