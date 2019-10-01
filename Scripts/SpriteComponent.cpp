@@ -62,7 +62,6 @@ void SpriteComponent::setShader(std::string vShader, std::string fShader)
 
 void SpriteComponent::draw(TransformComponent* transform)
 {
-
 	m_transformMat = glm::translate(m_transformMat, {transform->getPosition().x, transform->getPosition().y, 0.0f});
 	m_transformMat = glm::scale(m_transformMat, glm::vec3(transform->getScale().x * 100, transform->getScale().y * 100, 1.0f));
 			
