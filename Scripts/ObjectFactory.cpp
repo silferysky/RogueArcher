@@ -19,16 +19,17 @@ void ObjectFactory::LoadLevel(const char* fileName)
 	Entity backgroundEnt = gEngine.m_coordinator.CreateEntity();
 	std::string backgroundStr = level["BackgroundTexture"].GetString();
 
-	SpriteComponent backgroundSprite;
+	SpriteComponent backgroundSprite = SpriteComponent();
 	backgroundSprite.setTexture(backgroundStr.c_str());
 
 	TransformComponent backgroundTransform = TransformComponent();
-	backgroundTransform.setPosition(Vec2());
-	backgroundTransform.setScale(Vec2(1));
+	backgroundTransform.setPosition(Vec2(1.0f, -1.0f));
+	backgroundTransform.setScale(Vec2(1.0f, 1.0f));
 	backgroundTransform.setRotation(0.0f);
 
 	gEngine.m_coordinator.AddComponent(backgroundEnt, backgroundSprite);
 	gEngine.m_coordinator.AddComponent(backgroundEnt, backgroundTransform);
+	m_activeEntities.push_back(backgroundEnt);
 
 	for (Entity entity = 0; entity < entCount; ++entity)
 	{
@@ -171,7 +172,9 @@ void ObjectFactory::LoadLevel(const char* fileName)
 
 void ObjectFactory::SaveLevel(const char* fileName)
 {
-	Entity entCount = static_cast<Entity>(m_activeEntities.size());
+	//Minus one off due to Background being part of the list as well.
+	//Background is unique and will not be counted to the entCount
+	Entity entCount = static_cast<Entity>(m_activeEntities.size() - 1);
 	EntityManager* em = &gEngine.m_coordinator.GetEntityManager();
 	m_Serialiser.WriteToFile(fileName, "EntCount", (int)entCount);
 
