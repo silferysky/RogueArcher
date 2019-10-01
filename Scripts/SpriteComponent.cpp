@@ -74,14 +74,12 @@ void SpriteComponent::draw(TransformComponent* transform) const
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
 	glEnableVertexAttribArray(2);
 
-	glBindBuffer(GL_ARRAY_BUFFER, 0);//Reset
+	//glBindBuffer(GL_ARRAY_BUFFER, 0);//Reset
 	glBindVertexArray(0);//Reset
 
 	//draw
 	// Use the shader program for drawing
 	glUseProgram(m_shader);
-
-	//transformMat = glm::rotate(transformMat, (GLfloat)glfwGetTime() * -0.5f, glm::vec3(0.0f, 0.0f, 1.0f));
 
 	GLint transformLocation = glGetUniformLocation(m_shader, "transform");
 	glUniformMatrix4fv(transformLocation, 1, GL_FALSE, glm::value_ptr(m_transformMat));

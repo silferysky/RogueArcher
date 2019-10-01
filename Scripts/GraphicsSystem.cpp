@@ -55,6 +55,18 @@ void GraphicsSystem::receive(Event* ev)
 			}
 			RE_INFO("Rotated!");
 		}
+
+		if (EvPressKey->GetKeyCode() == KeyPress::KeyS)
+		{
+			for (auto entity : m_entities)
+			{
+				auto& sprite = gEngine.m_coordinator.GetComponent<SpriteComponent>(entity);
+
+				sprite.m_transformMat = glm::scale_slow(sprite.m_transformMat, glm::vec3(0.99f, 0.99f, 0.99f));
+			}
+			RE_INFO("Scaled!");
+		}
+
 		return;
 	}
 	default:
