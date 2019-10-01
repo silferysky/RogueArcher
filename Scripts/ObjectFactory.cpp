@@ -3,14 +3,32 @@
 #include <bitset>
 #include <random>
 #define RAND_LARGE 500
-#define RAND_SMALL 10
+#define RAND_SMALL 5
 
 void ObjectFactory::LoadLevel(const char* fileName)
 {
 	rapidjson::Document level = m_Serialiser.DeserialiseFromFile(fileName);
+
 	Signature currentSignature;
-	Entity entCount = level["EntCount"].GetInt();
 	std::stringstream debugStr;
+
+	//For Entity Count
+	Entity entCount = level["EntCount"].GetInt();
+
+	//For Background
+	Entity backgroundEnt = gEngine.m_coordinator.CreateEntity();
+	std::string backgroundStr = level["BackgroundTexture"].GetString();
+
+	SpriteComponent backgroundSprite;
+	backgroundSprite.setTexture(backgroundStr.c_str());
+
+	TransformComponent backgroundTransform = TransformComponent();
+	backgroundTransform.setPosition(Vec2());
+	backgroundTransform.setScale(Vec2(1));
+	backgroundTransform.setRotation(0.0f);
+
+	gEngine.m_coordinator.AddComponent(backgroundEnt, backgroundSprite);
+	gEngine.m_coordinator.AddComponent(backgroundEnt, backgroundTransform);
 
 	for (Entity entity = 0; entity < entCount; ++entity)
 	{
@@ -28,18 +46,20 @@ void ObjectFactory::LoadLevel(const char* fileName)
 		currentSignature = level[cstr].GetInt();
 
 		//Copypasta for each new variable//
-		if (currentSignature.test(0))
+		if (currentSignature.test(static_cast<int>(SPRITE)))
 		{
-			//SpriteComponent does not need to load values, so ignore
-			//Still need to -- though, since signature does contain it
 			SpriteComponent s;
+			const char* path;
+			CLEARNSETSTR(strstream, entity, "sc", 0);
+			path = level[cstr].GetString();
+			s.setTexture(path);
 			
 			gEngine.m_coordinator.AddComponent(curEnt, s);
 		}
 		///////////////////////////////////
 
 		//Copypasta for each new variable//
-		if (currentSignature.test(1))
+		if (currentSignature.test(static_cast<int>(RIGIDBODY)))
 		{
 			RigidbodyComponent r;
 			float x, y;
@@ -73,7 +93,7 @@ void ObjectFactory::LoadLevel(const char* fileName)
 		///////////////////////////////////
 
 		//Copypasta for each new variable//
-		if (currentSignature.test(2))
+		if (currentSignature.test(static_cast<int>(TRANSFORM)))
 		{
 			TransformComponent t;
 			float x, y;
@@ -94,7 +114,7 @@ void ObjectFactory::LoadLevel(const char* fileName)
 		///////////////////////////////////
 
 		//Copypasta for each new variable//
-		if (currentSignature.test(3))
+		if (currentSignature.test(static_cast<int>(CIRCLECOLLIDER2D)))
 		{
 			CircleCollider2DComponent cc;
 			CLEARNSETSTR(strstream, entity, "ccc", 0);
@@ -106,7 +126,7 @@ void ObjectFactory::LoadLevel(const char* fileName)
 		///////////////////////////////////
 
 		//Copypasta for each new variable//
-		if (currentSignature.test(4))
+		if (currentSignature.test(static_cast<int>(BOXCOLLIDER2D)))
 		{
 			std::vector<Vec2> vecVec;
 			float x, y;
@@ -174,6 +194,29 @@ void ObjectFactory::SaveLevel(const char* fileName)
 		//SpriteComponent does not need to save values, so just save signature
 		///////////////////////////////////
 
+		if (gEngine.m_coordinator.CheckIfComponentExists<SpriteComponent>(entity))
+		{
+			/*SpriteComponent& s = gEngine.m_coordinator.GetComponent<SpriteComponent>(entity);
+
+			varNum = 0;
+			CLEARNSETSTR(varName, entity, "sc", varNum);
+			std::map<const char*, GLuint> textureMap = gEngine.m_coordinator.GetTextureManager().getTextureMap();
+			const char* filePath = "";
+			
+			for (std::map<const char*, GLuint>::iterator it = textureMap.begin();
+				it != textureMap.end(); ++it)
+			{
+				if (it->second == s.getTexture())
+				{
+					filePath = it->first;
+					break;
+				}
+			}
+
+			std::string filePathStr = filePath;
+			m_Serialiser.WriteToFile(fileName, cstr, filePathStr);*/
+		}
+
 		if (gEngine.m_coordinator.CheckIfComponentExists<RigidbodyComponent>(entity))
 		{
 			RigidbodyComponent& r = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
@@ -205,8 +248,13 @@ void ObjectFactory::SaveLevel(const char* fileName)
 			std::random_device rd;
 			std::mt19937 gen(rd());		//For random seed
 			std::uniform_int_distribution<> distribution_L(-RAND_LARGE, RAND_LARGE);
-			std::uniform_int_distribution<> distribution_S(-RAND_SMALL, RAND_SMALL);
+			//std::uniform_int_distribution<> distribution_S(-RAND_SMALL, RAND_SMALL);
 
+			//Position, Scale and Rotation
+			//Scale is set to 2 decimal places by getting a random int, cast as float,
+			//divided by RAND_SMALL, rounded off, then divided by RAND_LARGE and multiply
+			//by RAND_SMALL to offset original RAND_SMALL
+			//This will give a number with 2 decimal places
 			varNum = 0;
 			CLEARNSETSTR(varName, entity, "tc", varNum);
 			m_Serialiser.WriteToFile(fileName, cstr, distribution_L(gen));
@@ -215,10 +263,12 @@ void ObjectFactory::SaveLevel(const char* fileName)
 			m_Serialiser.WriteToFile(fileName, cstr, distribution_L(gen));
 			++varNum;
 			CLEARNSETSTR(varName, entity, "tc", varNum);
-			m_Serialiser.WriteToFile(fileName, cstr, distribution_S(gen));
+			m_Serialiser.WriteToFile(fileName, cstr, 
+				std::round(static_cast<float>(distribution_L(gen)) / RAND_SMALL) * RAND_SMALL / RAND_LARGE);
 			++varNum;
 			CLEARNSETSTR(varName, entity, "tc", varNum);
-			m_Serialiser.WriteToFile(fileName, cstr, distribution_S(gen));
+			m_Serialiser.WriteToFile(fileName, cstr,
+				std::round(static_cast<float>(distribution_L(gen)) / RAND_SMALL) * RAND_SMALL / RAND_LARGE);
 			++varNum;
 			CLEARNSETSTR(varName, entity, "tc", varNum);
 			m_Serialiser.WriteToFile(fileName, cstr, distribution_L(gen));
