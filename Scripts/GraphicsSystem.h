@@ -4,8 +4,6 @@
 #include "../Scripts/REMath.h"
 #include "../Scripts/EventListener.h"
 
-#include "Quad.h"
-
 class GraphicsSystem : public System
 {
 public:

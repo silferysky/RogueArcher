@@ -62,7 +62,6 @@
     <ClInclude Include="Scripts\Matrix33.h" />
     <ClInclude Include="Scripts\MemoryType.h" />
     <ClInclude Include="Scripts\ObjectFactory.h" />
-    <ClInclude Include="Scripts\Quad.h" />
     <ClInclude Include="Scripts\REMath.h" />
     <ClInclude Include="Scripts\Resource.h" />
     <ClInclude Include="Scripts\RogueEngine.h" />
@@ -70,11 +69,11 @@
     <ClInclude Include="Scripts\SpriteComponent.h" />
     <ClInclude Include="Scripts\SystemManager.h" />
     <ClInclude Include="Scripts\TestSystem.h" />
-    <ClInclude Include="Scripts\triangle.h" />
     <ClInclude Include="Scripts\Types.h" />
     <ClInclude Include="Scripts\Vector2D.h" />
     <ClInclude Include="Scripts\VSync.h" />
     <ClInclude Include="Scripts\WindowHelper.h" />
+    <ClInclude Include="TextureManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Physics\BoxCollider2DComponent.cpp" />
@@ -102,12 +101,10 @@
     <ClCompile Include="Scripts\Main.cpp" />
     <ClCompile Include="Scripts\Matrix33.cpp" />
     <ClCompile Include="Scripts\ObjectFactory.cpp" />
-    <ClCompile Include="Scripts\Quad.cpp" />
     <ClCompile Include="Scripts\REEngine.cpp" />
     <ClCompile Include="Scripts\REMath.cpp" />
     <ClCompile Include="Scripts\shader.cpp" />
     <ClCompile Include="Scripts\SpriteComponent.cpp" />
-    <ClCompile Include="Scripts\triangle.cpp" />
     <ClCompile Include="Scripts\Vector2D.cpp" />
     <ClCompile Include="Scripts\VSync.cpp" />
     <ClCompile Include="Scripts\WindowHelper.cpp" />

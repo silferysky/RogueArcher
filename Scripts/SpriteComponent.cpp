@@ -3,16 +3,7 @@
 
 SpriteComponent::SpriteComponent()
 {
-	m_texture = SOIL_load_OGL_texture
-	(
-		"test.bmp",
-		SOIL_LOAD_AUTO,
-		SOIL_CREATE_NEW_ID,
-		SOIL_FLAG_INVERT_Y
-	);
-
-	if (m_texture == 0)
-		std::cout << "fuck" << std::endl;
+	m_texture = gEngine.m_coordinator.loadTexture("test.bmp");
 
 	glBindTexture(GL_TEXTURE_2D, m_texture);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -83,11 +74,11 @@ void SpriteComponent::draw(TransformComponent* transform) const
 	}; */
 
 	{
-		// positions          // colors           // texture coords
-		0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
-		0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
-	   -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-	   -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left 
+	// positions          // colors           // texture coords
+	0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, // top right
+		0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, // bottom right
+		-0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, // bottom left
+		-0.5f, 0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f  // top left 
 	};
 
 	glBufferData(GL_ARRAY_BUFFER, sizeof(_vertexpos), _vertexpos, GL_STATIC_DRAW);
@@ -125,7 +116,7 @@ GLuint SpriteComponent::getTexture() const
 	return m_texture;
 }
 
-unsigned int SpriteComponent::getShader() const
+GLuint SpriteComponent::getShader() const
 {
 	return m_shader;
 }
