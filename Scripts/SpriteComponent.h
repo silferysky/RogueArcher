@@ -4,6 +4,9 @@
 #include "SOIL.h"
 #include "../Physics/TransformComponent.h"
 #include "../TextureManager.h"
+#include <glm.hpp>
+#include <gtc/matrix_transform.hpp>
+#include <gtc/type_ptr.hpp>
 
 class SpriteComponent
 {
@@ -13,16 +16,14 @@ class SpriteComponent
 		1, 2, 3    // second triangle
 	};
 
-	GLuint m_texture = 0;
-	GLuint m_shader = 0;
-	GLuint m_VAO = 0;
-	GLuint m_VBO = 0;
-	GLuint m_EBO = 0;
+	GLuint m_texture;
+	GLuint m_shader;
+	GLuint m_VAO;
+	GLuint m_VBO;
+	GLuint m_EBO;
 public:
-	SpriteComponent() = default;
+	SpriteComponent();
 	~SpriteComponent() = default;
-
-	SpriteComponent(TransformComponent* transform);
 
 	void setTexture(const char* texture);
 	void setShader(std::string vShader, std::string fShader);
