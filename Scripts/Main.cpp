@@ -80,7 +80,6 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	RE_INFO("TEST FILEWRITER");
 	BasicIO::WriteJsonFile("Resources/TestJsonFileCreator.json", 1);
 
-
 	RE_INFO("TEST OBJECT FACTORY");
 	std::stringstream debugStr;
 	size_t objInLevel = gObjectFactory.GetActiveEntity().size();
