@@ -1,7 +1,7 @@
 #include "SpriteComponent.h"
 #include "REEngine.h"
 
-SpriteComponent::SpriteComponent()
+SpriteComponent::SpriteComponent() : m_transformMat{ 1.0 }
 {
 	m_texture = gEngine.m_coordinator.loadTexture("test.bmp");
 
@@ -81,11 +81,10 @@ void SpriteComponent::draw(TransformComponent* transform) const
 	// Use the shader program for drawing
 	glUseProgram(m_shader);
 
-	glm::mat4 transformMat{ 1.0 };
-	transformMat = glm::rotate(transformMat, (GLfloat)glfwGetTime() * -0.5f, glm::vec3(0.0f, 0.0f, 1.0f));
+	//transformMat = glm::rotate(transformMat, (GLfloat)glfwGetTime() * -0.5f, glm::vec3(0.0f, 0.0f, 1.0f));
 
 	GLint transformLocation = glGetUniformLocation(m_shader, "transform");
-	glUniformMatrix4fv(transformLocation, 1, GL_FALSE, glm::value_ptr(transformMat));
+	glUniformMatrix4fv(transformLocation, 1, GL_FALSE, glm::value_ptr(m_transformMat));
 
 	glBindVertexArray(m_VAO);
 
