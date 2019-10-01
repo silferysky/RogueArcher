@@ -16,7 +16,7 @@ void ObjectFactory::LoadLevel(const char* fileName)
 	Entity entCount = level["EntCount"].GetInt();
 
 	//For Background
-	/* Entity backgroundEnt = gEngine.m_coordinator.CreateEntity();
+	Entity backgroundEnt = gEngine.m_coordinator.CreateEntity();
 	std::string backgroundStr = level["BackgroundTexture"].GetString();
 
 	SpriteComponent backgroundSprite = SpriteComponent();
@@ -24,12 +24,12 @@ void ObjectFactory::LoadLevel(const char* fileName)
 
 	TransformComponent backgroundTransform = TransformComponent();
 	backgroundTransform.setPosition(Vec2(0.0f, 0.0f));
-	backgroundTransform.setScale(Vec2(1.0f, 1.0f));
+	backgroundTransform.setScale(Vec2(2.0f, 2.0f));
 	backgroundTransform.setRotation(0.0f);
 
 	gEngine.m_coordinator.AddComponent(backgroundEnt, backgroundSprite);
 	gEngine.m_coordinator.AddComponent(backgroundEnt, backgroundTransform);
-	m_activeEntities.push_back(backgroundEnt); */
+	m_activeEntities.push_back(backgroundEnt);
 
 	for (Entity entity = 0; entity < entCount; ++entity)
 	{
