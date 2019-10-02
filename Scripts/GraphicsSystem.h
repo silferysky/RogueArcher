@@ -17,6 +17,8 @@ public:
 	void init();
 	void update() override;
 
+	void drawDebug(BoxCollider2DComponent* box);
+
 	void receive(Event* ev);
 };
 #endif

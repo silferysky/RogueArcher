@@ -5,7 +5,7 @@ class TransformComponent
 {
 	Vec2 m_position = Vec2(0.0f, 0.0f);
 	Vec2 m_scale = Vec2(0.5f, 0.5f);
-	float m_rotation;
+	float m_rotation = 0.0f;
 
 public:
 	TransformComponent() = default;

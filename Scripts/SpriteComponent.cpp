@@ -3,7 +3,7 @@
 
 SpriteComponent::SpriteComponent() : m_effectMat{ 1.0 }
 {
-	m_texture = gEngine.m_coordinator.loadTexture("test.bmp");
+	m_texture = gEngine.m_coordinator.loadTexture("CharaTest.bmp");
 
 	glBindTexture(GL_TEXTURE_2D, m_texture);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -17,7 +17,6 @@ SpriteComponent::SpriteComponent() : m_effectMat{ 1.0 }
 	// bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
 	glGenVertexArrays(1, &m_VAO);
 	glBindVertexArray(m_VAO);
-
 	
 	glGenBuffers(1, &m_VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
@@ -27,15 +26,14 @@ SpriteComponent::SpriteComponent() : m_effectMat{ 1.0 }
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(quadIndices), quadIndices, GL_STATIC_DRAW);
 	
-
 	// position attribute
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 	// color attribute
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
 	// texture coord attribute
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)(7 * sizeof(float)));
 	glEnableVertexAttribArray(2);
 	//glBindBuffer(GL_ARRAY_BUFFER, 0); //Reset
 	glBindVertexArray(0); //Reset
@@ -65,7 +63,7 @@ void SpriteComponent::draw(TransformComponent* transform)
 	auto transformMat = glm::mat4(1.0f);
 
 	transformMat = glm::translate(transformMat, { transform->getPosition().x * 100, transform->getPosition().y * 100, 0.0f });
-	transformMat = glm::scale(transformMat, glm::vec3(100, 100, 1.0f));
+	transformMat = glm::scale(transformMat, glm::vec3(transform->getScale().x * 100, transform->getScale().y * 100, 1.0f));
 
 	//draw
 	 // Use the shader program for drawing
