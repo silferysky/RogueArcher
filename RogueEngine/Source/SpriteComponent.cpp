@@ -23,34 +23,34 @@ void SpriteComponent::setTexture(const char* texture)
 
 void SpriteComponent::draw(TransformComponent* transform)
 {
-	{
-		auto transformMat = glm::mat4(1.0f);
 
-		transformMat = glm::scale(transformMat, glm::vec3(transform->getScale().x, transform->getScale().y, 1.0f));
-		transformMat = glm::translate(transformMat, { transform->getPosition().x, transform->getPosition().y, 1.0f});
+	auto transformMat = glm::mat4(1.0f);
 
-		glBindTexture(GL_TEXTURE_2D, m_texture);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	transformMat = glm::translate(transformMat, { transform->getPosition().x, transform->getPosition().y, 1.0f });
+	transformMat = glm::scale(transformMat, glm::vec3(transform->getScale().x, transform->getScale().y, 1.0f));
 
-		//draw
-		 // Use the shader program for drawing
-		// model to world, world to view, view to projection
+	glBindTexture(GL_TEXTURE_2D, m_texture);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-		//offset by translation of camera, inverse of rotation
+	//draw
+		// Use the shader program for drawing
+	// model to world, world to view, view to projection
 
-		glm::mat4 projMat = glm::ortho(-16.0f, 16.0f, -9.0f, 9.0f, -10.0f, 10.0f);
+	//offset by translation of camera, inverse of rotation
 
-		glUseProgram(m_shader);
+	glm::mat4 projMat = glm::ortho(-16.0f * 0.5f, 16.0f * 0.5f, -9.0f * 0.5f, 9.0f * 0.5f, -10.0f, 10.0f);
 
-		m_effectMat = projMat * transformMat;
+	glUseProgram(m_shader);
 
-		GLint effectLocation = glGetUniformLocation(m_shader, "effect");
-		glUniformMatrix4fv(effectLocation, 1, GL_FALSE, glm::value_ptr(m_effectMat));
+	m_effectMat = projMat * transformMat;
 
-		// Draw the Mesh
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-	}
+	GLint effectLocation = glGetUniformLocation(m_shader, "effect");
+	glUniformMatrix4fv(effectLocation, 1, GL_FALSE, glm::value_ptr(m_effectMat));
+
+	// Draw the Mesh
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
 }
 
 GLuint SpriteComponent::getTexture() const
