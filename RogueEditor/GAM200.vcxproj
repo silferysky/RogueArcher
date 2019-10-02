@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Scripts\EditorAssets.h" />
+    <ClInclude Include="Scripts\EditorComponent.h" />
+    <ClInclude Include="Scripts\EditorConsole.h" />
+    <ClInclude Include="Scripts\EditorEdit.h" />
+    <ClInclude Include="Scripts\EditorFile.h" />
+    <ClInclude Include="Scripts\EditorGameObject.h" />
+    <ClInclude Include="Scripts\ImguiLayer.h" />
+    <ClInclude Include="Scripts\EditorInspector.h" />
+    <ClInclude Include="Scripts\REEditor.h" />
+    <ClInclude Include="Scripts\Time.h" />
+    <ClInclude Include="SystemComponent.h" />
+    <ClInclude Include="Scripts\AppEvent.h" />
+    <ClInclude Include="Scripts\BaseComponent.h" />
+    <ClInclude Include="Scripts\BaseEntity.h" />
+    <ClInclude Include="Scripts\BaseSystem.h" />
+    <ClInclude Include="Scripts\ComponentArray.h" />
+    <ClInclude Include="Scripts\ComponentManager.h" />
+    <ClInclude Include="Scripts\Coordinator.h" />
+    <ClInclude Include="Scripts\EngineIO.h" />
+    <ClInclude Include="Scripts\EntityManager.h" />
+    <ClInclude Include="Scripts\Event.h" />
+    <ClInclude Include="Scripts\EventDispatcher.h" />
+    <ClInclude Include="Scripts\FileIO.h" />
+    <ClInclude Include="Scripts\GameStateList.h" />
+    <ClInclude Include="Scripts\GameStateManager.h" />
+    <ClInclude Include="Scripts\glew.h" />
+    <ClInclude Include="Scripts\glfw3.h" />
+    <ClInclude Include="Scripts\imconfig.h" />
+    <ClInclude Include="Scripts\imgui.h" />
+    <ClInclude Include="Scripts\imgui_impl_glfw.h" />
+    <ClInclude Include="Scripts\imgui_impl_opengl3.h" />
+    <ClInclude Include="Scripts\imgui_internal.h" />
+    <ClInclude Include="Scripts\imgui_stl.h" />
+    <ClInclude Include="Scripts\imstb_rectpack.h" />
+    <ClInclude Include="Scripts\imstb_textedit.h" />
+    <ClInclude Include="Scripts\imstb_truetype.h" />
+    <ClInclude Include="Scripts\InputData.h" />
+    <ClInclude Include="Scripts\InputManager.h" />
+    <ClInclude Include="Scripts\KeyEvent.h" />
+    <ClInclude Include="Scripts\Logger.h" />
+    <ClInclude Include="Scripts\Main.h" />
+    <ClInclude Include="Scripts\MemoryManager.h" />
+    <ClInclude Include="Scripts\PhysicsComponent.h" />
+    <ClInclude Include="Scripts\Quad.h" />
+    <ClInclude Include="Scripts\Resource.h" />
+    <ClInclude Include="Scripts\RogueEngine.h" />
+    <ClInclude Include="Scripts\shader.h" />
+    <ClInclude Include="Scripts\SystemManager.h" />
+    <ClInclude Include="Scripts\triangle.h" />
+    <ClInclude Include="Scripts\Types.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Scripts\BaseComponent.cpp" />
+    <ClCompile Include="Scripts\BaseEntity.cpp" />
+    <ClCompile Include="Scripts\BaseSystem.cpp" />
+    <ClCompile Include="Scripts\EditorAssets.cpp" />
+    <ClCompile Include="Scripts\EditorComponent.cpp" />
+    <ClCompile Include="Scripts\EditorConsole.cpp" />
+    <ClCompile Include="Scripts\EditorEdit.cpp" />
+    <ClCompile Include="Scripts\EditorFile.cpp" />
+    <ClCompile Include="Scripts\EditorGameObject.cpp" />
+    <ClCompile Include="Scripts\EngineIO.cpp" />
+    <ClCompile Include="Scripts\FileIO.cpp" />
+    <ClCompile Include="Scripts\GameStateManager.cpp" />
+    <ClCompile Include="Scripts\imgui.cpp" />
+    <ClCompile Include="Scripts\ImguiLayer.cpp" />
+    <ClCompile Include="Scripts\imgui_demo.cpp" />
+    <ClCompile Include="Scripts\imgui_draw.cpp" />
+    <ClCompile Include="Scripts\imgui_impl_glfw.cpp" />
+    <ClCompile Include="Scripts\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="Scripts\imgui_stl.cpp" />
+    <ClCompile Include="Scripts\imgui_widgets.cpp" />
+    <ClCompile Include="Scripts\InputManager.cpp" />
+    <ClCompile Include="Scripts\EditorInspector.cpp" />
+    <ClCompile Include="Scripts\Logger.cpp" />
+    <ClCompile Include="Scripts\Main.cpp" />
+    <ClCompile Include="Scripts\MemoryManager.cpp" />
+    <ClCompile Include="Scripts\PhysicsComponent.cpp" />
+    <ClCompile Include="Scripts\Quad.cpp" />
+    <ClCompile Include="Scripts\shader.cpp" />
+    <ClCompile Include="Scripts\Time.cpp" />
+    <ClCompile Include="Scripts\triangle.cpp" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{63B4A48E-83B8-4090-AC7E-1263A5B407D8}</ProjectGuid>
+    <RootNamespace>GAM200</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>Rogue Editor</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dep\FMOD\inc;$(SolutionDir)Dep\spdlog-1.x\include;$(SolutionDir)Dep\SOIL\include;$(SolutionDir)Dep\GLFW\include;$(SolutionDir)Dep\glew-2.1.0\lib\Release\Win32;$(SolutionDir)Dep\rapidjson-master\include;..\Dep\imgui;$(SolutionDir)Dep\nlohmann;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dep\FMOD\lib;$(SolutionDir)Dep\SOIL;$(SolutionDir)Dep\GLFW\lib-vc2015;$(SolutionDir)Dep\glew-2.1.0\lib\Release\Win32</AdditionalLibraryDirectories>
+      <AdditionalDependencies>fmod64_vc.lib;glfw3.lib;opengl32.lib;SOIL.lib;glew32.lib;glew32s.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dep\FMOD\inc;$(SolutionDir)Dep\spdlog-1.x\include;$(SolutionDir)Dep\SOIL\include;$(SolutionDir)Dep\GLFW\include;$(SolutionDir)Dep\glew-2.1.0\lib\Release\x64;$(SolutionDir)Dep\rapidjson-master\include;$(SolutionDir)Dep\nlohmann;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dep\FMOD\lib;$(SolutionDir)Dep\SOIL;$(SolutionDir)Dep\GLFW\lib-vc2015;$(SolutionDir)Dep\glew-2.1.0\lib\Release\x64</AdditionalLibraryDirectories>
+      <AdditionalDependencies>fmod64_vc.lib;glfw3.lib;opengl32.lib;SOIL.lib;glew32.lib;glew32s.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dep\FMOD\inc;$(SolutionDir)Dep\spdlog-1.x\include;$(SolutionDir)Dep\SOIL\include;$(SolutionDir)Dep\GLFW\include;$(SolutionDir)Dep\glew-2.1.0\lib\Release\Win32;$(SolutionDir)Dep\rapidjson-master\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dep\FMOD\lib;$(SolutionDir)Dep\SOIL;$(SolutionDir)Dep\GLFW\lib-vc2015;$(SolutionDir)Dep\glew-2.1.0\lib\Release\Win32</AdditionalLibraryDirectories>
+      <AdditionalDependencies>fmod64_vc.lib;glfw3.lib;opengl32.lib;SOIL.lib;glew32.lib;glew32s.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dep\FMOD\inc;$(SolutionDir)Dep\spdlog-1.x\include;$(SolutionDir)Dep\SOIL\include;$(SolutionDir)Dep\GLFW\include;$(SolutionDir)Dep\glew-2.1.0\lib\Release\x64;$(SolutionDir)Dep\rapidjson-master\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dep\FMOD\lib;$(SolutionDir)Dep\SOIL;$(SolutionDir)Dep\GLFW\lib-vc2015;$(SolutionDir)Dep\glew-2.1.0\lib\Release\x64</AdditionalLibraryDirectories>
+      <AdditionalDependencies>fmod64_vc.lib;glfw3.lib;opengl32.lib;SOIL.lib;glew32.lib;glew32s.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
