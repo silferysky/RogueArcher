@@ -1,5 +1,23 @@
 #include "WindowHelper.h"
 
+float GetDesktopWidth()
+{
+	RECT desktop;
+	const HWND hDesktop = GetDesktopWindow();
+	// Get the size of screen to the desktop
+	GetWindowRect(hDesktop, &desktop);
+	return float(desktop.right);
+}
+
+float GetDesktopHeight()
+{
+	RECT desktop;
+	const HWND hDesktop = GetDesktopWindow();
+	// Get the size of screen to the desktop
+	GetWindowRect(hDesktop, &desktop);
+	return float(desktop.bottom);
+}
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	static PAINTSTRUCT ps;
@@ -16,6 +34,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		return 0;
+	case WM_KEYDOWN:
+		if (wParam == 'F')
+		{
+			if (GetWindowLongPtr(hWnd, GWL_STYLE) & WS_POPUP)
+			{
+				SetWindowLongPtr(hWnd, GWL_STYLE, WS_VISIBLE | WS_OVERLAPPEDWINDOW);
+				SetWindowPos(hWnd, NULL, 0, 0, 600, 400, SWP_FRAMECHANGED);
+			}
+			else
+			{ // set full screen
+				SetWindowLongPtr(hWnd, GWL_STYLE, WS_VISIBLE | WS_POPUP);
+				SetWindowPos(hWnd, HWND_TOP, 0, 0, GetSystemMetrics(SM_CXSCREEN), 
+					GetSystemMetrics(SM_CYSCREEN), SWP_FRAMECHANGED);
+			}
+		}
 	}
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);
 }

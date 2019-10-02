@@ -10,7 +10,7 @@ CollisionManager::CollisionManager()
 //_________________________________________________________________________|
 //_________________________________________________________________________|
 // Update the bounding box's m_min and m_max.
-void CollisionManager::updateAABB(AABB& collider, const Transform& transform)
+void CollisionManager::updateAABB(AABB& collider, const TransformComponent& transform)
 {
 	collider.setMin(Vec2{ -HALF_SCALE * transform.getScale().x + transform.getPosition().x,
 						  -HALF_SCALE * transform.getScale().y + transform.getPosition().y });
@@ -48,7 +48,7 @@ Collision passes.
 */
 /**************************************************************************/
 bool CollisionManager::dynamicAABBvsAABB(const AABB& aabb1, const AABB& aabb2,
-									   const Rigidbody& body1, const Rigidbody& body2)
+									   const RigidbodyComponent& body1, const RigidbodyComponent& body2)
 {
 	// Calculate new relative velocity Vb using vel2
 	float tFirst = 0;
@@ -209,14 +209,14 @@ void CollisionManager::initOBB(OBB& obb, const std::vector<Vec2>& modelVertices)
 }
 
 
-void CollisionManager::updateOBB(OBB& obb, const Transform& trans)
+void CollisionManager::updateOBB(OBB& obb, const TransformComponent& trans)
 {
 	updateVertices(obb, trans);
 	updateNormals(obb);
 }
 
 
-void CollisionManager::updateVertices(OBB& obb, const Transform& trans)
+void CollisionManager::updateVertices(OBB& obb, const TransformComponent& trans)
 {
 	Mtx33 rot, sca;
 	Mtx33RotRad(rot, trans.getRotation());

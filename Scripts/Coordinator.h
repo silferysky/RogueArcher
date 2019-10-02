@@ -9,16 +9,18 @@
 // Forward declaration
 class PhysicsSystem;
 class GraphicsSystem;
+class SpriteComponent;
 
 class Coordinator
 {
 public:
 	Coordinator()
 		: m_entityManager{ std::make_unique<EntityManager>() },
-		m_componentManager{ std::make_unique<ComponentManager>() },
-		m_systemManager{ std::make_unique<SystemManager>() },
-		m_fileManager{ std::make_unique<FileManager>() },
-		m_activeEntities{MAX_ENTITIES}
+		  m_componentManager{ std::make_unique<ComponentManager>() },
+		  m_systemManager{ std::make_unique<SystemManager>() },
+		  m_fileManager{ std::make_unique<FileManager>() },
+		  m_textureManager{ std::make_unique<TextureManager>() },
+		  m_activeEntities{MAX_ENTITIES}
 	{}
 
 	void Init()
@@ -33,6 +35,17 @@ public:
 
 		RE_CORE_INFO("-----------END REGISTERING SYSTEMS------------\n\n");
 
+		// Register all components
+		RE_CORE_INFO("---------START REGISTERING COMPONENTS---------");
+
+		RegisterComponent<SpriteComponent>();
+		RegisterComponent<RigidbodyComponent>();
+		RegisterComponent<TransformComponent>();
+		RegisterComponent<CircleCollider2DComponent>();
+		RegisterComponent<BoxCollider2DComponent>();
+
+		RE_CORE_INFO("----------END REGISTERING COMPONENTS----------\n\n");
+
 		// Init systems and system signatures will be set in their respective inits.
 		RE_CORE_INFO("----------START INITIALIZING SYSTEMS----------");
 
@@ -40,23 +53,11 @@ public:
 
 		RE_CORE_INFO("-----------END INITIALIZING SYSTEMS-----------\n\n");
 
-		// Register all components
-		RE_CORE_INFO("---------START REGISTERING COMPONENTS---------");
-
-		RegisterComponent<SpriteComponent>();
-		RegisterComponent<Rigidbody>();
-		RegisterComponent<Transform>();
-		RegisterComponent<CircleCollider2D>();
-		RegisterComponent<BoxCollider2D>();
-
-		RE_CORE_INFO("----------END REGISTERING COMPONENTS----------\n\n");
 	}
 
 	void update()
 	{
 		//...
-	//	RE_CORE_INFO("\n===============COORDINATOR UPDATE===============");
-	//	RE_CORE_INFO("\n-----------UPDATING SYSTEMS-----------");
 		m_systemManager->updateSystems();
 	}
 
@@ -72,6 +73,11 @@ public:
 		m_componentManager->EntityDestroyed(entity);
 
 		m_systemManager->EntityDestroyed(entity);
+	}
+
+	GLuint loadTexture(const char* texture)
+	{
+		return m_textureManager->loadTexture(texture);
 	}
 
 	template<typename T>
@@ -121,11 +127,6 @@ public:
 		return m_componentManager->GetComponentType<T>();
 	}
 
-	ComponentType GetComponentType(const char* typeName)
-	{
-		return m_componentManager->GetComponentType(typeName);
-	}
-
 	template<typename T>
 	std::shared_ptr<T> RegisterSystem()
 	{
@@ -143,6 +144,11 @@ public:
 		return *m_entityManager;
 	}
 
+	TextureManager& GetTextureManager() const
+	{
+		return *m_textureManager;
+	}
+
 	std::shared_ptr<std::string> getVertexShader() const
 	{
 		return m_fileManager->getVertexShader();
@@ -153,6 +159,12 @@ public:
 		return m_fileManager->getFragmentShader();
 	}
 	
+	template <typename T>
+	bool CheckIfComponentExists(Entity entity)
+	{
+		return m_entityManager->GetSignature(entity).test(GetComponentType<T>());
+	}
+
 private:
 	void initSystems()
 	{
@@ -163,5 +175,6 @@ private:
 	std::unique_ptr<EntityManager> m_entityManager;
 	std::unique_ptr<SystemManager> m_systemManager;
 	std::unique_ptr<FileManager> m_fileManager;
+	std::unique_ptr<TextureManager> m_textureManager;
 	std::vector<Entity> m_activeEntities;
 };

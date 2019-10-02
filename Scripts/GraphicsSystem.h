@@ -1,12 +1,14 @@
 #pragma once
+#ifndef GRAPICSSYSTEM_H
+#define GRAPICSSYSTEM_H
+#include "Timer.h"
 #include "../Scripts/Main.h"
-#include "../Physics/Transform.h"
+#include "../Physics/TransformComponent.h"
 #include "../Scripts/REMath.h"
-#include "../Scripts/EventListener.h"
+#include "../Scripts/EventDispatcher.h"
 
-#include "Quad.h"
-
-class GraphicsSystem : public System
+class Timer;
+class GraphicsSystem : public System, public EventListener
 {
 public:
 	GraphicsSystem() = default;
@@ -15,5 +17,8 @@ public:
 	void init();
 	void update() override;
 
+	void drawDebug(BoxCollider2DComponent* box);
+
 	void receive(Event* ev);
 };
+#endif
