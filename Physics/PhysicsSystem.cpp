@@ -1,9 +1,9 @@
 #include "PhysicsSystem.h"
 
 //-------------------------------------------------------//
-//              PRIVATE MEMBER FUNCTIONS					 //
+//              PRIVATE MEMBER FUNCTIONS				 //
 //-------------------------------------------------------//
-void PhysicsSystem::applyForces(Rigidbody& rigidbody) // F = ma
+void PhysicsSystem::applyForces(RigidbodyComponent& rigidbody) // F = ma
 {
 	rigidbody.offSetAcceleration(rigidbody.getAccForce() * rigidbody.getInvMass());
 }
@@ -12,13 +12,15 @@ PhysicsSystem::PhysicsSystem(Vec2 gravity)
 	: m_colliderManager{}, m_gravity{gravity}
 {}
 
-void PhysicsSystem::integrateAcceleration(Rigidbody& rigidbody, Transform& transform)
+void PhysicsSystem::integrateAcceleration(RigidbodyComponent& rigidbody, TransformComponent& transform)
 {
 	Vec2 vel = rigidbody.getAcceleration() * gDeltaTime;
+//	std::cout << "Vel = " << vel << std::endl;
+
 	vel *= static_cast<float>(std::pow(rigidbody.getDamping(), gDeltaTime));
 	rigidbody.offSetVelocity(vel);
-	transform.offSetPosition(rigidbody.getVelocity() * gDeltaTime);
 
+	transform.offSetPosition(rigidbody.getVelocity() * gDeltaTime);
 }
 
 
@@ -27,12 +29,14 @@ void PhysicsSystem::integrateAcceleration(Rigidbody& rigidbody, Transform& trans
 //-------------------------------------------------------//
 void PhysicsSystem::init()
 {
+	LISTENER_HANDLER hand = std::bind(&PhysicsSystem::receive, this, std::placeholders::_1);
+	EventDispatcher::instance().AddListener(SystemID::id_PHYSICSSYSTEM, hand);
 	// Add components to signature.
 	Signature signature;
-	signature.set(gEngine.m_coordinator.GetComponentType<Rigidbody>());
-	signature.set(gEngine.m_coordinator.GetComponentType<Transform>());
-	signature.set(gEngine.m_coordinator.GetComponentType<BoxCollider2D>());
-//	signature.set(gEngine.m_coordinator.GetComponentType<CircleCollider2D>());
+	signature.set(gEngine.m_coordinator.GetComponentType<RigidbodyComponent>());
+	signature.set(gEngine.m_coordinator.GetComponentType<TransformComponent>());
+	//signature.set(gEngine.m_coordinator.GetComponentType<BoxCollider2DComponent>());
+	//signature.set(gEngine.m_coordinator.GetComponentType<CircleCollider2DComponent>());
 	
 	// Set physics system signature.
 	gEngine.m_coordinator.SetSystemSignature<PhysicsSystem>(signature);
@@ -42,16 +46,15 @@ void PhysicsSystem::update()
 {
 //	RE_CORE_INFO("Running Update");
 
+	Timer TimerSystem;
 	// For all entities
+	TimerSystem.TimerInit("Physics System");
 	for(auto entity : m_entities)
 	{
-		auto& rigidbody = gEngine.m_coordinator.GetComponent<Rigidbody>(entity);
-		auto& transform = gEngine.m_coordinator.GetComponent<Transform>(entity);
-		auto& boxCollider = gEngine.m_coordinator.GetComponent<BoxCollider2D>(entity);
-		auto& circleCollider = gEngine.m_coordinator.GetComponent<CircleCollider2D>(entity);
-
-		// Reset accForce
-		rigidbody.setAccForce(Vec2());
+		auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
+		auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(entity);
+	//	auto& boxCollider = gEngine.m_coordinator.GetComponent<BoxCollider2DComponent>(entity);
+	//	auto& circleCollider = gEngine.m_coordinator.GetComponent<CircleCollider2DComponent>(entity);
 
 		// Apply accForce (Forces are added if necessary)
 		applyForces(rigidbody);
@@ -60,8 +63,8 @@ void PhysicsSystem::update()
 		integrateAcceleration(rigidbody, transform);
 
 		// Update collidables
-		m_colliderManager.updateAABB(boxCollider.m_aabb, transform);
-		m_colliderManager.updateOBB(boxCollider.m_obb, transform);
+	//	m_colliderManager.updateAABB(boxCollider.m_aabb, transform);
+	//	m_colliderManager.updateOBB(boxCollider.m_obb, transform);
 
 		// Conduct spatial partitioning
 		
@@ -70,15 +73,39 @@ void PhysicsSystem::update()
 
 		// Collision Response (Contact, forces, etc)
 		// Rest, Impulse, Torque
+
+		// Reset accForce
+		rigidbody.setAccForce(Vec2());
 		
-		//	std::cout << "Entity " << entity << "'s pos: " << transform.getPosition() << std::endl;
+	//	std::cout << "Entity " << entity << "'s pos: " << transform.getPosition() << std::endl;
 	}
+	TimerSystem.TimerEnd("Physics System");
 }
 
 void PhysicsSystem::receive(Event* ev)
 {
-	RE_INFO(ev->ToString());
-	RE_CORE_INFO("TEST SYSTEM RECEIVED EVENT");
+	switch (ev->GetEventType())
+	{
+	case EventType::EvKeyPressed:
+	{
+		auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(0);
+		auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(0);
+		KeyPressEvent* EvPressKey = dynamic_cast<KeyPressEvent*>(ev);
+		if (EvPressKey->GetKeyCode() == KeyPress::KeyA)
+		{
+			transform.offSetPosition(Vec2(-1.0f, 0.0f) * gDeltaTime);
+			RE_INFO("Move Left!");
+		}
+		else if (EvPressKey->GetKeyCode() == KeyPress::KeyD)
+		{
+			transform.offSetPosition(Vec2(1.0f, 0.0f) * gDeltaTime);
+			RE_INFO("Move Right!");
+		}
+		return;
+	}
+	default:
+		return;
+	}
 }
 
 // Setters

@@ -12,7 +12,6 @@
 #include <chrono>
 #include "GraphicsSystem.h"
 #include "VSync.h"
-#include "Quad.h"
 #include "SOIL.h"
 #include "Config.h"
 #include "WindowHelper.h"
@@ -33,13 +32,17 @@ int APIENTRY
 WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	LPSTR lpszCmdLine, int nCmdShow)
 {
+	UNREFERENCED_PARAMETER(hPreviousInst);
+	UNREFERENCED_PARAMETER(lpszCmdLine);
+	UNREFERENCED_PARAMETER(hCurrentInst);
 	HDC   hDC;				/* device context */
 	HGLRC hRC;				/* opengl context */
 	HWND  hWnd;				/* window */
-	MSG   msg;				/* message */
+	MSG   msg ;				/* message */
 	REConfig config;
 	config.ConfigInit();
-	hWnd = CreateOpenGLWindow(const_cast<char*>(config.GetTitle().c_str()), config.GetX(), config.GetY(), config.GetWidth(), config.GetHeight(), config.GetByte(), config.GetFlags());
+	UNREFERENCED_PARAMETER(msg);
+	hWnd = CreateOpenGLWindow(const_cast<char*>(config.GetTitle().c_str()), config.GetX(), config.GetY(), config.GetWidth(), config.GetHeight(),0, config.GetFlags());
 	if (hWnd == NULL)
 		exit(1);
 
@@ -81,26 +84,25 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	RE_INFO("TEST FILEWRITER");
 	BasicIO::WriteJsonFile("Resources/TestJsonFileCreator.json", 1);
 
-
 	RE_INFO("TEST OBJECT FACTORY");
 	std::stringstream debugStr;
 	size_t objInLevel = gObjectFactory.GetActiveEntity().size();
 	debugStr << "Number of entities at start: " << objInLevel;
+
+	//BasicIO::WriteJsonFile("Resources/Level 1.json", 8);
 
 	RE_INFO(debugStr.str());
 	gObjectFactory.LoadLevel("Resources/Level 1.json");
 
 	debugStr.clear();
 	debugStr.str("");
-	/*debugStr << "Entity 0's Signature: " << gEngine.m_coordinator.GetEntityManager().GetSignature(0).to_ulong();
-	RE_INFO(debugStr.str());
 
-	debugStr.clear();
+	/*debugStr.clear();
 	debugStr.str("");
 	debugStr << "Entity 1's Signature: " << gEngine.m_coordinator.GetEntityManager().GetSignature(1).to_ulong();
 	RE_INFO(debugStr.str());*/
 
-	gObjectFactory.SaveLevel("Resources/Level 1.json");
+	//gObjectFactory.SaveLevel("Resources/Level 1.json");
 
 	objInLevel = gObjectFactory.GetActiveEntity().size();
 	debugStr.clear();
@@ -110,10 +112,11 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 
 	RE_CORE_INFO("Entity generation complete");
 
-
+	InputManager* inputMgr = new InputManager();
 	TestSystem sys = TestSystem();
 	float wasteTimer;
 	std::chrono::high_resolution_clock timer;
+	config.SetFPS(60);
 	while (gameIsRunning)
 	{
 		auto start = timer.now(); 
@@ -127,51 +130,22 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 
 		// Update engine.
 		gEngine.update();
+		inputMgr->update();
+		EventDispatcher::instance().update();
 
-		int repeat = 0;
-		//float timer2 = 0.0f;
-		while (repeat < 5)
-		{
-			InputMgr->UpdateState();
-			EventDispatcher::instance().Update();
-
-			//if (InputMgr->KeyTriggeredAny())
-			{
-				//InputMgr->DebugKeyInputs();
-				++repeat;
-			}
-		}
-		glDisable(GL_DEPTH_TEST);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		SwapBuffers(hDC);
-
 		auto stop = timer.now();
-		gDeltaTime = std::chrono::duration_cast<std::chrono::microseconds>(stop - start).count() / 1000000.0f;
-		wasteTimer = gDeltaTime;
+		wasteTimer = std::chrono::duration_cast<std::chrono::microseconds>(stop - start).count() / 1000000.0f;
+		gDeltaTime = wasteTimer;
 		//config.SetFPS(30);
-		while (wasteTimer <= config.GetFPS())
+		while (gDeltaTime <= config.GetFPS())
 		{
 			stop = timer.now();
-			wasteTimer = std::chrono::duration_cast<std::chrono::microseconds>(stop - start).count() / 1000000.0f;
+			gDeltaTime = std::chrono::duration_cast<std::chrono::microseconds>(stop - start).count() / 1000000.0f;
 		}
 
-	//	std::cout << "FPS: " << 1 / wasteTimer << std::endl;
+	//	std::cout << "FPS: " << 1 / gDeltaTime << std::endl;
 	}
-
-	RE_INFO("TESTING HERE FOR A EVENT DEBUG");
-	KeyPressEvent testEvent(KeyPress::KeyArrowRight, 10);
-	RE_INFO(testEvent.ToString());
-	RE_INFO(testEvent.GetEventName());
-	RE_INFO("END EVENT TEST");
-
-	RE_INFO("MANUAL TEST EVENT DISPATCHER");
-	TestSystem testSys = TestSystem((SYSTEMID)2);
-	testSys.Receive(&testEvent);
-
-	RE_INFO("EVENT DISPATCHER TEST");
-	EventDispatcher::instance().AddEvent(&testEvent);
-	EventDispatcher::instance().Update();
-	RE_INFO("EVENT DISPATCHER END");
 
 	std::cin.get();
 

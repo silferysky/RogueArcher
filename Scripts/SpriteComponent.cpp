@@ -1,74 +1,52 @@
 #include "SpriteComponent.h"
 #include "REEngine.h"
 
-SpriteComponent::SpriteComponent()
+SpriteComponent::SpriteComponent() : m_effectMat{ 1.0 }
 {
-	glGenVertexArrays(1, &m_VAO);
-	glGenBuffers(1, &m_VBO);
-	glGenBuffers(1, &m_EBO);
+	m_texture = gEngine.m_coordinator.loadTexture("CharaTest.bmp");
 
-	glBindVertexArray(m_VAO);
+	glBindTexture(GL_TEXTURE_2D, m_texture);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-
-	/* float left = transform.getPosition().x - transform.getScale().x;
-	float right = transform.getPosition().x + transform.getScale().x;
-
-	float top = transform.getPosition().y - transform.getScale().y;
-	float bottom = transform.getPosition().y + transform.getScale().y; */
-
-	float _vertexpos[] =
-	{
-		// positions          // colors           // texture coords
-		0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
-		0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
-	   -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-	   -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left 
-	};
-
-	glBufferData(GL_ARRAY_BUFFER, sizeof(_vertexpos), _vertexpos, GL_STATIC_DRAW);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(quadIndices), quadIndices, GL_STATIC_DRAW);
-
-	// position attribute
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-
-	// color attribute
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(1);
-
-	// texture coord attribute
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-	glEnableVertexAttribArray(2);
-
-	glBindBuffer(GL_ARRAY_BUFFER, 0); //Reset
-	glBindVertexArray(0); //Reset
-
-	m_texture = SOIL_load_OGL_texture
-	(
-		"../../test.bmp",
-		SOIL_LOAD_AUTO,
-		SOIL_CREATE_NEW_ID,
-		SOIL_FLAG_INVERT_Y
-	);
-
-	std::string vertexShader = *gEngine.m_coordinator.getVertexShader();
-	std::string fragmentShader = *gEngine.m_coordinator.getFragmentShader();
+	std::string vertexShader = BasicIO::ReadFile("vertexShader.txt");
+	std::string fragmentShader = BasicIO::ReadFile("fragmentShader.txt");
 
 	m_shader = CreateShader(vertexShader, fragmentShader);
+
+	// bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
+	glGenVertexArrays(1, &m_VAO);
+	glBindVertexArray(m_VAO);
+	
+	glGenBuffers(1, &m_VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), quadVertices, GL_STATIC_DRAW);
+
+	glGenBuffers(1, &m_EBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(quadIndices), quadIndices, GL_STATIC_DRAW);
+	
+	// position attribute
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+	// color attribute
+	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
+	// texture coord attribute
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)(7 * sizeof(float)));
+	glEnableVertexAttribArray(2);
+	//glBindBuffer(GL_ARRAY_BUFFER, 0); //Reset
+	glBindVertexArray(0); //Reset
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
 void SpriteComponent::setTexture(const char* texture)
 {
-	m_texture = SOIL_load_OGL_texture
-	(
-		texture,
-		SOIL_LOAD_AUTO,
-		SOIL_CREATE_NEW_ID,
-		SOIL_FLAG_INVERT_Y
-	);
+	m_texture = gEngine.m_coordinator.loadTexture(texture);
+
+	glBindTexture(GL_TEXTURE_2D, m_texture);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 }
 
 void SpriteComponent::setShader(std::string vShader, std::string fShader)
@@ -80,12 +58,42 @@ void SpriteComponent::setShader(std::string vShader, std::string fShader)
 	m_shader = CreateShader(vertexShader, fragmentShader);
 }
 
+void SpriteComponent::draw(TransformComponent* transform)
+{
+	auto transformMat = glm::mat4(1.0f);
+
+	transformMat = glm::translate(transformMat, { transform->getPosition().x * 100, transform->getPosition().y * 100, 0.0f });
+	transformMat = glm::scale(transformMat, glm::vec3(transform->getScale().x * 100, transform->getScale().y * 100, 1.0f));
+
+	//draw
+	 // Use the shader program for drawing
+		
+	auto projMat = glm::ortho(-GetDesktopWidth()/ 2, GetDesktopWidth()/2, -GetDesktopHeight()/2, GetDesktopHeight()/2, -1000.f, 1000.f);
+
+	glUseProgram(m_shader);
+
+	GLint projLocation = glGetUniformLocation(m_shader, "projection");
+	glUniformMatrix4fv(projLocation, 1, GL_FALSE, glm::value_ptr(projMat));
+
+	GLint effectLocation = glGetUniformLocation(m_shader, "effect");
+	glUniformMatrix4fv(effectLocation, 1, GL_FALSE, glm::value_ptr(m_effectMat));
+		
+	GLint transformLocation = glGetUniformLocation(m_shader, "transform");
+	glUniformMatrix4fv(transformLocation, 1, GL_FALSE, glm::value_ptr(transformMat));
+
+	glBindVertexArray(m_VAO);
+	// Draw the Mesh
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+	// Unbind VAO after drawing
+	glBindVertexArray(0);
+}
+
 GLuint SpriteComponent::getTexture() const
 {
 	return m_texture;
 }
 
-unsigned int SpriteComponent::getShader() const
+GLuint SpriteComponent::getShader() const
 {
 	return m_shader;
 }

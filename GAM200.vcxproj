@@ -19,21 +19,21 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Physics\BoxCollider2D.h" />
+    <ClInclude Include="Physics\BoxCollider2DComponent.h" />
     <ClInclude Include="Physics\PhysicsSystem.h" />
     <ClInclude Include="Physics\AABB.h" />
     <ClInclude Include="Physics\BaseCollider.h" />
     <ClInclude Include="Physics\Circle.h" />
-    <ClInclude Include="Physics\CircleCollider2D.h" />
+    <ClInclude Include="Physics\CircleCollider2DComponent.h" />
     <ClInclude Include="Physics\Collider.h" />
     <ClInclude Include="Physics\CollisionManager.h" />
-    <ClInclude Include="Physics\Material.h" />
+    <ClInclude Include="Physics\MaterialComponent.h" />
     <ClInclude Include="Physics\OBB.h" />
     <ClInclude Include="Physics\Polygon.h" />
-    <ClInclude Include="Physics\Rigidbody.h" />
-    <ClInclude Include="Physics\Rotatable.h" />
+    <ClInclude Include="Physics\RigidbodyComponent.h" />
+    <ClInclude Include="Physics\RotatableComponent.h" />
     <ClInclude Include="Physics\Shape.h" />
-    <ClInclude Include="Physics\Transform.h" />
+    <ClInclude Include="Physics\TransformComponent.h" />
     <ClInclude Include="Scripts\AppEvent.h" />
     <ClInclude Include="Scripts\FileManager.h" />
     <ClInclude Include="Scripts\MemoryManager.h" />
@@ -63,7 +63,6 @@
     <ClInclude Include="Scripts\Matrix33.h" />
     <ClInclude Include="Scripts\MemoryType.h" />
     <ClInclude Include="Scripts\ObjectFactory.h" />
-    <ClInclude Include="Scripts\Quad.h" />
     <ClInclude Include="Scripts\REMath.h" />
     <ClInclude Include="Scripts\Resource.h" />
     <ClInclude Include="Scripts\RogueEngine.h" />
@@ -71,27 +70,28 @@
     <ClInclude Include="Scripts\SpriteComponent.h" />
     <ClInclude Include="Scripts\SystemManager.h" />
     <ClInclude Include="Scripts\TestSystem.h" />
-    <ClInclude Include="Scripts\triangle.h" />
+    <ClInclude Include="Scripts\Timer.h" />
     <ClInclude Include="Scripts\Types.h" />
     <ClInclude Include="Scripts\Vector2D.h" />
     <ClInclude Include="Scripts\VSync.h" />
     <ClInclude Include="Scripts\WindowHelper.h" />
+    <ClInclude Include="TextureManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Physics\BoxCollider2D.cpp" />
+    <ClCompile Include="Physics\BoxCollider2DComponent.cpp" />
     <ClCompile Include="Physics\PhysicsSystem.cpp" />
     <ClCompile Include="Physics\AABB.cpp" />
     <ClCompile Include="Physics\Circle.cpp" />
-    <ClCompile Include="Physics\CircleCollider2D.cpp" />
+    <ClCompile Include="Physics\CircleCollider2DComponent.cpp" />
     <ClCompile Include="Physics\Collider.cpp" />
     <ClCompile Include="Physics\CollisionManager.cpp" />
-    <ClCompile Include="Physics\Material.cpp" />
+    <ClCompile Include="Physics\MaterialComponent.cpp" />
     <ClCompile Include="Physics\OBB.cpp" />
     <ClCompile Include="Physics\Polygon.cpp" />
-    <ClCompile Include="Physics\Rigidbody.cpp" />
-    <ClCompile Include="Physics\Rotatable.cpp" />
+    <ClCompile Include="Physics\RigidbodyComponent.cpp" />
+    <ClCompile Include="Physics\RotatableComponent.cpp" />
     <ClCompile Include="Physics\Shape.cpp" />
-    <ClCompile Include="Physics\Transform.cpp" />
+    <ClCompile Include="Physics\TransformComponent.cpp" />
     <ClCompile Include="Scripts\Config.cpp" />
     <ClCompile Include="Scripts\BasicIO.cpp" />
     <ClCompile Include="Scripts\FileIO.cpp" />
@@ -104,12 +104,11 @@
     <ClCompile Include="Scripts\Matrix33.cpp" />
     <ClCompile Include="Scripts\MemoryManager.cpp" />
     <ClCompile Include="Scripts\ObjectFactory.cpp" />
-    <ClCompile Include="Scripts\Quad.cpp" />
     <ClCompile Include="Scripts\REEngine.cpp" />
     <ClCompile Include="Scripts\REMath.cpp" />
     <ClCompile Include="Scripts\shader.cpp" />
     <ClCompile Include="Scripts\SpriteComponent.cpp" />
-    <ClCompile Include="Scripts\triangle.cpp" />
+    <ClCompile Include="Scripts\Timer.cpp" />
     <ClCompile Include="Scripts\Vector2D.cpp" />
     <ClCompile Include="Scripts\VSync.cpp" />
     <ClCompile Include="Scripts\WindowHelper.cpp" />
@@ -178,7 +177,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dep\FMOD\inc;$(SolutionDir)Dep\spdlog-1.x\include;$(SolutionDir)Dep\SOIL\include;$(SolutionDir)Dep\GLFW\include;$(SolutionDir)Dep\glew-2.1.0\include;$(SolutionDir)Dep\rapidjson-master\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dep\glm;$(SolutionDir)Dep\FMOD\inc;$(SolutionDir)Dep\spdlog-1.x\include;$(SolutionDir)Dep\SOIL\include;$(SolutionDir)Dep\GLFW\include;$(SolutionDir)Dep\glew-2.1.0\include;$(SolutionDir)Dep\rapidjson-master\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -192,12 +191,12 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dep\FMOD\inc;$(SolutionDir)Dep\spdlog-1.x\include;$(SolutionDir)Dep\SOIL\include;$(SolutionDir)Dep\GLFW\include;$(SolutionDir)Dep\glew-2.1.0\include;$(SolutionDir)Dep\rapidjson-master\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dep\glm;$(SolutionDir)Dep\FMOD\inc;$(SolutionDir)Dep\spdlog-1.x\include;$(SolutionDir)Dep\SOIL\include;$(SolutionDir)Dep\GLFW\include;$(SolutionDir)Dep\glew-2.1.0\include;$(SolutionDir)Dep\rapidjson-master\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(SolutionDir)Dep\FMOD\lib;$(SolutionDir)Dep\SOIL\x64;$(SolutionDir)Dep\GLFW\lib-vc2015;$(SolutionDir)Dep\glew-2.1.0\lib\Release\x64</AdditionalLibraryDirectories>
-      <AdditionalDependencies>fmod64_vc.lib;glfw3.lib;opengl32.lib;SOIL.lib;glew32.lib;glew32s.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dep\FMOD\lib;$(SolutionDir)Dep\SOIL\x64;$(SolutionDir)Dep\GLFW\lib-vc2019;$(SolutionDir)Dep\glew-2.1.0\lib\Release\x64</AdditionalLibraryDirectories>
+      <AdditionalDependencies>fmod64_vc.lib;glfw3.lib;glfw3dll.lib;opengl32.lib;SOIL.lib;glew32.lib;glew32s.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>
@@ -209,7 +208,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dep\FMOD\inc;$(SolutionDir)Dep\spdlog-1.x\include;$(SolutionDir)Dep\SOIL\include;$(SolutionDir)Dep\GLFW\include;$(SolutionDir)Dep\glew-2.1.0\include;$(SolutionDir)Dep\rapidjson-master\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dep\glm;$(SolutionDir)Dep\FMOD\inc;$(SolutionDir)Dep\spdlog-1.x\include;$(SolutionDir)Dep\SOIL\include;$(SolutionDir)Dep\GLFW\include;$(SolutionDir)Dep\glew-2.1.0\include;$(SolutionDir)Dep\rapidjson-master\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -227,14 +226,14 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dep\FMOD\inc;$(SolutionDir)Dep\spdlog-1.x\include;$(SolutionDir)Dep\SOIL\include;$(SolutionDir)Dep\GLFW\include;$(SolutionDir)Dep\glew-2.1.0\include;$(SolutionDir)Dep\rapidjson-master\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dep\glm;$(SolutionDir)Dep\FMOD\inc;$(SolutionDir)Dep\spdlog-1.x\include;$(SolutionDir)Dep\SOIL\include;$(SolutionDir)Dep\GLFW\include;$(SolutionDir)Dep\glew-2.1.0\include;$(SolutionDir)Dep\rapidjson-master\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(SolutionDir)Dep\FMOD\lib;$(SolutionDir)Dep\SOIL\x64;$(SolutionDir)Dep\GLFW\lib-vc2015;$(SolutionDir)Dep\glew-2.1.0\lib\Release\x64</AdditionalLibraryDirectories>
-      <AdditionalDependencies>fmod64_vc.lib;glfw3.lib;opengl32.lib;SOIL.lib;glew32.lib;glew32s.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dep\FMOD\lib;$(SolutionDir)Dep\SOIL\x64;$(SolutionDir)Dep\GLFW\lib-vc2019;$(SolutionDir)Dep\glew-2.1.0\lib\Release\x64</AdditionalLibraryDirectories>
+      <AdditionalDependencies>fmod64_vc.lib;glfw3.lib;glfw3dll.lib;opengl32.lib;SOIL.lib;glew32.lib;glew32s.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
