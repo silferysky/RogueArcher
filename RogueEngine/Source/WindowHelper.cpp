@@ -53,6 +53,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		{
 			gEngine.m_coordinator.togglePerformanceChecker();
 		}
+		else if (wParam == 'O')
+		{
+			gEngine.m_coordinator.toggleFPSChecker();
+		}
 	}
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);
 }

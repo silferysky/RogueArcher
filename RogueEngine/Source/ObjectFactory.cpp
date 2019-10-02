@@ -176,8 +176,15 @@ void ObjectFactory::SaveLevel(const char* fileName)
 	EntityManager* em = &gEngine.m_coordinator.GetEntityManager();
 	m_Serialiser.WriteToFile(fileName, "EntCount", (int)entCount);
 
+	bool skipping = true;
+
 	for (Entity entity : m_activeEntities)
 	{
+		if (skipping)
+		{
+			skipping = false;
+			continue;
+		}
 		std::stringstream varName;
 		std::string stdstr;
 		const char* cstr;
@@ -247,9 +254,9 @@ void ObjectFactory::SaveLevel(const char* fileName)
 			TransformComponent& t = gEngine.m_coordinator.GetComponent<TransformComponent>(entity);
 			UNREFERENCED_PARAMETER(t);
 
-			std::random_device rd;
-			std::mt19937 gen(rd());		//For random seed
-			std::uniform_int_distribution<> distribution_L(-RAND_LARGE, RAND_LARGE);
+			//std::random_device rd;
+			//std::mt19937 gen(rd());		//For random seed
+			//std::uniform_int_distribution<> distribution_L(-RAND_LARGE, RAND_LARGE);
 			//std::uniform_int_distribution<> distribution_S(-RAND_SMALL, RAND_SMALL);
 
 			//Position, Scale and Rotation
@@ -259,21 +266,19 @@ void ObjectFactory::SaveLevel(const char* fileName)
 			//This will give a number with 2 decimal places
 			varNum = 0;
 			CLEARNSETSTR(varName, entity, "tc", varNum);
-			m_Serialiser.WriteToFile(fileName, cstr, distribution_L(gen));
+			m_Serialiser.WriteToFile(fileName, cstr, t.getPosition().x);
 			++varNum;
 			CLEARNSETSTR(varName, entity, "tc", varNum);
-			m_Serialiser.WriteToFile(fileName, cstr, distribution_L(gen));
+			m_Serialiser.WriteToFile(fileName, cstr, t.getPosition().y);
 			++varNum;
 			CLEARNSETSTR(varName, entity, "tc", varNum);
-			m_Serialiser.WriteToFile(fileName, cstr, 
-				std::round(static_cast<float>(distribution_L(gen)) / RAND_SMALL) * RAND_SMALL / RAND_LARGE);
+			m_Serialiser.WriteToFile(fileName, cstr, t.getScale().x);
 			++varNum;
 			CLEARNSETSTR(varName, entity, "tc", varNum);
-			m_Serialiser.WriteToFile(fileName, cstr,
-				std::round(static_cast<float>(distribution_L(gen)) / RAND_SMALL) * RAND_SMALL / RAND_LARGE);
+			m_Serialiser.WriteToFile(fileName, cstr, t.getScale().y);
 			++varNum;
 			CLEARNSETSTR(varName, entity, "tc", varNum);
-			m_Serialiser.WriteToFile(fileName, cstr, distribution_L(gen));
+			m_Serialiser.WriteToFile(fileName, cstr, t.getRotation());
 		}
 
 		if (gEngine.m_coordinator.CheckIfComponentExists<CircleCollider2DComponent>(entity))
@@ -293,7 +298,7 @@ void ObjectFactory::SaveLevel(const char* fileName)
 			CLEARNSETSTR(varName, entity, "bcc", varNum);
 			m_Serialiser.WriteToFile(fileName, cstr, static_cast<int>(bc.m_obb.getSize()));
 			++varNum;
-			for (std::vector<Vec2>::iterator it; (size_t)varNum < bc.m_obb.getSize(); ++it)
+			for (std::vector<Vec2>::iterator it = bc.m_obb.modelVerts().begin(); (size_t)varNum < bc.m_obb.getSize(); ++it)
 			{
 				CLEARNSETSTR(varName, entity, "bcc", varNum);
 				m_Serialiser.WriteToFile(fileName, cstr, it->x);
