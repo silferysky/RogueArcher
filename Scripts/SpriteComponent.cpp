@@ -19,10 +19,6 @@ SpriteComponent::SpriteComponent() : m_effectMat{ 1.0 }
 void SpriteComponent::setTexture(const char* texture)
 {
 	m_texture = gEngine.m_coordinator.loadTexture(texture);
-
-	glBindTexture(GL_TEXTURE_2D, m_texture);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 }
 
 void SpriteComponent::draw(TransformComponent* transform)
@@ -32,6 +28,10 @@ void SpriteComponent::draw(TransformComponent* transform)
 
 		transformMat = glm::scale(transformMat, glm::vec3(transform->getScale().x, transform->getScale().y, 1.0f));
 		transformMat = glm::translate(transformMat, { transform->getPosition().x, transform->getPosition().y, 1.0f});
+
+		glBindTexture(GL_TEXTURE_2D, m_texture);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 		//draw
 		 // Use the shader program for drawing
