@@ -31,7 +31,7 @@ class SpriteComponent
 	GLuint m_VBO;
 	GLuint m_EBO;
 public:
-	glm::mat4 m_transformMat;
+	glm::mat4 m_effectMat;
 	SpriteComponent();
 	~SpriteComponent() = default;
 
