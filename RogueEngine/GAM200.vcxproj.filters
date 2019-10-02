@@ -199,9 +199,6 @@
     <ClInclude Include="Source\BoxCollider2DComponent.h">
       <Filter>RogueEngine\Systems\Physics\Components</Filter>
     </ClInclude>
-    <ClInclude Include="TextureManager.h">
-      <Filter>RogueEngine\Systems\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="Source\MemoryManager.h">
       <Filter>RogueEngine\Systems\Memory</Filter>
     </ClInclude>
@@ -219,6 +216,9 @@
     </ClInclude>
     <ClInclude Include="Source\TestSystem.h">
       <Filter>RogueEngine\Systems\Others</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TextureManager.h">
+      <Filter>RogueEngine\Systems\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

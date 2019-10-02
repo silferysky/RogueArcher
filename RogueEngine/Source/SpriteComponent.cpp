@@ -26,7 +26,6 @@ void SpriteComponent::draw(TransformComponent* transform)
 	{
 		auto transformMat = glm::mat4(1.0f);
 
-		//transformMat = glm::rotate_slow(transformMat, (GLfloat)glfwGetTime() * -5.0f, glm::vec3(0.0f, 0.0f, transform->getRotation()));
 		transformMat = glm::translate(transformMat, { transform->getPosition().x, transform->getPosition().y, 1.0f});
 		transformMat = glm::scale(transformMat, glm::vec3(transform->getScale().x, transform->getScale().y, 1.0f));
 
