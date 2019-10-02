@@ -5,16 +5,13 @@
 #include <ctime>
 #include <fstream>
 #include "Main.h"
-#include "KeyEvent.h"
-#include "InputManager.h"
-#include "EventDispatcher.h"
 #include "TestSystem.h"
 #include <chrono>
-#include "GraphicsSystem.h"
 #include "VSync.h"
 #include "SOIL.h"
 #include "Config.h"
 #include "WindowHelper.h"
+#include "MemoryManager.h"
 
 
 REEngine gEngine;
@@ -96,10 +93,12 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	debugStr.clear();
 	debugStr.str("");
 
-	/*debugStr.clear();
-	debugStr.str("");
-	debugStr << "Entity 1's Signature: " << gEngine.m_coordinator.GetEntityManager().GetSignature(1).to_ulong();
-	RE_INFO(debugStr.str());*/
+	int* value1 = (int*)MemoryManager::instance().operator new(8);
+	int* value2 = (int*)MemoryManager::instance().operator new(8);
+	MemoryManager::instance().operator delete(value1);
+	MemoryManager::instance().operator delete(value2);
+	int* value3 = (int*)MemoryManager::instance().operator new(8);
+	//*value1 = 5;
 
 	//gObjectFactory.SaveLevel("Resources/Level 1.json");
 
