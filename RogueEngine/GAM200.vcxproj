@@ -33,6 +33,7 @@
     <ClInclude Include="Source\RigidbodyComponent.h" />
     <ClInclude Include="Source\RotatableComponent.h" />
     <ClInclude Include="Source\Shape.h" />
+    <ClInclude Include="Source\TextureManager.h" />
     <ClInclude Include="Source\TransformComponent.h" />
     <ClInclude Include="Source\AppEvent.h" />
     <ClInclude Include="Source\FileManager.h" />
@@ -71,7 +72,6 @@
     <ClInclude Include="Source\Vector2D.h" />
     <ClInclude Include="Source\VSync.h" />
     <ClInclude Include="Source\WindowHelper.h" />
-    <ClInclude Include="TextureManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\BoxCollider2DComponent.cpp" />
