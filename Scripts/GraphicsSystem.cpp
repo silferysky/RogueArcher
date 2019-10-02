@@ -59,17 +59,16 @@ void GraphicsSystem::update()
 		glBindVertexArray(m_VAO);
 
 		sprite.draw(&transform);
-		//drawDebug(&collider);
 		// Unbind VAO after drawing
 		glBindVertexArray(0);
+
+		//drawDebug(&collider);
 	}
 	TimeSystem.TimerEnd("Graphics System");
 }
 
 void GraphicsSystem::drawDebug(BoxCollider2DComponent* box)
 {
-	// GLuint VBO, VAO;
-
 	float left = box->m_aabb.getMin().x;
 	float right = box->m_aabb.getMax().x;
 
@@ -136,7 +135,7 @@ void GraphicsSystem::receive(Event* ev)
 	{
 	case EventType::EvKeyPressed:
 	{
-		auto& sprite = gEngine.m_coordinator.GetComponent<SpriteComponent>(0);
+		auto& sprite = gEngine.m_coordinator.GetComponent<SpriteComponent>(m_entities.size() - 1);
 		KeyPressEvent* EvPressKey = dynamic_cast<KeyPressEvent*>(ev);
 		if (EvPressKey->GetKeyCode() == KeyPress::KeyR)
 		{
