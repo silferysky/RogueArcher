@@ -4,7 +4,7 @@
 #include "EntityManager.h"
 #include "FileManager.h"
 #include "GraphicsSystem.h"
-#include "../Physics/PhysicsSystem.h"
+#include "PhysicsSystem.h"
 
 // Forward declaration
 class PhysicsSystem;

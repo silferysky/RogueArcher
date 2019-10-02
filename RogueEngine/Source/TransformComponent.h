@@ -1,5 +1,5 @@
 #pragma once
-#include "../Scripts/REMath.h"
+#include "../Source/REMath.h"
 
 class TransformComponent
 {
