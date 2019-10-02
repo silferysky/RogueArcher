@@ -9,8 +9,14 @@ void REEngine::init()
 	glDepthFunc(GL_LEQUAL);							   // Depth testing type
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Perspective Calculations
 
+	// enable alpha
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	if (glewInit() != GLEW_OK)
 		std::cout << "GLEW broke" << std::endl;
+
+	glfwInit();
 
 	m_coordinator.Init();
 	m_inputManager.init();

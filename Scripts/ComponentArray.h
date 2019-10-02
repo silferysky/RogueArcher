@@ -48,7 +48,7 @@ public:
 
 	T& GetData(Entity entity)
 	{
-		//assert(REEntityToIndexMap.find(entity) != REEntityToIndexMap.end() && "Retrieving non-existent component.");
+		assert(REEntityToIndexMap.find(entity) != REEntityToIndexMap.end() && "Retrieving non-existent component.");
 		return REComponentArray[REEntityToIndexMap[entity]];
 	}
 

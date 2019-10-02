@@ -23,12 +23,15 @@ void ObjectFactory::LoadLevel(const char* fileName)
 	backgroundSprite.setTexture(backgroundStr.c_str());
 
 	TransformComponent backgroundTransform = TransformComponent();
-	backgroundTransform.setPosition(Vec2(-1.0f, 0.0f));
-	backgroundTransform.setScale(Vec2(0.5f, 0.5f));
+	backgroundTransform.setPosition(Vec2(-0.5f, 0.0f));
+	backgroundTransform.setScale(Vec2(1.0f, 1.0f));
 	backgroundTransform.setRotation(0.0f);
+
+	RigidbodyComponent backgroundRigidbody = RigidbodyComponent();
 
 	gEngine.m_coordinator.AddComponent(backgroundEnt, backgroundSprite);
 	gEngine.m_coordinator.AddComponent(backgroundEnt, backgroundTransform);
+	gEngine.m_coordinator.AddComponent(backgroundEnt, backgroundRigidbody);
 	m_activeEntities.push_back(backgroundEnt);
 
 	for (Entity entity = 0; entity < entCount; ++entity)
@@ -46,36 +49,10 @@ void ObjectFactory::LoadLevel(const char* fileName)
 		cstr = stdstr.c_str();
 		currentSignature = level[cstr].GetInt();
 
-		TransformComponent t{};
-
-		//Copypasta for each new variable//
-		if (currentSignature.test(static_cast<int>(TRANSFORM)))
-		{
-			float x, y;
-			//CLEARNSETSTR(strstream, entity, "tc", 0);
-			//x = level[cstr].GetFloat();
-			//CLEARNSETSTR(strstream, entity, "tc", 1);
-			//y = level[cstr].GetFloat();
-			//t.setPosition(Vec2(x, y));
-			//CLEARNSETSTR(strstream, entity, "tc", 2);
-			//x = level[cstr].GetFloat();
-			//CLEARNSETSTR(strstream, entity, "tc", 3);
-			//y = level[cstr].GetFloat();
-			//t.setScale(Vec2(x, y));
-			//t.setRotation(level[cstr].GetFloat());
-
-			t.setPosition(Vec2(1.0f, 0.0f));
-			t.setScale(Vec2(0.5f, 0.5f));
-			t.setRotation(0.0f);
-
-			gEngine.m_coordinator.AddComponent(curEnt, t);
-		}
-		///////////////////////////////////
-
 		//Copypasta for each new variable//
 		if (currentSignature.test(static_cast<int>(SPRITE)))
 		{
-			SpriteComponent s{&t};
+			SpriteComponent s{};
 			const char* path;
 			CLEARNSETSTR(strstream, entity, "sc", 0);
 			path = level[cstr].GetString();
@@ -117,6 +94,31 @@ void ObjectFactory::LoadLevel(const char* fileName)
 			r.setVolume(level[cstr].GetFloat());
 
 			gEngine.m_coordinator.AddComponent(curEnt, r);
+		}
+		///////////////////////////////////
+
+		//Copypasta for each new variable//
+		if (currentSignature.test(static_cast<int>(TRANSFORM)))
+		{
+			TransformComponent t{};
+			float x, y;
+			//CLEARNSETSTR(strstream, entity, "tc", 0);
+			//x = level[cstr].GetFloat();
+			//CLEARNSETSTR(strstream, entity, "tc", 1);
+			//y = level[cstr].GetFloat();
+			//t.setPosition(Vec2(x, y));
+			//CLEARNSETSTR(strstream, entity, "tc", 2);
+			//x = level[cstr].GetFloat();
+			//CLEARNSETSTR(strstream, entity, "tc", 3);
+			//y = level[cstr].GetFloat();
+			//t.setScale(Vec2(x, y));
+			//t.setRotation(level[cstr].GetFloat());
+
+			t.setPosition(Vec2(1.0f, 0.0f));
+			t.setScale(Vec2(0.5f, 0.5f));
+			t.setRotation(0.0f);
+
+			gEngine.m_coordinator.AddComponent(curEnt, t);
 		}
 		///////////////////////////////////
 
