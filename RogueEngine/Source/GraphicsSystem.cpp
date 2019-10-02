@@ -113,6 +113,8 @@ void GraphicsSystem::drawDebug(BoxCollider2DComponent* box, TransformComponent* 
 
 	transformMat = glm::translate(transformMat, { (left + right) * 0.5f, (top + bottom) * 0.5f, 1.0f });
 	transformMat = glm::scale(transformMat, glm::vec3(transform->getScale().x, transform->getScale().x, 1.0f));
+	if (transform->getRotation() > 0)
+		transformMat = glm::rotate_slow(transformMat, (GLfloat)glfwGetTime() * -5.0f, glm::vec3(0.0f, 0.0f, transform->getRotation()));
 
 	glUseProgram(m_shader);
 
