@@ -135,7 +135,7 @@ void GraphicsSystem::receive(Event* ev)
 	{
 	case EventType::EvKeyPressed:
 	{
-		auto& sprite = gEngine.m_coordinator.GetComponent<SpriteComponent>(m_entities.size() - 1);
+		auto& sprite = gEngine.m_coordinator.GetComponent<SpriteComponent>(static_cast<int>(m_entities.size()) - 1);
 		KeyPressEvent* EvPressKey = dynamic_cast<KeyPressEvent*>(ev);
 		if (EvPressKey->GetKeyCode() == KeyPress::KeyR)
 		{
