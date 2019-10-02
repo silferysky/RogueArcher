@@ -33,7 +33,7 @@ class SpriteComponent
 	GLuint m_EBO;
 public:
 	glm::mat4 m_effectMat;
-	SpriteComponent();
+	SpriteComponent(wdsad);
 	~SpriteComponent() = default;
 
 	void setTexture(const char* texture);
