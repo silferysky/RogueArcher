@@ -1,0 +1,101 @@
+[19:51:28] CoreFileLogger: (info) ===============COORDINATOR INIT===============
+[19:51:28] CoreFileLogger: (info) -----------START REGISTERING SYSTEMS----------
+[19:51:28] CoreFileLogger: (info) class PhysicsSystem registered!
+[19:51:28] CoreFileLogger: (info) class GraphicsSystem registered!
+[19:51:28] CoreFileLogger: (info) -----------END REGISTERING SYSTEMS------------
+
+
+[19:51:28] CoreFileLogger: (info) ---------START REGISTERING COMPONENTS---------
+[19:51:28] CoreFileLogger: (info) Creating class SpriteComponents...
+[19:51:28] CoreFileLogger: (info) Array of 32 class SpriteComponents created!
+[19:51:28] CoreFileLogger: (info) class SpriteComponent registered!
+[19:51:28] CoreFileLogger: (info) Creating class RigidbodyComponents...
+[19:51:28] CoreFileLogger: (info) Array of 32 class RigidbodyComponents created!
+[19:51:28] CoreFileLogger: (info) class RigidbodyComponent registered!
+[19:51:28] CoreFileLogger: (info) Creating class TransformComponents...
+[19:51:28] CoreFileLogger: (info) Array of 32 class TransformComponents created!
+[19:51:28] CoreFileLogger: (info) class TransformComponent registered!
+[19:51:28] CoreFileLogger: (info) Creating class CircleCollider2DComponents...
+[19:51:28] CoreFileLogger: (info) Array of 32 class CircleCollider2DComponents created!
+[19:51:28] CoreFileLogger: (info) class CircleCollider2DComponent registered!
+[19:51:28] CoreFileLogger: (info) Creating class BoxCollider2DComponents...
+[19:51:28] CoreFileLogger: (info) Array of 32 class BoxCollider2DComponents created!
+[19:51:28] CoreFileLogger: (info) class BoxCollider2DComponent registered!
+[19:51:28] CoreFileLogger: (info) ----------END REGISTERING COMPONENTS----------
+
+
+[19:51:28] CoreFileLogger: (info) ----------START INITIALIZING SYSTEMS----------
+[19:51:28] CoreFileLogger: (info) Added new key to ListenerMap
+[19:51:28] CoreFileLogger: (info) Added new key to ListenerMap
+[19:51:28] CoreFileLogger: (info) -----------END INITIALIZING SYSTEMS-----------
+
+
+[19:51:28] CoreFileLogger: (info) Generating entities...
+[19:51:28] CoreFileLogger: (info) Entities created. Current active entities: 1
+[19:51:28] CoreFileLogger: (info) Entity 0's class SpriteComponent added!
+[19:51:28] CoreFileLogger: (info) Signature 0 does not match class PhysicsSystem.
+[19:51:28] CoreFileLogger: (info) Entity not added to system
+[19:51:28] CoreFileLogger: (info) Signature 0 does not match class GraphicsSystem.
+[19:51:28] CoreFileLogger: (info) Entity not added to system
+[19:51:28] CoreFileLogger: (info) Entity 0's class TransformComponent added!
+[19:51:28] CoreFileLogger: (info) Signature 0 does not match class PhysicsSystem.
+[19:51:28] CoreFileLogger: (info) Entity not added to system
+[19:51:28] CoreFileLogger: (info) Entity 0's signature matches.
+[19:51:28] CoreFileLogger: (info) Entity added to class GraphicsSystem.
+[19:51:28] CoreFileLogger: (info) Entities created. Current active entities: 2
+[19:51:28] CoreFileLogger: (info) Entity 1's class SpriteComponent added!
+[19:51:28] CoreFileLogger: (info) Signature 1 does not match class PhysicsSystem.
+[19:51:28] CoreFileLogger: (info) Entity not added to system
+[19:51:28] CoreFileLogger: (info) Signature 1 does not match class GraphicsSystem.
+[19:51:28] CoreFileLogger: (info) Entity not added to system
+[19:51:28] CoreFileLogger: (info) Entity 1's class RigidbodyComponent added!
+[19:51:28] CoreFileLogger: (info) Signature 1 does not match class PhysicsSystem.
+[19:51:28] CoreFileLogger: (info) Entity not added to system
+[19:51:28] CoreFileLogger: (info) Signature 1 does not match class GraphicsSystem.
+[19:51:28] CoreFileLogger: (info) Entity not added to system
+[19:51:28] CoreFileLogger: (info) Entity 1's class TransformComponent added!
+[19:51:28] CoreFileLogger: (info) Signature 1 does not match class PhysicsSystem.
+[19:51:28] CoreFileLogger: (info) Entity not added to system
+[19:51:28] CoreFileLogger: (info) Entity 1's signature matches.
+[19:51:28] CoreFileLogger: (info) Entity added to class GraphicsSystem.
+[19:51:28] CoreFileLogger: (info) Entity 1's class CircleCollider2DComponent added!
+[19:51:28] CoreFileLogger: (info) Signature 1 does not match class PhysicsSystem.
+[19:51:28] CoreFileLogger: (info) Entity not added to system
+[19:51:28] CoreFileLogger: (info) Entity 1's signature matches.
+[19:51:28] CoreFileLogger: (info) Entity already exists in class GraphicsSystem.
+[19:51:28] CoreFileLogger: (info) Entity 1's class BoxCollider2DComponent added!
+[19:51:28] CoreFileLogger: (info) Entity 1's signature matches.
+[19:51:28] CoreFileLogger: (info) Entity added to class PhysicsSystem.
+[19:51:28] CoreFileLogger: (info) Entity 1's signature matches.
+[19:51:28] CoreFileLogger: (info) Entity already exists in class GraphicsSystem.
+[19:51:28] CoreFileLogger: (info) Entities created. Current active entities: 3
+[19:51:28] CoreFileLogger: (info) Entity 2's class SpriteComponent added!
+[19:51:28] CoreFileLogger: (info) Signature 2 does not match class PhysicsSystem.
+[19:51:28] CoreFileLogger: (info) Entity not added to system
+[19:51:28] CoreFileLogger: (info) Signature 2 does not match class GraphicsSystem.
+[19:51:28] CoreFileLogger: (info) Entity not added to system
+[19:51:28] CoreFileLogger: (info) Entity 2's class RigidbodyComponent added!
+[19:51:28] CoreFileLogger: (info) Signature 2 does not match class PhysicsSystem.
+[19:51:28] CoreFileLogger: (info) Entity not added to system
+[19:51:28] CoreFileLogger: (info) Signature 2 does not match class GraphicsSystem.
+[19:51:28] CoreFileLogger: (info) Entity not added to system
+[19:51:28] CoreFileLogger: (info) Entity 2's class TransformComponent added!
+[19:51:28] CoreFileLogger: (info) Signature 2 does not match class PhysicsSystem.
+[19:51:28] CoreFileLogger: (info) Entity not added to system
+[19:51:28] CoreFileLogger: (info) Entity 2's signature matches.
+[19:51:28] CoreFileLogger: (info) Entity added to class GraphicsSystem.
+[19:51:28] CoreFileLogger: (info) Entity 2's class CircleCollider2DComponent added!
+[19:51:28] CoreFileLogger: (info) Signature 2 does not match class PhysicsSystem.
+[19:51:28] CoreFileLogger: (info) Entity not added to system
+[19:51:28] CoreFileLogger: (info) Entity 2's signature matches.
+[19:51:28] CoreFileLogger: (info) Entity already exists in class GraphicsSystem.
+[19:51:28] CoreFileLogger: (info) Entity 2's class BoxCollider2DComponent added!
+[19:51:28] CoreFileLogger: (info) Entity 2's signature matches.
+[19:51:28] CoreFileLogger: (info) Entity added to class PhysicsSystem.
+[19:51:28] CoreFileLogger: (info) Entity 2's signature matches.
+[19:51:28] CoreFileLogger: (info) Entity already exists in class GraphicsSystem.
+[19:51:28] CoreFileLogger: (warning) MAXED OUT MEMORY
+[19:51:28] CoreFileLogger: (warning) MAXED OUT MEMORY
+[19:51:28] CoreFileLogger: (warning) MAXED OUT MEMORY
+[19:51:28] CoreFileLogger: (info) Entity generation complete
+[19:51:28] CoreFileLogger: (info) Added new key to ListenerMap

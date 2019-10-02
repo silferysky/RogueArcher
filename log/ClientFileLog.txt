@@ -1,0 +1,10 @@
+[19:51:28] ClientFileLogger: (info) Logging App info succeeded
+[19:51:28] ClientFileLogger: (info) TEST FILEWRITER
+[19:51:28] ClientFileLogger: (info) TEST OBJECT FACTORY
+[19:51:28] ClientFileLogger: (info) Number of entities at start: 0
+[19:51:28] ClientFileLogger: (info) Entity 0's Signature: 5
+[19:51:28] ClientFileLogger: (info) Entity 1's Signature: 31
+[19:51:28] ClientFileLogger: (info) LEVEL LOADED
+[19:51:28] ClientFileLogger: (info) 2 ENTITIES LOADED
+[19:51:28] ClientFileLogger: (info) INIT MEMORY MANAGER
+[19:51:28] ClientFileLogger: (info) Number of entities at end: 3
