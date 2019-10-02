@@ -8,7 +8,8 @@ RigidbodyComponent::RigidbodyComponent(float mass, float volume, float damping)
 	  m_accForce{ Vec2() },
 	  m_invMass{ 1/mass },
 	  m_volume{ volume },
-	  m_damping{ damping }
+	  m_damping{ damping },
+	  m_isStatic{ false }
 {}
 
 Vec2 RigidbodyComponent::getVelocity() const
@@ -84,7 +85,17 @@ float RigidbodyComponent::getDamping() const
 	return m_damping;
 }
 
+bool RigidbodyComponent::getIsStatic() const
+{
+	return m_isStatic;
+}
+
 void RigidbodyComponent::setDamping(float damping)
 {
 	m_damping = damping;
+}
+
+void RigidbodyComponent::setIsStatic(bool set)
+{
+	m_isStatic = set;
 }

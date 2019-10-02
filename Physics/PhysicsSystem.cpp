@@ -5,7 +5,9 @@
 //-------------------------------------------------------//
 void PhysicsSystem::applyForces(RigidbodyComponent& rigidbody) // F = ma
 {
+	std::cout << "AccForce = " << rigidbody.getAccForce() << std::endl;
 	rigidbody.offSetAcceleration(rigidbody.getAccForce() * rigidbody.getInvMass());
+	std::cout << "Acceleration = " << rigidbody.getAcceleration() << std::endl;
 }
 
 PhysicsSystem::PhysicsSystem(Vec2 gravity)
@@ -14,13 +16,14 @@ PhysicsSystem::PhysicsSystem(Vec2 gravity)
 
 void PhysicsSystem::integrateAcceleration(RigidbodyComponent& rigidbody, TransformComponent& transform)
 {
+	transform.offSetPosition(rigidbody.getVelocity() * gDeltaTime);
+
 	Vec2 vel = rigidbody.getAcceleration() * gDeltaTime;
 //	std::cout << "Vel = " << vel << std::endl;
 
 	vel *= static_cast<float>(std::pow(rigidbody.getDamping(), gDeltaTime));
 	rigidbody.offSetVelocity(vel);
 
-	transform.offSetPosition(rigidbody.getVelocity() * gDeltaTime);
 }
 
 
@@ -52,6 +55,12 @@ void PhysicsSystem::update()
 	for(auto entity : m_entities)
 	{
 		auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
+
+		// Skip any static rigidbodies.
+		if (rigidbody.getIsStatic())
+			continue;
+
+		std::cout << "FUCKFUCKFUCKFUCKFUCKFUCKFUCKFUCKFUCKFUCKFUCKFUCKFUCK" << std::endl;
 		auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(entity);
 	//	auto& boxCollider = gEngine.m_coordinator.GetComponent<BoxCollider2DComponent>(entity);
 	//	auto& circleCollider = gEngine.m_coordinator.GetComponent<CircleCollider2DComponent>(entity);
@@ -84,28 +93,43 @@ void PhysicsSystem::update()
 
 void PhysicsSystem::receive(Event* ev)
 {
-	switch (ev->GetEventType())
-	{
-	case EventType::EvKeyPressed:
-	{
-		auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(0);
-		UNREFERENCED_PARAMETER(rigidbody);
-		auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(0);
-		KeyPressEvent* EvPressKey = dynamic_cast<KeyPressEvent*>(ev);
-		if (EvPressKey->GetKeyCode() == KeyPress::KeyA)
+		switch (ev->GetEventType())
 		{
-			transform.offSetPosition(Vec2(-1.0f, 0.0f) * gDeltaTime);
-			RE_INFO("Move Left!");
-		}
-		else if (EvPressKey->GetKeyCode() == KeyPress::KeyD)
+		case EventType::EvKeyPressed:
 		{
-			transform.offSetPosition(Vec2(1.0f, 0.0f) * gDeltaTime);
-			RE_INFO("Move Right!");
+			std::set<Entity>::iterator it;
+			for (it = m_entities.begin(); it != m_entities.end(); ++it)
+			{
+				auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(*it);
+				UNREFERENCED_PARAMETER(rigidbody);
+				auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(*it);
+
+				KeyPressEvent* EvPressKey = dynamic_cast<KeyPressEvent*>(ev);
+				if (EvPressKey->GetKeyCode() == KeyPress::KeyA)
+				{
+					transform.offSetPosition(Vec2(-1.0f, 0.0f) * gDeltaTime);
+					RE_INFO("Move Left!");
+				}
+				else if (EvPressKey->GetKeyCode() == KeyPress::KeyD)
+				{
+					transform.offSetPosition(Vec2(1.0f, 0.0f) * gDeltaTime);
+					RE_INFO("Move Right!");
+				}
+				else if (EvPressKey->GetKeyCode() == KeyPress::KeyW)
+				{
+					transform.offSetPosition(Vec2(0.0f, 1.0f) * gDeltaTime);
+					RE_INFO("Move Up!");
+				}
+				else if (EvPressKey->GetKeyCode() == KeyPress::KeyS)
+				{
+					transform.offSetPosition(Vec2(0.0f, -1.0f) * gDeltaTime);
+					RE_INFO("Move Down!");
+				}
+				return;
+			}
 		}
-		return;
-	}
-	default:
-		return;
+		default:
+			return;
 	}
 }
 
