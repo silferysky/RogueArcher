@@ -1,5 +1,5 @@
 {
-    "EntCount": 1,
+    "EntCount": 3,
     "BackgroundTexture": "test.bmp",
     "Signature0": 31,
     "Signature1": 23,
@@ -16,7 +16,7 @@
     "e0rbc3": 0.0,
     "e0rbc4": 1.0,
     "e0rbc5": 1.0,
-    "e0tc0": 0.0,
+    "e0tc0": 1.0,
     "e0tc1": 0.0,
     "e0tc2": 2.0,
     "e0tc3": 2.0,
