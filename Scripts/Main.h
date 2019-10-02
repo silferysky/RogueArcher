@@ -17,5 +17,3 @@ class ObjectFactory;
 extern REEngine gEngine;
 extern ObjectFactory gObjectFactory;
 extern float gDeltaTime;
-
-int APIENTRY WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst, LPSTR lpszCmdLine, int nCmdShow);
