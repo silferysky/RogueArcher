@@ -1,7 +1,7 @@
 #include "SpriteComponent.h"
 #include "REEngine.h"
 
-SpriteComponent::SpriteComponent() : m_transformMat{ 1.0 }
+SpriteComponent::SpriteComponent() : m_effectMat{ 1.0 }
 {
 	m_texture = gEngine.m_coordinator.loadTexture("test.bmp");
 
@@ -62,11 +62,10 @@ void SpriteComponent::setShader(std::string vShader, std::string fShader)
 
 void SpriteComponent::draw(TransformComponent* transform)
 {
-	auto a = glm::mat4(1.0f);
+	auto transformMat = glm::mat4(1.0f);
 
-	a = glm::translate(a, { transform->getPosition().x * 100, transform->getPosition().y * 100, 0.0f });
-	auto lol = transform->getPosition().x;
-	a = glm::scale(a, glm::vec3(100, 100, 1.0f));
+	transformMat = glm::translate(transformMat, { transform->getPosition().x * 100, transform->getPosition().y * 100, 0.0f });
+	transformMat = glm::scale(transformMat, glm::vec3(100, 100, 1.0f));
 
 	//draw
 	 // Use the shader program for drawing
@@ -79,10 +78,10 @@ void SpriteComponent::draw(TransformComponent* transform)
 	glUniformMatrix4fv(projLocation, 1, GL_FALSE, glm::value_ptr(projMat));
 
 	GLint effectLocation = glGetUniformLocation(m_shader, "effect");
-	glUniformMatrix4fv(effectLocation, 1, GL_FALSE, glm::value_ptr(m_transformMat));
+	glUniformMatrix4fv(effectLocation, 1, GL_FALSE, glm::value_ptr(m_effectMat));
 		
 	GLint transformLocation = glGetUniformLocation(m_shader, "transform");
-	glUniformMatrix4fv(transformLocation, 1, GL_FALSE, glm::value_ptr(a));
+	glUniformMatrix4fv(transformLocation, 1, GL_FALSE, glm::value_ptr(transformMat));
 
 	glBindVertexArray(m_VAO);
 	// Draw the Mesh
