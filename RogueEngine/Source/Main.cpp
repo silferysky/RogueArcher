@@ -135,14 +135,23 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 		auto stop = timer.now();
 		wasteTimer = std::chrono::duration_cast<std::chrono::microseconds>(stop - start).count() / 1000000.0f;
 		gDeltaTime = wasteTimer;
-		//config.SetFPS(30);
+		if (gEngine.m_coordinator.FPSChecker())
+		{
+			config.SetFPS(30);
+		}
+		else
+		{
+			config.SetFPS(60);
+		}
 		while (gDeltaTime <= config.GetFPS())
 		{
 			stop = timer.now();
 			gDeltaTime = std::chrono::duration_cast<std::chrono::microseconds>(stop - start).count() / 1000000.0f;
 		}
-
-	//	std::cout << "FPS: " << 1 / gDeltaTime << std::endl;
+		if (gEngine.m_coordinator.performanceChecker())
+		{
+			std::cout << "FPS: " << 1 / gDeltaTime << std::endl;
+		}	
 	}
 
 	std::cin.get();

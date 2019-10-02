@@ -82,8 +82,8 @@ void PhysicsSystem::update()
 		for (iNextEntity++; iNextEntity != m_entities.end(); ++iNextEntity)
 		{
 			auto& nextBoxCollider = gEngine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iNextEntity);
-			if (m_colliderManager.staticAABBvsAABB(currBoxCollider.m_aabb, nextBoxCollider.m_aabb));
-			std::cout << "Entity " << *iEntity << " AABB collides with Entity " << *iNextEntity << " AABB" << std::endl;
+			//if (m_colliderManager.staticAABBvsAABB(currBoxCollider.m_aabb, nextBoxCollider.m_aabb));
+			//std::cout << "Entity " << *iEntity << " AABB collides with Entity " << *iNextEntity << " AABB" << std::endl;
 		}
 		// Collision Response (Contact, forces, etc)
 		// Rest, Impulse, Torque
