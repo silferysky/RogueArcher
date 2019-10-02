@@ -36,6 +36,7 @@
     <ClInclude Include="Physics\TransformComponent.h" />
     <ClInclude Include="Scripts\AppEvent.h" />
     <ClInclude Include="Scripts\FileManager.h" />
+    <ClInclude Include="Scripts\MemoryManager.h" />
     <ClInclude Include="Scripts\REEngine.h" />
     <ClInclude Include="Scripts\SystemList.h" />
     <ClInclude Include="Scripts\BaseSystem.h" />
@@ -101,6 +102,7 @@
     <ClCompile Include="Scripts\Logger.cpp" />
     <ClCompile Include="Scripts\Main.cpp" />
     <ClCompile Include="Scripts\Matrix33.cpp" />
+    <ClCompile Include="Scripts\MemoryManager.cpp" />
     <ClCompile Include="Scripts\ObjectFactory.cpp" />
     <ClCompile Include="Scripts\REEngine.cpp" />
     <ClCompile Include="Scripts\REMath.cpp" />
