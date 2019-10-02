@@ -15,6 +15,11 @@ void GraphicsSystem::init()
 	// Set graphics system signature
 	gEngine.m_coordinator.SetSystemSignature<GraphicsSystem>(signature);
 
+	std::string vertexShader = BasicIO::ReadFile("vertexLineShader.txt");
+	std::string fragmentShader = BasicIO::ReadFile("fragmentLineShader.txt");
+
+	m_shader = CreateShader(vertexShader, fragmentShader);
+
 	// bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
 	glGenVertexArrays(1, &m_VAO);
 	glBindVertexArray(m_VAO);
@@ -39,6 +44,32 @@ void GraphicsSystem::init()
 	//glBindBuffer(GL_ARRAY_BUFFER, 0); //Reset
 	glBindVertexArray(0); //Reset
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+	glGenVertexArrays(1, &m_d_VAO);
+	glBindVertexArray(m_d_VAO);
+
+	glGenBuffers(1, &m_d_VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, m_d_VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), quadVertices, GL_STATIC_DRAW);
+
+	glGenBuffers(1, &m_d_EBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_d_EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(quadIndices), quadIndices, GL_STATIC_DRAW);
+
+	// position attribute
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+	// color attribute
+	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
+	// texture coord attribute
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)(7 * sizeof(float)));
+	glEnableVertexAttribArray(2);
+	//glBindBuffer(GL_ARRAY_BUFFER, 0); //Reset
+	glBindVertexArray(0); //Reset
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
 }
 
 void GraphicsSystem::update()
@@ -62,71 +93,46 @@ void GraphicsSystem::update()
 		// Unbind VAO after drawing
 		glBindVertexArray(0);
 
-		drawDebug(&collider);
+		drawDebug(&collider, &transform);
 	}
 	TimeSystem.TimerEnd("Graphics System");
 }
 
-void GraphicsSystem::drawDebug(BoxCollider2DComponent* box)
+void GraphicsSystem::drawDebug(BoxCollider2DComponent* box, TransformComponent* transform)
 {
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+	auto transformMat = glm::mat4(1.0f);
+
 	float left = box->m_aabb.getMin().x;
 	float right = box->m_aabb.getMax().x;
 
 	float top = box->m_aabb.getMax().y;
 	float bottom = box->m_aabb.getMin().y;
 
-	glBegin(GL_LINES);
-	glVertex2f(left, top);
-	glVertex2f(right, top);
-	glEnd();
+	transformMat = glm::translate(transformMat, { (left + right) * 0.5f, (top + bottom) * 0.5f, 1.0f });
+	transformMat = glm::scale(transformMat, glm::vec3(transform->getScale().x, transform->getScale().x, 1.0f));
 
-	glBegin(GL_LINES);
-	glVertex2f(right, top);
-	glVertex2f(right, bottom);
-	glEnd();
+	glUseProgram(m_shader);
 
-	glBegin(GL_LINES);
-	glVertex2f(left, bottom);
-	glVertex2f(right, bottom);
-	glEnd();
+	glm::mat4 projMat = glm::ortho(-16.0f * 0.5f, 16.0f * 0.5f, -9.0f * 0.5f, 9.0f * 0.5f, -10.0f, 10.0f);
 
-	glBegin(GL_LINES);
-	glVertex2f(left, top);
-	glVertex2f(left, bottom);
-	glEnd();
+	glBindVertexArray(m_d_VAO);
 
-	/* auto& obb = box->m_obb;
+	glUseProgram(m_shader);
 
-	for (int i = 0; i < static_cast<int>(obb.getSize());)
-	{
-		glBegin(GL_LINES);
-		glVertex2f(obb.modelVerts()[i].x, obb.modelVerts()[i].y);
-		glVertex2f(obb.modelVerts()[++i].x, obb.modelVerts()[++i].y);
-		glEnd();
-	} */
+	projMat = projMat * transformMat;
 
-	/* float vertices[] = { 
-		left, top, 
-		right, top, 
-		left, bottom, 
-		right, bottom
-	};
+	GLint effectLocation = glGetUniformLocation(m_shader, "projectionMatrix");
+	glUniformMatrix4fv(effectLocation, 1, GL_FALSE, glm::value_ptr(projMat));
 
-	glGenVertexArrays(1, &VAO);
-	glBindVertexArray(VAO);
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
-	glGenBuffers(1, &VBO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+	glUseProgram(0);
 
-	// position attribute
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
-
-	glDrawElements(GL_LINE_STRIP, 4, GL_UNSIGNED_INT, 0);
-
-	glEnableVertexAttribArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0); //Reset
-	glBindVertexArray(0); //Reset */
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
 void GraphicsSystem::receive(Event* ev)
@@ -135,23 +141,23 @@ void GraphicsSystem::receive(Event* ev)
 	{
 	case EventType::EvKeyPressed:
 	{
-		auto& sprite = gEngine.m_coordinator.GetComponent<SpriteComponent>(static_cast<int>(m_entities.size()) - 1);
+		auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(static_cast<int>(m_entities.size()) - 1);
 		KeyPressEvent* EvPressKey = dynamic_cast<KeyPressEvent*>(ev);
 		if (EvPressKey->GetKeyCode() == KeyPress::KeyR)
 		{
-			sprite.m_effectMat = glm::rotate_slow(sprite.m_effectMat, (GLfloat)glfwGetTime() * -5.0f, glm::vec3(0.0f, 0.0f, 1.0f));
+			//sprite.m_effectMat = glm::rotate_slow(sprite.m_effectMat, (GLfloat)glfwGetTime() * -5.0f, glm::vec3(0.0f, 0.0f, 1.0f));
 			RE_INFO("Rotated!");
 		}
 
 		else if (EvPressKey->GetKeyCode() == KeyPress::KeyE)
 		{
-			sprite.m_effectMat = glm::scale_slow(sprite.m_effectMat, glm::vec3(1.1f, 1.1f, 0.0f));
+			transform.offSetScale(Vec2(1.0f, 1.0f) * gDeltaTime);
 			RE_INFO("Scaled Up!");
 		}
 
 		else if (EvPressKey->GetKeyCode() == KeyPress::KeyQ)
 		{
-			sprite.m_effectMat = glm::scale_slow(sprite.m_effectMat, glm::vec3(0.9f, 0.9f, 0.0f));
+			transform.offSetScale(Vec2(-1.0f, -1.0f) * gDeltaTime);
 			RE_INFO("Scaled Down!");
 		}
 		return;

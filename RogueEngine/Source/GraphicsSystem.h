@@ -28,6 +28,12 @@ class GraphicsSystem : public System, public EventListener
 	GLuint m_VAO;
 	GLuint m_VBO;
 	GLuint m_EBO;
+
+	GLuint m_shader;
+
+	GLuint m_d_VAO;
+	GLuint m_d_VBO;
+	GLuint m_d_EBO;
 public:
 	GraphicsSystem() = default;
 	~GraphicsSystem() = default;
@@ -35,7 +41,7 @@ public:
 	void init();
 	void update() override;
 
-	void drawDebug(BoxCollider2DComponent* box);
+	void drawDebug(BoxCollider2DComponent* box, TransformComponent* transform);
 
 	void receive(Event* ev);
 };
