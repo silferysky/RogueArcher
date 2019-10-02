@@ -82,11 +82,6 @@ void ObjectFactory::LoadLevel(const char* fileName)
 			CLEARNSETSTR(strstream, entity, "rbc", 3);
 			y = level[cstr].GetFloat();
 			r.setVelocity(Vec2(x, y));
-			//CLEARNSETSTR(strstream, entity, "rbc", 4);
-			//x = level[cstr].GetInt();
-			//CLEARNSETSTR(strstream, entity, "rbc", 5);
-			//y = level[cstr].GetInt();
-			//r.getAccForce(Vec2(x, y));
 			CLEARNSETSTR(strstream, entity, "rbc", 4);
 			r.setMass(level[cstr].GetFloat());
 			CLEARNSETSTR(strstream, entity, "rbc", 5);
