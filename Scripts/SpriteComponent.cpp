@@ -1,7 +1,7 @@
 #include "SpriteComponent.h"
 #include "REEngine.h"
 
-SpriteComponent::SpriteComponent(TransformComponent* transform)
+SpriteComponent::SpriteComponent() : m_transformMat{ 1.0 }
 {
 	m_texture = gEngine.m_coordinator.loadTexture("test.bmp");
 
@@ -15,32 +15,18 @@ SpriteComponent::SpriteComponent(TransformComponent* transform)
 	m_shader = CreateShader(vertexShader, fragmentShader);
 
 	// bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
-	glGenBuffers(1, &m_VBO);
 	glGenVertexArrays(1, &m_VAO);
-	glGenBuffers(1, &m_EBO);
-
 	glBindVertexArray(m_VAO);
 
-	float left = -1.0 * transform->getScale().x + transform->getPosition().x;
-	float right = 1.0 * transform->getScale().x + transform->getPosition().x;
-
-	float top = 1.0 * transform->getScale().y + transform->getPosition().y;
-	float bottom = -1.0 * transform->getScale().y + transform->getPosition().y;
-
-	float _vertexpos[] =
-	{
-		// positions          // colors           // texture coords
-		right,  top, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
-		right, bottom, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
-	   left, bottom, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-	   left,  top, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left 
-	};
-
+	
+	glGenBuffers(1, &m_VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(_vertexpos), _vertexpos, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), quadVertices, GL_STATIC_DRAW);
 
+	glGenBuffers(1, &m_EBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(quadIndices), quadIndices, GL_STATIC_DRAW);
+	
 
 	// position attribute
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
@@ -51,9 +37,9 @@ SpriteComponent::SpriteComponent(TransformComponent* transform)
 	// texture coord attribute
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
 	glEnableVertexAttribArray(2);
-
-	glBindBuffer(GL_ARRAY_BUFFER, 0);//Reset
-	glBindVertexArray(0);//Reset
+	//glBindBuffer(GL_ARRAY_BUFFER, 0); //Reset
+	glBindVertexArray(0); //Reset
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
 void SpriteComponent::setTexture(const char* texture)
@@ -74,19 +60,31 @@ void SpriteComponent::setShader(std::string vShader, std::string fShader)
 	m_shader = CreateShader(vertexShader, fragmentShader);
 }
 
-void SpriteComponent::draw(TransformComponent* transform) const
+void SpriteComponent::draw(TransformComponent* transform)
 {
+	m_transformMat = glm::translate(m_transformMat, {transform->getPosition().x, transform->getPosition().y, 0.0f});
+	m_transformMat = glm::scale(m_transformMat, glm::vec3(transform->getScale().x * 100, transform->getScale().y * 100, 1.0f));
+			
 	//draw
-	
-	// Use the shader program for drawing
-	glUseProgram(m_shader);
-	glBindVertexArray(m_VAO);
+	 // Use the shader program for drawing
+		
+	auto projMat = glm::ortho(-GetDesktopWidth()/ 2, GetDesktopWidth()/2, -GetDesktopHeight()/2, GetDesktopHeight()/2, -1000.f, 1000.f);
 
+	glUseProgram(m_shader);
+
+	GLint projLocation = glGetUniformLocation(m_shader, "projection");
+	glUniformMatrix4fv(projLocation, 1, GL_FALSE, glm::value_ptr(projMat));
+		
+	GLint transformLocation = glGetUniformLocation(m_shader, "transform");
+	glUniformMatrix4fv(transformLocation, 1, GL_FALSE, glm::value_ptr(m_transformMat));
+
+	glBindVertexArray(m_VAO);
 	// Draw the Mesh
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-
 	// Unbind VAO after drawing
 	glBindVertexArray(0);
+
+	m_transformMat = glm::mat4{ 1.0 };
 }
 
 GLuint SpriteComponent::getTexture() const

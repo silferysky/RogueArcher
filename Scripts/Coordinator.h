@@ -9,6 +9,7 @@
 // Forward declaration
 class PhysicsSystem;
 class GraphicsSystem;
+class SpriteComponent;
 
 class Coordinator
 {
