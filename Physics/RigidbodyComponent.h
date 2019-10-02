@@ -11,10 +11,12 @@ class RigidbodyComponent
 	float m_volume;
 	float m_damping;
 
+	bool m_isStatic;
+
 public:
 	RigidbodyComponent(float mass = 1.0f,
 			  float volume = 1.0f,
-			  float damping = 0.99f);
+			  float damping = 0.1f);
 	~RigidbodyComponent() = default;
 
 	Vec2 getVelocity() const;
@@ -23,6 +25,7 @@ public:
 	float getInvMass() const;
 	float getVolume() const;
 	float getDamping() const;
+	bool getIsStatic() const;
 
 	void setAccForce(const Vec2& accforce);
 	void setVelocity(const Vec2& vel);
@@ -33,5 +36,6 @@ public:
 	void setAcceleration(const Vec2& accel);
 	void offSetAcceleration(const Vec2& accel);
 	void setDamping(float damping);
+	void setIsStatic(bool set);
 
 };

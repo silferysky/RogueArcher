@@ -11,6 +11,7 @@ void ObjectFactory::LoadLevel(const char* fileName)
 
 	Signature currentSignature;
 	std::stringstream debugStr;
+	Vec2 WorldGravity{ 0.0f, 0.0f };
 
 	//For Entity Count
 	Entity entCount = level["EntCount"].GetInt();
@@ -23,15 +24,12 @@ void ObjectFactory::LoadLevel(const char* fileName)
 	backgroundSprite.setTexture(backgroundStr.c_str());
 
 	TransformComponent backgroundTransform = TransformComponent();
-	backgroundTransform.setPosition(Vec2(-0.5f, 0.0f));
-	backgroundTransform.setScale(Vec2(1.0f, 1.0f));
+	backgroundTransform.setPosition(Vec2(0.0f, 0.0f));
+	backgroundTransform.setScale(Vec2(18.0f, 12.0f));
 	backgroundTransform.setRotation(0.0f);
-
-	RigidbodyComponent backgroundRigidbody = RigidbodyComponent();
 
 	gEngine.m_coordinator.AddComponent(backgroundEnt, backgroundSprite);
 	gEngine.m_coordinator.AddComponent(backgroundEnt, backgroundTransform);
-	gEngine.m_coordinator.AddComponent(backgroundEnt, backgroundRigidbody);
 	m_activeEntities.push_back(backgroundEnt);
 
 	for (Entity entity = 0; entity < entCount; ++entity)
@@ -67,23 +65,22 @@ void ObjectFactory::LoadLevel(const char* fileName)
 		{
 			RigidbodyComponent r{};
 			float x, y;
+
 			CLEARNSETSTR(strstream, entity, "rbc", 0);
 			x = level[cstr].GetFloat();
 			CLEARNSETSTR(strstream, entity, "rbc", 1);
 			y = level[cstr].GetFloat();
-
-			if (x != 0.0f && y != 0.0f)
-			{
-				std::cout << "HI" << std::endl;
-				r.setAcceleration(Vec2(x, y));
-			}
+			r.setAcceleration(Vec2{ x,y } += WorldGravity);
+			
 			CLEARNSETSTR(strstream, entity, "rbc", 2);
 			x = level[cstr].GetFloat();
 			CLEARNSETSTR(strstream, entity, "rbc", 3);
 			y = level[cstr].GetFloat();
 			r.setVelocity(Vec2(x, y));
+
 			CLEARNSETSTR(strstream, entity, "rbc", 4);
 			r.setMass(level[cstr].GetFloat());
+
 			CLEARNSETSTR(strstream, entity, "rbc", 5);
 			r.setVolume(level[cstr].GetFloat());
 
