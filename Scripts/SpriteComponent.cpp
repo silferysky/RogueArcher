@@ -3,6 +3,7 @@
 
 SpriteComponent::SpriteComponent() : m_effectMat{ 1.0 }
 {
+	// create this once
 	m_texture = gEngine.m_coordinator.loadTexture("CharaTest.bmp");
 
 	glBindTexture(GL_TEXTURE_2D, m_texture);
@@ -60,32 +61,44 @@ void SpriteComponent::setShader(std::string vShader, std::string fShader)
 
 void SpriteComponent::draw(TransformComponent* transform)
 {
-	auto transformMat = glm::mat4(1.0f);
+	{
+		auto transformMat = glm::mat4(1.0f);
 
-	transformMat = glm::translate(transformMat, { transform->getPosition().x * 100, transform->getPosition().y * 100, 0.0f });
-	transformMat = glm::scale(transformMat, glm::vec3(transform->getScale().x * 100, transform->getScale().y * 100, 1.0f));
+		transformMat = glm::scale(transformMat, glm::vec3(transform->getScale().x, transform->getScale().y, 1.0f));
+		transformMat = glm::translate(transformMat, { transform->getPosition().x, transform->getPosition().y, 1.0f});
 
-	//draw
-	 // Use the shader program for drawing
-		
-	auto projMat = glm::ortho(-GetDesktopWidth()/ 2, GetDesktopWidth()/2, -GetDesktopHeight()/2, GetDesktopHeight()/2, -1000.f, 1000.f);
+		//draw
+		 // Use the shader program for drawing
+		// model to world, world to view, view to projection
 
-	glUseProgram(m_shader);
 
-	GLint projLocation = glGetUniformLocation(m_shader, "projection");
-	glUniformMatrix4fv(projLocation, 1, GL_FALSE, glm::value_ptr(projMat));
+		//offset by translation of camera, inverse of rotation
 
-	GLint effectLocation = glGetUniformLocation(m_shader, "effect");
-	glUniformMatrix4fv(effectLocation, 1, GL_FALSE, glm::value_ptr(m_effectMat));
-		
-	GLint transformLocation = glGetUniformLocation(m_shader, "transform");
-	glUniformMatrix4fv(transformLocation, 1, GL_FALSE, glm::value_ptr(transformMat));
+		auto projMat = glm::ortho(-9.0f, 9.0f, -6.0f, 6.0f, -10.0f, 10.0f);
 
-	glBindVertexArray(m_VAO);
-	// Draw the Mesh
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-	// Unbind VAO after drawing
-	glBindVertexArray(0);
+		glUseProgram(m_shader);
+
+		GLint projLocation = glGetUniformLocation(m_shader, "projection");
+		glUniformMatrix4fv(projLocation, 1, GL_FALSE, glm::value_ptr(projMat));
+
+		GLint effectLocation = glGetUniformLocation(m_shader, "effect");
+		glUniformMatrix4fv(effectLocation, 1, GL_FALSE, glm::value_ptr(m_effectMat));
+
+		GLint transformLocation = glGetUniformLocation(m_shader, "transform");
+		glUniformMatrix4fv(transformLocation, 1, GL_FALSE, glm::value_ptr(transformMat));
+
+		glBindVertexArray(m_VAO);
+		// Draw the Mesh
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		// Unbind VAO after drawing
+
+		transformMat = glm::translate(transformMat, { transform->getPosition().x * 3, transform->getPosition().y, 1.0f });
+		glUniformMatrix4fv(transformLocation, 1, GL_FALSE, glm::value_ptr(transformMat));
+		//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+
+		glBindVertexArray(0);
+	}
 }
 
 GLuint SpriteComponent::getTexture() const

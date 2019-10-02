@@ -9,7 +9,7 @@ void GraphicsSystem::init()
 	// Add components to signature
 	Signature signature;
 	signature.set(gEngine.m_coordinator.GetComponentType<SpriteComponent>());
-	signature.set(gEngine.m_coordinator.GetComponentType<BoxCollider2DComponent>());
+	//signature.set(gEngine.m_coordinator.GetComponentType<BoxCollider2DComponent>());
 	signature.set(gEngine.m_coordinator.GetComponentType<TransformComponent>());
 
 	// Set graphics system signature
@@ -20,18 +20,19 @@ void GraphicsSystem::update()
 {
 	Timer TimeSystem;
 	TimeSystem.TimerInit("Graphics System");
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 	// For all entities
 	for (auto entity : m_entities)
 	{
 		auto& sprite = gEngine.m_coordinator.GetComponent<SpriteComponent>(entity);
 		auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(entity);
-		auto& collider = gEngine.m_coordinator.GetComponent<BoxCollider2DComponent>(entity);
+		//auto& collider = gEngine.m_coordinator.GetComponent<BoxCollider2DComponent>(entity);
 
 		//glDisable(GL_DEPTH_TEST);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+		
 		sprite.draw(&transform);
-		drawDebug(&collider);
+		//drawDebug(&collider);
 	}
 	TimeSystem.TimerEnd("Graphics System");
 }
@@ -65,6 +66,16 @@ void GraphicsSystem::drawDebug(BoxCollider2DComponent* box)
 	glVertex2f(left, top);
 	glVertex2f(left, bottom);
 	glEnd();
+
+	auto& obb = box->m_obb;
+
+	for (int i = 0; i < obb.getSize();)
+	{
+		glBegin(GL_LINES);
+		glVertex2f(obb.modelVerts()[i].x, obb.modelVerts()[i].y);
+		glVertex2f(obb.modelVerts()[++i].x, obb.modelVerts()[++i].y);
+		glEnd();
+	}
 
 	/* float vertices[] = { 
 		left, top, 
