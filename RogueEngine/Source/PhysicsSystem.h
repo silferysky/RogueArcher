@@ -1,12 +1,12 @@
 #pragma once
-#include "../Scripts/Main.h"
-#include "../Scripts/REMath.h"
-#include "../Scripts/EventListener.h"
+#include "../Source/Main.h"
+#include "../Source/REMath.h"
+#include "../Source/EventListener.h"
 #include "CollisionManager.h"
 #include "RigidbodyComponent.h"
 #include "TransformComponent.h"
 #include "BoxCollider2DComponent.h"
-#include "../Scripts/Timer.h"
+#include "../Source/Timer.h"
 
 class Timer;
 class PhysicsSystem : public System, public EventListener

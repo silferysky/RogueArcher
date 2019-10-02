@@ -2,10 +2,10 @@
 #ifndef GRAPICSSYSTEM_H
 #define GRAPICSSYSTEM_H
 #include "Timer.h"
-#include "../Scripts/Main.h"
-#include "../Physics/TransformComponent.h"
-#include "../Scripts/REMath.h"
-#include "../Scripts/EventDispatcher.h"
+#include "../Source/Main.h"
+#include "TransformComponent.h"
+#include "../Source/REMath.h"
+#include "../Source/EventDispatcher.h"
 
 class Timer;
 class GraphicsSystem : public System, public EventListener

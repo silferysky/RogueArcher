@@ -1,10 +1,11 @@
 #pragma once
 #include <vector>
-#include "Vector2.h"
+#include "../Source/Vector2D.h"
 
 enum PolygonList
 {
 	POLY_NONE = 0,
+	POLY_POINT,
 	POLY_LINE,
 	POLY_TRI,
 	POLY_QUAD,

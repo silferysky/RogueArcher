@@ -2,8 +2,8 @@
 #include "shader.h"
 #include "BasicIO.h"
 #include "SOIL.h"
-#include "../Physics/TransformComponent.h"
-#include "../TextureManager.h"
+#include "TransformComponent.h"
+#include "TextureManager.h"
 #include <glm.hpp>
 #include <gtc/matrix_transform.hpp>
 #include <gtc/type_ptr.hpp>
