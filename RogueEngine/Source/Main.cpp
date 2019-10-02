@@ -49,14 +49,17 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	ShowWindow(hWnd, nCmdShow);
 
 	AllocConsole();
-	freopen("CONIN$", "r", stdin);
-	freopen("CONOUT$", "w", stdout);
-	freopen("CONOUT$", "w", stderr);
+	(void)freopen("CONIN$", "r", stdin);
+	(void)freopen("CONOUT$", "w", stdout);
+	(void)freopen("CONOUT$", "w", stderr);
+
+	// Enable run-time memory check for debug builds.
+	#if defined(DEBUG) | defined(_DEBUG)
+	    _CrtSetDbgFlag( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
+	#endif
 
 	setVSync(1);
-	//Logger
-	Logger::InitLogger();
-	//RE_CORE_TRACE("Init Core Logger");
+
 	InputManager* InputMgr = new InputManager();
 	RE_INFO("Logging App info succeeded");
 
@@ -97,7 +100,7 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	int* value2 = (int*)MemoryManager::instance().operator new(8);
 	MemoryManager::instance().operator delete(value1);
 	MemoryManager::instance().operator delete(value2);
-	int* value3 = (int*)MemoryManager::instance().operator new(8);
+	//int* value3 = (int*)MemoryManager::instance().operator new(8);
 	//*value1 = 5;
 
 	//gObjectFactory.SaveLevel("Resources/Level 1.json");
@@ -135,14 +138,23 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 		auto stop = timer.now();
 		wasteTimer = std::chrono::duration_cast<std::chrono::microseconds>(stop - start).count() / 1000000.0f;
 		gDeltaTime = wasteTimer;
-		//config.SetFPS(30);
+		if (gEngine.m_coordinator.FPSChecker())
+		{
+			config.SetFPS(30);
+		}
+		else
+		{
+			config.SetFPS(60);
+		}
 		while (gDeltaTime <= config.GetFPS())
 		{
 			stop = timer.now();
 			gDeltaTime = std::chrono::duration_cast<std::chrono::microseconds>(stop - start).count() / 1000000.0f;
 		}
-
-	//	std::cout << "FPS: " << 1 / gDeltaTime << std::endl;
+		if (gEngine.m_coordinator.performanceChecker())
+		{
+			std::cout << "FPS: " << 1 / gDeltaTime << std::endl;
+		}	
 	}
 
 	std::cin.get();

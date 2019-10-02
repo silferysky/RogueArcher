@@ -13,15 +13,28 @@ private:
   double DegreesToRadians(double degrees) const;
   double RadiansToDegrees(double radians) const;
 
+public:
   struct LineSegment
   {
-    Vec2	m_pt0;
-    Vec2	m_pt1;
-    Vec2	m_normal;
+	  Vec2 m_pt0;
+	  Vec2 m_pt1;
+	  Vec2 m_normal;
   };
-public:
+
+  struct Circle
+  {
+	  Vec2 m_center;
+	  float m_radius;
+	  float m_mass{ 1.0f };
+  };
+
+  struct Ray
+  {
+	  Vec2 m_pt0;
+	  Vec2 m_dir;
+  };
   //building line segment
-  void BuildLineSegment(LineSegment &lineSegment,const Vec2 &pos,float scale,float dir);
+  void REBuildLineSegment(LineSegment &lineSegment,const Vec2 &pos,float scale,float dir);
   //calcuations
   float RESin(float x);
   float RECos(float x);
@@ -50,6 +63,8 @@ public:
 
   float REDistRectangleToRectangle(const Vec2& pRect0, float SizeX0, float SizeY0, const Vec2& pRect1, float SizeX1, float SizeY1);
   //collision detection
+
+
   bool RETestPointToCircle(Vec2& pPos, Vec2& pCenter, float radius);
   bool RETestPointToRectangle(Vec2& pPos, Vec2& pRect, float SizeX, float SizeY);
   bool RETestCircleToCircle(Vec2& pCenter0, Vec2& pCenter1, float radius0, float radius1);

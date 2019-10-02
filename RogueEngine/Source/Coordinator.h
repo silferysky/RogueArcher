@@ -176,6 +176,15 @@ public:
 		return m_togglePerformanceChecker;
 	}
 
+	void toggleFPSChecker()
+	{
+		m_fpscheck = !m_fpscheck;
+	}
+
+	bool FPSChecker()
+	{
+		return m_fpscheck;
+	}
 private:
 	void initSystems()
 	{
@@ -188,5 +197,6 @@ private:
 	std::unique_ptr<FileManager> m_fileManager;
 	std::unique_ptr<TextureManager> m_textureManager;
 	std::vector<Entity> m_activeEntities;
-	bool m_togglePerformanceChecker;
+	bool m_togglePerformanceChecker = true;
+	bool m_fpscheck = true;
 };
