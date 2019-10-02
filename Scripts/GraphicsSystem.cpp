@@ -38,7 +38,7 @@ void GraphicsSystem::update()
 
 void GraphicsSystem::drawDebug(BoxCollider2DComponent* box)
 {
-	GLuint VBO, VAO;
+	// GLuint VBO, VAO;
 
 	float left = box->m_aabb.getMin().x;
 	float right = box->m_aabb.getMax().x;
@@ -46,7 +46,27 @@ void GraphicsSystem::drawDebug(BoxCollider2DComponent* box)
 	float top = box->m_aabb.getMax().y;
 	float bottom = box->m_aabb.getMin().y;
 
-	float vertices[] = { 
+	glBegin(GL_LINES);
+	glVertex2f(left, top);
+	glVertex2f(right, top);
+	glEnd();
+
+	glBegin(GL_LINES);
+	glVertex2f(right, top);
+	glVertex2f(right, bottom);
+	glEnd();
+
+	glBegin(GL_LINES);
+	glVertex2f(left, bottom);
+	glVertex2f(right, bottom);
+	glEnd();
+
+	glBegin(GL_LINES);
+	glVertex2f(left, top);
+	glVertex2f(left, bottom);
+	glEnd();
+
+	/* float vertices[] = { 
 		left, top, 
 		right, top, 
 		left, bottom, 
@@ -67,7 +87,7 @@ void GraphicsSystem::drawDebug(BoxCollider2DComponent* box)
 
 	glEnableVertexAttribArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0); //Reset
-	glBindVertexArray(0); //Reset
+	glBindVertexArray(0); //Reset */
 }
 
 void GraphicsSystem::receive(Event* ev)
@@ -88,7 +108,7 @@ void GraphicsSystem::receive(Event* ev)
 			RE_INFO("Rotated!");
 		}
 
-		if (EvPressKey->GetKeyCode() == KeyPress::KeyS)
+		else if (EvPressKey->GetKeyCode() == KeyPress::KeyE)
 		{
 			for (auto entity : m_entities)
 			{
@@ -99,7 +119,7 @@ void GraphicsSystem::receive(Event* ev)
 			RE_INFO("Scaled Up!");
 		}
 
-		if (EvPressKey->GetKeyCode() == KeyPress::KeyW)
+		else if (EvPressKey->GetKeyCode() == KeyPress::KeyQ)
 		{
 			for (auto entity : m_entities)
 			{
@@ -110,7 +130,7 @@ void GraphicsSystem::receive(Event* ev)
 			RE_INFO("Scaled Down!");
 		}
 
-		if (EvPressKey->GetKeyCode() == KeyPress::KeyA)
+		/* else if (EvPressKey->GetKeyCode() == KeyPress::KeyA)
 		{
 			for (auto entity : m_entities)
 			{
@@ -120,13 +140,33 @@ void GraphicsSystem::receive(Event* ev)
 			}
 		}
 
-		if (EvPressKey->GetKeyCode() == KeyPress::KeyD)
+		else if (EvPressKey->GetKeyCode() == KeyPress::KeyD)
 		{
 			for (auto entity : m_entities)
 			{
 				auto& sprite = gEngine.m_coordinator.GetComponent<SpriteComponent>(entity);
 
 				sprite.m_effectMat = glm::translate(sprite.m_effectMat, glm::vec3(0.1f, 0.0f, 0.0f));
+			}
+		} */
+
+		else if (EvPressKey->GetKeyCode() == KeyPress::KeyW)
+		{
+			for (auto entity : m_entities)
+			{
+				auto& sprite = gEngine.m_coordinator.GetComponent<SpriteComponent>(entity);
+
+				sprite.m_effectMat = glm::translate(sprite.m_effectMat, glm::vec3(0.0f, 0.1f, 0.0f));
+			}
+		}
+
+		else if (EvPressKey->GetKeyCode() == KeyPress::KeyS)
+		{
+			for (auto entity : m_entities)
+			{
+				auto& sprite = gEngine.m_coordinator.GetComponent<SpriteComponent>(entity);
+
+				sprite.m_effectMat = glm::translate(sprite.m_effectMat, glm::vec3(0.0f, -0.1f, 0.0f));
 			}
 		}
 
