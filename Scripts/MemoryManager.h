@@ -70,6 +70,6 @@ private:
 
 	static int* MemoryStart;
 	static int* MemoryCurrent;
-	static std::list<MemChunk> MemorySpare;
-	static std::list<MemChunk> MemoryUsed;
+	static std::vector<MemChunk> MemorySpare;
+	static std::vector<MemChunk> MemoryUsed;
 };
