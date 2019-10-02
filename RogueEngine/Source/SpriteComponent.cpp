@@ -28,7 +28,8 @@ void SpriteComponent::draw(TransformComponent* transform)
 
 		transformMat = glm::translate(transformMat, { transform->getPosition().x, transform->getPosition().y, 1.0f});
 		transformMat = glm::scale(transformMat, glm::vec3(transform->getScale().x, transform->getScale().y, 1.0f));
-
+		if (transform->getRotation() > 0)
+			transformMat = glm::rotate_slow(transformMat, (GLfloat)glfwGetTime() * -5.0f, glm::vec3(0.0f, 0.0f, transform->getRotation()));
 
 		glBindTexture(GL_TEXTURE_2D, m_texture);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
