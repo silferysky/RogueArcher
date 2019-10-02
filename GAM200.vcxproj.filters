@@ -223,6 +223,10 @@
     <ClInclude Include="Scripts\Timer.h">
       <Filter>RogueEngine</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\ObjectFactory.h" />
+    <ClInclude Include="Scripts\MemoryManager.h">
+      <Filter>RogueEngine\Systems\Memory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\GameStateManager.cpp">
@@ -320,6 +324,10 @@
     </ClCompile>
     <ClCompile Include="Scripts\Timer.cpp">
       <Filter>RogueEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\ObjectFactory.cpp" />
+    <ClCompile Include="Scripts\MemoryManager.cpp">
+      <Filter>RogueEngine\Systems\Memory</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
