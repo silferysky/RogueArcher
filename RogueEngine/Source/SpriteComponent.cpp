@@ -26,8 +26,8 @@ void SpriteComponent::draw(TransformComponent* transform)
 	{
 		auto transformMat = glm::mat4(1.0f);
 
-		transformMat = glm::scale(transformMat, glm::vec3(transform->getScale().x, transform->getScale().y, 1.0f));
 		transformMat = glm::translate(transformMat, { transform->getPosition().x, transform->getPosition().y, 1.0f});
+		transformMat = glm::scale(transformMat, glm::vec3(transform->getScale().x, transform->getScale().y, 1.0f));
 
 		glBindTexture(GL_TEXTURE_2D, m_texture);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -39,7 +39,7 @@ void SpriteComponent::draw(TransformComponent* transform)
 
 		//offset by translation of camera, inverse of rotation
 
-		glm::mat4 projMat = glm::ortho(-16.0f, 16.0f, -9.0f, 9.0f, -10.0f, 10.0f);
+		glm::mat4 projMat = glm::ortho(-16.0f * 0.5f, 16.0f * 0.5f, -9.0f * 0.5f, 9.0f * 0.5f, -10.0f, 10.0f);
 
 		glUseProgram(m_shader);
 
@@ -50,6 +50,9 @@ void SpriteComponent::draw(TransformComponent* transform)
 
 		// Draw the Mesh
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+		glBindBuffer(GL_ARRAY_BUFFER, 0); //Reset
+		glBindVertexArray(0); //Reset
 	}
 }
 
