@@ -245,6 +245,7 @@ void ObjectFactory::SaveLevel(const char* fileName)
 		if (gEngine.m_coordinator.CheckIfComponentExists<TransformComponent>(entity))
 		{
 			TransformComponent& t = gEngine.m_coordinator.GetComponent<TransformComponent>(entity);
+			UNREFERENCED_PARAMETER(t);
 
 			std::random_device rd;
 			std::mt19937 gen(rd());		//For random seed

@@ -38,10 +38,9 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	HDC   hDC;				/* device context */
 	HGLRC hRC;				/* opengl context */
 	HWND  hWnd;				/* window */
-	MSG   msg ;				/* message */
+	MSG   msg = { 0 };				/* message */
 	REConfig config;
 	config.ConfigInit();
-	UNREFERENCED_PARAMETER(msg);
 	hWnd = CreateOpenGLWindow(const_cast<char*>(config.GetTitle().c_str()), config.GetX(), config.GetY(), config.GetWidth(), config.GetHeight(),0, config.GetFlags());
 	if (hWnd == NULL)
 		exit(1);
