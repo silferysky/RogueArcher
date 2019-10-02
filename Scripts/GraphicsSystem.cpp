@@ -3,19 +3,17 @@
 // Public member functions 
 void GraphicsSystem::init()
 {
-	
 	LISTENER_HANDLER hand = std::bind(&GraphicsSystem::receive, this, std::placeholders::_1);
 	EventDispatcher::instance().AddListener(SystemID::id_GRAPHICSSYSTEM, hand);
 
 	// Add components to signature
 	Signature signature;
 	signature.set(gEngine.m_coordinator.GetComponentType<SpriteComponent>());
-//	signature.set(gEngine.m_coordinator.GetComponentType<BoxCollider2D>());
+	signature.set(gEngine.m_coordinator.GetComponentType<BoxCollider2DComponent>());
 	signature.set(gEngine.m_coordinator.GetComponentType<TransformComponent>());
 
 	// Set graphics system signature
 	gEngine.m_coordinator.SetSystemSignature<GraphicsSystem>(signature);
-
 }
 
 void GraphicsSystem::update()
@@ -27,15 +25,49 @@ void GraphicsSystem::update()
 	{
 		auto& sprite = gEngine.m_coordinator.GetComponent<SpriteComponent>(entity);
 		auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(entity);
-		//auto& collider = gEngine.m_coordinator.GetComponent<BoxCollider2D>(entity);
+		auto& collider = gEngine.m_coordinator.GetComponent<BoxCollider2DComponent>(entity);
 
 		//glDisable(GL_DEPTH_TEST);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		sprite.draw(&transform);
-
+		drawDebug(&collider);
 	}
 	TimeSystem.TimerEnd("Graphics System");
+}
+
+void GraphicsSystem::drawDebug(BoxCollider2DComponent* box)
+{
+	GLuint VBO, VAO;
+
+	float left = box->m_aabb.getMin().x;
+	float right = box->m_aabb.getMax().x;
+
+	float top = box->m_aabb.getMax().y;
+	float bottom = box->m_aabb.getMin().y;
+
+	float vertices[] = { 
+		left, top, 
+		right, top, 
+		left, bottom, 
+		right, bottom
+	};
+
+	glGenVertexArrays(1, &VAO);
+	glBindVertexArray(VAO);
+
+	glGenBuffers(1, &VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+	// position attribute
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+
+	glDrawElements(GL_LINE_STRIP, 4, GL_UNSIGNED_INT, 0);
+
+	glEnableVertexAttribArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0); //Reset
+	glBindVertexArray(0); //Reset
 }
 
 void GraphicsSystem::receive(Event* ev)
