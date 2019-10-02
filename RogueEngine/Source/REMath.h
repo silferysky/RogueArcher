@@ -23,8 +23,8 @@ public:
 
   struct Circle
   {
-	  Vec2 m_center;
-	  float m_radius;
+	  Vec2 m_center{ Vec2(0,0) };
+	  float m_radius{ 1.0f };
 	  float m_mass{ 1.0f };
   };
 
