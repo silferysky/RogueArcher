@@ -1,6 +1,32 @@
 #include "REMath.h"
 
 
+
+void REMath::REBuildLineSegment(LineSegment& lineSegment,								//Line segment reference - output 
+	const Vec2& pos,							//position - input 
+	float scale,											//scale - input 
+	float dir)											//direction angle - input
+{
+	// Points pt0 and pt1
+	lineSegment.m_pt0 = { pos.x - 0.5f * scale, pos.y };
+	lineSegment.m_pt1 = { pos.x + 0.5f * scale, pos.y };
+
+	Mtx33 rot;
+	Mtx33RotRad(rot, dir);
+
+	// Rotate the line to obtain P0 and P1
+	lineSegment.m_pt0 = pos + rot * (lineSegment.m_pt0 - pos);
+	lineSegment.m_pt1 = pos + rot * (lineSegment.m_pt1 - pos);
+
+	// Vector of the line
+	Vec2 temp = lineSegment.m_pt1 - pos;
+
+	// Normalize the vector
+	lineSegment.m_normal = { temp.y, -temp.x };
+	Vec2Normalize(lineSegment.m_normal, lineSegment.m_normal);
+
+}
+
 double REMath::DegreesToRadians(double degrees) const
 {
 	return (degrees * RE_PI / 180.0);
@@ -171,6 +197,8 @@ float REMath::REDistRectangleToRectangle(const Vec2& pRect0, float SizeX0, float
 	return REMax(abs(pRect1.x - pRect0.x) - (SizeX0 + SizeX1) / 2, abs(pRect1.y - pRect0.y) - (SizeY1 + SizeY0) / 2);
 }
 
+
+
 //bool RETestPointToCircle(Vec2& pPos, Vec2& pCenter, float radius)
 //{
 //	return false;
@@ -205,7 +233,7 @@ float REMath::REDistRectangleToRectangle(const Vec2& pRect0, float SizeX0, float
 //		//pline0 = pline1
 //		return sqrt((pPos.x - pLine0.x)*(pPos.x - pLine0.x) + (pPos.y - pLine0.y) * (pPos.y - pLine0.y));
 //	}
-//	const float t = REMax(0, REMin(1, Vec2DotProduct(pPos - pLine0, pLine1 - pLine0) / length));
+//	const float t = REMax(0, REMin(1, Vec2DotProd(pPos - pLine0, pLine1 - pLine0) / length));
 //	const Vec2 projection = v + t * (pLine1 - pLine0);
 //	return Vec2Distance(pPos, projection);
 //}
