@@ -88,8 +88,8 @@ void PhysicsSystem::receive(Event* ev)
 	{
 	case EventType::EvKeyPressed:
 	{
-		auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(0);
-		auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(0);
+		auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(m_entities.size() - 1);
+		auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(m_entities.size() - 1);
 		KeyPressEvent* EvPressKey = dynamic_cast<KeyPressEvent*>(ev);
 		if (EvPressKey->GetKeyCode() == KeyPress::KeyA)
 		{
