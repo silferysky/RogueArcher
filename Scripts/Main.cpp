@@ -32,14 +32,17 @@ int APIENTRY
 WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	LPSTR lpszCmdLine, int nCmdShow)
 {
+	UNREFERENCED_PARAMETER(hPreviousInst);
+	UNREFERENCED_PARAMETER(lpszCmdLine);
+	UNREFERENCED_PARAMETER(hCurrentInst);
 	HDC   hDC;				/* device context */
 	HGLRC hRC;				/* opengl context */
 	HWND  hWnd;				/* window */
-	MSG   msg;				/* message */
+	MSG   msg ;				/* message */
 	REConfig config;
 	config.ConfigInit();
-
-	hWnd = CreateOpenGLWindow(const_cast<char*>(config.GetTitle().c_str()), config.GetX(), config.GetY(), config.GetWidth(), config.GetHeight(), config.GetByte(), config.GetFlags());
+	UNREFERENCED_PARAMETER(msg);
+	hWnd = CreateOpenGLWindow(const_cast<char*>(config.GetTitle().c_str()), config.GetX(), config.GetY(), config.GetWidth(), config.GetHeight(),0, config.GetFlags());
 	if (hWnd == NULL)
 		exit(1);
 

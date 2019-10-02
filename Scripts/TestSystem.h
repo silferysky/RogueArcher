@@ -18,6 +18,7 @@ public:
 	void update() {}
 	void receive(Event* ev) override 
 	{
+		UNREFERENCED_PARAMETER(ev);
 		//RE_INFO(ev->ToString());  
 		//RE_CORE_INFO("TEST SYSTEM RECEIVED EVENT"); 
 	}

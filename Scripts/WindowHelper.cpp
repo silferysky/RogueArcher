@@ -6,7 +6,7 @@ float GetDesktopWidth()
 	const HWND hDesktop = GetDesktopWindow();
 	// Get the size of screen to the desktop
 	GetWindowRect(hDesktop, &desktop);
-	return desktop.right;
+	return float(desktop.right);
 }
 
 float GetDesktopHeight()
@@ -15,7 +15,7 @@ float GetDesktopHeight()
 	const HWND hDesktop = GetDesktopWindow();
 	// Get the size of screen to the desktop
 	GetWindowRect(hDesktop, &desktop);
-	return desktop.bottom;
+	return float(desktop.bottom);
 }
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
