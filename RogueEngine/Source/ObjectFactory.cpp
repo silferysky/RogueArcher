@@ -104,6 +104,7 @@ void ObjectFactory::LoadLevel(const char* fileName)
 			x = level[cstr].GetFloat();
 			CLEARNSETSTR(strstream, entity, "tc", 3);
 			y = level[cstr].GetFloat();
+			CLEARNSETSTR(strstream, entity, "tc", 4);
 			t.setScale(Vec2(x, y));
 			t.setRotation(level[cstr].GetFloat());
 
