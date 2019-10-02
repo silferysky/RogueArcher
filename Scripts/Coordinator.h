@@ -53,6 +53,7 @@ public:
 
 		RE_CORE_INFO("-----------END INITIALIZING SYSTEMS-----------\n\n");
 
+		m_togglePerformanceChecker = false;
 	}
 
 	void update()
@@ -165,6 +166,16 @@ public:
 		return m_entityManager->GetSignature(entity).test(GetComponentType<T>());
 	}
 
+	void togglePerformanceChecker()
+	{
+		m_togglePerformanceChecker = !m_togglePerformanceChecker;
+	}
+
+	bool performanceChecker()
+	{
+		return m_togglePerformanceChecker;
+	}
+
 private:
 	void initSystems()
 	{
@@ -177,4 +188,5 @@ private:
 	std::unique_ptr<FileManager> m_fileManager;
 	std::unique_ptr<TextureManager> m_textureManager;
 	std::vector<Entity> m_activeEntities;
+	bool m_togglePerformanceChecker;
 };
