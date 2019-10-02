@@ -51,7 +51,7 @@ void GraphicsSystem::receive(Event* ev)
 			{
 				auto& sprite = gEngine.m_coordinator.GetComponent<SpriteComponent>(entity);
 
-				sprite.m_transformMat = glm::rotate_slow(sprite.m_transformMat, (GLfloat)glfwGetTime() * 0.5f, glm::vec3(0.0f, 0.0f, 1.0f));
+				sprite.m_transformMat = glm::rotate_slow(sprite.m_transformMat, (GLfloat)glfwGetTime() * -5.0f, glm::vec3(0.0f, 0.0f, 1.0f));
 			}
 			RE_INFO("Rotated!");
 		}
@@ -62,9 +62,20 @@ void GraphicsSystem::receive(Event* ev)
 			{
 				auto& sprite = gEngine.m_coordinator.GetComponent<SpriteComponent>(entity);
 
-				sprite.m_transformMat = glm::scale_slow(sprite.m_transformMat, glm::vec3(1.5f, 1.5f, 0.0f));
+				sprite.m_transformMat = glm::scale_slow(sprite.m_transformMat, glm::vec3(1.1f, 1.1f, 0.0f));
 			}
-			RE_INFO("Scaled!");
+			RE_INFO("Scaled Up!");
+		}
+
+		if (EvPressKey->GetKeyCode() == KeyPress::KeyW)
+		{
+			for (auto entity : m_entities)
+			{
+				auto& sprite = gEngine.m_coordinator.GetComponent<SpriteComponent>(entity);
+
+				sprite.m_transformMat = glm::scale_slow(sprite.m_transformMat, glm::vec3(0.9f, 0.9f, 0.0f));
+			}
+			RE_INFO("Scaled Down!");
 		}
 
 		return;
