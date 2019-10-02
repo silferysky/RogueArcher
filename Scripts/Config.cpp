@@ -5,7 +5,7 @@ void REConfig::ConfigInit()
 
 	RESerialiser Serialiser;
 	rapidjson::Document Windows = Serialiser.DeserialiseFromFile("Resources/Windows.json");
-	const char* Window;
+
 	x = Windows["x"].GetInt();
 	y = Windows["y"].GetInt();
 	height = Windows["height"].GetInt();
@@ -47,9 +47,9 @@ int REConfig::GetWidth()
 	return width;
 }
 
-int REConfig::GetByte()
+BYTE REConfig::GetByte()
 {
-	return byte;
+	return BYTE(byte);
 }
 
 int REConfig::GetFlags()
