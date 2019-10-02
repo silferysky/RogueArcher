@@ -101,6 +101,16 @@ void PhysicsSystem::receive(Event* ev)
 			transform.offSetPosition(Vec2(1.0f, 0.0f) * gDeltaTime);
 			RE_INFO("Move Right!");
 		}
+		else if (EvPressKey->GetKeyCode() == KeyPress::KeyW)
+		{
+			transform.offSetPosition(Vec2(0.0f, 1.0f) * gDeltaTime);
+			RE_INFO("Move Up!");
+		}
+		else if (EvPressKey->GetKeyCode() == KeyPress::KeyS)
+		{
+			transform.offSetPosition(Vec2(0.0f, -1.0f) * gDeltaTime);
+			RE_INFO("Move Down!");
+		}
 		return;
 	}
 	default:

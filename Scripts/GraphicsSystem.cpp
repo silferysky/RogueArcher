@@ -14,6 +14,31 @@ void GraphicsSystem::init()
 
 	// Set graphics system signature
 	gEngine.m_coordinator.SetSystemSignature<GraphicsSystem>(signature);
+
+	// bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
+	glGenVertexArrays(1, &m_VAO);
+	glBindVertexArray(m_VAO);
+
+	glGenBuffers(1, &m_VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), quadVertices, GL_STATIC_DRAW);
+
+	glGenBuffers(1, &m_EBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(quadIndices), quadIndices, GL_STATIC_DRAW);
+
+	// position attribute
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+	// color attribute
+	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
+	// texture coord attribute
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)(7 * sizeof(float)));
+	glEnableVertexAttribArray(2);
+	//glBindBuffer(GL_ARRAY_BUFFER, 0); //Reset
+	glBindVertexArray(0); //Reset
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
 void GraphicsSystem::update()
@@ -31,8 +56,12 @@ void GraphicsSystem::update()
 
 		//glDisable(GL_DEPTH_TEST);
 		
+		glBindVertexArray(m_VAO);
+
 		sprite.draw(&transform);
 		//drawDebug(&collider);
+		// Unbind VAO after drawing
+		glBindVertexArray(0);
 	}
 	TimeSystem.TimerEnd("Graphics System");
 }
@@ -107,80 +136,25 @@ void GraphicsSystem::receive(Event* ev)
 	{
 	case EventType::EvKeyPressed:
 	{
+		auto& sprite = gEngine.m_coordinator.GetComponent<SpriteComponent>(0);
 		KeyPressEvent* EvPressKey = dynamic_cast<KeyPressEvent*>(ev);
 		if (EvPressKey->GetKeyCode() == KeyPress::KeyR)
 		{
-			for (auto entity : m_entities)
-			{
-				auto& sprite = gEngine.m_coordinator.GetComponent<SpriteComponent>(entity);
-
-				sprite.m_effectMat = glm::rotate_slow(sprite.m_effectMat, (GLfloat)glfwGetTime() * -5.0f, glm::vec3(0.0f, 0.0f, 1.0f));
-			}
+			sprite.m_effectMat = glm::rotate_slow(sprite.m_effectMat, (GLfloat)glfwGetTime() * -5.0f, glm::vec3(0.0f, 0.0f, 1.0f));
 			RE_INFO("Rotated!");
 		}
 
 		else if (EvPressKey->GetKeyCode() == KeyPress::KeyE)
 		{
-			for (auto entity : m_entities)
-			{
-				auto& sprite = gEngine.m_coordinator.GetComponent<SpriteComponent>(entity);
-
-				sprite.m_effectMat = glm::scale_slow(sprite.m_effectMat, glm::vec3(1.1f, 1.1f, 0.0f));
-			}
+			sprite.m_effectMat = glm::scale_slow(sprite.m_effectMat, glm::vec3(1.1f, 1.1f, 0.0f));
 			RE_INFO("Scaled Up!");
 		}
 
 		else if (EvPressKey->GetKeyCode() == KeyPress::KeyQ)
 		{
-			for (auto entity : m_entities)
-			{
-				auto& sprite = gEngine.m_coordinator.GetComponent<SpriteComponent>(entity);
-
-				sprite.m_effectMat = glm::scale_slow(sprite.m_effectMat, glm::vec3(0.9f, 0.9f, 0.0f));
-			}
+			sprite.m_effectMat = glm::scale_slow(sprite.m_effectMat, glm::vec3(0.9f, 0.9f, 0.0f));
 			RE_INFO("Scaled Down!");
 		}
-
-		/* else if (EvPressKey->GetKeyCode() == KeyPress::KeyA)
-		{
-			for (auto entity : m_entities)
-			{
-				auto& sprite = gEngine.m_coordinator.GetComponent<SpriteComponent>(entity);
-
-				sprite.m_effectMat = glm::translate(sprite.m_effectMat, glm::vec3(-0.1f, 0.0f, 0.0f));
-			}
-		}
-
-		else if (EvPressKey->GetKeyCode() == KeyPress::KeyD)
-		{
-			for (auto entity : m_entities)
-			{
-				auto& sprite = gEngine.m_coordinator.GetComponent<SpriteComponent>(entity);
-
-				sprite.m_effectMat = glm::translate(sprite.m_effectMat, glm::vec3(0.1f, 0.0f, 0.0f));
-			}
-		} */
-
-		else if (EvPressKey->GetKeyCode() == KeyPress::KeyW)
-		{
-			for (auto entity : m_entities)
-			{
-				auto& sprite = gEngine.m_coordinator.GetComponent<SpriteComponent>(entity);
-
-				sprite.m_effectMat = glm::translate(sprite.m_effectMat, glm::vec3(0.0f, 0.1f, 0.0f));
-			}
-		}
-
-		else if (EvPressKey->GetKeyCode() == KeyPress::KeyS)
-		{
-			for (auto entity : m_entities)
-			{
-				auto& sprite = gEngine.m_coordinator.GetComponent<SpriteComponent>(entity);
-
-				sprite.m_effectMat = glm::translate(sprite.m_effectMat, glm::vec3(0.0f, -0.1f, 0.0f));
-			}
-		}
-
 		return;
 	}
 	default:
