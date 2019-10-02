@@ -42,8 +42,8 @@ public:
 
 			textureMap.emplace(texture, newTexture);
 
-			auto itr = textureMap.find(texture);
-			return itr->second;
+			auto itr1 = textureMap.find(texture);
+			return itr1->second;
 		}
 	}
 };

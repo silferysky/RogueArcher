@@ -16,10 +16,10 @@ void Timer::TimerEnd(const char* System)
 	{
 		it->second = totaltime;
 	}
-	for (auto it = time.begin(); it != time.end(); ++it)
+	for (auto it1 = time.begin(); it1 != time.end(); ++it1)
 	{
 		if (gEngine.m_coordinator.performanceChecker())
-			std::cout << it->first << " " << it->second << "%" << std::endl;
+			std::cout << it1->first << " " << it1->second << "%" << std::endl;
 	}
 
 
