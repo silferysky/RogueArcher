@@ -38,8 +38,8 @@ void PhysicsSystem::init()
 	Signature signature;
 	signature.set(gEngine.m_coordinator.GetComponentType<RigidbodyComponent>());
 	signature.set(gEngine.m_coordinator.GetComponentType<TransformComponent>());
-	//signature.set(gEngine.m_coordinator.GetComponentType<BoxCollider2DComponent>());
-	//signature.set(gEngine.m_coordinator.GetComponentType<CircleCollider2DComponent>());
+	signature.set(gEngine.m_coordinator.GetComponentType<BoxCollider2DComponent>());
+	signature.set(gEngine.m_coordinator.GetComponentType<CircleCollider2DComponent>());
 	
 	// Set physics system signature.
 	gEngine.m_coordinator.SetSystemSignature<PhysicsSystem>(signature);
@@ -62,8 +62,8 @@ void PhysicsSystem::update()
 
 		std::cout << "FUCKFUCKFUCKFUCKFUCKFUCKFUCKFUCKFUCKFUCKFUCKFUCKFUCK" << std::endl;
 		auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(entity);
-	//	auto& boxCollider = gEngine.m_coordinator.GetComponent<BoxCollider2DComponent>(entity);
-	//	auto& circleCollider = gEngine.m_coordinator.GetComponent<CircleCollider2DComponent>(entity);
+		auto& boxCollider = gEngine.m_coordinator.GetComponent<BoxCollider2DComponent>(entity);
+		auto& circleCollider = gEngine.m_coordinator.GetComponent<CircleCollider2DComponent>(entity);
 
 		// Apply accForce (Forces are added if necessary)
 		applyForces(rigidbody);
@@ -72,8 +72,8 @@ void PhysicsSystem::update()
 		integrateAcceleration(rigidbody, transform);
 
 		// Update collidables
-	//	m_colliderManager.updateAABB(boxCollider.m_aabb, transform);
-	//	m_colliderManager.updateOBB(boxCollider.m_obb, transform);
+		m_colliderManager.updateAABB(boxCollider.m_aabb, transform);
+		m_colliderManager.updateOBB(boxCollider.m_obb, transform);
 
 		// Conduct spatial partitioning
 		

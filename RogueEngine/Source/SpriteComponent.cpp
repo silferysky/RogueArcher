@@ -39,18 +39,14 @@ void SpriteComponent::draw(TransformComponent* transform)
 
 		//offset by translation of camera, inverse of rotation
 
-		auto projMat = glm::ortho(-9.0f, 9.0f, -6.0f, 6.0f, -10.0f, 10.0f);
+		glm::mat4 projMat = glm::ortho(-16.0f, 16.0f, -9.0f, 9.0f, -10.0f, 10.0f);
 
 		glUseProgram(m_shader);
 
-		GLint projLocation = glGetUniformLocation(m_shader, "projection");
-		glUniformMatrix4fv(projLocation, 1, GL_FALSE, glm::value_ptr(projMat));
+		m_effectMat = projMat * transformMat;
 
 		GLint effectLocation = glGetUniformLocation(m_shader, "effect");
 		glUniformMatrix4fv(effectLocation, 1, GL_FALSE, glm::value_ptr(m_effectMat));
-
-		GLint transformLocation = glGetUniformLocation(m_shader, "transform");
-		glUniformMatrix4fv(transformLocation, 1, GL_FALSE, glm::value_ptr(transformMat));
 
 		// Draw the Mesh
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
