@@ -97,7 +97,7 @@ void GraphicsSystem::drawDebug(BoxCollider2DComponent* box)
 
 	auto& obb = box->m_obb;
 
-	for (int i = 0; i < obb.getSize();)
+	for (int i = 0; i < static_cast<int>(obb.getSize());)
 	{
 		glBegin(GL_LINES);
 		glVertex2f(obb.modelVerts()[i].x, obb.modelVerts()[i].y);

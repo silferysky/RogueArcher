@@ -222,7 +222,7 @@ void CollisionManager::updateVertices(OBB& obb, const TransformComponent& trans)
 	Mtx33RotRad(rot, trans.getRotation());
 	Mtx33Scale(sca, trans.getScale().x, trans.getScale().y);
 	
-	for (int i = 0; i < obb.modelVerts().size(); i++)
+	for (int i = 0; i < static_cast<int>(obb.modelVerts().size()); i++)
 	{
 		obb.globVerts()[i] = rot * obb.modelVerts()[i];
 		obb.globVerts()[i] = sca * obb.modelVerts()[i];

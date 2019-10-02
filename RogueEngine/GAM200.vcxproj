@@ -39,7 +39,6 @@
     <ClInclude Include="Scripts\MemoryManager.h" />
     <ClInclude Include="Scripts\REEngine.h" />
     <ClInclude Include="Scripts\SystemList.h" />
-    <ClInclude Include="Scripts\BaseSystem.h" />
     <ClInclude Include="Scripts\BasicIO.h" />
     <ClInclude Include="Scripts\ComponentArray.h" />
     <ClInclude Include="Scripts\ComponentList.h" />
@@ -52,8 +51,6 @@
     <ClInclude Include="Scripts\FileIO.h" />
     <ClInclude Include="Scripts\EventListener.h" />
     <ClInclude Include="Scripts\GameEvent.h" />
-    <ClInclude Include="Scripts\GameStateList.h" />
-    <ClInclude Include="Scripts\GameStateManager.h" />
     <ClInclude Include="Scripts\GraphicsSystem.h" />
     <ClInclude Include="Scripts\InputData.h" />
     <ClInclude Include="Scripts\InputManager.h" />
@@ -65,7 +62,6 @@
     <ClInclude Include="Scripts\ObjectFactory.h" />
     <ClInclude Include="Scripts\REMath.h" />
     <ClInclude Include="Scripts\Resource.h" />
-    <ClInclude Include="Scripts\RogueEngine.h" />
     <ClInclude Include="Scripts\shader.h" />
     <ClInclude Include="Scripts\SpriteComponent.h" />
     <ClInclude Include="Scripts\SystemManager.h" />
@@ -96,7 +92,6 @@
     <ClCompile Include="Scripts\BasicIO.cpp" />
     <ClCompile Include="Scripts\FileIO.cpp" />
     <ClCompile Include="Scripts\FileManager.cpp" />
-    <ClCompile Include="Scripts\GameStateManager.cpp" />
     <ClCompile Include="Scripts\GraphicsSystem.cpp" />
     <ClCompile Include="Scripts\InputManager.cpp" />
     <ClCompile Include="Scripts\Logger.cpp" />

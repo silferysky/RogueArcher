@@ -32,7 +32,7 @@ public:
 	static void*		Allocate(const size_t size);
 	static void			Deallocate(int* ptr, const size_t size);
 	static bool			FindSpareChunk(const size_t size);
-	static MemChunk&	FindUsedChunk(int* ptr);
+	static MemChunk*	FindUsedChunk(int* ptr);
 	static bool			CombineChunks();
 
 	//For Generic overload new/delete
@@ -52,7 +52,7 @@ public:
 	{
 		if (ptr != nullptr)
 		{
-			MemChunk* toDeallocate = &MemoryManager::instance().FindUsedChunk((int*)ptr);
+			MemChunk* toDeallocate = MemoryManager::instance().FindUsedChunk((int*)ptr);
 			MemoryManager::Deallocate(toDeallocate->chunkStart, toDeallocate->size);
 		}
 	}
@@ -61,7 +61,7 @@ public:
 	{
 		if (ptr != nullptr)
 		{
-			MemChunk* toDeallocate = &MemoryManager::instance().FindUsedChunk((int*)ptr);
+			MemChunk* toDeallocate = MemoryManager::instance().FindUsedChunk((int*)ptr);
 			MemoryManager::Deallocate(toDeallocate->chunkStart, toDeallocate->size);
 		}
 	}
