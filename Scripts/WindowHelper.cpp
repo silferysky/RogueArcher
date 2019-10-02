@@ -49,6 +49,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 					GetSystemMetrics(SM_CYSCREEN), SWP_FRAMECHANGED);
 			}
 		}
+		else if (wParam == 'P')
+		{
+			gEngine.m_coordinator.togglePerformanceChecker();
+		}
 	}
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);
 }
