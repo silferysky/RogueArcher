@@ -1,9 +1,6 @@
 #include "CollisionManager.h"
 #include <iostream>
 
-CollisionManager::CollisionManager()
-	: HALF_SCALE{ 0.5f }
-{}
 //_________________________________________________________________________
 //_________________________________________________________________________|
 //_____________________Axis-Aligned Bounding Box___________________________|
@@ -25,7 +22,7 @@ Checks for overlapping of two objects by comparing their boundary boxes.
 Returns a boolean.
 */
 /**************************************************************************/
-inline bool CollisionManager::staticAABBvsAABB(const AABB& aabb1, const AABB& aabb2)
+bool CollisionManager::staticAABBvsAABB(const AABB& aabb1, const AABB& aabb2)
 {
 	// Static collision check
 	// Check for m_min and m_max values and eliminate false scenarios
@@ -222,7 +219,7 @@ void CollisionManager::updateVertices(OBB& obb, const TransformComponent& trans)
 	Mtx33RotRad(rot, trans.getRotation());
 	Mtx33Scale(sca, trans.getScale().x, trans.getScale().y);
 	
-	for (int i = 0; i < static_cast<int>(obb.modelVerts().size()); i++)
+	for (int i = 0; i < obb.modelVerts().size(); i++)
 	{
 		obb.globVerts()[i] = rot * obb.modelVerts()[i];
 		obb.globVerts()[i] = sca * obb.modelVerts()[i];

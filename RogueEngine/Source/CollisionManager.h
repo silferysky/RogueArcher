@@ -7,14 +7,14 @@
 
 class CollisionManager
 {
-	const float HALF_SCALE;
+	const float HALF_SCALE = 0.5f;
 public:
-	CollisionManager();
+	CollisionManager() = default;
 	~CollisionManager() = default;
 
 	// AXIS-ALIGNED BOUNDING BOX
 	void updateAABB(AABB& collider, const TransformComponent& transform);
-	inline bool staticAABBvsAABB(const AABB& aabb1, const AABB& aabb2);
+	bool staticAABBvsAABB(const AABB& aabb1, const AABB& aabb2);
 	bool dynamicAABBvsAABB(const AABB& aabb1, const AABB& aabb2, const RigidbodyComponent& body1, const RigidbodyComponent& body2);
 
 	// ORIENTED BOUNDING BOX (SAT on n-sided polygons)
