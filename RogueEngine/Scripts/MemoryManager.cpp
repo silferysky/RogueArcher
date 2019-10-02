@@ -152,18 +152,17 @@ bool MemoryManager::FindSpareChunk(const size_t size)
 	return false;
 }
 
-MemChunk& MemoryManager::FindUsedChunk(int* ptr)
+MemChunk* MemoryManager::FindUsedChunk(int* ptr)
 {
 	for (auto &i : MemoryUsed)
 	{
 		//Look for the correct position
 		if (i.chunkStart == ptr)
-			return i;
+			return &i;
 	}
 
 	//If none found, ignore and return nullptr
-	MemChunk empty = MemChunk();
-	return empty;
+	return nullptr;
 }
 
 bool MemoryManager::CombineChunks()

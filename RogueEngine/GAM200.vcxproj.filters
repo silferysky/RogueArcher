@@ -56,21 +56,15 @@
     <Filter Include="RogueEngine\Systems\Physics\Components">
       <UniqueIdentifier>{846770d4-715c-44f0-88bf-591217db1294}</UniqueIdentifier>
     </Filter>
+    <Filter Include="RogueEngine\Systems\Others">
+      <UniqueIdentifier>{0ecd1d51-418d-4be3-99a8-6cce0b2b1f2b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Scripts\GameStateList.h">
-      <Filter>RogueEngine\Systems</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\Resource.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\GameStateManager.h">
-      <Filter>RogueEngine\Systems</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\Main.h">
-      <Filter>RogueEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\RogueEngine.h">
       <Filter>RogueEngine</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Event.h">
@@ -142,12 +136,6 @@
     <ClInclude Include="Scripts\MemoryType.h">
       <Filter>RogueEngine\Systems\Memory</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\TestSystem.h">
-      <Filter>RogueEngine\Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\VSync.h">
-      <Filter>RogueEngine</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\GraphicsSystem.h">
       <Filter>RogueEngine\Systems\Graphics</Filter>
     </ClInclude>
@@ -193,12 +181,6 @@
     <ClInclude Include="Scripts\BasicIO.h">
       <Filter>RogueEngine\Systems\I/O</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\WindowHelper.h">
-      <Filter>RogueEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\BaseSystem.h">
-      <Filter>RogueEngine\Systems</Filter>
-    </ClInclude>
     <ClInclude Include="Physics\CircleCollider2DComponent.h">
       <Filter>RogueEngine\Systems\Physics\Components</Filter>
     </ClInclude>
@@ -220,18 +202,26 @@
     <ClInclude Include="TextureManager.h">
       <Filter>RogueEngine\Systems\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Timer.h">
-      <Filter>RogueEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\ObjectFactory.h" />
     <ClInclude Include="Scripts\MemoryManager.h">
       <Filter>RogueEngine\Systems\Memory</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\ObjectFactory.h">
+      <Filter>RogueEngine\Core\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\VSync.h">
+      <Filter>RogueEngine\Systems\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Timer.h">
+      <Filter>RogueEngine\Systems\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\WindowHelper.h">
+      <Filter>RogueEngine\Systems\Others</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\TestSystem.h">
+      <Filter>RogueEngine\Systems\Others</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Scripts\GameStateManager.cpp">
-      <Filter>RogueEngine\Systems</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\Main.cpp">
       <Filter>RogueEngine</Filter>
     </ClCompile>
@@ -277,9 +267,6 @@
     <ClCompile Include="Scripts\REMath.cpp">
       <Filter>RogueEngine\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\VSync.cpp">
-      <Filter>RogueEngine</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\GraphicsSystem.cpp">
       <Filter>RogueEngine\Systems\Graphics</Filter>
     </ClCompile>
@@ -301,9 +288,6 @@
     <ClCompile Include="Scripts\BasicIO.cpp">
       <Filter>RogueEngine\Systems\I/O</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\WindowHelper.cpp">
-      <Filter>RogueEngine</Filter>
-    </ClCompile>
     <ClCompile Include="Physics\CircleCollider2DComponent.cpp">
       <Filter>RogueEngine\Systems\Physics\Components</Filter>
     </ClCompile>
@@ -322,12 +306,20 @@
     <ClCompile Include="Physics\BoxCollider2DComponent.cpp">
       <Filter>RogueEngine\Systems\Physics\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Timer.cpp">
-      <Filter>RogueEngine</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\ObjectFactory.cpp" />
     <ClCompile Include="Scripts\MemoryManager.cpp">
       <Filter>RogueEngine\Systems\Memory</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\ObjectFactory.cpp">
+      <Filter>RogueEngine\Core\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\VSync.cpp">
+      <Filter>RogueEngine\Systems\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Timer.cpp">
+      <Filter>RogueEngine\Systems\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\WindowHelper.cpp">
+      <Filter>RogueEngine\Systems\Others</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

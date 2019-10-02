@@ -31,7 +31,7 @@ typedef union Matrix3x3
 		float m20, m21, m22;
 	};
 
-	float m[9];
+	float m[9] = { 0.0f };
 
 	Matrix3x3() {}
 	Matrix3x3(const float *pArr);

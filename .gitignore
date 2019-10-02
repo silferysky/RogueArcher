@@ -24,7 +24,9 @@ RogueEngine/.vs
 *.class
 *.o
 *.so
-*ilk
+*.ilk
+*.iobj
+*.ipdb
 
 # Packages #
 ############
@@ -39,9 +41,14 @@ RogueEngine/.vs
 
 #include everything within#
 !/Dep/**/*
+
+#include glew32 files#
 !/RogueEngine/Debug/glew32.dll
 !/RogueEngine/x64/Debug/glew32.dll
+!/x64/Release/glew32.dll
 !/x64/Debug/glew32.dll
+!/Debug/glew32.dll
+!/Release/glew32.dll
 
 #ignore specifically these files#
 RogueEngine/log/ClientFileLog.txt
