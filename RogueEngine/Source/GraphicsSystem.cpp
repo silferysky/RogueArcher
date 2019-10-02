@@ -93,7 +93,8 @@ void GraphicsSystem::update()
 		// Unbind VAO after drawing
 		glBindVertexArray(0);
 
-		drawDebug(&collider, &transform);
+		if (entity)
+			drawDebug(&collider, &transform);
 	}
 	TimeSystem.TimerEnd("Graphics System");
 }
@@ -145,20 +146,8 @@ void GraphicsSystem::receive(Event* ev)
 		KeyPressEvent* EvPressKey = dynamic_cast<KeyPressEvent*>(ev);
 		if (EvPressKey->GetKeyCode() == KeyPress::KeyR)
 		{
-			//sprite.m_effectMat = glm::rotate_slow(sprite.m_effectMat, (GLfloat)glfwGetTime() * -5.0f, glm::vec3(0.0f, 0.0f, 1.0f));
+			transform.offSetRotation(1.0f * gDeltaTime);
 			RE_INFO("Rotated!");
-		}
-
-		else if (EvPressKey->GetKeyCode() == KeyPress::KeyE)
-		{
-			transform.offSetScale(Vec2(1.0f, 1.0f) * gDeltaTime);
-			RE_INFO("Scaled Up!");
-		}
-
-		else if (EvPressKey->GetKeyCode() == KeyPress::KeyQ)
-		{
-			transform.offSetScale(Vec2(-1.0f, -1.0f) * gDeltaTime);
-			RE_INFO("Scaled Down!");
 		}
 		return;
 	}

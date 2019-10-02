@@ -203,6 +203,19 @@ void PhysicsSystem::receive(Event* ev)
 					}
 				}
 			}
+			else if (EvPressKey->GetKeyCode() == KeyPress::KeyE)
+			{
+				auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>((Entity)(m_entities.size() - 1));
+				transform.offSetScale(Vec2(1.0f, 1.0f) * gDeltaTime);
+				RE_INFO("Scaled Up!");
+			}
+
+			else if (EvPressKey->GetKeyCode() == KeyPress::KeyQ)
+			{
+				auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>((Entity)(m_entities.size() - 1));
+				transform.offSetScale(Vec2(-1.0f, -1.0f) * gDeltaTime);
+				RE_INFO("Scaled Down!");
+			}
 		}
 		default:
 			return;
