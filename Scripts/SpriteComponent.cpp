@@ -62,9 +62,12 @@ void SpriteComponent::setShader(std::string vShader, std::string fShader)
 
 void SpriteComponent::draw(TransformComponent* transform)
 {
-	m_transformMat = glm::translate(m_transformMat, {transform->getPosition().x, transform->getPosition().y, 0.0f});
-	m_transformMat = glm::scale(m_transformMat, glm::vec3(transform->getScale().x * 100, transform->getScale().y * 100, 1.0f));
-			
+	auto a = glm::mat4(1.0f);
+
+	a = glm::translate(a, { transform->getPosition().x * 100, transform->getPosition().y * 100, 0.0f });
+	auto lol = transform->getPosition().x;
+	a = glm::scale(a, glm::vec3(100, 100, 1.0f));
+
 	//draw
 	 // Use the shader program for drawing
 		
@@ -74,17 +77,18 @@ void SpriteComponent::draw(TransformComponent* transform)
 
 	GLint projLocation = glGetUniformLocation(m_shader, "projection");
 	glUniformMatrix4fv(projLocation, 1, GL_FALSE, glm::value_ptr(projMat));
+
+	GLint effectLocation = glGetUniformLocation(m_shader, "effect");
+	glUniformMatrix4fv(effectLocation, 1, GL_FALSE, glm::value_ptr(m_transformMat));
 		
 	GLint transformLocation = glGetUniformLocation(m_shader, "transform");
-	glUniformMatrix4fv(transformLocation, 1, GL_FALSE, glm::value_ptr(m_transformMat));
+	glUniformMatrix4fv(transformLocation, 1, GL_FALSE, glm::value_ptr(a));
 
 	glBindVertexArray(m_VAO);
 	// Draw the Mesh
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	// Unbind VAO after drawing
 	glBindVertexArray(0);
-
-	m_transformMat = glm::mat4{ 1.0 };
 }
 
 GLuint SpriteComponent::getTexture() const

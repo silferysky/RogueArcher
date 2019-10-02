@@ -56,8 +56,7 @@ void ObjectFactory::LoadLevel(const char* fileName)
 			const char* path;
 			CLEARNSETSTR(strstream, entity, "sc", 0);
 			path = level[cstr].GetString();
-			//s.setTexture(path);
-			s.setTexture("test.bmp");
+			s.setTexture(path);
 			
 			gEngine.m_coordinator.AddComponent(curEnt, s);
 		}
@@ -102,21 +101,17 @@ void ObjectFactory::LoadLevel(const char* fileName)
 		{
 			TransformComponent t{};
 			float x, y;
-			//CLEARNSETSTR(strstream, entity, "tc", 0);
-			//x = level[cstr].GetFloat();
-			//CLEARNSETSTR(strstream, entity, "tc", 1);
-			//y = level[cstr].GetFloat();
-			//t.setPosition(Vec2(x, y));
-			//CLEARNSETSTR(strstream, entity, "tc", 2);
-			//x = level[cstr].GetFloat();
-			//CLEARNSETSTR(strstream, entity, "tc", 3);
-			//y = level[cstr].GetFloat();
-			//t.setScale(Vec2(x, y));
-			//t.setRotation(level[cstr].GetFloat());
-
-			t.setPosition(Vec2(1.0f, 0.0f));
-			t.setScale(Vec2(0.5f, 0.5f));
-			t.setRotation(0.0f);
+			CLEARNSETSTR(strstream, entity, "tc", 0);
+			x = level[cstr].GetFloat();
+			CLEARNSETSTR(strstream, entity, "tc", 1);
+			y = level[cstr].GetFloat();
+			t.setPosition(Vec2(x, y));
+			CLEARNSETSTR(strstream, entity, "tc", 2);
+			x = level[cstr].GetFloat();
+			CLEARNSETSTR(strstream, entity, "tc", 3);
+			y = level[cstr].GetFloat();
+			t.setScale(Vec2(x, y));
+			t.setRotation(level[cstr].GetFloat());
 
 			gEngine.m_coordinator.AddComponent(curEnt, t);
 		}
