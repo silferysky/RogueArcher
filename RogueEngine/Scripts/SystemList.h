@@ -1,0 +1,13 @@
+#pragma once
+
+enum class SystemID
+{
+	id_MEMORYMANAGER = 0,
+	id_INPUTMANAGER,
+	id_EVENTMANAGER,
+	id_GRAPHICSSYSTEM,
+	id_AUDIOMANAGER,
+	id_PHYSICSSYSTEM,
+	id_TESTSYSTEM,
+	id_LASTSYS
+};

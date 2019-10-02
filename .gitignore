@@ -1,6 +1,7 @@
 # Don't track these folders
 .vs/
 x64/
+RogueEngine/.vs
 
 # Compiled source #
 ###################
@@ -23,6 +24,7 @@ x64/
 *.class
 *.o
 *.so
+*ilk
 
 # Packages #
 ############
@@ -37,9 +39,11 @@ x64/
 
 #include everything within#
 !/Dep/**/*
-!/Debug/glew32.dll
+!/RogueEngine/Debug/glew32.dll
+!/RogueEngine/x64/Debug/glew32.dll
+!/x64/Debug/glew32.dll
 
 #ignore specifically these files#
-log/ClientFileLog.txt
-log/CoreFileLog.txt
-Resources/TestJsonFileCreator.json
+RogueEngine/log/ClientFileLog.txt
+RogueEngine/log/CoreFileLog.txt
+RogueEngine/Resources/TestJsonFileCreator.json
