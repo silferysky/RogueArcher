@@ -5,29 +5,46 @@
 #include "FileManager.h"
 #include "GraphicsSystem.h"
 #include "PhysicsSystem.h"
+#include "EventDispatcher.h"
 
 // Forward declaration
 class PhysicsSystem;
 class GraphicsSystem;
 class SpriteComponent;
+class EventDispatcher;
 
 class Coordinator
 {
+	std::unique_ptr<ComponentManager> m_componentManager;
+	std::unique_ptr<EntityManager> m_entityManager;
+	std::unique_ptr<SystemManager> m_systemManager;
+	std::unique_ptr<FileManager> m_fileManager;
+	std::unique_ptr<TextureManager> m_textureManager;
+
+	bool m_togglePerformanceChecker = true;
+	bool m_fpscheck = true;
 public:
 	Coordinator()
-		: m_entityManager{ std::make_unique<EntityManager>() },
-		  m_componentManager{ std::make_unique<ComponentManager>() },
-		  m_systemManager{ std::make_unique<SystemManager>() },
-		  m_fileManager{ std::make_unique<FileManager>() },
-		  m_textureManager{ std::make_unique<TextureManager>() },
-		  m_togglePerformanceChecker{ false },
-		  m_fpscheck{ false }
+		:	m_entityManager{ std::make_unique<EntityManager>() },
+			m_componentManager{ std::make_unique<ComponentManager>() },
+			m_systemManager{ std::make_unique<SystemManager>() },
+			m_fileManager{ std::make_unique<FileManager>() },
+			m_textureManager{ std::make_unique<TextureManager>() },
+			m_togglePerformanceChecker{ false },
+			m_fpscheck{ false }
 	{}
 
-	void UpdateSystems()
+	void Init()
 	{
-		//...
+		// Init the systems and set their signatures.
+		m_systemManager->InitSystems();
+	}
+
+	void Update()
+	{
+		// Update the core systems
 		m_systemManager->UpdateSystems();
+		EventDispatcher::instance().update();
 	}
 
 	Entity CreateEntity()
@@ -154,17 +171,4 @@ public:
 		return m_fpscheck;
 	}
 
-	void InitSystems()
-	{
-		m_systemManager->InitSystems();
-	}
-
-private:
-	std::unique_ptr<ComponentManager> m_componentManager;
-	std::unique_ptr<EntityManager> m_entityManager;
-	std::unique_ptr<SystemManager> m_systemManager;
-	std::unique_ptr<FileManager> m_fileManager;
-	std::unique_ptr<TextureManager> m_textureManager;
-	bool m_togglePerformanceChecker = true;
-	bool m_fpscheck = true;
 };

@@ -12,8 +12,6 @@ class REEngine
 	void RegisterComponents();
 public:
 	Coordinator m_coordinator;
-	InputManager m_inputManager;
-	EventDispatcher m_eventDispatcher;
 	REEngine() = default;
 	~REEngine() = default;
 
