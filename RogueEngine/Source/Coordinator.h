@@ -20,46 +20,14 @@ public:
 		  m_systemManager{ std::make_unique<SystemManager>() },
 		  m_fileManager{ std::make_unique<FileManager>() },
 		  m_textureManager{ std::make_unique<TextureManager>() },
-		  m_activeEntities{MAX_ENTITIES}
+		  m_togglePerformanceChecker{ false },
+		  m_fpscheck{ false }
 	{}
 
-	void Init()
-	{
-		RE_CORE_INFO("===============COORDINATOR INIT===============");
-
-		// Register all systems.
-		RE_CORE_INFO("-----------START REGISTERING SYSTEMS----------");
-
-		auto PhysSystem = RegisterSystem<PhysicsSystem>();
-		auto graphics = RegisterSystem<GraphicsSystem>();
-
-		RE_CORE_INFO("-----------END REGISTERING SYSTEMS------------\n\n");
-
-		// Register all components
-		RE_CORE_INFO("---------START REGISTERING COMPONENTS---------");
-
-		RegisterComponent<SpriteComponent>();
-		RegisterComponent<RigidbodyComponent>();
-		RegisterComponent<TransformComponent>();
-		RegisterComponent<CircleCollider2DComponent>();
-		RegisterComponent<BoxCollider2DComponent>();
-
-		RE_CORE_INFO("----------END REGISTERING COMPONENTS----------\n\n");
-
-		// Init systems and system signatures will be set in their respective inits.
-		RE_CORE_INFO("----------START INITIALIZING SYSTEMS----------");
-
-		initSystems();
-
-		RE_CORE_INFO("-----------END INITIALIZING SYSTEMS-----------\n\n");
-
-		m_togglePerformanceChecker = false;
-	}
-
-	void update()
+	void UpdateSystems()
 	{
 		//...
-		m_systemManager->updateSystems();
+		m_systemManager->UpdateSystems();
 	}
 
 	Entity CreateEntity()
@@ -129,7 +97,7 @@ public:
 	}
 
 	template<typename T>
-	std::shared_ptr<T> RegisterSystem()
+	void RegisterSystem()
 	{
 		return m_systemManager->RegisterSystem<T>();
 	}
@@ -185,18 +153,18 @@ public:
 	{
 		return m_fpscheck;
 	}
-private:
-	void initSystems()
+
+	void InitSystems()
 	{
-		m_systemManager->initSystems();
+		m_systemManager->InitSystems();
 	}
 
+private:
 	std::unique_ptr<ComponentManager> m_componentManager;
 	std::unique_ptr<EntityManager> m_entityManager;
 	std::unique_ptr<SystemManager> m_systemManager;
 	std::unique_ptr<FileManager> m_fileManager;
 	std::unique_ptr<TextureManager> m_textureManager;
-	std::vector<Entity> m_activeEntities;
 	bool m_togglePerformanceChecker = true;
 	bool m_fpscheck = true;
 };

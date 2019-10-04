@@ -332,7 +332,7 @@ int CollisionManager::CollisionIntersection_CircleCircle(const REMath::Circle& c
 	Reflection computations for circle and line segment collisions.
  */
  /******************************************************************************/
-void CollisionResponse_CircleLineSegment(const Vec2& ptInter,
+void CollisionManager::CollisionResponse_CircleLineSegment(const Vec2& ptInter,
 	const Vec2& normal,
 	Vec2& ptEnd,
 	Vec2& reflected)
@@ -348,7 +348,7 @@ void CollisionResponse_CircleLineSegment(const Vec2& ptInter,
 	Reflection computations for moving circle and static circle (Pillar) collisions.
  */
  /******************************************************************************/
-void CollisionResponse_CirclePillar(const Vec2& normal,
+void CollisionManager::CollisionResponse_CirclePillar(const Vec2& normal,
 	const float& interTime,
 	const Vec2& ptStart,
 	const Vec2& ptInter,
@@ -369,7 +369,7 @@ void CollisionResponse_CirclePillar(const Vec2& normal,
 	Extra credits: Reflection computation for moving circle and moving circle.
  */
  /******************************************************************************/
-void CollisionResponse_CircleCircle(Vec2& normal,
+void CollisionManager::CollisionResponse_CircleCircle(Vec2& normal,
 	const float interTime,
 	Vec2& velA,
 	const float& massA,
