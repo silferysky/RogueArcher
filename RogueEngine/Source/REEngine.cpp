@@ -26,6 +26,7 @@ bool REEngine::InitializeOpenGL()
 
 void REEngine::RegisterSystems()
 {
+	m_coordinator.RegisterSystem<InputManager>();
 	m_coordinator.RegisterSystem<PhysicsSystem>();
 	m_coordinator.RegisterSystem<GraphicsSystem>();
 }
@@ -50,18 +51,11 @@ void REEngine::init()
 	RegisterComponents();
 	
 	// Init systems and system signatures will be set in their respective inits.
-	m_coordinator.InitSystems();
-
-	// Init the input manager
-	m_inputManager.init();
-	
-	// Init the event dispatcher
-	m_eventDispatcher.init();	
+	// Other systems and managers will also be initialized here.
+	m_coordinator.Init();
 }
 
 void REEngine::update()
 {
-	m_coordinator.UpdateSystems();
-	m_inputManager.update();
-	m_eventDispatcher.update();
+	m_coordinator.Update();
 }

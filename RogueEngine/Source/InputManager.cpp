@@ -5,6 +5,7 @@ enum class KeyPress;
 enum KeyFunction;
 
 InputManager::InputManager()
+	: ButtonTrigger{ 0 }
 {
 	//init();
 }
