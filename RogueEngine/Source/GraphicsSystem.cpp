@@ -105,11 +105,11 @@ void GraphicsSystem::drawDebug(BoxCollider2DComponent* box, TransformComponent* 
 
 	auto transformMat = glm::mat4(1.0f);
 
-	float left = box->m_aabb.getMin().x;
-	float right = box->m_aabb.getMax().x;
+	float left = box->AABB().getMin().x;
+	float right = box->AABB().getMax().x;
 
-	float top = box->m_aabb.getMax().y;
-	float bottom = box->m_aabb.getMin().y;
+	float top = box->AABB().getMax().y;
+	float bottom = box->AABB().getMin().y;
 
 	transformMat = glm::translate(transformMat, { (left + right) * 0.5f, (top + bottom) * 0.5f, 1.0f });
 	transformMat = glm::scale(transformMat, glm::vec3(transform->getScale().x, transform->getScale().x, 1.0f));

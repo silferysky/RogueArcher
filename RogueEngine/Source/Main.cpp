@@ -12,6 +12,7 @@
 #include "Config.h"
 #include "WindowHelper.h"
 #include "MemoryManager.h"
+#include "REMath.h"
 
 
 REEngine gEngine;
@@ -66,6 +67,15 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	////////////////////////////////////
 	// Create Engine Object (Testing)
 	////////////////////////////////////
+	Mtx33 test{ 1.0f, 2.0f, 3.0f,
+			4.0f, 5.0f, 6.0f,
+			7.0f, 8.0f, 9.0f };
+
+	Mtx33 test2 = test * test;
+
+	std::cout << test << std::endl;
+	std::cout << test2 << std::endl;
+
 
 	gEngine.init();
 	

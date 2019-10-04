@@ -4,8 +4,9 @@
 
 class BoxCollider2DComponent
 {
-public:
 	AABB m_aabb;
 	OBB m_obb;
+public:
+	AABB& AABB();
+	OBB& OBB();
 };
-

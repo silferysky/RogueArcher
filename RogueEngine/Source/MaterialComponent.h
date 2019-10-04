@@ -16,7 +16,6 @@ class MaterialComponent
 	MaterialList m_material;
 	float m_density;
 	float m_friction;
-	float m_damping;
 
 public:
 	MaterialComponent(MaterialList material = MAT_NONE);
