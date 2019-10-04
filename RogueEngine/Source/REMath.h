@@ -23,9 +23,15 @@ public:
 
   struct Circle
   {
-	  Vec2 m_center{ Vec2(0,0) };
-	  float m_radius{ 1.0f };
-	  float m_mass{ 1.0f };
+	  Vec2 m_center;
+	  float m_radius;
+	  float m_mass;
+
+	  Circle()
+		: m_center{ Vec2() },
+  		  m_radius{ 1.0f },
+		  m_mass{ 1.0f }
+	  {}
   };
 
   struct Ray

@@ -32,12 +32,10 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #pragma once
 #include "Matrix33.h"
 
-const int LAST_COORD = 9; // Last coordinate of the 3x3 matrix.
-const int LAST_X = 3; // Last coordinate of a row/column
-int i, j, k; // Iterators.
-float product; // Product of coordinates.
+const int TOTAL_VALUES = 9;
+const int N = 3; // Last coordinate of a row/column
 
-/**************************************************************************/
+/*************************************************************************/
 /*!
 	Conversion constructor for the 3x3 matrix. Initializes the matrix to
 	the values in the array.
@@ -45,7 +43,7 @@ float product; // Product of coordinates.
 /**************************************************************************/
 Matrix3x3::Matrix3x3(const float *pArr)
 {
-	for (i = 0; i < LAST_COORD; ++i)
+	for (int i = 0; i < TOTAL_VALUES; ++i)
 		m[i] = pArr[i];
 }
 
@@ -78,7 +76,7 @@ Matrix3x3::Matrix3x3(float _00, float _01, float _02,
 /**************************************************************************/
 Matrix3x3& Matrix3x3::operator=(const Matrix3x3 &rhs)
 {
-	for (i = 0; i < LAST_COORD; ++i)
+	for (int i = 0; i < TOTAL_VALUES; ++i)
 		m[i] = rhs.m[i];
 
 	return *this;
@@ -93,19 +91,33 @@ Matrix3x3& Matrix3x3::operator=(const Matrix3x3 &rhs)
 Matrix3x3& Matrix3x3::operator *= (const Matrix3x3 &rhs)
 {
 	Matrix3x3 temp = *this;
-	product = 0;
-	// Add the products of the first row with the first column, and so on.
-	for (i = 0; i < LAST_X; ++i)
-		for (j = 0; j < LAST_X; ++j)
-		{
-			for (k = 0; k < LAST_X; ++k)
-				product += temp.m[LAST_X * i + k] * rhs.m[LAST_X * k + j];
 
-			m[LAST_X * i + j] = product;
+	// Add the products of the first row with the first column, and so on.
+	for (int i = 0; i < N; ++i)
+		for (int j = 0; j < N; ++j)
+		{
+			float product = 0;
+			for (int k = 0; k < N; ++k)
+				product += temp.m[N * i + k] * rhs.m[N * k + j];
+			
+			m[N * i + j] = product;
+			
 			product = 0;
 		}
 
 	return *this;
+}
+std::ostream& operator<<(std::ostream& out, const Mtx33& matrix)
+{
+	return out << matrix.m00 << ", "
+		<< matrix.m01 << ", "
+		<< matrix.m02 << ", " << "\n"
+		<< matrix.m10 << ", " 
+		<< matrix.m11 << ", "
+		<< matrix.m12 << ", " << "\n"
+		<< matrix.m20 << ", "
+		<< matrix.m21 << ", "
+		<< matrix.m22 << ", ";
 }
 /**************************************************************************/
 /*!
@@ -223,8 +235,8 @@ void Mtx33RotDeg(Matrix3x3 &pResult, float angle)
 /**************************************************************************/
 void Mtx33Transpose(Matrix3x3 &pResult, const Matrix3x3 &pMtx)
 {
-	for(i = 0; i < LAST_X; ++i)
-		for (j = 0; j < LAST_X; ++j)
+	for(int i = 0; i < N; ++i)
+		for (int j = 0; j < N; ++j)
 		{
 			// Flip the values from x and y to y and x
 			pResult.m[3 * i + j] = pMtx.m[3 * j + i];
@@ -282,6 +294,6 @@ void Mtx33Inverse(Matrix3x3 &pResult, float &determinant, const Matrix3x3 &pMtx)
 	Mtx33Transpose(pResult, temp);
 
 	/////////////////////   Inverse Matrix    /////////////////////
-	for (i = 0; i < LAST_COORD; ++i)
+	for (int i = 0; i < TOTAL_VALUES; ++i)
 		pResult.m[i] *= 1 / determinant;
 }
