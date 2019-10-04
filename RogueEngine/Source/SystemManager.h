@@ -13,7 +13,6 @@ public:
 	std::set<Entity> m_entities;
 	SystemID m_systemID = SystemID::id_LASTSYS;
 
-
 	System() = default;
 	virtual void init() = 0;
 	virtual void update() = 0;
@@ -24,21 +23,20 @@ class SystemManager
 {
 public:
 	template<typename T>
-	std::shared_ptr<T> RegisterSystem()
+	void RegisterSystem()
 	{
 		const char* typeName = typeid(T).name();
 		assert(RESystems.find(typeName) == RESystems.end() && "Registering system more than once.");
-		// Create a pointer to the system and return it so it can be used externally
-		auto pSystem = std::make_shared<T>();
-		RESystems.insert({ typeName, pSystem });
+
+		// Insert the newly created system pointer and typename into the map.
+		RESystems.insert({ typeName, std::make_shared<T>() });
 
 		std::stringstream loggerStr;
 		loggerStr << typeName << " registered!";
 		RE_CORE_INFO(loggerStr.str());
-		return pSystem;
 	}
 
-	void initSystems()
+	void InitSystems()
 	{
 		for (auto system : RESystems)
 		{
@@ -46,7 +44,7 @@ public:
 		}
 	}
 
-	void updateSystems()
+	void UpdateSystems()
 	{
 		for (auto system : RESystems)
 		{

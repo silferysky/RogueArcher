@@ -7,6 +7,9 @@
 
 class REEngine
 {
+	bool InitializeOpenGL();
+	void RegisterSystems();
+	void RegisterComponents();
 public:
 	Coordinator m_coordinator;
 	InputManager m_inputManager;
