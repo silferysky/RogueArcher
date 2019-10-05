@@ -223,7 +223,7 @@ void Mtx33RotRad(Matrix3x3 &pResult, float angle)
 void Mtx33RotDeg(Matrix3x3 &pResult, float angle)
 {
 	// Convert angle to radian, then do rotation transformation in radians.
-	angle *= static_cast<float>(RE_PI / 180);
+	angle *= static_cast<float>(REMath::PI / 180);
 	Mtx33RotRad(pResult, angle);
 }
 
@@ -267,7 +267,7 @@ void Mtx33Inverse(Matrix3x3 &pResult, float &determinant, const Matrix3x3 &pMtx)
 	// Det = a(det12) - b(det02) + c(det01)
 	determinant = pMtx.m00 * det00 - pMtx.m01 * det01 + pMtx.m02 * det02;
 
-	if (determinant <= RE_EPSILON && determinant >= -RE_EPSILON)
+	if (determinant <= REMath::EPSILON && determinant >= -REMath::EPSILON)
 	{
 		pResult = NULL;
 		return;

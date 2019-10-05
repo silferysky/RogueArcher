@@ -27,14 +27,14 @@ void REMath::REBuildLineSegment(LineSegment& lineSegment,								//Line segment 
 
 }
 
-double REMath::DegreesToRadians(double degrees) const
+double REMath::DegreesToRadians(double degrees)
 {
-	return (degrees * RE_PI / 180.0);
+	return (degrees * REMath::PI / 180.0);
 }
 
-double REMath::RadiansToDegrees(double radians) const
+double REMath::RadiansToDegrees(double radians)
 {
-	return (radians * 180.0 / RE_PI);
+	return (radians * 180.0 / REMath::PI);
 }
 
 float REMath::RESin(float x)
