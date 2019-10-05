@@ -6,7 +6,7 @@
 #include "TransformComponent.h"
 #include "../Source/REMath.h"
 #include "../Source/EventDispatcher.h"
-#include "GLHelper.h"
+#include "GLHelper.hpp"
 
 class Timer;
 class DebugDrawSystem : public System, public EventListener

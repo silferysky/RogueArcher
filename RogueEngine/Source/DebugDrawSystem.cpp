@@ -16,30 +16,7 @@ void DebugDrawSystem::init()
 
 	m_shader = gEngine.m_coordinator.loadShader("Debug Shader");
 
-	// bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
-	glGenVertexArrays(1, &m_VAO);
-	glBindVertexArray(m_VAO);
-
-	glGenBuffers(1, &m_VBO);
-	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), quadVertices, GL_STATIC_DRAW);
-
-	glGenBuffers(1, &m_EBO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(quadIndices), quadIndices, GL_STATIC_DRAW);
-
-	// position attribute
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-	// color attribute
-	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(1);
-	// texture coord attribute
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)(7 * sizeof(float)));
-	glEnableVertexAttribArray(2);
-
-	glBindBuffer(GL_ARRAY_BUFFER, 0); //Reset
-	glBindVertexArray(0); //Reset
+	GenerateQuadPrimitive(m_VBO, m_VAO, m_EBO);
 }
 
 void DebugDrawSystem::update()
@@ -55,13 +32,8 @@ void DebugDrawSystem::update()
 
 		glDisable(GL_DEPTH_TEST);
 
-		glBindVertexArray(m_VAO);
-
 		if (entity)
 			drawDebug(&collider, &transform);
-
-		// Unbind VAO after drawing
-		glBindVertexArray(0);
 	}
 	TimeSystem.TimerEnd("Graphics System");
 }
@@ -69,6 +41,7 @@ void DebugDrawSystem::update()
 void DebugDrawSystem::drawDebug(BoxCollider2DComponent* box, TransformComponent* transform)
 {
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glBindVertexArray(m_VAO);
 
 	auto transformMat = glm::mat4(1.0f);
 
@@ -96,8 +69,6 @@ void DebugDrawSystem::drawDebug(BoxCollider2DComponent* box, TransformComponent*
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 	glUseProgram(0);
-
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
 void DebugDrawSystem::receive(Event* ev)

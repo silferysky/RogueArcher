@@ -220,13 +220,13 @@
     <ClInclude Include="Source\DebugDrawSystem.h">
       <Filter>RogueEngine\Systems\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GLHelper.h">
-      <Filter>RogueEngine\Systems\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Shader.h">
       <Filter>RogueEngine\Systems\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Source\ShaderManager.h">
+      <Filter>RogueEngine\Systems\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GLHelper.hpp">
       <Filter>RogueEngine\Systems\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
