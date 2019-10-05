@@ -13,7 +13,7 @@
 class SpriteComponent
 {
 	GLuint m_texture;
-	GLuint m_shader;
+	Shader m_shader;
 public:
 	glm::mat4 m_effectMat;
 	SpriteComponent();

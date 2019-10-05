@@ -34,6 +34,7 @@
     <ClInclude Include="Source\Polygon.h" />
     <ClInclude Include="Source\RigidbodyComponent.h" />
     <ClInclude Include="Source\RotatableComponent.h" />
+    <ClInclude Include="Source\Shader.h" />
     <ClInclude Include="Source\Shape.h" />
     <ClInclude Include="Source\TextureManager.h" />
     <ClInclude Include="Source\TransformComponent.h" />
@@ -65,7 +66,6 @@
     <ClInclude Include="Source\ObjectFactory.h" />
     <ClInclude Include="Source\REMath.h" />
     <ClInclude Include="Source\Resource.h" />
-    <ClInclude Include="Source\shader.h" />
     <ClInclude Include="Source\SpriteComponent.h" />
     <ClInclude Include="Source\SystemManager.h" />
     <ClInclude Include="Source\TestSystem.h" />
@@ -89,6 +89,7 @@
     <ClCompile Include="Source\Polygon.cpp" />
     <ClCompile Include="Source\RigidbodyComponent.cpp" />
     <ClCompile Include="Source\RotatableComponent.cpp" />
+    <ClCompile Include="Source\Shader.cpp" />
     <ClCompile Include="Source\Shape.cpp" />
     <ClCompile Include="Source\TransformComponent.cpp" />
     <ClCompile Include="Source\Config.cpp" />
@@ -104,7 +105,6 @@
     <ClCompile Include="Source\ObjectFactory.cpp" />
     <ClCompile Include="Source\REEngine.cpp" />
     <ClCompile Include="Source\REMath.cpp" />
-    <ClCompile Include="Source\shader.cpp" />
     <ClCompile Include="Source\SpriteComponent.cpp" />
     <ClCompile Include="Source\Timer.cpp" />
     <ClCompile Include="Source\Vector2D.cpp" />

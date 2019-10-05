@@ -15,7 +15,7 @@ class DebugDrawSystem : public System, public EventListener
 	GLuint m_VBO;
 	GLuint m_EBO;
 
-	GLuint m_shader;
+	Shader m_shader;
 public:
 	DebugDrawSystem() = default;
 	~DebugDrawSystem() = default;
