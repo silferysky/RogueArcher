@@ -77,13 +77,7 @@ void GraphicsSystem::receive(Event* ev)
 	{
 	case EventType::EvKeyPressed:
 	{
-		auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(static_cast<int>(m_entities.size()) - 1);
 		KeyPressEvent* EvPressKey = dynamic_cast<KeyPressEvent*>(ev);
-		if (EvPressKey->GetKeyCode() == KeyPress::KeyR)
-		{
-			transform.offSetRotation(1.0f * gDeltaTime);
-			RE_INFO("Rotated!");
-		}
 		return;
 	}
 	default:
