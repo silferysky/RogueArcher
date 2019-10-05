@@ -654,9 +654,9 @@ void CollisionManager::SATFindMinMax(OBB& obb, const Vec2& currNormal) const
 
 bool CollisionManager::staticOBBvsOBB(OBB& lhs, OBB& rhs)
 {
-	std::vector<Vec2>::iterator i;
-	for(i = lhs.globVerts().begin(); i != lhs.globVerts().cend(); ++i)
-		std::cout << *i << std::endl;
+	//std::vector<Vec2>::iterator i;
+	//for(i = lhs.globVerts().begin(); i != lhs.globVerts().cend(); ++i)
+	//	std::cout << *i << std::endl;
 
 	for (Vec2 normal : lhs.normals())
 	{

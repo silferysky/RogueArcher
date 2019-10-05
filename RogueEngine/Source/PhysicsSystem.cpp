@@ -122,7 +122,7 @@ void PhysicsSystem::receive(Event* ev)
 					if (entity == 1) // Entity A
 					{
 						auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(entity);
-						transform.offSetPosition(Vec2(-1.0f, 0.0f) * gDeltaTime);
+						transform.offSetPosition(Vec2(-3.0f, 0.0f) * gDeltaTime);
 						RE_INFO("Move A Left!");
 					}
 				}
@@ -134,7 +134,7 @@ void PhysicsSystem::receive(Event* ev)
 					if (entity == 1) // Entity A
 					{
 						auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(entity);
-						transform.offSetPosition(Vec2(1.0f, 0.0f) * gDeltaTime);
+						transform.offSetPosition(Vec2(3.0f, 0.0f) * gDeltaTime);
 						RE_INFO("Move A Right!");
 					}
 				}
@@ -146,7 +146,7 @@ void PhysicsSystem::receive(Event* ev)
 					if (entity == 1) // Entity A
 					{
 						auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(entity);
-						transform.offSetPosition(Vec2(0.0f, 1.0f) * gDeltaTime);
+						transform.offSetPosition(Vec2(0.0f, 3.0f) * gDeltaTime);
 						RE_INFO("Move A Up!");
 					}
 				}
@@ -158,7 +158,7 @@ void PhysicsSystem::receive(Event* ev)
 					if (entity == 1) // Entity A
 					{
 						auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(entity);
-						transform.offSetPosition(Vec2(0.0f, -1.0f) * gDeltaTime);
+						transform.offSetPosition(Vec2(0.0f, -3.0f) * gDeltaTime);
 						RE_INFO("Move A Down!");
 					}
 				}
@@ -170,7 +170,7 @@ void PhysicsSystem::receive(Event* ev)
 					if (entity == 2) // Entity B
 					{
 						auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(entity);
-						transform.offSetPosition(Vec2(-1.0f, 0.0f) * gDeltaTime);
+						transform.offSetPosition(Vec2(-3.0f, 0.0f) * gDeltaTime);
 						RE_INFO("Move B Left!");
 					}
 				}
@@ -182,7 +182,7 @@ void PhysicsSystem::receive(Event* ev)
 					if (entity == 2) // Entity B
 					{
 						auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(entity);
-						transform.offSetPosition(Vec2(1.0f, 0.0f) * gDeltaTime);
+						transform.offSetPosition(Vec2(3.0f, 0.0f) * gDeltaTime);
 						RE_INFO("Move B Right!");
 					}
 				}
@@ -194,7 +194,7 @@ void PhysicsSystem::receive(Event* ev)
 					if (entity == 2) // Entity B
 					{
 						auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(entity);
-						transform.offSetPosition(Vec2(0.0f, 1.0f) * gDeltaTime);
+						transform.offSetPosition(Vec2(0.0f, 3.0f) * gDeltaTime);
 						RE_INFO("Move B Up!");
 					}
 				}
@@ -206,7 +206,7 @@ void PhysicsSystem::receive(Event* ev)
 					if (entity == 2) // Entity B
 					{
 						auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(entity);
-						transform.offSetPosition(Vec2(0.0f, -1.0f) * gDeltaTime);
+						transform.offSetPosition(Vec2(0.0f, -3.0f) * gDeltaTime);
 						RE_INFO("Move B Down!");
 					}
 				}
@@ -214,21 +214,21 @@ void PhysicsSystem::receive(Event* ev)
 			else if (EvPressKey->GetKeyCode() == KeyPress::KeyE)
 			{
 				auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>((Entity)(m_entities.size() - 1));
-				transform.offSetScale(Vec2(1.0f, 1.0f) * gDeltaTime);
+				transform.offSetScale(Vec2(3.0f, 3.0f) * gDeltaTime);
 				RE_INFO("Scaled Up!");
 			}
 
 			else if (EvPressKey->GetKeyCode() == KeyPress::KeyQ)
 			{
 				auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>((Entity)(m_entities.size() - 1));
-				transform.offSetScale(Vec2(-1.0f, -1.0f) * gDeltaTime);
+				transform.offSetScale(Vec2(-3.0f, -3.0f) * gDeltaTime);
 				RE_INFO("Scaled Down!");
 			}
 
 			else if (EvPressKey->GetKeyCode() == KeyPress::KeyR)
 			{
 				auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>((Entity)(m_entities.size() - 1));
-				transform.offSetRotation(1.0f * gDeltaTime);
+				transform.offSetRotation(3.0f * gDeltaTime);
 				RE_INFO("Rotated!");
 			}
 		}
