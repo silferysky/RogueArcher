@@ -1,13 +1,5 @@
 #pragma once
-#include "shader.h"
-#include "BasicIO.h"
-#include "SOIL.h"
-#include "TransformComponent.h"
 #include "TextureManager.h"
-#include <glm.hpp>
-#include <gtc/matrix_transform.hpp>
-#include <gtc/type_ptr.hpp>
-#include "WindowHelper.h"
 #include "GLHelper.h"
 
 class SpriteComponent

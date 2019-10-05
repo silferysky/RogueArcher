@@ -14,7 +14,7 @@ void DebugDrawSystem::init()
 	// Set graphics system signature
 	gEngine.m_coordinator.SetSystemSignature<DebugDrawSystem>(signature);
 
-	m_shader = Shader("vertexLineShader.txt", "fragmentLineShader.txt");
+	m_shader = gEngine.m_coordinator.loadShader("Debug Shader");
 
 	// bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
 	glGenVertexArrays(1, &m_VAO);
