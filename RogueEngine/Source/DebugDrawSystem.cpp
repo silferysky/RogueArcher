@@ -14,10 +14,7 @@ void DebugDrawSystem::init()
 	// Set graphics system signature
 	gEngine.m_coordinator.SetSystemSignature<DebugDrawSystem>(signature);
 
-	std::string vertexShader = BasicIO::ReadFile("vertexLineShader.txt");
-	std::string fragmentShader = BasicIO::ReadFile("fragmentLineShader.txt");
-
-	m_shader = CreateShader(vertexShader, fragmentShader);
+	m_shader = Shader("vertexLineShader.txt", "fragmentLineShader.txt");
 
 	// bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
 	glGenVertexArrays(1, &m_VAO);
@@ -43,7 +40,6 @@ void DebugDrawSystem::init()
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0); //Reset
 	glBindVertexArray(0); //Reset
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
 void DebugDrawSystem::update()
@@ -86,16 +82,14 @@ void DebugDrawSystem::drawDebug(BoxCollider2DComponent* box, TransformComponent*
 	transformMat = glm::scale(transformMat, glm::vec3(transform->getScale().x, transform->getScale().x, 1.0f));
 	transformMat = glm::rotate(transformMat, transform->getRotation(), glm::vec3(0.0f, 0.0f, 1.0f));
 
-	glUseProgram(m_shader);
-
 	glBindVertexArray(m_VAO);
 
-	glUseProgram(m_shader);
+	glUseProgram(m_shader.GetShader());
 
 	transformMat = projMat * transformMat;
 
-	GLint effectLocation = glGetUniformLocation(m_shader, "projectionMatrix");
-	glUniformMatrix4fv(effectLocation, 1, GL_FALSE, glm::value_ptr(transformMat));
+	GLint transformLocation = glGetUniformLocation(m_shader.GetShader(), "transform");
+	glUniformMatrix4fv(transformLocation, 1, GL_FALSE, glm::value_ptr(transformMat));
 
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 

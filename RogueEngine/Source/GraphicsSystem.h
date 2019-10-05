@@ -15,7 +15,7 @@ class GraphicsSystem : public System, public EventListener
 	GLuint m_VBO;
 	GLuint m_EBO;
 
-	GLuint m_shader;
+	Shader m_shader;
 public:
 	GraphicsSystem() = default;
 	~GraphicsSystem() = default;
