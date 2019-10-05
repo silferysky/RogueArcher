@@ -15,7 +15,7 @@ void GraphicsSystem::init()
 	// Set graphics system signature
 	gEngine.m_coordinator.SetSystemSignature<GraphicsSystem>(signature);
 
-	m_shader = Shader("vertexShader.txt", "fragmentShader.txt");
+	m_shader = gEngine.m_coordinator.loadShader("Object Shader");
 
 	// bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
 	glGenVertexArrays(1, &m_VAO);

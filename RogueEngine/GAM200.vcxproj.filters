@@ -226,6 +226,9 @@
     <ClInclude Include="Source\Shader.h">
       <Filter>RogueEngine\Systems\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="Source\ShaderManager.h">
+      <Filter>RogueEngine\Systems\Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
