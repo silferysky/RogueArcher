@@ -1,5 +1,6 @@
 #include "CollisionManager.h"
 #include <iostream>
+#include "Main.h"
 
 //_________________________________________________________________________
 //_________________________________________________________________________|
@@ -258,11 +259,11 @@ int CollisionManager::CollisionIntersection_RayCircle(const REMath::Ray& ray,
 	float c = Vec2DotProd(circle.m_center - ray.m_pt0, circle.m_center - ray.m_pt0) - circle.m_radius * circle.m_radius; // (C-Bs).(C-Bs) - r^2
 	float det = b * b - (4 * a * c); // b^2 - 4ac
 
-	if (det < RE_EPSILON && det > -RE_EPSILON) // If determinant is 0, ray grazes circle.
+	if (det < REMath::EPSILON && det > -REMath::EPSILON) // If determinant is 0, ray grazes circle.
 	{
 		interTime = -b / (2 * a); // Faster calculation (Avoids sqrt)
 	}
-	else if (det >= RE_EPSILON)
+	else if (det >= REMath::EPSILON)
 	{
 		float s = sqrt(circle.m_radius * circle.m_radius - nSquared);
 		float rayLength = Vec2Length(ray.m_dir);
@@ -437,7 +438,7 @@ bool CollisionManager::dynamicAABBvsAABB(const AABB& aabb1, const AABB& aabb2,
 {
 	// Calculate new relative velocity Vb using vel2
 	float tFirst = 0;
-	float tLast = 0.016f; //deltaTime
+	float tLast = gDeltaTime;
 
 	Vec2 Vb(body2.getVelocity() - body1.getVelocity());
 
@@ -621,9 +622,9 @@ void CollisionManager::updateNormals(OBB& obb)
 	size_t i;
 	size_t max_sides = obb.modelVerts().size();
 
-	if (max_sides == 0)
-		return;
-
+	if (!max_sides)
+		RE_CORE_ERROR("OBB has no sides!");
+	
 	for (i = 0; i < max_sides - 1; ++i) // Traverse to the second last vertex
 		obb.normals()[i] = Vec2NormalOf(obb.globVerts()[i + 1] - obb.globVerts()[i]); // n1 till second last normal
 
@@ -653,6 +654,10 @@ void CollisionManager::SATFindMinMax(OBB& obb, const Vec2& currNormal) const
 
 bool CollisionManager::staticOBBvsOBB(OBB& lhs, OBB& rhs)
 {
+	//std::vector<Vec2>::iterator i;
+	//for(i = lhs.globVerts().begin(); i != lhs.globVerts().cend(); ++i)
+	//	std::cout << *i << std::endl;
+
 	for (Vec2 normal : lhs.normals())
 	{
 		SATFindMinMax(lhs, normal);
