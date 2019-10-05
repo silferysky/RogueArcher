@@ -21,7 +21,7 @@
   <ItemGroup>
     <ClInclude Include="Source\BoxCollider2DComponent.h" />
     <ClInclude Include="Source\DebugDrawSystem.h" />
-    <ClInclude Include="Source\GLHelper.h" />
+    <ClInclude Include="Source\GLHelper.hpp" />
     <ClInclude Include="Source\PhysicsSystem.h" />
     <ClInclude Include="Source\AABB.h" />
     <ClInclude Include="Source\BaseCollider.h" />
