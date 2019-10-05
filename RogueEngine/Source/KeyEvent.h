@@ -45,6 +45,7 @@ public:
 protected:
 	int RepeatCount;
 };
+
 class KeyReleaseEvent : public KeyEvent
 {
 public:
@@ -60,7 +61,25 @@ public:
 		ss << "KeyReleasedEvent: " << (int)KeyCode;
 		return ss.str();
 	}
+}; 
+
+class KeyTriggeredEvent : public KeyEvent
+{
+public:
+
+	SET_EVENT_TYPE(EvKeyTriggered)
+
+	KeyTriggeredEvent(KeyPress key)
+		: KeyEvent(key) {}
+
+	std::string ToString() const override
+	{
+		std::stringstream ss;
+		ss << "KeyTriggeredEvent: " << (int)KeyCode;
+		return ss.str();
+	}
 };
+
 
 class MousePressEvent : public KeyPressEvent
 {
@@ -87,6 +106,24 @@ public:
 
 	MouseReleaseEvent(KeyPress key)
 		: KeyReleaseEvent(key) {}
+
+	std::string ToString() const override
+	{
+		std::stringstream ss;
+		ss << "MouseReleaseEvent: " << (int)KeyCode;
+		return ss.str();
+	}
+};
+
+class MouseTriggeredEvent : public KeyTriggeredEvent
+{
+public:
+
+	SET_EVENT_CATEGORY(EventCatMouse | EventCatInput)
+	SET_EVENT_TYPE(EvMouseButtonTriggered)
+
+	MouseTriggeredEvent(KeyPress key)
+		: KeyTriggeredEvent(key) {}
 
 	std::string ToString() const override
 	{

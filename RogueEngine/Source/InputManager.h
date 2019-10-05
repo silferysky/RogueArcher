@@ -14,16 +14,7 @@ struct KeyboardState
 	int Key[(int)KeyPress::KeyCount] = { 0 };
 
 	//overloaded += operator. Checks if rhs has value. If rhs has value, add it, otherwise reset to 0
-	void operator+=(KeyboardState &rhs)
-	{
-		for (int i = 0; i < (int)KeyPress::KeyCount; ++i)
-		{
-			if (rhs.Key[i] != 0)
-				Key[i] += rhs.Key[i];
-			else
-				Key[i] = 0;
-		}
-	}
+	void operator+=(KeyboardState& rhs);
 };
 
 struct FuncState
@@ -36,7 +27,7 @@ class InputManager
 {
 public:
 	InputManager();
-	~InputManager();
+	~InputManager() = default;
 
 	//Initialization
 	void init();
@@ -79,6 +70,7 @@ public:
 	//Creating Events
 	void CreateKeyPressEvent(KeyPress key, int repeat = 0);
 	void CreateKeyReleaseEvent(KeyPress key);
+	void CreateKeyTriggeredEvent(KeyPress key);
 
 private:
 	KeyboardState CurKeyboardState;
@@ -86,5 +78,4 @@ private:
 	std::map<KeyPress, KeyFunction> GameKeyConfig;
 	std::map<KeyPress, KeyFunction> MenuKeyConfig;
 	FuncState CurFuncState;
-	int ButtonTrigger;
 };
