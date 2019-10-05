@@ -17,7 +17,11 @@ class TextureManager
 	std::map<const char*, GLuint, str_cmp> textureMap;
 public:
 	TextureManager() = default;
-	~TextureManager() = default;
+	~TextureManager()
+	{
+		for( auto itr = textureMap.begin(); itr != textureMap.begin(); ++itr)
+			glDeleteTextures(1, &(itr->second));
+	}
 
 	std::map<const char*, GLuint, str_cmp> getTextureMap() const
 	{
