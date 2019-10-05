@@ -4,16 +4,12 @@
 #include <algorithm>
 #include "Matrix33.h"
 
-const double RE_EPSILON = 0.000001;
-const double RE_PI = 3.1415926535897;
 
-class REMath
+namespace REMath
 {
-private:
-  double DegreesToRadians(double degrees) const;
-  double RadiansToDegrees(double radians) const;
+	const double EPSILON = 0.000001;
+	const double PI = 3.1415926535897;
 
-public:
   struct LineSegment
   {
 	  Vec2 m_pt0;
@@ -39,6 +35,10 @@ public:
 	  Vec2 m_pt0;
 	  Vec2 m_dir;
   };
+
+  double DegreesToRadians(double degrees);
+  double RadiansToDegrees(double radians);
+
   //building line segment
   void REBuildLineSegment(LineSegment &lineSegment,const Vec2 &pos,float scale,float dir);
   //calcuations
