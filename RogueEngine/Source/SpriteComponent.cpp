@@ -6,10 +6,6 @@ SpriteComponent::SpriteComponent() : m_effectMat{ 1.0 }
 	// create this once
 	m_texture = gEngine.m_coordinator.loadTexture("CharaTest.bmp");
 
-	glBindTexture(GL_TEXTURE_2D, m_texture);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
 	std::string vertexShader = BasicIO::ReadFile("vertexShader.txt");
 	std::string fragmentShader = BasicIO::ReadFile("fragmentShader.txt");
 
@@ -28,11 +24,7 @@ void SpriteComponent::draw(TransformComponent* transform)
 
 		transformMat = glm::translate(transformMat, { transform->getPosition().x, transform->getPosition().y, 1.0f});
 		transformMat = glm::scale(transformMat, glm::vec3(transform->getScale().x, transform->getScale().y, 1.0f));
-		if (transform->getRotation() > 0)
-		{
-			transformMat = glm::rotate_slow(transformMat, (GLfloat)glfwGetTime() * -5.0f, glm::vec3(0.0f, 0.0f, transform->getRotation()));
-
-		}
+		transformMat = glm::rotate(transformMat, transform->getRotation(), glm::vec3(0.0f, 0.0f, 1.0f));
 		
 		glBindTexture(GL_TEXTURE_2D, m_texture);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -43,8 +35,6 @@ void SpriteComponent::draw(TransformComponent* transform)
 		// model to world, world to view, view to projection
 
 		//offset by translation of camera, inverse of rotation
-
-		glm::mat4 projMat = glm::ortho(-16.0f * 0.5f, 16.0f * 0.5f, -9.0f * 0.5f, 9.0f * 0.5f, -10.0f, 10.0f);
 
 		glUseProgram(m_shader);
 

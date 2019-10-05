@@ -4,6 +4,7 @@
 #include "EntityManager.h"
 #include "FileManager.h"
 #include "GraphicsSystem.h"
+#include "DebugDrawSystem.h"
 #include "PhysicsSystem.h"
 #include "EventDispatcher.h"
 

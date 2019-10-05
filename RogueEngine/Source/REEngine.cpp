@@ -29,6 +29,7 @@ void REEngine::RegisterSystems()
 	m_coordinator.RegisterSystem<InputManager>();
 	m_coordinator.RegisterSystem<PhysicsSystem>();
 	m_coordinator.RegisterSystem<GraphicsSystem>();
+	m_coordinator.RegisterSystem<DebugDrawSystem>();
 }
 
 void REEngine::RegisterComponents()
