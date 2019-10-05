@@ -7,6 +7,7 @@
 #include "DebugDrawSystem.h"
 #include "PhysicsSystem.h"
 #include "EventDispatcher.h"
+#include "ShaderManager.h"
 
 // Forward declaration
 class PhysicsSystem;
@@ -21,6 +22,7 @@ class Coordinator
 	std::unique_ptr<SystemManager> m_systemManager;
 	std::unique_ptr<FileManager> m_fileManager;
 	std::unique_ptr<TextureManager> m_textureManager;
+	std::unique_ptr<ShaderManager> m_shaderManager;
 
 	bool m_togglePerformanceChecker = true;
 	bool m_fpscheck = true;
@@ -31,12 +33,14 @@ public:
 			m_systemManager{ std::make_unique<SystemManager>() },
 			m_fileManager{ std::make_unique<FileManager>() },
 			m_textureManager{ std::make_unique<TextureManager>() },
+			m_shaderManager{ std::make_unique<ShaderManager>() },
 			m_togglePerformanceChecker{ false },
 			m_fpscheck{ false }
 	{}
 
 	void Init()
 	{
+		m_shaderManager->Init();
 		// Init the systems and set their signatures.
 		m_systemManager->InitSystems();
 	}
@@ -65,6 +69,11 @@ public:
 	GLuint loadTexture(const char* texture)
 	{
 		return m_textureManager->loadTexture(texture);
+	}
+
+	Shader loadShader(std::string shader)
+	{
+		return m_shaderManager->loadShader(shader);
 	}
 
 	template<typename T>
