@@ -607,14 +607,15 @@ void CollisionManager::updateVertices(OBB& obb, const TransformComponent& trans)
 	Mtx33 rot, sca;
 	Mtx33RotRad(rot, trans.getRotation());
 	Mtx33Scale(sca, trans.getScale().x, trans.getScale().y);
-	
+	std::cout << trans.getRotation() << std::endl;
+
 	for (int i = 0; i < (int)obb.modelVerts().size(); i++)
 	{
 		obb.globVerts()[i] = rot * obb.modelVerts()[i];
-		obb.globVerts()[i] = sca * obb.modelVerts()[i];
+		obb.globVerts()[i] = sca * obb.globVerts()[i];
 		obb.globVerts()[i] += trans.getPosition();
 	}
-	}
+}
 
 
 void CollisionManager::updateNormals(OBB& obb)
@@ -654,9 +655,10 @@ void CollisionManager::SATFindMinMax(OBB& obb, const Vec2& currNormal) const
 
 bool CollisionManager::staticOBBvsOBB(OBB& lhs, OBB& rhs)
 {
-	//std::vector<Vec2>::iterator i;
-	//for(i = lhs.globVerts().begin(); i != lhs.globVerts().cend(); ++i)
-	//	std::cout << *i << std::endl;
+	std::vector<Vec2>::iterator i;
+	for(i = lhs.globVerts().begin(); i != lhs.globVerts().cend(); ++i)
+		std::cout << *i << ',';
+	std::cout << std::endl;
 
 	for (Vec2 normal : lhs.normals())
 	{
