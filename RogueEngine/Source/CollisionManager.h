@@ -4,6 +4,8 @@
 #include "AABB.h"
 #include "OBB.h"
 #include "CircleCollider2DComponent.h"
+#include "Logger.h"
+#include "REMath.h"
 
 class CollisionManager
 {
