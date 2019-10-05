@@ -224,6 +224,13 @@ void PhysicsSystem::receive(Event* ev)
 				transform.offSetScale(Vec2(-1.0f, -1.0f) * gDeltaTime);
 				RE_INFO("Scaled Down!");
 			}
+
+			else if (EvPressKey->GetKeyCode() == KeyPress::KeyR)
+			{
+				auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>((Entity)(m_entities.size() - 1));
+				transform.offSetRotation(1.0f * gDeltaTime);
+				RE_INFO("Rotated!");
+			}
 		}
 		default:
 			return;
