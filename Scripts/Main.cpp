@@ -54,7 +54,11 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	freopen("CONOUT$", "w", stderr);
 
 	setVSync(1);
-
+	//Logger
+	Logger::InitLogger();
+	//RE_CORE_TRACE("Init Core Logger");
+	InputManager* InputMgr = new InputManager();
+	RE_INFO("Logging App info succeeded");
 
 	////////////////////////////////////
 	// Create Engine Object (Testing)
@@ -104,6 +108,7 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 
 	RE_CORE_INFO("Entity generation complete");
 
+	InputManager* inputMgr = new InputManager();
 	TestSystem sys = TestSystem();
 	float wasteTimer;
 	std::chrono::high_resolution_clock timer;
@@ -120,6 +125,8 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 
 		// Update engine.
 		gEngine.update();
+		inputMgr->update();
+		EventDispatcher::instance().update();
 
 		SwapBuffers(hDC);
 
@@ -138,6 +145,7 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 
 	std::cin.get();
 
+	delete InputMgr;
 
 	wglMakeCurrent(NULL, NULL);
 	ReleaseDC(hWnd, hDC);

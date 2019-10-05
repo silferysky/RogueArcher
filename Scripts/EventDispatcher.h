@@ -16,7 +16,6 @@ public:
 
 	void init()
 	{
-		//instance();
 		EventQueue = std::queue<Event*>();
 		DelayedEventQueue = std::queue<Event*>();
 		ListenerMap = std::map<SystemID, LISTENER_HANDLER>();
