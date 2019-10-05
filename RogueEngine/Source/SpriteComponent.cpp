@@ -1,9 +1,7 @@
 #include "SpriteComponent.h"
-#include "REEngine.h"
 
 SpriteComponent::SpriteComponent()
 {
-	// create this once
 	m_texture = gEngine.m_coordinator.loadTexture("CharaTest.bmp");
 }
 

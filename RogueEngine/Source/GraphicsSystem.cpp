@@ -17,30 +17,8 @@ void GraphicsSystem::init()
 
 	m_shader = gEngine.m_coordinator.loadShader("Object Shader");
 
-	// bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
-	glGenVertexArrays(1, &m_VAO);
-	glBindVertexArray(m_VAO);
+	GenerateQuadPrimitive(m_VBO, m_VAO, m_EBO);
 
-	glGenBuffers(1, &m_VBO);
-	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), quadVertices, GL_STATIC_DRAW);
-
-	glGenBuffers(1, &m_EBO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(quadIndices), quadIndices, GL_STATIC_DRAW);
-
-	// position attribute
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-	// color attribute
-	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(1);
-	// texture coord attribute
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)(7 * sizeof(float)));
-	glEnableVertexAttribArray(2);
-
-	glBindBuffer(GL_ARRAY_BUFFER, 0); //Reset
-	glBindVertexArray(0); //Reset
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
@@ -48,6 +26,8 @@ void GraphicsSystem::update()
 {
 	Timer TimeSystem;
 	TimeSystem.TimerInit("Graphics System");
+
+	// clear the buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// For all entities
@@ -58,19 +38,17 @@ void GraphicsSystem::update()
 		auto& collider = gEngine.m_coordinator.GetComponent<BoxCollider2DComponent>(entity);
 
 		//glDisable(GL_DEPTH_TEST);
-		
-		glBindVertexArray(m_VAO);
 
 		draw(&sprite, &transform);
-
-		// Unbind VAO after drawing
-		glBindVertexArray(0);
 	}
 	TimeSystem.TimerEnd("Graphics System");
 }
 
 void GraphicsSystem::draw(SpriteComponent* sprite, TransformComponent* transform)
 {
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	glBindVertexArray(m_VAO);
+
 	auto transformMat = glm::mat4(1.0f);
 
 	transformMat = glm::translate(transformMat, { transform->getPosition().x, transform->getPosition().y, 1.0f });

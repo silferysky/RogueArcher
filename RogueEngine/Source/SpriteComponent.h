@@ -1,6 +1,6 @@
 #pragma once
 #include "TextureManager.h"
-#include "GLHelper.h"
+#include "REEngine.h"
 
 class SpriteComponent
 {
