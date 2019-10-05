@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\BoxCollider2DComponent.h" />
+    <ClInclude Include="Source\PhysicsSystem.h" />
+    <ClInclude Include="Source\AABB.h" />
+    <ClInclude Include="Source\BaseCollider.h" />
+    <ClInclude Include="Source\Circle.h" />
+    <ClInclude Include="Source\CircleCollider2DComponent.h" />
+    <ClInclude Include="Source\Collider.h" />
+    <ClInclude Include="Source\CollisionManager.h" />
+    <ClInclude Include="Source\MaterialComponent.h" />
+    <ClInclude Include="Source\OBB.h" />
+    <ClInclude Include="Source\Polygon.h" />
+    <ClInclude Include="Source\RigidbodyComponent.h" />
+    <ClInclude Include="Source\RotatableComponent.h" />
+    <ClInclude Include="Source\Shape.h" />
+    <ClInclude Include="Source\TextureManager.h" />
+    <ClInclude Include="Source\TransformComponent.h" />
+    <ClInclude Include="Source\AppEvent.h" />
+    <ClInclude Include="Source\FileManager.h" />
+    <ClInclude Include="Source\MemoryManager.h" />
+    <ClInclude Include="Source\REEngine.h" />
+    <ClInclude Include="Source\SystemList.h" />
+    <ClInclude Include="Source\BasicIO.h" />
+    <ClInclude Include="Source\ComponentArray.h" />
+    <ClInclude Include="Source\ComponentList.h" />
+    <ClInclude Include="Source\ComponentManager.h" />
+    <ClInclude Include="Source\Config.h" />
+    <ClInclude Include="Source\Coordinator.h" />
+    <ClInclude Include="Source\EntityManager.h" />
+    <ClInclude Include="Source\Event.h" />
+    <ClInclude Include="Source\EventDispatcher.h" />
+    <ClInclude Include="Source\FileIO.h" />
+    <ClInclude Include="Source\EventListener.h" />
+    <ClInclude Include="Source\GameEvent.h" />
+    <ClInclude Include="Source\GraphicsSystem.h" />
+    <ClInclude Include="Source\InputData.h" />
+    <ClInclude Include="Source\InputManager.h" />
+    <ClInclude Include="Source\KeyEvent.h" />
+    <ClInclude Include="Source\Logger.h" />
+    <ClInclude Include="Source\Main.h" />
+    <ClInclude Include="Source\Matrix33.h" />
+    <ClInclude Include="Source\MemoryType.h" />
+    <ClInclude Include="Source\ObjectFactory.h" />
+    <ClInclude Include="Source\REMath.h" />
+    <ClInclude Include="Source\Resource.h" />
+    <ClInclude Include="Source\shader.h" />
+    <ClInclude Include="Source\SpriteComponent.h" />
+    <ClInclude Include="Source\SystemManager.h" />
+    <ClInclude Include="Source\TestSystem.h" />
+    <ClInclude Include="Source\Timer.h" />
+    <ClInclude Include="Source\Types.h" />
+    <ClInclude Include="Source\Vector2D.h" />
+    <ClInclude Include="Source\VSync.h" />
+    <ClInclude Include="Source\WindowHelper.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\BoxCollider2DComponent.cpp" />
+    <ClCompile Include="Source\PhysicsSystem.cpp" />
+    <ClCompile Include="Source\AABB.cpp" />
+    <ClCompile Include="Source\Circle.cpp" />
+    <ClCompile Include="Source\CircleCollider2DComponent.cpp" />
+    <ClCompile Include="Source\Collider.cpp" />
+    <ClCompile Include="Source\CollisionManager.cpp" />
+    <ClCompile Include="Source\MaterialComponent.cpp" />
+    <ClCompile Include="Source\OBB.cpp" />
+    <ClCompile Include="Source\Polygon.cpp" />
+    <ClCompile Include="Source\RigidbodyComponent.cpp" />
+    <ClCompile Include="Source\RotatableComponent.cpp" />
+    <ClCompile Include="Source\Shape.cpp" />
+    <ClCompile Include="Source\TransformComponent.cpp" />
+    <ClCompile Include="Source\Config.cpp" />
+    <ClCompile Include="Source\BasicIO.cpp" />
+    <ClCompile Include="Source\FileIO.cpp" />
+    <ClCompile Include="Source\FileManager.cpp" />
+    <ClCompile Include="Source\GraphicsSystem.cpp" />
+    <ClCompile Include="Source\InputManager.cpp" />
+    <ClCompile Include="Source\Logger.cpp" />
+    <ClCompile Include="Source\Main.cpp" />
+    <ClCompile Include="Source\Matrix33.cpp" />
+    <ClCompile Include="Source\MemoryManager.cpp" />
+    <ClCompile Include="Source\ObjectFactory.cpp" />
+    <ClCompile Include="Source\REEngine.cpp" />
+    <ClCompile Include="Source\REMath.cpp" />
+    <ClCompile Include="Source\shader.cpp" />
+    <ClCompile Include="Source\SpriteComponent.cpp" />
+    <ClCompile Include="Source\Timer.cpp" />
+    <ClCompile Include="Source\Vector2D.cpp" />
+    <ClCompile Include="Source\VSync.cpp" />
+    <ClCompile Include="Source\WindowHelper.cpp" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{63B4A48E-83B8-4090-AC7E-1263A5B407D8}</ProjectGuid>
+    <RootNamespace>GAM200</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+    <ProjectName>GAM200</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dep\glm;$(SolutionDir)Dep\FMOD\inc;$(SolutionDir)Dep\spdlog-1.x\include;$(SolutionDir)Dep\SOIL\include;$(SolutionDir)Dep\GLFW\include;$(SolutionDir)Dep\glew-2.1.0\include;$(SolutionDir)Dep\rapidjson-master\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dep\FMOD\lib;$(SolutionDir)Dep\SOIL\Win32;$(SolutionDir)Dep\GLFW\lib-vc2015;$(SolutionDir)Dep\glew-2.1.0\lib\Release\Win32</AdditionalLibraryDirectories>
+      <AdditionalDependencies>fmod64_vc.lib;glfw3.lib;opengl32.lib;SOIL.lib;glew32.lib;glew32s.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dep\glm;$(SolutionDir)Dep\FMOD\inc;$(SolutionDir)Dep\spdlog-1.x\include;$(SolutionDir)Dep\SOIL\include;$(SolutionDir)Dep\GLFW\include;$(SolutionDir)Dep\glew-2.1.0\include;$(SolutionDir)Dep\rapidjson-master\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dep\FMOD\lib;$(SolutionDir)Dep\SOIL\x64;$(SolutionDir)Dep\GLFW\lib-vc2019;$(SolutionDir)Dep\glew-2.1.0\lib\Release\x64</AdditionalLibraryDirectories>
+      <AdditionalDependencies>fmod64_vc.lib;glfw3.lib;glfw3dll.lib;opengl32.lib;SOIL.lib;glew32.lib;glew32s.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dep\glm;$(SolutionDir)Dep\FMOD\inc;$(SolutionDir)Dep\spdlog-1.x\include;$(SolutionDir)Dep\SOIL\include;$(SolutionDir)Dep\GLFW\include;$(SolutionDir)Dep\glew-2.1.0\include;$(SolutionDir)Dep\rapidjson-master\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dep\FMOD\lib;$(SolutionDir)Dep\SOIL\Win32;$(SolutionDir)Dep\GLFW\lib-vc2015;$(SolutionDir)Dep\glew-2.1.0\lib\Release\Win32</AdditionalLibraryDirectories>
+      <AdditionalDependencies>fmod64_vc.lib;glfw3.lib;opengl32.lib;SOIL.lib;glew32.lib;glew32s.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dep\glm;$(SolutionDir)Dep\FMOD\inc;$(SolutionDir)Dep\spdlog-1.x\include;$(SolutionDir)Dep\SOIL\include;$(SolutionDir)Dep\GLFW\include;$(SolutionDir)Dep\glew-2.1.0\include;$(SolutionDir)Dep\rapidjson-master\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dep\FMOD\lib;$(SolutionDir)Dep\SOIL\x64;$(SolutionDir)Dep\GLFW\lib-vc2019;$(SolutionDir)Dep\glew-2.1.0\lib\Release\x64</AdditionalLibraryDirectories>
+      <AdditionalDependencies>fmod64_vc.lib;glfw3.lib;glfw3dll.lib;opengl32.lib;SOIL.lib;glew32.lib;glew32s.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
