@@ -220,6 +220,12 @@
     <ClInclude Include="Source\TextureManager.h">
       <Filter>RogueEngine\Systems\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="Source\DebugDrawSystem.h">
+      <Filter>RogueEngine\Systems\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GLHelper.h">
+      <Filter>RogueEngine\Systems\Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -320,6 +326,9 @@
     </ClCompile>
     <ClCompile Include="Source\WindowHelper.cpp">
       <Filter>RogueEngine\Systems\Others</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DebugDrawSystem.cpp">
+      <Filter>RogueEngine\Systems\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

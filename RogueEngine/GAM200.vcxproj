@@ -20,6 +20,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\BoxCollider2DComponent.h" />
+    <ClInclude Include="Source\DebugDrawSystem.h" />
+    <ClInclude Include="Source\GLHelper.h" />
     <ClInclude Include="Source\PhysicsSystem.h" />
     <ClInclude Include="Source\AABB.h" />
     <ClInclude Include="Source\BaseCollider.h" />
@@ -75,6 +77,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\BoxCollider2DComponent.cpp" />
+    <ClCompile Include="Source\DebugDrawSystem.cpp" />
     <ClCompile Include="Source\PhysicsSystem.cpp" />
     <ClCompile Include="Source\AABB.cpp" />
     <ClCompile Include="Source\Circle.cpp" />
