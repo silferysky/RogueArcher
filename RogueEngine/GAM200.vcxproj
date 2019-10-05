@@ -35,6 +35,7 @@
     <ClInclude Include="Source\RigidbodyComponent.h" />
     <ClInclude Include="Source\RotatableComponent.h" />
     <ClInclude Include="Source\Shader.h" />
+    <ClInclude Include="Source\ShaderManager.h" />
     <ClInclude Include="Source\Shape.h" />
     <ClInclude Include="Source\TextureManager.h" />
     <ClInclude Include="Source\TransformComponent.h" />

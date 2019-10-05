@@ -1,5 +1,9 @@
 #pragma once
-#include "glm.hpp"
+#include <glm.hpp>
+#include <gtc/matrix_transform.hpp>
+#include <gtc/type_ptr.hpp>
+
+#include "ShaderManager.h"
 
 static const float quadVertices[40] =
 {
