@@ -74,8 +74,8 @@ void GraphicsSystem::draw(SpriteComponent* sprite, TransformComponent* transform
 	auto transformMat = glm::mat4(1.0f);
 
 	transformMat = glm::translate(transformMat, { transform->getPosition().x, transform->getPosition().y, 1.0f });
-	transformMat = glm::scale(transformMat, glm::vec3(transform->getScale().x, transform->getScale().y, 1.0f));
 	transformMat = glm::rotate(transformMat, transform->getRotation(), glm::vec3(0.0f, 0.0f, 1.0f));
+	transformMat = glm::scale(transformMat, glm::vec3(transform->getScale().x, transform->getScale().y, 1.0f));
 
 	glBindTexture(GL_TEXTURE_2D, sprite->getTexture());
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
