@@ -9,6 +9,8 @@
 #include "GLHelper.h"
 
 class Timer;
+class SpriteComponent;
+
 class GraphicsSystem : public System, public EventListener
 {
 	GLuint m_VAO;
@@ -22,6 +24,8 @@ public:
 
 	void init();
 	void update() override;
+
+	void draw(SpriteComponent* sprite, TransformComponent* transform);
 
 	void receive(Event* ev);
 };
