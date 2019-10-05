@@ -19,7 +19,7 @@ public:
 	TextureManager() = default;
 	~TextureManager()
 	{
-		for( auto itr = textureMap.begin(); itr != textureMap.begin(); ++itr)
+		for (auto itr = textureMap.begin(); itr != textureMap.begin(); ++itr)
 			glDeleteTextures(1, &(itr->second));
 	}
 
