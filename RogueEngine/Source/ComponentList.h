@@ -5,6 +5,7 @@
 #include "TransformComponent.h"
 #include "CircleCollider2DComponent.h"
 #include "BoxCollider2DComponent.h"
+#include "PlayerControllerComponent.h"
 
 enum COMPONENTID
 {
@@ -13,5 +14,6 @@ enum COMPONENTID
 	TRANSFORM,
 	CIRCLECOLLIDER2D,
 	BOXCOLLIDER2D,
+	PLAYERCONTROLLER,
 	LASTCOMP
 };

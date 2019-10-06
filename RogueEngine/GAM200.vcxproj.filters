@@ -229,6 +229,9 @@
     <ClInclude Include="Source\GLHelper.hpp">
       <Filter>RogueEngine\Systems\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="Source\PlayerControllerComponent.h">
+      <Filter>RogueEngine\Systems\Input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">

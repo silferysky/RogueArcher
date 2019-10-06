@@ -31,6 +31,7 @@
     <ClInclude Include="Source\CollisionManager.h" />
     <ClInclude Include="Source\MaterialComponent.h" />
     <ClInclude Include="Source\OBB.h" />
+    <ClInclude Include="Source\PlayerControllerComponent.h" />
     <ClInclude Include="Source\Polygon.h" />
     <ClInclude Include="Source\RigidbodyComponent.h" />
     <ClInclude Include="Source\RotatableComponent.h" />
