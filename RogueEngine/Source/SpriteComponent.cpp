@@ -17,9 +17,11 @@ GLuint SpriteComponent::getTexture() const
 
 std::string SpriteComponent::Serialize()
 {
+	//gEngine.m_coordinator.GetTextureManager().getTextureMap();
 	return std::string();
 }
 
 void SpriteComponent::Deserialize(std::string toDeserialize)
 {
+	setTexture(toDeserialize.c_str());
 }

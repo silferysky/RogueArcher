@@ -19,9 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\BaseComponent.h" />
     <ClInclude Include="Source\BoxCollider2DComponent.h" />
     <ClInclude Include="Source\DebugDrawSystem.h" />
     <ClInclude Include="Source\GLHelper.hpp" />
+    <ClInclude Include="Source\ISerializable.h" />
     <ClInclude Include="Source\PhysicsSystem.h" />
     <ClInclude Include="Source\AABB.h" />
     <ClInclude Include="Source\BaseCollider.h" />

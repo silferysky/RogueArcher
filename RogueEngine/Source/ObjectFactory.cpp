@@ -49,119 +49,72 @@ void ObjectFactory::LoadLevel(const char* fileName)
 		cstr = stdstr.c_str();
 		currentSignature = level[cstr].GetInt();
 
-		//Copypasta for each new variable//
-		if (currentSignature.test(static_cast<int>(SPRITE)))
+		for (int index = 0; index < (int)LASTCOMP; ++index)
 		{
-			SpriteComponent s{};
-			const char* path;
-			CLEARNSETSTR(strstream, entity, "Sprite", 0);
-			path = level[cstr].GetString();
-			s.setTexture(path);
-			
-			gEngine.m_coordinator.AddComponent(curEnt, s);
-		}
-		///////////////////////////////////
-
-		//Copypasta for each new variable//
-		if (currentSignature.test(static_cast<int>(RIGIDBODY)))
-		{
-			RigidbodyComponent r{};
-			float x, y;
-
-			CLEARNSETSTR(strstream, entity, "Rigidbody", 0);
-			x = level[cstr].GetFloat();
-			CLEARNSETSTR(strstream, entity, "Rigidbody", 1);
-			y = level[cstr].GetFloat();
-			r.setAcceleration(Vec2{ x,y } += WorldGravity);
-			
-			CLEARNSETSTR(strstream, entity, "Ri", 2);
-			x = level[cstr].GetFloat();
-			CLEARNSETSTR(strstream, entity, "Rigidbody", 3);
-			y = level[cstr].GetFloat();
-			r.setVelocity(Vec2(x, y));
-
-			CLEARNSETSTR(strstream, entity, "Rigidbody", 4);
-			r.setMass(level[cstr].GetFloat());
-
-			CLEARNSETSTR(strstream, entity, "Rigidbody", 5);
-			r.setVolume(level[cstr].GetFloat());
-
-			gEngine.m_coordinator.AddComponent(curEnt, r);
-		}
-		///////////////////////////////////
-
-		//Copypasta for each new variable//
-		if (currentSignature.test(static_cast<int>(TRANSFORM)))
-		{
-			TransformComponent t{};
-			float x, y;
-			CLEARNSETSTR(strstream, entity, "Transform", 0);
-			x = level[cstr].GetFloat();
-			CLEARNSETSTR(strstream, entity, "Transform", 1);
-			y = level[cstr].GetFloat();
-			t.setPosition(Vec2(x, y));
-			CLEARNSETSTR(strstream, entity, "Transform", 2);
-			x = level[cstr].GetFloat();
-			CLEARNSETSTR(strstream, entity, "Transform", 3);
-			y = level[cstr].GetFloat();
-			CLEARNSETSTR(strstream, entity, "Transform", 4);
-			t.setScale(Vec2(x, y));
-			t.setRotation(level[cstr].GetFloat());
-
-			gEngine.m_coordinator.AddComponent(curEnt, t);
-		}
-		///////////////////////////////////
-
-		//Copypasta for each new variable//
-		if (currentSignature.test(static_cast<int>(CIRCLECOLLIDER2D)))
-		{
-			CircleCollider2DComponent cc{};
-			CLEARNSETSTR(strstream, entity, "CircleCollider", 0);
-			cc.setRadius(level[cstr].GetFloat());
-
-			gEngine.m_coordinator.AddComponent(curEnt, cc);
-		}
-
-		///////////////////////////////////
-
-		//Copypasta for each new variable//
-		if (currentSignature.test(static_cast<int>(BOXCOLLIDER2D)))
-		{
-			std::vector<Vec2> vecVec;
-			float x, y;
-			size_t size, varNum = 0;
-			CLEARNSETSTR(strstream, entity, "BoxCollider", varNum);
-			size = (size_t)level[cstr].GetInt();
-			++varNum;
-
-			for (size_t vertCount = 0; vertCount < size; ++vertCount)
+			if (currentSignature.test(index))
 			{
-				CLEARNSETSTR(strstream, entity, "BoxCollider", varNum);
-				x = level[cstr].GetFloat();
-				++varNum;
-				CLEARNSETSTR(strstream, entity, "BoxCollider", varNum);
-				y = level[cstr].GetFloat();
-				++varNum;
-				vecVec.push_back(Vec2(x, y));
+				switch (index)
+				{
+					case static_cast<int>(SPRITE) :
+					{
+						SpriteComponent spriteComponent{};
+						CLEARNSETSTR(strstream, entity, "Sprite", 0);
+						spriteComponent.Deserialize(level[cstr].GetString());
+
+						gEngine.m_coordinator.AddComponent(curEnt, spriteComponent);
+						break;
+					}
+					case static_cast<int>(RIGIDBODY) :
+					{
+						RigidbodyComponent rigidbodyComponent{};
+						CLEARNSETSTR(strstream, entity, "Rigidbody", 0);
+						rigidbodyComponent.Deserialize(level[cstr].GetString());
+
+						gEngine.m_coordinator.AddComponent(curEnt, rigidbodyComponent);
+						break;
+					}
+					case static_cast<int>(TRANSFORM) :
+					{
+						TransformComponent transformComponent{};
+						CLEARNSETSTR(strstream, entity, "Transform", 0);
+						transformComponent.Deserialize(level[cstr].GetString());
+
+						gEngine.m_coordinator.AddComponent(curEnt, transformComponent);
+						break;
+					}
+					case static_cast<int>(CIRCLECOLLIDER2D) :
+					{
+						CircleCollider2DComponent circleColliderComponent{};
+						CLEARNSETSTR(strstream, entity, "CircleCollider", 0);
+						circleColliderComponent.Deserialize(level[cstr].GetString());
+
+						gEngine.m_coordinator.AddComponent(curEnt, circleColliderComponent);
+						break;
+					}
+					case static_cast<int>(BOXCOLLIDER2D) :
+					{
+						BoxCollider2DComponent boxColliderComponent{};
+						CLEARNSETSTR(strstream, entity, "BoxCollider", 0);
+						boxColliderComponent.Deserialize(level[cstr].GetString());
+
+						gEngine.m_coordinator.AddComponent(curEnt, boxColliderComponent);
+						break;
+					}
+					case static_cast<int>(PLAYERCONTROLLER) :
+					{
+						PlayerControllerComponent playerControllerComponent{};
+						gEngine.m_coordinator.AddComponent(curEnt, playerControllerComponent);
+						break;
+					}
+					default:
+					{
+						RE_CORE_WARN("OUT OF BOUNDS OBJECT COMPONENT LOADING");
+						break;
+					}
+				}
 			}
-
-			BoxCollider2DComponent bc{};
-			bc.OBB() = OBB(vecVec);
-			bc.OBB().setSize(size);
-			gEngine.m_coordinator.AddComponent(curEnt, bc);
 		}
-		///////////////////////////////////
 
-		//Copypasta for each new variable//
-		if (currentSignature.test(static_cast<int>(PLAYERCONTROLLER)))
-		{
-			PlayerControllerComponent pcc{};
-			gEngine.m_coordinator.AddComponent(curEnt, pcc);
-		}
-		///////////////////////////////////
-
-		//ADD NEW COMPONENT LOADING HERE, BASED ON BITMAP
-		//Finally add Entity reference to entity vector
 		m_activeEntities.push_back(curEnt);
 
 		debugStr.clear();

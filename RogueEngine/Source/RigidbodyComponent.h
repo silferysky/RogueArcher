@@ -1,7 +1,10 @@
 #pragma once
 #include "../Source/REMath.h"
+#include <sstream>
+#include "BaseComponent.h"
 
 class RigidbodyComponent
+	: public BaseComponent
 {
 	Vec2 m_acceleration;
 	Vec2 m_velocity;
@@ -37,5 +40,8 @@ public:
 	void offSetAcceleration(const Vec2& accel);
 	void setDamping(float damping);
 	void setIsStatic(bool set);
+
+	std::string Serialize();
+	void Deserialize(std::string toDeserialize);
 
 };

@@ -1,10 +1,9 @@
 #pragma once
 #include "TextureManager.h"
 #include "REEngine.h"
-#include "ISerializable.h"
 
 class SpriteComponent
-	: public ISerializable
+	: public BaseComponent
 {
 	GLuint m_texture;
 public:
