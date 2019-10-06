@@ -14,3 +14,12 @@ GLuint SpriteComponent::getTexture() const
 {
 	return m_texture;
 }
+
+std::string SpriteComponent::Serialize()
+{
+	return std::string();
+}
+
+void SpriteComponent::Deserialize(std::string toDeserialize)
+{
+}

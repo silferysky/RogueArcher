@@ -39,6 +39,7 @@ void REEngine::RegisterComponents()
 	m_coordinator.RegisterComponent<TransformComponent>();
 	m_coordinator.RegisterComponent<CircleCollider2DComponent>();
 	m_coordinator.RegisterComponent<BoxCollider2DComponent>();
+	m_coordinator.RegisterComponent<PlayerControllerComponent>();
 }
 
 void REEngine::init()
