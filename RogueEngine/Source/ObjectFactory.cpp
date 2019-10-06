@@ -166,11 +166,11 @@ void ObjectFactory::SaveLevel(const char* fileName)
 			{
 				switch (index)
 				{
-					case static_cast<int>(SPRITE) :
+					/*case static_cast<int>(SPRITE) :
 					{
-						//CLEARNSETSTR(strstream, entity, "Sprite", 0);
-						//SpriteComponent& sprite = gEngine.m_coordinator.GetComponent<SpriteComponent>(entity);
-						//m_Serialiser.WriteToFile(fileName, cstr, sprite.Serialize());
+						CLEARNSETSTR(strstream, entity, "Sprite", 0);
+						SpriteComponent& sprite = gEngine.m_coordinator.GetComponent<SpriteComponent>(entity);
+						m_Serialiser.WriteToFile(fileName, cstr, sprite.Serialize());
 						break;
 					}
 					case static_cast<int>(RIGIDBODY) :
@@ -204,11 +204,11 @@ void ObjectFactory::SaveLevel(const char* fileName)
 					case static_cast<int>(PLAYERCONTROLLER) :
 					{
 						//Player Controller does not need to save value
-						/*CLEARNSETSTR(strstream, entity, "PlayerController", 0);
-						PlayerControllerComponent& playerController = gEngine.m_coordinator.GetComponent<PlayerControllerComponent>(entity);
-						m_Serialiser.WriteToFile(fileName, cstr, playerController.Serialize());*/
+						//CLEARNSETSTR(strstream, entity, "PlayerController", 0);
+						//PlayerControllerComponent& playerController = gEngine.m_coordinator.GetComponent<PlayerControllerComponent>(entity);
+						//m_Serialiser.WriteToFile(fileName, cstr, playerController.Serialize());
 						break;
-					}
+					}*/
 					default:
 					{
 						RE_CORE_WARN("OUT OF BOUNDS OBJECT COMPONENT LOADING");
