@@ -1,7 +1,10 @@
 #pragma once
 #include "../Source/REMath.h"
+#include <sstream>
+#include "BaseComponent.h"
 
 class TransformComponent
+	: public BaseComponent
 {
 	Vec2 m_position = Vec2(0.0f, 0.0f);
 	Vec2 m_scale = Vec2(0.5f, 0.5f);
@@ -21,5 +24,8 @@ public:
 	Vec2 getPosition() const;
 	Vec2 getScale() const;
 	float getRotation() const;
+
+	std::string Serialize();
+	void Deserialize(std::string toDeserialize);
 };
 

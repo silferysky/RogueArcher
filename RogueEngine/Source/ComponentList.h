@@ -1,5 +1,6 @@
 #pragma once
 
+#include "BaseComponent.h"
 #include "SpriteComponent.h"
 #include "RigidbodyComponent.h"
 #include "TransformComponent.h"
