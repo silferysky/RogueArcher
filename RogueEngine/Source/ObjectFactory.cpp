@@ -14,7 +14,7 @@ void ObjectFactory::LoadLevel(const char* fileName)
 	Vec2 WorldGravity{ 0.0f, 0.0f };
 
 	//For Entity Count
-	Entity entCount = level["EntCount"].GetInt();
+	Entity entCount = level["EntityCount"].GetInt();
 
 	//For Background
 	Entity backgroundEnt = gEngine.m_coordinator.CreateEntity();
@@ -54,7 +54,7 @@ void ObjectFactory::LoadLevel(const char* fileName)
 		{
 			SpriteComponent s{};
 			const char* path;
-			CLEARNSETSTR(strstream, entity, "sc", 0);
+			CLEARNSETSTR(strstream, entity, "Sprite", 0);
 			path = level[cstr].GetString();
 			s.setTexture(path);
 			
@@ -68,22 +68,22 @@ void ObjectFactory::LoadLevel(const char* fileName)
 			RigidbodyComponent r{};
 			float x, y;
 
-			CLEARNSETSTR(strstream, entity, "rbc", 0);
+			CLEARNSETSTR(strstream, entity, "Rigidbody", 0);
 			x = level[cstr].GetFloat();
-			CLEARNSETSTR(strstream, entity, "rbc", 1);
+			CLEARNSETSTR(strstream, entity, "Rigidbody", 1);
 			y = level[cstr].GetFloat();
 			r.setAcceleration(Vec2{ x,y } += WorldGravity);
 			
-			CLEARNSETSTR(strstream, entity, "rbc", 2);
+			CLEARNSETSTR(strstream, entity, "Ri", 2);
 			x = level[cstr].GetFloat();
-			CLEARNSETSTR(strstream, entity, "rbc", 3);
+			CLEARNSETSTR(strstream, entity, "Rigidbody", 3);
 			y = level[cstr].GetFloat();
 			r.setVelocity(Vec2(x, y));
 
-			CLEARNSETSTR(strstream, entity, "rbc", 4);
+			CLEARNSETSTR(strstream, entity, "Rigidbody", 4);
 			r.setMass(level[cstr].GetFloat());
 
-			CLEARNSETSTR(strstream, entity, "rbc", 5);
+			CLEARNSETSTR(strstream, entity, "Rigidbody", 5);
 			r.setVolume(level[cstr].GetFloat());
 
 			gEngine.m_coordinator.AddComponent(curEnt, r);
@@ -95,16 +95,16 @@ void ObjectFactory::LoadLevel(const char* fileName)
 		{
 			TransformComponent t{};
 			float x, y;
-			CLEARNSETSTR(strstream, entity, "tc", 0);
+			CLEARNSETSTR(strstream, entity, "Transform", 0);
 			x = level[cstr].GetFloat();
-			CLEARNSETSTR(strstream, entity, "tc", 1);
+			CLEARNSETSTR(strstream, entity, "Transform", 1);
 			y = level[cstr].GetFloat();
 			t.setPosition(Vec2(x, y));
-			CLEARNSETSTR(strstream, entity, "tc", 2);
+			CLEARNSETSTR(strstream, entity, "Transform", 2);
 			x = level[cstr].GetFloat();
-			CLEARNSETSTR(strstream, entity, "tc", 3);
+			CLEARNSETSTR(strstream, entity, "Transform", 3);
 			y = level[cstr].GetFloat();
-			CLEARNSETSTR(strstream, entity, "tc", 4);
+			CLEARNSETSTR(strstream, entity, "Transform", 4);
 			t.setScale(Vec2(x, y));
 			t.setRotation(level[cstr].GetFloat());
 
@@ -116,7 +116,7 @@ void ObjectFactory::LoadLevel(const char* fileName)
 		if (currentSignature.test(static_cast<int>(CIRCLECOLLIDER2D)))
 		{
 			CircleCollider2DComponent cc{};
-			CLEARNSETSTR(strstream, entity, "ccc", 0);
+			CLEARNSETSTR(strstream, entity, "CircleCollider", 0);
 			cc.setRadius(level[cstr].GetFloat());
 
 			gEngine.m_coordinator.AddComponent(curEnt, cc);
@@ -130,16 +130,16 @@ void ObjectFactory::LoadLevel(const char* fileName)
 			std::vector<Vec2> vecVec;
 			float x, y;
 			size_t size, varNum = 0;
-			CLEARNSETSTR(strstream, entity, "bcc", varNum);
+			CLEARNSETSTR(strstream, entity, "BoxCollider", varNum);
 			size = (size_t)level[cstr].GetInt();
 			++varNum;
 
 			for (size_t vertCount = 0; vertCount < size; ++vertCount)
 			{
-				CLEARNSETSTR(strstream, entity, "bcc", varNum);
+				CLEARNSETSTR(strstream, entity, "BoxCollider", varNum);
 				x = level[cstr].GetFloat();
 				++varNum;
-				CLEARNSETSTR(strstream, entity, "bcc", varNum);
+				CLEARNSETSTR(strstream, entity, "BoxCollider", varNum);
 				y = level[cstr].GetFloat();
 				++varNum;
 				vecVec.push_back(Vec2(x, y));
@@ -149,6 +149,14 @@ void ObjectFactory::LoadLevel(const char* fileName)
 			bc.OBB() = OBB(vecVec);
 			bc.OBB().setSize(size);
 			gEngine.m_coordinator.AddComponent(curEnt, bc);
+		}
+		///////////////////////////////////
+
+		//Copypasta for each new variable//
+		if (currentSignature.test(static_cast<int>(PLAYERCONTROLLER)))
+		{
+			PlayerControllerComponent pcc{};
+			gEngine.m_coordinator.AddComponent(curEnt, pcc);
 		}
 		///////////////////////////////////
 
@@ -207,7 +215,7 @@ void ObjectFactory::SaveLevel(const char* fileName)
 			/*SpriteComponent& s = gEngine.m_coordinator.GetComponent<SpriteComponent>(entity);
 
 			varNum = 0;
-			CLEARNSETSTR(varName, entity, "sc", varNum);
+			CLEARNSETSTR(varName, entity, "Sprite", varNum);
 			std::map<const char*, GLuint> textureMap = gEngine.m_coordinator.GetTextureManager().getTextureMap();
 			const char* filePath = "";
 			
@@ -230,22 +238,22 @@ void ObjectFactory::SaveLevel(const char* fileName)
 			RigidbodyComponent& r = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
 
 			varNum = 0;
-			CLEARNSETSTR(varName, entity, "rbc", varNum);
+			CLEARNSETSTR(varName, entity, "Rigidbody", varNum);
 			m_Serialiser.WriteToFile(fileName, cstr, r.getAcceleration().x);
 			++varNum;
-			CLEARNSETSTR(varName, entity, "rbc", varNum);
+			CLEARNSETSTR(varName, entity, "Rigidbody", varNum);
 			m_Serialiser.WriteToFile(fileName, cstr, r.getAcceleration().y);
 			++varNum;
-			CLEARNSETSTR(varName, entity, "rbc", varNum);
+			CLEARNSETSTR(varName, entity, "Rigidbody", varNum);
 			m_Serialiser.WriteToFile(fileName, cstr, r.getVelocity().x);
 			++varNum;
-			CLEARNSETSTR(varName, entity, "rbc", varNum);
+			CLEARNSETSTR(varName, entity, "Rigidbody", varNum);
 			m_Serialiser.WriteToFile(fileName, cstr, r.getVelocity().y);
 			++varNum;
-			CLEARNSETSTR(varName, entity, "rbc", varNum);
+			CLEARNSETSTR(varName, entity, "Rigidbody", varNum);
 			m_Serialiser.WriteToFile(fileName, cstr, r.getInvMass());
 			++varNum;
-			CLEARNSETSTR(varName, entity, "rbc", varNum);
+			CLEARNSETSTR(varName, entity, "Rigidbody", varNum);
 			m_Serialiser.WriteToFile(fileName, cstr, r.getVolume());
 		}
 
@@ -265,19 +273,19 @@ void ObjectFactory::SaveLevel(const char* fileName)
 			//by RAND_SMALL to offset original RAND_SMALL
 			//This will give a number with 2 decimal places
 			varNum = 0;
-			CLEARNSETSTR(varName, entity, "tc", varNum);
+			CLEARNSETSTR(varName, entity, "Transform", varNum);
 			m_Serialiser.WriteToFile(fileName, cstr, t.getPosition().x);
 			++varNum;
-			CLEARNSETSTR(varName, entity, "tc", varNum);
+			CLEARNSETSTR(varName, entity, "Transform", varNum);
 			m_Serialiser.WriteToFile(fileName, cstr, t.getPosition().y);
 			++varNum;
-			CLEARNSETSTR(varName, entity, "tc", varNum);
+			CLEARNSETSTR(varName, entity, "Transform", varNum);
 			m_Serialiser.WriteToFile(fileName, cstr, t.getScale().x);
 			++varNum;
-			CLEARNSETSTR(varName, entity, "tc", varNum);
+			CLEARNSETSTR(varName, entity, "Transform", varNum);
 			m_Serialiser.WriteToFile(fileName, cstr, t.getScale().y);
 			++varNum;
-			CLEARNSETSTR(varName, entity, "tc", varNum);
+			CLEARNSETSTR(varName, entity, "Transform", varNum);
 			m_Serialiser.WriteToFile(fileName, cstr, t.getRotation());
 		}
 
@@ -286,7 +294,7 @@ void ObjectFactory::SaveLevel(const char* fileName)
 			CircleCollider2DComponent cc = gEngine.m_coordinator.GetComponent<CircleCollider2DComponent>(entity);
 
 			varNum = 0;
-			CLEARNSETSTR(varName, entity, "ccc", varNum);
+			CLEARNSETSTR(varName, entity, "CircleCollider", varNum);
 			m_Serialiser.WriteToFile(fileName, cstr, cc.getRadius());
 		}
 
@@ -295,15 +303,15 @@ void ObjectFactory::SaveLevel(const char* fileName)
 			BoxCollider2DComponent bc = gEngine.m_coordinator.GetComponent<BoxCollider2DComponent>(entity);
 
 			varNum = 0;
-			CLEARNSETSTR(varName, entity, "bcc", varNum);
+			CLEARNSETSTR(varName, entity, "BoxCollider", varNum);
 			m_Serialiser.WriteToFile(fileName, cstr, static_cast<int>(bc.OBB().getSize()));
 			++varNum;
 			for (std::vector<Vec2>::iterator it = bc.OBB().modelVerts().begin(); (size_t)varNum < bc.OBB().getSize(); ++it)
 			{
-				CLEARNSETSTR(varName, entity, "bcc", varNum);
+				CLEARNSETSTR(varName, entity, "BoxCollider", varNum);
 				m_Serialiser.WriteToFile(fileName, cstr, it->x);
 				++varNum;
-				CLEARNSETSTR(varName, entity, "bcc", varNum);
+				CLEARNSETSTR(varName, entity, "BoxCollider", varNum);
 				m_Serialiser.WriteToFile(fileName, cstr, it->y);
 				++varNum;
 			}
