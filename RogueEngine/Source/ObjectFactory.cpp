@@ -146,8 +146,8 @@ void ObjectFactory::LoadLevel(const char* fileName)
 			}
 
 			BoxCollider2DComponent bc{};
-			bc.m_obb = OBB(vecVec);
-			bc.m_obb.setSize(size);
+			bc.OBB() = OBB(vecVec);
+			bc.OBB().setSize(size);
 			gEngine.m_coordinator.AddComponent(curEnt, bc);
 		}
 		///////////////////////////////////
@@ -296,9 +296,9 @@ void ObjectFactory::SaveLevel(const char* fileName)
 
 			varNum = 0;
 			CLEARNSETSTR(varName, entity, "bcc", varNum);
-			m_Serialiser.WriteToFile(fileName, cstr, static_cast<int>(bc.m_obb.getSize()));
+			m_Serialiser.WriteToFile(fileName, cstr, static_cast<int>(bc.OBB().getSize()));
 			++varNum;
-			for (std::vector<Vec2>::iterator it = bc.m_obb.modelVerts().begin(); (size_t)varNum < bc.m_obb.getSize(); ++it)
+			for (std::vector<Vec2>::iterator it = bc.OBB().modelVerts().begin(); (size_t)varNum < bc.OBB().getSize(); ++it)
 			{
 				CLEARNSETSTR(varName, entity, "bcc", varNum);
 				m_Serialiser.WriteToFile(fileName, cstr, it->x);

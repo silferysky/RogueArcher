@@ -54,7 +54,7 @@ void RigidbodyComponent::offSetVelocity(const Vec2& vel)
 
 void RigidbodyComponent::setMass(float mass)
 {
-	if (mass < RE_EPSILON && mass > -RE_EPSILON)
+	if (mass < REMath::EPSILON && mass > -REMath::EPSILON)
 		throw("Mass is 0!");
 
 	m_invMass = 1 / mass;

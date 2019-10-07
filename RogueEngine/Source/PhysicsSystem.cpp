@@ -72,8 +72,8 @@ void PhysicsSystem::update()
 		integrateAcceleration(rigidbody, transform);
 
 		// Update collidables
-		m_colliderManager.updateAABB(currBoxCollider.m_aabb, transform);
-		m_colliderManager.updateOBB(currBoxCollider.m_obb, transform);
+		m_colliderManager.updateAABB(currBoxCollider.AABB(), transform);
+		m_colliderManager.updateOBB(currBoxCollider.OBB(), transform);
 
 		// Conduct spatial partitioning
 		
@@ -82,17 +82,13 @@ void PhysicsSystem::update()
 		for (iNextEntity++; iNextEntity != m_entities.end(); ++iNextEntity)
 		{
 			auto& nextBoxCollider = gEngine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iNextEntity);
-			if (m_colliderManager.staticAABBvsAABB(currBoxCollider.m_aabb, nextBoxCollider.m_aabb))
+			if (m_colliderManager.staticAABBvsAABB(currBoxCollider.AABB(), nextBoxCollider.AABB()))
 				std::cout << "Entity " << *iEntity << " AABB collides with Entity " << *iNextEntity << " AABB" << std::endl;
-		}
 
-		iNextEntity = iEntity;
-		for (iNextEntity++; iNextEntity != m_entities.end(); ++iNextEntity)
-		{
-			auto& nextBoxCollider = gEngine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iNextEntity);
-			if (m_colliderManager.staticOBBvsOBB(currBoxCollider.m_obb, nextBoxCollider.m_obb))
+			if (m_colliderManager.staticOBBvsOBB(currBoxCollider.OBB(), nextBoxCollider.OBB()))
 				std::cout << "Entity " << *iEntity << " OBB collides with Entity " << *iNextEntity << "OBB" << std::endl;
 		}
+
 		// Collision Response (Contact, forces, etc)
 		// Rest, Impulse, Torque
 
@@ -122,7 +118,7 @@ void PhysicsSystem::receive(Event* ev)
 					if (entity == 1) // Entity A
 					{
 						auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(entity);
-						transform.offSetPosition(Vec2(-1.0f, 0.0f) * gDeltaTime);
+						transform.offSetPosition(Vec2(-3.0f, 0.0f) * gDeltaTime);
 						RE_INFO("Move A Left!");
 					}
 				}
@@ -134,7 +130,7 @@ void PhysicsSystem::receive(Event* ev)
 					if (entity == 1) // Entity A
 					{
 						auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(entity);
-						transform.offSetPosition(Vec2(1.0f, 0.0f) * gDeltaTime);
+						transform.offSetPosition(Vec2(3.0f, 0.0f) * gDeltaTime);
 						RE_INFO("Move A Right!");
 					}
 				}
@@ -146,7 +142,7 @@ void PhysicsSystem::receive(Event* ev)
 					if (entity == 1) // Entity A
 					{
 						auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(entity);
-						transform.offSetPosition(Vec2(0.0f, 1.0f) * gDeltaTime);
+						transform.offSetPosition(Vec2(0.0f, 3.0f) * gDeltaTime);
 						RE_INFO("Move A Up!");
 					}
 				}
@@ -158,7 +154,7 @@ void PhysicsSystem::receive(Event* ev)
 					if (entity == 1) // Entity A
 					{
 						auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(entity);
-						transform.offSetPosition(Vec2(0.0f, -1.0f) * gDeltaTime);
+						transform.offSetPosition(Vec2(0.0f, -3.0f) * gDeltaTime);
 						RE_INFO("Move A Down!");
 					}
 				}
@@ -170,7 +166,7 @@ void PhysicsSystem::receive(Event* ev)
 					if (entity == 2) // Entity B
 					{
 						auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(entity);
-						transform.offSetPosition(Vec2(-1.0f, 0.0f) * gDeltaTime);
+						transform.offSetPosition(Vec2(-3.0f, 0.0f) * gDeltaTime);
 						RE_INFO("Move B Left!");
 					}
 				}
@@ -182,7 +178,7 @@ void PhysicsSystem::receive(Event* ev)
 					if (entity == 2) // Entity B
 					{
 						auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(entity);
-						transform.offSetPosition(Vec2(1.0f, 0.0f) * gDeltaTime);
+						transform.offSetPosition(Vec2(3.0f, 0.0f) * gDeltaTime);
 						RE_INFO("Move B Right!");
 					}
 				}
@@ -194,7 +190,7 @@ void PhysicsSystem::receive(Event* ev)
 					if (entity == 2) // Entity B
 					{
 						auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(entity);
-						transform.offSetPosition(Vec2(0.0f, 1.0f) * gDeltaTime);
+						transform.offSetPosition(Vec2(0.0f, 3.0f) * gDeltaTime);
 						RE_INFO("Move B Up!");
 					}
 				}
@@ -206,7 +202,7 @@ void PhysicsSystem::receive(Event* ev)
 					if (entity == 2) // Entity B
 					{
 						auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(entity);
-						transform.offSetPosition(Vec2(0.0f, -1.0f) * gDeltaTime);
+						transform.offSetPosition(Vec2(0.0f, -3.0f) * gDeltaTime);
 						RE_INFO("Move B Down!");
 					}
 				}
@@ -214,15 +210,22 @@ void PhysicsSystem::receive(Event* ev)
 			else if (EvPressKey->GetKeyCode() == KeyPress::KeyE)
 			{
 				auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>((Entity)(m_entities.size() - 1));
-				transform.offSetScale(Vec2(1.0f, 1.0f) * gDeltaTime);
+				transform.offSetScale(Vec2(3.0f, 3.0f) * gDeltaTime);
 				RE_INFO("Scaled Up!");
 			}
 
 			else if (EvPressKey->GetKeyCode() == KeyPress::KeyQ)
 			{
 				auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>((Entity)(m_entities.size() - 1));
-				transform.offSetScale(Vec2(-1.0f, -1.0f) * gDeltaTime);
+				transform.offSetScale(Vec2(-3.0f, -3.0f) * gDeltaTime);
 				RE_INFO("Scaled Down!");
+			}
+
+			else if (EvPressKey->GetKeyCode() == KeyPress::KeyR)
+			{
+				auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>((Entity)(m_entities.size() - 1));
+				transform.offSetRotation(3.0f * gDeltaTime);
+				RE_INFO("Rotated!");
 			}
 		}
 		default:

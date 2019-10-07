@@ -12,6 +12,7 @@
 #include "Config.h"
 #include "WindowHelper.h"
 #include "MemoryManager.h"
+#include "REMath.h"
 
 
 REEngine gEngine;
@@ -60,12 +61,7 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 
 	setVSync(1);
 
-	InputManager* InputMgr = new InputManager();
 	RE_INFO("Logging App info succeeded");
-
-	////////////////////////////////////
-	// Create Engine Object (Testing)
-	////////////////////////////////////
 
 	gEngine.init();
 	
@@ -113,7 +109,6 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 
 	RE_CORE_INFO("Entity generation complete");
 
-	InputManager* inputMgr = new InputManager();
 	TestSystem sys = TestSystem();
 	float wasteTimer;
 	std::chrono::high_resolution_clock timer;
@@ -131,8 +126,6 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 
 		// Update engine.
 		gEngine.update();
-		inputMgr->update();
-		EventDispatcher::instance().update();
 
 		SwapBuffers(hDC);
 		auto stop = timer.now();
@@ -159,7 +152,6 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 
 	std::cin.get();
 
-	delete InputMgr;
 
 	wglMakeCurrent(NULL, NULL);
 	ReleaseDC(hWnd, hDC);

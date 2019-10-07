@@ -82,9 +82,6 @@
     <ClInclude Include="Source\InputData.h">
       <Filter>RogueEngine\Data</Filter>
     </ClInclude>
-    <ClInclude Include="Source\shader.h">
-      <Filter>RogueEngine\Systems\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="Source\InputManager.h">
       <Filter>RogueEngine\Systems\Input</Filter>
     </ClInclude>
@@ -220,13 +217,22 @@
     <ClInclude Include="Source\TextureManager.h">
       <Filter>RogueEngine\Systems\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="Source\DebugDrawSystem.h">
+      <Filter>RogueEngine\Systems\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Shader.h">
+      <Filter>RogueEngine\Systems\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ShaderManager.h">
+      <Filter>RogueEngine\Systems\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GLHelper.hpp">
+      <Filter>RogueEngine\Systems\Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
       <Filter>RogueEngine</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\shader.cpp">
-      <Filter>RogueEngine\Systems\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Source\InputManager.cpp">
       <Filter>RogueEngine\Systems\Input</Filter>
@@ -320,6 +326,12 @@
     </ClCompile>
     <ClCompile Include="Source\WindowHelper.cpp">
       <Filter>RogueEngine\Systems\Others</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DebugDrawSystem.cpp">
+      <Filter>RogueEngine\Systems\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Shader.cpp">
+      <Filter>RogueEngine\Systems\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

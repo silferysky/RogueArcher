@@ -4,6 +4,8 @@
 #include "AABB.h"
 #include "OBB.h"
 #include "CircleCollider2DComponent.h"
+#include "Logger.h"
+#include "REMath.h"
 
 class CollisionManager
 {
@@ -35,6 +37,29 @@ public:
 		Vec2& interPtA,
 		Vec2& interPtB,
 		float& interTime);
+	void CollisionResponse_CircleLineSegment(const Vec2& ptInter,
+		const Vec2& normal,
+		Vec2& ptEnd,
+		Vec2& reflected);
+	void CollisionResponse_CirclePillar(const Vec2& normal,
+		const float& interTime,
+		const Vec2& ptStart,
+		const Vec2& ptInter,
+		Vec2& ptEnd,
+		Vec2& reflectedVectorNormalized);
+	void CollisionResponse_CircleCircle(Vec2& normal,
+		const float interTime,
+		Vec2& velA,
+		const float& massA,
+		Vec2& interPtA,
+		Vec2& velB,
+		const float& massB,
+		Vec2& interPtB,
+		Vec2& reflectedVectorA,
+		Vec2& ptEndA,
+		Vec2& reflectedVectorB,
+		Vec2& ptEndB);
+
 
 	// AXIS-ALIGNED BOUNDING BOX
 	void updateAABB(AABB& collider, const TransformComponent& transform);

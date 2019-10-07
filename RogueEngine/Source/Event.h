@@ -26,9 +26,11 @@ enum EventType
 
 	EvKeyPressed,
 	EvKeyReleased,
+	EvKeyTriggered,
 
-	EvMouseButtonPressed,			//To be combined with EvKeyPressed
-	EvMouseButtonReleased,		//To be combined with EvKeyReleased
+	EvMouseButtonPressed,
+	EvMouseButtonReleased,
+	EvMouseButtonTriggered,
 	EvMouseMoved,
 	EvMouseScrolled,
 
