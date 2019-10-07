@@ -6,34 +6,18 @@
 #include "TransformComponent.h"
 #include "../Source/REMath.h"
 #include "../Source/EventDispatcher.h"
+#include "GLHelper.hpp"
 
 class Timer;
+class SpriteComponent;
+
 class GraphicsSystem : public System, public EventListener
 {
-	float quadVertices[40] =
-	{
-		// positions          // colors           // texture coords
-		 0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f, 1.0f,    1.0f, 1.0f,   // top right
-		 0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f, 1.0f,   1.0f, 0.0f,   // bottom right
-		-0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f, 1.0f,    0.0f, 0.0f,   // bottom left
-		-0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f, 1.0f,   0.0f, 1.0f   // top left 
-	};
-
-	static constexpr unsigned int quadIndices[6] =
-	{
-		0, 1, 3,   // first triangle
-		1, 2, 3    // second triangle
-	};
-
 	GLuint m_VAO;
 	GLuint m_VBO;
 	GLuint m_EBO;
 
-	GLuint m_shader;
-
-	GLuint m_d_VAO;
-	GLuint m_d_VBO;
-	GLuint m_d_EBO;
+	Shader m_shader;
 public:
 	GraphicsSystem() = default;
 	~GraphicsSystem() = default;
@@ -41,7 +25,7 @@ public:
 	void init();
 	void update() override;
 
-	void drawDebug(BoxCollider2DComponent* box, TransformComponent* transform);
+	void draw(SpriteComponent* sprite, TransformComponent* transform);
 
 	void receive(Event* ev);
 };

@@ -4,62 +4,52 @@
 #include "EntityManager.h"
 #include "FileManager.h"
 #include "GraphicsSystem.h"
+#include "DebugDrawSystem.h"
 #include "PhysicsSystem.h"
+#include "EventDispatcher.h"
+#include "ShaderManager.h"
 
 // Forward declaration
 class PhysicsSystem;
 class GraphicsSystem;
 class SpriteComponent;
+class EventDispatcher;
 
 class Coordinator
 {
+	std::unique_ptr<ComponentManager> m_componentManager;
+	std::unique_ptr<EntityManager> m_entityManager;
+	std::unique_ptr<SystemManager> m_systemManager;
+	std::unique_ptr<FileManager> m_fileManager;
+	std::unique_ptr<TextureManager> m_textureManager;
+	std::unique_ptr<ShaderManager> m_shaderManager;
+
+	bool m_togglePerformanceChecker = true;
+	bool m_fpscheck = true;
 public:
 	Coordinator()
-		: m_entityManager{ std::make_unique<EntityManager>() },
-		  m_componentManager{ std::make_unique<ComponentManager>() },
-		  m_systemManager{ std::make_unique<SystemManager>() },
-		  m_fileManager{ std::make_unique<FileManager>() },
-		  m_textureManager{ std::make_unique<TextureManager>() },
-		  m_activeEntities{MAX_ENTITIES}
+		:	m_entityManager{ std::make_unique<EntityManager>() },
+			m_componentManager{ std::make_unique<ComponentManager>() },
+			m_systemManager{ std::make_unique<SystemManager>() },
+			m_fileManager{ std::make_unique<FileManager>() },
+			m_textureManager{ std::make_unique<TextureManager>() },
+			m_shaderManager{ std::make_unique<ShaderManager>() },
+			m_togglePerformanceChecker{ false },
+			m_fpscheck{ false }
 	{}
 
 	void Init()
 	{
-		RE_CORE_INFO("===============COORDINATOR INIT===============");
-
-		// Register all systems.
-		RE_CORE_INFO("-----------START REGISTERING SYSTEMS----------");
-
-		auto PhysSystem = RegisterSystem<PhysicsSystem>();
-		auto graphics = RegisterSystem<GraphicsSystem>();
-
-		RE_CORE_INFO("-----------END REGISTERING SYSTEMS------------\n\n");
-
-		// Register all components
-		RE_CORE_INFO("---------START REGISTERING COMPONENTS---------");
-
-		RegisterComponent<SpriteComponent>();
-		RegisterComponent<RigidbodyComponent>();
-		RegisterComponent<TransformComponent>();
-		RegisterComponent<CircleCollider2DComponent>();
-		RegisterComponent<BoxCollider2DComponent>();
-
-		RE_CORE_INFO("----------END REGISTERING COMPONENTS----------\n\n");
-
-		// Init systems and system signatures will be set in their respective inits.
-		RE_CORE_INFO("----------START INITIALIZING SYSTEMS----------");
-
-		initSystems();
-
-		RE_CORE_INFO("-----------END INITIALIZING SYSTEMS-----------\n\n");
-
-		m_togglePerformanceChecker = false;
+		m_shaderManager->Init();
+		// Init the systems and set their signatures.
+		m_systemManager->InitSystems();
 	}
 
-	void update()
+	void Update()
 	{
-		//...
-		m_systemManager->updateSystems();
+		// Update the core systems
+		m_systemManager->UpdateSystems();
+		EventDispatcher::instance().update();
 	}
 
 	Entity CreateEntity()
@@ -79,6 +69,11 @@ public:
 	GLuint loadTexture(const char* texture)
 	{
 		return m_textureManager->loadTexture(texture);
+	}
+
+	Shader loadShader(std::string shader)
+	{
+		return m_shaderManager->loadShader(shader);
 	}
 
 	template<typename T>
@@ -129,7 +124,7 @@ public:
 	}
 
 	template<typename T>
-	std::shared_ptr<T> RegisterSystem()
+	void RegisterSystem()
 	{
 		return m_systemManager->RegisterSystem<T>();
 	}
@@ -185,18 +180,5 @@ public:
 	{
 		return m_fpscheck;
 	}
-private:
-	void initSystems()
-	{
-		m_systemManager->initSystems();
-	}
 
-	std::unique_ptr<ComponentManager> m_componentManager;
-	std::unique_ptr<EntityManager> m_entityManager;
-	std::unique_ptr<SystemManager> m_systemManager;
-	std::unique_ptr<FileManager> m_fileManager;
-	std::unique_ptr<TextureManager> m_textureManager;
-	std::vector<Entity> m_activeEntities;
-	bool m_togglePerformanceChecker = true;
-	bool m_fpscheck = true;
 };

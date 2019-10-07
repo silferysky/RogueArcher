@@ -4,13 +4,20 @@ struct KeyboardState;
 enum class KeyPress;
 enum KeyFunction;
 
+void KeyboardState::operator+=(KeyboardState &rhs)
+{
+	for (int i = 0; i < (int)KeyPress::KeyCount; ++i)
+	{
+		if (rhs.Key[i] != 0)
+			Key[i] += rhs.Key[i];
+		else
+			Key[i] = 0;
+	}
+}
+
 InputManager::InputManager()
 {
 	//init();
-}
-
-InputManager::~InputManager()
-{
 }
 
 void InputManager::init()
@@ -48,9 +55,11 @@ void InputManager::HandleState()
 {
 	for (int i = 0; i < (int)KeyPress::KeyCount; ++i)
 	{
-		if (CurKeyboardState.Key[i] > 0)
+		if (KeyTriggered(static_cast<KeyPress>(i)))
+			CreateKeyTriggeredEvent(static_cast<KeyPress>(i));
+		else if (CurKeyboardState.Key[i] > 0)
 			CreateKeyPressEvent((KeyPress(i)), CurKeyboardState.Key[i]);
-		if (KeyReleased((KeyPress)i))
+		else if (KeyReleased((KeyPress)i))
 			CreateKeyReleaseEvent((KeyPress)i);
 	}
 }
@@ -242,5 +251,11 @@ void InputManager::CreateKeyPressEvent(KeyPress key, int repeat)
 void InputManager::CreateKeyReleaseEvent(KeyPress key)
 {
 	KeyReleaseEvent* event = new KeyReleaseEvent(key);
+	EventDispatcher::instance().AddEvent(event);
+}
+
+void InputManager::CreateKeyTriggeredEvent(KeyPress key)
+{
+	KeyTriggeredEvent* event = new KeyTriggeredEvent(key);
 	EventDispatcher::instance().AddEvent(event);
 }

@@ -46,6 +46,8 @@ typedef union Matrix3x3
 } Matrix3x3, Mtx33;
 
 
+std::ostream& operator << (std::ostream& out, const Mtx33& matrix);
+
 Matrix3x3 operator * (const Matrix3x3 &lhs, const Matrix3x3 &rhs);
 	
 /**************************************************************************/

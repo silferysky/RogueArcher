@@ -1,5 +1,6 @@
 #include "CollisionManager.h"
 #include <iostream>
+#include "Main.h"
 
 //_________________________________________________________________________
 //_________________________________________________________________________|
@@ -258,11 +259,11 @@ int CollisionManager::CollisionIntersection_RayCircle(const REMath::Ray& ray,
 	float c = Vec2DotProd(circle.m_center - ray.m_pt0, circle.m_center - ray.m_pt0) - circle.m_radius * circle.m_radius; // (C-Bs).(C-Bs) - r^2
 	float det = b * b - (4 * a * c); // b^2 - 4ac
 
-	if (det < RE_EPSILON && det > -RE_EPSILON) // If determinant is 0, ray grazes circle.
+	if (det < REMath::EPSILON && det > -REMath::EPSILON) // If determinant is 0, ray grazes circle.
 	{
 		interTime = -b / (2 * a); // Faster calculation (Avoids sqrt)
 	}
-	else if (det >= RE_EPSILON)
+	else if (det >= REMath::EPSILON)
 	{
 		float s = sqrt(circle.m_radius * circle.m_radius - nSquared);
 		float rayLength = Vec2Length(ray.m_dir);
@@ -332,7 +333,7 @@ int CollisionManager::CollisionIntersection_CircleCircle(const REMath::Circle& c
 	Reflection computations for circle and line segment collisions.
  */
  /******************************************************************************/
-void CollisionResponse_CircleLineSegment(const Vec2& ptInter,
+void CollisionManager::CollisionResponse_CircleLineSegment(const Vec2& ptInter,
 	const Vec2& normal,
 	Vec2& ptEnd,
 	Vec2& reflected)
@@ -348,7 +349,7 @@ void CollisionResponse_CircleLineSegment(const Vec2& ptInter,
 	Reflection computations for moving circle and static circle (Pillar) collisions.
  */
  /******************************************************************************/
-void CollisionResponse_CirclePillar(const Vec2& normal,
+void CollisionManager::CollisionResponse_CirclePillar(const Vec2& normal,
 	const float& interTime,
 	const Vec2& ptStart,
 	const Vec2& ptInter,
@@ -369,7 +370,7 @@ void CollisionResponse_CirclePillar(const Vec2& normal,
 	Extra credits: Reflection computation for moving circle and moving circle.
  */
  /******************************************************************************/
-void CollisionResponse_CircleCircle(Vec2& normal,
+void CollisionManager::CollisionResponse_CircleCircle(Vec2& normal,
 	const float interTime,
 	Vec2& velA,
 	const float& massA,
@@ -437,7 +438,7 @@ bool CollisionManager::dynamicAABBvsAABB(const AABB& aabb1, const AABB& aabb2,
 {
 	// Calculate new relative velocity Vb using vel2
 	float tFirst = 0;
-	float tLast = 0.016f; //deltaTime
+	float tLast = gDeltaTime;
 
 	Vec2 Vb(body2.getVelocity() - body1.getVelocity());
 
@@ -606,14 +607,15 @@ void CollisionManager::updateVertices(OBB& obb, const TransformComponent& trans)
 	Mtx33 rot, sca;
 	Mtx33RotRad(rot, trans.getRotation());
 	Mtx33Scale(sca, trans.getScale().x, trans.getScale().y);
-	
-	for (int i = 0; i < obb.modelVerts().size(); i++)
+	std::cout << trans.getRotation() << std::endl;
+
+	for (int i = 0; i < (int)obb.modelVerts().size(); i++)
 	{
 		obb.globVerts()[i] = rot * obb.modelVerts()[i];
-		obb.globVerts()[i] = sca * obb.modelVerts()[i];
+		obb.globVerts()[i] = sca * obb.globVerts()[i];
 		obb.globVerts()[i] += trans.getPosition();
 	}
-	}
+}
 
 
 void CollisionManager::updateNormals(OBB& obb)
@@ -621,9 +623,9 @@ void CollisionManager::updateNormals(OBB& obb)
 	size_t i;
 	size_t max_sides = obb.modelVerts().size();
 
-	if (max_sides == 0)
-		return;
-
+	if (!max_sides)
+		RE_CORE_ERROR("OBB has no sides!");
+	
 	for (i = 0; i < max_sides - 1; ++i) // Traverse to the second last vertex
 		obb.normals()[i] = Vec2NormalOf(obb.globVerts()[i + 1] - obb.globVerts()[i]); // n1 till second last normal
 
@@ -653,6 +655,11 @@ void CollisionManager::SATFindMinMax(OBB& obb, const Vec2& currNormal) const
 
 bool CollisionManager::staticOBBvsOBB(OBB& lhs, OBB& rhs)
 {
+	std::vector<Vec2>::iterator i;
+	for(i = lhs.globVerts().begin(); i != lhs.globVerts().cend(); ++i)
+		std::cout << *i << ',';
+	std::cout << std::endl;
+
 	for (Vec2 normal : lhs.normals())
 	{
 		SATFindMinMax(lhs, normal);

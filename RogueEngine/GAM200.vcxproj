@@ -20,6 +20,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\BoxCollider2DComponent.h" />
+    <ClInclude Include="Source\DebugDrawSystem.h" />
+    <ClInclude Include="Source\GLHelper.hpp" />
     <ClInclude Include="Source\PhysicsSystem.h" />
     <ClInclude Include="Source\AABB.h" />
     <ClInclude Include="Source\BaseCollider.h" />
@@ -32,6 +34,8 @@
     <ClInclude Include="Source\Polygon.h" />
     <ClInclude Include="Source\RigidbodyComponent.h" />
     <ClInclude Include="Source\RotatableComponent.h" />
+    <ClInclude Include="Source\Shader.h" />
+    <ClInclude Include="Source\ShaderManager.h" />
     <ClInclude Include="Source\Shape.h" />
     <ClInclude Include="Source\TextureManager.h" />
     <ClInclude Include="Source\TransformComponent.h" />
@@ -63,7 +67,6 @@
     <ClInclude Include="Source\ObjectFactory.h" />
     <ClInclude Include="Source\REMath.h" />
     <ClInclude Include="Source\Resource.h" />
-    <ClInclude Include="Source\shader.h" />
     <ClInclude Include="Source\SpriteComponent.h" />
     <ClInclude Include="Source\SystemManager.h" />
     <ClInclude Include="Source\TestSystem.h" />
@@ -75,6 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\BoxCollider2DComponent.cpp" />
+    <ClCompile Include="Source\DebugDrawSystem.cpp" />
     <ClCompile Include="Source\PhysicsSystem.cpp" />
     <ClCompile Include="Source\AABB.cpp" />
     <ClCompile Include="Source\Circle.cpp" />
@@ -86,6 +90,7 @@
     <ClCompile Include="Source\Polygon.cpp" />
     <ClCompile Include="Source\RigidbodyComponent.cpp" />
     <ClCompile Include="Source\RotatableComponent.cpp" />
+    <ClCompile Include="Source\Shader.cpp" />
     <ClCompile Include="Source\Shape.cpp" />
     <ClCompile Include="Source\TransformComponent.cpp" />
     <ClCompile Include="Source\Config.cpp" />
@@ -101,7 +106,6 @@
     <ClCompile Include="Source\ObjectFactory.cpp" />
     <ClCompile Include="Source\REEngine.cpp" />
     <ClCompile Include="Source\REMath.cpp" />
-    <ClCompile Include="Source\shader.cpp" />
     <ClCompile Include="Source\SpriteComponent.cpp" />
     <ClCompile Include="Source\Timer.cpp" />
     <ClCompile Include="Source\Vector2D.cpp" />
