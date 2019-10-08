@@ -19,6 +19,7 @@ class PhysicsSystem : public System, public EventListener
 	// For debugging.
 	bool checkAABB;
 	bool checkOBB;
+	bool allowGravity;
 public:
 	PhysicsSystem(Vec2 gravity = { 0.0f, -9.81f });
 	~PhysicsSystem() = default;
