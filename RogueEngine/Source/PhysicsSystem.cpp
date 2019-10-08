@@ -5,11 +5,12 @@
 //-------------------------------------------------------//
 void PhysicsSystem::applyForces(RigidbodyComponent& rigidbody) // F = ma
 {
-	rigidbody.offSetAcceleration(rigidbody.getAccForce() * rigidbody.getInvMass());
+	rigidbody.setAcceleration(rigidbody.getAccForce() * rigidbody.getInvMass() + m_gravity);
 }
 
 PhysicsSystem::PhysicsSystem(Vec2 gravity)
-	: m_colliderManager{}, m_gravity{gravity}
+	: m_colliderManager{}, m_gravity{gravity},
+	  checkAABB{ true }, checkOBB{ true }
 {}
 
 void PhysicsSystem::integrateAcceleration(RigidbodyComponent& rigidbody, TransformComponent& transform)
@@ -17,7 +18,7 @@ void PhysicsSystem::integrateAcceleration(RigidbodyComponent& rigidbody, Transfo
 	transform.offSetPosition(rigidbody.getVelocity() * gDeltaTime);
 
 	Vec2 vel = rigidbody.getAcceleration() * gDeltaTime;
-//	std::cout << "Vel = " << vel << std::endl;
+	std::cout << "Vel = " << vel << std::endl;
 
 	vel *= static_cast<float>(std::pow(rigidbody.getDamping(), gDeltaTime));
 	rigidbody.offSetVelocity(vel);
@@ -32,6 +33,7 @@ void PhysicsSystem::init()
 {
 	LISTENER_HANDLER hand = std::bind(&PhysicsSystem::receive, this, std::placeholders::_1);
 	EventDispatcher::instance().AddListener(SystemID::id_PHYSICSSYSTEM, hand);
+
 	// Add components to signature.
 	Signature signature;
 	signature.set(gEngine.m_coordinator.GetComponentType<RigidbodyComponent>());
@@ -41,6 +43,7 @@ void PhysicsSystem::init()
 	
 	// Set physics system signature.
 	gEngine.m_coordinator.SetSystemSignature<PhysicsSystem>(signature);
+	m_gravity = { 0.0f, -1.0f };
 }
 
 void PhysicsSystem::update()
@@ -79,14 +82,22 @@ void PhysicsSystem::update()
 		
 		// Test AABB/OBB Collision
 		std::set<Entity>::iterator iNextEntity = iEntity;
+
 		for (iNextEntity++; iNextEntity != m_entities.end(); ++iNextEntity)
 		{
 			auto& nextBoxCollider = gEngine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iNextEntity);
 			if (m_colliderManager.staticAABBvsAABB(currBoxCollider.AABB(), nextBoxCollider.AABB()))
-				std::cout << "Entity " << *iEntity << " AABB collides with Entity " << *iNextEntity << " AABB" << std::endl;
-
+			{
+				if(checkAABB)
+					std::cout << "Entity " << *iEntity << " AABB collides with Entity " << *iNextEntity << " AABB" << std::endl;
+				checkAABB = false;
+			}
 			if (m_colliderManager.staticOBBvsOBB(currBoxCollider.OBB(), nextBoxCollider.OBB()))
-				std::cout << "Entity " << *iEntity << " OBB collides with Entity " << *iNextEntity << "OBB" << std::endl;
+			{
+				if(checkOBB)
+					std::cout << "Entity " << *iEntity << " OBB collides with Entity " << *iNextEntity << "OBB" << std::endl;
+				checkOBB = false;
+			}
 		}
 
 		// Collision Response (Contact, forces, etc)
@@ -106,9 +117,6 @@ void PhysicsSystem::receive(Event* ev)
 		{
 		case EventType::EvKeyPressed:
 		{
-		//	auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
-		//	UNREFERENCED_PARAMETER(rigidbody);
-
 			KeyPressEvent* EvPressKey = dynamic_cast<KeyPressEvent*>(ev);
 				
 			if (EvPressKey->GetKeyCode() == KeyPress::KeyA)
@@ -117,8 +125,8 @@ void PhysicsSystem::receive(Event* ev)
 				{
 					if (entity == 1) // Entity A
 					{
-						auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(entity);
-						transform.offSetPosition(Vec2(-3.0f, 0.0f) * gDeltaTime);
+						auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
+						rigidbody.addForce(Vec2(-5.0f, 0.0f));
 						RE_INFO("Move A Left!");
 					}
 				}
@@ -129,8 +137,8 @@ void PhysicsSystem::receive(Event* ev)
 				{
 					if (entity == 1) // Entity A
 					{
-						auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(entity);
-						transform.offSetPosition(Vec2(3.0f, 0.0f) * gDeltaTime);
+						auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
+						rigidbody.addForce(Vec2(5.0f, 0.0f));
 						RE_INFO("Move A Right!");
 					}
 				}
@@ -141,8 +149,8 @@ void PhysicsSystem::receive(Event* ev)
 				{
 					if (entity == 1) // Entity A
 					{
-						auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(entity);
-						transform.offSetPosition(Vec2(0.0f, 3.0f) * gDeltaTime);
+						auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
+						rigidbody.addForce(Vec2(0.0f, 5.0f));
 						RE_INFO("Move A Up!");
 					}
 				}
@@ -153,8 +161,8 @@ void PhysicsSystem::receive(Event* ev)
 				{
 					if (entity == 1) // Entity A
 					{
-						auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(entity);
-						transform.offSetPosition(Vec2(0.0f, -3.0f) * gDeltaTime);
+						auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
+						rigidbody.addForce(Vec2(0.0f, -5.0f));
 						RE_INFO("Move A Down!");
 					}
 				}
@@ -165,8 +173,8 @@ void PhysicsSystem::receive(Event* ev)
 				{
 					if (entity == 2) // Entity B
 					{
-						auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(entity);
-						transform.offSetPosition(Vec2(-3.0f, 0.0f) * gDeltaTime);
+						auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
+						rigidbody.addForce(Vec2(-5.0f, 0.0f));
 						RE_INFO("Move B Left!");
 					}
 				}
@@ -177,8 +185,8 @@ void PhysicsSystem::receive(Event* ev)
 				{
 					if (entity == 2) // Entity B
 					{
-						auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(entity);
-						transform.offSetPosition(Vec2(3.0f, 0.0f) * gDeltaTime);
+						auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
+						rigidbody.addForce(Vec2(5.0f, 0.0f));
 						RE_INFO("Move B Right!");
 					}
 				}
@@ -189,8 +197,8 @@ void PhysicsSystem::receive(Event* ev)
 				{
 					if (entity == 2) // Entity B
 					{
-						auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(entity);
-						transform.offSetPosition(Vec2(0.0f, 3.0f) * gDeltaTime);
+						auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
+						rigidbody.addForce(Vec2(0.0f, 5.0f));
 						RE_INFO("Move B Up!");
 					}
 				}
@@ -201,8 +209,8 @@ void PhysicsSystem::receive(Event* ev)
 				{
 					if (entity == 2) // Entity B
 					{
-						auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(entity);
-						transform.offSetPosition(Vec2(0.0f, -3.0f) * gDeltaTime);
+						auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
+						rigidbody.addForce(Vec2(0.0f, -5.0f));
 						RE_INFO("Move B Down!");
 					}
 				}
@@ -226,6 +234,16 @@ void PhysicsSystem::receive(Event* ev)
 				auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>((Entity)(m_entities.size() - 1));
 				transform.offSetRotation(3.0f * gDeltaTime);
 				RE_INFO("Rotated!");
+			}
+			else if (EvPressKey->GetKeyCode() == KeyPress::KeyK)
+			{
+				auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>((Entity)(m_entities.size() - 1));
+				transform.setPosition(Vec2(0.0f, 0.0f));
+			}
+			else if (EvPressKey->GetKeyCode() == KeyPress::KeyL)
+			{
+				auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>((Entity)2);
+				transform.setPosition(Vec2(0.0f, 0.0f));
 			}
 		}
 		default:
