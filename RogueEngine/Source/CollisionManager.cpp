@@ -566,6 +566,12 @@ bool CollisionManager::dynamicAABBvsAABB(const AABB& aabb1, const AABB& aabb2,
 	return true;
 }
 
+
+//_________________________________________________________________________
+//_________________________________________________________________________|
+//_________________________Oriented Bounding Box___________________________|
+//_________________________________________________________________________|
+//_________________________________________________________________________|
 // Debug print
 void printOBBGlobs(OBB& obb)
 {
@@ -580,13 +586,6 @@ void printOBBGlobs(OBB& obb)
 	std::cout << std::endl;
 }
 
-
-
-//_________________________________________________________________________
-//_________________________________________________________________________|
-//_________________________Oriented Bounding Box___________________________|
-//_________________________________________________________________________|
-//_________________________________________________________________________|
 void CollisionManager::initOBB(OBB& obb, const std::vector<Vec2>& modelVertices)
 {
 	obb.modelVerts() = modelVertices;
@@ -607,8 +606,7 @@ void CollisionManager::updateVertices(OBB& obb, const TransformComponent& trans)
 	Mtx33 rot, sca;
 	Mtx33RotRad(rot, trans.getRotation());
 	Mtx33Scale(sca, trans.getScale().x, trans.getScale().y);
-	std::cout << trans.getRotation() << std::endl;
-
+	
 	for (int i = 0; i < (int)obb.modelVerts().size(); i++)
 	{
 		obb.globVerts()[i] = rot * obb.modelVerts()[i];
@@ -655,10 +653,10 @@ void CollisionManager::SATFindMinMax(OBB& obb, const Vec2& currNormal) const
 
 bool CollisionManager::staticOBBvsOBB(OBB& lhs, OBB& rhs)
 {
-	std::vector<Vec2>::iterator i;
-	for(i = lhs.globVerts().begin(); i != lhs.globVerts().cend(); ++i)
-		std::cout << *i << ',';
-	std::cout << std::endl;
+//	std::vector<Vec2>::iterator i;
+//	for(i = lhs.globVerts().begin(); i != lhs.globVerts().cend(); ++i)
+//		std::cout << *i << ',';
+//	std::cout << std::endl;
 
 	for (Vec2 normal : lhs.normals())
 	{
