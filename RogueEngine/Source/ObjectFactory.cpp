@@ -11,7 +11,6 @@ void ObjectFactory::LoadLevel(const char* fileName)
 
 	Signature currentSignature;
 	std::stringstream debugStr;
-	Vec2 WorldGravity{ 0.0f, 0.0f };
 
 	//For Entity Count
 	Entity entCount = level["EntityCount"].GetInt();
@@ -19,7 +18,6 @@ void ObjectFactory::LoadLevel(const char* fileName)
 	//For Background
 	Entity backgroundEnt = gEngine.m_coordinator.CreateEntity();
 	std::string backgroundStr = level["BackgroundTexture"].GetString();
-
 	SpriteComponent backgroundSprite = SpriteComponent();
 	backgroundSprite.setTexture(backgroundStr.c_str());
 

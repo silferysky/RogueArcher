@@ -1,8 +1,8 @@
 #include "ImguiLayer.h"
 #include "Quad.h"
-#include "SOIL.h"
 #include "REEditor.h"
 #include "glew.h"
+#include "glfw3.h"
 
 namespace ImGuiLayer
 {

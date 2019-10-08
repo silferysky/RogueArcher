@@ -4,12 +4,7 @@
 
 #include <fstream>
 #include "Main.h"
-#include "KeyEvent.h"
-#include "InputManager.h"
-#include "MemoryManager.h"
 
-#include "Quad.h"
-#include "SOIL.h"
 #include "imgui.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_glfw.h"

@@ -41,6 +41,7 @@ RogueEngine/.vs
 
 #include everything within#
 !/Dep/**/*
+!/RogueEditor/Dep/**/*
 
 #include glew32 files#
 !/RogueEngine/Debug/glew32.dll

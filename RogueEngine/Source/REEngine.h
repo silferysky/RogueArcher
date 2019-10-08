@@ -3,7 +3,6 @@
 #include "Logger.h"
 #include "InputManager.h"
 #include "EventDispatcher.h"
-#include "glfw3.h"
 
 class REEngine
 {
