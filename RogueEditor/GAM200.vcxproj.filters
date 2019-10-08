@@ -8,30 +8,6 @@
     <Filter Include="RogueEngine">
       <UniqueIdentifier>{f2913a8b-aa33-48bd-b5ba-6c6af812770d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="RogueEngine\Systems">
-      <UniqueIdentifier>{720125b1-fd03-4ad0-be57-66bebbe94904}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="RogueEngine\Entities">
-      <UniqueIdentifier>{9625a325-37cf-4799-a695-4dc1753bacd4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="RogueEngine\Components">
-      <UniqueIdentifier>{a5d5a6bb-9849-4008-976f-ee24ee403053}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="RogueEngine\Systems\EventSystem">
-      <UniqueIdentifier>{8ed8a40a-ae7c-43fa-aac3-45f06a6593ca}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="RogueEngine\Systems\EventSystem\Events">
-      <UniqueIdentifier>{874017b0-c223-4a1e-9f81-5e68b60e39c5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="RogueEngine\Data">
-      <UniqueIdentifier>{a050a5c0-1c86-4d17-8448-e9c5d24c48f5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="RogueEngine\Systems\Graphics">
-      <UniqueIdentifier>{d11b3ae9-5aed-4e68-8791-7e74d89579b3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="RogueEngine\Systems\ECS">
-      <UniqueIdentifier>{629d965b-c364-483b-b07e-8a65dc3774f6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="RogueEngine\Imgui">
       <UniqueIdentifier>{805152a0-e608-446c-95c2-9f0925dc4fab}</UniqueIdentifier>
     </Filter>
@@ -43,88 +19,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Scripts\GameStateList.h">
-      <Filter>RogueEngine\Systems</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\Resource.h">
       <Filter>Resource Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\SystemManager.h">
-      <Filter>RogueEngine\Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\GameStateManager.h">
-      <Filter>RogueEngine\Systems</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Main.h">
       <Filter>RogueEngine</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Logger.h">
-      <Filter>RogueEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\RogueEngine.h">
-      <Filter>RogueEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Event.h">
-      <Filter>RogueEngine\Systems\EventSystem\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\AppEvent.h">
-      <Filter>RogueEngine\Systems\EventSystem\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\KeyEvent.h">
-      <Filter>RogueEngine\Systems\EventSystem\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\EventDispatcher.h">
-      <Filter>RogueEngine\Systems\EventSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\InputManager.h">
-      <Filter>RogueEngine\Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\InputData.h">
-      <Filter>RogueEngine\Data</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\EngineIO.h">
-      <Filter>RogueEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Quad.h">
-      <Filter>RogueEngine\Systems\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\shader.h">
-      <Filter>RogueEngine\Systems\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\triangle.h">
-      <Filter>RogueEngine\Systems\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\ComponentArray.h">
-      <Filter>RogueEngine\Systems\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\ComponentManager.h">
-      <Filter>RogueEngine\Systems\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Coordinator.h">
-      <Filter>RogueEngine\Systems\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\EntityManager.h">
-      <Filter>RogueEngine\Systems\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Types.h">
-      <Filter>RogueEngine\Systems\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\PhysicsComponent.h">
-      <Filter>RogueEngine\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\BaseSystem.h">
-      <Filter>RogueEngine\Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\MemoryManager.h">
-      <Filter>RogueEngine\Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\BaseEntity.h">
-      <Filter>RogueEngine\Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\BaseComponent.h">
-      <Filter>RogueEngine\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\FileIO.h" />
     <ClInclude Include="Scripts\glew.h">
       <Filter>RogueEngine\Imgui\Library Files</Filter>
     </ClInclude>
@@ -158,9 +58,6 @@
     <ClInclude Include="Scripts\imstb_truetype.h">
       <Filter>RogueEngine\Imgui\Library Files</Filter>
     </ClInclude>
-    <ClInclude Include="SystemComponent.h">
-      <Filter>RogueEngine\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\ImguiLayer.h">
       <Filter>RogueEngine\Imgui\Editor Files</Filter>
     </ClInclude>
@@ -188,46 +85,11 @@
     <ClInclude Include="Scripts\EditorConsole.h">
       <Filter>RogueEngine\Imgui\Editor Files</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Time.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Scripts\GameStateManager.cpp">
-      <Filter>RogueEngine\Systems</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\Main.cpp">
       <Filter>RogueEngine</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Logger.cpp">
-      <Filter>RogueEngine</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\InputManager.cpp">
-      <Filter>RogueEngine\Systems</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\EngineIO.cpp">
-      <Filter>RogueEngine</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Quad.cpp">
-      <Filter>RogueEngine\Systems\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\shader.cpp">
-      <Filter>RogueEngine\Systems\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\triangle.cpp">
-      <Filter>RogueEngine\Systems\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\BaseSystem.cpp">
-      <Filter>RogueEngine\Systems</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\MemoryManager.cpp">
-      <Filter>RogueEngine\Systems</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\BaseEntity.cpp">
-      <Filter>RogueEngine\Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\BaseComponent.cpp">
-      <Filter>RogueEngine\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\FileIO.cpp" />
     <ClCompile Include="Scripts\imgui.cpp">
       <Filter>RogueEngine\Imgui\Library Files</Filter>
     </ClCompile>
@@ -272,10 +134,6 @@
     </ClCompile>
     <ClCompile Include="Scripts\EditorConsole.cpp">
       <Filter>RogueEngine\Imgui\Editor Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Time.cpp" />
-    <ClCompile Include="Scripts\PhysicsComponent.cpp">
-      <Filter>RogueEngine\Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
