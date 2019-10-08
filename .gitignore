@@ -1,7 +1,7 @@
 # Don't track these folders
 .vs/
 x64/
-RogueEngine/.vs
+RogueEngine/.vs/*
 
 # Compiled source #
 ###################
@@ -27,6 +27,9 @@ RogueEngine/.vs
 *.ilk
 *.iobj
 *.ipdb
+*.ilk
+*.iobj
+*.ipdb
 
 # Packages #
 ############
@@ -43,13 +46,8 @@ RogueEngine/.vs
 !/Dep/**/*
 !/RogueEditor/Dep/**/*
 
-#include glew32 files#
-!/RogueEngine/Debug/glew32.dll
-!/RogueEngine/x64/Debug/glew32.dll
-!/x64/Release/glew32.dll
-!/x64/Debug/glew32.dll
-!/Debug/glew32.dll
-!/Release/glew32.dll
+#include dll files#
+!.dll
 
 #ignore specifically these files#
 RogueEngine/log/ClientFileLog.txt
