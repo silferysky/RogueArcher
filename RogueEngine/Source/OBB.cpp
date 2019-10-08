@@ -39,6 +39,13 @@ OBB::VertexList& OBB::normals()
 	return m_normals;
 }
 
+void OBB::setModelVerts(VertexList& model)
+{
+	m_modelVertices = model;
+	m_globalVertices = OBB::VertexList(model.size());
+	m_normals = OBB::VertexList(model.size());
+}
+
 void OBB::setSize(size_t size)
 {
 	m_size = size;
