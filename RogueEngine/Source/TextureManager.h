@@ -2,6 +2,7 @@
 #include <GL/glew.h>
 #include <map>
 #include "SOIL.h"
+#include <iostream>
 
 // to properly compare texture paths
 struct str_cmp
@@ -35,13 +36,16 @@ public:
 			return itr->second;
 		else
 		{
-			GLuint newTexture = SOIL_load_OGL_texture
+			GLuint newTexture = SOIL_load_OGL_texture // load an image file directly as a new OpenGL texture 
 			(
-				texture,
+				"CharaTest.png",
 				SOIL_LOAD_AUTO,
 				SOIL_CREATE_NEW_ID,
-				SOIL_FLAG_INVERT_Y
+				SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
 			);
+
+			if (newTexture == 0)
+				std::cout << "Texture not found!" << std::endl;
 
 			textureMap.emplace(texture, newTexture);
 
