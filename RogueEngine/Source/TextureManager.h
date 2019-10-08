@@ -45,7 +45,7 @@ public:
 			);
 
 			if (newTexture == 0)
-				std::cout << "Texture not found!" << std::endl;
+				std::cout << "SOIL error: " << SOIL_last_result() << std::endl;
 
 			textureMap.emplace(texture, newTexture);
 
