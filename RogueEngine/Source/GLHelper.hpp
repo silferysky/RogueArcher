@@ -49,3 +49,13 @@ static void GenerateQuadPrimitive(GLuint& VBO, GLuint& VAO, GLuint& EBO)
 	glBindBuffer(GL_ARRAY_BUFFER, 0); //Reset
 	glBindVertexArray(0); //Reset
 }
+
+static void drawLine(const Vector2D& p1, const Vector2D& p2) 
+{
+	float line_vertex[] =
+	{
+		p1.x, p1.y, p2.x, p2.y
+	};
+	glVertexPointer(2, GL_FLOAT, 0, line_vertex);
+	glDrawArrays(GL_LINES, 0, 2);
+}

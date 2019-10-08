@@ -10,16 +10,14 @@ bool REEngine::InitializeOpenGL()
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Perspective Calculations
 
 	// Enable alpha
-	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_BLEND);
 
 	if (glewInit() != GLEW_OK)
 	{
 		std::cout << "GLEW broke" << std::endl;
 		return false;
 	}
-
-	glfwInit();
 
 	return true;
 }

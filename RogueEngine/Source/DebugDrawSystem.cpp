@@ -33,12 +33,13 @@ void DebugDrawSystem::update()
 		glDisable(GL_DEPTH_TEST);
 
 		if (entity)
-			drawDebug(&collider, &transform);
+			drawAABB(&collider, &transform);
+		//drawOBB(&collider);
 	}
 	TimeSystem.TimerEnd("Graphics System");
 }
 
-void DebugDrawSystem::drawDebug(BoxCollider2DComponent* box, TransformComponent* transform)
+void DebugDrawSystem::drawAABB(BoxCollider2DComponent* box, TransformComponent* transform)
 {
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glBindVertexArray(m_VAO);
@@ -53,7 +54,6 @@ void DebugDrawSystem::drawDebug(BoxCollider2DComponent* box, TransformComponent*
 
 	transformMat = glm::translate(transformMat, { (left + right) * 0.5f, (top + bottom) * 0.5f, 1.0f });
 	transformMat = glm::scale(transformMat, glm::vec3(transform->getScale().x, transform->getScale().x, 1.0f));
-	transformMat = glm::rotate(transformMat, transform->getRotation(), glm::vec3(0.0f, 0.0f, 1.0f));
 
 	glBindVertexArray(m_VAO);
 
@@ -69,6 +69,15 @@ void DebugDrawSystem::drawDebug(BoxCollider2DComponent* box, TransformComponent*
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 	glUseProgram(0);
+}
+
+void DebugDrawSystem::drawOBB(BoxCollider2DComponent* box)
+{
+	auto obb = box->OBB();
+	for (int i = 0; i < obb.getSize() - 1;)
+	{
+		drawLine(obb.modelVerts()[i], obb.modelVerts()[++i]);
+	}
 }
 
 void DebugDrawSystem::receive(Event* ev)

@@ -19,7 +19,7 @@ class RigidbodyComponent
 public:
 	RigidbodyComponent(float mass = 1.0f,
 			  float volume = 1.0f,
-			  float damping = 0.1f);
+			  float damping = 0.99f);
 	~RigidbodyComponent() = default;
 
 	Vec2 getVelocity() const;

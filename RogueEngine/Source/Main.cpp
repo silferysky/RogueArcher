@@ -101,16 +101,8 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 
 	//gObjectFactory.SaveLevel("Resources/Level 1.json");
 
-	objInLevel = gObjectFactory.GetActiveEntity().size();
-	debugStr.clear();
-	debugStr.str("");
-	debugStr << "Number of entities at end: " << objInLevel;
-	RE_INFO(debugStr.str());
-
-	RE_CORE_INFO("Entity generation complete");
-
 	TestSystem sys = TestSystem();
-	float wasteTimer;
+	float gFixedDeltaTime;
 	std::chrono::high_resolution_clock timer;
 	config.SetFPS(60);
 	while (gameIsRunning)
@@ -127,10 +119,29 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 		// Update engine.
 		gEngine.update();
 
+//		void Engine::Update()
+//		{
+//			currentNumberOfSteps = 0; //reset
+//			deltaTime = timeEnd - timeStart; // Compute the actual game loop time
+//			while (accumulatedTime >= gFixedDeltaTime)
+//			{
+//				accumulatedTime -= gFixedDeltaTime;
+//			}
+//			currentNumberOfSteps++;
+//		}
+//		Physics::Update()
+//		{
+//			// Loop used in systems that have time-based formula
+//			for(int step = 0; step < currentNumberOfSteps; ++step
+//				{
+//					// Do euler's stuff
+//				}
+//		}
+
 		SwapBuffers(hDC);
 		auto stop = timer.now();
-		wasteTimer = std::chrono::duration_cast<std::chrono::microseconds>(stop - start).count() / 1000000.0f;
-		gDeltaTime = wasteTimer;
+		gFixedDeltaTime = std::chrono::duration_cast<std::chrono::microseconds>(stop - start).count() / 1000000.0f;
+		gDeltaTime = gFixedDeltaTime;
 		if (gEngine.m_coordinator.FPSChecker())
 		{
 			config.SetFPS(30);
