@@ -1,7 +1,9 @@
 # Don't track these folders
 .vs/
 x64/
-RogueEngine/.vs
+RogueEngine/.vs/*
+Debug/*
+Release/*
 
 # Compiled source #
 ###################
@@ -24,6 +26,9 @@ RogueEngine/.vs
 *.class
 *.o
 *.so
+*.ilk
+*.iobj
+*.ipdb
 *.ilk
 *.iobj
 *.ipdb
