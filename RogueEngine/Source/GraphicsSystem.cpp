@@ -9,7 +9,6 @@ void GraphicsSystem::init()
 	// Add components to signature
 	Signature signature;
 	signature.set(gEngine.m_coordinator.GetComponentType<SpriteComponent>());
-	signature.set(gEngine.m_coordinator.GetComponentType<BoxCollider2DComponent>());
 	signature.set(gEngine.m_coordinator.GetComponentType<TransformComponent>());
 
 	// Set graphics system signature
@@ -35,7 +34,6 @@ void GraphicsSystem::update()
 	{
 		auto& sprite = gEngine.m_coordinator.GetComponent<SpriteComponent>(entity);
 		auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(entity);
-		auto& collider = gEngine.m_coordinator.GetComponent<BoxCollider2DComponent>(entity);
 
 		//glDisable(GL_DEPTH_TEST);
 
@@ -59,8 +57,6 @@ void GraphicsSystem::draw(SpriteComponent* sprite, TransformComponent* transform
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-	//draw
-	// Use the shader program for drawing
 	// model to world, world to view, view to projection
 
 	//offset by translation of camera, inverse of rotation

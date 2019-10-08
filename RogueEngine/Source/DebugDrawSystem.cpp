@@ -53,7 +53,6 @@ void DebugDrawSystem::drawDebug(BoxCollider2DComponent* box, TransformComponent*
 
 	transformMat = glm::translate(transformMat, { (left + right) * 0.5f, (top + bottom) * 0.5f, 1.0f });
 	transformMat = glm::scale(transformMat, glm::vec3(transform->getScale().x, transform->getScale().x, 1.0f));
-	transformMat = glm::rotate(transformMat, transform->getRotation(), glm::vec3(0.0f, 0.0f, 1.0f));
 
 	glBindVertexArray(m_VAO);
 
