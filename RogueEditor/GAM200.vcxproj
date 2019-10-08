@@ -25,6 +25,7 @@
     <ClInclude Include="Scripts\EditorEdit.h" />
     <ClInclude Include="Scripts\EditorFile.h" />
     <ClInclude Include="Scripts\EditorGameObject.h" />
+    <ClInclude Include="Scripts\EditorHierarchy.h" />
     <ClInclude Include="Scripts\ImguiLayer.h" />
     <ClInclude Include="Scripts\EditorInspector.h" />
     <ClInclude Include="Scripts\REEditor.h" />
@@ -49,6 +50,7 @@
     <ClCompile Include="Scripts\EditorEdit.cpp" />
     <ClCompile Include="Scripts\EditorFile.cpp" />
     <ClCompile Include="Scripts\EditorGameObject.cpp" />
+    <ClCompile Include="Scripts\EditorHierarchy.cpp" />
     <ClCompile Include="Scripts\imgui.cpp" />
     <ClCompile Include="Scripts\ImguiLayer.cpp" />
     <ClCompile Include="Scripts\imgui_demo.cpp" />
