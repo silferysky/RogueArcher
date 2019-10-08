@@ -37,7 +37,8 @@ void GraphicsSystem::update()
 
 		//glDisable(GL_DEPTH_TEST);
 
-		draw(&sprite, &transform);
+		//if (!entity)
+			draw(&sprite, &transform);
 	}
 	TimeSystem.TimerEnd("Graphics System");
 }
