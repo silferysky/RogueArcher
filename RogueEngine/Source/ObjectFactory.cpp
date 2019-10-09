@@ -1,5 +1,7 @@
 #pragma once
 #include "ObjectFactory.h"
+#include "REEngine.h"
+#include "FileIO.h"
 #include <bitset>
 #include <random>
 #define RAND_LARGE 500
@@ -7,7 +9,7 @@
 
 void ObjectFactory::LoadLevel(const char* fileName)
 {
-	rapidjson::Document level = m_Serialiser.DeserialiseFromFile(fileName);
+	rapidjson::Document level = RESerialiser::DeserialiseFromFile(fileName);
 
 	Signature currentSignature;
 	std::stringstream debugStr;
@@ -133,7 +135,7 @@ void ObjectFactory::SaveLevel(const char* fileName)
 	//Background is unique and will not be counted to the entCount
 	Entity entCount = static_cast<Entity>(m_activeEntities.size() - 1);
 	EntityManager* em = &gEngine.m_coordinator.GetEntityManager();
-	m_Serialiser.WriteToFile(fileName, "EntityCount", (int)entCount);
+	RESerialiser::WriteToFile(fileName, "EntityCount", (int)entCount);
 
 	bool writingBackground = true;
 
@@ -156,7 +158,7 @@ void ObjectFactory::SaveLevel(const char* fileName)
 		strstream << "Signature" << entity;
 		stdstr = strstream.str();
 		cstr = stdstr.c_str();
-		m_Serialiser.WriteToFile(fileName, cstr, static_cast<int>(entitySignature.to_ulong()));
+		RESerialiser::WriteToFile(fileName, cstr, static_cast<int>(entitySignature.to_ulong()));
 
 		for (int index = 0; index < static_cast<int>(LASTCOMP); ++index)
 		{
@@ -175,28 +177,28 @@ void ObjectFactory::SaveLevel(const char* fileName)
 					{
 						CLEARNSETSTR(strstream, entity, "Rigidbody", varNum);
 						RigidbodyComponent& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
-						m_Serialiser.WriteToFile(fileName, cstr, rigidbody.Serialize());
+						RESerialiser::WriteToFile(fileName, cstr, rigidbody.Serialize());
 						break;
 					}
 					case static_cast<int>(TRANSFORM) :
 					{
 						CLEARNSETSTR(strstream, entity, "Transform", 0);
 						TransformComponent& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(entity);
-						m_Serialiser.WriteToFile(fileName, cstr, transform.Serialize());
+						RESerialiser::WriteToFile(fileName, cstr, transform.Serialize());
 						break;
 					}
 					case static_cast<int>(CIRCLECOLLIDER2D) :
 					{
 						CLEARNSETSTR(strstream, entity, "CircleCollider", 0);
 						CircleCollider2DComponent& circleCollider = gEngine.m_coordinator.GetComponent<CircleCollider2DComponent>(entity);
-						m_Serialiser.WriteToFile(fileName, cstr, circleCollider.Serialize());
+						RESerialiser::WriteToFile(fileName, cstr, circleCollider.Serialize());
 						break;
 					}
 					case static_cast<int>(BOXCOLLIDER2D) :
 					{
 						CLEARNSETSTR(strstream, entity, "BoxCollider", 0);
 						BoxCollider2DComponent& boxCollider = gEngine.m_coordinator.GetComponent<BoxCollider2DComponent>(entity);
-						m_Serialiser.WriteToFile(fileName, cstr, boxCollider.Serialize());
+						RESerialiser::WriteToFile(fileName, cstr, boxCollider.Serialize());
 						break;
 					}
 					case static_cast<int>(PLAYERCONTROLLER) :
