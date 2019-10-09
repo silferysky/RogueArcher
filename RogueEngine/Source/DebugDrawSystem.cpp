@@ -16,7 +16,7 @@ void DebugDrawSystem::init()
 
 	m_shader = gEngine.m_coordinator.loadShader("Debug Shader");
 
-	GenerateQuadPrimitive(m_VBO, m_VAO, m_EBO);
+	GenerateLinePrimitive(m_VBO, m_VAO);
 }
 
 void DebugDrawSystem::update()
@@ -33,18 +33,19 @@ void DebugDrawSystem::update()
 		glDisable(GL_DEPTH_TEST);
 
 		if (entity)
+		{
 			drawAABB(&collider, &transform);
-		//drawOBB(&collider);
+			//drawOBB(&collider);
+		}
 	}
 	TimeSystem.TimerEnd("Graphics System");
 }
 
 void DebugDrawSystem::drawAABB(BoxCollider2DComponent* box, TransformComponent* transform)
 {
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glUseProgram(m_shader.GetShader());
 	glBindVertexArray(m_VAO);
-
-	auto transformMat = glm::mat4(1.0f);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 
 	float left = box->AABB().getMin().x;
 	float right = box->AABB().getMax().x;
@@ -52,19 +53,13 @@ void DebugDrawSystem::drawAABB(BoxCollider2DComponent* box, TransformComponent* 
 	float top = box->AABB().getMax().y;
 	float bottom = box->AABB().getMin().y;
 
-	transformMat = glm::translate(transformMat, { (left + right) * 0.5f, (top + bottom) * 0.5f, 1.0f });
-	transformMat = glm::scale(transformMat, glm::vec3(transform->getScale().x, transform->getScale().x, 1.0f));
-
-	glBindVertexArray(m_VAO);
-
-	glUseProgram(m_shader.GetShader());
-
-	transformMat = projMat * transformMat;
-
 	GLint transformLocation = glGetUniformLocation(m_shader.GetShader(), "transform");
-	glUniformMatrix4fv(transformLocation, 1, GL_FALSE, glm::value_ptr(transformMat));
+	glUniformMatrix4fv(transformLocation, 1, GL_FALSE, glm::value_ptr(projMat));
 
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+	drawLine(Vec2(left, top), Vec2(right, top)); // top line
+	drawLine(Vec2(left, bottom), Vec2(right, bottom)); // bottom line
+	drawLine(Vec2(left, top), Vec2(left, bottom)); // left line
+	drawLine(Vec2(right, top), Vec2(right, bottom)); // right line
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
@@ -73,11 +68,24 @@ void DebugDrawSystem::drawAABB(BoxCollider2DComponent* box, TransformComponent* 
 
 void DebugDrawSystem::drawOBB(BoxCollider2DComponent* box)
 {
+	glUseProgram(m_shader.GetShader());
+	glBindVertexArray(m_VAO);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+
+	GLint transformLocation = glGetUniformLocation(m_shader.GetShader(), "transform");
+	glUniformMatrix4fv(transformLocation, 1, GL_FALSE, glm::value_ptr(projMat));
+
 	auto obb = box->OBB();
-	for (int i = 0; i < obb.getSize() - 1;)
+	for (int i = 0; i < obb.getSize() - 1; ++i)
 	{
-		drawLine(obb.modelVerts()[i], obb.modelVerts()[++i]);
+		drawLine(obb.globVerts()[i], obb.globVerts()[i + 1]);
 	}
+
+	drawLine(obb.globVerts()[obb.getSize() - 1], obb.globVerts()[0]);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+	glUseProgram(0);
 }
 
 void DebugDrawSystem::receive(Event* ev)
