@@ -34,8 +34,8 @@ void DebugDrawSystem::update()
 
 		if (entity)
 		{
-			drawAABB(&collider, &transform);
-			//drawOBB(&collider);
+			//drawAABB(&collider, &transform);
+			drawOBB(&collider);
 		}
 	}
 	TimeSystem.TimerEnd("Graphics System");
