@@ -6,6 +6,7 @@
 
 namespace ImGuiLayer
 {
+	static ImGuiDockNodeFlags opt_flags = ImGuiDockNodeFlags_None;
 	ImguiLayer::ImguiLayer():window(nullptr)
 	{
 
@@ -35,7 +36,8 @@ namespace ImGuiLayer
 		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
 		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;   */      // Enable Multi-Viewport / Platform Windows
 		ImGui::StyleColorsClassic();
-
+		io.ConfigDockingWithShift = false;
+		io.ConfigFlags = ImGuiConfigFlags_DockingEnable;
 		/*ImGuiStyle& style = ImGui::GetStyle();
 		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
 		{
@@ -50,6 +52,10 @@ namespace ImGuiLayer
 	}
 	void ImguiLayer::UpdateWindow()
 	{
+		static ImGuiDockNodeFlags opt_flags = ImGuiDockNodeFlags_None;
+		ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
+		if (opt_flags & ImGuiDockNodeFlags_PassthruDockspace)
+			window_flags |= ImGuiWindowFlags_NoBackground;
 		ImGuiEditorFile::ImGuiEditorFile ImGuiFile;
 		ImGuiInspector::ImGuiInspector ImGuiInspector;
 		ImGuiEditorEdit::ImGuiEditorEdit ImGuiMenu;
@@ -65,8 +71,9 @@ namespace ImGuiLayer
 			ImGui_ImplOpenGL3_NewFrame();
 			ImGui_ImplGlfw_NewFrame();
 			ImGui::NewFrame();
-
-
+			ImGuiIO& io = ImGui::GetIO();
+			ImGuiID dockspace_id = ImGui::GetID("DOCKSPACE");
+			ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_PassthruDockspace);
 			// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
 			if (show_demo_window)
 				ImGui::ShowDemoWindow(&show_demo_window);

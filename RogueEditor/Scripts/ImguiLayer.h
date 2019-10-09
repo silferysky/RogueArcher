@@ -26,11 +26,12 @@ namespace ImGuiLayer
 		bool show_another_window = false;
 		bool show = true;
 		bool Inspector = true;
-		bool Dropbox = true;
+		bool Dropbox = false;
 		bool Console = true;
 		GLFWwindow* window = nullptr;
 		ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 	private:
+
 		float RETime = 0.0f;
 
 	};

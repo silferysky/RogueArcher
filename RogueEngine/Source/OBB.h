@@ -27,6 +27,8 @@ public:
 	VertexList& modelVerts();
 	VertexList& normals();
 
+	void setModelVerts(VertexList& model);
+
 	void setSize(size_t size);
 	void setMin(float min);
 	void setMax(float max);
