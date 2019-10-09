@@ -13,7 +13,7 @@
     "Entity0Rigidbody0": "0.0;0.0;0.0;0.0;1.0;1.0",
     "Entity0Transform0": "-4.0;0.0;1.0;1.0;0.0",
     "Entity0CircleCollider0": "0.0",
-    "Entity0BoxCollider0": "4;0.0;0.0;0.0;-0.5;-0.5;-0.5;-0.5;0.5",
+    "Entity0BoxCollider0": "4;0.5;0.5;0.5;-0.5;-0.5;-0.5;-0.5;0.5",
     "Entity1Sprite0": "test.bmp",
     "Entity1Rigidbody0": "0.0;0.0;0.0;0.0;1.0;1.0",
     "Entity1Transform0": "4.0;0.0;1.0;1.0;0.0",
