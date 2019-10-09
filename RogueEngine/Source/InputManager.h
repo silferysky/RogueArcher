@@ -1,12 +1,8 @@
 #pragma once
-#include <Windows.h>
 #include <map>
-#include "SystemList.h"
-#include "EventDispatcher.h"
 #include "KeyEvent.h"
 #include "InputData.h"
-#include "SystemManager.h"
-#include <iostream>
+#include "BaseSystem.h"
 
 struct KeyboardState
 {

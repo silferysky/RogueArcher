@@ -1,7 +1,6 @@
 #pragma once
-#include <list>					//std::list
-#include <memory>				//std::unique_ptr
-#include "RogueEngine.h"
+#include <vector>
+#include "logger.h"
 #include "MemoryType.h"
 
 #define MEM_SPACE 1024 * 1024

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <functional>
-#include "RogueEngine.h"
+#include "logger.h"
 #include "Event.h"
 
 class SystemList;
