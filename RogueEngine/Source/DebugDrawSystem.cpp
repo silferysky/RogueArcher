@@ -38,7 +38,7 @@ void DebugDrawSystem::update()
 		{
 			drawAABB(&collider, &transform);
 			drawOBB(&collider);
-			//drawVelocity(&rBody, &transform);
+			drawVelocity(&rBody, &transform);
 		}
 	}
 	TimeSystem.TimerEnd("Graphics System");
@@ -79,7 +79,7 @@ void DebugDrawSystem::drawOBB(BoxCollider2DComponent* box)
 	glUniformMatrix4fv(transformLocation, 1, GL_FALSE, glm::value_ptr(projMat));
 
 	auto obb = box->OBB();
-	for (int i = 0; i < obb.getSize() - 1; ++i)
+	for (unsigned int i = 0; i < obb.getSize() - 1; ++i)
 	{
 		drawLine(obb.globVerts()[i], obb.globVerts()[i + 1]);
 	}
@@ -97,18 +97,18 @@ void DebugDrawSystem::drawVelocity(RigidbodyComponent* rBody, TransformComponent
 	glBindVertexArray(m_VAO);
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 
-	auto transformMat = glm::mat4(1.0f);
+	auto rotateMat = glm::mat4(1.0f);
 
-	transformMat = glm::translate(transformMat, { transform->getPosition().x, transform->getPosition().y, 1.0f });
-	transformMat = glm::rotate(transformMat, transform->getRotation(), glm::vec3(0.0f, 0.0f, 1.0f));
-	transformMat = glm::scale(transformMat, glm::vec3(rBody->getVelocity().x, rBody->getVelocity().y, 1.0f));
-
-	transformMat = projMat * transformMat;
+	//transformMat = glm::translate(transformMat, { transform->getPosition().x, transform->getPosition().y, 1.0f });
+	rotateMat = glm::rotate(rotateMat, transform->getRotation(), glm::vec3(0.0f, 0.0f, 1.0f));
 
 	GLint transformLocation = glGetUniformLocation(m_shader.GetShader(), "transform");
-	glUniformMatrix4fv(transformLocation, 1, GL_FALSE, glm::value_ptr(transformMat));
+	glUniformMatrix4fv(transformLocation, 1, GL_FALSE, glm::value_ptr(projMat));
 
-	glDrawArrays(GL_LINES, 0, 2);
+	Vec2 end(transform->getPosition().x + 0.5 * rBody->getVelocity().x, transform->getPosition().y);
+	Matrix3x3 transformMat(rotateMat);
+
+	drawLine(Vec2(transform->getPosition().x, transform->getPosition().y), transformMat * end);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);

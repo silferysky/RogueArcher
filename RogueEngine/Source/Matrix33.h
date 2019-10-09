@@ -35,6 +35,7 @@ typedef union Matrix3x3
 
 	Matrix3x3() {}
 	Matrix3x3(const float *pArr);
+	Matrix3x3(glm::mat3 rhs);
 	Matrix3x3(float _00, float _01, float _02,
 				float _10, float _11, float _12,
 				float _20, float _21, float _22);

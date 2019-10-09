@@ -47,6 +47,19 @@ Matrix3x3::Matrix3x3(const float *pArr)
 		m[i] = pArr[i];
 }
 
+Matrix3x3::Matrix3x3(glm::mat3 rhs)
+{
+	int i = 0;
+	for (int j = 0; j < 3; ++i, ++j)
+	{
+		m[i] = rhs[j][0];
+		++i;
+		m[i] = rhs[j][1];
+		++i;
+		m[i] = rhs[j][2];
+	}
+}
+
 /**************************************************************************/
 /*!
 	Conversion constructor of 3x3 matrix. Initializes the matrix to the
