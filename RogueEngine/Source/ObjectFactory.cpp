@@ -58,7 +58,7 @@ void ObjectFactory::LoadLevel(const char* fileName)
 					case static_cast<int>(SPRITE) :
 					{
 						SpriteComponent spriteComponent{};
-						CLEARNSETSTR(strstream, entity, "Sprite", 0);
+						CLEARNSETSTR(strstream, entity, "Sprite");
 						spriteComponent.Deserialize(level[cstr].GetString());
 
 						gEngine.m_coordinator.AddComponent(curEnt, spriteComponent);
@@ -67,7 +67,7 @@ void ObjectFactory::LoadLevel(const char* fileName)
 					case static_cast<int>(RIGIDBODY) :
 					{
 						RigidbodyComponent rigidbodyComponent{};
-						CLEARNSETSTR(strstream, entity, "Rigidbody", 0);
+						CLEARNSETSTR(strstream, entity, "Rigidbody");
 						rigidbodyComponent.Deserialize(level[cstr].GetString());
 
 						gEngine.m_coordinator.AddComponent(curEnt, rigidbodyComponent);
@@ -76,7 +76,7 @@ void ObjectFactory::LoadLevel(const char* fileName)
 					case static_cast<int>(TRANSFORM) :
 					{
 						TransformComponent transformComponent{};
-						CLEARNSETSTR(strstream, entity, "Transform", 0);
+						CLEARNSETSTR(strstream, entity, "Transform");
 						transformComponent.Deserialize(level[cstr].GetString());
 
 						gEngine.m_coordinator.AddComponent(curEnt, transformComponent);
@@ -85,7 +85,7 @@ void ObjectFactory::LoadLevel(const char* fileName)
 					case static_cast<int>(CIRCLECOLLIDER2D) :
 					{
 						CircleCollider2DComponent circleColliderComponent{};
-						CLEARNSETSTR(strstream, entity, "CircleCollider", 0);
+						CLEARNSETSTR(strstream, entity, "CircleCollider");
 						circleColliderComponent.Deserialize(level[cstr].GetString());
 
 						gEngine.m_coordinator.AddComponent(curEnt, circleColliderComponent);
@@ -94,7 +94,7 @@ void ObjectFactory::LoadLevel(const char* fileName)
 					case static_cast<int>(BOXCOLLIDER2D) :
 					{
 						BoxCollider2DComponent boxColliderComponent{};
-						CLEARNSETSTR(strstream, entity, "BoxCollider", 0);
+						CLEARNSETSTR(strstream, entity, "BoxCollider");
 						boxColliderComponent.Deserialize(level[cstr].GetString());
 
 						gEngine.m_coordinator.AddComponent(curEnt, boxColliderComponent);

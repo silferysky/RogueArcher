@@ -32,7 +32,17 @@ void BoxCollider2DComponent::Deserialize(std::string toDeserialize)
 	std::vector<Vec2> vertexList{};
 	size_t size = 0;
 
-	while (std::getline(ss, s1, ';'))
+	if (std::getline(ss, s1))
+	{
+		size = static_cast<size_t>(stoi(s1));
+	}
+
+	for (size_t sz = 0; sz < size; ++sz)
+	{
+		vertexList.push_back(Vec2());
+	}
+
+	/*	while (std::getline(ss, s1, ';'))
 	{
 		//In this case, 1st value is only non double read
 		if (counter > 0)
@@ -44,12 +54,13 @@ void BoxCollider2DComponent::Deserialize(std::string toDeserialize)
 			size = static_cast<size_t>(stoi(s1));
 			break;
 		default:
-			vertexList.push_back(Vec2(stof(s1), stof(s2)));
+			//vertexList.push_back(Vec2(stof(s1), stof(s2)));
+			vertexList.push_back(Vec2());
 			break;
 		}
 
 		++counter;
-	}
+	}*/
 
 	m_obb.setModelVerts(vertexList);
 	m_obb.setSize(size);
