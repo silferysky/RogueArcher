@@ -209,6 +209,10 @@ void ObjectFactory::SaveLevel(const char* fileName)
 						//m_Serialiser.WriteToFile(fileName, cstr, playerController.Serialize());
 						break;
 					}*/
+					case 0:
+					{
+						break;
+					}
 					default:
 					{
 						RE_CORE_WARN("OUT OF BOUNDS OBJECT COMPONENT LOADING");
