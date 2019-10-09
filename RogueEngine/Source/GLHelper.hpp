@@ -50,6 +50,33 @@ static void GenerateQuadPrimitive(GLuint& VBO, GLuint& VAO, GLuint& EBO)
 	glBindVertexArray(0); //Reset
 }
 
+/* static void GenerateLinePrimitive(GLuint& VBO, GLuint& VAO, GLuint& EBO)
+{
+	m_vertexAttribute = 0;
+	m_colorAttribute = 1;
+
+	// Generate
+	glGenVertexArrays(1, &VAO);
+	glGenBuffers(2, &VBO);
+
+	glBindVertexArray(&VAO);
+	glEnableVertexAttribArray(m_vertexAttribute);
+	glEnableVertexAttribArray(m_colorAttribute);
+
+	// Vertex buffer
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glVertexAttribPointer(m_vertexAttribute, 3, GL_FLOAT, GL_FALSE, 0, (const void*)(0));
+	glBufferData(GL_ARRAY_BUFFER, sizeof(m_vertices), m_vertices, GL_DYNAMIC_DRAW);
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_vboIds[1]);
+	glVertexAttribPointer(m_colorAttribute, 4, GL_FLOAT, GL_FALSE, 0, (const void*)(0));
+	glBufferData(GL_ARRAY_BUFFER, sizeof(m_colors), m_colors, GL_DYNAMIC_DRAW);
+
+	// Cleanup
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+} */
+
 static void drawLine(const Vector2D& p1, const Vector2D& p2) 
 {
 	float line_vertex[] =
