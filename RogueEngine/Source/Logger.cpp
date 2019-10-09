@@ -1,5 +1,6 @@
 #pragma once
 #include "Logger.h"
+#include <sstream>
 
 ////////////Declarations for static objects////////////
 std::shared_ptr<spdlog::logger> Logger::RE_CoreLogger;
