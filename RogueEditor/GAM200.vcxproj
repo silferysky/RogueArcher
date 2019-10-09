@@ -26,13 +26,13 @@
     <ClInclude Include="Scripts\EditorFile.h" />
     <ClInclude Include="Scripts\EditorGameObject.h" />
     <ClInclude Include="Scripts\EditorHierarchy.h" />
-    <ClInclude Include="Scripts\ImguiLayer.h" />
     <ClInclude Include="Scripts\EditorInspector.h" />
-    <ClInclude Include="Scripts\REEditor.h" />
+    <ClInclude Include="Scripts\EditorProject.h" />
     <ClInclude Include="Scripts\glew.h" />
     <ClInclude Include="Scripts\glfw3.h" />
     <ClInclude Include="Scripts\imconfig.h" />
     <ClInclude Include="Scripts\imgui.h" />
+    <ClInclude Include="Scripts\ImguiLayer.h" />
     <ClInclude Include="Scripts\imgui_impl_glfw.h" />
     <ClInclude Include="Scripts\imgui_impl_opengl3.h" />
     <ClInclude Include="Scripts\imgui_internal.h" />
@@ -41,6 +41,7 @@
     <ClInclude Include="Scripts\imstb_textedit.h" />
     <ClInclude Include="Scripts\imstb_truetype.h" />
     <ClInclude Include="Scripts\Main.h" />
+    <ClInclude Include="Scripts\REEditor.h" />
     <ClInclude Include="Scripts\Resource.h" />
   </ItemGroup>
   <ItemGroup>
@@ -51,6 +52,8 @@
     <ClCompile Include="Scripts\EditorFile.cpp" />
     <ClCompile Include="Scripts\EditorGameObject.cpp" />
     <ClCompile Include="Scripts\EditorHierarchy.cpp" />
+    <ClCompile Include="Scripts\EditorInspector.cpp" />
+    <ClCompile Include="Scripts\EditorProject.cpp" />
     <ClCompile Include="Scripts\imgui.cpp" />
     <ClCompile Include="Scripts\ImguiLayer.cpp" />
     <ClCompile Include="Scripts\imgui_demo.cpp" />
@@ -59,7 +62,6 @@
     <ClCompile Include="Scripts\imgui_impl_opengl3.cpp" />
     <ClCompile Include="Scripts\imgui_stl.cpp" />
     <ClCompile Include="Scripts\imgui_widgets.cpp" />
-    <ClCompile Include="Scripts\EditorInspector.cpp" />
     <ClCompile Include="Scripts\Main.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
