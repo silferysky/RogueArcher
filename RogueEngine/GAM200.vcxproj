@@ -83,6 +83,7 @@
   <ItemGroup>
     <ClCompile Include="Source\BoxCollider2DComponent.cpp" />
     <ClCompile Include="Source\DebugDrawSystem.cpp" />
+    <ClCompile Include="Source\EventDispatcher.cpp" />
     <ClCompile Include="Source\PhysicsSystem.cpp" />
     <ClCompile Include="Source\AABB.cpp" />
     <ClCompile Include="Source\Circle.cpp" />
