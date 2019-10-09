@@ -14,8 +14,8 @@
     <Filter Include="RogueEngine\Imgui\Library Files">
       <UniqueIdentifier>{b6d9db0d-6c3b-4ba1-bf73-8df6051d6257}</UniqueIdentifier>
     </Filter>
-    <Filter Include="RogueEngine\Imgui\Editor Files">
-      <UniqueIdentifier>{4173f22b-058f-4c1d-a3c4-0f462db94155}</UniqueIdentifier>
+    <Filter Include="RogueEngine\EditorFiles">
+      <UniqueIdentifier>{70779b6f-9798-450c-abd0-ebceb9102f99}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -58,35 +58,38 @@
     <ClInclude Include="Scripts\imstb_truetype.h">
       <Filter>RogueEngine\Imgui\Library Files</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\ImguiLayer.h">
-      <Filter>RogueEngine\Imgui\Editor Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\EditorFile.h">
-      <Filter>RogueEngine\Imgui\Editor Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\EditorInspector.h">
-      <Filter>RogueEngine\Imgui\Editor Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\REEditor.h">
-      <Filter>RogueEngine\Imgui\Editor Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\EditorEdit.h">
-      <Filter>RogueEngine\Imgui\Editor Files</Filter>
+    <ClInclude Include="Scripts\EditorProject.h">
+      <Filter>RogueEngine\EditorFiles</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\EditorAssets.h">
-      <Filter>RogueEngine\Imgui\Editor Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\EditorGameObject.h">
-      <Filter>RogueEngine\Imgui\Editor Files</Filter>
+      <Filter>RogueEngine\EditorFiles</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\EditorComponent.h">
-      <Filter>RogueEngine\Imgui\Editor Files</Filter>
+      <Filter>RogueEngine\EditorFiles</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\EditorConsole.h">
-      <Filter>RogueEngine\Imgui\Editor Files</Filter>
+      <Filter>RogueEngine\EditorFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\EditorEdit.h">
+      <Filter>RogueEngine\EditorFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\EditorFile.h">
+      <Filter>RogueEngine\EditorFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\EditorGameObject.h">
+      <Filter>RogueEngine\EditorFiles</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\EditorHierarchy.h">
-      <Filter>RogueEngine\Imgui\Editor Files</Filter>
+      <Filter>RogueEngine\EditorFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\EditorInspector.h">
+      <Filter>RogueEngine\EditorFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\REEditor.h">
+      <Filter>RogueEngine\EditorFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\ImguiLayer.h">
+      <Filter>RogueEngine\EditorFiles</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -114,32 +117,35 @@
     <ClCompile Include="Scripts\imgui_widgets.cpp">
       <Filter>RogueEngine\Imgui\Library Files</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\ImguiLayer.cpp">
-      <Filter>RogueEngine\Imgui\Editor Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\EditorFile.cpp">
-      <Filter>RogueEngine\Imgui\Editor Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\EditorInspector.cpp">
-      <Filter>RogueEngine\Imgui\Editor Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\EditorEdit.cpp">
-      <Filter>RogueEngine\Imgui\Editor Files</Filter>
+    <ClCompile Include="Scripts\EditorProject.cpp">
+      <Filter>RogueEngine\EditorFiles</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\EditorAssets.cpp">
-      <Filter>RogueEngine\Imgui\Editor Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\EditorGameObject.cpp">
-      <Filter>RogueEngine\Imgui\Editor Files</Filter>
+      <Filter>RogueEngine\EditorFiles</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\EditorComponent.cpp">
-      <Filter>RogueEngine\Imgui\Editor Files</Filter>
+      <Filter>RogueEngine\EditorFiles</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\EditorConsole.cpp">
-      <Filter>RogueEngine\Imgui\Editor Files</Filter>
+      <Filter>RogueEngine\EditorFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\EditorEdit.cpp">
+      <Filter>RogueEngine\EditorFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\EditorFile.cpp">
+      <Filter>RogueEngine\EditorFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\EditorGameObject.cpp">
+      <Filter>RogueEngine\EditorFiles</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\EditorHierarchy.cpp">
-      <Filter>RogueEngine\Imgui\Editor Files</Filter>
+      <Filter>RogueEngine\EditorFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\EditorInspector.cpp">
+      <Filter>RogueEngine\EditorFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\ImguiLayer.cpp">
+      <Filter>RogueEngine\EditorFiles</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

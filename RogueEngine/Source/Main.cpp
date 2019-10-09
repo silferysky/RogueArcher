@@ -17,6 +17,7 @@
 
 REEngine gEngine;
 float gDeltaTime;
+float gFixedDeltaTime;
 bool gameIsRunning = true;
 ObjectFactory gObjectFactory;
 
@@ -24,6 +25,7 @@ ObjectFactory gObjectFactory;
 static const int SCREEN_FULLSCREEN = 0;
 static const int SCREEN_WIDTH = 960;
 static const int SCREEN_HEIGHT = 540;
+
 
 
 //Use for console
@@ -55,13 +57,14 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	(void)freopen("CONOUT$", "w", stdout);
 	(void)freopen("CONOUT$", "w", stderr);
 
+
+// Enable run-time memory check for debug builds.
+#if defined(DEBUG) | defined(_DEBUG)
+	_CrtSetDbgFlag( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
+#endif
+
 	//Ensures program closes properly 
 	SetConsoleCtrlHandler(CtrlHandler, true);
-
-	// Enable run-time memory check for debug builds.
-	#if defined(DEBUG) | defined(_DEBUG)
-	    _CrtSetDbgFlag( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
-	#endif
 
 	setVSync(1);
 
@@ -106,61 +109,40 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	//gObjectFactory.SaveLevel("Resources/Level 1.json");
 
 	TestSystem sys = TestSystem();
-	float gFixedDeltaTime;
 	std::chrono::high_resolution_clock timer;
 	config.SetFPS(60);
 
 	while (gameIsRunning)
 	{
-
 		auto start = timer.now();
 		while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
 		{
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
-		//Main Debug
-		// RE_INFO("INPUT DEBUG");
 
 		// Update engine.
 		gEngine.update();
 
-		//		void Engine::Update()
-		//		{
-		//			currentNumberOfSteps = 0; //reset
-		//			deltaTime = timeEnd - timeStart; // Compute the actual game loop time
-		//			while (accumulatedTime >= gFixedDeltaTime)
-		//			{
-		//				accumulatedTime -= gFixedDeltaTime;
-		//			}
-		//			currentNumberOfSteps++;
-		//		}
-		//		Physics::Update()
-		//		{
-		//			// Loop used in systems that have time-based formula
-		//			for(int step = 0; step < currentNumberOfSteps; ++step
-		//				{
-		//					// Do euler's stuff
-		//				}
-		//		}
-
 		SwapBuffers(hDC);
 		auto stop = timer.now();
-		gFixedDeltaTime = std::chrono::duration_cast<std::chrono::microseconds>(stop - start).count() / 1000000.0f;
-		gDeltaTime = gFixedDeltaTime;
-		if (gEngine.m_coordinator.FPSChecker())
-		{
-			config.SetFPS(30);
-		}
-		else
-		{
-			config.SetFPS(60);
-		}
-		while (gDeltaTime <= config.GetFPS())
-		{
-			stop = timer.now();
-			gDeltaTime = std::chrono::duration_cast<std::chrono::microseconds>(stop - start).count() / 1000000.0f;
-		}
+	//	if (gEngine.m_coordinator.FPSChecker())
+	//	{
+	//		config.SetFPS(30);
+	//	}
+	//	else
+	//	{
+	//		config.SetFPS(60);
+	//	}
+	//	while (gDeltaTime <= config.GetFPS())
+	//	{
+	//		stop = timer.now();
+	//		gDeltaTime = std::chrono::duration_cast<std::chrono::microseconds>(stop - start).count() / 1000000.0f;
+	//	}
+
+
+	gDeltaTime = std::chrono::duration_cast<std::chrono::microseconds>(stop - start).count() / 1000000.0f;
+
 		if (gEngine.m_coordinator.performanceChecker())
 		{
 			std::cout << "FPS: " << 1 / gDeltaTime << std::endl;
