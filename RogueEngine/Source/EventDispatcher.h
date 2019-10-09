@@ -2,7 +2,6 @@
 
 #include <queue>
 #include <map>
-#include <vector>
 #include "EventListener.h"
 #include "SystemManager.h"
 
