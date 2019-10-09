@@ -29,37 +29,51 @@ void ObjectFactory::LoadLevel(const char* fileName)
 	backgroundTransform.setRotation(0.0f);
 
 	gEngine.m_coordinator.AddComponent(backgroundEnt, BoxCollider2DComponent());
-
 	gEngine.m_coordinator.AddComponent(backgroundEnt, backgroundSprite);
 	gEngine.m_coordinator.AddComponent(backgroundEnt, backgroundTransform);
 	m_activeEntities.push_back(backgroundEnt);
 
 	for (Entity entity = 0; entity < entCount; ++entity)
 	{
-		std::stringstream strstream;
-		std::string stdstr;
+		std::ostringstream ostrstream;
+		std::istringstream istrstream;
+		std::string stdstr, readstr;
 		const char* cstr;
 		Entity curEnt = gEngine.m_coordinator.CreateEntity();
 
 		//cstr will go out of scope if you choose to do strstream.str().c_str()
 		//This is the proper (Non macro) way of setting the string
-		strstream << "Signature" << entity;
+		ostrstream << "Signature" << entity;
 
-		stdstr = strstream.str();
+		stdstr = ostrstream.str();
 		cstr = stdstr.c_str();
 		currentSignature = level[cstr].GetInt();
+
+		ostrstream.clear();
+		ostrstream.str("");
+
+		stdstr = "Entity";
+		ostrstream << stdstr << static_cast<int>(entity);
+		SETSSTOSTR(ostrstream);
+
+		istrstream.str(level[cstr].GetString());
+
+		
 
 		for (int index = 0; index < (int)LASTCOMP; ++index)
 		{
 			if (currentSignature.test(index))
 			{
+				//Does this twice to skip the name line
+				std::getline(istrstream, readstr, '{');
+				std::getline(istrstream, readstr, '}');
 				switch (index)
 				{
 					case static_cast<int>(SPRITE) :
 					{
 						SpriteComponent spriteComponent{};
-						CLEARNSETSTR(strstream, entity, "Sprite");
-						spriteComponent.Deserialize(level[cstr].GetString());
+						//CLEARNSETSTR(strstream, entity, "Sprite");
+						spriteComponent.Deserialize(readstr);
 
 						gEngine.m_coordinator.AddComponent(curEnt, spriteComponent);
 						break;
@@ -67,8 +81,8 @@ void ObjectFactory::LoadLevel(const char* fileName)
 					case static_cast<int>(RIGIDBODY) :
 					{
 						RigidbodyComponent rigidbodyComponent{};
-						CLEARNSETSTR(strstream, entity, "Rigidbody");
-						rigidbodyComponent.Deserialize(level[cstr].GetString());
+						//CLEARNSETSTR(strstream, entity, "Rigidbody");
+						rigidbodyComponent.Deserialize(readstr);
 
 						gEngine.m_coordinator.AddComponent(curEnt, rigidbodyComponent);
 						break;
@@ -76,8 +90,8 @@ void ObjectFactory::LoadLevel(const char* fileName)
 					case static_cast<int>(TRANSFORM) :
 					{
 						TransformComponent transformComponent{};
-						CLEARNSETSTR(strstream, entity, "Transform");
-						transformComponent.Deserialize(level[cstr].GetString());
+						//CLEARNSETSTR(strstream, entity, "Transform");
+						transformComponent.Deserialize(readstr);
 
 						gEngine.m_coordinator.AddComponent(curEnt, transformComponent);
 						break;
@@ -85,8 +99,8 @@ void ObjectFactory::LoadLevel(const char* fileName)
 					case static_cast<int>(CIRCLECOLLIDER2D) :
 					{
 						CircleCollider2DComponent circleColliderComponent{};
-						CLEARNSETSTR(strstream, entity, "CircleCollider");
-						circleColliderComponent.Deserialize(level[cstr].GetString());
+						//CLEARNSETSTR(strstream, entity, "CircleCollider");
+						circleColliderComponent.Deserialize(readstr);
 
 						gEngine.m_coordinator.AddComponent(curEnt, circleColliderComponent);
 						break;
@@ -94,8 +108,8 @@ void ObjectFactory::LoadLevel(const char* fileName)
 					case static_cast<int>(BOXCOLLIDER2D) :
 					{
 						BoxCollider2DComponent boxColliderComponent{};
-						CLEARNSETSTR(strstream, entity, "BoxCollider");
-						boxColliderComponent.Deserialize(level[cstr].GetString());
+						//CLEARNSETSTR(strstream, entity, "BoxCollider");
+						boxColliderComponent.Deserialize(readstr);
 
 						gEngine.m_coordinator.AddComponent(curEnt, boxColliderComponent);
 						break;
