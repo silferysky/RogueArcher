@@ -1,10 +1,9 @@
 #pragma once
-#include "REEngine.h"
-#include "FileIO.h"
+#include "Types.h"
+#include <vector>
 
 class ObjectFactory
 {
-	RESerialiser m_Serialiser;
 
 public:
 	void SaveLevel(const char* fileName);
