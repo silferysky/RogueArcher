@@ -29,9 +29,6 @@
     <Filter Include="RogueEngine\Systems\Events\Events">
       <UniqueIdentifier>{874017b0-c223-4a1e-9f81-5e68b60e39c5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="RogueEngine\Systems\Memory">
-      <UniqueIdentifier>{c7c96828-3cac-4aeb-bc20-6a26e3a1a849}</UniqueIdentifier>
-    </Filter>
     <Filter Include="RogueEngine\Systems\Debug">
       <UniqueIdentifier>{dd569528-c110-4600-89f9-e2702d70a3fd}</UniqueIdentifier>
     </Filter>
@@ -58,6 +55,9 @@
     </Filter>
     <Filter Include="RogueEngine\Systems\Others">
       <UniqueIdentifier>{0ecd1d51-418d-4be3-99a8-6cce0b2b1f2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RogueEngine\Systems\Memory">
+      <UniqueIdentifier>{c7c96828-3cac-4aeb-bc20-6a26e3a1a849}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -239,6 +239,9 @@
       <Filter>RogueEngine\Core\ECS</Filter>
     </ClInclude>
     <ClInclude Include="Texture.h" />
+    <ClInclude Include="Source\BaseSystem.h">
+      <Filter>RogueEngine\Systems</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">

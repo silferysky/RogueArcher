@@ -1,4 +1,6 @@
 #include "InputManager.h"
+#include "EventDispatcher.h"
+#include <iostream>
 
 struct KeyboardState;
 enum class KeyPress;

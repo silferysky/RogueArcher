@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\BaseComponent.h" />
+    <ClInclude Include="Source\BaseSystem.h" />
     <ClInclude Include="Source\BoxCollider2DComponent.h" />
     <ClInclude Include="Source\DebugDrawSystem.h" />
     <ClInclude Include="Source\GLHelper.hpp" />
