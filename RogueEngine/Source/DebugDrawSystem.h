@@ -25,6 +25,7 @@ public:
 
 	void drawAABB(BoxCollider2DComponent* box, TransformComponent* transform);
 	void drawOBB(BoxCollider2DComponent* box);
+	void drawVelocity(RigidbodyComponent* rBody, TransformComponent* transform);
 
 	void receive(Event* ev);
 };

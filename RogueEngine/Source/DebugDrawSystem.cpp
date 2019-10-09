@@ -10,6 +10,7 @@ void DebugDrawSystem::init()
 	Signature signature;
 	signature.set(gEngine.m_coordinator.GetComponentType<BoxCollider2DComponent>());
 	signature.set(gEngine.m_coordinator.GetComponentType<TransformComponent>());
+	signature.set(gEngine.m_coordinator.GetComponentType<RigidbodyComponent>());
 
 	// Set graphics system signature
 	gEngine.m_coordinator.SetSystemSignature<DebugDrawSystem>(signature);
@@ -29,13 +30,15 @@ void DebugDrawSystem::update()
 	{
 		auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(entity);
 		auto& collider = gEngine.m_coordinator.GetComponent<BoxCollider2DComponent>(entity);
+		auto& rBody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
 
 		glDisable(GL_DEPTH_TEST);
 
 		if (entity)
 		{
 			drawAABB(&collider, &transform);
-			//drawOBB(&collider);
+			drawOBB(&collider);
+			//drawVelocity(&rBody, &transform);
 		}
 	}
 	TimeSystem.TimerEnd("Graphics System");
@@ -82,6 +85,30 @@ void DebugDrawSystem::drawOBB(BoxCollider2DComponent* box)
 	}
 
 	drawLine(obb.globVerts()[obb.getSize() - 1], obb.globVerts()[0]);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+	glUseProgram(0);
+}
+
+void DebugDrawSystem::drawVelocity(RigidbodyComponent* rBody, TransformComponent* transform)
+{
+	glUseProgram(m_shader.GetShader());
+	glBindVertexArray(m_VAO);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+
+	auto transformMat = glm::mat4(1.0f);
+
+	transformMat = glm::translate(transformMat, { transform->getPosition().x, transform->getPosition().y, 1.0f });
+	transformMat = glm::rotate(transformMat, transform->getRotation(), glm::vec3(0.0f, 0.0f, 1.0f));
+	transformMat = glm::scale(transformMat, glm::vec3(rBody->getVelocity().x, rBody->getVelocity().y, 1.0f));
+
+	transformMat = projMat * transformMat;
+
+	GLint transformLocation = glGetUniformLocation(m_shader.GetShader(), "transform");
+	glUniformMatrix4fv(transformLocation, 1, GL_FALSE, glm::value_ptr(transformMat));
+
+	glDrawArrays(GL_LINES, 0, 2);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);

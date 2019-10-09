@@ -17,8 +17,6 @@ void GraphicsSystem::init()
 	m_shader = gEngine.m_coordinator.loadShader("Object Shader");
 
 	GenerateQuadPrimitive(m_VBO, m_VAO, m_EBO);
-
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
 void GraphicsSystem::update()
@@ -45,7 +43,6 @@ void GraphicsSystem::update()
 
 void GraphicsSystem::draw(SpriteComponent* sprite, TransformComponent* transform)
 {
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glBindVertexArray(m_VAO);
 
 	auto transformMat = glm::mat4(1.0f);
