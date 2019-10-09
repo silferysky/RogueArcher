@@ -56,6 +56,18 @@ void REEngine::init()
 }
 
 void REEngine::update()
-{
+{	
+	m_stepCount = 0;
+
 	m_coordinator.Update();
+}
+
+float REEngine::GetAccumulatedTime() const
+{
+	return m_accumulatedTime;
+}
+
+int REEngine::GetStepCount() const
+{
+	return m_stepCount;
 }
