@@ -6,3 +6,5 @@
 #include "EditorGameObject.h"
 #include "EditorComponent.h"
 #include "EditorConsole.h"
+#include "EditorProject.h"
+#include "EditorHierarchy.h"

@@ -52,10 +52,13 @@ namespace ImGuiLayer
 	}
 	void ImguiLayer::UpdateWindow()
 	{
-		static ImGuiDockNodeFlags opt_flags = ImGuiDockNodeFlags_None;
-		ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
-		if (opt_flags & ImGuiDockNodeFlags_PassthruDockspace)
-			window_flags |= ImGuiWindowFlags_NoBackground;
+		//static ImGuiDockNodeFlags opt_flags = ImGuiDockNodeFlags_None;
+		//ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar;
+		//window_flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
+		//window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
+		//if (opt_flags & ImGuiDockNodeFlags_PassthruDockspace)
+		//	window_flags |= ImGuiWindowFlags_NoBackground;
+
 		ImGuiEditorFile::ImGuiEditorFile ImGuiFile;
 		ImGuiInspector::ImGuiInspector ImGuiInspector;
 		ImGuiEditorEdit::ImGuiEditorEdit ImGuiMenu;
@@ -71,42 +74,66 @@ namespace ImGuiLayer
 			ImGui_ImplOpenGL3_NewFrame();
 			ImGui_ImplGlfw_NewFrame();
 			ImGui::NewFrame();
+			bool i = true;
+			static ImGuiDockNodeFlags opt_flags = ImGuiDockNodeFlags_None;
+			ImGuiViewport* viewport = ImGui::GetMainViewport();
+			ImGui::SetNextWindowPos(viewport->Pos);
+			//ImGui::SetWindowSize(viewport->Size);
+			ImGui::SetNextWindowViewport(viewport->ID);
+			ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+			ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+			ImGui::Begin("MainWindow",&i, ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_MenuBar| ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoTitleBar| ImGuiWindowFlags_NoNavFocus | ImGuiWindowFlags_NoCollapse);
+			ImGui::PopStyleVar(2);
+
+			ImGui::SetWindowSize(viewport->Size);
+			ImGui::SetWindowPos({ 0.f,0.f });
 			ImGuiIO& io = ImGui::GetIO();
-			ImGuiID dockspace_id = ImGui::GetID("DOCKSPACE");
-			ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_PassthruDockspace);
+			ImGuiID dockspace_id = ImGui::GetID("MainWindow");
+			//ImGui::SetNextWindowBgAlpha(0.0f);
+			ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), opt_flags);
+
+			if (ImGui::BeginMainMenuBar())
+			{
+				ImGuiFile.ImGuiEditorFileMenuInit();
+				ImGuiMenu.ImGuiEditorEditInit();
+				ImGuiAssets.ImGuiAssetsInit();
+				ImGuiGameObject.ImGuiGameObjectInit();
+				ImGuiComponent.ImGuiComponentInit();					
+				ImGui::EndMainMenuBar();
+			}
 			// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
 			if (show_demo_window)
 				ImGui::ShowDemoWindow(&show_demo_window);
-			if (show)
-			{
-				static float f = 0.0f;
-				static int counter = 0;
-
-				ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
-
-				ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
-				ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
-				ImGui::Checkbox("Another Window", &show_another_window);
-
-				ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-				ImGui::ColorEdit3("clear color", (float*)& clear_color); // Edit 3 floats representing a color
-				if (ImGui::BeginMainMenuBar())
-				{
-					ImGuiFile.ImGuiEditorFileMenuInit();
-					ImGuiMenu.ImGuiEditorEditInit();
-					ImGuiAssets.ImGuiAssetsInit();
-					ImGuiGameObject.ImGuiGameObjectInit();
-					ImGuiComponent.ImGuiComponentInit();					
-					ImGui::EndMainMenuBar();
-				}
-				if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
-					counter++;
-				ImGui::SameLine();
-				ImGui::Text("counter = %d", counter);
-
-				ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-				ImGui::End();
-			}
+			//if (show)
+			//{
+			//	static float f = 0.0f;
+			//	static int counter = 0;
+			//
+			//	ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
+			//
+			//	ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
+			//	ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
+			//	ImGui::Checkbox("Another Window", &show_another_window);
+			//
+			//	ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
+			//	ImGui::ColorEdit3("clear color", (float*)& clear_color); // Edit 3 floats representing a color
+			//	if (ImGui::BeginMainMenuBar())
+			//	{
+			//		ImGuiFile.ImGuiEditorFileMenuInit();
+			//		ImGuiMenu.ImGuiEditorEditInit();
+			//		ImGuiAssets.ImGuiAssetsInit();
+			//		ImGuiGameObject.ImGuiGameObjectInit();
+			//		ImGuiComponent.ImGuiComponentInit();					
+			//		ImGui::EndMainMenuBar();
+			//	}
+			//	if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
+			//		counter++;
+			//	ImGui::SameLine();
+			//	ImGui::Text("counter = %d", counter);
+			//
+			//	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+			//	ImGui::End();
+			//}
 			if (show_another_window)
 			{
 				ImGui::Begin("Another Window", &show_another_window);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
@@ -123,7 +150,8 @@ namespace ImGuiLayer
 			{
 				ImGuiConsole.ImGuiConsoleInit();
 			}
-			if (Dropbox)
+			ImGui::End();
+			/*if (Dropbox)
 			{
 				static ImGuiComboFlags flags = 0;
 				ImGui::CheckboxFlags("ImGuiComboFlags_PopupAlignLeft", (unsigned int*)& flags, ImGuiComboFlags_PopupAlignLeft);
@@ -156,7 +184,7 @@ namespace ImGuiLayer
 				struct FuncHolder { static bool ItemGetter(void* data, int idx, const char** out_str) { *out_str = ((const char**)data)[idx]; return true; } };
 				static int item_current_4 = 0;
 				ImGui::Combo("combo 4 (function)", &item_current_4, &FuncHolder::ItemGetter, items, IM_ARRAYSIZE(items));
-			}
+			}*/
 			ImGui::Render();
 			int display_w, display_h;
 			glfwGetFramebufferSize(window, &display_w, &display_h);
