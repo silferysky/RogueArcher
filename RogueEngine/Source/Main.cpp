@@ -25,6 +25,7 @@ static const int SCREEN_FULLSCREEN = 0;
 static const int SCREEN_WIDTH = 960;
 static const int SCREEN_HEIGHT = 540;
 
+
 //Use for console
 int APIENTRY
 WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
@@ -53,6 +54,9 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	(void)freopen("CONIN$", "r", stdin);
 	(void)freopen("CONOUT$", "w", stdout);
 	(void)freopen("CONOUT$", "w", stderr);
+
+	//Ensures program closes properly 
+	SetConsoleCtrlHandler(CtrlHandler, true);
 
 	// Enable run-time memory check for debug builds.
 	#if defined(DEBUG) | defined(_DEBUG)
@@ -105,9 +109,11 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	float gFixedDeltaTime;
 	std::chrono::high_resolution_clock timer;
 	config.SetFPS(60);
+
 	while (gameIsRunning)
 	{
-		auto start = timer.now(); 
+
+		auto start = timer.now();
 		while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
 		{
 			TranslateMessage(&msg);
@@ -119,24 +125,24 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 		// Update engine.
 		gEngine.update();
 
-//		void Engine::Update()
-//		{
-//			currentNumberOfSteps = 0; //reset
-//			deltaTime = timeEnd - timeStart; // Compute the actual game loop time
-//			while (accumulatedTime >= gFixedDeltaTime)
-//			{
-//				accumulatedTime -= gFixedDeltaTime;
-//			}
-//			currentNumberOfSteps++;
-//		}
-//		Physics::Update()
-//		{
-//			// Loop used in systems that have time-based formula
-//			for(int step = 0; step < currentNumberOfSteps; ++step
-//				{
-//					// Do euler's stuff
-//				}
-//		}
+		//		void Engine::Update()
+		//		{
+		//			currentNumberOfSteps = 0; //reset
+		//			deltaTime = timeEnd - timeStart; // Compute the actual game loop time
+		//			while (accumulatedTime >= gFixedDeltaTime)
+		//			{
+		//				accumulatedTime -= gFixedDeltaTime;
+		//			}
+		//			currentNumberOfSteps++;
+		//		}
+		//		Physics::Update()
+		//		{
+		//			// Loop used in systems that have time-based formula
+		//			for(int step = 0; step < currentNumberOfSteps; ++step
+		//				{
+		//					// Do euler's stuff
+		//				}
+		//		}
 
 		SwapBuffers(hDC);
 		auto stop = timer.now();
@@ -158,7 +164,7 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 		if (gEngine.m_coordinator.performanceChecker())
 		{
 			std::cout << "FPS: " << 1 / gDeltaTime << std::endl;
-		}	
+		}
 	}
 
 	std::cin.get();

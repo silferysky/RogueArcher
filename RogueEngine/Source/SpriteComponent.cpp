@@ -14,3 +14,21 @@ GLuint SpriteComponent::getTexture() const
 {
 	return m_texture;
 }
+
+std::string SpriteComponent::Serialize()
+{
+	std::map<const char*, GLuint, str_cmp> textureMap = gEngine.m_coordinator.GetTextureManager().getTextureMap();
+	for (std::map<const char*, GLuint, str_cmp>::iterator it = textureMap.begin(); it != textureMap.end(); ++it)
+	{
+		if (it->second == m_texture)
+		{
+			return std::string(it->first);
+		}
+	}
+	return std::string();
+}
+
+void SpriteComponent::Deserialize(std::string toDeserialize)
+{
+	setTexture(toDeserialize.c_str());
+}
