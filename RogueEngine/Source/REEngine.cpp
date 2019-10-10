@@ -62,6 +62,11 @@ void REEngine::update()
 	m_coordinator.Update();
 }
 
+void REEngine::shutdown()
+{
+	//put graphics shutdown here
+}
+
 float REEngine::GetAccumulatedTime() const
 {
 	return m_accumulatedTime;
