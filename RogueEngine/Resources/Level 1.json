@@ -9,7 +9,7 @@
     "Signature5": 31,
     "Signature6": 31,
     "Signature7": 31,
-    "Entity0Sprite0": "test.bmp",
+    "Entity0Sprite0": "Arrow.png",
     "Entity0Rigidbody0": "0.0;0.0;0.0;0.0;1.0;1.0",
     "Entity0Transform0": "-4.0;0.0;1.0;1.0;0.0",
     "Entity0CircleCollider0": "0.0",
