@@ -1,6 +1,6 @@
 #include "DebugDrawSystem.h"
 
-// Public member functions 
+// Public member functions
 void DebugDrawSystem::init()
 {
 	LISTENER_HANDLER hand = std::bind(&DebugDrawSystem::receive, this, std::placeholders::_1);
@@ -16,6 +16,11 @@ void DebugDrawSystem::init()
 	gEngine.m_coordinator.SetSystemSignature<DebugDrawSystem>(signature);
 
 	m_shader = gEngine.m_coordinator.loadShader("Debug Shader");
+
+	glUseProgram(m_shader.GetShader());
+
+	GLint transformLocation = glGetUniformLocation(m_shader.GetShader(), "transform");
+	glUniformMatrix4fv(transformLocation, 1, GL_FALSE, glm::value_ptr(projMat));
 
 	GenerateLinePrimitive(m_VBO, m_VAO);
 }
@@ -56,9 +61,6 @@ void DebugDrawSystem::drawAABB(BoxCollider2DComponent* box, TransformComponent* 
 	float top = box->AABB().getMax().y;
 	float bottom = box->AABB().getMin().y;
 
-	GLint transformLocation = glGetUniformLocation(m_shader.GetShader(), "transform");
-	glUniformMatrix4fv(transformLocation, 1, GL_FALSE, glm::value_ptr(projMat));
-
 	drawLine(Vec2(left, top), Vec2(right, top)); // top line
 	drawLine(Vec2(left, bottom), Vec2(right, bottom)); // bottom line
 	drawLine(Vec2(left, top), Vec2(left, bottom)); // left line
@@ -74,9 +76,6 @@ void DebugDrawSystem::drawOBB(BoxCollider2DComponent* box)
 	glUseProgram(m_shader.GetShader());
 	glBindVertexArray(m_VAO);
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-
-	GLint transformLocation = glGetUniformLocation(m_shader.GetShader(), "transform");
-	glUniformMatrix4fv(transformLocation, 1, GL_FALSE, glm::value_ptr(projMat));
 
 	auto obb = box->OBB();
 	for (unsigned int i = 0; i < obb.getSize() - 1; ++i)
@@ -97,18 +96,10 @@ void DebugDrawSystem::drawVelocity(RigidbodyComponent* rBody, TransformComponent
 	glBindVertexArray(m_VAO);
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 
-	auto rotateMat = glm::mat4(1.0f);
+	float posX = transform->getPosition().x;
+	float posY = transform->getPosition().y;
 
-	//transformMat = glm::translate(transformMat, { transform->getPosition().x, transform->getPosition().y, 1.0f });
-	rotateMat = glm::rotate(rotateMat, transform->getRotation(), glm::vec3(0.0f, 0.0f, 1.0f));
-
-	GLint transformLocation = glGetUniformLocation(m_shader.GetShader(), "transform");
-	glUniformMatrix4fv(transformLocation, 1, GL_FALSE, glm::value_ptr(projMat));
-
-	Vec2 end(transform->getPosition().x + 0.5 * rBody->getVelocity().x, transform->getPosition().y);
-	Matrix3x3 transformMat(rotateMat);
-
-	drawLine(Vec2(transform->getPosition().x, transform->getPosition().y), transformMat * end);
+	drawLine(Vec2(posX, posY), Vec2(posX + rBody->getVelocity().x, posY + rBody->getVelocity().y));
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
