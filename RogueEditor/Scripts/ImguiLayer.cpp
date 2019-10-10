@@ -16,7 +16,13 @@ namespace ImGuiLayer
 	{
 		const char* glsl_version = "#version 130";
 		window = glfwCreateWindow(1640, 1480, "Terence Dad Gay", NULL, NULL);
+		if (!window)
+		{
+			glfwTerminate();
+		}
 		glfwMakeContextCurrent(window);
+		if (glewInit() != GLEW_OK)
+			std::cout << "Oh fuck" << std::endl;
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
