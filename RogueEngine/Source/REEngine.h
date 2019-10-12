@@ -19,7 +19,7 @@ public:
 
 	void init();
 	void update();
-
+	void shutdown();
 	float GetAccumulatedTime() const;
 	int GetStepCount() const;
 };

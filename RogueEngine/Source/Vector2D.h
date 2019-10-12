@@ -18,6 +18,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #endif
 #include <cmath>
 #include <iostream>
+#include "glm.hpp"
 
 typedef union Vector2D
 {
