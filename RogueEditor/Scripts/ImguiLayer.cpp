@@ -15,6 +15,11 @@ namespace ImGuiLayer
 	void ImguiLayer::StartWindow()
 	{
 		const char* glsl_version = "#version 130";
+		/* Initialize the library */
+		if (!glfwInit())
+		{
+			std::cout << "help" << std::endl;
+		}
 		window = glfwCreateWindow(1640, 1480, "Terence Dad Gay", NULL, NULL);
 		if (!window)
 		{
@@ -47,8 +52,13 @@ namespace ImGuiLayer
 	}
 	void ImguiLayer::UpdateWindow()
 	{
-
-
+		//static ImGuiDockNodeFlags opt_flags = ImGuiDockNodeFlags_None;
+		//ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar;
+		//window_flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
+		//window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
+		//if (opt_flags & ImGuiDockNodeFlags_PassthruDockspace)
+		//	window_flags |= ImGuiWindowFlags_NoBackground;
+		ImGuiProject::ImGuiProject ImGuiProject;
 		ImGuiEditorFile::ImGuiEditorFile ImGuiFile;
 		ImGuiInspector::ImGuiInspector ImGuiInspector;
 		ImGuiEditorEdit::ImGuiEditorEdit ImGuiMenu;
@@ -56,6 +66,7 @@ namespace ImGuiLayer
 		ImGuiGameObject::ImGuiGameObject ImGuiGameObject;
 		ImGuiComponent::ImGuiComponent ImGuiComponent;
 		ImGuiConsole::ImGuiConsole ImGuiConsole;
+		ImGuiEditorHierarchy::ImGuiEditorHierarchy ImGuiHierarchy;
 		while (!glfwWindowShouldClose(window))
 		{
 			glfwPollEvents();
@@ -88,7 +99,7 @@ namespace ImGuiLayer
 				ImGuiMenu.ImGuiEditorEditInit();
 				ImGuiAssets.ImGuiAssetsInit();
 				ImGuiGameObject.ImGuiGameObjectInit();
-				ImGuiComponent.ImGuiComponentInit();					
+				ImGuiComponent.ImGuiComponentInit();				
 				ImGui::EndMainMenuBar();
 			}
 			// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
@@ -135,6 +146,8 @@ namespace ImGuiLayer
 			if (Inspector)
 			{
 				ImGuiInspector.InitInspector();
+				ImGuiProject.ImGuiProjectInit();
+				ImGuiHierarchy.ImGuiEditorHierarchyInit();
 			}
 			if (Console)
 			{
