@@ -59,6 +59,9 @@
     <Filter Include="RogueEngine\Systems\Memory">
       <UniqueIdentifier>{c7c96828-3cac-4aeb-bc20-6a26e3a1a849}</UniqueIdentifier>
     </Filter>
+    <Filter Include="RogueEngine\Systems\AI">
+      <UniqueIdentifier>{e68acb32-5338-4384-a5ff-e96022bc6953}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Resource.h">
@@ -242,6 +245,18 @@
     <ClInclude Include="Source\BaseSystem.h">
       <Filter>RogueEngine\Systems</Filter>
     </ClInclude>
+    <ClInclude Include="Source\LogicSystem.h">
+      <Filter>RogueEngine\Systems\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LogicComponent.h">
+      <Filter>RogueEngine\Systems\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AIType.h">
+      <Filter>RogueEngine\Systems\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ILogic.h">
+      <Filter>RogueEngine\Systems\AI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -348,6 +363,12 @@
     </ClCompile>
     <ClCompile Include="Source\EventDispatcher.cpp">
       <Filter>RogueEngine\Systems\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\LogicSystem.cpp">
+      <Filter>RogueEngine\Systems\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\LogicComponent.cpp">
+      <Filter>RogueEngine\Systems\AI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
