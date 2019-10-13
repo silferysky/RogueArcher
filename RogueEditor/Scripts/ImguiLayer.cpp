@@ -58,7 +58,7 @@ namespace ImGuiLayer
 		//window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
 		//if (opt_flags & ImGuiDockNodeFlags_PassthruDockspace)
 		//	window_flags |= ImGuiWindowFlags_NoBackground;
-
+		ImGuiProject::ImGuiProject ImGuiProject;
 		ImGuiEditorFile::ImGuiEditorFile ImGuiFile;
 		ImGuiInspector::ImGuiInspector ImGuiInspector;
 		ImGuiEditorEdit::ImGuiEditorEdit ImGuiMenu;
@@ -66,6 +66,7 @@ namespace ImGuiLayer
 		ImGuiGameObject::ImGuiGameObject ImGuiGameObject;
 		ImGuiComponent::ImGuiComponent ImGuiComponent;
 		ImGuiConsole::ImGuiConsole ImGuiConsole;
+		ImGuiEditorHierarchy::ImGuiEditorHierarchy ImGuiHierarchy;
 		while (!glfwWindowShouldClose(window))
 		{
 			glfwPollEvents();
@@ -98,7 +99,7 @@ namespace ImGuiLayer
 				ImGuiMenu.ImGuiEditorEditInit();
 				ImGuiAssets.ImGuiAssetsInit();
 				ImGuiGameObject.ImGuiGameObjectInit();
-				ImGuiComponent.ImGuiComponentInit();					
+				ImGuiComponent.ImGuiComponentInit();				
 				ImGui::EndMainMenuBar();
 			}
 			// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
@@ -145,6 +146,8 @@ namespace ImGuiLayer
 			if (Inspector)
 			{
 				ImGuiInspector.InitInspector();
+				ImGuiProject.ImGuiProjectInit();
+				ImGuiHierarchy.ImGuiEditorHierarchyInit();
 			}
 			if (Console)
 			{
