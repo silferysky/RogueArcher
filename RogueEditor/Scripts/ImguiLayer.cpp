@@ -15,6 +15,11 @@ namespace ImGuiLayer
 	void ImguiLayer::StartWindow()
 	{
 		const char* glsl_version = "#version 130";
+		/* Initialize the library */
+		if (!glfwInit())
+		{
+			std::cout << "help" << std::endl;
+		}
 		window = glfwCreateWindow(1640, 1480, "Terence Dad Gay", NULL, NULL);
 		if (!window)
 		{
@@ -47,7 +52,12 @@ namespace ImGuiLayer
 	}
 	void ImguiLayer::UpdateWindow()
 	{
-
+		//static ImGuiDockNodeFlags opt_flags = ImGuiDockNodeFlags_None;
+		//ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar;
+		//window_flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
+		//window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
+		//if (opt_flags & ImGuiDockNodeFlags_PassthruDockspace)
+		//	window_flags |= ImGuiWindowFlags_NoBackground;
 
 		ImGuiEditorFile::ImGuiEditorFile ImGuiFile;
 		ImGuiInspector::ImGuiInspector ImGuiInspector;
