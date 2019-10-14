@@ -51,11 +51,11 @@ public:
 		//{
 		//	doc[DataTitle].SetString(rapidjson::GenericStringRef<char>(ss.str().c_str()), doc.GetAllocator()); // = DataToChange;
 		//}
-		if (std::is_same<T, int>())
+		if (std::is_same<T, int>::value)
 		{
 			doc[DataTitle].SetInt((int)DataToChange);
 		}
-		else if (std::is_same<T, float>())
+		else if (std::is_same<T, float>::value)
 		{
 			doc[DataTitle].SetFloat((float)DataToChange);
 		}
