@@ -1,7 +1,9 @@
 #pragma once
-#include "EntityManager.h"
 #include <unordered_map>
 #include <cassert>
+
+#include "EntityManager.h"
+
 class BaseComponentArray
 {
 public:

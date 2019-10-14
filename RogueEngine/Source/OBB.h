@@ -1,7 +1,6 @@
 #pragma once
+#include "Vector2D.h"
 #include <vector>
-#include "../Source/Matrix33.h"
-#include "Polygon.h"
 
 class OBB
 {

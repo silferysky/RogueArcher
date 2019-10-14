@@ -1,12 +1,13 @@
 #pragma once
 #include <set>
+#include <cassert>
 #include <unordered_map>
+
 #include "EntityManager.h"
 #include "ComponentArray.h"
 #include "Logger.h"
 #include "Event.h"
 #include "SystemList.h"
-#include <cassert>
 #include "BaseSystem.h"
 
 class SystemManager

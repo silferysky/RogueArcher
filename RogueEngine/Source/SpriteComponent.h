@@ -1,6 +1,6 @@
 #pragma once
-#include "TextureManager.h"
-#include "REEngine.h"
+#include "BaseComponent.h"
+#include "GL/glew.h"
 
 class SpriteComponent
 	: public BaseComponent

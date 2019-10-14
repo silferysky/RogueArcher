@@ -1,9 +1,6 @@
 #pragma once
-
-#include <queue>
 #include <map>
 #include "EventListener.h"
-#include "SystemManager.h"
 
 class EventDispatcher :
 	public System

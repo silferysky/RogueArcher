@@ -1,4 +1,7 @@
 #include "SpriteComponent.h"
+#include "TextureManager.h"
+#include "REEngine.h"
+#include "Main.h"
 
 SpriteComponent::SpriteComponent()
 {

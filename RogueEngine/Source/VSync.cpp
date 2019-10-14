@@ -1,4 +1,7 @@
 #include "VSync.h"
+#include "BasicIO.h"
+#include "GL/glew.h"
+#include "Windows.h"
 
 void setVSync(bool sync)
 {

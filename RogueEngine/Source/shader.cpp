@@ -1,4 +1,7 @@
 #include "Shader.h"
+#include <iostream>
+#include "BasicIO.h"
+
 
 Shader::Shader(const std::string& vShader, const std::string& fShader)
 {

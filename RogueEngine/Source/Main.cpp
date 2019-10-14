@@ -4,16 +4,26 @@
 #include <cstdlib>
 #include <ctime>
 #include <fstream>
-#include "Main.h"
-#include "TestSystem.h"
+#include <sstream>
 #include <chrono>
-#include "VSync.h"
+#include <Windows.h>
+
+#include "Main.h"
+#include "Logger.h"
+#include "VSync.h"	
 #include "SOIL.h"
 #include "Config.h"
 #include "WindowHelper.h"
 #include "MemoryManager.h"
-#include "REMath.h"
+#include "GameStateList.h"
+#include "Resource.h"
+#include "ComponentList.h"
+#include "BasicIO.h"
+#include "GLHelper.hpp"
 
+#if _DEBUG
+#include <iostream>
+#endif
 
 REEngine gEngine;
 float gDeltaTime;
@@ -108,7 +118,6 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 
 	//gObjectFactory.SaveLevel("Resources/Level 1.json");
 
-	TestSystem sys = TestSystem();
 	std::chrono::high_resolution_clock timer;
 	config.SetFPS(60);
 

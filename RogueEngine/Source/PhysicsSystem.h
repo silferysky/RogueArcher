@@ -1,14 +1,9 @@
 #pragma once
-#include "../Source/Main.h"
-#include "../Source/REMath.h"
-#include "../Source/EventListener.h"
 #include "CollisionManager.h"
-#include "RigidbodyComponent.h"
-#include "TransformComponent.h"
-#include "BoxCollider2DComponent.h"
-#include "../Source/Timer.h"
+#include "REEngine.h"
 
 class Timer;
+
 class PhysicsSystem : public System, public EventListener
 {
 	CollisionManager m_colliderManager;

@@ -1,6 +1,8 @@
 #pragma once
 #include <fstream>
 #include "BasicIO.h"
+#include "logger.h"
+
 #define BUFFER_SIZE 10000
 
 std::string BasicIO::ReadFile(std::string FileName)

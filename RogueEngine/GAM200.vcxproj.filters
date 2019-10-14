@@ -94,16 +94,10 @@
     <ClInclude Include="Source\FileIO.h">
       <Filter>RogueEngine\Systems\I/O</Filter>
     </ClInclude>
-    <ClInclude Include="Source\BaseCollider.h">
-      <Filter>RogueEngine\Systems\Physics\Collision</Filter>
-    </ClInclude>
     <ClInclude Include="Source\OBB.h">
       <Filter>RogueEngine\Systems\Physics\Collision</Filter>
     </ClInclude>
     <ClInclude Include="Source\CollisionManager.h">
-      <Filter>RogueEngine\Systems\Physics\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Collider.h">
       <Filter>RogueEngine\Systems\Physics\Collision</Filter>
     </ClInclude>
     <ClInclude Include="Source\AABB.h">
@@ -166,9 +160,6 @@
     <ClInclude Include="Source\SystemList.h">
       <Filter>RogueEngine\Systems</Filter>
     </ClInclude>
-    <ClInclude Include="Source\FileManager.h">
-      <Filter>RogueEngine\Systems\I/O</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Types.h">
       <Filter>RogueEngine\Core\ECS</Filter>
     </ClInclude>
@@ -212,9 +203,6 @@
       <Filter>RogueEngine\Systems\Debug</Filter>
     </ClInclude>
     <ClInclude Include="Source\WindowHelper.h">
-      <Filter>RogueEngine\Systems\Others</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TestSystem.h">
       <Filter>RogueEngine\Systems\Others</Filter>
     </ClInclude>
     <ClInclude Include="Source\TextureManager.h">
@@ -277,9 +265,6 @@
     <ClCompile Include="Source\CollisionManager.cpp">
       <Filter>RogueEngine\Systems\Physics\Collision</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Collider.cpp">
-      <Filter>RogueEngine\Systems\Physics\Collision</Filter>
-    </ClCompile>
     <ClCompile Include="Source\AABB.cpp">
       <Filter>RogueEngine\Systems\Physics\Collision</Filter>
     </ClCompile>
@@ -315,9 +300,6 @@
     </ClCompile>
     <ClCompile Include="Source\REEngine.cpp">
       <Filter>RogueEngine\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\FileManager.cpp">
-      <Filter>RogueEngine\Core\ECS</Filter>
     </ClCompile>
     <ClCompile Include="Source\BasicIO.cpp">
       <Filter>RogueEngine\Systems\I/O</Filter>
