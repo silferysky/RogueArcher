@@ -22,3 +22,11 @@ void ImGuiEditorHierarchy::ImGuiEditorHierarchy::ImGuiEditorHierarchyInit()
 	ImGui::InputText("", bufferX, 64);
 	ImGui::End();
 }
+
+void ImGuiEditorHierarchy::ImGuiEditorHierarchy::Update()
+{
+}
+
+void ImGuiEditorHierarchy::ImGuiEditorHierarchy::Shutdown()
+{
+}

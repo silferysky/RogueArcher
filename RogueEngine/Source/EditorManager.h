@@ -4,23 +4,23 @@
 
 #include <fstream>
 #include "Main.h"
-
+#include <vector>
+#include <unordered_map>
 #include "imgui.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_glfw.h"
-namespace ImGuiLayer
+#include "REEditor.h"
+namespace EditorManager
 {
-	class ImguiLayer
+	class IEditable;
+	class EditorManager
 	{
 	public:
-		ImguiLayer();
-		~ImguiLayer() = default;
+		EditorManager();
+		~EditorManager() = default;
 		void StartWindow();
 		void UpdateWindow();
 		void CloseWindow();
-
-		void Begin();
-		void End();
 
 		bool show_demo_window = true;
 		bool show_another_window = false;
@@ -30,8 +30,15 @@ namespace ImGuiLayer
 		bool Console = true;
 		GLFWwindow* window = nullptr;
 		ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-	private:
+		
+		template<typename T>
+		void AddEditorWindow(T* Window)
+		{
 
+		}
+	private:
+		std::vector<IEditable*> m_WindowsVector;
+		std::unordered_map<std::string, IEditable*> m_WindowsMap;
 		float RETime = 0.0f;
 
 	};

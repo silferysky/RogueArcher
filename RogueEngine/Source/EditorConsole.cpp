@@ -41,4 +41,12 @@ namespace ImGuiConsole
 		ImGui::End();
 	}
 
+	void ImGuiConsole::Update()
+	{
+	}
+
+	void ImGuiConsole::Shutdown()
+	{
+	}
+
 }

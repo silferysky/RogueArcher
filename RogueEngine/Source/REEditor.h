@@ -1,5 +1,5 @@
 #pragma once
-#include "ImguiLayer.h"
+#include "EditorManager.h"
 #include "glew.h"
 #include "glfw3.h"
 #include "EditorInspector.h"

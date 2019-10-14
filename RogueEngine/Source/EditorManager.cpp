@@ -2,15 +2,15 @@
 #include "REEditor.h"
 
 
-namespace ImGuiLayer
+namespace EditorManager
 {
 	static ImGuiDockNodeFlags opt_flags = ImGuiDockNodeFlags_None;
-	ImguiLayer::ImguiLayer():window(nullptr)
+	EditorManager::EditorManager():window(nullptr)
 	{
 
 	}
 
-	void ImguiLayer::StartWindow()
+	void EditorManager::StartWindow()
 	{
 		const char* glsl_version = "#version 130";
 		/* Initialize the library */
@@ -29,33 +29,17 @@ namespace ImGuiLayer
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
-		/*io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
-		//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
-		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;   */      // Enable Multi-Viewport / Platform Windows
 		ImGui::StyleColorsClassic();
 		io.ConfigDockingWithShift = false;
 		io.ConfigFlags = ImGuiConfigFlags_DockingEnable;
-		/*ImGuiStyle& style = ImGui::GetStyle();
-		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-		{
-			style.WindowRounding = 0.0f;
-			style.Colors[ImGuiCol_WindowBg].w = 1.0f;
-		}*/
 
 
 
 		ImGui_ImplGlfw_InitForOpenGL(window, true);
 		ImGui_ImplOpenGL3_Init(glsl_version);
 	}
-	void ImguiLayer::UpdateWindow()
+	void EditorManager::UpdateWindow()
 	{
-		//static ImGuiDockNodeFlags opt_flags = ImGuiDockNodeFlags_None;
-		//ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar;
-		//window_flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
-		//window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
-		//if (opt_flags & ImGuiDockNodeFlags_PassthruDockspace)
-		//	window_flags |= ImGuiWindowFlags_NoBackground;
 		ImGuiProject::ImGuiProject ImGuiProject;
 		ImGuiEditorFile::ImGuiEditorFile ImGuiFile;
 		ImGuiInspector::ImGuiInspector ImGuiInspector;
@@ -199,7 +183,7 @@ namespace ImGuiLayer
 			ImGui::UpdatePlatformWindows();
 		}
 	}
-	void ImguiLayer::CloseWindow()
+	void EditorManager::CloseWindow()
 	{
 		ImGui_ImplOpenGL3_Shutdown();
 		ImGui_ImplGlfw_Shutdown();

@@ -83,4 +83,10 @@ namespace ImGuiComponent
 			ImGui::EndMenu();
 		}
 	}
+	void ImGuiComponent::Update()
+	{
+	}
+	void ImGuiComponent::Shutdown()
+	{
+	}
 }
