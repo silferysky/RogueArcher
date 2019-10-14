@@ -10,7 +10,7 @@ class LogicSystem :
 public:
 	//Logic System constructors/destructors
 	LogicSystem();
-	~LogicSystem();
+	~LogicSystem() = default;
 
 	//For entity logic
 	void AddLogicInterface(Entity, ILogic*);

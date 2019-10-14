@@ -6,10 +6,6 @@ LogicSystem::LogicSystem()
 	m_entityLogicMap = std::map<Entity, ILogic*>();
 }
 
-LogicSystem::~LogicSystem()
-{
-}
-
 void LogicSystem::AddLogicInterface(Entity entity, ILogic* logicInterface)
 {
 	m_entityLogicMap.insert({ entity, logicInterface });
@@ -28,7 +24,7 @@ void LogicSystem::init()
 	Signature signature;
 	signature.set(gEngine.m_coordinator.GetComponentType<TransformComponent>());
 	signature.set(gEngine.m_coordinator.GetComponentType<BoxCollider2DComponent>());
-	signature.set(gEngine.m_coordinator.GetComponentType <LogicComponent>());
+	signature.set(gEngine.m_coordinator.GetComponentType<LogicComponent>());
 
 	gEngine.m_coordinator.SetSystemSignature<LogicSystem>(signature);
 }
