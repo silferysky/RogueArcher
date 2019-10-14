@@ -1,4 +1,14 @@
 #include "PhysicsSystem.h"
+#include "Main.h"
+#include "REMath.h"
+#include "EventListener.h"
+#include "ComponentList.h"
+#include "Timer.h"
+#include "Vector2D.h"
+#include "SystemManager.h"
+#include "KeyEvent.h"
+#include "EventDispatcher.h"
+#include "Logger.h"
 
 //-------------------------------------------------------//
 //              PRIVATE MEMBER FUNCTIONS				 //

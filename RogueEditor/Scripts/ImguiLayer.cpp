@@ -1,5 +1,4 @@
 #include "ImguiLayer.h"
-#include "Quad.h"
 #include "REEditor.h"
 #include "glew.h"
 #include "glfw3.h"

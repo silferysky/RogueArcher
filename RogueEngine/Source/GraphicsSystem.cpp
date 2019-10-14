@@ -1,4 +1,9 @@
 #include "GraphicsSystem.h"
+#include "Timer.h"
+#include "Main.h"
+#include "REMath.h"
+#include "EventDispatcher.h"
+#include "KeyEvent.h"
 
 // Public member functions 
 void GraphicsSystem::init()

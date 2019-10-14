@@ -1,4 +1,6 @@
 #pragma once
+#include <fstream>
+#include <sstream>
 #include <rapidjson/document.h>
 #include <rapidjson/istreamwrapper.h>
 #include <rapidjson/writer.h>
@@ -6,11 +8,6 @@
 #include <rapidjson/ostreamwrapper.h>
 #include <rapidjson/filereadstream.h>
 #include <rapidjson/prettywriter.h>
-#include <iostream>
-#include <fstream>
-#include <cstdlib>
-#include <string>
-#include <sstream>
 
 class RESerialiser
 {

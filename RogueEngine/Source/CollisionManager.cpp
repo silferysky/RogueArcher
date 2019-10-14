@@ -1,6 +1,8 @@
-#include "CollisionManager.h"
 #include <iostream>
+#include <vector>
+#include "CollisionManager.h"
 #include "Main.h"
+#include "Logger.h"
 
 //_________________________________________________________________________
 //_________________________________________________________________________|
@@ -267,7 +269,7 @@ int CollisionManager::CollisionIntersection_RayCircle(const REMath::Ray& ray,
 	{
 		float s = sqrt(circle.m_radius * circle.m_radius - nSquared);
 		float rayLength = Vec2Length(ray.m_dir);
-		interTime = std::min((m - s) / rayLength, (m + s) / rayLength);  // (m+-s)/||v||. min(Ti0, Ti1). For pillar, it's always Ti0.
+		interTime = REMath::REMin((m - s) / rayLength, (m + s) / rayLength);  // (m+-s)/||v||. min(Ti0, Ti1). For pillar, it's always Ti0.
 	}
 	if (interTime > 0.0f && interTime < 1.0f) // If time of intersection is between 0 and 1
 		return 1; // Ray intersects static circle (Pillar).

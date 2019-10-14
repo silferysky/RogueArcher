@@ -1,5 +1,13 @@
-#include "LogicSystem.h"
+#include <vector>
+#include <map>
+
 #include "Main.h"
+#include "BaseSystem.h"
+#include "LogicSystem.h"
+#include "EventDispatcher.h"
+#include "TransformComponent.h"
+#include "BoxCollider2DComponent.h"
+#include "LogicComponent.h"
 
 LogicSystem::LogicSystem()
 {

@@ -1,4 +1,6 @@
+#include <sstream>
 #include "TransformComponent.h"
+#include "REMath.h"
 
 void TransformComponent::setPosition(const Vec2& pos)
 {

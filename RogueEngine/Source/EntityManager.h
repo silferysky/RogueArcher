@@ -1,11 +1,12 @@
 #pragma once
-#include "Types.h"
+#include <cassert>
+#include <sstream>
 #include <queue>
 #include <bitset>
 #include <array>
+
+#include "Types.h"
 #include "Logger.h"
-#include <cassert>
-#include <sstream>
 
 class EntityManager
 {

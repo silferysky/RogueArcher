@@ -1,10 +1,5 @@
 #pragma once
-#ifndef TIMER_H
-#define TIMER_H
-#include <chrono>
-#include <map>
-#include <iterator> 
-#include "Main.h"
+
 class Timer
 {
 public:
@@ -17,4 +12,3 @@ private:
 	float totaltime;
 	std::chrono::high_resolution_clock timer;
 };
-#endif

@@ -1,8 +1,7 @@
 #pragma once
+#include "BaseComponent.h"
 #include "AABB.h"
 #include "OBB.h"
-#include <sstream>
-#include "BaseComponent.h"
 
 class BoxCollider2DComponent
 	: public BaseComponent

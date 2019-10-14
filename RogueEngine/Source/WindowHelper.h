@@ -1,9 +1,5 @@
 #pragma once
 
-#include <Windows.h>
-#include "wtypes.h"
-#include "Main.h"
-
 float GetDesktopWidth();
 float GetDesktopHeight();
 

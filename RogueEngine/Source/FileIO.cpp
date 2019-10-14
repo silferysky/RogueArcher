@@ -1,3 +1,8 @@
+#include <iostream>
+#include <fstream>
+#include <cstdlib>
+#include <string>
+#include <sstream>
 #include "FileIO.h"
 
 bool RESerialiser::ReadFromFile(const char* FileName)

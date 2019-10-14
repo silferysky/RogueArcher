@@ -1,10 +1,11 @@
 #pragma once
 #include <unordered_map>
+#include <cassert>
+
 #include "EntityManager.h"
 #include "ComponentArray.h"
 #include "ComponentList.h"
 #include "Logger.h"
-#include <cassert>
 
 class ComponentManager
 {
@@ -42,11 +43,6 @@ public:
 	{
 		const char* typeName = typeid(T).name();
 		assert(REComponentTypes.find(typeName) != REComponentTypes.end() && "Component not registered before use.");
-		return REComponentTypes[typeName];
-	}
-
-	ComponentType GetComponentType(const char* typeName)
-	{
 		return REComponentTypes[typeName];
 	}
 

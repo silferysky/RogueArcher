@@ -6,7 +6,7 @@ Shape::~Shape()
 
 void Shape::initShape(float w, float h, float m)
 {
-	m_wigDeltaTimeh = w;
+	m_width = w;
 	m_height = h;
 	m_mass = m;
 
@@ -15,5 +15,5 @@ void Shape::initShape(float w, float h, float m)
 
 inline float Shape::calcInertia() const
 {
-	return m_mass * (m_wigDeltaTimeh * m_wigDeltaTimeh + m_height * m_height) / 12;
+	return m_mass * (m_width * m_width + m_height * m_height) / 12;
 }

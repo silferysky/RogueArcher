@@ -1,3 +1,7 @@
+#include <queue>
+
+#include "Logger.h"
+#include "SystemManager.h"
 #include "EventDispatcher.h"
 
 void EventDispatcher::init()

@@ -1,3 +1,4 @@
+#include <cmath>
 #include "Vector2D.h"
 
 Vector2D::Vector2D(const int num) : x{ static_cast<float>(num) }, y{ static_cast<float>(num) }
