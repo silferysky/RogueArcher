@@ -2,14 +2,14 @@
 #include "REEditor.h"
 #include "IEditable.h"
 
-namespace ImGuiEditorFile
+namespace Rogue
 {
 	class ImGuiEditorFile : public IEditable
 	{
 	public:
 		ImGuiEditorFile();
 		~ImGuiEditorFile();
-		void ImGuiEditorFileMenuInit();
+		virtual void Init() override;
 		virtual void Update() override;
 		virtual void Shutdown() override;
 	};

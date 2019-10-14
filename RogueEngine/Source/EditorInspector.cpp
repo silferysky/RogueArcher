@@ -1,6 +1,6 @@
 #include "EditorInspector.h"
 
-namespace ImGuiInspector
+namespace Rogue
 {
 	ImGuiInspector::ImGuiInspector()
 	{
@@ -10,7 +10,7 @@ namespace ImGuiInspector
 	{
 	}
 
-	void ImGuiInspector::InitInspector()
+	void ImGuiInspector::Init()
 	{
 		ImGui::Begin("Inspector");
 		if (ImGui::CollapsingHeader("Transform"))

@@ -1,9 +1,9 @@
 
 #include "REEditor.h"
 
+#include "imgui.h"
+#include "imgui_internal.h"
 
-namespace EditorManager
-{
 	static ImGuiDockNodeFlags opt_flags = ImGuiDockNodeFlags_None;
 	EditorManager::EditorManager():window(nullptr)
 	{
@@ -40,15 +40,15 @@ namespace EditorManager
 	}
 	void EditorManager::UpdateWindow()
 	{
-		ImGuiProject::ImGuiProject ImGuiProject;
-		ImGuiEditorFile::ImGuiEditorFile ImGuiFile;
-		ImGuiInspector::ImGuiInspector ImGuiInspector;
-		ImGuiEditorEdit::ImGuiEditorEdit ImGuiMenu;
-		ImGuiAssets::ImGuiAssets ImGuiAssets;
-		ImGuiGameObject::ImGuiGameObject ImGuiGameObject;
-		ImGuiComponent::ImGuiComponent ImGuiComponent;
-		ImGuiConsole::ImGuiConsole ImGuiConsole;
-		ImGuiEditorHierarchy::ImGuiEditorHierarchy ImGuiHierarchy;
+		Rogue::ImGuiProject ImGuiProject;
+		Rogue::ImGuiEditorFile ImGuiFile;
+		Rogue::ImGuiInspector ImGuiInspector;
+		Rogue::ImGuiEditorEdit ImGuiMenu;
+		Rogue::ImGuiAssets ImGuiAssets;
+		Rogue::ImGuiGameObject ImGuiGameObject;
+		Rogue::ImGuiComponent ImGuiComponent;
+		Rogue::ImGuiConsole ImGuiConsole;
+		Rogue::ImGuiEditorHierarchy ImGuiHierarchy;
 		while (!glfwWindowShouldClose(window))
 		{
 			glfwPollEvents();
@@ -77,11 +77,11 @@ namespace EditorManager
 
 			if (ImGui::BeginMainMenuBar())
 			{
-				ImGuiFile.ImGuiEditorFileMenuInit();
-				ImGuiMenu.ImGuiEditorEditInit();
-				ImGuiAssets.ImGuiAssetsInit();
-				ImGuiGameObject.ImGuiGameObjectInit();
-				ImGuiComponent.ImGuiComponentInit();				
+				ImGuiFile.Init();
+				ImGuiMenu.Init();
+				ImGuiAssets.Init();
+				ImGuiGameObject.Init();
+				ImGuiComponent.Init();				
 				ImGui::EndMainMenuBar();
 			}
 			// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
@@ -127,13 +127,13 @@ namespace EditorManager
 			}
 			if (Inspector)
 			{
-				ImGuiInspector.InitInspector();
-				ImGuiProject.ImGuiProjectInit();
-				ImGuiHierarchy.ImGuiEditorHierarchyInit();
+				ImGuiInspector.Init();
+				ImGuiProject.Init();
+				ImGuiHierarchy.Init();
 			}
 			if (Console)
 			{
-				ImGuiConsole.ImGuiConsoleInit();
+				ImGuiConsole.Init();
 			}
 			ImGui::End();
 			/*if (Dropbox)
@@ -192,5 +192,5 @@ namespace EditorManager
 		glfwDestroyWindow(window);
 		glfwTerminate();
 	}
-}
+
 	
