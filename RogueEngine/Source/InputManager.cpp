@@ -4,6 +4,7 @@
 #include "BaseSystem.h"
 #include "Windows.h"
 #include "EventDispatcher.h"
+#include "Timer.h"
 
 struct KeyboardState;
 enum class KeyPress;
@@ -39,6 +40,8 @@ void InputManager::init()
 
 void InputManager::update()
 {
+	Timer TimerSystem;
+	TimerSystem.TimerInit("Input System");
 	//Always do this first
 	//Shallow add old keyboardstate details over to keep track of how long button is pressed
 	PrevKeyboardState += CurKeyboardState;
@@ -51,7 +54,7 @@ void InputManager::update()
 
 	//Do keyfunction inputs here
 	HandleState();
-
+	TimerSystem.TimerEnd("Input System");
 
 	//Always do this last
 }

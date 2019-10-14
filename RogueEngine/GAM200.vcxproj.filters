@@ -326,6 +326,12 @@
     <ClInclude Include="Source\EditorManager.h">
       <Filter>RogueEditor\EditorFiles</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Editor.h">
+      <Filter>RogueEditor\EditorFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EditorViewport.h">
+      <Filter>RogueEditor\EditorFiles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -482,6 +488,12 @@
       <Filter>RogueEditor\EditorLibrary</Filter>
     </ClCompile>
     <ClCompile Include="Source\EditorManager.cpp">
+      <Filter>RogueEditor\EditorFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Editor.cpp">
+      <Filter>RogueEditor\EditorFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EditorViewport.cpp">
       <Filter>RogueEditor\EditorFiles</Filter>
     </ClCompile>
   </ItemGroup>

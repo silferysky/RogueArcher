@@ -8,6 +8,7 @@
 #include "TransformComponent.h"
 #include "BoxCollider2DComponent.h"
 #include "LogicComponent.h"
+#include "Timer.h"
 
 LogicSystem::LogicSystem()
 {
@@ -43,6 +44,8 @@ void LogicSystem::init()
 
 void LogicSystem::update()
 {
+	Timer TimerSystem;
+	TimerSystem.TimerInit("Logic System");
 	for (auto it = m_entityLogicMap.begin(); it != m_entityLogicMap.end(); ++it)
 	{
 		//Null checker
@@ -52,6 +55,7 @@ void LogicSystem::update()
 		//Updates the current logic. The individual AI types will handle the state on their own
 		it->second->logicUpdate();
 	}
+	TimerSystem.TimerEnd("Logic System");
 }
 
 void LogicSystem::receive(Event* ev)

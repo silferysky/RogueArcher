@@ -1,7 +1,7 @@
 #pragma once
 #include <cstdio>
 #include <cstdlib>
-
+#include <string>
 #include <fstream>
 #include "Main.h"
 #include <vector>
@@ -10,8 +10,7 @@
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_glfw.h"
 #include "REEditor.h"
-namespace EditorManager
-{
+
 	class IEditable;
 	class EditorManager
 	{
@@ -32,9 +31,10 @@ namespace EditorManager
 		ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 		
 		template<typename T>
-		void AddEditorWindow(T* Window)
+		void AddEditorWindow(std::string name,T* Window)
 		{
-
+			//m_WindowsVector.push_back(Window);
+			//m_WindowsMap.emplace(name, Window);
 		}
 	private:
 		std::vector<IEditable*> m_WindowsVector;
@@ -42,5 +42,5 @@ namespace EditorManager
 		float RETime = 0.0f;
 
 	};
-}
+
 	

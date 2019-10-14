@@ -32,7 +32,7 @@ float gDeltaTime;
 float gFixedDeltaTime;
 bool gameIsRunning = true;
 ObjectFactory gObjectFactory;
-bool EditorMode = false;
+bool EditorMode = true;
 //const char* FileName = "/Resources/test.json";
 static const int SCREEN_FULLSCREEN = 0;
 static const int SCREEN_WIDTH = 960;
@@ -64,7 +64,7 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	ShowWindow(hWnd, nCmdShow);
 	if (EditorMode)
 	{
-		EditorManager::EditorManager Editor;
+		EditorManager Editor;
 		Editor.StartWindow();
 		Editor.UpdateWindow();
 		Editor.CloseWindow();

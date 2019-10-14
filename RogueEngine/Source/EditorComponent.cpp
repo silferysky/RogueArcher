@@ -1,6 +1,6 @@
 #include "EditorComponent.h"
 
-namespace ImGuiComponent
+namespace Rogue
 {
 	ImGuiComponent::ImGuiComponent()
 	{
@@ -8,7 +8,7 @@ namespace ImGuiComponent
 	ImGuiComponent::~ImGuiComponent()
 	{
 	}
-	void ImGuiComponent::ImGuiComponentInit()
+	void ImGuiComponent::Init()
 	{
 		if (ImGui::BeginMenu("Component"))
 		{

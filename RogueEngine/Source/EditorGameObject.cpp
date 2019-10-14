@@ -1,6 +1,6 @@
 #include "EditorGameObject.h"
 
-namespace ImGuiGameObject
+namespace Rogue
 {
 	ImGuiGameObject::ImGuiGameObject()
 	{
@@ -8,7 +8,7 @@ namespace ImGuiGameObject
 	ImGuiGameObject::~ImGuiGameObject()
 	{
 	}
-	void ImGuiGameObject::ImGuiGameObjectInit()
+	void ImGuiGameObject::Init()
 	{
 		if (ImGui::BeginMenu("GameObject"))
 		{

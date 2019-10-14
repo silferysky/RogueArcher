@@ -1,7 +1,7 @@
 #pragma once
 #include "REEditor.h"
 #include "IEditable.h"
-namespace ImGuiProject
+namespace Rogue
 
 {
 	class ImGuiProject : public IEditable
@@ -9,7 +9,7 @@ namespace ImGuiProject
 	public:
 		ImGuiProject();
 		~ImGuiProject();
-		void ImGuiProjectInit();
+		virtual void Init() override;
 		virtual void Update() override;
 		virtual void Shutdown() override;
 	};
