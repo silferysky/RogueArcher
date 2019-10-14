@@ -62,13 +62,11 @@ std::string LogicComponent::Serialize()
 	ss << static_cast<int>(m_AIType) << ";";
 	ss << static_cast<int>(m_currentState) << ";";
 
-	for (auto it = m_allStates.begin();;)
+	for (auto it = m_allStates.begin();it != m_allStates.end();)
 	{
 		ss << static_cast<int>(*it);
 		if (++it != m_allStates.end())
 			ss << ";";
-		else
-			break;
 	}
 
 	return ss.str();

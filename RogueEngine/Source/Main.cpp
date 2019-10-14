@@ -99,13 +99,6 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	debugStr.clear();
 	debugStr.str("");
 
-	int* value1 = (int*)MemoryManager::instance().operator new(8);
-	int* value2 = (int*)MemoryManager::instance().operator new(8);
-	MemoryManager::instance().operator delete(value1);
-	MemoryManager::instance().operator delete(value2);
-	//int* value3 = (int*)MemoryManager::instance().operator new(8);
-	//*value1 = 5;
-
 	//gObjectFactory.SaveLevel("Resources/Level 1.json");
 
 	TestSystem sys = TestSystem();
