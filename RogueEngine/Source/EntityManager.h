@@ -5,6 +5,8 @@
 #include <array>
 #include "Logger.h"
 #include <cassert>
+#include <sstream>
+
 class EntityManager
 {
 public:

@@ -1,10 +1,9 @@
 #pragma once
-#include "REEngine.h"
-#include "FileIO.h"
+#include "Types.h"
+#include <vector>
 
 class ObjectFactory
 {
-	RESerialiser m_Serialiser;
 
 public:
 	void SaveLevel(const char* fileName);
@@ -17,8 +16,9 @@ private:
 };
 
 //MACROS FOR OBJECT FACTORY
-#define SETSTRING(str, i1, cmp, i2) str << "Entity" << i1 << cmp << i2
+#define SETSTRING(str, i1, cmp) str << "Entity" << i1 << cmp
 #define SETSSTOSTR(ss) stdstr = ss.str(); cstr = stdstr.c_str()
-#define CLEARNSETSTR(s, i1, cmp, i2) s.clear(); s.str(""); SETSTRING(s, i1, cmp, i2); SETSSTOSTR(s)
+#define CLEARSTR(s) s.clear(); s.str("")
+#define CLEARNSETSTR(s, i1, cmp) CLEARSTR(s); SETSTRING(s, i1, cmp); SETSSTOSTR(s)
 #define MAX_SAVE_ENTITY 8
 #define MIN_SAVE_ENTITY 2

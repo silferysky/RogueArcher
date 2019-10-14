@@ -1,20 +1,8 @@
 #include "GraphicsSystem.h"
-#include "SystemList.h"
 
 // Public member functions 
 void GraphicsSystem::init()
 {
-	// Init OpenGL
-	glEnable(GL_TEXTURE_2D);						   // Texture Mapping
-	glEnable(GL_DEPTH_TEST);
-	glShadeModel(GL_SMOOTH);						   // Smooth shading
-	glDepthFunc(GL_LEQUAL);							   // Depth testing type
-	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Perspective Calculations
-
-	// Enable alpha
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glEnable(GL_BLEND);
-
 	LISTENER_HANDLER hand = std::bind(&GraphicsSystem::receive, this, std::placeholders::_1);
 	EventDispatcher::instance().AddListener(SystemID::id_GRAPHICSSYSTEM, hand);
 
@@ -26,14 +14,9 @@ void GraphicsSystem::init()
 	// Set graphics system signature
 	gEngine.m_coordinator.SetSystemSignature<GraphicsSystem>(signature);
 
-	if (glewInit() != GLEW_OK)
-	{
-		std::cout << "GLEW broke" << std::endl;
-	}
-
 	m_shader = gEngine.m_coordinator.loadShader("Object Shader");
 
-	//GenerateQuadPrimitive(m_VBO, m_VAO, m_EBO);
+	GenerateQuadPrimitive(m_VBO, m_VAO, m_EBO);
 }
 
 void GraphicsSystem::update()
@@ -60,7 +43,6 @@ void GraphicsSystem::update()
 
 void GraphicsSystem::draw(SpriteComponent* sprite, TransformComponent* transform)
 {
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glBindVertexArray(m_VAO);
 
 	auto transformMat = glm::mat4(1.0f);

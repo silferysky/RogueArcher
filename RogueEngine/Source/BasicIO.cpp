@@ -1,4 +1,5 @@
 #pragma once
+#include <fstream>
 #include "BasicIO.h"
 #define BUFFER_SIZE 10000
 

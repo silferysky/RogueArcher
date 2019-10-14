@@ -1,4 +1,5 @@
 #include "REEngine.h"
+#include "LogicSystem.h"
 
 bool REEngine::InitializeOpenGL()
 {
@@ -12,6 +13,7 @@ void REEngine::RegisterSystems()
 	m_coordinator.RegisterSystem<WindowSystem>();
 	m_coordinator.RegisterSystem<GraphicsSystem>();
 	m_coordinator.RegisterSystem<DebugDrawSystem>();
+	//m_coordinator.RegisterSystem<LogicSystem>();
 }
 
 void REEngine::RegisterComponents()
@@ -22,6 +24,7 @@ void REEngine::RegisterComponents()
 	m_coordinator.RegisterComponent<CircleCollider2DComponent>();
 	m_coordinator.RegisterComponent<BoxCollider2DComponent>();
 	m_coordinator.RegisterComponent<PlayerControllerComponent>();
+	//m_coordinator.RegisterComponent<LogicComponent>();
 }
 
 void REEngine::init()
@@ -40,6 +43,23 @@ void REEngine::init()
 }
 
 void REEngine::update()
-{
+{	
+	m_stepCount = 0;
+
 	m_coordinator.Update();
+}
+
+void REEngine::shutdown()
+{
+	//put graphics shutdown here
+}
+
+float REEngine::GetAccumulatedTime() const
+{
+	return m_accumulatedTime;
+}
+
+int REEngine::GetStepCount() const
+{
+	return m_stepCount;
 }

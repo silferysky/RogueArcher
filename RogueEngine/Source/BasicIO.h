@@ -1,7 +1,6 @@
 #pragma once
-#include <fstream>
 #include <string>
-#include "RogueEngine.h"
+#include "logger.h"
 
 class BasicIO 
 {
