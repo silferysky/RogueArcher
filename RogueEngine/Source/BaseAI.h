@@ -12,7 +12,8 @@ public:
 	~BaseAI();
 
 	//From ILogic
-	void logicUpdate();
+	void logicInit() override;
+	void logicUpdate() override;
 
 	//Getter/Setter
 	std::shared_ptr<LogicComponent> getLogicComponent();

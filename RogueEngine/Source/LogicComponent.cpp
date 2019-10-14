@@ -27,6 +27,28 @@ void LogicComponent::LogicType(AIType newType)
 	m_AIType = newType;
 }
 
+void LogicComponent::SetActiveStateBit(size_t pos)
+{
+	m_activeStates.set(pos);
+}
+
+bool LogicComponent::GetActiveStateBit(size_t pos) const
+{
+	return m_activeStates.test(pos);
+}
+
+void LogicComponent::AddAIState(AIState newState)
+{
+	//Assumes the new state is not in yet
+	m_allStates.push_back(newState);
+	//m_activeStates.set(static_cast<int>(newState), false);
+}
+
+std::vector<AIState> LogicComponent::AllAIStates() const
+{
+	return m_allStates;
+}
+
 std::string LogicComponent::Serialize()
 {
 	//Acceleration, Velocity, Mass, Volume, isStatic
