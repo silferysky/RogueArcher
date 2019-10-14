@@ -41,7 +41,13 @@ void LogicComponent::AddAIState(AIState newState)
 {
 	//Assumes the new state is not in yet
 	m_allStates.push_back(newState);
-	//m_activeStates.set(static_cast<int>(newState), false);
+	m_activeStates.set(static_cast<size_t>(newState), true);
+}
+
+void LogicComponent::AddAIStateInactive(AIState newState)
+{
+	//Assumes the new state is not in yet
+	m_allStates.push_back(newState);
 }
 
 std::vector<AIState> LogicComponent::AllAIStates() const
