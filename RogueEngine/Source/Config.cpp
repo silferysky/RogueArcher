@@ -3,7 +3,7 @@
 void REConfig::ConfigInit()
 {
 	RESerialiser Serialiser;
-	rapidjson::Document Windows = Serialiser.DeserialiseFromFile("Resources/Windows.json");
+	rapidjson::Document Windows = RESerialiser::DeserialiseFromFile("Resources/Windows.json");
 
 	x = Windows["x"].GetInt();
 	y = Windows["y"].GetInt();

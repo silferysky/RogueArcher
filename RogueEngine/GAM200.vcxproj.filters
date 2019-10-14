@@ -160,9 +160,6 @@
     <ClInclude Include="Source\PhysicsSystem.h">
       <Filter>RogueEngine\Systems\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Config.h">
-      <Filter>RogueEngine\Data</Filter>
-    </ClInclude>
     <ClInclude Include="Source\SystemList.h">
       <Filter>RogueEngine\Systems</Filter>
     </ClInclude>
@@ -257,11 +254,12 @@
     <ClInclude Include="Source\ILogic.h">
       <Filter>RogueEngine\Systems\AI</Filter>
     </ClInclude>
+    <ClInclude Include="Source\WindowSystem.h" />
+    <ClInclude Include="Source\Config.h">
+      <Filter>RogueEngine\Data</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Main.cpp">
-      <Filter>RogueEngine</Filter>
-    </ClCompile>
     <ClCompile Include="Source\InputManager.cpp">
       <Filter>RogueEngine\Systems\Input</Filter>
     </ClCompile>
@@ -309,9 +307,6 @@
     </ClCompile>
     <ClCompile Include="Source\PhysicsSystem.cpp">
       <Filter>RogueEngine\Systems\Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Config.cpp">
-      <Filter>RogueEngine\Data</Filter>
     </ClCompile>
     <ClCompile Include="Source\REEngine.cpp">
       <Filter>RogueEngine\Core</Filter>
@@ -369,6 +364,13 @@
     </ClCompile>
     <ClCompile Include="Source\LogicComponent.cpp">
       <Filter>RogueEngine\Systems\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\WindowSystem.cpp" />
+    <ClCompile Include="Source\Config.cpp">
+      <Filter>RogueEngine\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Main.cpp">
+      <Filter>RogueEngine</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

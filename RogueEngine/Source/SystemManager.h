@@ -16,10 +16,10 @@ public:
 	void RegisterSystem()
 	{
 		const char* typeName = typeid(T).name();
-		assert(RESystems.find(typeName) == RESystems.end() && "Registering system more than once.");
+		//assert(RESystems.find(typeName) == RESystems.end() && "Registering system more than once.");
 
 		// Insert the newly created system pointer and typename into the map.
-		RESystems.insert({ typeName, std::make_shared<T>() });
+		RESystems.push_back({ typeName, std::make_shared<T>() });
 
 		std::stringstream loggerStr;
 		loggerStr << typeName << " registered!";
@@ -118,5 +118,5 @@ public:
 
 private:
 	std::unordered_map<const char*, Signature> RESignatures{};
-	std::unordered_map<const char*, std::shared_ptr<System>> RESystems{};
+	std::vector < std::pair<const char*, std::shared_ptr<System>>> RESystems{};
 };
