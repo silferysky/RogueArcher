@@ -1,9 +1,16 @@
 #pragma once
-#include "ObjectFactory.h"
-#include "REEngine.h"
-#include "FileIO.h"
+
 #include <bitset>
 #include <random>
+#include <vector>
+
+#include "Main.h"
+#include "ObjectFactory.h"
+#include "Types.h"
+#include "logger.h"
+#include "EntityManager.h"
+#include "FileIO.h"
+
 #define RAND_LARGE 500
 #define RAND_SMALL 5
 

@@ -1,18 +1,17 @@
 #pragma once
 
-
 // Class to define the shape's characteristics
 class Shape
 { 
 private:
-	float m_wigDeltaTimeh;
+	float m_width;
 	float m_height;
 	float m_mass;
 	float m_inertia; // Moment of inertia
 
 public:
 	Shape(float w = 0.0f, float h = 0.0f, float m = 0.0f, float MoI = 0.0f)
-		: m_wigDeltaTimeh{ w }, m_height{ h }, m_mass{ m }, m_inertia{ MoI }
+		: m_width{ w }, m_height{ h }, m_mass{ m }, m_inertia{ MoI }
 	{}
 
 	virtual ~Shape();

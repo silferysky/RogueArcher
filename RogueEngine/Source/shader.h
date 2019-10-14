@@ -1,9 +1,6 @@
-#ifndef SHADER_H
-#define SHADER_H
-
-#include <iostream>
+#pragma once
 #include <GL/glew.h>
-#include "BasicIO.h"
+#include <string>
 
 class Shader
 {
@@ -17,5 +14,3 @@ public:
 
 	GLuint GetShader() const;
 };
-
-#endif

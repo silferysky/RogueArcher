@@ -1,6 +1,9 @@
+#include <vector>
+#include <sstream>
+
+#include "BaseComponent.h"
 #include "LogicComponent.h"
 #include "Vector2D.h"
-#include <sstream>
 
 std::vector<AIState> LogicComponent::AllStates()
 {

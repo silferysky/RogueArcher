@@ -1,12 +1,9 @@
 #pragma once
-#ifndef GRAPICSSYSTEM_H
-#define GRAPICSSYSTEM_H
-#include "Timer.h"
-#include "../Source/Main.h"
-#include "TransformComponent.h"
-#include "../Source/REMath.h"
-#include "../Source/EventDispatcher.h"
+#include "SystemManager.h"
+#include "EventListener.h"
+#include "GL/glew.h"
 #include "GLHelper.hpp"
+#include "ComponentList.h"
 
 class Timer;
 class SpriteComponent;
@@ -29,4 +26,3 @@ public:
 
 	void receive(Event* ev);
 };
-#endif

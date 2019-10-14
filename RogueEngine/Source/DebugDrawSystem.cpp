@@ -1,4 +1,13 @@
-#include "DebugDrawSystem.h"
+#include "REEngine.h"
+#include "Timer.h"
+#include "Main.h"
+#include "REMath.h"
+#include "EventDispatcher.h"
+#include "GLHelper.hpp"
+#include "ComponentList.h"
+#include "DebugDrawSystem.h"	
+#include "SystemManager.h"
+#include "EventListener.h"
 
 // Public member functions
 void DebugDrawSystem::init()

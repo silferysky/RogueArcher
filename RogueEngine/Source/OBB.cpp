@@ -1,4 +1,6 @@
 #include "OBB.h"
+#include "Polygon.h"
+#include "Matrix33.h"
 
 OBB::OBB(const OBB::VertexList& model)
 	: m_minOnAxis{ 0.0f },

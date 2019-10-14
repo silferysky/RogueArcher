@@ -1,8 +1,6 @@
 #pragma once
-#include "BaseSystem.h"
-#include "EventDispatcher.h"
 #include "ILogic.h"
-#include <vector>
+#include "EventListener.h"
 
 class LogicSystem :
 	public System, public EventListener

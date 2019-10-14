@@ -2,40 +2,44 @@
 #include "SystemManager.h"
 #include "ComponentManager.h"
 #include "EntityManager.h"
-#include "FileManager.h"
 #include "GraphicsSystem.h"
 #include "DebugDrawSystem.h"
 #include "PhysicsSystem.h"
 #include "EventDispatcher.h"
 #include "ShaderManager.h"
+#include "TextureManager.h"
+#include "Coordinator.h"
+#include "Types.h"
 
-// Forward declaration
-class PhysicsSystem;
-class GraphicsSystem;
-class SpriteComponent;
-class EventDispatcher;
+//// Forward declaration
+//class PhysicsSystem;
+//class GraphicsSystem;
+//class SpriteComponent;
+//class EventDispatcher;
+//class ComponentManager;
+//class EntityManager;
+//class SystemManager;
+//class TextureManager;
 
 class Coordinator
 {
 	std::unique_ptr<ComponentManager> m_componentManager;
 	std::unique_ptr<EntityManager> m_entityManager;
 	std::unique_ptr<SystemManager> m_systemManager;
-	std::unique_ptr<FileManager> m_fileManager;
 	std::unique_ptr<TextureManager> m_textureManager;
 	std::unique_ptr<ShaderManager> m_shaderManager;
 
 	bool m_togglePerformanceChecker = true;
 	bool m_fpscheck = true;
 public:
-	Coordinator()
-		:	m_entityManager{ std::make_unique<EntityManager>() },
-			m_componentManager{ std::make_unique<ComponentManager>() },
-			m_systemManager{ std::make_unique<SystemManager>() },
-			m_fileManager{ std::make_unique<FileManager>() },
-			m_textureManager{ std::make_unique<TextureManager>() },
-			m_shaderManager{ std::make_unique<ShaderManager>() },
-			m_togglePerformanceChecker{ false },
-			m_fpscheck{ false }
+	Coordinator() :
+		m_entityManager{ std::make_unique<EntityManager>() },
+		m_componentManager{ std::make_unique<ComponentManager>() },
+		m_systemManager{ std::make_unique<SystemManager>() },
+		m_textureManager{ std::make_unique<TextureManager>() },
+		m_shaderManager{ std::make_unique<ShaderManager>() },
+		m_togglePerformanceChecker{ false },
+		m_fpscheck{ false }
 	{}
 
 	void Init()
@@ -145,22 +149,6 @@ public:
 		return *m_textureManager;
 	}
 
-	template<typename T>
-	std::shared_ptr<T> GetSystem(const char* name) const
-	{
-		return m_systemManager->RESystems[name];
-	}
-
-	std::shared_ptr<std::string> getVertexShader() const
-	{
-		return m_fileManager->getVertexShader();
-	}
-
-	std::shared_ptr<std::string> getFragmentShader() const
-	{
-		return m_fileManager->getFragmentShader();
-	}
-	
 	template <typename T>
 	bool CheckIfComponentExists(Entity entity)
 	{

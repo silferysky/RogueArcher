@@ -1,113 +1,110 @@
 #include "Config.h"
+#include "FileIO.h"
+#include "Main.h"
+
+REConfig::REConfig() :
+	m_title{ "" }, m_byte{ 0 }, m_flags{ 0 }, m_FPS{ 1 / 60 }, m_height{ 0 }, m_sound{ true }, m_x{ 0 }, m_y{ 0 }
+{}
 
 void REConfig::ConfigInit()
 {
-
 	RESerialiser Serialiser;
 	rapidjson::Document Windows = Serialiser.DeserialiseFromFile("Resources/Windows.json");
 
-	x = Windows["x"].GetInt();
-	y = Windows["y"].GetInt();
-	height = Windows["height"].GetInt();
-	width = Windows["width"].GetInt();
-	byte = Windows["byte"].GetInt();
-	flags = Windows["flags"].GetInt();
-	title = Windows["title"].GetString();
-	sound = Windows["sound"].GetBool();
+	m_x = Windows["x"].GetInt();
+	m_y = Windows["y"].GetInt();
+	m_height = Windows["height"].GetInt();
+	m_width = Windows["width"].GetInt();
+	m_byte = Windows["byte"].GetInt();
+	m_flags = Windows["flags"].GetInt();
+	m_title = Windows["title"].GetString();
+	m_sound = Windows["sound"].GetBool();
 }
 
 std::string REConfig::GetTitle()
 {
-	return title;
+	return m_title;
 }
 
 bool REConfig::GetSound()
 {
-	return sound;
+	return m_sound;
 }
 
 
 int REConfig::GetX()
 {
-	return x;
+	return m_x;
 }
 
 int REConfig::GetY()
 {
-	return y;
+	return m_y;
 }
 
 int REConfig::GetHeight()
 {
-	return height;
+	return m_height;
 }
 
 int REConfig::GetWidth()
 {
-	return width;
+	return m_width;
 }
 
 BYTE REConfig::GetByte()
 {
-	return BYTE(byte);
+	return m_byte;
 }
 
 int REConfig::GetFlags()
 {
-	return flags;
+	return m_flags;
 }
 
 float REConfig::GetFPS()
 {
-	return FPS;
+	return m_FPS;
 }
 
-int REConfig::SetX(int newx)
+void REConfig::SetX(int newx)
 {
-	x = newx;
-	return x;
+	m_x = newx;
 }
 
-int REConfig::SetY(int newy)
+void REConfig::SetY(int newy)
 {
-	y = newy;
-	return y;
+	m_y = newy;
 }
 
-int REConfig::SetHeight(int newheight)
+void REConfig::SetHeight(int newheight)
 {
-	height = newheight;
-	return height;
+	m_height = newheight;
 }
 
-int REConfig::SetWidth(int newwidth)
+void REConfig::SetWidth(int newwidth)
 {
-	width = newwidth;
-	return width;
+	m_width = newwidth;
 }
 
-int REConfig::SetByte(int newbyte)
+void REConfig::SetByte(int newbyte)
 {
-	byte = newbyte;
-	return byte;
+	m_byte = newbyte;
 }
 
-int REConfig::SetFlags(int newflags)
+void REConfig::SetFlags(int newflags)
 {
-	flags = newflags;
-	return flags;
+	m_flags = newflags;
 }
 
-float REConfig::SetFPS(int FPSset)
+void REConfig::SetFPS(int FPSset)
 {
-	FPS = 1 / float(FPSset);
-	return FPS;
+	m_FPS = 1 / static_cast<float>(FPSset);
 }
 
-bool REConfig::SetSound(bool NewSound)
+void REConfig::SetSound(bool NewSound)
 {
-	sound = NewSound;
-	return NewSound;
+	m_sound = NewSound;
 }
 
 
