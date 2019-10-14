@@ -1,7 +1,5 @@
 #pragma once
-#include "BaseComponent.h"
 #include "AIType.h"
-#include <vector>
 
 class LogicComponent
 	: public BaseComponent

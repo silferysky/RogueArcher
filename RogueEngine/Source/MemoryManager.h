@@ -1,7 +1,5 @@
 #pragma once
 #include <vector>
-#include "logger.h"
-#include "MemoryType.h"
 
 #define MEM_SPACE 1024 * 1024
 #define MAX_CHUNK_SIZE 1024

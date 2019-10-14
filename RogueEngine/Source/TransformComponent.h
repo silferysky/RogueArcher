@@ -1,7 +1,6 @@
 #pragma once
-#include "../Source/REMath.h"
-#include <sstream>
 #include "BaseComponent.h"
+#include "Vector2D.h"
 
 class TransformComponent
 	: public BaseComponent
@@ -11,9 +10,6 @@ class TransformComponent
 	float m_rotation = 0.0f;
 
 public:
-	TransformComponent() = default;
-	~TransformComponent() = default;
-
 	void setPosition(const Vec2& pos);
 	void offSetPosition(const Vec2& pos);
 	void setScale(const Vec2& scale);

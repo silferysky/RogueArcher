@@ -16,9 +16,8 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 	// Supress warning: nonstandard extension used : nameless struct/union
 #pragma warning( disable : 4201 )
 #endif
-#include <cmath>
+
 #include <iostream>
-#include "glm.hpp"
 
 typedef union Vector2D
 {

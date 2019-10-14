@@ -1,9 +1,9 @@
 /******************************************************************************/
 /*!
 \file		Matrix3x3.cpp
-\author 	Lim Jia Hao, l.jiahao, 390006518
-\par    	email: l.jiahao\@digipen.edu
-\date   	March 19, 2019
+\author 	
+\par    	
+\date   	
 \brief
 This module contains the necessary functions and operator overloads for the
 3x3 Matrix. 
@@ -30,6 +30,10 @@ prior written consent of DigiPen Institute of Technology is prohibited.
  */
  /******************************************************************************/
 #pragma once
+#include <cmath>
+#include <iostream>
+#include "REMath.h"
+#include "Vector2D.h"
 #include "Matrix33.h"
 
 const int TOTAL_VALUES = 9;

@@ -1,9 +1,7 @@
 #pragma once
-#include <cmath>
-#include "Vector2D.h"
-#include <algorithm>
-#include "Matrix33.h"
 
+#include "Vector2D.h"
+#include "Matrix33.h"
 
 namespace REMath
 {

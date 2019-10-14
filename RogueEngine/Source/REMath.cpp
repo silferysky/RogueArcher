@@ -1,5 +1,6 @@
+#include <cmath>
+#include <algorithm>
 #include "REMath.h"
-
 
 
 void REMath::REBuildLineSegment(LineSegment& lineSegment,								//Line segment reference - output 

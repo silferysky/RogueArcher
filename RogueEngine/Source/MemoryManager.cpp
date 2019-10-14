@@ -1,4 +1,6 @@
 #include "MemoryManager.h"
+#include "Logger.h"
+#include "MemoryType.h"
 
 ///***************Definition/Initialization of values*****************/
 int* MemoryManager::MemoryStart;

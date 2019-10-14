@@ -31,10 +31,8 @@
     <ClInclude Include="Source\LogicSystem.h" />
     <ClInclude Include="Source\PhysicsSystem.h" />
     <ClInclude Include="Source\AABB.h" />
-    <ClInclude Include="Source\BaseCollider.h" />
     <ClInclude Include="Source\Circle.h" />
     <ClInclude Include="Source\CircleCollider2DComponent.h" />
-    <ClInclude Include="Source\Collider.h" />
     <ClInclude Include="Source\CollisionManager.h" />
     <ClInclude Include="Source\MaterialComponent.h" />
     <ClInclude Include="Source\OBB.h" />
@@ -48,7 +46,6 @@
     <ClInclude Include="Source\TextureManager.h" />
     <ClInclude Include="Source\TransformComponent.h" />
     <ClInclude Include="Source\AppEvent.h" />
-    <ClInclude Include="Source\FileManager.h" />
     <ClInclude Include="Source\MemoryManager.h" />
     <ClInclude Include="Source\REEngine.h" />
     <ClInclude Include="Source\SystemList.h" />
@@ -77,7 +74,6 @@
     <ClInclude Include="Source\Resource.h" />
     <ClInclude Include="Source\SpriteComponent.h" />
     <ClInclude Include="Source\SystemManager.h" />
-    <ClInclude Include="Source\TestSystem.h" />
     <ClInclude Include="Source\Timer.h" />
     <ClInclude Include="Source\Types.h" />
     <ClInclude Include="Source\Vector2D.h" />
@@ -95,7 +91,6 @@
     <ClCompile Include="Source\AABB.cpp" />
     <ClCompile Include="Source\Circle.cpp" />
     <ClCompile Include="Source\CircleCollider2DComponent.cpp" />
-    <ClCompile Include="Source\Collider.cpp" />
     <ClCompile Include="Source\CollisionManager.cpp" />
     <ClCompile Include="Source\MaterialComponent.cpp" />
     <ClCompile Include="Source\OBB.cpp" />
@@ -108,7 +103,6 @@
     <ClCompile Include="Source\Config.cpp" />
     <ClCompile Include="Source\BasicIO.cpp" />
     <ClCompile Include="Source\FileIO.cpp" />
-    <ClCompile Include="Source\FileManager.cpp" />
     <ClCompile Include="Source\GraphicsSystem.cpp" />
     <ClCompile Include="Source\InputManager.cpp" />
     <ClCompile Include="Source\Logger.cpp" />

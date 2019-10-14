@@ -1,4 +1,7 @@
+#include <sstream>
+#include <vector>
 #include "BoxCollider2DComponent.h"
+#include "Vector2D.h"
 
 AABB& BoxCollider2DComponent::AABB()
 {

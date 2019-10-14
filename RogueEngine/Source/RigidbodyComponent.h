@@ -1,7 +1,6 @@
 #pragma once
-#include "../Source/REMath.h"
-#include <sstream>
 #include "BaseComponent.h"
+#include "Vector2D.h"
 
 class RigidbodyComponent
 	: public BaseComponent

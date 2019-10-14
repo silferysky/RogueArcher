@@ -1,8 +1,7 @@
 #pragma once
-#include <map>
 #include "KeyEvent.h"
-#include "InputData.h"
-#include "BaseSystem.h"
+#include "SystemManager.h"
+#include <map>
 
 struct KeyboardState
 {

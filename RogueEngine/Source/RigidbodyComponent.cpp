@@ -1,5 +1,7 @@
 #pragma once
+#include <sstream>
 #include "RigidbodyComponent.h"
+#include "REMath.h"
 
 
 RigidbodyComponent::RigidbodyComponent(float mass, float volume, float damping)

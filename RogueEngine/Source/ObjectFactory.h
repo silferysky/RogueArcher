@@ -1,6 +1,5 @@
 #pragma once
-#include "Types.h"
-#include <vector>
+#include "REEngine.h"
 
 class ObjectFactory
 {

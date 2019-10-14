@@ -1,12 +1,4 @@
 #pragma once
-#ifndef DEBUGDRAWSYSTEM_H
-#define DEBUGDRAWSYSTEM_H
-#include "Timer.h"
-#include "../Source/Main.h"
-#include "TransformComponent.h"
-#include "../Source/REMath.h"
-#include "../Source/EventDispatcher.h"
-#include "GLHelper.hpp"
 
 class Timer;
 class DebugDrawSystem : public System, public EventListener
@@ -29,4 +21,3 @@ public:
 
 	void receive(Event* ev);
 };
-#endif#pragma once

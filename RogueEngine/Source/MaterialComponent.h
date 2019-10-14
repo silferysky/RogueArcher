@@ -1,6 +1,6 @@
 #pragma once
 
-enum MaterialList
+enum class MaterialList
 {
 	MAT_NONE = 0,
 	MAT_A,
@@ -18,7 +18,7 @@ class MaterialComponent
 	float m_friction;
 
 public:
-	MaterialComponent(MaterialList material = MAT_NONE);
+	MaterialComponent(MaterialList material = MaterialList::MAT_NONE);
 	~MaterialComponent();
 };
 

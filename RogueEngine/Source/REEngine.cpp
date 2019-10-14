@@ -1,5 +1,13 @@
-#include "REEngine.h"
+#include "Logger.h"
+#include "InputManager.h"
+#include "EventDispatcher.h"
 #include "LogicSystem.h"
+#include "REEngine.h"
+#include "GLHelper.hpp"
+#include "PhysicsSystem.h"
+#include "GraphicsSystem.h"
+#include "DebugDrawSystem.h"
+#include "ComponentList.h"
 
 bool REEngine::InitializeOpenGL()
 {

@@ -1,4 +1,8 @@
+#include <Windows.h>
 #include "WindowHelper.h"
+#include "wtypes.h"
+#include "Main.h"
+#include "GLHelper.hpp"
 
 float GetDesktopWidth()
 {

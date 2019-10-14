@@ -1,6 +1,5 @@
 #pragma once
-#include <vector>
-#include "../Source/Vector2D.h"
+#include "Vector2D.h"
 
 enum PolygonList
 {
