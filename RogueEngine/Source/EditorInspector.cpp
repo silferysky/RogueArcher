@@ -71,5 +71,11 @@ namespace ImGuiInspector
 		}
 		ImGui::End();
 	}
+	void ImGuiInspector::Update()
+	{
+	}
+	void ImGuiInspector::Shutdown()
+	{
+	}
 };
 

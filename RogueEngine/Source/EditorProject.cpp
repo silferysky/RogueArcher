@@ -24,3 +24,11 @@ void ImGuiProject::ImGuiProject::ImGuiProjectInit()
 	ImGui::End();
 
 }
+
+void ImGuiProject::ImGuiProject::Update()
+{
+}
+
+void ImGuiProject::ImGuiProject::Shutdown()
+{
+}

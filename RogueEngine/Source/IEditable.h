@@ -5,7 +5,6 @@ typedef int EditorWindowFlags;
 class IEditable
 {
 public:
-	IEditable(const std::string& name, bool defOpen, ImGuiWindowFlags imguiFlags, EditorWindowFlags editorFlags);
 	virtual ~IEditable() = default;
 
 	virtual void Init(){}

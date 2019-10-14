@@ -46,5 +46,11 @@ namespace ImGuiEditorFile
 			ImGui::EndMenu();
 		}
 	}
+	void ImGuiEditorFile::Update()
+	{
+	}
+	void ImGuiEditorFile::Shutdown()
+	{
+	}
 }
 

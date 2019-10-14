@@ -40,4 +40,10 @@ namespace ImGuiAssets
 			ImGui::EndMenu();
 		}
 	}
+	void ImGuiAssets::Update()
+	{
+	}
+	void ImGuiAssets::Shutdown()
+	{
+	}
 }

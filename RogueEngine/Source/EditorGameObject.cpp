@@ -42,4 +42,10 @@ namespace ImGuiGameObject
 			ImGui::EndMenu();
 		}
 	}
+	void ImGuiGameObject::Update()
+	{
+	}
+	void ImGuiGameObject::Shutdown()
+	{
+	}
 }

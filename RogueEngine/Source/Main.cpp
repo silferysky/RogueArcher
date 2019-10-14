@@ -25,7 +25,7 @@
 #include <iostream>
 #endif
 #include "REMath.h"
-#include "ImguiLayer.h"
+#include "REEditor.h"
 
 REEngine gEngine;
 float gDeltaTime;
@@ -64,7 +64,7 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	ShowWindow(hWnd, nCmdShow);
 	if (EditorMode)
 	{
-		ImGuiLayer::ImguiLayer Editor;
+		EditorManager::EditorManager Editor;
 		Editor.StartWindow();
 		Editor.UpdateWindow();
 		Editor.CloseWindow();
