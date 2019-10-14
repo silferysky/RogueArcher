@@ -1,7 +1,6 @@
-#include "ImguiLayer.h"
+
 #include "REEditor.h"
-#include "glew.h"
-#include "glfw3.h"
+
 
 namespace ImGuiLayer
 {

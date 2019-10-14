@@ -62,6 +62,15 @@
     <Filter Include="RogueEngine\Systems\AI">
       <UniqueIdentifier>{e68acb32-5338-4384-a5ff-e96022bc6953}</UniqueIdentifier>
     </Filter>
+    <Filter Include="RogueEditor">
+      <UniqueIdentifier>{5a236eec-1c6e-4ffa-9a10-717a12c37429}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RogueEditor\EditorFiles">
+      <UniqueIdentifier>{20c1c47b-5b49-47b1-abb4-12f8f5fd1d9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RogueEditor\EditorLibrary">
+      <UniqueIdentifier>{35c0161a-d947-4567-9c59-669be140c0e9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Resource.h">
@@ -245,6 +254,78 @@
     <ClInclude Include="Source\ILogic.h">
       <Filter>RogueEngine\Systems\AI</Filter>
     </ClInclude>
+    <ClInclude Include="Source\EditorAssets.h">
+      <Filter>RogueEditor\EditorFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EditorComponent.h">
+      <Filter>RogueEditor\EditorFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EditorConsole.h">
+      <Filter>RogueEditor\EditorFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EditorEdit.h">
+      <Filter>RogueEditor\EditorFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EditorFile.h">
+      <Filter>RogueEditor\EditorFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EditorGameObject.h">
+      <Filter>RogueEditor\EditorFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EditorHierarchy.h">
+      <Filter>RogueEditor\EditorFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EditorInspector.h">
+      <Filter>RogueEditor\EditorFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EditorProject.h">
+      <Filter>RogueEditor\EditorFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ImguiLayer.h">
+      <Filter>RogueEditor\EditorFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\REEditor.h">
+      <Filter>RogueEditor\EditorFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\glew.h">
+      <Filter>RogueEditor\EditorLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\glfw3.h">
+      <Filter>RogueEditor\EditorLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\glfw3native.h">
+      <Filter>RogueEditor\EditorLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\imconfig.h">
+      <Filter>RogueEditor\EditorLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\imgui.h">
+      <Filter>RogueEditor\EditorLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\imgui_impl_glfw.h">
+      <Filter>RogueEditor\EditorLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\imgui_impl_opengl3.h">
+      <Filter>RogueEditor\EditorLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\imgui_internal.h">
+      <Filter>RogueEditor\EditorLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\imgui_stl.h">
+      <Filter>RogueEditor\EditorLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\imstb_rectpack.h">
+      <Filter>RogueEditor\EditorLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\imstb_textedit.h">
+      <Filter>RogueEditor\EditorLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\imstb_truetype.h">
+      <Filter>RogueEditor\EditorLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\IEditable.h">
+      <Filter>RogueEditor\EditorFiles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -351,6 +432,60 @@
     </ClCompile>
     <ClCompile Include="Source\LogicComponent.cpp">
       <Filter>RogueEngine\Systems\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EditorAssets.cpp">
+      <Filter>RogueEditor\EditorFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EditorComponent.cpp">
+      <Filter>RogueEditor\EditorFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EditorConsole.cpp">
+      <Filter>RogueEditor\EditorFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EditorEdit.cpp">
+      <Filter>RogueEditor\EditorFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EditorGameObject.cpp">
+      <Filter>RogueEditor\EditorFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EditorFile.cpp">
+      <Filter>RogueEditor\EditorFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EditorHierarchy.cpp">
+      <Filter>RogueEditor\EditorFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EditorInspector.cpp">
+      <Filter>RogueEditor\EditorFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EditorProject.cpp">
+      <Filter>RogueEditor\EditorFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ImguiLayer.cpp">
+      <Filter>RogueEditor\EditorFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\imgui.cpp">
+      <Filter>RogueEditor\EditorLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\imgui_demo.cpp">
+      <Filter>RogueEditor\EditorLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\imgui_draw.cpp">
+      <Filter>RogueEditor\EditorLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\imgui_impl_glfw.cpp">
+      <Filter>RogueEditor\EditorLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\imgui_impl_opengl3.cpp">
+      <Filter>RogueEditor\EditorLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\imgui_stl.cpp">
+      <Filter>RogueEditor\EditorLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\imgui_widgets.cpp">
+      <Filter>RogueEditor\EditorLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\IEditable.cpp">
+      <Filter>RogueEditor</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
