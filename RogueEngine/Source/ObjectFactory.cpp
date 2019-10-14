@@ -149,7 +149,8 @@ void ObjectFactory::SaveLevel(const char* fileName)
 	//Background is unique and will not be counted to the entCount
 	Entity entCount = static_cast<Entity>(m_activeEntities.size() - 1);
 	EntityManager* em = &gEngine.m_coordinator.GetEntityManager();
-	//RESerialiser::WriteToFile(fileName, "EntityCount", (int)entCount);
+	int intVar = (int)entCount;
+	RESerialiser::WriteToFile(fileName, "EntityCount", &intVar);
 
 	bool writingBackground = true;
 
@@ -162,6 +163,8 @@ void ObjectFactory::SaveLevel(const char* fileName)
 			continue;
 		}
 
+		//Entity value acts as the value to store (-1 because of background)
+		Entity entityVal = curEntity - 1;
 		std::ostringstream strstream;
 		std::string stdstr;
 		const char* cstr;
@@ -169,68 +172,69 @@ void ObjectFactory::SaveLevel(const char* fileName)
 
 		//cstr will go out of scope if you choose to do strstream.str().c_str()
 		//This is the proper (Non macro) way of setting the string
-		strstream << "Signature" << curEntity;
+		strstream << "Signature" << entityVal;
 		stdstr = strstream.str();
 		cstr = stdstr.c_str();
-		//RESerialiser::WriteToFile(fileName, cstr, static_cast<int>(currentSignature.to_ulong()));
+		intVar = static_cast<int>(currentSignature.to_ulong());
+		RESerialiser::WriteToFile(fileName, cstr, &intVar);
 		CLEARSTR(strstream);
 		
-		for (int index = 0;;)
+		for (int index = 0; index != LASTCOMP;)
 		{
-			switch (index)
-			{
-				case static_cast<int>(SPRITE) :
+			if (currentSignature.test(index))
+				switch (index)
 				{
-					strstream << "Sprite{" << gEngine.m_coordinator.GetComponent<SpriteComponent>(curEntity).Serialize() << "}";
-					break;
-				}
-				case static_cast<int>(RIGIDBODY) :
-				{
-					strstream << "Rigidbody{" << gEngine.m_coordinator.GetComponent<RigidbodyComponent>(curEntity).Serialize() << "}";
-					break;
-				}
-				case static_cast<int>(TRANSFORM) :
-				{
-					strstream << "Transform{" << gEngine.m_coordinator.GetComponent<TransformComponent>(curEntity).Serialize() << "}";
-					break;
-				}
-				case static_cast<int>(CIRCLECOLLIDER2D) :
-				{
-					strstream << "CircleCollider{" << gEngine.m_coordinator.GetComponent<CircleCollider2DComponent>(curEntity).Serialize() << "}";
-					break;
-				}
-				case static_cast<int>(BOXCOLLIDER2D) :
-				{
-					strstream << "BoxCollider{" << gEngine.m_coordinator.GetComponent<BoxCollider2DComponent>(curEntity).Serialize() << "}";
-					break;
-				}
-				case static_cast<int>(PLAYERCONTROLLER) :
-				{
-					strstream << "PlayerController{" << gEngine.m_coordinator.GetComponent<PlayerControllerComponent>(curEntity).Serialize() << "}";
-					break;
-				}
-				case static_cast<int>(LOGIC) :
-				{
-					strstream << "LogicComponent{" << gEngine.m_coordinator.GetComponent<LogicComponent>(curEntity).Serialize() << "}";
-					break;
-				}
-				default:
-				{
-					RE_CORE_WARN("OUT OF BOUNDS OBJECT COMPONENT SAVING");
-					break;
+					case static_cast<int>(SPRITE) :
+					{
+						strstream << "Sprite{" << gEngine.m_coordinator.GetComponent<SpriteComponent>(curEntity).Serialize().c_str() << "}";
+						break;
+					}
+					case static_cast<int>(RIGIDBODY) :
+					{
+						strstream << "Rigidbody{" << gEngine.m_coordinator.GetComponent<RigidbodyComponent>(curEntity).Serialize().c_str() << "}";
+						break;
+					}
+					case static_cast<int>(TRANSFORM) :
+					{
+						strstream << "Transform{" << gEngine.m_coordinator.GetComponent<TransformComponent>(curEntity).Serialize() << "}";
+						break;
+					}
+					case static_cast<int>(CIRCLECOLLIDER2D) :
+					{
+						strstream << "CircleCollider{" << gEngine.m_coordinator.GetComponent<CircleCollider2DComponent>(curEntity).Serialize() << "}";
+						break;
+					}
+					case static_cast<int>(BOXCOLLIDER2D) :
+					{
+						strstream << "BoxCollider{" << gEngine.m_coordinator.GetComponent<BoxCollider2DComponent>(curEntity).Serialize() << "}";
+						break;
+					}
+					case static_cast<int>(PLAYERCONTROLLER) :
+					{
+						strstream << "PlayerController{" << gEngine.m_coordinator.GetComponent<PlayerControllerComponent>(curEntity).Serialize() << "}";
+						break;
+					}
+					case static_cast<int>(LOGIC) :
+					{
+						strstream << "LogicComponent{" << gEngine.m_coordinator.GetComponent<LogicComponent>(curEntity).Serialize() << "}";
+						break;
+					}
+					default:
+					{
+						RE_CORE_WARN("OUT OF BOUNDS OBJECT COMPONENT SAVING");
+						break;
+					}
 				}
 
-				//Does checker and incrementing here
-				if (++index != (COMPONENTID)LASTCOMP)
-					strstream << "|";
-				else
-					break;
-			}
+			//Does checker and incrementing here
+			if (++index != (COMPONENTID)LASTCOMP)
+				strstream << "|";
 		} //End of for loop strstream adding
 
 		SETSSTOSTR(strstream);
-		stdstr = "Entity" + curEntity;
-		//RESerialiser::WriteToFile(fileName, stdstr.c_str(), cstr);
+		CLEARSTR(strstream);
+		strstream << "Entity" << entityVal;
+		RESerialiser::WriteToFile(fileName, strstream.str().c_str(), cstr);
 	}
 
 	RE_INFO("LEVEL SAVED");

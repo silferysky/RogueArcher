@@ -16,7 +16,7 @@ class RESerialiser
 {
 public:
 	template <typename T>
-	static bool WriteToFile(const char* FileName, const char* DataTitle, T DataToChange)
+	static bool WriteToFile(const char* FileName, const char* DataTitle, T* DataToChange)
 	{
 		std::ifstream ifs{ FileName };
 		if (!ifs.is_open())
@@ -53,11 +53,11 @@ public:
 		//}
 		if (std::is_same<T, int>::value)
 		{
-			doc[DataTitle].SetInt((int)DataToChange);
+			doc[DataTitle].SetInt((int)*DataToChange);
 		}
 		else if (std::is_same<T, float>::value)
 		{
-			doc[DataTitle].SetFloat((float)DataToChange);
+			doc[DataTitle].SetFloat((float)*DataToChange);
 		}
 		else
 		{
