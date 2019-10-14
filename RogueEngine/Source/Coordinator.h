@@ -145,6 +145,12 @@ public:
 		return *m_textureManager;
 	}
 
+	template<typename T>
+	std::shared_ptr<T> GetSystem(const char* name) const
+	{
+		return m_systemManager->RESystems[name];
+	}
+
 	std::shared_ptr<std::string> getVertexShader() const
 	{
 		return m_fileManager->getVertexShader();

@@ -14,9 +14,6 @@ BaseAI::~BaseAI()
 
 void BaseAI::logicInit()
 {
-	//Add to LogicSystem
-	//Set all states this AI will use
-
 	//Put in order of importance
 	//Use AddAIState for active states, AddAIStateInactive for inactive states that might turn active
 	m_logicComponent->AddAIState(AIState::AIState_Idle);
@@ -27,8 +24,6 @@ void BaseAI::logicInit()
 
 void BaseAI::logicUpdate()
 {
-	int counter = 0;
-
 	//For all possible states BaseAI has
 	//This for loop handles the order of importance of each state.
 	for (auto it = m_logicComponent->AllAIStates().begin(); it != m_logicComponent->AllAIStates().end(); ++it)
