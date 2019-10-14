@@ -24,25 +24,26 @@
 #if _DEBUG
 #include <iostream>
 #endif
+#include "REMath.h"
+#include "ImguiLayer.h"
 
 REEngine gEngine;
 float gDeltaTime;
 float gFixedDeltaTime;
 bool gameIsRunning = true;
 ObjectFactory gObjectFactory;
-
+bool EditorMode = false;
 //const char* FileName = "/Resources/test.json";
 static const int SCREEN_FULLSCREEN = 0;
 static const int SCREEN_WIDTH = 960;
 static const int SCREEN_HEIGHT = 540;
-
-
 
 //Use for console
 int APIENTRY
 WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	LPSTR lpszCmdLine, int nCmdShow)
 {
+
 	UNREFERENCED_PARAMETER(hPreviousInst);
 	UNREFERENCED_PARAMETER(lpszCmdLine);
 	UNREFERENCED_PARAMETER(hCurrentInst);
@@ -61,6 +62,13 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	wglMakeCurrent(hDC, hRC);
 
 	ShowWindow(hWnd, nCmdShow);
+	if (EditorMode)
+	{
+		ImGuiLayer::ImguiLayer Editor;
+		Editor.StartWindow();
+		Editor.UpdateWindow();
+		Editor.CloseWindow();
+	}
 
 	AllocConsole();
 	(void)freopen("CONIN$", "r", stdin);
@@ -76,7 +84,7 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	//Ensures program closes properly 
 	SetConsoleCtrlHandler(CtrlHandler, true);
 
-	setVSync(1);
+	//setVSync(1);
 
 	RE_INFO("Logging App info succeeded");
 
@@ -167,5 +175,6 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	DestroyWindow(hWnd);
 
 	return (int)msg.wParam;
+
 }
 
