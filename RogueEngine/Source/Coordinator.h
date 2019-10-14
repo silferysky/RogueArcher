@@ -42,6 +42,7 @@ public:
 
 	void Init()
 	{
+
 		// Init the systems and set their signatures.
 		m_systemManager->InitSystems();
 

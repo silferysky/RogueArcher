@@ -9,7 +9,6 @@ class REEngine
 	float m_accumulatedTime;
 	int	m_stepCount;
 
-	bool InitializeOpenGL();
 	void RegisterSystems();
 	void RegisterComponents();
 public:

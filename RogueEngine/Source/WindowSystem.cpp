@@ -12,11 +12,12 @@ WindowSystem::~WindowSystem()
 
 void WindowSystem::init()
 {
+	config->ConfigInit();
+
 	hWnd = CreateOpenGLWindow(const_cast<char*>(config->GetTitle().c_str()), config->GetX(), config->GetY(), config->GetWidth(), config->GetHeight(), 0, config->GetFlags());
+
 	if (hWnd == NULL)
 		exit(1);
-
-	config->ConfigInit();
 
 	hDC = GetDC(hWnd);
 	hRC = wglCreateContext(hDC);

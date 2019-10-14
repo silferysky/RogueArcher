@@ -1,11 +1,6 @@
 #include "REEngine.h"
 #include "LogicSystem.h"
 
-bool REEngine::InitializeOpenGL()
-{
-	return true;
-}
-
 void REEngine::RegisterSystems()
 {
 	m_coordinator.RegisterSystem<InputManager>();
@@ -29,8 +24,6 @@ void REEngine::RegisterComponents()
 
 void REEngine::init()
 {
-	// Init OpenGL libraries.
-	assert(InitializeOpenGL());
 	// Register all systems.
 	RegisterSystems();
 	

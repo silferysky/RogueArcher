@@ -2,7 +2,6 @@
 
 void REConfig::ConfigInit()
 {
-
 	RESerialiser Serialiser;
 	rapidjson::Document Windows = Serialiser.DeserialiseFromFile("Resources/Windows.json");
 

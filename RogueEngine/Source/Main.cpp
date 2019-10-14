@@ -36,38 +36,11 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	UNREFERENCED_PARAMETER(hPreviousInst);
 	UNREFERENCED_PARAMETER(lpszCmdLine);
 	UNREFERENCED_PARAMETER(hCurrentInst);
-	HDC   hDC;				/* device context */
-	HGLRC hRC;				/* opengl context */
-	HWND  hWnd;				/* window */
-	MSG   msg = { 0 };		/* message */
-	REConfig config;
-	config.ConfigInit();
-	hWnd = CreateOpenGLWindow(const_cast<char*>(config.GetTitle().c_str()), config.GetX(), config.GetY(), config.GetWidth(), config.GetHeight(),0, config.GetFlags());
-	if (hWnd == NULL)
-		exit(1);
-
-	hDC = GetDC(hWnd);
-	hRC = wglCreateContext(hDC);
-	wglMakeCurrent(hDC, hRC);
-
-	ShowWindow(hWnd, nCmdShow);
-
-	AllocConsole();
-	(void)freopen("CONIN$", "r", stdin);
-	(void)freopen("CONOUT$", "w", stdout);
-	(void)freopen("CONOUT$", "w", stderr);
-
 
 // Enable run-time memory check for debug builds.
 #if defined(DEBUG) | defined(_DEBUG)
 	_CrtSetDbgFlag( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
 #endif
-
-	//Ensures program closes properly 
-	SetConsoleCtrlHandler(CtrlHandler, true);
-
-	setVSync(1);
-
 	RE_INFO("Logging App info succeeded");
 
 	gEngine.init();
@@ -109,23 +82,12 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	//gObjectFactory.SaveLevel("Resources/Level 1.json");
 
 	TestSystem sys = TestSystem();
-	std::chrono::high_resolution_clock timer;
-	config.SetFPS(60);
 
 	while (gameIsRunning)
 	{
-		auto start = timer.now();
-		while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
-		{
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-		}
 
 		// Update engine.
 		gEngine.update();
-
-		SwapBuffers(hDC);
-		auto stop = timer.now();
 	//	if (gEngine.m_coordinator.FPSChecker())
 	//	{
 	//		config.SetFPS(30);
@@ -139,24 +101,10 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	//		stop = timer.now();
 	//		gDeltaTime = std::chrono::duration_cast<std::chrono::microseconds>(stop - start).count() / 1000000.0f;
 	//	}
-
-
-	gDeltaTime = std::chrono::duration_cast<std::chrono::microseconds>(stop - start).count() / 1000000.0f;
-
-		if (gEngine.m_coordinator.performanceChecker())
-		{
-			std::cout << "FPS: " << 1 / gDeltaTime << std::endl;
-		}
 	}
 
 	std::cin.get();
 
-
-	wglMakeCurrent(NULL, NULL);
-	ReleaseDC(hWnd, hDC);
-	wglDeleteContext(hRC);
-	DestroyWindow(hWnd);
-
-	return (int)msg.wParam;
+	return (int)0;
 }
 

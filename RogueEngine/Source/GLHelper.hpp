@@ -29,7 +29,7 @@ static constexpr unsigned int quadIndices[6] =
 
 static const glm::mat4 projMat = glm::ortho(-16.0f * 0.5f, 16.0f * 0.5f, -9.0f * 0.5f, 9.0f * 0.5f, -10.0f, 10.0f);
 
-/* static void GenerateQuadPrimitive(GLuint& VBO, GLuint& VAO, GLuint& EBO)
+static void GenerateQuadPrimitive(GLuint& VBO, GLuint& VAO, GLuint& EBO)
 {
 	// bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
 	glGenVertexArrays(1, &VAO);
@@ -55,7 +55,7 @@ static const glm::mat4 projMat = glm::ortho(-16.0f * 0.5f, 16.0f * 0.5f, -9.0f *
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0); //Reset
 	glBindVertexArray(0); //Reset
-} */
+}
 
 static void GenerateLinePrimitive(GLuint& VBO, GLuint& VAO)
 {
