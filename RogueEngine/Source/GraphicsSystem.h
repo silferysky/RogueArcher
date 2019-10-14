@@ -18,6 +18,8 @@ class GraphicsSystem : public System, public EventListener
 	GLuint m_EBO;
 
 	Shader m_shader;
+
+	const HDC* p_hDC;
 public:
 	GraphicsSystem() = default;
 	~GraphicsSystem() = default;

@@ -3,6 +3,7 @@
 #include "ComponentManager.h"
 #include "EntityManager.h"
 #include "FileManager.h"
+#include "WindowSystem.h"
 #include "GraphicsSystem.h"
 #include "DebugDrawSystem.h"
 #include "PhysicsSystem.h"
@@ -10,6 +11,7 @@
 #include "ShaderManager.h"
 
 // Forward declaration
+class WindowSystem;
 class PhysicsSystem;
 class GraphicsSystem;
 class SpriteComponent;
@@ -40,9 +42,10 @@ public:
 
 	void Init()
 	{
-		m_shaderManager->Init();
 		// Init the systems and set their signatures.
 		m_systemManager->InitSystems();
+
+		m_shaderManager->Init();
 	}
 
 	void Update()

@@ -28,4 +28,4 @@ public:
 
 	void receive(Event* ev);
 };
-#endif#pragma once
+#endif#

@@ -2,23 +2,6 @@
 
 bool REEngine::InitializeOpenGL()
 {
-	// Init OpenGL
-	glEnable(GL_TEXTURE_2D);						   // Texture Mapping
-	glEnable(GL_DEPTH_TEST);
-	glShadeModel(GL_SMOOTH);						   // Smooth shading
-	glDepthFunc(GL_LEQUAL);							   // Depth testing type
-	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Perspective Calculations
-
-	// Enable alpha
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glEnable(GL_BLEND);
-
-	if (glewInit() != GLEW_OK)
-	{
-		std::cout << "GLEW broke" << std::endl;
-		return false;
-	}
-
 	return true;
 }
 
@@ -26,6 +9,7 @@ void REEngine::RegisterSystems()
 {
 	m_coordinator.RegisterSystem<InputManager>();
 	m_coordinator.RegisterSystem<PhysicsSystem>();
+	m_coordinator.RegisterSystem<WindowSystem>();
 	m_coordinator.RegisterSystem<GraphicsSystem>();
 	m_coordinator.RegisterSystem<DebugDrawSystem>();
 }

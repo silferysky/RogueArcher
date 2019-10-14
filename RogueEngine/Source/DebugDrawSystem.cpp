@@ -16,7 +16,7 @@ void DebugDrawSystem::init()
 
 	m_shader = gEngine.m_coordinator.loadShader("Debug Shader");
 
-	GenerateQuadPrimitive(m_VBO, m_VAO, m_EBO);
+	//GenerateQuadPrimitive(m_VBO, m_VAO, m_EBO);
 }
 
 void DebugDrawSystem::update()

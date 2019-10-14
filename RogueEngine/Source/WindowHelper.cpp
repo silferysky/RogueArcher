@@ -71,8 +71,9 @@ HWND CreateOpenGLWindow(char* title, int x, int y, int width, int height,
 	PIXELFORMATDESCRIPTOR pfd{ 0 };
 	static HINSTANCE hInstance = 0;
 
-	/* only register the window class once - use hInstance as a flag. */
-	if (!hInstance) {
+	/* only register the window class once */
+	if (!hInstance)
+	{
 		hInstance = GetModuleHandle(NULL);
 		wc.style = CS_OWNDC;
 		wc.lpfnWndProc = (WNDPROC)WndProc;
@@ -85,7 +86,8 @@ HWND CreateOpenGLWindow(char* title, int x, int y, int width, int height,
 		wc.lpszMenuName = NULL;
 		wc.lpszClassName = "OpenGL";
 
-		if (!RegisterClass(&wc)) {
+		if (!RegisterClass(&wc)) 
+		{
 			MessageBox(NULL, "RegisterClass() failed:  "
 				"Cannot register window class.", "Error", MB_OK);
 			return NULL;
@@ -96,7 +98,8 @@ HWND CreateOpenGLWindow(char* title, int x, int y, int width, int height,
 		WS_CLIPSIBLINGS | WS_CLIPCHILDREN,
 		x, y, width, height, NULL, NULL, hInstance, NULL);
 
-	if (hWnd == NULL) {
+	if (hWnd == NULL) 
+	{
 		MessageBox(NULL, "CreateWindow() failed:  Cannot create a window.",
 			"Error", MB_OK);
 		return NULL;
@@ -112,13 +115,15 @@ HWND CreateOpenGLWindow(char* title, int x, int y, int width, int height,
 	pfd.cColorBits = 32;
 
 	pf = ChoosePixelFormat(hDC, &pfd);
-	if (pf == 0) {
+	if (pf == 0) 
+	{
 		MessageBox(NULL, "ChoosePixelFormat() failed:  "
 			"Cannot find a suitable pixel format.", "Error", MB_OK);
 		return 0;
 	}
 
-	if (SetPixelFormat(hDC, pf, &pfd) == FALSE) {
+	if (SetPixelFormat(hDC, pf, &pfd) == FALSE) 
+	{
 		MessageBox(NULL, "SetPixelFormat() failed:  "
 			"Cannot set format specified.", "Error", MB_OK);
 		return 0;

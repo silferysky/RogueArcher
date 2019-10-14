@@ -238,6 +238,10 @@
     <ClInclude Include="Source\BaseComponent.h">
       <Filter>RogueEngine\Core\ECS</Filter>
     </ClInclude>
+    <ClInclude Include="Texture.h" />
+    <ClInclude Include="Source\WindowSystem.h">
+      <Filter>RogueEngine\Systems\Others</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -341,6 +345,9 @@
     </ClCompile>
     <ClCompile Include="Source\Shader.cpp">
       <Filter>RogueEngine\Systems\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\WindowSystem.cpp">
+      <Filter>RogueEngine\Systems\Others</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
