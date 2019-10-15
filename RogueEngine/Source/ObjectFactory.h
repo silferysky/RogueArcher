@@ -14,10 +14,8 @@ public:
 
 private:
 
-	//Helper functions
-	BaseComponent* CreateComponent(Entity owner, ComponentType index);
-
 	std::vector<Entity> m_activeEntities;
+
 };
 
 //MACROS FOR OBJECT FACTORY

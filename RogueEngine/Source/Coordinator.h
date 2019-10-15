@@ -121,6 +121,25 @@ public:
 	}
 
 	template<typename T>
+	T& CreateComponent(Entity owner)
+	{
+		AddComponent(owner, T());
+		return GetComponent<T>(owner);
+	}
+
+	template<typename T>
+	void CopyComponent(Entity owner, Entity toCopyFrom)
+	{
+		CreateComponent<T>(owner) = GetComponent<T>(toCopyFrom);
+	}
+
+	template<typename T>
+	void LoadComponent(Entity owner, std::string strToLoad)
+	{
+		CreateComponent<T>(owner).Deserialize(strToLoad);
+	}
+
+	template<typename T>
 	void RegisterSystem()
 	{
 		return m_systemManager->RegisterSystem<T>();
