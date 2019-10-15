@@ -12,6 +12,7 @@
 #include "Timer.h"
 
 LogicSystem::LogicSystem()
+	: System(SystemID::id_LOGICSYSTEM)
 {
 	m_entityLogicMap = std::map<Entity, ILogic*>();
 }

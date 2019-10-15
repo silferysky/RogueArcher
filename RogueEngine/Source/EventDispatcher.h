@@ -13,7 +13,7 @@ public:
 		return instance;
 	}
 
-	EventDispatcher() = default;
+	EventDispatcher();
 	~EventDispatcher() = default;
 
 	void init();

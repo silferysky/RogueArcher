@@ -9,6 +9,9 @@
 #include "SystemManager.h"
 #include "EventListener.h"
 
+DebugDrawSystem::DebugDrawSystem()
+	:System(SystemID::id_DEBUGDRAWSYSTEM){}
+
 // Public member functions
 void DebugDrawSystem::init()
 {

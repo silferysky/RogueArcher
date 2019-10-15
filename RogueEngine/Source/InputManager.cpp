@@ -22,6 +22,7 @@ void KeyboardState::operator+=(KeyboardState &rhs)
 }
 
 InputManager::InputManager()
+	:System(SystemID::id_INPUTMANAGER)
 {
 	//init();
 }

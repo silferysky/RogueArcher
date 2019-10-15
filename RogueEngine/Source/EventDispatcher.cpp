@@ -5,6 +5,10 @@
 #include "EventDispatcher.h"
 #include "Timer.h"
 
+EventDispatcher::EventDispatcher()
+	: System(SystemID::id_EVENTMANAGER)
+{}
+
 void EventDispatcher::init()
 {
 	EventQueue = std::queue<Event*>();

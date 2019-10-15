@@ -22,7 +22,8 @@ void PhysicsSystem::applyForces(RigidbodyComponent& rigidbody) // F = ma
 }
 
 PhysicsSystem::PhysicsSystem(Vec2 gravity)
-	: m_colliderManager{}, m_gravity{gravity},
+	:	System(SystemID::id_PHYSICSSYSTEM),
+		m_colliderManager{}, m_gravity{gravity},
 	  checkAABB{ true }, checkOBB{ true }, allowGravity{ true }
 {}
 
