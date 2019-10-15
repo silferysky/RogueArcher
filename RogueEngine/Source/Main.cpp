@@ -33,7 +33,7 @@ float gDeltaTime;
 float gFixedDeltaTime;
 
 ObjectFactory gObjectFactory;
-bool EditorMode = false;
+bool EditorMode = true;
 
 //const char* FileName = "/Resources/test.json";
 static const int SCREEN_FULLSCREEN = 0;
@@ -75,7 +75,7 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	ShowWindow(hWnd, nCmdShow);
 	if (EditorMode)
 	{
-		Rogue::EditorManager Editor;
+		Rogue::Editor Editor;
 		Editor.Init();
 		Editor.Update();
 		Editor.Shutdown();

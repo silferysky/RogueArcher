@@ -48,7 +48,7 @@ namespace Rogue
 
 		void AddEditorWindow(std::string name, std::shared_ptr<IEditable> Window)
 		{
-			m_WindowsVector.push_back(std::shared_ptr<IEditable>());
+			m_WindowsVector.push_back(Window);
 			m_WindowsMap.emplace(name, Window);
 		}
 	private:
