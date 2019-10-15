@@ -45,18 +45,24 @@ int APIENTRY
 WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	LPSTR lpszCmdLine, int nCmdShow)
 {
+	// Enable run-time memory check for debug builds.
+#if defined(DEBUG) | defined(_DEBUG)
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+#endif
 
 	UNREFERENCED_PARAMETER(hPreviousInst);
 	UNREFERENCED_PARAMETER(lpszCmdLine);
 	UNREFERENCED_PARAMETER(hCurrentInst);
+
 	HDC   hDC;				/* device context */
 	HGLRC hRC;				/* opengl context */
 	HWND  hWnd;				/* window */
 	MSG   msg = { 0 };		/* message */
+
 	REConfig config;
 	config.ConfigInit();
 	hWnd = CreateOpenGLWindow(const_cast<char*>(config.GetTitle().c_str()), config.GetX(), config.GetY(),
-		config.GetWidth(), config.GetHeight(),0, config.GetFlags());
+		config.GetWidth(), config.GetHeight(), 0, config.GetFlags());
 
 	if (hWnd == NULL)
 		exit(1);
@@ -80,17 +86,10 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	(void)freopen("CONOUT$", "w", stderr);
 
 
-// Enable run-time memory check for debug builds.
-#if defined(DEBUG) | defined(_DEBUG)
-	_CrtSetDbgFlag( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
-#endif
-
 	//Ensures program closes properly 
 	SetConsoleCtrlHandler(CtrlHandler, true);
 
 	//setVSync(1);
-
-	RE_INFO("Logging App info succeeded");
 
 	gEngine.init();
 	
@@ -100,61 +99,18 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 
 	std::cout << glGetString(GL_VERSION) << std::endl;
 
-	//---------------------------------------------------------------//
-	//	Generate entities (Can't use object factory in coordinator)	 //
-	//---------------------------------------------------------------//
-	RE_CORE_INFO("Generating entities...");
-
 	RE_INFO("TEST FILEWRITER");
 	BasicIO::WriteJsonFile("Resources/TestJsonFileCreator.json", 1);
 
-	RE_INFO("TEST OBJECT FACTORY");
-	std::stringstream debugStr;
-	size_t objInLevel = gObjectFactory.GetActiveEntity().size();
-	debugStr << "Number of entities at start: " << objInLevel;
-
 	//BasicIO::WriteJsonFile("Resources/Level 1.json", 8);
 
-	RE_INFO(debugStr.str());
 	gObjectFactory.LoadLevel("Resources/Level 1.json");
 
-	debugStr.clear();
-	debugStr.str("");
 
 	//gObjectFactory.SaveLevel("Resources/Level 1.json");
 
-	std::chrono::high_resolution_clock timer;
-	config.SetFPS(60);
-
 	// Update engine.
 	gEngine.update(hDC);
-
-	//	SwapBuffers(hDC);
-	//	auto stop = timer.now();
-	//	if (gEngine.m_coordinator.FPSChecker())
-	//	{
-	//		config.SetFPS(30);
-	//	}
-	//	else
-	//	{
-	//		config.SetFPS(60);
-	//	}
-	//	while (gDeltaTime <= config.GetFPS())
-	//	{
-	//		stop = timer.now();
-	//		gDeltaTime = std::chrono::duration_cast<std::chrono::microseconds>(stop - start).count() / 1000000.0f;
-	//	}
-
-
-	//gDeltaTime = std::chrono::duration_cast<std::chrono::microseconds>(stop - start).count() / 1000000.0f;
-
-	//	if (gEngine.m_coordinator.performanceChecker())
-	//	{
-	//	}
-	//}
-
-	//std::cin.get();
-
 
 	wglMakeCurrent(NULL, NULL);
 	ReleaseDC(hWnd, hDC);

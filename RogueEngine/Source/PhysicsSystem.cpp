@@ -81,7 +81,7 @@ void PhysicsSystem::update()
 			auto& currBoxCollider = gEngine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iEntity);
 			//	auto& circleCollider = gEngine.m_coordinator.GetComponent<CircleCollider2DComponent>(*iEntity);
 
-				// Apply accForce (Forces are added if necessary)
+			// Apply accForce (Forces are added if necessary)	
 			applyForces(rigidbody);
 
 			// Update positions
