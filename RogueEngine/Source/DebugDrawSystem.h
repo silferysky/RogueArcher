@@ -9,7 +9,7 @@ class DebugDrawSystem : public System, public EventListener
 
 	Shader m_shader;
 public:
-	DebugDrawSystem() = default;
+	DebugDrawSystem();
 	~DebugDrawSystem() = default;
 
 	void init();

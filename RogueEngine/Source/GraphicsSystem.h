@@ -16,7 +16,7 @@ class GraphicsSystem : public System, public EventListener
 
 	Shader m_shader;
 public:
-	GraphicsSystem() = default;
+	GraphicsSystem();
 	~GraphicsSystem() = default;
 
 	void init();

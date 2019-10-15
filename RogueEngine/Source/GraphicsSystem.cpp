@@ -5,6 +5,9 @@
 #include "EventDispatcher.h"
 #include "KeyEvent.h"
 
+GraphicsSystem::GraphicsSystem()
+	: System(SystemID::id_GRAPHICSSYSTEM){}
+
 // Public member functions 
 void GraphicsSystem::init()
 {
