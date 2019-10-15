@@ -54,7 +54,7 @@ void REEngine::RegisterComponents()
 void REEngine::init()
 {
 	// Init OpenGL libraries.
-	assert(InitializeOpenGL());
+	RE_ASSERT(InitializeOpenGL(), "OpenGL not initialized");
 	// Register all systems.
 	RegisterSystems();
 	

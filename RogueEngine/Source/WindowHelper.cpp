@@ -147,7 +147,7 @@ BOOL WINAPI CtrlHandler(DWORD fdwCtrlType)
 		// CTRL-CLOSE: confirm that the user wants to exit. 
 	case CTRL_CLOSE_EVENT:
 		printf("Ctrl-Close event\n\n");
-		return TRUE;
+		return FALSE;
 
 		// Pass other signals to the next handler. 
 	case CTRL_BREAK_EVENT:

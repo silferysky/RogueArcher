@@ -14,7 +14,7 @@ public:
 	void RegisterComponent()
 	{
 		const char* typeName = typeid(T).name();
-		assert(REComponentTypes.find(typeName) == REComponentTypes.end() && "Registering component type more than once.");
+		RE_ASSERT(REComponentTypes.find(typeName) == REComponentTypes.end(), "Registering component type more than once.");
 
 		// Add this component type to the component type map
 		REComponentTypes.insert({ typeName, RENextComponentType });
@@ -42,7 +42,7 @@ public:
 	ComponentType GetComponentType()
 	{
 		const char* typeName = typeid(T).name();
-		assert(REComponentTypes.find(typeName) != REComponentTypes.end() && "Component not registered before use.");
+		RE_ASSERT(REComponentTypes.find(typeName) != REComponentTypes.end(), "Component not registered before use.");
 		return REComponentTypes[typeName];
 	}
 
@@ -92,7 +92,7 @@ private:
 	{
 
 		const char* typeName = typeid(T).name();
-		assert(REComponentTypes.find(typeName) != REComponentTypes.end() && "Component not registered before use.");
+		RE_ASSERT(REComponentTypes.find(typeName) != REComponentTypes.end(), "Component not registered before use.");
 		return std::static_pointer_cast<ComponentArray<T>>(REComponentArrays[typeName]);
 	}
 

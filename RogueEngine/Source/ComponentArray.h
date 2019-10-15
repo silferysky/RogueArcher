@@ -18,7 +18,7 @@ class ComponentArray : public BaseComponentArray
 public:
 	void InsertData(Entity entity, T component)
 	{
-		assert(REEntityToIndexMap.find(entity) == REEntityToIndexMap.end() && "Component added to same entity more than once.");
+		RE_ASSERT(REEntityToIndexMap.find(entity) == REEntityToIndexMap.end(), "Component added to same entity more than once.");
 		// Put new entry at end and update the maps
 		size_t newIndex = RESize;
 		REEntityToIndexMap[entity] = newIndex;
@@ -29,7 +29,7 @@ public:
 
 	void RemoveData(Entity entity)
 	{
-		assert(REEntityToIndexMap.find(entity) != REEntityToIndexMap.end() && "Removing non-existent component.");
+		RE_ASSERT(REEntityToIndexMap.find(entity) != REEntityToIndexMap.end(), "Removing non-existent component.");
 		if (!RESize)
 			return;
 		// Copy element at end into deleted element's place to maintain density
@@ -50,7 +50,7 @@ public:
 
 	T& GetData(Entity entity)
 	{
-		assert(REEntityToIndexMap.find(entity) != REEntityToIndexMap.end() && "Retrieving non-existent component.");
+		RE_ASSERT(REEntityToIndexMap.find(entity) != REEntityToIndexMap.end(), "Retrieving non-existent component.");
 		return REComponentArray[REEntityToIndexMap[entity]];
 	}
 
