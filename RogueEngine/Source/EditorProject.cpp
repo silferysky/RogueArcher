@@ -1,26 +1,38 @@
 #include "EditorProject.h"
 
-ImGuiProject::ImGuiProject::ImGuiProject()
+namespace Rogue
 {
-}
-
-ImGuiProject::ImGuiProject::~ImGuiProject()
-{
-}
-
-void ImGuiProject::ImGuiProject::ImGuiProjectInit()
-{
-	ImGui::Begin("Project");
-	if (ImGui::CollapsingHeader("Folder Hierachy"))
+	ImGuiProject::ImGuiProject()
 	{
+	}
+
+	ImGuiProject::~ImGuiProject()
+	{
+	}
+
+	void ImGuiProject::Init()
+	{
+		ImGui::Begin("Project");
+		if (ImGui::CollapsingHeader("Folder Hierachy"))
+		{
+
+		}
+		ImGui::End();
+		ImGui::Begin("File");
+		if (ImGui::CollapsingHeader("File Display"))
+		{
+
+		}
+		ImGui::End();
 
 	}
-	ImGui::End();
-	ImGui::Begin("File");
-	if (ImGui::CollapsingHeader("File Display"))
+
+	void ImGuiProject::Update()
 	{
-
 	}
-	ImGui::End();
 
+	void ImGuiProject::Shutdown()
+	{
+	}
 }
+

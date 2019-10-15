@@ -1,16 +1,16 @@
 
 #include "REEditor.h"
 
+#include "imgui.h"
+#include "imgui_internal.h"
 
-namespace ImGuiLayer
-{
 	static ImGuiDockNodeFlags opt_flags = ImGuiDockNodeFlags_None;
-	ImguiLayer::ImguiLayer():window(nullptr)
+	EditorManager::EditorManager():window(nullptr)
 	{
 
 	}
 
-	void ImguiLayer::StartWindow()
+	void EditorManager::StartWindow()
 	{
 		const char* glsl_version = "#version 130";
 		/* Initialize the library */
@@ -29,42 +29,26 @@ namespace ImGuiLayer
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
-		/*io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
-		//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
-		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;   */      // Enable Multi-Viewport / Platform Windows
 		ImGui::StyleColorsClassic();
 		io.ConfigDockingWithShift = false;
 		io.ConfigFlags = ImGuiConfigFlags_DockingEnable;
-		/*ImGuiStyle& style = ImGui::GetStyle();
-		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-		{
-			style.WindowRounding = 0.0f;
-			style.Colors[ImGuiCol_WindowBg].w = 1.0f;
-		}*/
 
 
 
 		ImGui_ImplGlfw_InitForOpenGL(window, true);
 		ImGui_ImplOpenGL3_Init(glsl_version);
 	}
-	void ImguiLayer::UpdateWindow()
+	void EditorManager::UpdateWindow()
 	{
-		//static ImGuiDockNodeFlags opt_flags = ImGuiDockNodeFlags_None;
-		//ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar;
-		//window_flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
-		//window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
-		//if (opt_flags & ImGuiDockNodeFlags_PassthruDockspace)
-		//	window_flags |= ImGuiWindowFlags_NoBackground;
-		ImGuiProject::ImGuiProject ImGuiProject;
-		ImGuiEditorFile::ImGuiEditorFile ImGuiFile;
-		ImGuiInspector::ImGuiInspector ImGuiInspector;
-		ImGuiEditorEdit::ImGuiEditorEdit ImGuiMenu;
-		ImGuiAssets::ImGuiAssets ImGuiAssets;
-		ImGuiGameObject::ImGuiGameObject ImGuiGameObject;
-		ImGuiComponent::ImGuiComponent ImGuiComponent;
-		ImGuiConsole::ImGuiConsole ImGuiConsole;
-		ImGuiEditorHierarchy::ImGuiEditorHierarchy ImGuiHierarchy;
+		Rogue::ImGuiProject ImGuiProject;
+		Rogue::ImGuiEditorFile ImGuiFile;
+		Rogue::ImGuiInspector ImGuiInspector;
+		Rogue::ImGuiEditorEdit ImGuiMenu;
+		Rogue::ImGuiAssets ImGuiAssets;
+		Rogue::ImGuiGameObject ImGuiGameObject;
+		Rogue::ImGuiComponent ImGuiComponent;
+		Rogue::ImGuiConsole ImGuiConsole;
+		Rogue::ImGuiEditorHierarchy ImGuiHierarchy;
 		while (!glfwWindowShouldClose(window))
 		{
 			glfwPollEvents();
@@ -93,11 +77,11 @@ namespace ImGuiLayer
 
 			if (ImGui::BeginMainMenuBar())
 			{
-				ImGuiFile.ImGuiEditorFileMenuInit();
-				ImGuiMenu.ImGuiEditorEditInit();
-				ImGuiAssets.ImGuiAssetsInit();
-				ImGuiGameObject.ImGuiGameObjectInit();
-				ImGuiComponent.ImGuiComponentInit();				
+				ImGuiFile.Init();
+				ImGuiMenu.Init();
+				ImGuiAssets.Init();
+				ImGuiGameObject.Init();
+				ImGuiComponent.Init();				
 				ImGui::EndMainMenuBar();
 			}
 			// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
@@ -143,13 +127,13 @@ namespace ImGuiLayer
 			}
 			if (Inspector)
 			{
-				ImGuiInspector.InitInspector();
-				ImGuiProject.ImGuiProjectInit();
-				ImGuiHierarchy.ImGuiEditorHierarchyInit();
+				ImGuiInspector.Init();
+				ImGuiProject.Init();
+				ImGuiHierarchy.Init();
 			}
 			if (Console)
 			{
-				ImGuiConsole.ImGuiConsoleInit();
+				ImGuiConsole.Init();
 			}
 			ImGui::End();
 			/*if (Dropbox)
@@ -199,7 +183,7 @@ namespace ImGuiLayer
 			ImGui::UpdatePlatformWindows();
 		}
 	}
-	void ImguiLayer::CloseWindow()
+	void EditorManager::CloseWindow()
 	{
 		ImGui_ImplOpenGL3_Shutdown();
 		ImGui_ImplGlfw_Shutdown();
@@ -208,5 +192,5 @@ namespace ImGuiLayer
 		glfwDestroyWindow(window);
 		glfwTerminate();
 	}
-}
+
 	

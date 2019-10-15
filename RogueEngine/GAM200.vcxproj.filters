@@ -281,9 +281,6 @@
     <ClInclude Include="Source\EditorProject.h">
       <Filter>RogueEditor\EditorFiles</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ImguiLayer.h">
-      <Filter>RogueEditor\EditorFiles</Filter>
-    </ClInclude>
     <ClInclude Include="Source\REEditor.h">
       <Filter>RogueEditor\EditorFiles</Filter>
     </ClInclude>
@@ -324,6 +321,15 @@
       <Filter>RogueEditor\EditorLibrary</Filter>
     </ClInclude>
     <ClInclude Include="Source\IEditable.h">
+      <Filter>RogueEditor\EditorFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EditorManager.h">
+      <Filter>RogueEditor\EditorFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Editor.h">
+      <Filter>RogueEditor\EditorFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EditorViewport.h">
       <Filter>RogueEditor\EditorFiles</Filter>
     </ClInclude>
   </ItemGroup>
@@ -460,9 +466,6 @@
     <ClCompile Include="Source\EditorProject.cpp">
       <Filter>RogueEditor\EditorFiles</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ImguiLayer.cpp">
-      <Filter>RogueEditor\EditorFiles</Filter>
-    </ClCompile>
     <ClCompile Include="Source\imgui.cpp">
       <Filter>RogueEditor\EditorLibrary</Filter>
     </ClCompile>
@@ -484,8 +487,14 @@
     <ClCompile Include="Source\imgui_widgets.cpp">
       <Filter>RogueEditor\EditorLibrary</Filter>
     </ClCompile>
-    <ClCompile Include="Source\IEditable.cpp">
-      <Filter>RogueEditor</Filter>
+    <ClCompile Include="Source\EditorManager.cpp">
+      <Filter>RogueEditor\EditorFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Editor.cpp">
+      <Filter>RogueEditor\EditorFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EditorViewport.cpp">
+      <Filter>RogueEditor\EditorFiles</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

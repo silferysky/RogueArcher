@@ -3,6 +3,7 @@
 #include "Logger.h"
 #include "SystemManager.h"
 #include "EventDispatcher.h"
+#include "Timer.h"
 
 void EventDispatcher::init()
 {
@@ -70,6 +71,8 @@ void EventDispatcher::AddEventDelayed(Event* e)
 
 void EventDispatcher::update()
 {
+	Timer TimerSystem;
+	TimerSystem.TimerInit("Event System");
 	if (isCombiningQueue)
 	{
 		CombineQueue();
@@ -84,6 +87,7 @@ void EventDispatcher::update()
 		EventQueue.pop();
 		delete nextEvent;
 	}
+	TimerSystem.TimerEnd("Event System");
 }
 
 void EventDispatcher::DispatchEvent(Event* toHandle)

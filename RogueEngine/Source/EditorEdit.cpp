@@ -1,6 +1,6 @@
 #include "EditorEdit.h"
 
-namespace ImGuiEditorEdit
+namespace Rogue
 {
 	ImGuiEditorEdit::ImGuiEditorEdit()
 	{
@@ -8,7 +8,7 @@ namespace ImGuiEditorEdit
 	ImGuiEditorEdit::~ImGuiEditorEdit()
 	{
 	}
-	void ImGuiEditorEdit::ImGuiEditorEditInit()
+	void ImGuiEditorEdit::Init()
 	{
 		if (ImGui::BeginMenu("Edit"))
 		{
@@ -35,5 +35,11 @@ namespace ImGuiEditorEdit
 			}
 			ImGui::EndMenu();
 		}
+	}
+	void ImGuiEditorEdit::Update()
+	{
+	}
+	void ImGuiEditorEdit::Shutdown()
+	{
 	}
 }

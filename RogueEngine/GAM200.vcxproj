@@ -24,6 +24,7 @@
     <ClInclude Include="Source\BaseSystem.h" />
     <ClInclude Include="Source\BoxCollider2DComponent.h" />
     <ClInclude Include="Source\DebugDrawSystem.h" />
+    <ClInclude Include="Source\Editor.h" />
     <ClInclude Include="Source\EditorAssets.h" />
     <ClInclude Include="Source\EditorComponent.h" />
     <ClInclude Include="Source\EditorConsole.h" />
@@ -33,6 +34,7 @@
     <ClInclude Include="Source\EditorHierarchy.h" />
     <ClInclude Include="Source\EditorInspector.h" />
     <ClInclude Include="Source\EditorProject.h" />
+    <ClInclude Include="Source\EditorViewport.h" />
     <ClInclude Include="Source\glew.h" />
     <ClInclude Include="Source\glfw3.h" />
     <ClInclude Include="Source\glfw3native.h" />
@@ -41,7 +43,7 @@
     <ClInclude Include="Source\ILogic.h" />
     <ClInclude Include="Source\imconfig.h" />
     <ClInclude Include="Source\imgui.h" />
-    <ClInclude Include="Source\ImguiLayer.h" />
+    <ClInclude Include="Source\EditorManager.h" />
     <ClInclude Include="Source\imgui_impl_glfw.h" />
     <ClInclude Include="Source\imgui_impl_opengl3.h" />
     <ClInclude Include="Source\imgui_internal.h" />
@@ -108,6 +110,7 @@
   <ItemGroup>
     <ClCompile Include="Source\BoxCollider2DComponent.cpp" />
     <ClCompile Include="Source\DebugDrawSystem.cpp" />
+    <ClCompile Include="Source\Editor.cpp" />
     <ClCompile Include="Source\EditorAssets.cpp" />
     <ClCompile Include="Source\EditorComponent.cpp" />
     <ClCompile Include="Source\EditorConsole.cpp" />
@@ -117,10 +120,10 @@
     <ClCompile Include="Source\EditorHierarchy.cpp" />
     <ClCompile Include="Source\EditorInspector.cpp" />
     <ClCompile Include="Source\EditorProject.cpp" />
+    <ClCompile Include="Source\EditorViewport.cpp" />
     <ClCompile Include="Source\EventDispatcher.cpp" />
-    <ClCompile Include="Source\IEditable.cpp" />
     <ClCompile Include="Source\imgui.cpp" />
-    <ClCompile Include="Source\ImguiLayer.cpp" />
+    <ClCompile Include="Source\EditorManager.cpp" />
     <ClCompile Include="Source\imgui_demo.cpp" />
     <ClCompile Include="Source\imgui_draw.cpp" />
     <ClCompile Include="Source\imgui_impl_glfw.cpp" />
