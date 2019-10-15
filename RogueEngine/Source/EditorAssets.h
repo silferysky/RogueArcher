@@ -1,13 +1,16 @@
 #pragma once
 #include "REEditor.h"
+#include "IEditable.h"
 
-namespace ImGuiAssets
+namespace Rogue
 {
-	class ImGuiAssets
+	class ImGuiAssets : public IEditable
 	{
 	public:
 		ImGuiAssets();
 		~ImGuiAssets();
-		void ImGuiAssetsInit();
+		virtual void Init() override;
+		virtual void Update() override;
+		virtual void Shutdown() override;
 	};
 }

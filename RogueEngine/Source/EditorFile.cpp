@@ -1,6 +1,6 @@
 #include "EditorFile.h"
 
-namespace ImGuiEditorFile
+namespace Rogue
 {
 	ImGuiEditorFile::ImGuiEditorFile()
 	{
@@ -10,7 +10,7 @@ namespace ImGuiEditorFile
 	{
 	}
 
-	void ImGuiEditorFile::ImGuiEditorFileMenuInit()
+	void ImGuiEditorFile::Init()
 	{
 
 		if (ImGui::BeginMenu("File"))
@@ -45,6 +45,12 @@ namespace ImGuiEditorFile
 			}
 			ImGui::EndMenu();
 		}
+	}
+	void ImGuiEditorFile::Update()
+	{
+	}
+	void ImGuiEditorFile::Shutdown()
+	{
 	}
 }
 

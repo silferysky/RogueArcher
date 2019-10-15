@@ -1,13 +1,15 @@
 #pragma once
 #include "REEditor.h"
-
-namespace ImGuiEditorHierarchy
+#include "IEditable.h"
+namespace Rogue
 {
-	class ImGuiEditorHierarchy
+	class ImGuiEditorHierarchy : public IEditable
 	{
 	public:
 		ImGuiEditorHierarchy();
 		~ImGuiEditorHierarchy();
-		void ImGuiEditorHierarchyInit();
+		virtual void Init() override;
+		virtual void Update() override;
+		virtual void Shutdown() override;
 	};
 }

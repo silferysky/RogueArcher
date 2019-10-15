@@ -1,6 +1,6 @@
 #include "EditorConsole.h"
 
-namespace ImGuiConsole
+namespace Rogue
 {
 	ImGuiConsole::ImGuiConsole()
 	{
@@ -8,7 +8,7 @@ namespace ImGuiConsole
 	ImGuiConsole::~ImGuiConsole()
 	{
 	}
-	void ImGuiConsole::ImGuiConsoleInit()
+	void ImGuiConsole::Init()
 	{
 		ImGui::Begin("Console");
 		if (ImGui::Button("Clear"))
@@ -39,6 +39,14 @@ namespace ImGuiConsole
 			ImGui::EndMenu();
 		}
 		ImGui::End();
+	}
+
+	void ImGuiConsole::Update()
+	{
+	}
+
+	void ImGuiConsole::Shutdown()
+	{
 	}
 
 }

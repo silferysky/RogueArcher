@@ -1,6 +1,6 @@
 #include "EditorAssets.h"
 
-namespace ImGuiAssets
+namespace Rogue
 {
 	ImGuiAssets::ImGuiAssets()
 	{
@@ -8,7 +8,7 @@ namespace ImGuiAssets
 	ImGuiAssets::~ImGuiAssets()
 	{
 	}
-	void ImGuiAssets::ImGuiAssetsInit()
+	void ImGuiAssets::Init()
 	{
 		if (ImGui::BeginMenu("Assets"))
 		{
@@ -39,5 +39,11 @@ namespace ImGuiAssets
 			}
 			ImGui::EndMenu();
 		}
+	}
+	void ImGuiAssets::Update()
+	{
+	}
+	void ImGuiAssets::Shutdown()
+	{
 	}
 }
