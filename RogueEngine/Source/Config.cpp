@@ -9,7 +9,7 @@ REConfig::REConfig() :
 void REConfig::ConfigInit()
 {
 	RESerialiser Serialiser;
-	rapidjson::Document Windows = Serialiser.DeserialiseFromFile("Resources/Windows.json");
+	rapidjson::Document Windows = Serialiser.DeserialiseFromFile("Resources/Config.json");
 
 	m_x = Windows["x"].GetInt();
 	m_y = Windows["y"].GetInt();
@@ -19,50 +19,51 @@ void REConfig::ConfigInit()
 	m_flags = Windows["flags"].GetInt();
 	m_title = Windows["title"].GetString();
 	m_sound = Windows["sound"].GetBool();
+	m_FPS = Windows["FPS"].GetInt();
 }
 
-std::string REConfig::GetTitle()
+std::string REConfig::GetTitle() const
 {
 	return m_title;
 }
 
-bool REConfig::GetSound()
+bool REConfig::GetSound() const
 {
 	return m_sound;
 }
 
 
-int REConfig::GetX()
+int REConfig::GetX() const
 {
 	return m_x;
 }
 
-int REConfig::GetY()
+int REConfig::GetY() const
 {
 	return m_y;
 }
 
-int REConfig::GetHeight()
+int REConfig::GetHeight() const
 {
 	return m_height;
 }
 
-int REConfig::GetWidth()
+int REConfig::GetWidth() const
 {
 	return m_width;
 }
 
-BYTE REConfig::GetByte()
+BYTE REConfig::GetByte() const
 {
 	return m_byte;
 }
 
-int REConfig::GetFlags()
+int REConfig::GetFlags() const
 {
 	return m_flags;
 }
 
-float REConfig::GetFPS()
+int REConfig::GetFPS() const
 {
 	return m_FPS;
 }
@@ -99,7 +100,7 @@ void REConfig::SetFlags(int newflags)
 
 void REConfig::SetFPS(int FPSset)
 {
-	m_FPS = 1 / static_cast<float>(FPSset);
+	m_FPS = FPSset;
 }
 
 void REConfig::SetSound(bool NewSound)

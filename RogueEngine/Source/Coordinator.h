@@ -11,16 +11,6 @@
 #include "Coordinator.h"
 #include "Types.h"
 
-//// Forward declaration
-//class PhysicsSystem;
-//class GraphicsSystem;
-//class SpriteComponent;
-//class EventDispatcher;
-//class ComponentManager;
-//class EntityManager;
-//class SystemManager;
-//class TextureManager;
-
 class Coordinator
 {
 	std::unique_ptr<ComponentManager> m_componentManager;
@@ -29,8 +19,8 @@ class Coordinator
 	std::unique_ptr<TextureManager> m_textureManager;
 	std::unique_ptr<ShaderManager> m_shaderManager;
 
-	bool m_togglePerformanceChecker = true;
-	bool m_fpscheck = true;
+	bool m_togglePerformanceChecker;
+	bool m_fpscheck;
 public:
 	Coordinator() :
 		m_entityManager{ std::make_unique<EntityManager>() },
@@ -44,7 +34,9 @@ public:
 
 	void Init()
 	{
+		// Emplace shaders into the map
 		m_shaderManager->Init();
+
 		// Init the systems and set their signatures.
 		m_systemManager->InitSystems();
 	}
@@ -53,7 +45,7 @@ public:
 	{
 		// Update the core systems
 		m_systemManager->UpdateSystems();
-		EventDispatcher::instance().update();
+		EventDispatcher::instance().update(); // Should also be part of systems
 	}
 
 	Entity CreateEntity()
@@ -85,6 +77,7 @@ public:
 	{
 		const char* typeName = typeid(T).name();
 		m_componentManager->RegisterComponent<T>();
+
 		std::stringstream output;
 		output << typeName << " registered!";
 		RE_CORE_INFO(output.str());
