@@ -5,4 +5,4 @@
 extern REEngine gEngine;
 extern ObjectFactory gObjectFactory;
 extern float gDeltaTime;
-extern float gFixedDeltaTime;
+extern const float gFixedDeltaTime;

@@ -29,10 +29,11 @@
 
 REEngine gEngine;
 float gDeltaTime;
-float gFixedDeltaTime;
-bool gameIsRunning = true;
+const float gFixedDeltaTime = 1/60;
+
 ObjectFactory gObjectFactory;
 bool EditorMode = false;
+
 //const char* FileName = "/Resources/test.json";
 static const int SCREEN_FULLSCREEN = 0;
 static const int SCREEN_WIDTH = 960;
@@ -40,6 +41,7 @@ static const int SCREEN_HEIGHT = 540;
 
 //Use for console
 int APIENTRY
+
 WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	LPSTR lpszCmdLine, int nCmdShow)
 {
@@ -53,7 +55,9 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	MSG   msg = { 0 };		/* message */
 	REConfig config;
 	config.ConfigInit();
-	hWnd = CreateOpenGLWindow(const_cast<char*>(config.GetTitle().c_str()), config.GetX(), config.GetY(), config.GetWidth(), config.GetHeight(),0, config.GetFlags());
+	hWnd = CreateOpenGLWindow(const_cast<char*>(config.GetTitle().c_str()), config.GetX(), config.GetY(),
+		config.GetWidth(), config.GetHeight(),0, config.GetFlags());
+
 	if (hWnd == NULL)
 		exit(1);
 
@@ -129,20 +133,11 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	std::chrono::high_resolution_clock timer;
 	config.SetFPS(60);
 
-	while (gameIsRunning)
-	{
-		auto start = timer.now();
-		while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
-		{
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-		}
+	// Update engine.
+	gEngine.update(hDC);
 
-		// Update engine.
-		gEngine.update();
-
-		SwapBuffers(hDC);
-		auto stop = timer.now();
+	//	SwapBuffers(hDC);
+	//	auto stop = timer.now();
 	//	if (gEngine.m_coordinator.FPSChecker())
 	//	{
 	//		config.SetFPS(30);
@@ -158,15 +153,14 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	//	}
 
 
-	gDeltaTime = std::chrono::duration_cast<std::chrono::microseconds>(stop - start).count() / 1000000.0f;
+	//gDeltaTime = std::chrono::duration_cast<std::chrono::microseconds>(stop - start).count() / 1000000.0f;
 
-		if (gEngine.m_coordinator.performanceChecker())
-		{
-			std::cout << "FPS: " << 1 / gDeltaTime << std::endl;
-		}
-	}
+	//	if (gEngine.m_coordinator.performanceChecker())
+	//	{
+	//	}
+	//}
 
-	std::cin.get();
+	//std::cin.get();
 
 
 	wglMakeCurrent(NULL, NULL);
