@@ -41,9 +41,9 @@ void REEngine::RegisterSystems()
 {
 	m_coordinator.RegisterSystem<InputManager>();
 	m_coordinator.RegisterSystem<PhysicsSystem>();
+	m_coordinator.RegisterSystem<LogicSystem>();
 	m_coordinator.RegisterSystem<GraphicsSystem>();
 	m_coordinator.RegisterSystem<DebugDrawSystem>();
-	m_coordinator.RegisterSystem<LogicSystem>();
 }
 
 void REEngine::RegisterComponents()
@@ -93,7 +93,6 @@ void REEngine::update(HDC hDC)
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
-
 
 		m_accumulatedTime += gDeltaTime;
 

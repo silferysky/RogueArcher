@@ -14,13 +14,13 @@ class REEngine
 	ChronoClock m_loopStart;
 	ChronoClock m_loopEnd;
 
-	void GameLoop(HDC hDC);
 	bool InitializeOpenGL();
 	void RegisterSystems();
 	void RegisterComponents();
 
 public:
 	REEngine();
+
 	Coordinator m_coordinator;
 
 	void init();

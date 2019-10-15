@@ -12,15 +12,15 @@ public:
 	void ConfigInit();
 
 	// Getters
-	std::string GetTitle();
-	bool GetSound();
-	int GetX();
-	int GetY();
-	int GetHeight();
-	int GetWidth();
-	BYTE GetByte();
-	int GetFlags();
-	float GetFPS();
+	std::string GetTitle() const;
+	bool GetSound() const;
+	int GetX() const;
+	int GetY() const;
+	int GetHeight() const;
+	int GetWidth() const;
+	BYTE GetByte() const;
+	int GetFlags() const;
+	int GetFPS() const;
 
 	// Setters
 	void SetX(int newx);
@@ -33,8 +33,8 @@ public:
 	void SetSound(bool NewSound);
 
 private:
-	std::string m_title = "";
-	float m_FPS = 1 / 60;
+	std::string m_title;
+	int m_FPS;
 	int m_x;
 	int m_y;
 	int m_height;
