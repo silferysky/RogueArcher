@@ -29,7 +29,7 @@
 
 REEngine gEngine;
 float gDeltaTime;
-const float gFixedDeltaTime = 1/60;
+float gFixedDeltaTime;
 
 ObjectFactory gObjectFactory;
 bool EditorMode = false;
