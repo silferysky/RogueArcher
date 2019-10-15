@@ -10,6 +10,10 @@ namespace Rogue
 	}
 	void ImGuiComponent::Init()
 	{
+
+	}
+	void ImGuiComponent::Update()
+	{
 		if (ImGui::BeginMenu("Component"))
 		{
 			if (ImGui::MenuItem("Add"))
@@ -82,9 +86,6 @@ namespace Rogue
 			}
 			ImGui::EndMenu();
 		}
-	}
-	void ImGuiComponent::Update()
-	{
 	}
 	void ImGuiComponent::Shutdown()
 	{

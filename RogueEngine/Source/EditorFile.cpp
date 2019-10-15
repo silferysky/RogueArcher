@@ -13,6 +13,10 @@ namespace Rogue
 	void ImGuiEditorFile::Init()
 	{
 
+		
+	}
+	void ImGuiEditorFile::Update()
+	{
 		if (ImGui::BeginMenu("File"))
 		{
 			if (ImGui::MenuItem("New Scene"))
@@ -45,9 +49,6 @@ namespace Rogue
 			}
 			ImGui::EndMenu();
 		}
-	}
-	void ImGuiEditorFile::Update()
-	{
 	}
 	void ImGuiEditorFile::Shutdown()
 	{

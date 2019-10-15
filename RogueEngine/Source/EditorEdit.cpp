@@ -10,6 +10,10 @@ namespace Rogue
 	}
 	void ImGuiEditorEdit::Init()
 	{
+	
+	}
+	void ImGuiEditorEdit::Update()
+	{
 		if (ImGui::BeginMenu("Edit"))
 		{
 			if (ImGui::MenuItem("Undo", "CTRL+Z"))
@@ -35,9 +39,6 @@ namespace Rogue
 			}
 			ImGui::EndMenu();
 		}
-	}
-	void ImGuiEditorEdit::Update()
-	{
 	}
 	void ImGuiEditorEdit::Shutdown()
 	{

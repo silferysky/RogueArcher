@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
-#include "REEditor.h"
+#include "imgui.h"
+
 namespace Rogue
 {
 	typedef int EditorWindowFlags;

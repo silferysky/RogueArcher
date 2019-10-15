@@ -26,6 +26,7 @@
 #endif
 #include "REMath.h"
 #include "REEditor.h"
+#include "Editor.h"
 
 REEngine gEngine;
 float gDeltaTime;
@@ -64,10 +65,10 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	ShowWindow(hWnd, nCmdShow);
 	if (EditorMode)
 	{
-		EditorManager Editor;
-		Editor.StartWindow();
-		Editor.UpdateWindow();
-		Editor.CloseWindow();
+		Rogue::EditorManager Editor;
+		Editor.Init();
+		Editor.Update();
+		Editor.Shutdown();
 	}
 
 	AllocConsole();
