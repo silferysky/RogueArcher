@@ -44,22 +44,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			if (GetWindowLongPtr(hWnd, GWL_STYLE) & WS_POPUP)
 			{
 				SetWindowLongPtr(hWnd, GWL_STYLE, WS_VISIBLE | WS_OVERLAPPEDWINDOW);
-				SetWindowPos(hWnd, NULL, 0, 0, 600, 400, SWP_FRAMECHANGED);
+				SetWindowPos(hWnd, NULL, 0, 0, 1024, 720, SWP_FRAMECHANGED);
 			}
 			else
 			{ // set full screen
 				SetWindowLongPtr(hWnd, GWL_STYLE, WS_VISIBLE | WS_POPUP);
-				SetWindowPos(hWnd, HWND_TOP, 0, 0, GetSystemMetrics(SM_CXSCREEN), 
+				SetWindowPos(hWnd, HWND_TOP, 0, 0, GetSystemMetrics(SM_CXSCREEN),
 					GetSystemMetrics(SM_CYSCREEN), SWP_FRAMECHANGED);
 			}
-		}
-		else if (wParam == 'P')
-		{
-			gEngine.m_coordinator.togglePerformanceChecker();
-		}
-		else if (wParam == 'O')
-		{
-			gEngine.m_coordinator.toggleFPSChecker();
 		}
 	}
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);

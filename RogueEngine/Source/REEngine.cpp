@@ -8,6 +8,12 @@
 #include "GraphicsSystem.h"
 #include "DebugDrawSystem.h"
 #include "ComponentList.h"
+#include "Main.h"
+
+REEngine::REEngine() :
+	m_coordinator{}, m_accumulatedTime{ 0.0f }, m_stepCount{ 0 },
+	m_gameIsRunning{ true }
+{}
 
 bool REEngine::InitializeOpenGL()
 {
@@ -35,9 +41,9 @@ void REEngine::RegisterSystems()
 {
 	m_coordinator.RegisterSystem<InputManager>();
 	m_coordinator.RegisterSystem<PhysicsSystem>();
+	m_coordinator.RegisterSystem<LogicSystem>();
 	m_coordinator.RegisterSystem<GraphicsSystem>();
 	m_coordinator.RegisterSystem<DebugDrawSystem>();
-	m_coordinator.RegisterSystem<LogicSystem>();
 }
 
 void REEngine::RegisterComponents()
@@ -66,11 +72,42 @@ void REEngine::init()
 	m_coordinator.Init();
 }
 
-void REEngine::update()
+void REEngine::update(HDC hDC)
 {	
 	m_stepCount = 0;
+	std::chrono::high_resolution_clock mainLoopTimer;
+	gFixedDeltaTime = 0.016f;
+	
+	while (m_gameIsRunning)
+	{
+		gDeltaTime = std::chrono::duration_cast<std::chrono::microseconds>(m_loopEnd - m_loopStart).count() / MICRO_TO_SECONDS;
 
-	m_coordinator.Update();
+		m_loopStart = mainLoopTimer.now();
+
+		MSG msg = { 0 };
+
+		m_stepCount = 0;
+
+		while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+		{
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+
+		m_accumulatedTime += gDeltaTime;
+
+		while (m_accumulatedTime >= gFixedDeltaTime)
+		{
+			m_accumulatedTime -= gFixedDeltaTime;
+			m_stepCount++;
+		}
+
+		m_coordinator.Update();
+
+		SwapBuffers(hDC);
+
+		m_loopEnd = mainLoopTimer.now();
+	}
 }
 
 void REEngine::shutdown()
@@ -86,4 +123,9 @@ float REEngine::GetAccumulatedTime() const
 int REEngine::GetStepCount() const
 {
 	return m_stepCount;
+}
+
+void REEngine::SetGameIsRunning(bool set)
+{
+	m_gameIsRunning = set;
 }

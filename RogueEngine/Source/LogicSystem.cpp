@@ -5,6 +5,7 @@
 #include "BaseSystem.h"
 #include "LogicSystem.h"
 #include "EventDispatcher.h"
+#include "KeyEvent.h"
 #include "TransformComponent.h"
 #include "BoxCollider2DComponent.h"
 #include "LogicComponent.h"
@@ -28,7 +29,7 @@ void LogicSystem::RemoveLogicInterface(Entity entity)
 void LogicSystem::init()
 {
 	LISTENER_HANDLER hand = std::bind(&LogicSystem::receive, this, std::placeholders::_1);
-	EventDispatcher::instance().AddListener(SystemID::id_PHYSICSSYSTEM, hand);
+	EventDispatcher::instance().AddListener(SystemID::id_LOGICSYSTEM, hand);
 
 	Signature signature;
 	signature.set(gEngine.m_coordinator.GetComponentType<TransformComponent>());
@@ -60,6 +61,12 @@ void LogicSystem::receive(Event* ev)
 	{
 	case EventType::EvKeyPressed:
 	{
+		KeyPressEvent* keypressevent = dynamic_cast<KeyPressEvent*>(ev);
+
+		KeyPress keycode = keypressevent->GetKeyCode();
+
+		if (keycode == KeyPress::KeyEsc)
+			gEngine.SetGameIsRunning(false);
 	}
 	}
 }
