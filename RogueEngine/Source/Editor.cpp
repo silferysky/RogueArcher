@@ -4,17 +4,16 @@ namespace Rogue
 {
 	void Editor::Init()
 	{
-		ImGuiAssets * Assets = new ImGuiAssets;
-		m_EditorManager->AddEditorWindow("Assets", Assets);
-		m_EditorManager->AddEditorWindow("Component", new ImGuiComponent{});
-		m_EditorManager->AddEditorWindow("Console", new ImGuiConsole{});
-		m_EditorManager->AddEditorWindow("Edit", new ImGuiEditorEdit{});
-		m_EditorManager->AddEditorWindow("File", new ImGuiEditorFile{});
-		m_EditorManager->AddEditorWindow("Game Object", new ImGuiGameObject{});
-		m_EditorManager->AddEditorWindow("Hierarchy", new ImGuiEditorHierarchy{});
-		m_EditorManager->AddEditorWindow("Inspector", new ImGuiInspector{});
-		m_EditorManager->AddEditorWindow("Project", new ImGuiProject{});
-		m_EditorManager->AddEditorWindow("Viewport", new ImGuiEditorViewport{});
+		m_EditorManager->AddEditorWindow("Assets", std::make_shared<ImGuiAssets>());
+		m_EditorManager->AddEditorWindow("Component", std::make_shared<ImGuiComponent>());
+		m_EditorManager->AddEditorWindow("Console", std::make_shared<ImGuiConsole>());
+		m_EditorManager->AddEditorWindow("Edit", std::make_shared<ImGuiEditorEdit>());
+		m_EditorManager->AddEditorWindow("File", std::make_shared<ImGuiEditorFile>());
+		m_EditorManager->AddEditorWindow("Game Object", std::make_shared<ImGuiGameObject>());
+		m_EditorManager->AddEditorWindow("Hierarchy", std::make_shared<ImGuiEditorHierarchy>());
+		m_EditorManager->AddEditorWindow("Inspector", std::make_shared<ImGuiInspector>());
+		m_EditorManager->AddEditorWindow("Project", std::make_shared<ImGuiProject>());
+		m_EditorManager->AddEditorWindow("Viewport", std::make_shared<ImGuiEditorViewport>());
 
 		m_EditorManager->Init();
 	}
