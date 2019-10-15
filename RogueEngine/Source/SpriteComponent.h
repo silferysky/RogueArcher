@@ -12,6 +12,10 @@ public:
 
 	void setTexture(const char* texture);
 	GLuint getTexture() const;
+
+	//Serialize
 	virtual std::string Serialize();
 	virtual void Deserialize(std::string toDeserialize);
+
+	//void operator=(SpriteComponent sprite);
 };

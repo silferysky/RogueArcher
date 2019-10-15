@@ -36,3 +36,19 @@ void SpriteComponent::Deserialize(std::string toDeserialize)
 {
 	setTexture(toDeserialize.c_str());
 }
+
+/*void SpriteComponent::operator=(SpriteComponent sprite)
+{
+	std::map<const char*, GLuint, str_cmp> textureMap = gEngine.m_coordinator.GetTextureManager().getTextureMap();
+	
+	for (std::map<const char*, GLuint, str_cmp>::iterator it = textureMap.begin(); it != textureMap.end(); ++it)
+	{
+		if (it->second == sprite.m_texture)
+		{
+			setTexture(it->first);
+			return;
+		}
+	}
+
+	setTexture("test.bmp");
+}*/

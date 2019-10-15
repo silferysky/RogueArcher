@@ -72,67 +72,8 @@ void ObjectFactory::LoadLevel(const char* fileName)
 				//Does this twice to skip the name line
 				std::getline(istrstream, readstr, '{');
 				std::getline(istrstream, readstr, '}');
-				switch (index)
-				{
-					case static_cast<int>(SPRITE) :
-					{
-						SpriteComponent spriteComponent{};
-						spriteComponent.Deserialize(readstr);
-
-						gEngine.m_coordinator.AddComponent(curEnt, spriteComponent);
-						break;
-					}
-					case static_cast<int>(RIGIDBODY) :
-					{
-						RigidbodyComponent rigidbodyComponent{};
-						rigidbodyComponent.Deserialize(readstr);
-
-						gEngine.m_coordinator.AddComponent(curEnt, rigidbodyComponent);
-						break;
-					}
-					case static_cast<int>(TRANSFORM) :
-					{
-						TransformComponent transformComponent{};
-						transformComponent.Deserialize(readstr);
-
-						gEngine.m_coordinator.AddComponent(curEnt, transformComponent);
-						break;
-					}
-					case static_cast<int>(CIRCLECOLLIDER2D) :
-					{
-						CircleCollider2DComponent circleColliderComponent{};
-						circleColliderComponent.Deserialize(readstr);
-
-						gEngine.m_coordinator.AddComponent(curEnt, circleColliderComponent);
-						break;
-					}
-					case static_cast<int>(BOXCOLLIDER2D) :
-					{
-						BoxCollider2DComponent boxColliderComponent{};
-						boxColliderComponent.Deserialize(readstr);
-
-						gEngine.m_coordinator.AddComponent(curEnt, boxColliderComponent);
-						break;
-					}
-					case static_cast<int>(PLAYERCONTROLLER) :
-					{
-						PlayerControllerComponent playerControllerComponent{};
-						gEngine.m_coordinator.AddComponent(curEnt, playerControllerComponent);
-						break;
-					}
-					case static_cast<int>(LOGIC) :
-					{
-						LogicComponent logicComponent{};
-						logicComponent.Deserialize(readstr);
-						gEngine.m_coordinator.AddComponent(curEnt, logicComponent);
-						break;
-					}
-					default:
-					{
-						RE_CORE_WARN("OUT OF BOUNDS OBJECT COMPONENT LOADING");
-						break;
-					}
-				}
+				
+				CreateComponent(curEnt, index)->Deserialize(readstr);
 			}
 		}
 
@@ -148,6 +89,8 @@ void ObjectFactory::LoadLevel(const char* fileName)
 	infoStr << entCount << " ENTITIES LOADED";
 	RE_INFO(infoStr.str());
 
+	Clone(1);
+	
 }
 
 void ObjectFactory::SaveLevel(const char* fileName)
@@ -247,9 +190,136 @@ void ObjectFactory::SaveLevel(const char* fileName)
 	RE_INFO("LEVEL SAVED");
 }
 
+void ObjectFactory::Clone(Entity toClone)
+{
+	Signature toCloneSignature = gEngine.m_coordinator.GetEntityManager().GetSignature(toClone);
+	Entity clonedEntity = gEngine.m_coordinator.CreateEntity();
+	for (int index = 0; index != LASTCOMP; ++index)
+	{
+		if (toCloneSignature.test(index))
+		{
+			switch (index)
+			{
+				case static_cast<int>(SPRITE) :
+				{
+					SpriteComponent* newComponent = dynamic_cast<SpriteComponent*>(CreateComponent(clonedEntity, index));
+					*newComponent = gEngine.m_coordinator.GetComponent<SpriteComponent>(toClone);
+					break;
+				}
+				case static_cast<int>(RIGIDBODY) :
+				{
+					RigidbodyComponent* newComponent = dynamic_cast<RigidbodyComponent*>(CreateComponent(clonedEntity, index));
+					*newComponent = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(toClone);
+					break;
+				}
+				case static_cast<int>(TRANSFORM) :
+				{
+					TransformComponent* newComponent = dynamic_cast<TransformComponent*>(CreateComponent(clonedEntity, index));
+					*newComponent = gEngine.m_coordinator.GetComponent<TransformComponent>(toClone);
+					break;
+				}
+				case static_cast<int>(CIRCLECOLLIDER2D) :
+				{
+					CircleCollider2DComponent* newComponent = dynamic_cast<CircleCollider2DComponent*>(CreateComponent(clonedEntity, index));
+					*newComponent = gEngine.m_coordinator.GetComponent<CircleCollider2DComponent>(toClone);
+					break;
+				}
+				case static_cast<int>(BOXCOLLIDER2D) :
+				{
+					BoxCollider2DComponent* newComponent = dynamic_cast<BoxCollider2DComponent*>(CreateComponent(clonedEntity, index));
+					*newComponent = gEngine.m_coordinator.GetComponent<BoxCollider2DComponent>(toClone);
+					break;
+				}
+				case static_cast<int>(PLAYERCONTROLLER) :
+				{
+					PlayerControllerComponent* newComponent = dynamic_cast<PlayerControllerComponent*>(CreateComponent(clonedEntity, index));
+					*newComponent = gEngine.m_coordinator.GetComponent<PlayerControllerComponent>(toClone);
+					break;
+				}
+				case static_cast<int>(LOGIC) :
+				{
+					LogicComponent* newComponent = dynamic_cast<LogicComponent*>(CreateComponent(clonedEntity, index));
+					*newComponent = gEngine.m_coordinator.GetComponent<LogicComponent>(toClone);
+					break;
+				}
+				default:
+				{
+					RE_CORE_WARN("OUT OF BOUNDS INDEX TO CLONE");
+					break;
+				}
+			}
+		}
+	}
+	m_activeEntities.push_back(clonedEntity);
+	
+}
+
 std::vector<Entity> ObjectFactory::GetActiveEntity() const
 {
 	return m_activeEntities;
+}
+
+BaseComponent* ObjectFactory::CreateComponent(Entity owner, ComponentType index)
+{
+	BaseComponent* componentToReturn = nullptr;
+	switch (index)
+	{
+		case static_cast<int>(SPRITE) :
+		{
+			SpriteComponent spriteComponent{};
+			gEngine.m_coordinator.AddComponent(owner, spriteComponent);
+			componentToReturn = &gEngine.m_coordinator.GetComponent<SpriteComponent>(owner);
+			break;
+		}
+		case static_cast<int>(RIGIDBODY) :
+		{
+			RigidbodyComponent rigidbodyComponent{};
+			gEngine.m_coordinator.AddComponent(owner, rigidbodyComponent);
+			componentToReturn = &gEngine.m_coordinator.GetComponent<RigidbodyComponent>(owner);
+			break;
+		}
+		case static_cast<int>(TRANSFORM) :
+		{
+			TransformComponent transformComponent{};
+			gEngine.m_coordinator.AddComponent(owner, transformComponent);
+			componentToReturn = &gEngine.m_coordinator.GetComponent<TransformComponent>(owner);
+			break;
+		}
+		case static_cast<int>(CIRCLECOLLIDER2D) :
+		{
+			CircleCollider2DComponent circleColliderComponent{};
+			gEngine.m_coordinator.AddComponent(owner, circleColliderComponent);
+			componentToReturn = &gEngine.m_coordinator.GetComponent<CircleCollider2DComponent>(owner);
+			break;
+		}
+		case static_cast<int>(BOXCOLLIDER2D) :
+		{
+			BoxCollider2DComponent boxColliderComponent{};
+			gEngine.m_coordinator.AddComponent(owner, boxColliderComponent);
+			componentToReturn = &gEngine.m_coordinator.GetComponent<BoxCollider2DComponent>(owner);
+			break;
+		}
+		case static_cast<int>(PLAYERCONTROLLER) :
+		{
+			PlayerControllerComponent playerControllerComponent{};
+			gEngine.m_coordinator.AddComponent(owner, playerControllerComponent);
+			componentToReturn = &gEngine.m_coordinator.GetComponent<PlayerControllerComponent>(owner);
+			break;
+		}
+		case static_cast<int>(LOGIC) :
+		{
+			LogicComponent logicComponent{};
+			gEngine.m_coordinator.AddComponent(owner, logicComponent);
+			componentToReturn = &gEngine.m_coordinator.GetComponent<LogicComponent>(owner);
+			break;
+		}
+		default:
+		{
+			RE_CORE_WARN("OUT OF BOUNDS INDEX TO CLONE");
+			break;
+		}
+	}
+	return componentToReturn;
 }
 
 
