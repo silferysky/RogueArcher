@@ -6,20 +6,22 @@
 #include "Main.h"
 #include <vector>
 #include <unordered_map>
+#include "REEditor.h"
 #include "imgui.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_glfw.h"
-#include "REEditor.h"
-
-	class IEditable;
+#include "IEditable.h"
+namespace Rogue
+{
+	//class IEditable;
 	class EditorManager
 	{
 	public:
 		EditorManager();
 		~EditorManager() = default;
-		void StartWindow();
-		void UpdateWindow();
-		void CloseWindow();
+		void Init();
+		void Update();
+		void Shutdown();
 
 		bool show_demo_window = true;
 		bool show_another_window = false;
@@ -29,11 +31,24 @@
 		bool Console = true;
 		GLFWwindow* window = nullptr;
 		ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+
+		template<typename T>
+		T* GetEditorWindow(std::string name)
+		{
+			auto Window = m_WindowsMap.find(name);
+			return (T*)Window->second;
+		}
 		
 		template<typename T>
-		void AddEditorWindow(std::string name,T* Window)
+		const T* GetEditorWindow(std::string name)
 		{
-			//m_WindowsVector.push_back(Window);
+			auto Window = m_WindowsMap.find(name);
+			return (T*)Window->second;
+		}
+		template<typename T>
+		void AddEditorWindow(std::string name, T* Window)
+		{
+			m_WindowsVector.push_back(Window);
 			//m_WindowsMap.emplace(name, Window);
 		}
 	private:
@@ -42,5 +57,7 @@
 		float RETime = 0.0f;
 
 	};
+
+}
 
 	

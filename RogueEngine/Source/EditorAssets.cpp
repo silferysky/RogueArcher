@@ -10,6 +10,10 @@ namespace Rogue
 	}
 	void ImGuiAssets::Init()
 	{
+
+	}
+	void ImGuiAssets::Update()
+	{
 		if (ImGui::BeginMenu("Assets"))
 		{
 			if (ImGui::BeginMenu("Create"))
@@ -39,9 +43,6 @@ namespace Rogue
 			}
 			ImGui::EndMenu();
 		}
-	}
-	void ImGuiAssets::Update()
-	{
 	}
 	void ImGuiAssets::Shutdown()
 	{

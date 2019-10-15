@@ -12,6 +12,12 @@ namespace Rogue
 
 	void ImGuiProject::Init()
 	{
+		
+
+	}
+
+	void ImGuiProject::Update()
+	{
 		ImGui::Begin("Project");
 		if (ImGui::CollapsingHeader("Folder Hierachy"))
 		{
@@ -24,11 +30,6 @@ namespace Rogue
 
 		}
 		ImGui::End();
-
-	}
-
-	void ImGuiProject::Update()
-	{
 	}
 
 	void ImGuiProject::Shutdown()

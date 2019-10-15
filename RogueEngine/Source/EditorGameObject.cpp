@@ -10,6 +10,10 @@ namespace Rogue
 	}
 	void ImGuiGameObject::Init()
 	{
+		
+	}
+	void ImGuiGameObject::Update()
+	{
 		if (ImGui::BeginMenu("GameObject"))
 		{
 			if (ImGui::MenuItem("Create Empty"))
@@ -41,9 +45,6 @@ namespace Rogue
 			}
 			ImGui::EndMenu();
 		}
-	}
-	void ImGuiGameObject::Update()
-	{
 	}
 	void ImGuiGameObject::Shutdown()
 	{

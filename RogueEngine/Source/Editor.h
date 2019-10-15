@@ -1,16 +1,16 @@
 #pragma once
 #include "Editor.h"
 #include "EditorManager.h"
-
+#include "REEditor.h"
 namespace Rogue
 {
 	class Editor
 	{
 	public:
 		void Init();
-		void Update(float dt);
+		void Update();
 		void Shutdown();
 	private:
-		EditorManager* m_EditorManager;
+		 std::shared_ptr<EditorManager> m_EditorManager;
 	};
 }
