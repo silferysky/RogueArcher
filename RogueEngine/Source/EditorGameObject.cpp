@@ -14,36 +14,40 @@ namespace Rogue
 	}
 	void ImGuiGameObject::Update()
 	{
-		if (ImGui::BeginMenu("GameObject"))
+		if (ImGui::BeginMainMenuBar())
 		{
-			if (ImGui::MenuItem("Create Empty"))
+			if (ImGui::BeginMenu("GameObject"))
 			{
-
-			}
-			if (ImGui::MenuItem("Create Empty Child"))
-			{
-
-			}
-			if (ImGui::BeginMenu("2D Object"))
-			{
-				if (ImGui::MenuItem("Sprite"))
+				if (ImGui::MenuItem("Create Empty"))
 				{
-
+		
 				}
-				ImGui::Separator();
-
-				if (ImGui::MenuItem("Sprite Mask"))
+				if (ImGui::MenuItem("Create Empty Child"))
 				{
-
+		
 				}
-
-				if (ImGui::MenuItem("Tilemap"))
+				if (ImGui::BeginMenu("2D Object"))
 				{
-
+					if (ImGui::MenuItem("Sprite"))
+					{
+		
+					}
+					ImGui::Separator();
+		
+					if (ImGui::MenuItem("Sprite Mask"))
+					{
+		
+					}
+		
+					if (ImGui::MenuItem("Tilemap"))
+					{
+		
+					}
+					ImGui::EndMenu();
 				}
 				ImGui::EndMenu();
 			}
-			ImGui::EndMenu();
+			ImGui::EndMainMenuBar();
 		}
 	}
 	void ImGuiGameObject::Shutdown()

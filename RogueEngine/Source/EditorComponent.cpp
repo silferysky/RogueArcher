@@ -14,78 +14,83 @@ namespace Rogue
 	}
 	void ImGuiComponent::Update()
 	{
-		if (ImGui::BeginMenu("Component"))
+		if (ImGui::BeginMainMenuBar())
 		{
-			if (ImGui::MenuItem("Add"))
+			if (ImGui::BeginMenu("Component"))
 			{
-
-			}
-			if (ImGui::BeginMenu("Mesh"))
-			{
-				if (ImGui::MenuItem("Mesh Filter"))
+				if (ImGui::MenuItem("Add"))
 				{
 
 				}
-				if (ImGui::MenuItem("TextMesh"))
+				if (ImGui::BeginMenu("Mesh"))
 				{
+					if (ImGui::MenuItem("Mesh Filter"))
+					{
 
+					}
+					if (ImGui::MenuItem("TextMesh"))
+					{
+
+					}
+					ImGui::Separator();
+					if (ImGui::MenuItem("Mesh Renderer"))
+					{
+
+					}
+					if (ImGui::MenuItem("Skinned Mesh Renderer"))
+					{
+
+					}
+					ImGui::EndMenu();
 				}
-				ImGui::Separator();
-				if (ImGui::MenuItem("Mesh Renderer"))
+				if (ImGui::BeginMenu("Physics"))
 				{
+					if (ImGui::MenuItem("Rigid Body"))
+					{
 
+					}
+					ImGui::Separator();
+					if (ImGui::MenuItem("Box Collider"))
+					{
+
+					}
+
+					if (ImGui::MenuItem("Circle Collider"))
+					{
+
+					}
+
+					if (ImGui::MenuItem("Edge Collider"))
+					{
+
+					}
+
+					if (ImGui::MenuItem("Polygon Collider"))
+					{
+
+					}
+
+					ImGui::Separator();
+					if (ImGui::MenuItem("Distant Joint"))
+					{
+
+					}
+					if (ImGui::MenuItem("Friction Joint"))
+					{
+
+					}
+					ImGui::EndMenu();
 				}
-				if (ImGui::MenuItem("Skinned Mesh Renderer"))
+				if (ImGui::BeginMenu("Audio"))
 				{
 
+					ImGui::EndMenu();
 				}
 				ImGui::EndMenu();
 			}
-			if (ImGui::BeginMenu("Physics"))
-			{
-				if (ImGui::MenuItem("Rigid Body"))
-				{
-
-				}
-				ImGui::Separator();
-				if (ImGui::MenuItem("Box Collider"))
-				{
-
-				}
-
-				if (ImGui::MenuItem("Circle Collider"))
-				{
-
-				}
-
-				if (ImGui::MenuItem("Edge Collider"))
-				{
-
-				}
-
-				if (ImGui::MenuItem("Polygon Collider"))
-				{
-
-				}
-
-				ImGui::Separator();
-				if (ImGui::MenuItem("Distant Joint"))
-				{
-
-				}
-				if (ImGui::MenuItem("Friction Joint"))
-				{
-
-				}
-				ImGui::EndMenu();
-			}
-			if (ImGui::BeginMenu("Audio"))
-			{
-
-				ImGui::EndMenu();
-			}
-			ImGui::EndMenu();
+			ImGui::EndMainMenuBar();
 		}
+		
 	}
 	void ImGuiComponent::Shutdown()
 	{

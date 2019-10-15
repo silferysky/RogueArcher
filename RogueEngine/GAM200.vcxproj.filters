@@ -254,9 +254,6 @@
     <ClInclude Include="Source\ILogic.h">
       <Filter>RogueEngine\Systems\AI</Filter>
     </ClInclude>
-    <ClInclude Include="Source\EditorAssets.h">
-      <Filter>RogueEditor\EditorFiles</Filter>
-    </ClInclude>
     <ClInclude Include="Source\EditorComponent.h">
       <Filter>RogueEditor\EditorFiles</Filter>
     </ClInclude>
@@ -279,9 +276,6 @@
       <Filter>RogueEditor\EditorFiles</Filter>
     </ClInclude>
     <ClInclude Include="Source\EditorProject.h">
-      <Filter>RogueEditor\EditorFiles</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\REEditor.h">
       <Filter>RogueEditor\EditorFiles</Filter>
     </ClInclude>
     <ClInclude Include="Source\glew.h">
@@ -438,9 +432,6 @@
     </ClCompile>
     <ClCompile Include="Source\LogicComponent.cpp">
       <Filter>RogueEngine\Systems\AI</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\EditorAssets.cpp">
-      <Filter>RogueEditor\EditorFiles</Filter>
     </ClCompile>
     <ClCompile Include="Source\EditorComponent.cpp">
       <Filter>RogueEditor\EditorFiles</Filter>
