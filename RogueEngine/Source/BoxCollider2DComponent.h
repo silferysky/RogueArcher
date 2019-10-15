@@ -14,4 +14,6 @@ public:
 
 	std::string Serialize();
 	void Deserialize(std::string toDeserialize);
+
+	void operator=(const BoxCollider2DComponent& rhs);
 };

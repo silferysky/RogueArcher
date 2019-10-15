@@ -5,12 +5,18 @@ class ObjectFactory
 {
 
 public:
-	void SaveLevel(const char* fileName);
 	void LoadLevel(const char* fileName);
+	void SaveLevel(const char* fileName);
+
+	void Clone(Entity toClone);
 
 	std::vector<Entity> GetActiveEntity() const;
 
 private:
+
+	//Helper functions
+	BaseComponent* CreateComponent(Entity owner, ComponentType index);
+
 	std::vector<Entity> m_activeEntities;
 };
 

@@ -68,3 +68,15 @@ void BoxCollider2DComponent::Deserialize(std::string toDeserialize)
 	m_obb.setModelVerts(vertexList);
 	m_obb.setSize(size);
 }
+
+void BoxCollider2DComponent::operator=(const BoxCollider2DComponent& rhs)
+{
+	m_obb.setSize(rhs.m_obb.getSize());
+	std::vector<Vec2> vertexList{};
+
+	for (size_t sz = 0; sz < m_obb.getSize(); ++sz)
+	{
+		vertexList.push_back(Vec2());
+	}
+	m_obb.setModelVerts(vertexList);
+}
