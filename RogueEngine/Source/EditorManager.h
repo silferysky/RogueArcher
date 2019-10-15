@@ -46,10 +46,11 @@ namespace Rogue
 			return (T*)Window->second;
 		}
 
-		void AddEditorWindow(std::string name, std::shared_ptr<IEditable> Window)
+		template <typename T>
+		void AddEditorWindow(std::string name)
 		{
-			m_WindowsVector.push_back(Window);
-			m_WindowsMap.emplace(name, Window);
+			m_WindowsVector.emplace_back(std::make_shared<T>());
+			m_WindowsMap.emplace(name, std::make_shared<T>());
 		}
 	private:
 		std::vector<std::shared_ptr<IEditable>> m_WindowsVector;
