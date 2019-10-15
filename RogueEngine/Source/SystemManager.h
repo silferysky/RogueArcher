@@ -17,7 +17,7 @@ public:
 	void RegisterSystem()
 	{
 		const char* typeName = typeid(T).name();
-		assert(RESystems.find(typeName) == RESystems.end() && "Registering system more than once.");
+		RE_ASSERT(RESystems.find(typeName) == RESystems.end(), "Registering system more than once.");
 
 		// Insert the newly created system pointer and typename into the map.
 		RESystems.insert({ typeName, std::make_shared<T>() });

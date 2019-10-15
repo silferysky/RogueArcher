@@ -4,6 +4,7 @@
 #include <string>
 #include <sstream>
 #include "FileIO.h"
+#include "Logger.h"
 
 bool RESerialiser::ReadFromFile(const char* FileName)
 	{
@@ -25,7 +26,7 @@ rapidjson::Document RESerialiser::DeserialiseFromFile(const char* FileName)
 {
 	FILE* pFile = nullptr;
 	fopen_s(&pFile, FileName, "r");
-	assert(pFile);
+	RE_ASSERT(pFile, "Error opening file for deserialization");
 	char buffer[65536];
 	rapidjson::FileReadStream is(pFile, buffer, sizeof(buffer));
 	fclose(pFile);
