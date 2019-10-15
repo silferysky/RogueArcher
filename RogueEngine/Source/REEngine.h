@@ -10,7 +10,6 @@ class REEngine
 	float m_accumulatedTime;
 	int	m_stepCount;
 	bool m_gameIsRunning;
-	bool firstIter;
 
 	ChronoClock m_loopStart;
 	ChronoClock m_loopEnd;
@@ -30,7 +29,6 @@ public:
 
 	float GetAccumulatedTime() const;
 	int GetStepCount() const;
-
 
 	void SetGameIsRunning(bool set);
 };
