@@ -72,8 +72,50 @@ void ObjectFactory::LoadLevel(const char* fileName)
 				//Does this twice to skip the name line
 				std::getline(istrstream, readstr, '{');
 				std::getline(istrstream, readstr, '}');
-				
-				CreateComponent(curEnt, index)->Deserialize(readstr);
+
+				switch (index)
+				{
+					case static_cast<int>(SPRITE) :
+					{
+						gEngine.m_coordinator.LoadComponent<SpriteComponent>(curEnt, readstr);
+						break;
+					}
+					case static_cast<int>(RIGIDBODY) :
+					{
+						gEngine.m_coordinator.LoadComponent<RigidbodyComponent>(curEnt, readstr);
+						break;
+					}
+					case static_cast<int>(TRANSFORM) :
+					{
+						gEngine.m_coordinator.LoadComponent<TransformComponent>(curEnt, readstr);
+						break;
+					}
+					case static_cast<int>(CIRCLECOLLIDER2D) :
+					{
+						gEngine.m_coordinator.LoadComponent<CircleCollider2DComponent>(curEnt, readstr);
+						break;
+					}
+					case static_cast<int>(BOXCOLLIDER2D) :
+					{
+						gEngine.m_coordinator.LoadComponent<BoxCollider2DComponent>(curEnt, readstr);
+						break;
+					}
+					case static_cast<int>(PLAYERCONTROLLER) :
+					{
+						gEngine.m_coordinator.LoadComponent<PlayerControllerComponent>(curEnt, readstr);
+						break;
+					}
+					case static_cast<int>(LOGIC) :
+					{
+						gEngine.m_coordinator.LoadComponent<LogicComponent>(curEnt, readstr);
+						break;
+					}
+					default:
+					{
+						RE_CORE_WARN("OUT OF BOUNDS INDEX TO CLONE");
+						break;
+					}
+				}
 			}
 		}
 
@@ -81,7 +123,7 @@ void ObjectFactory::LoadLevel(const char* fileName)
 
 		debugStr.clear();
 		debugStr.str("");
-		debugStr << "Entity " << entity << "'s Signature: " << gEngine.m_coordinator.GetEntityManager().GetSignature(entity).to_ulong();
+		debugStr << "Entity " << curEnt << "'s Signature: " << gEngine.m_coordinator.GetEntityManager().GetSignature(curEnt).to_ulong();
 		RE_INFO(debugStr.str());
 	}
 	RE_INFO("LEVEL LOADED");
@@ -89,7 +131,7 @@ void ObjectFactory::LoadLevel(const char* fileName)
 	infoStr << entCount << " ENTITIES LOADED";
 	RE_INFO(infoStr.str());
 
-	Clone(1);
+	//Clone(1);
 	
 }
 
@@ -202,44 +244,37 @@ void ObjectFactory::Clone(Entity toClone)
 			{
 				case static_cast<int>(SPRITE) :
 				{
-					SpriteComponent* newComponent = dynamic_cast<SpriteComponent*>(CreateComponent(clonedEntity, index));
-					*newComponent = gEngine.m_coordinator.GetComponent<SpriteComponent>(toClone);
+					gEngine.m_coordinator.CopyComponent<SpriteComponent>(clonedEntity, toClone);
 					break;
 				}
 				case static_cast<int>(RIGIDBODY) :
 				{
-					RigidbodyComponent* newComponent = dynamic_cast<RigidbodyComponent*>(CreateComponent(clonedEntity, index));
-					*newComponent = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(toClone);
+					gEngine.m_coordinator.CopyComponent<RigidbodyComponent>(clonedEntity, toClone);
 					break;
 				}
 				case static_cast<int>(TRANSFORM) :
 				{
-					TransformComponent* newComponent = dynamic_cast<TransformComponent*>(CreateComponent(clonedEntity, index));
-					*newComponent = gEngine.m_coordinator.GetComponent<TransformComponent>(toClone);
+					gEngine.m_coordinator.CopyComponent<TransformComponent>(clonedEntity, toClone);
 					break;
 				}
 				case static_cast<int>(CIRCLECOLLIDER2D) :
 				{
-					CircleCollider2DComponent* newComponent = dynamic_cast<CircleCollider2DComponent*>(CreateComponent(clonedEntity, index));
-					*newComponent = gEngine.m_coordinator.GetComponent<CircleCollider2DComponent>(toClone);
+					gEngine.m_coordinator.CopyComponent<CircleCollider2DComponent>(clonedEntity, toClone);
 					break;
 				}
 				case static_cast<int>(BOXCOLLIDER2D) :
 				{
-					BoxCollider2DComponent* newComponent = dynamic_cast<BoxCollider2DComponent*>(CreateComponent(clonedEntity, index));
-					*newComponent = gEngine.m_coordinator.GetComponent<BoxCollider2DComponent>(toClone);
+					gEngine.m_coordinator.CopyComponent<BoxCollider2DComponent>(clonedEntity, toClone);
 					break;
 				}
 				case static_cast<int>(PLAYERCONTROLLER) :
 				{
-					PlayerControllerComponent* newComponent = dynamic_cast<PlayerControllerComponent*>(CreateComponent(clonedEntity, index));
-					*newComponent = gEngine.m_coordinator.GetComponent<PlayerControllerComponent>(toClone);
+					gEngine.m_coordinator.CopyComponent<PlayerControllerComponent>(clonedEntity, toClone);
 					break;
 				}
 				case static_cast<int>(LOGIC) :
 				{
-					LogicComponent* newComponent = dynamic_cast<LogicComponent*>(CreateComponent(clonedEntity, index));
-					*newComponent = gEngine.m_coordinator.GetComponent<LogicComponent>(toClone);
+					gEngine.m_coordinator.CopyComponent<LogicComponent>(clonedEntity, toClone);
 					break;
 				}
 				default:
@@ -258,70 +293,6 @@ std::vector<Entity> ObjectFactory::GetActiveEntity() const
 {
 	return m_activeEntities;
 }
-
-BaseComponent* ObjectFactory::CreateComponent(Entity owner, ComponentType index)
-{
-	BaseComponent* componentToReturn = nullptr;
-	switch (index)
-	{
-		case static_cast<int>(SPRITE) :
-		{
-			SpriteComponent spriteComponent{};
-			gEngine.m_coordinator.AddComponent(owner, spriteComponent);
-			componentToReturn = &gEngine.m_coordinator.GetComponent<SpriteComponent>(owner);
-			break;
-		}
-		case static_cast<int>(RIGIDBODY) :
-		{
-			RigidbodyComponent rigidbodyComponent{};
-			gEngine.m_coordinator.AddComponent(owner, rigidbodyComponent);
-			componentToReturn = &gEngine.m_coordinator.GetComponent<RigidbodyComponent>(owner);
-			break;
-		}
-		case static_cast<int>(TRANSFORM) :
-		{
-			TransformComponent transformComponent{};
-			gEngine.m_coordinator.AddComponent(owner, transformComponent);
-			componentToReturn = &gEngine.m_coordinator.GetComponent<TransformComponent>(owner);
-			break;
-		}
-		case static_cast<int>(CIRCLECOLLIDER2D) :
-		{
-			CircleCollider2DComponent circleColliderComponent{};
-			gEngine.m_coordinator.AddComponent(owner, circleColliderComponent);
-			componentToReturn = &gEngine.m_coordinator.GetComponent<CircleCollider2DComponent>(owner);
-			break;
-		}
-		case static_cast<int>(BOXCOLLIDER2D) :
-		{
-			BoxCollider2DComponent boxColliderComponent{};
-			gEngine.m_coordinator.AddComponent(owner, boxColliderComponent);
-			componentToReturn = &gEngine.m_coordinator.GetComponent<BoxCollider2DComponent>(owner);
-			break;
-		}
-		case static_cast<int>(PLAYERCONTROLLER) :
-		{
-			PlayerControllerComponent playerControllerComponent{};
-			gEngine.m_coordinator.AddComponent(owner, playerControllerComponent);
-			componentToReturn = &gEngine.m_coordinator.GetComponent<PlayerControllerComponent>(owner);
-			break;
-		}
-		case static_cast<int>(LOGIC) :
-		{
-			LogicComponent logicComponent{};
-			gEngine.m_coordinator.AddComponent(owner, logicComponent);
-			componentToReturn = &gEngine.m_coordinator.GetComponent<LogicComponent>(owner);
-			break;
-		}
-		default:
-		{
-			RE_CORE_WARN("OUT OF BOUNDS INDEX TO CLONE");
-			break;
-		}
-	}
-	return componentToReturn;
-}
-
 
 /* test for joel in case he forget/ put in main.cpp
 	RESerialiser Serialiser;
