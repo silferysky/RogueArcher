@@ -5,10 +5,9 @@
 namespace Rogue
 {
 	static ImGuiDockNodeFlags opt_flags = ImGuiDockNodeFlags_None;
-	EditorManager::EditorManager() :window(nullptr)
-	{
-
-	}
+	EditorManager::EditorManager() :
+		window(nullptr)
+	{}
 
 	void EditorManager::Init()
 	{
@@ -24,8 +23,10 @@ namespace Rogue
 			glfwTerminate();
 		}
 		glfwMakeContextCurrent(window);
+
 		if (glewInit() != GLEW_OK)
-			std::cout << "Oh fuck" << std::endl;
+			std::cout << "Oh damn" << std::endl;
+
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
@@ -34,7 +35,8 @@ namespace Rogue
 		io.ConfigFlags = ImGuiConfigFlags_DockingEnable;
 		ImGui_ImplGlfw_InitForOpenGL(window, true);
 		ImGui_ImplOpenGL3_Init(glsl_version);
-		for (auto& i : m_WindowsVector)
+
+		for (std::shared_ptr<IEditable> i : m_WindowsVector)
 		{
 			i->Init();
 		}

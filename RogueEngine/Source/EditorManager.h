@@ -45,15 +45,15 @@ namespace Rogue
 			auto Window = m_WindowsMap.find(name);
 			return (T*)Window->second;
 		}
-		template<typename T>
-		void AddEditorWindow(std::string name, T* Window)
+
+		void AddEditorWindow(std::string name, std::shared_ptr<IEditable> Window)
 		{
-			m_WindowsVector.push_back(Window);
-			//m_WindowsMap.emplace(name, Window);
+			m_WindowsVector.push_back(std::shared_ptr<IEditable>());
+			m_WindowsMap.emplace(name, Window);
 		}
 	private:
-		std::vector<IEditable*> m_WindowsVector;
-		std::unordered_map<std::string, IEditable*> m_WindowsMap;
+		std::vector<std::shared_ptr<IEditable>> m_WindowsVector;
+		std::unordered_map<std::string, std::shared_ptr<IEditable>> m_WindowsMap;
 		float RETime = 0.0f;
 
 	};

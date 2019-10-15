@@ -79,6 +79,8 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 		Editor.Init();
 		Editor.Update();
 		Editor.Shutdown();
+
+		return (int)msg.wParam;
 	}
 
 	AllocConsole();
