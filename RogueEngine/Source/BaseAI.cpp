@@ -42,14 +42,14 @@ void BaseAI::logicUpdate()
 			case AIState::AIState_Patrol:
 				AIPatrolUpdate();
 				break;
-			case default:
+			default:
 				//Idle is default state
 				AIIdleUpdate();
 				break;
 			}
 			//Do Stuff
 			RE_INFO("Base AI Doing Stuff");
-			RE_INFO((static_cast<int>(*it));
+			RE_INFO(static_cast<int>(*it));
 
 			//Sets current state and exit state since you aren't supposed to do multiple states
 			m_logicComponent->CurState(*it);
