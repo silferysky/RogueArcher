@@ -31,9 +31,7 @@
 REEngine gEngine;
 float gDeltaTime;
 float gFixedDeltaTime;
-
-ObjectFactory gObjectFactory;
-bool EditorMode = true;
+bool EditorMode = false;
 
 //const char* FileName = "/Resources/test.json";
 static const int SCREEN_FULLSCREEN = 0;
@@ -104,13 +102,6 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 
 	RE_INFO("TEST FILEWRITER");
 	BasicIO::WriteJsonFile("Resources/TestJsonFileCreator.json", 1);
-
-	//BasicIO::WriteJsonFile("Resources/Level 1.json", 8);
-
-	gObjectFactory.LoadLevel("Resources/Level 1.json");
-
-
-	//gObjectFactory.SaveLevel("Resources/Level 1.json");
 
 	// Update engine.
 	gEngine.update(hDC);

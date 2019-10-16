@@ -21,11 +21,11 @@ void Timer::TimerEnd(const char* System)
 	{
 		it->second = totaltime;
 	}
-	for (auto it1 = time.begin(); it1 != time.end(); ++it1)
-	{
-		if (gEngine.m_coordinator.performanceChecker())
-			std::cout << it1->first << " " << it1->second << "%" << std::endl;
-	}
+//	for (auto it1 = time.begin(); it1 != time.end(); ++it1)
+//	{
+//		if (gEngine.m_coordinator.performanceChecker())
+//			std::cout << it1->first << " " << it1->second << "%" << std::endl;
+//	}
 
 
 }
