@@ -2,6 +2,8 @@
 
 #include <string>
 #include <sstream>
+#include <bitset>
+#include "SystemList.h"
 
 #define EvCatFlag(x) (1 << x) //Defines event category as x shifted by 1 bit (since 0 is None)
 
@@ -90,11 +92,10 @@ public:
 	};
 
 protected:
-	EventCategory eventCat;			//Event Category as based on the EventCategory enum
-	EventType eventType;			//Specific event type
-	//EventMessageType eventMsgType;	//Specific message type
-	std::string eventName;			//Name of event
-	bool isHandled = false;			//If event is handled or not
+	EventCategory	eventCat;				//Event Category as based on the EventCategory enum
+	EventType		eventType;				//Specific event type
+	bool			isHandled = false;		//If event is handled or not
+	std::bitset<(int)SystemID::id_LASTSYS>	SystemsToReceive;		//Denotes which system receives this eevnt
 };
 
 //For Debugging/Logging

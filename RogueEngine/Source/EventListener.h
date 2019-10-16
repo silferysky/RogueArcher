@@ -3,8 +3,6 @@
 #include "logger.h"
 #include "Event.h"
 
-class SystemList;
-
 //Used to override template events
 class BaseEventListener
 {
