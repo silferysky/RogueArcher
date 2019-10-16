@@ -29,8 +29,7 @@ void LogicSystem::RemoveLogicInterface(Entity entity)
 
 void LogicSystem::init()
 {
-	LISTENER_HANDLER hand = std::bind(&LogicSystem::receive, this, std::placeholders::_1);
-	EventDispatcher::instance().AddListener(SystemID::id_LOGICSYSTEM, hand);
+	REGISTER_LISTENER(SystemID::id_LOGICSYSTEM, LogicSystem::receive);
 
 	Signature signature;
 	signature.set(gEngine.m_coordinator.GetComponentType<TransformComponent>());

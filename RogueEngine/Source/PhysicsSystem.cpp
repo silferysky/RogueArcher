@@ -43,8 +43,7 @@ void PhysicsSystem::integrateAcceleration(RigidbodyComponent& rigidbody, Transfo
 //-------------------------------------------------------//
 void PhysicsSystem::init()
 {
-	LISTENER_HANDLER hand = std::bind(&PhysicsSystem::receive, this, std::placeholders::_1);
-	EventDispatcher::instance().AddListener(SystemID::id_PHYSICSSYSTEM, hand);
+	REGISTER_LISTENER(SystemID::id_PHYSICSSYSTEM, PhysicsSystem::receive);
 
 	// Add components to signature.
 	Signature signature;

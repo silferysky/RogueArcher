@@ -15,8 +15,7 @@ DebugDrawSystem::DebugDrawSystem()
 // Public member functions
 void DebugDrawSystem::init()
 {
-	LISTENER_HANDLER hand = std::bind(&DebugDrawSystem::receive, this, std::placeholders::_1);
-	EventDispatcher::instance().AddListener(SystemID::id_DEBUGDRAWSYSTEM, hand);
+	REGISTER_LISTENER(SystemID::id_DEBUGDRAWSYSTEM, DebugDrawSystem::receive);
 
 	// Add components to signature
 	Signature signature;
