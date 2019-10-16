@@ -4,6 +4,7 @@
 #include "EntityManager.h"
 #include "GraphicsSystem.h"
 #include "DebugDrawSystem.h"
+#include "ObjectFactory.h"
 #include "PhysicsSystem.h"
 #include "EventDispatcher.h"
 #include "ShaderManager.h"
@@ -18,9 +19,8 @@ class Coordinator
 	std::unique_ptr<SystemManager> m_systemManager;
 	std::unique_ptr<TextureManager> m_textureManager;
 	std::unique_ptr<ShaderManager> m_shaderManager;
+	std::unique_ptr<ObjectFactory> m_objectFactory;
 
-	bool m_togglePerformanceChecker;
-	bool m_fpscheck;
 public:
 	Coordinator() :
 		m_entityManager{ std::make_unique<EntityManager>() },
@@ -28,8 +28,7 @@ public:
 		m_systemManager{ std::make_unique<SystemManager>() },
 		m_textureManager{ std::make_unique<TextureManager>() },
 		m_shaderManager{ std::make_unique<ShaderManager>() },
-		m_togglePerformanceChecker{ false },
-		m_fpscheck{ false }
+		m_objectFactory{ std::make_unique<ObjectFactory>() }
 	{}
 
 	void Init()
@@ -39,6 +38,10 @@ public:
 
 		// Init the systems and set their signatures.
 		m_systemManager->InitSystems();
+
+		// Load first scene
+		m_objectFactory->LoadLevel("Resources/Level 1.json");
+		m_objectFactory->SaveLevel("Resources/Level 1.json");
 	}
 
 	void Update()
@@ -95,6 +98,23 @@ public:
 		m_systemManager->EntitySignatureChanged(entity, signature);
 	}
 
+	void clone(Entity existingEntity)
+	{
+		Entity clonedEntity = CreateEntity();
+		Signature sig = m_entityManager->GetSignature(existingEntity);
+		
+		for (int i = 0; i < LASTCOMP; i++)
+		{
+			if (sig.test(i))
+			{
+				
+				auto& existingComponent = GetComponent<RigidbodyComponent>(existingEntity);
+				AddComponent(clonedEntity, existingComponent);
+			}
+		}
+
+	}
+
 	template<typename T>
 	void RemoveComponent(Entity entity)
 	{
@@ -147,25 +167,4 @@ public:
 	{
 		return m_entityManager->GetSignature(entity).test(GetComponentType<T>());
 	}
-
-	void togglePerformanceChecker()
-	{
-		m_togglePerformanceChecker = !m_togglePerformanceChecker;
-	}
-
-	bool performanceChecker()
-	{
-		return m_togglePerformanceChecker;
-	}
-
-	void toggleFPSChecker()
-	{
-		m_fpscheck = !m_fpscheck;
-	}
-
-	bool FPSChecker()
-	{
-		return m_fpscheck;
-	}
-
 };
