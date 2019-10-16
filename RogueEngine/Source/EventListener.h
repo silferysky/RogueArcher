@@ -18,10 +18,8 @@ class EventListener : public BaseEventListener
 public:
 	virtual ~EventListener() override {};
 	virtual void receive(Event* event) = 0;
-
-	SystemList* SysListener = nullptr;
 };
 
 using LISTENER_HANDLER = std::function<void(Event*)>;
-#define ADD_LISTENER(id, func)	LISTENER_HANDLER hand = std::bind(&func, this, std::placeholders::_1); \
-								eventDispatcher.AddListener(id, hand)
+#define REGISTER_LISTENER(id, func)	LISTENER_HANDLER hand = std::bind(&func, this, std::placeholders::_1); \
+									EventDispatcher::instance().AddListener(id, hand)

@@ -11,8 +11,7 @@ GraphicsSystem::GraphicsSystem()
 // Public member functions 
 void GraphicsSystem::init()
 {
-	LISTENER_HANDLER hand = std::bind(&GraphicsSystem::receive, this, std::placeholders::_1);
-	EventDispatcher::instance().AddListener(SystemID::id_GRAPHICSSYSTEM, hand);
+	REGISTER_LISTENER(SystemID::id_GRAPHICSSYSTEM, GraphicsSystem::receive);
 
 	// Add components to signature
 	Signature signature;
