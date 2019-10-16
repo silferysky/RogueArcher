@@ -1,5 +1,6 @@
 #pragma once
 #include "AIType.h"
+#include "BaseComponent.h"
 #include <vector>
 #include <bitset>
 
