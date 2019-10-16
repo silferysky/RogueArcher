@@ -43,19 +43,10 @@ namespace Rogue
 	}
 	void EditorManager::Update()
 	{
-		Rogue::ImGuiProject ImGuiProject;
-		Rogue::ImGuiEditorFile ImGuiFile;
-		Rogue::ImGuiInspector ImGuiInspector;
-		Rogue::ImGuiEditorEdit ImGuiMenu;
-		Rogue::ImGuiAssets ImGuiAssets;
-		Rogue::ImGuiGameObject ImGuiGameObject;
-		Rogue::ImGuiComponent ImGuiComponent;
-		Rogue::ImGuiConsole ImGuiConsole;
-		Rogue::ImGuiEditorHierarchy ImGuiHierarchy;
 		while (!glfwWindowShouldClose(window))
 		{
 			glfwPollEvents();
-
+			
 			// Start the Dear ImGui frame
 			ImGui_ImplOpenGL3_NewFrame();
 			ImGui_ImplGlfw_NewFrame();
@@ -78,14 +69,9 @@ namespace Rogue
 			//ImGui::SetNextWindowBgAlpha(0.0f);
 			ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), opt_flags);
 
-			if (ImGui::BeginMainMenuBar())
+			for (auto& i : m_WindowsVector)
 			{
-				ImGuiFile.Update();
-				ImGuiMenu.Update();
-				ImGuiAssets.Update();
-				ImGuiGameObject.Update();
-				ImGuiComponent.Update();
-				ImGui::EndMainMenuBar();
+				i->Update();
 			}
 			// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
 			if (show_demo_window)
@@ -119,16 +105,6 @@ namespace Rogue
 					show_another_window = false;
 				ImGui::End();
 			}*/
-			if (Inspector)
-			{
-				ImGuiInspector.Update();
-				ImGuiProject.Update();
-				ImGuiHierarchy.Update();
-			}
-			if (Console)
-			{
-				ImGuiConsole.Update();
-			}
 			ImGui::End();
 			ImGui::Render();
 			int display_w, display_h;

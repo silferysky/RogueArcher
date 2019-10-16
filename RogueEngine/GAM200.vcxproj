@@ -25,7 +25,6 @@
     <ClInclude Include="Source\BoxCollider2DComponent.h" />
     <ClInclude Include="Source\DebugDrawSystem.h" />
     <ClInclude Include="Source\Editor.h" />
-    <ClInclude Include="Source\EditorAssets.h" />
     <ClInclude Include="Source\EditorComponent.h" />
     <ClInclude Include="Source\EditorConsole.h" />
     <ClInclude Include="Source\EditorEdit.h" />
@@ -63,7 +62,6 @@
     <ClInclude Include="Source\OBB.h" />
     <ClInclude Include="Source\PlayerControllerComponent.h" />
     <ClInclude Include="Source\Polygon.h" />
-    <ClInclude Include="Source\REEditor.h" />
     <ClInclude Include="Source\RigidbodyComponent.h" />
     <ClInclude Include="Source\RotatableComponent.h" />
     <ClInclude Include="Source\Shader.h" />
@@ -111,7 +109,6 @@
     <ClCompile Include="Source\BoxCollider2DComponent.cpp" />
     <ClCompile Include="Source\DebugDrawSystem.cpp" />
     <ClCompile Include="Source\Editor.cpp" />
-    <ClCompile Include="Source\EditorAssets.cpp" />
     <ClCompile Include="Source\EditorComponent.cpp" />
     <ClCompile Include="Source\EditorConsole.cpp" />
     <ClCompile Include="Source\EditorEdit.cpp" />
