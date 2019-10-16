@@ -71,6 +71,9 @@
     <Filter Include="RogueEngine\Systems\Window">
       <UniqueIdentifier>{0ecd1d51-418d-4be3-99a8-6cce0b2b1f2b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="RogueEngine\Systems\AI\AI Types">
+      <UniqueIdentifier>{d574c589-f4a4-4c0f-a12d-0c7a4994e96d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Resource.h">
@@ -248,9 +251,6 @@
     <ClInclude Include="Source\LogicComponent.h">
       <Filter>RogueEngine\Systems\AI</Filter>
     </ClInclude>
-    <ClInclude Include="Source\AIType.h">
-      <Filter>RogueEngine\Systems\AI</Filter>
-    </ClInclude>
     <ClInclude Include="Source\ILogic.h">
       <Filter>RogueEngine\Systems\AI</Filter>
     </ClInclude>
@@ -331,6 +331,12 @@
     </ClInclude>
     <ClInclude Include="Source\EditorViewport.h">
       <Filter>RogueEditor\EditorFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AIType.h">
+      <Filter>RogueEngine\Systems\AI\AI Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BaseAI.h">
+      <Filter>RogueEngine\Systems\AI\AI Types</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -495,6 +501,9 @@
     </ClCompile>
     <ClCompile Include="Source\EditorViewport.cpp">
       <Filter>RogueEditor\EditorFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BaseAI.cpp">
+      <Filter>RogueEngine\Systems\AI\AI Types</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
