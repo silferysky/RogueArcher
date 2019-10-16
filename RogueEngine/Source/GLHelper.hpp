@@ -2,6 +2,7 @@
 #include <glm.hpp>
 #include <gtc/matrix_transform.hpp>
 #include <gtc/type_ptr.hpp>
+#include "WindowHelper.h"
 #include "Vector2D.h"
 #include "ShaderManager.h"
 

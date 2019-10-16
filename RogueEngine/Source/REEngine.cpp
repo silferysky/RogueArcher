@@ -7,6 +7,7 @@
 #include "PhysicsSystem.h"
 #include "GraphicsSystem.h"
 #include "DebugDrawSystem.h"
+#include "FontSystem.h"
 #include "ComponentList.h"
 #include "Main.h"
 
@@ -44,6 +45,7 @@ void REEngine::RegisterSystems()
 	m_coordinator.RegisterSystem<LogicSystem>();
 	m_coordinator.RegisterSystem<GraphicsSystem>();
 	m_coordinator.RegisterSystem<DebugDrawSystem>();
+	m_coordinator.RegisterSystem<FontSystem>();
 }
 
 void REEngine::RegisterComponents()
