@@ -8,13 +8,21 @@ public:
 	void LoadLevel(const char* fileName);
 	void SaveLevel(const char* fileName);
 
+	void LoadArchetypes(const char* fileName);
+	void SaveArchetypes(const char* fileName);
+
 	void Clone(Entity toClone);
+	void Clone(const char* archetype);
 
 	std::vector<Entity> GetActiveEntity() const;
 
 private:
 
+	//Helper function
+	void FactoryLoadComponent(Entity curEnt, Signature signature, std::string value);
+
 	std::vector<Entity> m_activeEntities;
+	std::map<const char*, std::string> m_archetypes;
 
 };
 
@@ -25,3 +33,6 @@ private:
 #define CLEARNSETSTR(s, i1, cmp) CLEARSTR(s); SETSTRING(s, i1, cmp); SETSSTOSTR(s)
 #define MAX_SAVE_ENTITY 8
 #define MIN_SAVE_ENTITY 2
+
+//cstr will go out of scope if you choose to do strstream.str().c_str()
+//This is the proper (Non macro) way of setting the string
