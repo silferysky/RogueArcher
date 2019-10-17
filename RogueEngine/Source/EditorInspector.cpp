@@ -12,6 +12,10 @@ namespace Rogue
 
 	void ImGuiInspector::Init()
 	{
+		
+	}
+	void ImGuiInspector::Update()
+	{
 		ImGui::Begin("Inspector");
 		if (ImGui::CollapsingHeader("Transform"))
 		{
@@ -23,7 +27,7 @@ namespace Rogue
 			ImGui::Text("X");
 			ImGui::SameLine();
 			ImGui::PushItemWidth(50);
-			ImGui::InputText("",bufferX,64);
+			ImGui::InputText("", bufferX, 64);
 			ImGui::SameLine();
 			ImGui::Text("Y");
 			ImGui::SameLine();
@@ -70,9 +74,6 @@ namespace Rogue
 
 		}
 		ImGui::End();
-	}
-	void ImGuiInspector::Update()
-	{
 	}
 	void ImGuiInspector::Shutdown()
 	{
