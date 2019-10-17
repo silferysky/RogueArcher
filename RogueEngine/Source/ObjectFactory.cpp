@@ -19,7 +19,7 @@ void ObjectFactory::LoadLevel(const char* fileName)
 	rapidjson::Document level = RESerialiser::DeserialiseFromFile(fileName);
 
 	Signature currentSignature;
-	std::stringstream debugStr;
+	std::ostringstream debugStr;
 
 	//For Entity Count
 	Entity entCount = level["EntityCount"].GetInt();
@@ -43,93 +43,32 @@ void ObjectFactory::LoadLevel(const char* fileName)
 	for (Entity entity = 0; entity < entCount; ++entity)
 	{
 		std::ostringstream ostrstream;
-		std::istringstream istrstream;
 		std::string stdstr, readstr;
 		const char* cstr;
 		Entity curEnt = gEngine.m_coordinator.CreateEntity();
 
-		//cstr will go out of scope if you choose to do strstream.str().c_str()
-		//This is the proper (Non macro) way of setting the string
+		//Setting signature
 		ostrstream << "Signature" << entity;
-
-		stdstr = ostrstream.str();
-		cstr = stdstr.c_str();
+		SETSSTOSTR(ostrstream);
 		currentSignature = level[cstr].GetInt();
+		CLEARSTR(ostrstream);
 
-		ostrstream.clear();
-		ostrstream.str("");
-
+		//Setting deserializable string
 		stdstr = "Entity";
 		ostrstream << stdstr << static_cast<int>(entity);
 		SETSSTOSTR(ostrstream);
+		ostrstream.str(level[cstr].GetString());
 
-		istrstream.str(level[cstr].GetString());
-
-		for (int index = 0; index < (int)LASTCOMP; ++index)
-		{
-			if (currentSignature.test(index))
-			{
-				//Does this twice to skip the name line
-				std::getline(istrstream, readstr, '{');
-				std::getline(istrstream, readstr, '}');
-
-				switch (index)
-				{
-					case static_cast<int>(SPRITE) :
-					{
-						gEngine.m_coordinator.LoadComponent<SpriteComponent>(curEnt, readstr);
-						break;
-					}
-					case static_cast<int>(RIGIDBODY) :
-					{
-						gEngine.m_coordinator.LoadComponent<RigidbodyComponent>(curEnt, readstr);
-						break;
-					}
-					case static_cast<int>(TRANSFORM) :
-					{
-						gEngine.m_coordinator.LoadComponent<TransformComponent>(curEnt, readstr);
-						break;
-					}
-					case static_cast<int>(CIRCLECOLLIDER2D) :
-					{
-						gEngine.m_coordinator.LoadComponent<CircleCollider2DComponent>(curEnt, readstr);
-						break;
-					}
-					case static_cast<int>(BOXCOLLIDER2D) :
-					{
-						gEngine.m_coordinator.LoadComponent<BoxCollider2DComponent>(curEnt, readstr);
-						break;
-					}
-					case static_cast<int>(PLAYERCONTROLLER) :
-					{
-						gEngine.m_coordinator.LoadComponent<PlayerControllerComponent>(curEnt, readstr);
-						break;
-					}
-					case static_cast<int>(LOGIC) :
-					{
-						gEngine.m_coordinator.LoadComponent<LogicComponent>(curEnt, readstr);
-						break;
-					}
-					default:
-					{
-						RE_CORE_WARN("OUT OF BOUNDS INDEX TO CLONE");
-						break;
-					}
-				}
-			}
-		}
-
+		FactoryLoadComponent(curEnt, currentSignature, ostrstream.str());
 		m_activeEntities.push_back(curEnt);
 
-		debugStr.clear();
-		debugStr.str("");
 		debugStr << "Entity " << curEnt << "'s Signature: " << gEngine.m_coordinator.GetEntityManager().GetSignature(curEnt).to_ulong();
 		RE_INFO(debugStr.str());
+		CLEARSTR(debugStr);
 	}
 	RE_INFO("LEVEL LOADED");
-	std::stringstream infoStr;
-	infoStr << entCount << " ENTITIES LOADED";
-	RE_INFO(infoStr.str());
+	debugStr << entCount << " ENTITIES LOADED";
+	RE_INFO(debugStr.str());
 
 	//Clone(1);
 	
@@ -232,6 +171,14 @@ void ObjectFactory::SaveLevel(const char* fileName)
 	RE_INFO("LEVEL SAVED");
 }
 
+void ObjectFactory::LoadArchetypes(const char* fileName)
+{
+}
+
+void ObjectFactory::SaveArchetypes(const char* fileName)
+{
+}
+
 void ObjectFactory::Clone(Entity toClone)
 {
 	Signature toCloneSignature = gEngine.m_coordinator.GetEntityManager().GetSignature(toClone);
@@ -289,9 +236,88 @@ void ObjectFactory::Clone(Entity toClone)
 	
 }
 
+void ObjectFactory::Clone(const char* archetype)
+{
+	//If the key exists
+	if (m_archetypes.count(archetype))
+	{
+		std::istringstream istrstream;
+		std::string readstr;
+
+		std::getline(istrstream, readstr, '{');
+		std::getline(istrstream, readstr, '}');
+
+		Entity curEnt = gEngine.m_coordinator.CreateEntity();
+		Signature curSignature = std::stoul(readstr);
+
+		//Does the actual clone
+		std::string toDeserialise = m_archetypes[archetype];
+		FactoryLoadComponent(curEnt, curSignature, toDeserialise);
+	}
+}
+
 std::vector<Entity> ObjectFactory::GetActiveEntity() const
 {
 	return m_activeEntities;
+}
+
+void ObjectFactory::FactoryLoadComponent(Entity curEnt, Signature signature, std::string value)
+{
+	std::istringstream istrstream(value);
+	std::string readstr;
+	for (int index = 0; index < (int)LASTCOMP; ++index)
+	{
+		if (signature.test(index))
+		{
+			//Does this twice to skip the name line
+			std::getline(istrstream, readstr, '{');
+			std::getline(istrstream, readstr, '}');
+
+			switch (index)
+			{
+				case static_cast<int>(SPRITE) :
+				{
+					gEngine.m_coordinator.LoadComponent<SpriteComponent>(curEnt, readstr);
+					break;
+				}
+				case static_cast<int>(RIGIDBODY) :
+				{
+					gEngine.m_coordinator.LoadComponent<RigidbodyComponent>(curEnt, readstr);
+					break;
+				}
+				case static_cast<int>(TRANSFORM) :
+				{
+					gEngine.m_coordinator.LoadComponent<TransformComponent>(curEnt, readstr);
+					break;
+				}
+				case static_cast<int>(CIRCLECOLLIDER2D) :
+				{
+					gEngine.m_coordinator.LoadComponent<CircleCollider2DComponent>(curEnt, readstr);
+					break;
+				}
+				case static_cast<int>(BOXCOLLIDER2D) :
+				{
+					gEngine.m_coordinator.LoadComponent<BoxCollider2DComponent>(curEnt, readstr);
+					break;
+				}
+				case static_cast<int>(PLAYERCONTROLLER) :
+				{
+					gEngine.m_coordinator.LoadComponent<PlayerControllerComponent>(curEnt, readstr);
+					break;
+				}
+				case static_cast<int>(LOGIC) :
+				{
+					gEngine.m_coordinator.LoadComponent<LogicComponent>(curEnt, readstr);
+					break;
+				}
+				default:
+				{
+					RE_CORE_WARN("OUT OF BOUNDS INDEX TO CLONE");
+					break;
+				}
+			}
+		}
+	}
 }
 
 /* test for joel in case he forget/ put in main.cpp
