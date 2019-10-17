@@ -24,6 +24,10 @@ void BaseAI::logicInit()
 
 void BaseAI::logicUpdate()
 {
+	//To set all flags of potential behavior
+	m_logicComponent->ResetActiveStateBit();
+	AIActiveStateUpdate();
+
 	//For all possible states BaseAI has
 	//This for loop handles the order of importance of each state.
 	for (auto it = m_logicComponent->AllAIStates().begin(); it != m_logicComponent->AllAIStates().end(); ++it)
@@ -56,6 +60,11 @@ void BaseAI::logicUpdate()
 			break;
 		}
 	}
+}
+
+void BaseAI::AIActiveStateUpdate()
+{
+	m_logicComponent->SetActiveStateBit((size_t)AIState::AIState_Idle);
 }
 
 std::shared_ptr<LogicComponent> BaseAI::getLogicComponent()
