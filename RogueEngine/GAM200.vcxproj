@@ -123,6 +123,7 @@
     <ClCompile Include="Source\EditorInspector.cpp" />
     <ClCompile Include="Source\EditorProject.cpp" />
     <ClCompile Include="Source\EditorViewport.cpp" />
+    <ClCompile Include="Source\Event.cpp" />
     <ClCompile Include="Source\EventDispatcher.cpp" />
     <ClCompile Include="Source\imgui.cpp" />
     <ClCompile Include="Source\EditorManager.cpp" />

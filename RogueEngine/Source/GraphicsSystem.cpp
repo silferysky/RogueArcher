@@ -83,7 +83,7 @@ void GraphicsSystem::draw(SpriteComponent* sprite, TransformComponent* transform
 
 void GraphicsSystem::receive(Event* ev)
 {
-	switch (ev->GetEventType())
+	/*switch (ev->GetEventType())
 	{
 	case EventType::EvKeyPressed:
 	{
@@ -92,5 +92,5 @@ void GraphicsSystem::receive(Event* ev)
 	}
 	default:
 		return;
-	}
+	}*/
 }

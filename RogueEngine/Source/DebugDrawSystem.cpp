@@ -119,12 +119,12 @@ void DebugDrawSystem::drawVelocity(RigidbodyComponent* rBody, TransformComponent
 
 void DebugDrawSystem::receive(Event* ev)
 {
-	switch (ev->GetEventType())
+	/*switch (ev->GetEventType())
 	{
 	case EventType::EvKeyPressed:
 	{
 	}
 	default:
 		return;
-	}
+	}*/
 }
