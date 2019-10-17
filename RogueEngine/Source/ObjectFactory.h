@@ -20,9 +20,11 @@ private:
 
 	//Helper function
 	void FactoryLoadComponent(Entity curEnt, Signature signature, std::string value);
+	void SetArchetype(std::string archetypeName, std::string archetypeValue, Signature archetypeSignature);
 
 	std::vector<Entity> m_activeEntities;
-	std::map<const char*, std::string> m_archetypes;
+	std::map<std::string, std::string> m_archetypes;
+	std::map<std::string, Signature> m_archetypeSignature;
 
 };
 

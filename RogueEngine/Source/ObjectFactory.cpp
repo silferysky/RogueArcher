@@ -19,7 +19,9 @@ void ObjectFactory::LoadLevel(const char* fileName)
 	rapidjson::Document level = RESerialiser::DeserialiseFromFile(fileName);
 
 	Signature currentSignature;
-	std::ostringstream debugStr;
+	std::ostringstream debugStr, ostrstream;
+	std::string stdstr, readstr;
+	const char* cstr;
 
 	//For Entity Count
 	Entity entCount = level["EntityCount"].GetInt();
@@ -42,18 +44,16 @@ void ObjectFactory::LoadLevel(const char* fileName)
 
 	for (Entity entity = 0; entity < entCount; ++entity)
 	{
-		std::ostringstream ostrstream;
-		std::string stdstr, readstr;
-		const char* cstr;
 		Entity curEnt = gEngine.m_coordinator.CreateEntity();
 
 		//Setting signature
+		CLEARSTR(ostrstream);
 		ostrstream << "Signature" << entity;
 		SETSSTOSTR(ostrstream);
 		currentSignature = level[cstr].GetInt();
-		CLEARSTR(ostrstream);
 
 		//Setting deserializable string
+		CLEARSTR(ostrstream);
 		stdstr = "Entity";
 		ostrstream << stdstr << static_cast<int>(entity);
 		SETSSTOSTR(ostrstream);
@@ -70,12 +70,14 @@ void ObjectFactory::LoadLevel(const char* fileName)
 	debugStr << entCount << " ENTITIES LOADED";
 	RE_INFO(debugStr.str());
 
-	//Clone(1);
-	
 }
 
 void ObjectFactory::SaveLevel(const char* fileName)
 {
+	std::ostringstream strstream;
+	std::string stdstr;
+	const char* cstr;
+
 	//Minus one off due to Background being part of the list as well.
 	//Background is unique and will not be counted to the entCount
 	Entity entCount = static_cast<Entity>(m_activeEntities.size() - 1);
@@ -96,16 +98,13 @@ void ObjectFactory::SaveLevel(const char* fileName)
 
 		//Entity value acts as the value to store (-1 because of background)
 		Entity entityVal = curEntity - 1;
-		std::ostringstream strstream;
-		std::string stdstr;
-		const char* cstr;
 		Signature currentSignature = em->GetSignature(curEntity);
 
 		//cstr will go out of scope if you choose to do strstream.str().c_str()
 		//This is the proper (Non macro) way of setting the string
+		CLEARSTR(strstream);
 		strstream << "Signature" << entityVal;
-		stdstr = strstream.str();
-		cstr = stdstr.c_str();
+		SETSSTOSTR(strstream);
 		intVar = static_cast<int>(currentSignature.to_ulong());
 		RESerialiser::WriteToFile(fileName, cstr, &intVar);
 		CLEARSTR(strstream);
@@ -173,10 +172,70 @@ void ObjectFactory::SaveLevel(const char* fileName)
 
 void ObjectFactory::LoadArchetypes(const char* fileName)
 {
+	std::stringstream strstream;
+	std::string stdstr, readstr;	//stdstr for name, readstr for value
+	const char* cstr;
+	Signature curSignature;
+
+	rapidjson::Document level = RESerialiser::DeserialiseFromFile(fileName);
+	Entity entCount = level["EntityCount"].GetInt();
+
+	for (Entity count = 0; count < entCount; ++count)
+	{
+		//For Signature
+		CLEARSTR(strstream);
+		readstr = "Signature";
+		strstream << readstr << static_cast<int>(count);
+		SETSSTOSTR(strstream);
+		curSignature = level[cstr].GetInt();
+
+		//For value
+		CLEARSTR(strstream);
+		readstr = "Entity";
+		strstream << readstr << static_cast<int>(count);
+		SETSSTOSTR(strstream);
+		strstream.str(level[cstr].GetString());
+		std::getline(strstream, stdstr, '{');
+		std::getline(strstream, stdstr, '}');
+		std::getline(strstream, readstr);
+		//Leftover '|' character will be ignored based on the getlines
+
+		SetArchetype(stdstr, readstr, curSignature);
+	}
+	RE_CORE_INFO("Archetypes loaded");
+	//RE_CORE_INFO(m_archetypes.size());
+	//RE_CORE_INFO(m_archetypeSignature.size());
 }
 
 void ObjectFactory::SaveArchetypes(const char* fileName)
 {
+	std::ostringstream strstream;
+	std::string stdstr;
+	const char* cstr;
+
+	//For EntCount
+	Entity entCount = static_cast<Entity>(m_archetypes.size());
+	int intVar = (int)entCount;
+	RESerialiser::WriteToFile(fileName, "EntityCount", &intVar);
+
+	int position = 0;
+	for (auto it = m_archetypes.begin(); it != m_archetypes.end(); ++it, ++position)
+	{
+		//Writing signature value
+		CLEARSTR(strstream);
+		strstream << "Signature" << position;
+		SETSSTOSTR(strstream);
+		intVar = static_cast<int>(m_archetypeSignature[it->first].to_ulong());
+		RESerialiser::WriteToFile(fileName, cstr, &intVar);
+
+		//Writing Actual Value
+		CLEARSTR(strstream);
+		strstream << "Name{" << it->first << "}" << it->second;
+		SETSSTOSTR(strstream); //Sets cstr
+		CLEARSTR(strstream);
+		strstream << "Entity" << position;
+		RESerialiser::WriteToFile(fileName, strstream.str().c_str(), cstr);
+	}
 }
 
 void ObjectFactory::Clone(Entity toClone)
@@ -318,6 +377,12 @@ void ObjectFactory::FactoryLoadComponent(Entity curEnt, Signature signature, std
 			}
 		}
 	}
+}
+
+void ObjectFactory::SetArchetype(std::string archetypeName, std::string archetypeValue, Signature archetypeSignature)
+{
+	m_archetypes.insert({ archetypeName, archetypeValue });
+	m_archetypeSignature.insert({ archetypeName, archetypeSignature });
 }
 
 /* test for joel in case he forget/ put in main.cpp
