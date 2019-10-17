@@ -10,13 +10,18 @@ namespace Rogue
 	}
 	void ImGuiConsole::Init()
 	{
+		
+	}
+
+	void ImGuiConsole::Update()
+	{
 		ImGui::Begin("Console");
 		if (ImGui::Button("Clear"))
 		{
 
 		}
 		ImGui::SameLine();
-		if(ImGui::Button("Collapse"))
+		if (ImGui::Button("Collapse"))
 		{
 
 		}
@@ -38,11 +43,8 @@ namespace Rogue
 			}
 			ImGui::EndMenu();
 		}
+		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 		ImGui::End();
-	}
-
-	void ImGuiConsole::Update()
-	{
 	}
 
 	void ImGuiConsole::Shutdown()

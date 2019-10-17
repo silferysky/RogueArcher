@@ -26,12 +26,11 @@
 #endif
 #include "REMath.h"
 #include "REEditor.h"
+#include "Editor.h"
 
 REEngine gEngine;
 float gDeltaTime;
 float gFixedDeltaTime;
-
-ObjectFactory gObjectFactory;
 bool EditorMode = false;
 
 //const char* FileName = "/Resources/test.json";
@@ -74,10 +73,12 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	ShowWindow(hWnd, nCmdShow);
 	if (EditorMode)
 	{
-		EditorManager Editor;
-		Editor.StartWindow();
-		Editor.UpdateWindow();
-		Editor.CloseWindow();
+		Rogue::Editor Editor;
+		Editor.Init();
+		Editor.Update();
+		Editor.Shutdown();
+
+		return (int)msg.wParam;
 	}
 
 	AllocConsole();
@@ -104,7 +105,7 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 
 	//BasicIO::WriteJsonFile("Resources/Level 1.json", 8);
 
-	gObjectFactory.LoadLevel("Resources/Level 1.json");
+	//gObjectFactory.LoadLevel("Resources/Level 1.json");
 	//gObjectFactory.LoadArchetypes("Resources/Archetypes.json");
 	//gObjectFactory.SaveArchetypes("Resources/Archetypes.json");
 

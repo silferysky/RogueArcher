@@ -16,6 +16,7 @@ public:
 	{
 		ShaderMap.emplace("Object Shader", Shader("vertexShader.txt", "fragmentShader.txt"));
 		ShaderMap.emplace("Debug Shader", Shader("vertexLineShader.txt", "fragmentLineShader.txt"));
+		ShaderMap.emplace("Font Shader", Shader("vertexFontShader.txt", "fragmentFontShader.txt"));
 	}
 
 	std::map<std::string, Shader> getShaderMap() const

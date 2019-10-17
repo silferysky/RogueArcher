@@ -67,6 +67,10 @@ public:
 		return GetComponentArray<T>()->GetData(entity);
 	}
 
+	BaseComponent& GetComponent(Entity entity, COMPONENTID id)
+	{
+	}
+
 	void EntityDestroyed(Entity entity)
 	{
 		// Notify each component array that an entity has been destroyed

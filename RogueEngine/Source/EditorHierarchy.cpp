@@ -12,6 +12,11 @@ namespace Rogue
 
 	void ImGuiEditorHierarchy::Init()
 	{
+		
+	}
+
+	void ImGuiEditorHierarchy::Update()
+	{
 		ImGui::Begin("Hierarchy");
 		if (ImGui::Button("Create"))
 		{
@@ -23,10 +28,6 @@ namespace Rogue
 		static char bufferX[64] = "";
 		ImGui::InputText("", bufferX, 64);
 		ImGui::End();
-	}
-
-	void ImGuiEditorHierarchy::Update()
-	{
 	}
 
 	void ImGuiEditorHierarchy::Shutdown()
