@@ -505,5 +505,8 @@
     <ClCompile Include="Source\BaseAI.cpp">
       <Filter>RogueEngine\Systems\AI\AI Types</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Event.cpp">
+      <Filter>RogueEngine\Systems\Events\Events</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

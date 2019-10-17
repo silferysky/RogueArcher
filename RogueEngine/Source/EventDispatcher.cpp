@@ -100,9 +100,11 @@ void EventDispatcher::DispatchEvent(Event* toHandle)
 	//Basically: Send a message to the relevant system to activate relavent function
 
 	auto sysIt = ListenerMap.begin();
+
 	while (sysIt != ListenerMap.end())
 	{
-		sysIt->second(toHandle);
+		if (toHandle->GetSystemReceivers().test((size_t)sysIt->first))
+			sysIt->second(toHandle);
 		++sysIt;
 	}
 }

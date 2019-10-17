@@ -254,17 +254,23 @@ void InputManager::ResetKeyBind()
 void InputManager::CreateKeyPressEvent(KeyPress key, int repeat)
 {
 	KeyPressEvent* event = new KeyPressEvent(key, repeat);
+	event->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
+	event->SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
 	EventDispatcher::instance().AddEvent(event);
 }
 
 void InputManager::CreateKeyReleaseEvent(KeyPress key)
 {
 	KeyReleaseEvent* event = new KeyReleaseEvent(key);
+	event->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
+	event->SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
 	EventDispatcher::instance().AddEvent(event);
 }
 
 void InputManager::CreateKeyTriggeredEvent(KeyPress key)
 {
 	KeyTriggeredEvent* event = new KeyTriggeredEvent(key);
+	event->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
+	event->SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
 	EventDispatcher::instance().AddEvent(event);
 }

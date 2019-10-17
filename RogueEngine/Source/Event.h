@@ -78,7 +78,6 @@ public:
 	//Functions to override
 	virtual int GetEventCat() const { return (int)eventCat; };
 	virtual EventType GetEventType() const { return eventType; };
-	//virtual EventMessageType GetEventMsgType() const { return eventMsgType; };
 	virtual const char* GetEventName() const { return "None"; };
 	virtual bool Handled() const { return isHandled; };
 	virtual std::string ToString() const { return GetEventName(); };
@@ -91,11 +90,26 @@ public:
 		return (cat & eventCat);
 	};
 
+	//For denoting system receivers
+	void SetSystemReceivers(std::bitset<(int)SystemID::id_LASTSYS> bitset);
+	void SetSystemReceivers(int bit, bool state = true);
+	void SetSystemReceivers();
+	std::bitset<(int)SystemID::id_LASTSYS> GetSystemReceivers() const;
+
+	/*template<typename... ints>
+	void SetSystemReceivers(int first, ints... args)
+	{
+		SetSystemReceivers(first);
+		if constexpr(sizeof...(args)) > 0)
+			SetSystemReceivers(args);
+	}*/
+
+
 protected:
 	EventCategory	eventCat;				//Event Category as based on the EventCategory enum
 	EventType		eventType;				//Specific event type
 	bool			isHandled = false;		//If event is handled or not
-	std::bitset<(int)SystemID::id_LASTSYS>	SystemsToReceive;		//Denotes which system receives this eevnt
+	std::bitset<(int)SystemID::id_LASTSYS>	m_systemsToReceive;		//Denotes which system receives this eevnt
 };
 
 //For Debugging/Logging
