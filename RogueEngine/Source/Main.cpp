@@ -105,7 +105,8 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	//BasicIO::WriteJsonFile("Resources/Level 1.json", 8);
 
 	gObjectFactory.LoadLevel("Resources/Level 1.json");
-
+	gObjectFactory.LoadArchetypes("Resources/Archetypes.json");
+	gObjectFactory.SaveArchetypes("Resources/Archetypes.json");
 
 	//gObjectFactory.SaveLevel("Resources/Level 1.json");
 
