@@ -17,6 +17,7 @@ public:
 	AIType	LogicType() const;
 	void	LogicType(AIType newType);
 	void	SetActiveStateBit(size_t pos);
+	void	ResetActiveStateBit();
 	bool	GetActiveStateBit(size_t pos) const;
 	void	AddAIState(AIState newState);
 	void	AddAIStateInactive(AIState newState);

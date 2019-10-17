@@ -9,6 +9,9 @@ public:
 	virtual void logicUpdate() = 0;
 	virtual ~ILogic() = default;
 
+	//AI behavior checker to update
+	virtual void AIActiveStateUpdate() {}
+
 	//All of the AI types to update
 	virtual void AIChaseUpdate() {}
 	virtual void AIPatrolUpdate() {}

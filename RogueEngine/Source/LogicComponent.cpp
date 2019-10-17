@@ -35,6 +35,11 @@ void LogicComponent::SetActiveStateBit(size_t pos)
 	m_activeStates.set(pos);
 }
 
+void LogicComponent::ResetActiveStateBit()
+{
+	m_activeStates.reset();
+}
+
 bool LogicComponent::GetActiveStateBit(size_t pos) const
 {
 	return m_activeStates.test(pos);
