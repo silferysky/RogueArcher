@@ -59,7 +59,7 @@ void BasicIO::WriteArchetypeJsonFile(std::string FileName, size_t numOfEnt)
 	std::ostringstream strstream;
 
 	strstream << InitializeHeader(numOfEnt);
-	strstream << InitializeComponentStr(numOfEnt);
+	strstream << InitializeComponentStr(numOfEnt, false);
 	strstream << "\n}";
 
 	WriteFile(FileName, strstream.str().c_str());

@@ -1,0 +1,9 @@
+{
+    "EntityCount": 3,
+    "Signature0": 0,
+    "Signature1": 0,
+    "Signature2": 0,
+    "Entity0": "Name{Entity0}|Sprite{test.bmp}|Rigidbody{0;0;0;0;1;1;0}|Transform{0;0;1;1;0}|CircleCollider{0}|BoxCollider{4}|PlayerController{}|LogicController{1;3;3}",,
+    "Entity1": "Name{Entity1}|Sprite{test.bmp}|Rigidbody{0;0;0;0;1;1;0}|Transform{0;0;1;1;0}|CircleCollider{0}|BoxCollider{4}|PlayerController{}|LogicController{1;3;3}",,
+    "Entity2": "Name{Entity2}|Sprite{test.bmp}|Rigidbody{0;0;0;0;1;1;0}|Transform{0;0;1;1;0}|CircleCollider{0}|BoxCollider{4}|PlayerController{}|LogicController{1;3;3}"
+}
