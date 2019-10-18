@@ -60,7 +60,7 @@ void BasicIO::WriteLevelJsonFile(std::string FileName, size_t numOfEnt)
 	}
 
 	//For components
-	for (size_t i = 0; i < numOfEnt; ++i)
+	for (size_t i = 0; i < numOfEnt;)
 	{
 		//Header
 		strstream << ",\n    \"Entity" << i << "\": \"";
@@ -92,7 +92,9 @@ void BasicIO::WriteLevelJsonFile(std::string FileName, size_t numOfEnt)
 		strstream << "LogicController{1;3;3}";
 
 		//End
-		strstream << "\",";
+		strstream << "\"";
+		if (++i < numOfEnt)
+			strstream << ",";
 	}
 	strstream << "\n}";
 

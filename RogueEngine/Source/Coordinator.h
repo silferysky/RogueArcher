@@ -41,7 +41,7 @@ public:
 
 		// Load first scene
 		m_objectFactory->LoadLevel("Resources/Level 1.json");
-		m_objectFactory->SaveLevel("Resources/Level 1.json");
+		//m_objectFactory->SaveLevel("Resources/Level 1.json");
 	}
 
 	void Update()
