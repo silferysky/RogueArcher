@@ -47,24 +47,62 @@ void BasicIO::WriteLevelJsonFile(std::string FileName, size_t numOfEnt)
 {
 	std::ostringstream strstream;
 
+	strstream << InitializeHeader(numOfEnt, true);
+	strstream << InitializeComponentStr(numOfEnt);
+	strstream << "\n}";
+
+	WriteFile(FileName, strstream.str().c_str());
+}
+
+void BasicIO::WriteArchetypeJsonFile(std::string FileName, size_t numOfEnt)
+{
+	std::ostringstream strstream;
+
+	strstream << InitializeHeader(numOfEnt);
+	strstream << InitializeComponentStr(numOfEnt);
+	strstream << "\n}";
+
+	WriteFile(FileName, strstream.str().c_str());
+}
+
+std::string BasicIO::InitializeHeader(size_t numOfEnt, bool includeBackground)
+{
+	std::ostringstream strstream;
+
 	//For EntCount
 	strstream << "{\n    \"EntityCount\": " << numOfEnt;
 
 	//For Background Texture
-	strstream << ",\n    \"BackgroundTexture\": \"test.bmp\"";
+	if (includeBackground)
+		strstream << ",\n    \"BackgroundTexture\": \"test.bmp\"";
+
+	//For Signature
+	strstream << InitializeSignatureJsonFile(numOfEnt);
+
+	return strstream.str();
+}
+
+std::string BasicIO::InitializeSignatureJsonFile(size_t numOfEnt)
+{
+	std::ostringstream strstream;
 
 	//For Signature
 	for (size_t i = 0; i < numOfEnt; ++i)
 	{
 		strstream << ",\n    \"Signature" << i << "\": 0";
 	}
+	return strstream.str();
+}
 
-	//For components
+std::string BasicIO::InitializeComponentStr(size_t numOfEnt)
+{
+	std::ostringstream strstream;
+
 	for (size_t i = 0; i < numOfEnt;)
 	{
 		//Header
 		strstream << ",\n    \"Entity" << i << "\": \"";
-		
+
 		//Sprite
 		strstream << "Sprite{test.bmp}|";
 
@@ -93,10 +131,9 @@ void BasicIO::WriteLevelJsonFile(std::string FileName, size_t numOfEnt)
 
 		//End
 		strstream << "\"";
+
 		if (++i < numOfEnt)
 			strstream << ",";
 	}
-	strstream << "\n}";
-
-	WriteFile(FileName, strstream.str().c_str());
+	return strstream.str();
 }
