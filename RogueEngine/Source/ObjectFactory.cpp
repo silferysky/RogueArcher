@@ -300,18 +300,13 @@ void ObjectFactory::Clone(const char* archetype)
 	//If the key exists
 	if (m_archetypes.count(archetype))
 	{
-		std::istringstream istrstream;
-		std::string readstr;
-
-		std::getline(istrstream, readstr, '{');
-		std::getline(istrstream, readstr, '}');
-
 		Entity curEnt = gEngine.m_coordinator.CreateEntity();
-		Signature curSignature = std::stoul(readstr);
+		Signature curSignature = m_archetypeSignature[archetype];
 
 		//Does the actual clone
 		std::string toDeserialise = m_archetypes[archetype];
 		FactoryLoadComponent(curEnt, curSignature, toDeserialise);
+		m_activeEntities.push_back(curEnt);
 	}
 }
 
