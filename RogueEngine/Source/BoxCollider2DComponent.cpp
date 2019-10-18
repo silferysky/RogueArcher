@@ -17,12 +17,12 @@ std::string BoxCollider2DComponent::Serialize()
 {
 	//Size, modelVertexList
 	std::ostringstream ss;
-	ss << m_obb.getSize() << ";";
+	ss << m_obb.getSize();
 
-	for (size_t i = 0; i < m_obb.getSize(); ++i)
-	{
-		ss << m_obb.modelVerts()[i].x << ";" << m_obb.modelVerts()[i].y << ";";
-	}
+	//for (size_t i = 0; i < m_obb.getSize(); ++i)
+	//{
+	//	ss << m_obb.modelVerts()[i].x << ";" << m_obb.modelVerts()[i].y << ";";
+	//}
 
 	return ss.str();
 }

@@ -101,9 +101,9 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	std::cout << glGetString(GL_VERSION) << std::endl;
 
 	RE_INFO("TEST FILEWRITER");
-	BasicIO::WriteJsonFile("Resources/TestJsonFileCreator.json", 1);
+	BasicIO::WriteLevelJsonFile("Resources/TestJsonFileCreator.json", 1);
 
-	//BasicIO::WriteJsonFile("Resources/Level 1.json", 8);
+	//BasicIO::WriteLevelJsonFile("Resources/Level 1.json", 8);
 
 	//gObjectFactory.LoadLevel("Resources/Level 1.json");
 	//gObjectFactory.LoadArchetypes("Resources/Archetypes.json");
