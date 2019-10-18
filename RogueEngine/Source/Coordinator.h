@@ -41,6 +41,8 @@ public:
 
 		// Load first scene
 		m_objectFactory->LoadLevel("Resources/Level 1.json");
+		m_objectFactory->LoadArchetypes("Resources/Archetypes.json");
+		//m_objectFactory->Clone("Stuff");
 		//m_objectFactory->SaveLevel("Resources/Level 1.json");
 	}
 

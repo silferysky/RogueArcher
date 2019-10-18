@@ -102,7 +102,7 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 
 	RE_INFO("TEST FILEWRITER");
 	//BasicIO::WriteLevelJsonFile("Resources/TestJsonFileCreator.json", 1);
-	BasicIO::WriteArchetypeJsonFile("Resources/TestArchetypeJsonFile.json", 3);
+	//BasicIO::WriteArchetypeJsonFile("Resources/TestArchetypeJsonFile.json", 3);
 	//BasicIO::WriteLevelJsonFile("Resources/Level 1.json", 8);
 
 	//gObjectFactory.LoadLevel("Resources/Level 1.json");
