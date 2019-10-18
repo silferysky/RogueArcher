@@ -74,8 +74,8 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	if (EditorMode)
 	{
 		Rogue::Editor Editor;
-		Editor.Init();
-		Editor.Update();
+		Editor.init();
+		Editor.update();
 		Editor.Shutdown();
 
 		return (int)msg.wParam;

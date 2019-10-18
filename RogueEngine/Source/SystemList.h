@@ -12,5 +12,6 @@ enum class SystemID
 	id_PHYSICSSYSTEM,
 	id_LOGICSYSTEM,
 	id_TESTSYSTEM,
+	id_EDITOR,
 	id_LASTSYS
 };

@@ -11,6 +11,7 @@
 #include "TextureManager.h"
 #include "Coordinator.h"
 #include "Types.h"
+#include "Timer.h"
 
 class Coordinator
 {
