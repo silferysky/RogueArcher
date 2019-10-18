@@ -94,7 +94,7 @@ std::string BasicIO::InitializeSignatureJsonFile(size_t numOfEnt)
 	return strstream.str();
 }
 
-std::string BasicIO::InitializeComponentStr(size_t numOfEnt)
+std::string BasicIO::InitializeComponentStr(size_t numOfEnt, bool writingLevel)
 {
 	std::ostringstream strstream;
 
@@ -102,6 +102,11 @@ std::string BasicIO::InitializeComponentStr(size_t numOfEnt)
 	{
 		//Header
 		strstream << ",\n    \"Entity" << i << "\": \"";
+
+		if (!writingLevel)
+		{
+			strstream << "Name{Entity" << i << "}|";
+		}
 
 		//Sprite
 		strstream << "Sprite{test.bmp}|";
