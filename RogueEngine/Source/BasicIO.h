@@ -16,6 +16,6 @@ public:
 private:
 	static std::string InitializeHeader(size_t numOfEnt, bool includeBackground = false);
 	static std::string InitializeSignatureJsonFile(size_t numOfEnt);
-	static std::string InitializeComponentStr(size_t numOfEnt = 1);
+	static std::string InitializeComponentStr(size_t numOfEnt = 1, bool writingLevel = true);
 
 };
