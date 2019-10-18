@@ -5,7 +5,8 @@
 #include "imgui_impl_glfw.h"
 #include "glew.h"
 #include "glfw3.h"
-
+#include "REEngine.h"
+#include "Timer.h"
 namespace Rogue
 
 {
@@ -17,5 +18,6 @@ namespace Rogue
 		virtual void Init() override;
 		virtual void Update() override;
 		virtual void Shutdown() override;
+		REEngine engine;
 	};
 }

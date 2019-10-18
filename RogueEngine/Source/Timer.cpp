@@ -29,3 +29,8 @@ void Timer::TimerEnd(const char* System)
 
 
 }
+
+std::map<const char*, float> Timer::GetTimeSystem() const
+{
+	return time;
+}

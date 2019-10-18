@@ -1,10 +1,11 @@
 #include "Editor.h"
-
+#include "EventDispatcher.h"
+#include "EventListener.h"
 namespace Rogue
 {
-	void Editor::Init()
+	void Editor::init()
 	{
-
+		REGISTER_LISTENER(SystemID::id_EDITOR, Editor::receive);
 		m_EditorManager->AddEditorWindow<ImGuiEditorFile>("File");
 		m_EditorManager->AddEditorWindow<ImGuiEditorEdit>("Edit");
 		m_EditorManager->AddEditorWindow<ImGuiComponent>("Component");
@@ -18,9 +19,14 @@ namespace Rogue
 		m_EditorManager->Init();
 	}
 
-	void Editor::Update()
+	void Editor::update()
 	{
 		m_EditorManager->Update();
+	}
+
+	void Editor::receive(Event* ev)
+	{
+
 	}
 
 	void Editor::Shutdown()
