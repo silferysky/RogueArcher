@@ -10,7 +10,7 @@ public:
 	static void WriteFile(std::string FileName, std::string strToWrite);
 
 	//For Json files
-	static void WriteJsonFile(std::string FileName, size_t size);
+	static void WriteLevelJsonFile(std::string FileName, size_t size);
 
 private:
 
