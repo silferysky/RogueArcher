@@ -27,6 +27,32 @@ public:
 		RE_CORE_INFO(loggerStr.str());
 	}
 
+	template<typename T>
+	T* GetSystem()
+	{
+		const char * SystemName = typeid(T).name();
+		//for (auto i = RESystems.begin();i != RESystems.end();++i)
+		//{
+		//	if (SystemName == i->first())
+		//	{
+		//		return nullptr;
+		//	}
+		//}
+		//for (auto i : RESystems)
+		//{
+		//	if (SystemName == i.first)
+		//	{
+		//		return (i.second);
+		//	}
+		//}
+		auto i = RESystems.find(SystemName);
+		if (i != RESystems.end())
+		{
+			return nullptr;
+			//return dynamic_cast<T&>(i->second);
+		}
+	}
+
 	void InitSystems()
 	{
 		for (auto system : RESystems)
