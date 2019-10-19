@@ -21,14 +21,6 @@ void Timer::TimerEnd(const char* System)
 	{
 		it->second = totaltime;
 	}
-//	for (auto it1 = time.begin(); it1 != time.end(); ++it1)
-//	{
-//		if (gEngine.m_coordinator.performanceChecker())
-//			std::cout << it1->first << " " << it1->second << "%" << std::endl;
-//	}
-	PhysicsSystem* i = gEngine.m_coordinator.GetSystem<PhysicsSystem>();
-	i->getGravity();
-	
 }
 
 std::map<const char*, float> Timer::GetTimeSystem() const

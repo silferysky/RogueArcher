@@ -169,7 +169,7 @@ public:
 	}
 	
 	template<typename T>
-	T* GetSystem()
+	std::shared_ptr<T> GetSystem()
 	{
 		return m_systemManager->GetSystem<T>();
 	}

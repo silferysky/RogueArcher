@@ -2,7 +2,8 @@
 #include <set>
 #include <cassert>
 #include <unordered_map>
-
+#include <typeindex>
+#include <memory>
 #include "EntityManager.h"
 #include "ComponentArray.h"
 #include "Logger.h"
@@ -12,44 +13,32 @@
 
 class SystemManager
 {
+	template <typename T>
+	static constexpr std::type_index GetTypeIndex(const T&) { return std::type_index(typeid(T)); }
+	
+	template <typename T>
+	static constexpr std::type_index GetTypeIndex() { return std::type_index(typeid(T)); }
+
 public:
 	template<typename T>
 	void RegisterSystem()
 	{
-		const char* typeName = typeid(T).name();
+		std::type_index typeName = GetTypeIndex<T>();
 		RE_ASSERT(RESystems.find(typeName) == RESystems.end(), "Registering system more than once.");
 
 		// Insert the newly created system pointer and typename into the map.
 		RESystems.insert({ typeName, std::make_shared<T>() });
-
-		std::stringstream loggerStr;
-		loggerStr << typeName << " registered!";
-		RE_CORE_INFO(loggerStr.str());
 	}
 
 	template<typename T>
-	T* GetSystem()
+	std::shared_ptr<T> GetSystem()
 	{
-		const char * SystemName = typeid(T).name();
-		//for (auto i = RESystems.begin();i != RESystems.end();++i)
-		//{
-		//	if (SystemName == i->first())
-		//	{
-		//		return nullptr;
-		//	}
-		//}
-		//for (auto i : RESystems)
-		//{
-		//	if (SystemName == i.first)
-		//	{
-		//		return (i.second);
-		//	}
-		//}
+		std::type_index SystemName = GetTypeIndex<T>();
+		
 		auto i = RESystems.find(SystemName);
 		if (i != RESystems.end())
 		{
-			return nullptr;
-			//return dynamic_cast<T&>(i->second);
+			return std::dynamic_pointer_cast<T>(i->second);
 		}
 	}
 
@@ -72,7 +61,7 @@ public:
 	template<typename T>
 	void SetSignature(Signature signature)
 	{
-		const char* typeName = typeid(T).name();
+		std::type_index typeName = GetTypeIndex<T>();
 
 		// Set the signature for this system
 		RESignatures.insert({ typeName, signature });
@@ -113,13 +102,13 @@ public:
 				if (system->m_entities.insert(entity).second)
 				{
 					CLEARSTRING(out);
-					out << "Entity added to " << type << ".";
+					out << "Entity added to " << type.name() << ".";
 					RE_CORE_INFO(out.str());
 				}
 				else
 				{
 					CLEARSTRING(out);
-					out << "Entity already exists in " << type << ".";
+					out << "Entity already exists in " << type.name()<< ".";
 					RE_CORE_INFO(out.str());
 				}
 			}
@@ -127,7 +116,7 @@ public:
 			else
 			{
 				CLEARSTRING(out);
-				out << "Signature " << entity << " does not match " << type << ".";
+				out << "Signature " << entity << " does not match " << type.name() << ".";
 				RE_CORE_INFO(out.str());
 
 				if (system->m_entities.find(entity) != system->m_entities.end()) // If entity exists
@@ -144,6 +133,6 @@ public:
 	}
 
 private:
-	std::unordered_map<const char*, Signature> RESignatures{};
-	std::unordered_map<const char*, std::shared_ptr<System>> RESystems{};
+	std::unordered_map<std::type_index, Signature> RESignatures{};
+	std::unordered_map<std::type_index, std::shared_ptr<System>> RESystems{};
 };
