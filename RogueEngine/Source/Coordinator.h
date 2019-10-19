@@ -167,6 +167,12 @@ public:
 	{
 		return m_systemManager->RegisterSystem<T>();
 	}
+	
+	template<typename T>
+	T* GetSystem()
+	{
+		return m_systemManager->GetSystem<T>();
+	}
 
 	template<typename T>
 	void SetSystemSignature(Signature signature)
