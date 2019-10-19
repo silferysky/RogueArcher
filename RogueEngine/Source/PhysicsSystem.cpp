@@ -74,8 +74,9 @@ void PhysicsSystem::update()
 
 			// Skip any static rigidbodies.
 			if (rigidbody.getIsStatic())
+			{
 				continue;
-
+			}
 			//		std::cout << "Entity " << *iEntity << std::endl;
 			auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
 			auto& currBoxCollider = gEngine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iEntity);
@@ -141,7 +142,7 @@ void PhysicsSystem::receive(Event* ev)
 				if (entity == 1) // Entity A
 				{
 					auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
-					rigidbody.addForce(Vec2(-5.0f, 0.0f));
+					rigidbody.addForce(Vec2(-1.0f, 0.0f));
 					RE_INFO("Move A Left!");
 				}
 			}
@@ -153,7 +154,7 @@ void PhysicsSystem::receive(Event* ev)
 				if (entity == 1) // Entity A
 				{
 					auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
-					rigidbody.addForce(Vec2(5.0f, 0.0f));
+					rigidbody.addForce(Vec2(1.0f, 0.0f));
 					RE_INFO("Move A Right!");
 				}
 			}
@@ -165,7 +166,7 @@ void PhysicsSystem::receive(Event* ev)
 				if (entity == 1) // Entity A
 				{
 					auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
-					rigidbody.addForce(Vec2(0.0f, 5.0f));
+					rigidbody.addForce(Vec2(0.0f, 1.0f));
 					RE_INFO("Move A Up!");
 				}
 			}
@@ -177,7 +178,7 @@ void PhysicsSystem::receive(Event* ev)
 				if (entity == 1) // Entity A
 				{
 					auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
-					rigidbody.addForce(Vec2(0.0f, -5.0f));
+					rigidbody.addForce(Vec2(0.0f, -1.0f));
 					RE_INFO("Move A Down!");
 				}
 			}
@@ -189,7 +190,7 @@ void PhysicsSystem::receive(Event* ev)
 				if (entity == 2) // Entity B
 				{
 					auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
-					rigidbody.addForce(Vec2(-5.0f, 0.0f));
+					rigidbody.addForce(Vec2(-1.0f, 0.0f));
 					RE_INFO("Move B Left!");
 				}
 			}
@@ -201,7 +202,7 @@ void PhysicsSystem::receive(Event* ev)
 				if (entity == 2) // Entity B
 				{
 					auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
-					rigidbody.addForce(Vec2(5.0f, 0.0f));
+					rigidbody.addForce(Vec2(1.0f, 0.0f));
 					RE_INFO("Move B Right!");
 				}
 			}
@@ -213,7 +214,7 @@ void PhysicsSystem::receive(Event* ev)
 				if (entity == 2) // Entity B
 				{
 					auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
-					rigidbody.addForce(Vec2(0.0f, 5.0f));
+					rigidbody.addForce(Vec2(0.0f, 1.0f));
 					RE_INFO("Move B Up!");
 				}
 			}
@@ -225,7 +226,7 @@ void PhysicsSystem::receive(Event* ev)
 				if (entity == 2) // Entity B
 				{
 					auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
-					rigidbody.addForce(Vec2(0.0f, -5.0f));
+					rigidbody.addForce(Vec2(0.0f, -1.0f));
 					RE_INFO("Move B Down!");
 				}
 			}
@@ -233,32 +234,32 @@ void PhysicsSystem::receive(Event* ev)
 		else if (EvPressKey->GetKeyCode() == KeyPress::KeyE)
 		{
 			auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>((Entity)(m_entities.size() - 1));
-			transform.offSetScale(Vec2(3.0f, 3.0f) * gFixedDeltaTime);
+			transform.offSetScale(Vec2(1.0f, 1.0f) * gFixedDeltaTime);
 			RE_INFO("Scaled Up!");
 		}
 
 		else if (EvPressKey->GetKeyCode() == KeyPress::KeyQ)
 		{
 			auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>((Entity)(m_entities.size() - 1));
-			transform.offSetScale(Vec2(-3.0f, -3.0f) * gFixedDeltaTime);
+			transform.offSetScale(Vec2(-1.0f, -1.0f) * gFixedDeltaTime);
 			RE_INFO("Scaled Down!");
 		}
 
 		else if (EvPressKey->GetKeyCode() == KeyPress::KeyR)
 		{
 			auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>((Entity)(m_entities.size() - 1));
-			transform.offSetRotation(3.0f * gFixedDeltaTime);
+			transform.offSetRotation(1.0f * gFixedDeltaTime);
 			RE_INFO("Rotated!");
 		}
 		else if (EvPressKey->GetKeyCode() == KeyPress::KeyK)
 		{
 			auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>((Entity)(m_entities.size() - 1));
-			transform.setPosition(Vec2(0.0f, 0.0f));
+			transform.setPosition(Vec2(-2.0f, 0.0f));
 		}
 		else if (EvPressKey->GetKeyCode() == KeyPress::KeyL)
 		{
 			auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>((Entity)2);
-			transform.setPosition(Vec2(0.0f, 0.0f));
+			transform.setPosition(Vec2(2.0f, 0.0f));
 		}
 
 		return;
