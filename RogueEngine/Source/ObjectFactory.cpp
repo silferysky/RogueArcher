@@ -37,7 +37,6 @@ void ObjectFactory::LoadLevel(const char* fileName)
 	backgroundTransform.setScale(Vec2(18.0f, 12.0f));
 	backgroundTransform.setRotation(0.0f);
 
-	gEngine.m_coordinator.AddComponent(backgroundEnt, BoxCollider2DComponent());
 	gEngine.m_coordinator.AddComponent(backgroundEnt, backgroundSprite);
 	gEngine.m_coordinator.AddComponent(backgroundEnt, backgroundTransform);
 	m_activeEntities.push_back(backgroundEnt);

@@ -72,21 +72,28 @@ void PhysicsSystem::update()
 		{
 			auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
 
-			// Skip any static rigidbodies.
-			if (rigidbody.getIsStatic())
-			{
-				continue;
-			}
+			//// Skip any static rigidbodies.
+			//if (rigidbody.getIsStatic())
+			//{
+			//	continue;
+			//}
 			//		std::cout << "Entity " << *iEntity << std::endl;
 			auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
 			auto& currBoxCollider = gEngine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iEntity);
 			//	auto& circleCollider = gEngine.m_coordinator.GetComponent<CircleCollider2DComponent>(*iEntity);
 
 			// Apply accForce (Forces are added if necessary)	
-			applyForces(rigidbody);
 
-			// Update positions
-			integrateAcceleration(rigidbody, transform);
+			if (!rigidbody.getIsStatic())
+			{
+				applyForces(rigidbody);
+
+				// Reset accForce
+				rigidbody.setAccForce(Vec2());
+
+				// Update positions
+				integrateAcceleration(rigidbody, transform);
+			}
 
 			// Update collidables
 			m_colliderManager.updateAABB(currBoxCollider.AABB(), transform);
@@ -100,25 +107,33 @@ void PhysicsSystem::update()
 			for (iNextEntity++; iNextEntity != m_entities.end(); ++iNextEntity)
 			{
 				auto& nextBoxCollider = gEngine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iNextEntity);
+				auto& currRigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
+				auto& nextRigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(*iNextEntity);
+				auto& currTransform = gEngine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
+
 				if (m_colliderManager.staticAABBvsAABB(currBoxCollider.AABB(), nextBoxCollider.AABB()))
 				{
-					if (checkAABB)
+				//	if (checkAABB)
 						std::cout << "Entity " << *iEntity << " AABB collides with Entity " << *iNextEntity << " AABB" << std::endl;
-					checkAABB = false;
+
+					if (nextRigidbody.getIsStatic())
+					{
+						currTransform.offSetPosition(Vec2(currRigidbody.getVelocity().x * gFixedDeltaTime, -currRigidbody.getVelocity().y) * gFixedDeltaTime);
+						currRigidbody.addForce(Vec2(0.0f, 5.0f));
+					}
+
+				//	checkAABB = false;
 				}
 				if (m_colliderManager.staticOBBvsOBB(currBoxCollider.OBB(), nextBoxCollider.OBB()))
 				{
-					if (checkOBB)
-						std::cout << "Entity " << *iEntity << " OBB collides with Entity " << *iNextEntity << "OBB" << std::endl;
-					checkOBB = false;
+				//	if (checkOBB)
+						std::cout << "Entity " << *iEntity << " OBB collides with Entity " << *iNextEntity << " OBB" << std::endl;
+				//	checkOBB = false;
 				}
 			}
 
 			// Collision Response (Contact, forces, etc)
 			// Rest, Impulse, Torque
-
-			// Reset accForce
-			rigidbody.setAccForce(Vec2());
 
 			//	std::cout << "Entity " << iEntity << "'s pos: " << transform.getPosition() << std::endl;
 		}
