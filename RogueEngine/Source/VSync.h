@@ -1,3 +1,6 @@
 #pragma once
 
-void setVSync(bool sync);
+namespace Rogue
+{
+	void setVSync(bool sync);
+}

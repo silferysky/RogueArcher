@@ -1,34 +1,37 @@
 #pragma once
 #include "REEngine.h"
 
-class ObjectFactory
+
+namespace Rogue
 {
+	class ObjectFactory
+	{
 
-public:
-	void LoadLevel(const char* fileName);
-	void SaveLevel(const char* fileName);
+	public:
+		void LoadLevel(const char* fileName);
+		void SaveLevel(const char* fileName);
 
-	void LoadArchetypes(const char* fileName);
-	void SaveArchetypes(const char* fileName);
+		void LoadArchetypes(const char* fileName);
+		void SaveArchetypes(const char* fileName);
 
-	void Clone(Entity toClone);
-	void Clone(const char* archetype);
+		void Clone(Entity toClone);
+		void Clone(const char* archetype);
 
-	std::vector<Entity> GetActiveEntity() const;
+		std::vector<Entity> GetActiveEntity() const;
 
-private:
+	private:
 
-	//Helper function
-	void FactoryLoadComponent(Entity curEnt, Signature signature, std::string value);
-	void SetArchetype(std::string archetypeName, std::string archetypeValue, Signature archetypeSignature);
+		//Helper function
+		void FactoryLoadComponent(Entity curEnt, Signature signature, std::string value);
+		void SetArchetype(std::string archetypeName, std::string archetypeValue, Signature archetypeSignature);
 
-	std::vector<Entity> m_activeEntities;
-	std::map<std::string, std::string> m_archetypes;
-	std::map<std::string, Signature> m_archetypeSignature;
+		std::vector<Entity> m_activeEntities;
+		std::map<std::string, std::string> m_archetypes;
+		std::map<std::string, Signature> m_archetypeSignature;
 
-};
+	};
 
-//MACROS FOR OBJECT FACTORY
+	//MACROS FOR OBJECT FACTORY
 #define SETSTRING(str, i1, cmp) str << "Entity" << i1 << cmp
 #define SETSSTOSTR(ss) stdstr = ss.str(); cstr = stdstr.c_str()
 #define CLEARSTR(s) s.clear(); s.str("")
@@ -38,3 +41,4 @@ private:
 
 //cstr will go out of scope if you choose to do strstream.str().c_str()
 //This is the proper (Non macro) way of setting the string
+}

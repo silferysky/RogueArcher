@@ -1,8 +1,11 @@
 #pragma once
 
-enum MemoryType
+namespace Rogue
 {
-	MemorySystem,
-	MemoryEntity,
-	MemoryComponent
-};
+	enum MemoryType
+	{
+		MemorySystem,
+		MemoryEntity,
+		MemoryComponent
+	};
+}

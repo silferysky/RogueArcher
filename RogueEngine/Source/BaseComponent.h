@@ -1,10 +1,13 @@
 #pragma once
 #include "ISerializable.h"
 
-class BaseComponent
-	: public ISerializable
+namespace Rogue
 {
-public:
-	BaseComponent() = default;
-	virtual ~BaseComponent() = default;
-};
+	class BaseComponent
+		: public ISerializable
+	{
+	public:
+		BaseComponent() = default;
+		virtual ~BaseComponent() = default;
+	};
+}
