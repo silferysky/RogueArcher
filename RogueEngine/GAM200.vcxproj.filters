@@ -74,6 +74,12 @@
     <Filter Include="RogueEditor\EditorLibrary">
       <UniqueIdentifier>{35c0161a-d947-4567-9c59-669be140c0e9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="RogueEngine\Systems\AI\Components">
+      <UniqueIdentifier>{c47994d7-a5b1-4833-b6e9-163adb7acfd8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RogueEngine\Systems\AI\Interface">
+      <UniqueIdentifier>{847c7d63-e621-4015-ba7e-024dcbef5d5e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Resource.h">
@@ -248,12 +254,6 @@
     <ClInclude Include="Source\LogicSystem.h">
       <Filter>RogueEngine\Systems\AI</Filter>
     </ClInclude>
-    <ClInclude Include="Source\LogicComponent.h">
-      <Filter>RogueEngine\Systems\AI</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ILogic.h">
-      <Filter>RogueEngine\Systems\AI</Filter>
-    </ClInclude>
     <ClInclude Include="Source\EditorComponent.h">
       <Filter>RogueEditor\EditorFiles</Filter>
     </ClInclude>
@@ -334,6 +334,12 @@
     </ClInclude>
     <ClInclude Include="Source\FontSystem.h">
       <Filter>RogueEngine\Systems\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LogicComponent.h">
+      <Filter>RogueEngine\Systems\AI\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ILogic.h">
+      <Filter>RogueEngine\Systems\AI\Interface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -439,9 +445,6 @@
     <ClCompile Include="Source\LogicSystem.cpp">
       <Filter>RogueEngine\Systems\AI</Filter>
     </ClCompile>
-    <ClCompile Include="Source\LogicComponent.cpp">
-      <Filter>RogueEngine\Systems\AI</Filter>
-    </ClCompile>
     <ClCompile Include="Source\EditorComponent.cpp">
       <Filter>RogueEditor\EditorFiles</Filter>
     </ClCompile>
@@ -504,6 +507,9 @@
     </ClCompile>
     <ClCompile Include="Source\FontSystem.cpp">
       <Filter>RogueEngine\Systems\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\LogicComponent.cpp">
+      <Filter>RogueEngine\Systems\AI\Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
