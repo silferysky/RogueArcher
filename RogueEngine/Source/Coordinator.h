@@ -45,7 +45,8 @@ namespace Rogue
 			// Load first scene
 			m_objectFactory->LoadLevel("Resources/Level 1.json");
 			m_objectFactory->LoadArchetypes("Resources/Archetypes.json");
-			//m_objectFactory->Clone("Stuff");
+			//for(int i = 0; i < 1500; i++)
+				//m_objectFactory->Clone("Stuff");
 			//m_objectFactory->SaveLevel("Resources/Level 1.json");
 		}
 

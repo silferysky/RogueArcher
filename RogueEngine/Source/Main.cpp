@@ -115,4 +115,3 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	return (int)msg.wParam;
 
 }
-
