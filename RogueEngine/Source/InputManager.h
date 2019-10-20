@@ -2,75 +2,78 @@
 #include "KeyEvent.h"
 #include "SystemManager.h"
 #include <map>
-
-struct KeyboardState
+#include "Main.h"
+namespace Rogue
 {
-	//Since COUNT is the last KeyPress, it will always be same value as size of KeyPress
-	int Key[(int)KeyPress::KeyCount] = { 0 };
+	struct KeyboardState
+	{
+		//Since COUNT is the last KeyPress, it will always be same value as size of KeyPress
+		int Key[(int)KeyPress::KeyCount] = { 0 };
 
-	//overloaded += operator. Checks if rhs has value. If rhs has value, add it, otherwise reset to 0
-	void operator+=(KeyboardState& rhs);
-};
+		//overloaded += operator. Checks if rhs has value. If rhs has value, add it, otherwise reset to 0
+		void operator+=(KeyboardState& rhs);
+	};
 
-struct FuncState
-{
-	int Func[FuncCount] = { 0 };
-};
+	struct FuncState
+	{
+		int Func[FuncCount] = { 0 };
+	};
 
-class InputManager
-	: public System
-{
-public:
-	InputManager();
-	~InputManager() = default;
+	class InputManager
+		: public System
+	{
+	public:
+		InputManager();
+		~InputManager() = default;
 
-	//Initialization
-	void init();
+		//Initialization
+		void init();
 
-	//State management
+		//State management
 
-	//Updates current and previous keyboard state
-	void update();
-	//Handles the current keyboard state
-	void HandleState();
-	//Hard reset keyboard states
-	void RemakeState();
-	//Reset given state to be all null values
-	void ResetState(KeyboardState *toReset);
-	void ResetState(FuncState *toReset);
-	//Add to current state only, not update it
-	void AddToState();
-	//To display the current keyboard state in debug
-	void DebugKeyInputs();
-	void DebugKeyInputs(KeyPress key);
-	//Functions to check buttons, applies to other controllers
-	FuncState* getFuncState();
+		//Updates current and previous keyboard state
+		void update();
+		//Handles the current keyboard state
+		void HandleState();
+		//Hard reset keyboard states
+		void RemakeState();
+		//Reset given state to be all null values
+		void ResetState(KeyboardState* toReset);
+		void ResetState(FuncState* toReset);
+		//Add to current state only, not update it
+		void AddToState();
+		//To display the current keyboard state in debug
+		void DebugKeyInputs();
+		void DebugKeyInputs(KeyPress key);
+		//Functions to check buttons, applies to other controllers
+		FuncState* getFuncState();
 
-	//Key Related
+		//Key Related
 
-	//Checks if key is not pressed
-	bool KeyUp(KeyPress checkKey);
-	//Checks if key is down
-	bool KeyDown(KeyPress checkKey);
-	bool KeyDownAny();
-	//Checks if key is just pressed
-	bool KeyTriggered(KeyPress checkKey);
-	bool KeyTriggeredAny();
-	//Checks if key is just released
-	bool KeyReleased(KeyPress checkKey);
+		//Checks if key is not pressed
+		bool KeyUp(KeyPress checkKey);
+		//Checks if key is down
+		bool KeyDown(KeyPress checkKey);
+		bool KeyDownAny();
+		//Checks if key is just pressed
+		bool KeyTriggered(KeyPress checkKey);
+		bool KeyTriggeredAny();
+		//Checks if key is just released
+		bool KeyReleased(KeyPress checkKey);
 
-	//Reset Key bindings
-	void ResetKeyBind();
+		//Reset Key bindings
+		void ResetKeyBind();
 
-	//Creating Events
-	void CreateKeyPressEvent(KeyPress key, int repeat = 0);
-	void CreateKeyReleaseEvent(KeyPress key);
-	void CreateKeyTriggeredEvent(KeyPress key);
+		//Creating Events
+		void CreateKeyPressEvent(KeyPress key, int repeat = 0);
+		void CreateKeyReleaseEvent(KeyPress key);
+		void CreateKeyTriggeredEvent(KeyPress key);
 
-private:
-	KeyboardState CurKeyboardState;
-	KeyboardState PrevKeyboardState;
-	std::map<KeyPress, KeyFunction> GameKeyConfig;
-	std::map<KeyPress, KeyFunction> MenuKeyConfig;
-	FuncState CurFuncState;
-};
+	private:
+		KeyboardState CurKeyboardState;
+		KeyboardState PrevKeyboardState;
+		std::map<KeyPress, KeyFunction> GameKeyConfig;
+		std::map<KeyPress, KeyFunction> MenuKeyConfig;
+		FuncState CurFuncState;
+	};
+}

@@ -1,21 +1,24 @@
 #include "AABB.h"
 
-Vec2 AABB::getMin() const
+namespace Rogue
 {
-	return m_min;
-}
+	Vec2 AABB::getMin() const
+	{
+		return m_min;
+	}
 
-Vec2 AABB::getMax() const
-{
-	return m_max;
-}
+	Vec2 AABB::getMax() const
+	{
+		return m_max;
+	}
 
-void AABB::setMin(const Vec2& min)
-{
-	m_min = min;
-}
+	void AABB::setMin(const Vec2& min)
+	{
+		m_min = min;
+	}
 
-void AABB::setMax(const Vec2& max)
-{
-	m_max = max;
+	void AABB::setMax(const Vec2& max)
+	{
+		m_max = max;
+	}
 }

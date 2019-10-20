@@ -11,123 +11,127 @@
 #include "ComponentList.h"
 #include "Main.h"
 
-REEngine::REEngine() :
-	m_coordinator{}, m_accumulatedTime{ 0.0f }, m_stepCount{ 0 },
-	m_gameIsRunning{ true }
-{}
-
-bool REEngine::InitializeOpenGL()
+namespace Rogue
 {
-	// Init OpenGL
-	glEnable(GL_TEXTURE_2D);						   // Texture Mapping
-	glEnable(GL_DEPTH_TEST);
-	glShadeModel(GL_SMOOTH);						   // Smooth shading
-	glDepthFunc(GL_LEQUAL);							   // Depth testing type
-	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Perspective Calculations
+	REEngine::REEngine() :
+		m_coordinator{}, m_accumulatedTime{ 0.0f }, m_stepCount{ 0 },
+		m_gameIsRunning{ true }
+	{}
 
-	// Enable alpha
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glEnable(GL_BLEND);
-
-	if (glewInit() != GLEW_OK)
+	bool REEngine::InitializeOpenGL()
 	{
-		std::cout << "GLEW broke" << std::endl;
-		return false;
+		// Init OpenGL
+		glEnable(GL_TEXTURE_2D);						   // Texture Mapping
+		glEnable(GL_DEPTH_TEST);
+		glShadeModel(GL_SMOOTH);						   // Smooth shading
+		glDepthFunc(GL_LEQUAL);							   // Depth testing type
+		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Perspective Calculations
+
+		// Enable alpha
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glEnable(GL_BLEND);
+
+		if (glewInit() != GLEW_OK)
+		{
+			std::cout << "GLEW broke" << std::endl;
+			return false;
+		}
+
+		return true;
 	}
 
-	return true;
-}
-
-void REEngine::RegisterSystems()
-{
-	m_coordinator.RegisterSystem<InputManager>();
-	m_coordinator.RegisterSystem<PhysicsSystem>();
-	m_coordinator.RegisterSystem<LogicSystem>();
-	m_coordinator.RegisterSystem<GraphicsSystem>();
-	m_coordinator.RegisterSystem<DebugDrawSystem>();
-	m_coordinator.RegisterSystem<FontSystem>();
-}
-
-void REEngine::RegisterComponents()
-{
-	m_coordinator.RegisterComponent<SpriteComponent>();
-	m_coordinator.RegisterComponent<RigidbodyComponent>();
-	m_coordinator.RegisterComponent<TransformComponent>();
-	m_coordinator.RegisterComponent<CircleCollider2DComponent>();
-	m_coordinator.RegisterComponent<BoxCollider2DComponent>();
-	m_coordinator.RegisterComponent<PlayerControllerComponent>();
-	m_coordinator.RegisterComponent<LogicComponent>();
-}
-
-void REEngine::init()
-{
-	// Init OpenGL libraries.
-	RE_ASSERT(InitializeOpenGL(), "OpenGL not initialized");
-	// Register all systems.
-	RegisterSystems();
-	
-	// Register all components
-	RegisterComponents();
-	
-	// Init systems and system signatures will be set in their respective inits.
-	// Other systems and managers will also be initialized here.
-	m_coordinator.Init();
-}
-
-void REEngine::update(HDC hDC)
-{	
-	m_stepCount = 0;
-	std::chrono::high_resolution_clock mainLoopTimer;
-	gFixedDeltaTime = 0.016f;
-	
-	while (m_gameIsRunning)
+	void REEngine::RegisterSystems()
 	{
-		gDeltaTime = std::chrono::duration_cast<std::chrono::microseconds>(m_loopEnd - m_loopStart).count() / MICRO_TO_SECONDS;
+		m_coordinator.RegisterSystem<InputManager>();
+		m_coordinator.RegisterSystem<PhysicsSystem>();
+		m_coordinator.RegisterSystem<LogicSystem>();
+		m_coordinator.RegisterSystem<GraphicsSystem>();
+		m_coordinator.RegisterSystem<DebugDrawSystem>();
+		m_coordinator.RegisterSystem<FontSystem>();
+	}
 
-		m_loopStart = mainLoopTimer.now();
+	void REEngine::RegisterComponents()
+	{
+		m_coordinator.RegisterComponent<SpriteComponent>();
+		m_coordinator.RegisterComponent<RigidbodyComponent>();
+		m_coordinator.RegisterComponent<TransformComponent>();
+		m_coordinator.RegisterComponent<CircleCollider2DComponent>();
+		m_coordinator.RegisterComponent<BoxCollider2DComponent>();
+		m_coordinator.RegisterComponent<PlayerControllerComponent>();
+		m_coordinator.RegisterComponent<LogicComponent>();
+	}
 
-		MSG msg = { 0 };
+	void REEngine::init()
+	{
+		// Init OpenGL libraries.
+		RE_ASSERT(InitializeOpenGL(), "OpenGL not initialized");
+		// Register all systems.
+		RegisterSystems();
 
+		// Register all components
+		RegisterComponents();
+
+		// Init systems and system signatures will be set in their respective inits.
+		// Other systems and managers will also be initialized here.
+		m_coordinator.Init();
+	}
+
+	void REEngine::update(HDC hDC)
+	{
 		m_stepCount = 0;
+		std::chrono::high_resolution_clock mainLoopTimer;
+		gFixedDeltaTime = 0.016f;
 
-		while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+		while (m_gameIsRunning)
 		{
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
+			gDeltaTime = std::chrono::duration_cast<std::chrono::microseconds>(m_loopEnd - m_loopStart).count() / MICRO_TO_SECONDS;
+
+			m_loopStart = mainLoopTimer.now();
+
+			MSG msg = { 0 };
+
+			m_stepCount = 0;
+
+			while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+			{
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
+			}
+
+			m_accumulatedTime += gDeltaTime;
+
+			while (m_accumulatedTime >= gFixedDeltaTime)
+			{
+				m_accumulatedTime -= gFixedDeltaTime;
+				m_stepCount++;
+			}
+
+			m_coordinator.Update();
+
+			SwapBuffers(hDC);
+
+			m_loopEnd = mainLoopTimer.now();
 		}
-
-		m_accumulatedTime += gDeltaTime;
-
-		while (m_accumulatedTime >= gFixedDeltaTime)
-		{
-			m_accumulatedTime -= gFixedDeltaTime;
-			m_stepCount++;
-		}
-
-		m_coordinator.Update();
-
-		SwapBuffers(hDC);
-
-		m_loopEnd = mainLoopTimer.now();
 	}
-}
 
-void REEngine::shutdown()
-{
-	//put graphics shutdown here
-}
+	void REEngine::shutdown()
+	{
+		//put graphics shutdown here
+	}
 
-float REEngine::GetAccumulatedTime() const
-{
-	return m_accumulatedTime;
-}
+	float REEngine::GetAccumulatedTime() const
+	{
+		return m_accumulatedTime;
+	}
 
-int REEngine::GetStepCount() const
-{
-	return m_stepCount;
-}
+	int REEngine::GetStepCount() const
+	{
+		return m_stepCount;
+	}
 
-void REEngine::SetGameIsRunning(bool set)
-{
-	m_gameIsRunning = set;
+	void REEngine::SetGameIsRunning(bool set)
+	{
+		m_gameIsRunning = set;
+	}
+
 }
