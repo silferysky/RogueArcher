@@ -71,15 +71,15 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	wglMakeCurrent(hDC, hRC);
 
 	ShowWindow(hWnd, nCmdShow);
-	if (EditorMode)
-	{
-		Rogue::Editor Editor;
-		Editor.init();
-		Editor.update();
-		Editor.Shutdown();
-
-		return (int)msg.wParam;
-	}
+	//if (EditorMode)
+	//{
+	//	Rogue::Editor Editor;
+	//	Editor.init();
+	//	Editor.update();
+	//	Editor.Shutdown();
+	//
+	//	return (int)msg.wParam;
+	//}
 
 	AllocConsole();
 	(void)freopen("CONIN$", "r", stdin);
