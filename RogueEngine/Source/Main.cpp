@@ -105,6 +105,12 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	//BasicIO::WriteArchetypeJsonFile("Resources/TestArchetypeJsonFile.json", 3);
 	//BasicIO::WriteLevelJsonFile("Resources/Level 1.json", 8);
 
+	//gObjectFactory.LoadLevel("Resources/Level 1.json");
+	//gObjectFactory.LoadArchetypes("Resources/Archetypes.json");
+	//gObjectFactory.SaveArchetypes("Resources/Archetypes.json");
+
+	//gObjectFactory.SaveLevel("Resources/Level 1.json");
+
 	// Update engine.
 	gEngine.update(hDC);
 
