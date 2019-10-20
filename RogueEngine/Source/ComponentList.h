@@ -9,17 +9,14 @@
 #include "PlayerControllerComponent.h"
 #include "LogicComponent.h"
 
-namespace Rogue
+enum COMPONENTID
 {
-	enum COMPONENTID
-	{
-		SPRITE = 0,
-		RIGIDBODY,
-		TRANSFORM,
-		CIRCLECOLLIDER2D,
-		BOXCOLLIDER2D,
-		PLAYERCONTROLLER,
-		LOGIC,
-		LASTCOMP
-	};
-}
+	SPRITE = 0,
+	RIGIDBODY,
+	TRANSFORM,
+	CIRCLECOLLIDER2D,
+	BOXCOLLIDER2D,
+	PLAYERCONTROLLER,
+	LOGIC,
+	LASTCOMP
+};

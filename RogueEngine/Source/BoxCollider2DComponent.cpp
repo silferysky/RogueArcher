@@ -4,88 +4,76 @@
 #include "Vector2D.h"
 #include "Logger.h"
 
-namespace Rogue
+AABB& BoxCollider2DComponent::AABB()
 {
-	AABB& BoxCollider2DComponent::AABB()
+	return m_aabb;
+}
+
+OBB& BoxCollider2DComponent::OBB()
+{
+	return m_obb;
+}
+
+std::string BoxCollider2DComponent::Serialize()
+{
+	//Size, modelVertexList
+	std::ostringstream ss;
+	ss << m_obb.getSize() << ";";
+
+	for (size_t i = 0; i < m_obb.getSize(); ++i)
 	{
-		return m_aabb;
+		ss << m_obb.modelVerts()[i].x << ";" << m_obb.modelVerts()[i].y << ";";
 	}
 
-	OBB& BoxCollider2DComponent::OBB()
+	return ss.str();
+}
+
+void BoxCollider2DComponent::Deserialize(std::string toDeserialize)
+{
+	std::istringstream ss(toDeserialize);
+	std::string s1, s2;		//s2 is used if two are needed
+	std::vector<Vec2> vertexList{};
+	int size = 0;
+
+	if (std::getline(ss, s1, ';'))
 	{
-		return m_obb;
+		size = static_cast<size_t>(stoi(s1));
 	}
 
-	std::string BoxCollider2DComponent::Serialize()
+	for(size_t counter = 0; counter < size; counter++)
 	{
-		//Size, modelVertexList
-		std::ostringstream ss;
-		ss << m_obb.getSize() << ";";
+		//In this case, 1st value is only non double value read
+		//if (counter > 0)
+		//	std::getline(ss, s2, ';');
 
-		//for (size_t i = 0; i < m_obb.getSize(); ++i)
+		//switch (counter)
 		//{
-		//	ss << m_obb.modelVerts()[i].x << ";" << m_obb.modelVerts()[i].y << ";";
+		//case 0:
+		//	size = static_cast<size_t>(stoi(s1));
+		//	break;
+		//default:
+		//	vertexList.push_back(Vec2(stof(s1), stof(s2)));
+		//	//vertexList.push_back(Vec2());
+		//	break;
 		//}
 
-		for (size_t i = 0; i < m_obb.getSize(); ++i)
-		{
-			ss << m_obb.modelVerts()[i].x << ";" << m_obb.modelVerts()[i].y << ";";
-		}
-
-		return ss.str();
+		std::getline(ss, s1, ';');
+		std::getline(ss, s2, ';');
+		vertexList.push_back(Vec2(stof(s1), stof(s2)));
 	}
 
-	void BoxCollider2DComponent::Deserialize(std::string toDeserialize)
+	m_obb.setModelVerts(vertexList);
+	m_obb.setSize(size);
+}
+
+void BoxCollider2DComponent::operator=(const BoxCollider2DComponent& rhs)
+{
+	m_obb.setSize(rhs.m_obb.getSize());
+	std::vector<Vec2> vertexList{};
+
+	for (size_t sz = 0; sz < m_obb.getSize(); ++sz)
 	{
-		std::istringstream ss(toDeserialize);
-		std::string s1, s2;		//s2 is used if two are needed
-	//	int counter = 0;		//Needed to take in for multiple values
-		std::vector<Vec2> vertexList{};
-		int size = 0;
-
-		if (std::getline(ss, s1, ';'))
-		{
-			size = static_cast<size_t>(stoi(s1));
-		}
-
-		for (size_t i = 0; i < size; i++)
-		{
-			//In this case, 1st value is only non double read
-			//if (counter > 0)
-			//	std::getline(ss, s2, ';');
-
-		//	switch (counter)
-		//	{
-		//	case 0:
-		//		size = static_cast<size_t>(stoi(s1));
-		//		break;
-		//	default:
-		//		vertexList.push_back(Vec2(stof(s1), stof(s2)));
-		//		//vertexList.push_back(Vec2());
-		//		break;
-		//	}
-
-		//	++counter;
-
-			std::getline(ss, s1, ';');
-			std::getline(ss, s2, ';');
-			vertexList.push_back(Vec2(stof(s1), stof(s2)));
-		}
-
-		m_obb.setModelVerts(vertexList);
-		m_obb.setSize(size);
+		vertexList.push_back(Vec2());
 	}
-
-	void BoxCollider2DComponent::operator=(const BoxCollider2DComponent& rhs)
-	{
-		m_obb.setSize(rhs.m_obb.getSize());
-		std::vector<Vec2> vertexList{};
-
-		for (size_t sz = 0; sz < m_obb.getSize(); ++sz)
-		{
-			vertexList.push_back(Vec2());
-		}
-		m_obb.setModelVerts(vertexList);
-	}
-
+	m_obb.setModelVerts(vertexList);
 }

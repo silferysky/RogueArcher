@@ -1,37 +1,34 @@
 #pragma once
 #include "Coordinator.h"
 
-namespace Rogue
+class REEngine
 {
-	class REEngine
-	{
-		using ChronoClock = std::chrono::time_point <std::chrono::steady_clock>;
+	using ChronoClock = std::chrono::time_point <std::chrono::steady_clock>;
 
-		const float MICRO_TO_SECONDS = 1000000.0f;
+	const float MICRO_TO_SECONDS = 1000000.0f;
+	
+	float m_accumulatedTime;
+	int	m_stepCount;
+	bool m_gameIsRunning;
 
-		float m_accumulatedTime;
-		int	m_stepCount;
-		bool m_gameIsRunning;
+	ChronoClock m_loopStart;
+	ChronoClock m_loopEnd;
 
-		ChronoClock m_loopStart;
-		ChronoClock m_loopEnd;
+	bool InitializeOpenGL();
+	void RegisterSystems();
+	void RegisterComponents();
 
-		bool InitializeOpenGL();
-		void RegisterSystems();
-		void RegisterComponents();
+public:
+	REEngine();
 
-	public:
-		REEngine();
+	Coordinator m_coordinator;
 
-		Coordinator m_coordinator;
+	void init();
+	void update(HDC hDC);
+	void shutdown();
 
-		void init();
-		void update(HDC hDC);
-		void shutdown();
+	float GetAccumulatedTime() const;
+	int GetStepCount() const;
 
-		float GetAccumulatedTime() const;
-		int GetStepCount() const;
-
-		void SetGameIsRunning(bool set);
-	};
-}
+	void SetGameIsRunning(bool set);
+};

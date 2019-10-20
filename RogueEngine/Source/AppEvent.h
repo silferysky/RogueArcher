@@ -2,80 +2,77 @@
 
 #include "Event.h"
 
-namespace Rogue
+class WinCloseEvent : public Event
 {
-	class WinCloseEvent : public Event
-	{
-	public:
-		WinCloseEvent() {}
-		SET_EVENT_CATEGORY(EventCatApp)
-			SET_EVENT_TYPE(EvWindowClose)
-	};
+public:
+	WinCloseEvent(){}
+	SET_EVENT_CATEGORY(EventCatApp)
+	SET_EVENT_TYPE(EvWindowClose)
+};
 
-	class WinResizeEvent : public Event
-	{
-	public:
-		WinResizeEvent(unsigned int wigDeltaTimeh, unsigned int height)
-			: WinWigDeltaTimeh(wigDeltaTimeh), WinHeight(height) {}
+class WinResizeEvent : public Event
+{
+public:
+	WinResizeEvent(unsigned int wigDeltaTimeh, unsigned int height)
+		: WinWigDeltaTimeh(wigDeltaTimeh), WinHeight(height){}
 
-		inline unsigned int GetWigDeltaTimeh() { return WinWigDeltaTimeh; }
-		inline unsigned int GetHeight() { return WinHeight; }
+	inline unsigned int GetWigDeltaTimeh() { return WinWigDeltaTimeh; }
+	inline unsigned int GetHeight() { return WinHeight; }
 
-		SET_EVENT_CATEGORY(EventCatApp)
-			SET_EVENT_TYPE(EvWindowResize)
+	SET_EVENT_CATEGORY(EventCatApp)
+	SET_EVENT_TYPE(EvWindowResize)
 
-	private:
-		unsigned int WinWigDeltaTimeh, WinHeight;
-	};
+private:
+	unsigned int WinWigDeltaTimeh, WinHeight;
+};
 
-	class WinFocusEvent : public Event
-	{
-	public:
-		WinFocusEvent() {}
+class WinFocusEvent : public Event
+{
+public:
+	WinFocusEvent(){}
 
-		SET_EVENT_CATEGORY(EventCatApp)
-			SET_EVENT_TYPE(EvWindowFocus)
-	};
+	SET_EVENT_CATEGORY(EventCatApp)
+	SET_EVENT_TYPE(EvWindowFocus)
+};
 
-	class WinLostFocusEvent : public Event
-	{
-	public:
-		WinLostFocusEvent() {}
+class WinLostFocusEvent : public Event
+{
+public:
+	WinLostFocusEvent(){}
 
-		SET_EVENT_CATEGORY(EventCatApp)
-			SET_EVENT_TYPE(EvWindowLostFocus)
-	};
+	SET_EVENT_CATEGORY(EventCatApp)
+	SET_EVENT_TYPE(EvWindowLostFocus)
+};
 
-	class WinMovedEvent : public Event
-	{
-	public:
-		WinMovedEvent() {}
+class WinMovedEvent : public Event
+{
+public:
+	WinMovedEvent(){}
 
-		SET_EVENT_CATEGORY(EventCatApp)
-			SET_EVENT_TYPE(EvWindowMoved)
-	};
+	SET_EVENT_CATEGORY(EventCatApp)
+	SET_EVENT_TYPE(EvWindowMoved)
+};
 
-	class EvAppTickEvent : public Event
-	{
-		EvAppTickEvent() {}
+class EvAppTickEvent : public Event
+{
+	EvAppTickEvent() {}
 
-		SET_EVENT_CATEGORY(EventCatApp)
-			SET_EVENT_TYPE(EvAppTick)
-	};
+	SET_EVENT_CATEGORY(EventCatApp)
+	SET_EVENT_TYPE(EvAppTick)
+};
 
-	class EvAppUpdateEvent : public Event
-	{
-		EvAppUpdateEvent() {}
+class EvAppUpdateEvent : public Event
+{
+	EvAppUpdateEvent() {}
 
-		SET_EVENT_CATEGORY(EventCatApp)
-			SET_EVENT_TYPE(EvAppUpdate)
-	};
+	SET_EVENT_CATEGORY(EventCatApp)
+	SET_EVENT_TYPE(EvAppUpdate)
+};
 
-	class EvAppRenderEvent : public Event
-	{
-		EvAppRenderEvent() {}
+class EvAppRenderEvent : public Event
+{
+	EvAppRenderEvent() {}
 
-		SET_EVENT_CATEGORY(EventCatApp)
-			SET_EVENT_TYPE(EvAppRender)
-	};
-}
+	SET_EVENT_CATEGORY(EventCatApp)
+	SET_EVENT_TYPE(EvAppRender)
+};

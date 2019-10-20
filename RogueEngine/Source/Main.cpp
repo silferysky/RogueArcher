@@ -28,10 +28,10 @@
 #include "REEditor.h"
 #include "Editor.h"
 
-Rogue::REEngine gEngine;
+REEngine gEngine;
 float gDeltaTime;
 float gFixedDeltaTime;
-bool EditorMode = true;
+bool EditorMode = false;
 
 //const char* FileName = "/Resources/test.json";
 static const int SCREEN_FULLSCREEN = 0;
@@ -58,9 +58,9 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	HWND  hWnd;				/* window */
 	MSG   msg = { 0 };		/* message */
 
-	Rogue::REConfig config;
+	REConfig config;
 	config.ConfigInit();
-	hWnd = Rogue::CreateOpenGLWindow(const_cast<char*>(config.GetTitle().c_str()), config.GetX(), config.GetY(),
+	hWnd = CreateOpenGLWindow(const_cast<char*>(config.GetTitle().c_str()), config.GetX(), config.GetY(),
 		config.GetWidth(), config.GetHeight(), 0, config.GetFlags());
 
 	if (hWnd == NULL)
@@ -88,7 +88,7 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 
 
 	//Ensures program closes properly 
-	SetConsoleCtrlHandler(Rogue::CtrlHandler, true);
+	SetConsoleCtrlHandler(CtrlHandler, true);
 
 	//setVSync(1);
 
@@ -100,16 +100,10 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 
 	std::cout << glGetString(GL_VERSION) << std::endl;
 
-	//Rogue::RE_INFO("TEST FILEWRITER");
+	RE_INFO("TEST FILEWRITER");
 	//BasicIO::WriteLevelJsonFile("Resources/TestJsonFileCreator.json", 1);
 	//BasicIO::WriteArchetypeJsonFile("Resources/TestArchetypeJsonFile.json", 3);
 	//BasicIO::WriteLevelJsonFile("Resources/Level 1.json", 8);
-
-	//gObjectFactory.LoadLevel("Resources/Level 1.json");
-	//gObjectFactory.LoadArchetypes("Resources/Archetypes.json");
-	//gObjectFactory.SaveArchetypes("Resources/Archetypes.json");
-
-	//gObjectFactory.SaveLevel("Resources/Level 1.json");
 
 	// Update engine.
 	gEngine.update(hDC);

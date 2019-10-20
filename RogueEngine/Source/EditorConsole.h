@@ -1,7 +1,7 @@
 #pragma once
 #include "IEditable.h"
 #include "Timer.h"
-#include "Main.h"
+#include "REEngine.h"
 
 namespace Rogue
 {
@@ -13,7 +13,5 @@ namespace Rogue
 		virtual void Init() override;
 		virtual void Update() override;
 		virtual void Shutdown() override;
-	private:
-		//std::shared_ptr<Timer> m_timer;
 	};
 }

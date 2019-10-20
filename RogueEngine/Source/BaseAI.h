@@ -3,27 +3,24 @@
 #include "LogicComponent.h"
 #include <memory>
 
-namespace Rogue
+class BaseAI
+	: public ILogic
 {
-	class BaseAI
-		: public ILogic
-	{
-	public:
+public:
 
-		BaseAI(LogicComponent& logicComp);
-		~BaseAI();
+	BaseAI(LogicComponent& logicComp);
+	~BaseAI();
 
-		//From ILogic
-		void logicInit() override;
-		void logicUpdate() override;
-		void AIActiveStateUpdate() override;
+	//From ILogic
+	void logicInit() override;
+	void logicUpdate() override;
+	void AIActiveStateUpdate() override;
 
-		//Getter/Setter
-		std::shared_ptr<LogicComponent> getLogicComponent();
-		void setLogicComponent(LogicComponent& logicComp);
+	//Getter/Setter
+	std::shared_ptr<LogicComponent> getLogicComponent();
+	void setLogicComponent(LogicComponent& logicComp);
 
-	private:
+private:
 
-		std::shared_ptr<LogicComponent> m_logicComponent;
-	};
-}
+	std::shared_ptr<LogicComponent> m_logicComponent;
+};
