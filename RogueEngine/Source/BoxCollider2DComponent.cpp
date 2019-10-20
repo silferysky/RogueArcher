@@ -25,11 +25,6 @@ std::string BoxCollider2DComponent::Serialize()
 		ss << m_obb.modelVerts()[i].x << ";" << m_obb.modelVerts()[i].y << ";";
 	}
 
-	for (size_t i = 0; i < m_obb.getSize(); ++i)
-	{
-		ss << m_obb.modelVerts()[i].x << ";" << m_obb.modelVerts()[i].y << ";";
-	}
-
 	return ss.str();
 }
 
