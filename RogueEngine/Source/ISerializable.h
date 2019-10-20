@@ -1,9 +1,12 @@
 #pragma once
 #include <string>
 
-class ISerializable
+namespace Rogue
 {
-public:
-	virtual std::string Serialize() = 0;
-	virtual void Deserialize(std::string deserializeStr) = 0;
-};
+	class ISerializable
+	{
+	public:
+		virtual std::string Serialize() = 0;
+		virtual void Deserialize(std::string deserializeStr) = 0;
+	};
+}

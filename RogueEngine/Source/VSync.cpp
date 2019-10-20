@@ -3,24 +3,27 @@
 #include "GL/glew.h"
 #include "Windows.h"
 
-void setVSync(bool sync)
+namespace Rogue
 {
-	// Function pointer for the wgl extention function we need to enable/disable
-	// vsync
-	typedef BOOL(APIENTRY * PFNWGLSWAPINTERVALPROC)(int);
-	PFNWGLSWAPINTERVALPROC wglSwapIntervalEXT = 0;
-
-	const char* extensions = (char*)glGetString(GL_EXTENSIONS);
-
-	if (strstr(extensions, "WGL_EXT_swap_control") == 0)
+	void setVSync(bool sync)
 	{
-		return;
-	}
-	else
-	{
-		wglSwapIntervalEXT = (PFNWGLSWAPINTERVALPROC)wglGetProcAddress("wglSwapIntervalEXT");
+		// Function pointer for the wgl extention function we need to enable/disable
+		// vsync
+		typedef BOOL(APIENTRY* PFNWGLSWAPINTERVALPROC)(int);
+		PFNWGLSWAPINTERVALPROC wglSwapIntervalEXT = 0;
 
-		if (wglSwapIntervalEXT)
-			wglSwapIntervalEXT(sync);
+		const char* extensions = (char*)glGetString(GL_EXTENSIONS);
+
+		if (strstr(extensions, "WGL_EXT_swap_control") == 0)
+		{
+			return;
+		}
+		else
+		{
+			wglSwapIntervalEXT = (PFNWGLSWAPINTERVALPROC)wglGetProcAddress("wglSwapIntervalEXT");
+
+			if (wglSwapIntervalEXT)
+				wglSwapIntervalEXT(sync);
+		}
 	}
 }

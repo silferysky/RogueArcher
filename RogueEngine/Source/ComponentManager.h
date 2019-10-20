@@ -7,99 +7,102 @@
 #include "ComponentList.h"
 #include "Logger.h"
 
-class ComponentManager
+namespace Rogue
 {
-public:
-	template<typename T>
-	void RegisterComponent()
+	class ComponentManager
 	{
-		const char* typeName = typeid(T).name();
-		RE_ASSERT(REComponentTypes.find(typeName) == REComponentTypes.end(), "Registering component type more than once.");
-
-		// Add this component type to the component type map
-		REComponentTypes.insert({ typeName, RENextComponentType });
-
-		std::stringstream out;
-		out.clear();
-		out.str("");
-		out << "Creating " << typeName << "s...";
-		RE_CORE_INFO(out.str());
-
-		// Create a ComponentArray pointer and add it to the component arrays map
-		REComponentArrays.insert({ typeName, std::make_shared<ComponentArray<T>>() });
-
-
-		out.clear();
-		out.str("");
-		out << "Array of " << MAX_ENTITIES << " " << typeName << "s created!";
-		RE_CORE_INFO(out.str());
-
-		// Increment the value so that the next component registered will be different
-		++RENextComponentType;
-	}
-
-	template<typename T>
-	ComponentType GetComponentType()
-	{
-		const char* typeName = typeid(T).name();
-		RE_ASSERT(REComponentTypes.find(typeName) != REComponentTypes.end(), "Component not registered before use.");
-		return REComponentTypes[typeName];
-	}
-
-	template<typename T>
-	void AddComponent(Entity entity, T component)
-	{
-		std::stringstream out;
-		out << "Added " << typeid(T).name() << " to Entity " << entity;
-		RE_CORE_INFO(out.str());
-		GetComponentArray<T>()->InsertData(entity, component);
-	}
-
-	template<typename T>
-	void RemoveComponent(Entity entity)
-	{
-		GetComponentArray<T>()->RemoveData(entity);
-	}
-
-	template<typename T>
-	T& GetComponent(Entity entity)
-	{
-		return GetComponentArray<T>()->GetData(entity);
-	}
-
-	void EntityDestroyed(Entity entity)
-	{
-		// Notify each component array that an entity has been destroyed
-		// If it has a component for that entity, it will remove it
-		for (auto const& pair : REComponentArrays)
+	public:
+		template<typename T>
+		void RegisterComponent()
 		{
-			auto const& component = pair.second;
+			const char* typeName = typeid(T).name();
+			RE_ASSERT(REComponentTypes.find(typeName) == REComponentTypes.end(), "Registering component type more than once.");
 
-			component->EntityDestroyed(entity);
-			RE_CORE_INFO("Components Removed\n");
+			// Add this component type to the component type map
+			REComponentTypes.insert({ typeName, RENextComponentType });
+
+			std::stringstream out;
+			out.clear();
+			out.str("");
+			out << "Creating " << typeName << "s...";
+			RE_CORE_INFO(out.str());
+
+			// Create a ComponentArray pointer and add it to the component arrays map
+			REComponentArrays.insert({ typeName, std::make_shared<ComponentArray<T>>() });
+
+
+			out.clear();
+			out.str("");
+			out << "Array of " << MAX_ENTITIES << " " << typeName << "s created!";
+			RE_CORE_INFO(out.str());
+
+			// Increment the value so that the next component registered will be different
+			++RENextComponentType;
 		}
-	}
 
-	size_t Size() const
-	{
-		return RENextComponentType;
-	}
+		template<typename T>
+		ComponentType GetComponentType()
+		{
+			const char* typeName = typeid(T).name();
+			RE_ASSERT(REComponentTypes.find(typeName) != REComponentTypes.end(), "Component not registered before use.");
+			return REComponentTypes[typeName];
+		}
 
-private:
+		template<typename T>
+		void AddComponent(Entity entity, T component)
+		{
+			std::stringstream out;
+			out << "Added " << typeid(T).name() << " to Entity " << entity;
+			RE_CORE_INFO(out.str());
+			GetComponentArray<T>()->InsertData(entity, component);
+		}
 
-	template<typename T>
-	std::shared_ptr<ComponentArray<T>> GetComponentArray()
-	{
+		template<typename T>
+		void RemoveComponent(Entity entity)
+		{
+			GetComponentArray<T>()->RemoveData(entity);
+		}
 
-		const char* typeName = typeid(T).name();
-		RE_ASSERT(REComponentTypes.find(typeName) != REComponentTypes.end(), "Component not registered before use.");
-		return std::static_pointer_cast<ComponentArray<T>>(REComponentArrays[typeName]);
-	}
+		template<typename T>
+		T& GetComponent(Entity entity)
+		{
+			return GetComponentArray<T>()->GetData(entity);
+		}
 
-	ComponentType RENextComponentType{};
+		void EntityDestroyed(Entity entity)
+		{
+			// Notify each component array that an entity has been destroyed
+			// If it has a component for that entity, it will remove it
+			for (auto const& pair : REComponentArrays)
+			{
+				auto const& component = pair.second;
 
-	std::unordered_map<const char*, ComponentType> REComponentTypes{};
+				component->EntityDestroyed(entity);
+				RE_CORE_INFO("Components Removed\n");
+			}
+		}
 
-	std::unordered_map<const char*, std::shared_ptr<BaseComponentArray>> REComponentArrays{};
+		size_t Size() const
+		{
+			return RENextComponentType;
+		}
 
-};
+	private:
+
+		template<typename T>
+		std::shared_ptr<ComponentArray<T>> GetComponentArray()
+		{
+
+			const char* typeName = typeid(T).name();
+			RE_ASSERT(REComponentTypes.find(typeName) != REComponentTypes.end(), "Component not registered before use.");
+			return std::static_pointer_cast<ComponentArray<T>>(REComponentArrays[typeName]);
+		}
+
+		ComponentType RENextComponentType{};
+
+		std::unordered_map<const char*, ComponentType> REComponentTypes{};
+
+		std::unordered_map<const char*, std::shared_ptr<BaseComponentArray>> REComponentArrays{};
+
+	};
+}

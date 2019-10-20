@@ -2,45 +2,48 @@
 #include <map>
 #include "EventListener.h"
 
-class EventDispatcher :
-	public System
+namespace Rogue
 {
-public:
-
-	static EventDispatcher& instance()
+	class EventDispatcher :
+		public System
 	{
-		static EventDispatcher instance;
-		return instance;
-	}
+	public:
 
-	EventDispatcher();
-	~EventDispatcher() = default;
+		static EventDispatcher& instance()
+		{
+			static EventDispatcher instance;
+			return instance;
+		}
 
-	void init();
+		EventDispatcher();
+		~EventDispatcher() = default;
 
-	//Queue functions
-	Event* GetQueueHead();
-	Event* GetQueueHeadDelayed();
-	void CombineQueue();
-	void CombineQueueCmd(Event& e);
+		void init();
 
-	//Listener functions
-	void AddListener(SystemID ID, LISTENER_HANDLER handler);
-	void RemoveAllListener();
-	void RemoveListener(SystemID ID);
-	std::map<SystemID, LISTENER_HANDLER> GetMap();
+		//Queue functions
+		Event* GetQueueHead();
+		Event* GetQueueHeadDelayed();
+		void CombineQueue();
+		void CombineQueueCmd(Event& e);
 
-	void AddEvent(Event* e);
-	void AddEventDelayed(Event* e);
+		//Listener functions
+		void AddListener(SystemID ID, LISTENER_HANDLER handler);
+		void RemoveAllListener();
+		void RemoveListener(SystemID ID);
+		std::map<SystemID, LISTENER_HANDLER> GetMap();
 
-	void update();
+		void AddEvent(Event* e);
+		void AddEventDelayed(Event* e);
 
-	//Dispatch sends it to the relavent system to execute event
-	void DispatchEvent(Event* toHandle);
+		void update();
 
-private:
-	std::queue<Event*> EventQueue;
-	std::queue<Event*> DelayedEventQueue;
-	std::map<SystemID, LISTENER_HANDLER> ListenerMap;
-	bool isCombiningQueue = false;
-};
+		//Dispatch sends it to the relavent system to execute event
+		void DispatchEvent(Event* toHandle);
+
+	private:
+		std::queue<Event*> EventQueue;
+		std::queue<Event*> DelayedEventQueue;
+		std::map<SystemID, LISTENER_HANDLER> ListenerMap;
+		bool isCombiningQueue = false;
+	};
+}

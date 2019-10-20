@@ -4,27 +4,30 @@
 #include "EventListener.h"
 #include "Vector2D.h"
 
-class Timer;
-
-class PhysicsSystem : public System, public EventListener
+namespace Rogue
 {
-	Vec2 m_gravity;
+	class Timer;
 
-	void integrateAcceleration(RigidbodyComponent& rigidbody, TransformComponent& transform);
-	void applyForces(RigidbodyComponent& rigidbody);
+	class PhysicsSystem : public System, public EventListener
+	{
+		Vec2 m_gravity;
 
-	// For debugging.
-	bool checkAABB;
-	bool checkOBB;
-	bool allowGravity;
-public:
-	PhysicsSystem(Vec2 gravity = { 0.0f, -9.81f });
-	~PhysicsSystem() = default;
+		void integrateAcceleration(RigidbodyComponent& rigidbody, TransformComponent& transform);
+		void applyForces(RigidbodyComponent& rigidbody);
 
-	void init();
-	void update() override;
-	void receive(Event* ev) override;
+		// For debugging.
+		bool checkAABB;
+		bool checkOBB;
+		bool allowGravity;
+	public:
+		PhysicsSystem(Vec2 gravity = { 0.0f, -9.81f });
+		~PhysicsSystem() = default;
 
-	void setGravity(const Vec2& gravity);
-	const Vec2& getGravity() const;
-};
+		void init();
+		void update() override;
+		void receive(Event* ev) override;
+
+		void setGravity(const Vec2& gravity);
+		const Vec2& getGravity() const;
+	};
+}
