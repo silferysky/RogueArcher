@@ -2,20 +2,23 @@
 #include "BaseComponent.h"
 #include "GL/glew.h"
 
-class SpriteComponent
-	: public BaseComponent
+namespace Rogue
 {
-	GLuint m_texture;
-public:
-	SpriteComponent();
-	~SpriteComponent() = default;
+	class SpriteComponent
+		: public BaseComponent
+	{
+		GLuint m_texture;
+	public:
+		SpriteComponent();
+		~SpriteComponent() = default;
 
-	void setTexture(const char* texture);
-	GLuint getTexture() const;
+		void setTexture(const char* texture);
+		GLuint getTexture() const;
 
-	//Serialize
-	virtual std::string Serialize();
-	virtual void Deserialize(std::string toDeserialize);
+		//Serialize
+		virtual std::string Serialize();
+		virtual void Deserialize(std::string toDeserialize);
 
-	//void operator=(SpriteComponent sprite);
-};
+		//void operator=(SpriteComponent sprite);
+	};
+}

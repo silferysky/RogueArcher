@@ -7,8 +7,9 @@
 #include "glfw3.h"
 #include "REEngine.h"
 #include "Timer.h"
-namespace Rogue
+#include "Main.h"
 
+namespace Rogue
 {
 	class ImGuiConsole : public IEditable
 	{
@@ -18,6 +19,7 @@ namespace Rogue
 		virtual void Init() override;
 		virtual void Update() override;
 		virtual void Shutdown() override;
-		REEngine engine;
+	private:
+		//std::shared_ptr<Timer> m_timer;
 	};
 }

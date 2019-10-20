@@ -2,14 +2,18 @@
 
 
 // Circle class
-class Circle
+namespace Rogue
 {
-	float m_radius;
+	class Circle
+	{
+		float m_radius;
 
-public:
-	Circle(float radius);
-	~Circle();
+	public:
+		Circle(float radius);
+		~Circle();
 
-	inline void setRadius(float rad);
-	inline float getRadius() const;
-};
+		inline void setRadius(float rad);
+		inline float getRadius() const;
+	};
+}
+

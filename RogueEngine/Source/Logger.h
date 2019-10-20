@@ -3,36 +3,38 @@
 #include "spdlog/sinks/stdout_color_sinks.h"
 #include "spdlog/sinks/basic_file_sink.h"
 
-class Logger
+namespace Rogue
 {
-public:
-
-	//Singleton for Logger
-	static Logger& instance()
+	class Logger
 	{
-		static Logger log;
-		if (!log.GetCoreLogger())
-			log.InitLogger();
-		return log;
-	}
-	//Initializer for Logger
-	static void InitLogger();
+	public:
 
-	inline static std::shared_ptr<spdlog::logger>& GetCoreLogger() { return RE_CoreLogger; }
-	inline static std::shared_ptr<spdlog::logger>& GetClientLogger() { return RE_ClientLogger; }
-	inline static std::shared_ptr<spdlog::logger>& GetCoreFileLogger() { return RE_CoreFileLogger; }
-	inline static std::shared_ptr<spdlog::logger>& GetClientFileLogger() { return RE_ClientFileLogger; }
+		//Singleton for Logger
+		static Logger& instance()
+		{
+			static Logger log;
+			if (!log.GetCoreLogger())
+				log.InitLogger();
+			return log;
+		}
+		//Initializer for Logger
+		static void InitLogger();
 
-private:
-	static std::shared_ptr<spdlog::logger> RE_CoreLogger;
-	static std::shared_ptr<spdlog::logger> RE_ClientLogger;
-	static std::shared_ptr<spdlog::logger> RE_CoreFileLogger;
-	static std::shared_ptr<spdlog::logger> RE_ClientFileLogger;
-};
+		inline static std::shared_ptr<spdlog::logger>& GetCoreLogger() { return RE_CoreLogger; }
+		inline static std::shared_ptr<spdlog::logger>& GetClientLogger() { return RE_ClientLogger; }
+		inline static std::shared_ptr<spdlog::logger>& GetCoreFileLogger() { return RE_CoreFileLogger; }
+		inline static std::shared_ptr<spdlog::logger>& GetClientFileLogger() { return RE_ClientFileLogger; }
 
-//MACROs
+	private:
+		static std::shared_ptr<spdlog::logger> RE_CoreLogger;
+		static std::shared_ptr<spdlog::logger> RE_ClientLogger;
+		static std::shared_ptr<spdlog::logger> RE_CoreFileLogger;
+		static std::shared_ptr<spdlog::logger> RE_ClientFileLogger;
+	};
 
-//Core Logger
+	//MACROs
+
+	//Core Logger
 #define RE_CORE_TRACE(...)		Logger::instance().GetCoreLogger()->trace(__VA_ARGS__);		Logger::GetCoreFileLogger()->trace(__VA_ARGS__)
 #define RE_CORE_INFO(...)		Logger::instance().GetCoreLogger()->info(__VA_ARGS__);		Logger::GetCoreFileLogger()->info(__VA_ARGS__)
 #define RE_CORE_WARN(...)		Logger::instance().GetCoreLogger()->warn(__VA_ARGS__);		Logger::GetCoreFileLogger()->warn(__VA_ARGS__)
@@ -53,3 +55,6 @@ private:
 
 //The point of using instance() in the first set of commands is to ensure Logger is initialized
 //Afterwards, no need to get the instance again (since it is static function anyway)
+}
+
+

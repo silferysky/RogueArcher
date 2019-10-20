@@ -1,9 +1,13 @@
 #pragma once
 
-struct Texture
+namespace Rogue
 {
-	GLuint m_id;
-	unsigned char* m_texture;
-	int m_width;
-	int m_height;
-};
+	struct Texture
+	{
+		GLuint m_id;
+		unsigned char* m_texture;
+		int m_width;
+		int m_height;
+	};
+}
+
