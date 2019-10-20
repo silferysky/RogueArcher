@@ -5,7 +5,7 @@
 #include "GLHelper.hpp"
 #include "ComponentList.h"
 #include "Main.h"
-
+#include "Editor.h"
 #include "PhysicsSystem.h"
 #include "GraphicsSystem.h"
 #include "LogicSystem.h"
@@ -51,6 +51,8 @@ namespace Rogue
 		m_coordinator.RegisterSystem<GraphicsSystem>();
 	//	m_coordinator.RegisterSystem<DebugDrawSystem>();
 		m_coordinator.RegisterSystem<FontSystem>();
+		m_coordinator.RegisterSystem<Editor>();
+
 	}
 
 	void REEngine::RegisterComponents()
