@@ -1,14 +1,12 @@
 #include "PhysicsSystem.h"
 #include "Main.h"
 #include "REMath.h"
-#include "EventListener.h"
 #include "ComponentList.h"
 #include "Timer.h"
-#include "Vector2D.h"
-#include "SystemManager.h"
 #include "KeyEvent.h"
 #include "EventDispatcher.h"
 #include "Logger.h"
+#include "REEngine.h"
 
 //-------------------------------------------------------//
 //              PRIVATE MEMBER FUNCTIONS								 //
@@ -20,12 +18,6 @@ void PhysicsSystem::applyForces(RigidbodyComponent& rigidbody) // F = ma
 	else
 		rigidbody.setAcceleration(rigidbody.getAccForce() * rigidbody.getInvMass());
 }
-
-PhysicsSystem::PhysicsSystem(Vec2 gravity)
-	:	System(SystemID::id_PHYSICSSYSTEM),
-		m_colliderManager{}, m_gravity{gravity},
-	  checkAABB{ true }, checkOBB{ true }, allowGravity{ true }
-{}
 
 void PhysicsSystem::integrateAcceleration(RigidbodyComponent& rigidbody, TransformComponent& transform)
 {
@@ -41,6 +33,11 @@ void PhysicsSystem::integrateAcceleration(RigidbodyComponent& rigidbody, Transfo
 //-------------------------------------------------------//
 //              PUBLIC MEMBER FUNCTIONS					 //
 //-------------------------------------------------------//
+PhysicsSystem::PhysicsSystem(Vec2 gravity) :
+	System(SystemID::id_PHYSICSSYSTEM),
+	m_gravity{ gravity }, checkAABB{ true }, checkOBB{ true }, allowGravity{ true }
+{}
+
 void PhysicsSystem::init()
 {
 	REGISTER_LISTENER(SystemID::id_PHYSICSSYSTEM, PhysicsSystem::receive);
@@ -82,8 +79,6 @@ void PhysicsSystem::update()
 			auto& currBoxCollider = gEngine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iEntity);
 			//	auto& circleCollider = gEngine.m_coordinator.GetComponent<CircleCollider2DComponent>(*iEntity);
 
-			// Apply accForce (Forces are added if necessary)	
-
 			if (!rigidbody.getIsStatic())
 			{
 				applyForces(rigidbody);
@@ -95,46 +90,7 @@ void PhysicsSystem::update()
 				integrateAcceleration(rigidbody, transform);
 			}
 
-			// Update collidables
-			m_colliderManager.updateAABB(currBoxCollider.AABB(), transform);
-			m_colliderManager.updateOBB(currBoxCollider.OBB(), transform);
-
-			// Conduct spatial partitioning
-
-			// Test AABB/OBB Collision
-			std::set<Entity>::iterator iNextEntity = iEntity;
-
-			for (iNextEntity++; iNextEntity != m_entities.end(); ++iNextEntity)
-			{
-				auto& nextBoxCollider = gEngine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iNextEntity);
-				auto& currRigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
-				auto& nextRigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(*iNextEntity);
-				auto& currTransform = gEngine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
-
-				if (m_colliderManager.staticAABBvsAABB(currBoxCollider.AABB(), nextBoxCollider.AABB()))
-				{
-				//	if (checkAABB)
-						std::cout << "Entity " << *iEntity << " AABB collides with Entity " << *iNextEntity << " AABB" << std::endl;
-
-					if (nextRigidbody.getIsStatic())
-					{
-						currTransform.offSetPosition(Vec2(currRigidbody.getVelocity().x * gFixedDeltaTime, -currRigidbody.getVelocity().y) * gFixedDeltaTime);
-						currRigidbody.addForce(Vec2(0.0f, 5.0f));
-					}
-
-				//	checkAABB = false;
-				}
-				if (m_colliderManager.staticOBBvsOBB(currBoxCollider.OBB(), nextBoxCollider.OBB()))
-				{
-				//	if (checkOBB)
-						std::cout << "Entity " << *iEntity << " OBB collides with Entity " << *iNextEntity << " OBB" << std::endl;
-				//	checkOBB = false;
-				}
-			}
-
-			// Collision Response (Contact, forces, etc)
-			// Rest, Impulse, Torque
-
+			
 			//	std::cout << "Entity " << iEntity << "'s pos: " << transform.getPosition() << std::endl;
 		}
 	}

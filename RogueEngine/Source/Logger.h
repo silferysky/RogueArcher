@@ -47,7 +47,7 @@ private:
 //#define RE_FATAL(...)			Logger::instance().GetClientLogger()->fatal(__VA_ARGS__);	Logger::GetClientFileLogger()->fatal(__VA_ARGS__)
 
 //Assert Logging
-#define RE_ASSERT(args, msg)	if(args == 0) { RE_CORE_ERROR(msg);	assert(args && msg); }
+#define RE_ASSERT(args, msg)	if(args == false) { RE_CORE_ERROR(msg);	assert(args && msg); }
 
 #define CLEARSTRING(s) s.clear(); s.str("")
 

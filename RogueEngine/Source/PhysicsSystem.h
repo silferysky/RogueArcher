@@ -1,13 +1,15 @@
 #pragma once
 #include "CollisionManager.h"
-#include "REEngine.h"
+#include "SystemManager.h"
+#include "EventListener.h"
+#include "Vector2D.h"
 
 class Timer;
 
 class PhysicsSystem : public System, public EventListener
 {
-	CollisionManager m_colliderManager;
 	Vec2 m_gravity;
+
 	void integrateAcceleration(RigidbodyComponent& rigidbody, TransformComponent& transform);
 	void applyForces(RigidbodyComponent& rigidbody);
 

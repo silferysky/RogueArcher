@@ -29,10 +29,10 @@ public:
 		auto itr = ShaderMap.find(shader);
 		if (itr != ShaderMap.end())
 			return itr->second;
-		/* else
+		else
 		{
 			std::cout << "Error: Shader " << shader << " not found." << std::endl;
-			return nullptr;
-		} */
+			return Shader();
+		}
 	}
 };
