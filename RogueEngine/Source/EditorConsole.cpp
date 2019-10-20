@@ -8,12 +8,8 @@
 namespace Rogue
 {
 	ImGuiConsole::ImGuiConsole()
-	{
-	}
+	{}
 
-	ImGuiConsole::~ImGuiConsole()
-	{
-	}
 	void ImGuiConsole::Init()
 	{}
 
@@ -48,12 +44,11 @@ namespace Rogue
 			ImGui::EndMenu();
 		}
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-		
-		std::map<const char*, float> TimerMap = gEngine.m_coordinator.GetTimeSystem();
-		for (const auto& iter : TimerMap)
-		{
-			ImGui::Text("%c time : %.1f seconds", iter.first, iter.second);
-		}
+		//std::map<const char*,float> i = engine.m_timer.GetTimeSystem();
+		//for (const auto& iter : i)
+		//{
+		//
+		//}
 
 		ImGui::End();
 	}

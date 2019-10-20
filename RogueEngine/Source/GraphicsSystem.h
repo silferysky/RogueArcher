@@ -5,26 +5,24 @@
 #include "GLHelper.hpp"
 #include "ComponentList.h"
 
-namespace Rogue
+class Timer;
+class SpriteComponent;
+
+class GraphicsSystem : public System, public EventListener
 {
-	class SpriteComponent;
+	GLuint m_VAO;
+	GLuint m_VBO;
+	GLuint m_EBO;
 
-	class GraphicsSystem : public System, public EventListener
-	{
-		GLuint m_VAO;
-		GLuint m_VBO;
-		GLuint m_EBO;
+	Shader m_shader;
+public:
+	GraphicsSystem();
+	~GraphicsSystem() = default;
 
-		Shader m_shader;
-	public:
-		GraphicsSystem();
-		~GraphicsSystem() = default;
+	void init();
+	void update() override;
 
-		void init();
-		void update() override;
+	void draw(SpriteComponent* sprite, TransformComponent* transform);
 
-		void draw(SpriteComponent* sprite, TransformComponent* transform);
-
-		void receive(Event* ev);
-	};
-}
+	void receive(Event* ev);
+};

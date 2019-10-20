@@ -1,9 +1,6 @@
 #include "RotatableComponent.h"
 
-namespace Rogue
+inline void RotatableComponent::computeMOI(float mass, float volume)
 {
-	inline void RotatableComponent::computeMOI(float mass, float volume)
-	{
-		m_moInertia = mass * volume / 12;
-	}
+	m_moInertia = mass * volume / 12;
 }
