@@ -5,6 +5,8 @@ namespace Rogue
 {
 	void Editor::init()
 	{
+		Signature signature;
+		gEngine.m_coordinator.SetSystemSignature<Editor>(signature);
 		REGISTER_LISTENER(SystemID::id_EDITOR, Editor::receive);
 		m_EditorManager->AddEditorWindow<ImGuiEditorFile>("File");
 		m_EditorManager->AddEditorWindow<ImGuiEditorEdit>("Edit");
@@ -16,12 +18,12 @@ namespace Rogue
 		m_EditorManager->AddEditorWindow<ImGuiProject>("Project");
 		m_EditorManager->AddEditorWindow<ImGuiEditorViewport>("Viewport");
 
-		m_EditorManager->Init();
+		//m_EditorManager->Init();
 	}
 
 	void Editor::update()
 	{
-		m_EditorManager->Update();
+		//m_EditorManager->Update();
 	}
 
 	void Editor::receive(Event* ev)
@@ -31,7 +33,7 @@ namespace Rogue
 
 	void Editor::Shutdown()
 	{
-		m_EditorManager->Shutdown();
+		//m_EditorManager->Shutdown();
 	}
 }
 
