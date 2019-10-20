@@ -251,6 +251,12 @@
     <ClInclude Include="Source\LogicSystem.h">
       <Filter>RogueEngine\Systems\AI</Filter>
     </ClInclude>
+    <ClInclude Include="Source\LogicComponent.h">
+      <Filter>RogueEngine\Systems\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ILogic.h">
+      <Filter>RogueEngine\Systems\AI</Filter>
+    </ClInclude>
     <ClInclude Include="Source\EditorComponent.h">
       <Filter>RogueEditor\EditorFiles</Filter>
     </ClInclude>
@@ -449,6 +455,9 @@
       <Filter>RogueEngine\Systems\Events</Filter>
     </ClCompile>
     <ClCompile Include="Source\LogicSystem.cpp">
+      <Filter>RogueEngine\Systems\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\LogicComponent.cpp">
       <Filter>RogueEngine\Systems\AI</Filter>
     </ClCompile>
     <ClCompile Include="Source\EditorComponent.cpp">

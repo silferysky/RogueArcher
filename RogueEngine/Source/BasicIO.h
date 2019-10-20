@@ -1,21 +1,24 @@
 #pragma once
 #include <string>
 
-class BasicIO 
+namespace Rogue
 {
-public:
+	class BasicIO
+	{
+	public:
 
-	//For Read/Write
-	static std::string ReadFile(std::string FileName);
-	static void WriteFile(std::string FileName, std::string strToWrite);
+		//For Read/Write
+		static std::string ReadFile(std::string FileName);
+		static void WriteFile(std::string FileName, std::string strToWrite);
 
-	//For Json files
-	static void WriteLevelJsonFile(std::string FileName, size_t numOfEnt);
-	static void WriteArchetypeJsonFile(std::string FileName, size_t numOfEnt);
+		//For Json files
+		static void WriteLevelJsonFile(std::string FileName, size_t numOfEnt);
+		static void WriteArchetypeJsonFile(std::string FileName, size_t numOfEnt);
 
-private:
-	static std::string InitializeHeader(size_t numOfEnt, bool includeBackground = false);
-	static std::string InitializeSignatureJsonFile(size_t numOfEnt);
-	static std::string InitializeComponentStr(size_t numOfEnt = 1, bool writingLevel = true);
+	private:
+		static std::string InitializeHeader(size_t numOfEnt, bool includeBackground = false);
+		static std::string InitializeSignatureJsonFile(size_t numOfEnt);
+		static std::string InitializeComponentStr(size_t numOfEnt = 1, bool writingLevel = true);
 
-};
+	};
+}

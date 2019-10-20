@@ -8,6 +8,7 @@ namespace Rogue
 	class IEditable
 	{
 	public:
+		IEditable() = default;
 		virtual ~IEditable() = default;
 
 		virtual void Init() {}

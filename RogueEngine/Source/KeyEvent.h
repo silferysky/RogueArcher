@@ -3,156 +3,159 @@
 #include "Event.h"
 #include "InputData.h"
 
-//Base class for all keyboard events
-class KeyEvent : public Event
+namespace Rogue
 {
-public:
-	SET_EVENT_CATEGORY(EventCatInput | EventCatKeyboard)
-
-	virtual KeyPress GetKeyCode() const { return KeyCode; }
-	virtual const char* GetKeyName() const { return "None"; }
-
-	//This should not be used
-	inline void SetKeyCode(const KeyPress key) { KeyCode = key; }
-
-protected:
-
-	//To be used only by creating other KeyEvents using this base class
-	KeyEvent(KeyPress key)
-		: KeyCode(key) {}
-
-	KeyPress KeyCode;
-};
-
-class KeyPressEvent : public KeyEvent
-{
-public:
-
-	SET_EVENT_TYPE(EvKeyPressed)
-
-	KeyPressEvent(KeyPress key, int repeatCount = 0)
-		: KeyEvent(key), RepeatCount(repeatCount) {}
-
-	inline int GetRepeatCount() const { return RepeatCount; }
-
-	std::string ToString() const override
+	//Base class for all keyboard events
+	class KeyEvent : public Event
 	{
-		std::stringstream ss;
-		ss << "KeyPressEvent: " << (int)KeyCode << " with " << RepeatCount << " repeats.";
-		return ss.str();
-	}
+	public:
+		SET_EVENT_CATEGORY(EventCatInput | EventCatKeyboard)
 
-protected:
-	int RepeatCount;
-};
+			virtual KeyPress GetKeyCode() const { return KeyCode; }
+		virtual const char* GetKeyName() const { return "None"; }
 
-class KeyReleaseEvent : public KeyEvent
-{
-public:
+		//This should not be used
+		inline void SetKeyCode(const KeyPress key) { KeyCode = key; }
 
-	SET_EVENT_TYPE(EvKeyReleased)
+	protected:
 
-	KeyReleaseEvent(KeyPress key)
-		: KeyEvent(key) {}
+		//To be used only by creating other KeyEvents using this base class
+		KeyEvent(KeyPress key)
+			: KeyCode(key) {}
 
-	std::string ToString() const override
+		KeyPress KeyCode;
+	};
+
+	class KeyPressEvent : public KeyEvent
 	{
-		std::stringstream ss;
-		ss << "KeyReleasedEvent: " << (int)KeyCode;
-		return ss.str();
-	}
-}; 
+	public:
 
-class KeyTriggeredEvent : public KeyEvent
-{
-public:
+		SET_EVENT_TYPE(EvKeyPressed)
 
-	SET_EVENT_TYPE(EvKeyTriggered)
+			KeyPressEvent(KeyPress key, int repeatCount = 0)
+			: KeyEvent(key), RepeatCount(repeatCount) {}
 
-	KeyTriggeredEvent(KeyPress key)
-		: KeyEvent(key) {}
+		inline int GetRepeatCount() const { return RepeatCount; }
 
-	std::string ToString() const override
+		std::string ToString() const override
+		{
+			std::stringstream ss;
+			ss << "KeyPressEvent: " << (int)KeyCode << " with " << RepeatCount << " repeats.";
+			return ss.str();
+		}
+
+	protected:
+		int RepeatCount;
+	};
+
+	class KeyReleaseEvent : public KeyEvent
 	{
-		std::stringstream ss;
-		ss << "KeyTriggeredEvent: " << (int)KeyCode;
-		return ss.str();
-	}
-};
+	public:
 
+		SET_EVENT_TYPE(EvKeyReleased)
 
-class MousePressEvent : public KeyPressEvent
-{
-	SET_EVENT_CATEGORY(EventCatMouse | EventCatInput)
-	SET_EVENT_TYPE(EvMouseButtonPressed)
+			KeyReleaseEvent(KeyPress key)
+			: KeyEvent(key) {}
 
-	MousePressEvent(KeyPress key, int repeatCount = 0)
-		: KeyPressEvent(key, repeatCount) {}
+		std::string ToString() const override
+		{
+			std::stringstream ss;
+			ss << "KeyReleasedEvent: " << (int)KeyCode;
+			return ss.str();
+		}
+	};
 
-	std::string ToString() const override
+	class KeyTriggeredEvent : public KeyEvent
 	{
-		std::stringstream ss;
-		ss << "MousePressEvent: " << (int)KeyCode << " with " << RepeatCount << " repeats.";
-		return ss.str();
-	}
-};
+	public:
 
-class MouseReleaseEvent : public KeyReleaseEvent
-{
-public:
+		SET_EVENT_TYPE(EvKeyTriggered)
 
-	SET_EVENT_CATEGORY(EventCatMouse | EventCatInput)
-	SET_EVENT_TYPE(EvMouseButtonReleased)
+			KeyTriggeredEvent(KeyPress key)
+			: KeyEvent(key) {}
 
-	MouseReleaseEvent(KeyPress key)
-		: KeyReleaseEvent(key) {}
+		std::string ToString() const override
+		{
+			std::stringstream ss;
+			ss << "KeyTriggeredEvent: " << (int)KeyCode;
+			return ss.str();
+		}
+	};
 
-	std::string ToString() const override
+
+	class MousePressEvent : public KeyPressEvent
 	{
-		std::stringstream ss;
-		ss << "MouseReleaseEvent: " << (int)KeyCode;
-		return ss.str();
-	}
-};
+		SET_EVENT_CATEGORY(EventCatMouse | EventCatInput)
+			SET_EVENT_TYPE(EvMouseButtonPressed)
 
-class MouseTriggeredEvent : public KeyTriggeredEvent
-{
-public:
+			MousePressEvent(KeyPress key, int repeatCount = 0)
+			: KeyPressEvent(key, repeatCount) {}
 
-	SET_EVENT_CATEGORY(EventCatMouse | EventCatInput)
-	SET_EVENT_TYPE(EvMouseButtonTriggered)
+		std::string ToString() const override
+		{
+			std::stringstream ss;
+			ss << "MousePressEvent: " << (int)KeyCode << " with " << RepeatCount << " repeats.";
+			return ss.str();
+		}
+	};
 
-	MouseTriggeredEvent(KeyPress key)
-		: KeyTriggeredEvent(key) {}
-
-	std::string ToString() const override
+	class MouseReleaseEvent : public KeyReleaseEvent
 	{
-		std::stringstream ss;
-		ss << "MouseReleaseEvent: " << (int)KeyCode;
-		return ss.str();
-	}
-};
+	public:
 
-class MouseMoveEvent : public KeyEvent
-{
-public:
+		SET_EVENT_CATEGORY(EventCatMouse | EventCatInput)
+			SET_EVENT_TYPE(EvMouseButtonReleased)
 
-	SET_EVENT_CATEGORY(EventCatMouse)
-	SET_EVENT_TYPE(EvMouseMoved)
+			MouseReleaseEvent(KeyPress key)
+			: KeyReleaseEvent(key) {}
 
-	inline float GetX() { return x; }
-	inline float GetY() { return y; }
+		std::string ToString() const override
+		{
+			std::stringstream ss;
+			ss << "MouseReleaseEvent: " << (int)KeyCode;
+			return ss.str();
+		}
+	};
 
-	MouseMoveEvent(float xPos, float yPos, KeyPress key = KeyPress::UNDEF)
-		: KeyEvent(key), x(xPos), y(yPos) {}
-
-	std::string ToString() const override
+	class MouseTriggeredEvent : public KeyTriggeredEvent
 	{
-		std::stringstream ss;
-		ss << "MouseMoveEvent: " << (int)KeyCode << " to (" << x << "," << y << ")";
-		return ss.str();
-	}
+	public:
 
-private:
-	float x, y;
-};
+		SET_EVENT_CATEGORY(EventCatMouse | EventCatInput)
+			SET_EVENT_TYPE(EvMouseButtonTriggered)
+
+			MouseTriggeredEvent(KeyPress key)
+			: KeyTriggeredEvent(key) {}
+
+		std::string ToString() const override
+		{
+			std::stringstream ss;
+			ss << "MouseReleaseEvent: " << (int)KeyCode;
+			return ss.str();
+		}
+	};
+
+	class MouseMoveEvent : public KeyEvent
+	{
+	public:
+
+		SET_EVENT_CATEGORY(EventCatMouse)
+			SET_EVENT_TYPE(EvMouseMoved)
+
+			inline float GetX() { return x; }
+		inline float GetY() { return y; }
+
+		MouseMoveEvent(float xPos, float yPos, KeyPress key = KeyPress::UNDEF)
+			: KeyEvent(key), x(xPos), y(yPos) {}
+
+		std::string ToString() const override
+		{
+			std::stringstream ss;
+			ss << "MouseMoveEvent: " << (int)KeyCode << " to (" << x << "," << y << ")";
+			return ss.str();
+		}
+
+	private:
+		float x, y;
+	};
+}

@@ -8,64 +8,67 @@
 #include "Types.h"
 #include "Logger.h"
 
-class EntityManager
+namespace Rogue
 {
-public:
-	EntityManager()
+	class EntityManager
 	{
-		for (Entity entity = 0; entity < MAX_ENTITIES; ++entity)
+	public:
+		EntityManager()
 		{
-			REAvailableEntities.push(entity);
+			for (Entity entity = 0; entity < MAX_ENTITIES; ++entity)
+			{
+				REAvailableEntities.push(entity);
+			}
 		}
-	}
 
-	Entity CreateEntity()
-	{
-		// Take an ID from the front of the queue
-		RE_ASSERT(REActiveEntityCount < MAX_ENTITIES, "Too many entities in existence.");
-		Entity id = REAvailableEntities.front();
-		REAvailableEntities.pop();
-		++REActiveEntityCount;
+		Entity CreateEntity()
+		{
+			// Take an ID from the front of the queue
+			RE_ASSERT(REActiveEntityCount < MAX_ENTITIES, "Too many entities in existence.");
+			Entity id = REAvailableEntities.front();
+			REAvailableEntities.pop();
+			++REActiveEntityCount;
 
-		std::stringstream out;
-		out << "Entities created. Current active entities: " << REActiveEntityCount;
-		RE_CORE_INFO(out.str());
+			std::stringstream out;
+			out << "Entities created. Current active entities: " << REActiveEntityCount;
+			RE_CORE_INFO(out.str());
 
-		return id;
-	}
+			return id;
+		}
 
-	void DestroyEntity(Entity entity)
-	{
-		RE_ASSERT(entity < MAX_ENTITIES, "Entity out of range.");
-		// Invalidate the destroyed entity's signature
-		RESignatures[entity].reset();
+		void DestroyEntity(Entity entity)
+		{
+			RE_ASSERT(entity < MAX_ENTITIES, "Entity out of range.");
+			// Invalidate the destroyed entity's signature
+			RESignatures[entity].reset();
 
-		// Put the destroyed ID at the back of the queue
-		REAvailableEntities.push(entity);
-		--REActiveEntityCount;
+			// Put the destroyed ID at the back of the queue
+			REAvailableEntities.push(entity);
+			--REActiveEntityCount;
 
-		std::stringstream out;
-		out << "Entities Destroyed. Current active entities: " << REActiveEntityCount;
-		RE_CORE_INFO(out.str());
-	}
+			std::stringstream out;
+			out << "Entities Destroyed. Current active entities: " << REActiveEntityCount;
+			RE_CORE_INFO(out.str());
+		}
 
-	void SetSignature(Entity entity, Signature signature)
-	{
-		RE_ASSERT(entity < MAX_ENTITIES, "Entity out of range.");
-		RESignatures[entity] = signature;
-	}
+		void SetSignature(Entity entity, Signature signature)
+		{
+			RE_ASSERT(entity < MAX_ENTITIES, "Entity out of range.");
+			RESignatures[entity] = signature;
+		}
 
-	Signature GetSignature(Entity entity)
-	{
-		RE_ASSERT(entity < MAX_ENTITIES, "Entity out of range.");
-		return RESignatures[entity];
-	}
+		Signature GetSignature(Entity entity)
+		{
+			RE_ASSERT(entity < MAX_ENTITIES, "Entity out of range.");
+			return RESignatures[entity];
+		}
 
-private:
+	private:
 
-	std::queue<Entity> REAvailableEntities{};
+		std::queue<Entity> REAvailableEntities{};
 
-	std::array<Signature, MAX_ENTITIES> RESignatures{};
+		std::array<Signature, MAX_ENTITIES> RESignatures{};
 
-	uint32_t REActiveEntityCount{};
-};
+		uint32_t REActiveEntityCount{};
+	};
+}
