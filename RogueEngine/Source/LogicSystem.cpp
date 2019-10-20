@@ -11,62 +11,66 @@
 #include "LogicComponent.h"
 #include "Timer.h"
 
-LogicSystem::LogicSystem()
-	: System(SystemID::id_LOGICSYSTEM)
+
+namespace Rogue
 {
-	m_entityLogicMap = std::map<Entity, ILogic*>();
-}
-
-void LogicSystem::AddLogicInterface(Entity entity, ILogic* logicInterface)
-{
-	m_entityLogicMap.insert({ entity, logicInterface });
-}
-
-void LogicSystem::RemoveLogicInterface(Entity entity)
-{
-	m_entityLogicMap.erase(entity);
-}
-
-void LogicSystem::init()
-{
-	REGISTER_LISTENER(SystemID::id_LOGICSYSTEM, LogicSystem::receive);
-
-	Signature signature;
-	signature.set(gEngine.m_coordinator.GetComponentType<TransformComponent>());
-	signature.set(gEngine.m_coordinator.GetComponentType<BoxCollider2DComponent>());
-	signature.set(gEngine.m_coordinator.GetComponentType<LogicComponent>());
-
-	gEngine.m_coordinator.SetSystemSignature<LogicSystem>(signature);
-}
-
-void LogicSystem::update()
-{
-	Timer TimerSystem;
-	TimerSystem.TimerInit("Logic System");
-	for (auto it = m_entityLogicMap.begin(); it != m_entityLogicMap.end(); ++it)
+	LogicSystem::LogicSystem()
+		: System(SystemID::id_LOGICSYSTEM)
 	{
-		//Null checker
-		if (!it->second)
-			continue;
-
-		//Updates the current logic. The individual AI types will handle the state on their own
-		it->second->logicUpdate();
+		m_entityLogicMap = std::map<Entity, ILogic*>();
 	}
-	TimerSystem.TimerEnd("Logic System");
+
+	void LogicSystem::AddLogicInterface(Entity entity, ILogic* logicInterface)
+	{
+		m_entityLogicMap.insert({ entity, logicInterface });
+	}
+
+	void LogicSystem::RemoveLogicInterface(Entity entity)
+	{
+		m_entityLogicMap.erase(entity);
+	}
+
+	void LogicSystem::init()
+	{
+		REGISTER_LISTENER(SystemID::id_LOGICSYSTEM, LogicSystem::receive);
+
+		Signature signature;
+		signature.set(gEngine.m_coordinator.GetComponentType<TransformComponent>());
+		signature.set(gEngine.m_coordinator.GetComponentType<BoxCollider2DComponent>());
+		signature.set(gEngine.m_coordinator.GetComponentType<LogicComponent>());
+
+		gEngine.m_coordinator.SetSystemSignature<LogicSystem>(signature);
+	}
+
+	void LogicSystem::update()
+	{
+		//gEngine.m_coordinator.GetTimer()->TimerInit("Logic System");
+		for (auto it = m_entityLogicMap.begin(); it != m_entityLogicMap.end(); ++it)
+		{
+			//Null checker
+			if (!it->second)
+				continue;
+
+			//Updates the current logic. The individual AI types will handle the state on their own
+			it->second->logicUpdate();
+		}
+		//gEngine.m_coordinator.GetTimer()->TimerEnd("Logic System");
+	}
+
+	void LogicSystem::receive(Event* ev)
+	{
+		switch (ev->GetEventType())
+		{
+		case EventType::EvKeyPressed:
+		{
+			KeyPressEvent* keypressevent = dynamic_cast<KeyPressEvent*>(ev);
+
+			KeyPress keycode = keypressevent->GetKeyCode();
+
+			if (keycode == KeyPress::KeyEsc)
+				gEngine.SetGameIsRunning(false);
+		}
+		}
+	}
 }
 
-void LogicSystem::receive(Event* ev)
-{
-	switch (ev->GetEventType())
-	{
-	case EventType::EvKeyPressed:
-	{
-		KeyPressEvent* keypressevent = dynamic_cast<KeyPressEvent*>(ev);
-
-		KeyPress keycode = keypressevent->GetKeyCode();
-
-		if (keycode == KeyPress::KeyEsc)
-			gEngine.SetGameIsRunning(false);
-	}
-	}
-}

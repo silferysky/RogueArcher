@@ -1,25 +1,34 @@
 #include "Main.h"
 #include "Timer.h"
 
-void Timer::TimerInit(const char* System)
+namespace Rogue
 {
-	time.insert(std::make_pair( System, totaltime ));
-	StartTimer = timer.now();
-}
-
-void Timer::TimerEnd(const char* System)
-{
-	auto EndTimer = timer.now();
-	totaltime = std::chrono::duration_cast<std::chrono::microseconds>(EndTimer - StartTimer).count() / 1000000.0f;
-	totaltime = (totaltime / gDeltaTime) * 100;
-	std::map<const char*, float>::iterator it = time.find(System);
-	if (it != time.end())
+	void Timer::TimerInit(const char* System)
 	{
-		it->second = totaltime;
+		time.insert(std::make_pair(System, totaltime));
+		StartTimer = timer.now();
+	}
+
+	void Timer::TimerEnd(const char* System)
+	{
+		auto EndTimer = timer.now();
+		totaltime = std::chrono::duration_cast<std::chrono::microseconds>(EndTimer - StartTimer).count() / 1000000.0f;
+		totaltime = (totaltime / gDeltaTime) * 100;
+		std::map<const char*, float>::iterator it = time.find(System);
+		if (it != time.end())
+		{
+			it->second = totaltime;
+		}
+		for (auto i : time)
+		{
+			std::cout << i.first << i.second << std::endl;
+		}
+	}
+
+	const std::map<const char*, float> Timer::GetTimeSystem() const
+	{
+		const std::map<const char*, float>& temp = time;
+		return temp;
 	}
 }
 
-std::map<const char*, float> Timer::GetTimeSystem() const
-{
-	return time;
-}
