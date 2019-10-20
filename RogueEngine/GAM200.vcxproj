@@ -24,6 +24,7 @@
     <ClInclude Include="Source\BaseComponent.h" />
     <ClInclude Include="Source\BaseSystem.h" />
     <ClInclude Include="Source\BoxCollider2DComponent.h" />
+    <ClInclude Include="Source\CollisionSystem.h" />
     <ClInclude Include="Source\DebugDrawSystem.h" />
     <ClInclude Include="Source\Editor.h" />
     <ClInclude Include="Source\EditorComponent.h" />
@@ -110,6 +111,7 @@
   <ItemGroup>
     <ClCompile Include="Source\BaseAI.cpp" />
     <ClCompile Include="Source\BoxCollider2DComponent.cpp" />
+    <ClCompile Include="Source\CollisionSystem.cpp" />
     <ClCompile Include="Source\DebugDrawSystem.cpp" />
     <ClCompile Include="Source\Editor.cpp" />
     <ClCompile Include="Source\EditorComponent.cpp" />

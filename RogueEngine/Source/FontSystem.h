@@ -30,7 +30,7 @@ class FontSystem : public System, public EventListener
 	FT_Library ft;
 	FT_Face face;
 public:
-	FontSystem() = default;
+	FontSystem();
 	~FontSystem() = default;
 
 	void init();

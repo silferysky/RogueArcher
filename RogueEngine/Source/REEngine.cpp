@@ -1,15 +1,17 @@
 #include "Logger.h"
 #include "InputManager.h"
 #include "EventDispatcher.h"
-#include "LogicSystem.h"
 #include "REEngine.h"
 #include "GLHelper.hpp"
-#include "PhysicsSystem.h"
-#include "GraphicsSystem.h"
-#include "DebugDrawSystem.h"
-#include "FontSystem.h"
 #include "ComponentList.h"
 #include "Main.h"
+
+#include "PhysicsSystem.h"
+#include "GraphicsSystem.h"
+#include "LogicSystem.h"
+#include "DebugDrawSystem.h"
+#include "FontSystem.h"
+#include "CollisionSystem.h"
 
 REEngine::REEngine() :
 	m_coordinator{}, m_accumulatedTime{ 0.0f }, m_stepCount{ 0 },
@@ -42,6 +44,7 @@ void REEngine::RegisterSystems()
 {
 	m_coordinator.RegisterSystem<InputManager>();
 	m_coordinator.RegisterSystem<PhysicsSystem>();
+	m_coordinator.RegisterSystem<CollisionSystem>();
 	m_coordinator.RegisterSystem<LogicSystem>();
 	m_coordinator.RegisterSystem<GraphicsSystem>();
 	m_coordinator.RegisterSystem<DebugDrawSystem>();
@@ -63,6 +66,7 @@ void REEngine::init()
 {
 	// Init OpenGL libraries.
 	RE_ASSERT(InitializeOpenGL(), "OpenGL not initialized");
+
 	// Register all systems.
 	RegisterSystems();
 	

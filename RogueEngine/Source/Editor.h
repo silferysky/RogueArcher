@@ -3,12 +3,14 @@
 #include "EditorManager.h"
 #include "REEditor.h"
 #include "REEngine.h"
+
 namespace Rogue
 {
 	class Editor : public System, public EventListener
 	{
 	public:
 		Editor() :
+			System(SystemID::id_EDITOR),
 			m_EditorManager{ std::make_shared<EditorManager>() }
 		{}
 

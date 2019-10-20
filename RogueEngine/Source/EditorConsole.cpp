@@ -1,17 +1,17 @@
 #include "EditorConsole.h"
+#include "imgui.h"
+#include "imgui_impl_opengl3.h"
+#include "imgui_impl_glfw.h"
+#include "glew.h"
+#include "glfw3.h"
 
 namespace Rogue
 {
 	ImGuiConsole::ImGuiConsole()
-	{
-	}
-	ImGuiConsole::~ImGuiConsole()
-	{
-	}
+	{}
+
 	void ImGuiConsole::Init()
-	{
-		
-	}
+	{}
 
 	void ImGuiConsole::Update()
 	{

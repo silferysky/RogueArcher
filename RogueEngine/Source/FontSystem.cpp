@@ -4,6 +4,10 @@
 #include "REMath.h"
 #include "EventDispatcher.h"
 
+FontSystem::FontSystem() :
+	System(SystemID::id_FONTSYSTEM)
+{}
+
 void FontSystem::init()
 {
 	LISTENER_HANDLER hand = std::bind(&FontSystem::receive, this, std::placeholders::_1);
@@ -78,6 +82,9 @@ void FontSystem::init()
 	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
+
+	Signature signature;
+	gEngine.m_coordinator.SetSystemSignature<FontSystem>(signature);
 }
 
 void FontSystem::update()

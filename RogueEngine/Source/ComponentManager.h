@@ -50,7 +50,7 @@ public:
 	void AddComponent(Entity entity, T component)
 	{
 		std::stringstream out;
-		out << "Entity " << entity << "'s " << typeid(T).name() << " added!";
+		out << "Added " << typeid(T).name() << " to Entity " << entity;
 		RE_CORE_INFO(out.str());
 		GetComponentArray<T>()->InsertData(entity, component);
 	}
@@ -65,10 +65,6 @@ public:
 	T& GetComponent(Entity entity)
 	{
 		return GetComponentArray<T>()->GetData(entity);
-	}
-
-	BaseComponent& GetComponent(Entity entity, COMPONENTID id)
-	{
 	}
 
 	void EntityDestroyed(Entity entity)

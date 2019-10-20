@@ -24,10 +24,10 @@ public:
 	void RegisterSystem()
 	{
 		std::type_index typeName = GetTypeIndex<T>();
-		RE_ASSERT(RESystems.find(typeName) == RESystems.end(), "Registering system more than once.");
+		RE_ASSERT(m_systems.find(typeName) == m_systems.end(), "Registering system more than once.");
 
 		// Insert the newly created system pointer and typename into the map.
-		RESystems.insert({ typeName, std::make_shared<T>() });
+		m_systems.insert({ typeName, std::make_shared<T>() });
 	}
 
 	template<typename T>
@@ -35,16 +35,16 @@ public:
 	{
 		std::type_index SystemName = GetTypeIndex<T>();
 		
-		auto i = RESystems.find(SystemName);
-		if (i != RESystems.end())
+		auto i = m_systems.find(SystemName);
+		if (i != m_systems.end())
 		{
-			return std::dynamic_pointer_cast<T>(i->second);
+			return std::dynamic_pointer_cast<T>(i->second); // Casts the base shared_ptr to derived
 		}
 	}
 
 	void InitSystems()
 	{
-		for (auto system : RESystems)
+		for (auto system : m_systems)
 		{
 			system.second->init();
 		}
@@ -52,30 +52,35 @@ public:
 
 	void UpdateSystems()
 	{
-		for (auto system : RESystems)
+		for (auto system : m_systems)
 		{
 			system.second->update();
 		}
 	}
 
-	template<typename T>
+	template <typename T>
 	void SetSignature(Signature signature)
 	{
-		std::type_index typeName = GetTypeIndex<T>();
+		std::type_index SystemName = GetTypeIndex<T>();
 
 		// Set the signature for this system
-		RESignatures.insert({ typeName, signature });
+		m_signatures.insert({ SystemName, signature });
 	}
 
 	void EntityDestroyed(Entity entity)
 	{
 		// Erase a destroyed entity from all system lists
-		for (auto const& pair : RESystems)
+		for (auto const& pair : m_systems)
 		{
 			auto const& system = pair.second;
 
 			system->m_entities.erase(entity);
-			RE_CORE_INFO("Entities Removed from system");
+			
+			std::stringstream str;
+			str << "Entity " << entity << " Removed from all systems";
+			RE_CORE_INFO(str.str());
+
+			break;
 		}
 	}
 
@@ -84,48 +89,45 @@ public:
 		std::stringstream out;
 
 		// Notify each system that an entity's signature changed
-		for (auto const& pair : RESystems)
+		for (auto const& pair : m_systems)
 		{
-			auto const& type = pair.first;
-			auto const& system = pair.second;
-			auto const& systemSignature = RESignatures[type];
+			std::type_index type = pair.first;
+			std::shared_ptr<System> system = pair.second;
+			std::unordered_map<std::type_index, Signature>::iterator i = m_signatures.find(type);
+			RE_ASSERT(i != m_signatures.end(), "System signature not found! Please set an empty sig if your system does not require any component");
+			Signature systemSignature = i->second;
 
 
 			// Entity signature matches system signature - insert into set
 			if ((entitySignature & systemSignature) == systemSignature)
-			{
-				// Signature matched.
-				CLEARSTRING(out);
-				out << "Entity " << entity << "'s signature matches.";
-				RE_CORE_INFO(out.str());
-				
+			{	
 				if (system->m_entities.insert(entity).second)
 				{
 					CLEARSTRING(out);
-					out << "Entity added to " << type.name() << ".";
+					out << "Entity " << entity << " added to " << type.name();
 					RE_CORE_INFO(out.str());
 				}
 				else
 				{
 					CLEARSTRING(out);
-					out << "Entity already exists in " << type.name()<< ".";
+					out << "Entity " << entity << " exists in " << type.name();
 					RE_CORE_INFO(out.str());
 				}
 			}
 			// Entity signature does not match system signature - erase from set/don't add
 			else
 			{
-				CLEARSTRING(out);
-				out << "Signature " << entity << " does not match " << type.name() << ".";
-				RE_CORE_INFO(out.str());
-
 				if (system->m_entities.find(entity) != system->m_entities.end()) // If entity exists
 				{
-					RE_CORE_INFO("Entity removed to system");
+					CLEARSTRING(out);
+					out << "Entity " << entity << " removed from " << type.name();
+					RE_CORE_INFO(out.str());
 				}
 				else
 				{
-					RE_CORE_INFO("Entity not added to system");
+					CLEARSTRING(out);
+					out << "Entity " << entity << " not added to " << type.name();
+					RE_CORE_INFO(out.str());
 				}
 				system->m_entities.erase(entity);
 			}
@@ -133,6 +135,6 @@ public:
 	}
 
 private:
-	std::unordered_map<std::type_index, Signature> RESignatures{};
-	std::unordered_map<std::type_index, std::shared_ptr<System>> RESystems{};
+	std::unordered_map<std::type_index, Signature> m_signatures;
+	std::unordered_map<std::type_index, std::shared_ptr<System>> m_systems;
 };

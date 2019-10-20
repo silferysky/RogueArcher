@@ -5,6 +5,7 @@
 #include "Windows.h"
 #include "EventDispatcher.h"
 #include "Timer.h"
+#include "Main.h"
 
 struct KeyboardState;
 enum class KeyPress;
@@ -37,6 +38,9 @@ void InputManager::init()
 
 	ResetState(&CurKeyboardState);
 	ResetState(&PrevKeyboardState);
+
+	Signature signature;
+	gEngine.m_coordinator.SetSystemSignature<InputManager>(signature);
 }
 
 void InputManager::update()
