@@ -11,6 +11,8 @@ namespace Rogue
 
 	void CollisionSystem::init()
 	{
+		REGISTER_LISTENER(SystemID::id_COLLISIONSYSTEM, CollisionSystem::receive);
+
 		// Add components to signature.
 		Signature signature;
 		signature.set(gEngine.m_coordinator.GetComponentType<RigidbodyComponent>());
@@ -24,8 +26,6 @@ namespace Rogue
 
 	void CollisionSystem::update()
 	{
-		REGISTER_LISTENER(SystemID::id_COLLISIONSYSTEM, CollisionSystem::receive);
-
 		std::set<Entity>::iterator iEntity;
 		for (iEntity = m_entities.begin()++; iEntity != m_entities.end(); ++iEntity)
 		{
@@ -60,7 +60,7 @@ namespace Rogue
 				if (m_colliderManager.staticAABBvsAABB(currBoxCollider.AABB(), nextBoxCollider.AABB()))
 				{
 					//	if (checkAABB)
-					std::cout << "Entity " << *iEntity << " AABB collides with Entity " << *iNextEntity << " AABB" << std::endl;
+					//std::cout << "Entity " << *iEntity << " AABB collides with Entity " << *iNextEntity << " AABB" << std::endl;
 
 					if (nextRigidbody.getIsStatic())
 					{
@@ -73,7 +73,7 @@ namespace Rogue
 				if (m_colliderManager.staticOBBvsOBB(currBoxCollider.OBB(), nextBoxCollider.OBB()))
 				{
 					//	if (checkOBB)
-					std::cout << "Entity " << *iEntity << " OBB collides with Entity " << *iNextEntity << " OBB" << std::endl;
+					//std::cout << "Entity " << *iEntity << " OBB collides with Entity " << *iNextEntity << " OBB" << std::endl;
 					//	checkOBB = false;
 				}
 			}

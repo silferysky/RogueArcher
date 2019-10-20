@@ -45,11 +45,11 @@ namespace Rogue
 	void REEngine::RegisterSystems()
 	{
 		m_coordinator.RegisterSystem<InputManager>();
+		m_coordinator.RegisterSystem<LogicSystem>();
 		m_coordinator.RegisterSystem<PhysicsSystem>();
 		m_coordinator.RegisterSystem<CollisionSystem>();
-		m_coordinator.RegisterSystem<LogicSystem>();
 		m_coordinator.RegisterSystem<GraphicsSystem>();
-		m_coordinator.RegisterSystem<DebugDrawSystem>();
+	//	m_coordinator.RegisterSystem<DebugDrawSystem>();
 		m_coordinator.RegisterSystem<FontSystem>();
 	}
 
@@ -88,6 +88,7 @@ namespace Rogue
 
 		while (m_gameIsRunning)
 		{
+			std::cout << 1/gDeltaTime << std::endl;
 			gDeltaTime = std::chrono::duration_cast<std::chrono::microseconds>(m_loopEnd - m_loopStart).count() / MICRO_TO_SECONDS;
 
 			m_loopStart = mainLoopTimer.now();
