@@ -29,13 +29,13 @@ namespace Rogue
 		Shader loadShader(std::string shader)
 		{
 			auto itr = ShaderMap.find(shader);
-			if (itr != ShaderMap.end())
-				return itr->second;
-			else
-			{
-				std::cout << "Error: Shader " << shader << " not found." << std::endl;
-				return Shader();
-			}
+
+			std::stringstream out;
+			out << "Shader " << shader << " not found!";
+
+			RE_ASSERT(itr != ShaderMap.end(), out.str().c_str());
+			
+			return itr->second;
 		}
 	};
 }
