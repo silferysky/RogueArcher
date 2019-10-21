@@ -60,7 +60,7 @@ namespace Rogue
 				if (m_colliderManager.staticAABBvsAABB(currBoxCollider.AABB(), nextBoxCollider.AABB()))
 				{
 					//	if (checkAABB)
-					//std::cout << "Entity " << *iEntity << " AABB collides with Entity " << *iNextEntity << " AABB" << std::endl;
+					std::cout << "Entity " << *iEntity << " AABB collides with Entity " << *iNextEntity << " AABB" << std::endl;
 
 					if (nextRigidbody.getIsStatic())
 					{
@@ -73,7 +73,7 @@ namespace Rogue
 				if (m_colliderManager.staticOBBvsOBB(currBoxCollider.OBB(), nextBoxCollider.OBB()))
 				{
 					//	if (checkOBB)
-					//std::cout << "Entity " << *iEntity << " OBB collides with Entity " << *iNextEntity << " OBB" << std::endl;
+					std::cout << "Entity " << *iEntity << " OBB collides with Entity " << *iNextEntity << " OBB" << std::endl;
 					//	checkOBB = false;
 				}
 			}

@@ -49,7 +49,7 @@ namespace Rogue
 		m_coordinator.RegisterSystem<PhysicsSystem>();
 		m_coordinator.RegisterSystem<CollisionSystem>();
 		m_coordinator.RegisterSystem<GraphicsSystem>();
-	//	m_coordinator.RegisterSystem<DebugDrawSystem>();
+		m_coordinator.RegisterSystem<DebugDrawSystem>();
 		m_coordinator.RegisterSystem<FontSystem>();
 		m_coordinator.RegisterSystem<Editor>();
 

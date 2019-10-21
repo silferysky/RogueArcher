@@ -21,6 +21,6 @@ namespace Rogue
 	};
 
 	using LISTENER_HANDLER = std::function<void(Event*)>;
+}
 #define REGISTER_LISTENER(id, func)	LISTENER_HANDLER hand = std::bind(&func, this, std::placeholders::_1); \
 									EventDispatcher::instance().AddListener(id, hand)
-}
