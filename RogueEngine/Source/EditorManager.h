@@ -30,7 +30,7 @@ namespace Rogue
 		bool Inspector = true;
 		bool Dropbox = true;
 		bool Console = true;
-		GLFWwindow* window = nullptr;
+		//GLFWwindow* window = nullptr;
 		ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
 		template<typename T>

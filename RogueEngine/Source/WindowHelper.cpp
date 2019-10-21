@@ -4,6 +4,7 @@
 #include "Main.h"
 #include "GLHelper.hpp"
 #include "EditorManager.h"
+#include "imgui_impl_win32.h"
 
 namespace Rogue
 {
