@@ -71,6 +71,7 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	wglMakeCurrent(hDC, hRC);
 
 	ShowWindow(hWnd, nCmdShow);
+
 	//if (EditorMode)
 	//{
 	//	Rogue::Editor Editor;
@@ -92,7 +93,7 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 
 	//setVSync(1);
 
-	gEngine.init();
+	gEngine.init(hWnd);
 	
 	//////////////////////////
 	//Graphics Debug

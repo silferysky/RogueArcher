@@ -44,6 +44,7 @@ namespace Rogue
 
 	void REEngine::RegisterSystems()
 	{
+		m_coordinator.RegisterSystem<Editor>();
 		m_coordinator.RegisterSystem<InputManager>();
 		m_coordinator.RegisterSystem<LogicSystem>();
 		m_coordinator.RegisterSystem<PhysicsSystem>();
@@ -51,8 +52,6 @@ namespace Rogue
 		m_coordinator.RegisterSystem<GraphicsSystem>();
 		m_coordinator.RegisterSystem<DebugDrawSystem>();
 		m_coordinator.RegisterSystem<FontSystem>();
-		m_coordinator.RegisterSystem<Editor>();
-
 	}
 
 	void REEngine::RegisterComponents()
@@ -66,8 +65,10 @@ namespace Rogue
 		m_coordinator.RegisterComponent<LogicComponent>();
 	}
 
-	void REEngine::init()
+	void REEngine::init(HWND hWnd)
 	{
+		m_hwnd = hWnd;
+
 		// Init OpenGL libraries.
 		RE_ASSERT(InitializeOpenGL(), "OpenGL not initialized");
 
@@ -134,6 +135,11 @@ namespace Rogue
 	int REEngine::GetStepCount() const
 	{
 		return m_stepCount;
+	}
+
+	HWND REEngine::GetWindowHandle() const
+	{
+		return m_hwnd;
 	}
 
 	void REEngine::SetGameIsRunning(bool set)

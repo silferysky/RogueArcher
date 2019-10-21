@@ -350,6 +350,9 @@
     <ClInclude Include="Source\DebugDrawSystem.h">
       <Filter>RogueEngine\Systems\DebugDraw</Filter>
     </ClInclude>
+    <ClInclude Include="Source\imgui_impl_win32.h">
+      <Filter>RogueEditor\EditorLibrary</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -522,6 +525,9 @@
     </ClCompile>
     <ClCompile Include="Source\DebugDrawSystem.cpp">
       <Filter>RogueEngine\Systems\DebugDraw</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\imgui_impl_win32.cpp">
+      <Filter>RogueEditor\EditorLibrary</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
