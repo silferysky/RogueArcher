@@ -44,12 +44,12 @@ namespace Rogue
 
 	void REEngine::RegisterSystems()
 	{
-		m_coordinator.RegisterSystem<Editor>();
 		m_coordinator.RegisterSystem<InputManager>();
 		m_coordinator.RegisterSystem<LogicSystem>();
 		m_coordinator.RegisterSystem<PhysicsSystem>();
 		m_coordinator.RegisterSystem<CollisionSystem>();
 		m_coordinator.RegisterSystem<GraphicsSystem>();
+		m_coordinator.RegisterSystem<Editor>();
 		m_coordinator.RegisterSystem<DebugDrawSystem>();
 		m_coordinator.RegisterSystem<FontSystem>();
 	}
