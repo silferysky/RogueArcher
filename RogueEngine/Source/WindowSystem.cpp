@@ -23,18 +23,11 @@ namespace Rogue
 		Signature signature;
 		gEngine.m_coordinator.SetSystemSignature<WindowSystem>(signature);
 
-		/* rapidjson::Document Windows = RESerialiser::DeserialiseFromFile("Resources/Windows.json");
+		/* 
+		config.ConfigInit();
 
-		x = Windows["x"].GetInt();
-		y = Windows["y"].GetInt();
-		height = Windows["height"].GetInt();
-		width = Windows["width"].GetInt();
-		byte = Windows["byte"].GetInt();
-		flags = Windows["flags"].GetInt();
-		title = Windows["title"].GetString();
-		sound = Windows["sound"].GetBool();
-
-		hWnd = CreateOpenGLWindow(const_cast<char*>("hi"), x, y, width, height, 0, flags);
+		hWnd = CreateOpenGLWindow(const_cast<char*>(config.GetTitle().c_str()), config.GetX(), config.GetY(),
+		config.GetWidth(), config.GetHeight(), 0, config.GetFlags());
 
 		if (hWnd == NULL)
 			exit(1);
@@ -152,99 +145,5 @@ namespace Rogue
 	HDC& WindowSystem::GetHDC()
 	{
 		return hDC;
-	}
-
-	std::string WindowSystem::GetTitle()
-	{
-		return title;
-	}
-
-	bool WindowSystem::GetSound()
-	{
-		return sound;
-	}
-
-
-	int WindowSystem::GetX()
-	{
-		return x;
-	}
-
-	int WindowSystem::GetY()
-	{
-		return y;
-	}
-
-	int WindowSystem::GetHeight()
-	{
-		return height;
-	}
-
-	int WindowSystem::GetWidth()
-	{
-		return width;
-	}
-
-	BYTE WindowSystem::GetByte()
-	{
-		return BYTE(byte);
-	}
-
-	int WindowSystem::GetFlags()
-	{
-		return flags;
-	}
-
-	float WindowSystem::GetFPS()
-	{
-		return FPS;
-	}
-
-	int WindowSystem::SetX(int newx)
-	{
-		x = newx;
-		return x;
-	}
-
-	int WindowSystem::SetY(int newy)
-	{
-		y = newy;
-		return y;
-	}
-
-	int WindowSystem::SetHeight(int newheight)
-	{
-		height = newheight;
-		return height;
-	}
-
-	int WindowSystem::SetWidth(int newwidth)
-	{
-		width = newwidth;
-		return width;
-	}
-
-	int WindowSystem::SetByte(int newbyte)
-	{
-		byte = newbyte;
-		return byte;
-	}
-
-	int WindowSystem::SetFlags(int newflags)
-	{
-		flags = newflags;
-		return flags;
-	}
-
-	float WindowSystem::SetFPS(int FPSset)
-	{
-		FPS = 1 / float(FPSset);
-		return FPS;
-	}
-
-	bool WindowSystem::SetSound(bool NewSound)
-	{
-		sound = NewSound;
-		return NewSound;
 	}
 }

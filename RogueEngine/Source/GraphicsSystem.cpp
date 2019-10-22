@@ -32,6 +32,9 @@ namespace Rogue
 		m_shader = gEngine.m_coordinator.loadShader("Object Shader");
 
 		GenerateQuadPrimitive(m_VBO, m_VAO, m_EBO);
+
+		// OpenGL version
+		std::cout << glGetString(GL_VERSION) << std::endl;
 	}
 
 	void GraphicsSystem::update()

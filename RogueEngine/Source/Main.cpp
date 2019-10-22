@@ -93,12 +93,6 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	//setVSync(1);
 
 	gEngine.init();
-	
-	//////////////////////////
-	//Graphics Debug
-	/////////////////////////
-
-	std::cout << glGetString(GL_VERSION) << std::endl;
 
 	//BasicIO::WriteLevelJsonFile("Resources/TestJsonFileCreator.json", 1);
 	//BasicIO::WriteArchetypeJsonFile("Resources/TestArchetypeJsonFile.json", 3);
