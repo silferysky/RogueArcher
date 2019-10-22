@@ -23,7 +23,6 @@ namespace Rogue
 		Signature signature;
 		gEngine.m_coordinator.SetSystemSignature<WindowSystem>(signature);
 
-		/* 
 		config.ConfigInit();
 
 		hWnd = CreateOpenGLWindow(const_cast<char*>(config.GetTitle().c_str()), config.GetX(), config.GetY(),
@@ -46,16 +45,18 @@ namespace Rogue
 		//Ensures program closes properly 
 		SetConsoleCtrlHandler(CtrlHandler, true);
 
-		setVSync(1); */
+		setVSync(1);
 	}
 
 	void WindowSystem::update()
 	{
-		/* while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+		while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
 		{
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
-		} */
+		}
+
+		SwapBuffers(hDC);
 
 		/* auto start = timer.now();
 		auto stop = timer.now();
@@ -72,27 +73,23 @@ namespace Rogue
 	HWND WindowSystem::CreateOpenGLWindow(char* title, int x, int y, int width, int height,
 		BYTE type, DWORD flags)
 	{
-		/* only register the window class once */
-		if (!hInstance)
-		{
-			hInstance = GetModuleHandle(NULL);
-			wc.style = CS_OWNDC;
-			wc.lpfnWndProc = (WNDPROC)WndProc;
-			wc.cbClsExtra = 0;
-			wc.cbWndExtra = 0;
-			wc.hInstance = hInstance;
-			wc.hIcon = LoadIcon(NULL, IDI_WINLOGO);
-			wc.hCursor = LoadCursor(NULL, IDC_ARROW);
-			wc.hbrBackground = NULL;
-			wc.lpszMenuName = NULL;
-			wc.lpszClassName = "OpenGL";
+		hInstance = GetModuleHandle(NULL);
+		wc.style = CS_OWNDC;
+		wc.lpfnWndProc = (WNDPROC)WndProc;
+		wc.cbClsExtra = 0;
+		wc.cbWndExtra = 0;
+		wc.hInstance = hInstance;
+		wc.hIcon = LoadIcon(NULL, IDI_WINLOGO);
+		wc.hCursor = LoadCursor(NULL, IDC_ARROW);
+		wc.hbrBackground = NULL;
+		wc.lpszMenuName = NULL;
+		wc.lpszClassName = "OpenGL";
 
-			if (!RegisterClass(&wc))
-			{
-				MessageBox(NULL, "RegisterClass() failed:  "
-					"Cannot register window class.", "Error", MB_OK);
-				return NULL;
-			}
+		if (!RegisterClass(&wc))
+		{
+			MessageBox(NULL, "RegisterClass() failed:  "
+				"Cannot register window class.", "Error", MB_OK);
+			return NULL;
 		}
 
 		hWnd = CreateWindow("OpenGL", title, WS_OVERLAPPEDWINDOW |
@@ -101,6 +98,7 @@ namespace Rogue
 
 		if (hWnd == NULL)
 		{
+			std::cout << GetLastError() << std::endl;
 			MessageBox(NULL, "CreateWindow() failed:  Cannot create a window.",
 				"Error", MB_OK);
 			return NULL;

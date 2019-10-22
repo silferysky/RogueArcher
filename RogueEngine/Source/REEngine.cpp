@@ -59,7 +59,7 @@ namespace Rogue
 		m_coordinator.Init();
 	}
 
-	void REEngine::update(HDC hDC)
+	void REEngine::update()
 	{
 		m_stepCount = 0;
 		std::chrono::high_resolution_clock mainLoopTimer;
@@ -91,8 +91,6 @@ namespace Rogue
 			}
 
 			m_coordinator.Update();
-
-			SwapBuffers(hDC);
 
 			m_loopEnd = mainLoopTimer.now();
 		}
