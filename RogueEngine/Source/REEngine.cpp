@@ -12,6 +12,7 @@
 #include "DebugDrawSystem.h"
 #include "FontSystem.h"
 #include "CollisionSystem.h"
+#include "WindowSystem.h"
 
 namespace Rogue
 {
@@ -48,6 +49,7 @@ namespace Rogue
 		m_coordinator.RegisterSystem<LogicSystem>();
 		m_coordinator.RegisterSystem<PhysicsSystem>();
 		m_coordinator.RegisterSystem<CollisionSystem>();
+		m_coordinator.RegisterSystem<WindowSystem>();
 		m_coordinator.RegisterSystem<GraphicsSystem>();
 		m_coordinator.RegisterSystem<DebugDrawSystem>();
 		m_coordinator.RegisterSystem<FontSystem>();
