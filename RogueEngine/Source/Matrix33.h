@@ -112,6 +112,4 @@ namespace Rogue
 	*/
 	/**************************************************************************/
 	void Mtx33Inverse(Matrix3x3& pResult, float& determinant, const Matrix3x3& pMtx);
-
-	Mtx33 Mtx33CreateSRTMatrix(const Vec2& scale, float rotation, const Vec2& translate);
 }

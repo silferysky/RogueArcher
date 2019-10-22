@@ -41,7 +41,7 @@ namespace Rogue
 
 		//building line segment
 		void REBuildLineSegment(LineSegment& lineSegment, const Vec2& pos, float scale, float dir);
-		//calculations
+		//calcuations
 		float RESin(float x);
 		float RECos(float x);
 		float RETan(float x);
@@ -49,19 +49,14 @@ namespace Rogue
 		float REACos(float x);
 		float REATan(float x);
 		double RELogBase2(double x);
-		
-		template <typename T>
-		T abs(T x);
 
 		//clamp x to be between x0 and x1
 		float REClamp(float x, float x0, float x1);
 		//Wrap x with respect to the range of x0 and x1, does not work if x is lesser than (x0 - range) or if x is greater than(x1 + range).
 		float REWrap(float x, float x0, float x1);
 		//find which values are higher or lower and return it
-		template <typename T>
-		T min(const T& x, const T& y);
-		template <typename T>
-		T max(const T& x, const T& y);
+		float REMin(float x, float y);
+		float REMax(float x, float y);
 		//check whether values are in range
 		bool REInRange(float x, float x0, float x1);
 		//check for distance

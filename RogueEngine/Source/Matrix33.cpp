@@ -304,16 +304,4 @@ namespace Rogue
 		for (int i = 0; i < TOTAL_VALUES; ++i)
 			pResult.m[i] *= 1 / determinant;
 	}
-	Mtx33 Mtx33CreateSRTMatrix(const Vec2& scale, float rotation, const Vec2& translate)
-	{
-		Mtx33 sca;
-		Mtx33 rot;
-		Mtx33 trans;
-
-		Mtx33Scale(sca, scale.x, scale.y);
-		Mtx33RotRad(rot, rotation);
-		Mtx33Translate(trans, translate.x, translate.y);
-
-		return trans *= rot *= sca;
-	}
 }
