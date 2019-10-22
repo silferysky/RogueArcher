@@ -16,7 +16,6 @@ namespace Rogue
 		ChronoClock m_loopStart;
 		ChronoClock m_loopEnd;
 
-		bool InitializeOpenGL();
 		void RegisterSystems();
 		void RegisterComponents();
 
@@ -26,7 +25,7 @@ namespace Rogue
 		Coordinator m_coordinator;
 
 		void init();
-		void update(HDC hDC);
+		void update();
 		void shutdown();
 
 		float GetAccumulatedTime() const;
