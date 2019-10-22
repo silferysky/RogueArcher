@@ -9,9 +9,19 @@ namespace Rogue
 		return m_radius;
 	}
 
+	float CircleCollider2DComponent::getCenter() const
+	{
+		return m_center;
+	}
+
 	void CircleCollider2DComponent::setRadius(float radius)
 	{
 		m_radius = radius;
+	}
+
+	void CircleCollider2DComponent::setCenter(float center)
+	{
+		m_center = center;
 	}
 
 	std::string CircleCollider2DComponent::Serialize()

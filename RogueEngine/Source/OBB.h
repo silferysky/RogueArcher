@@ -1,10 +1,11 @@
 #pragma once
 #include "Vector2D.h"
 #include <vector>
+#include "BaseCollider.h"
 
 namespace Rogue
 {
-	class OBB
+	class OBB : public BaseCollider
 	{
 		using VertexList = std::vector<Vec2>;
 
@@ -17,6 +18,7 @@ namespace Rogue
 		VertexList m_modelVertices;
 		VertexList m_globalVertices; // The positions of each vertex in the shape.
 		VertexList m_normals; // The normal vectors of each side.
+	
 	public:
 		OBB(const VertexList& model = VertexList());
 		~OBB() = default;
