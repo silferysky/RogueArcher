@@ -21,28 +21,6 @@ namespace Rogue
 		m_gameIsRunning{ true }
 	{}
 
-	bool REEngine::InitializeOpenGL()
-	{
-		// Init OpenGL
-		glEnable(GL_TEXTURE_2D);						   // Texture Mapping
-		glEnable(GL_DEPTH_TEST);
-		glShadeModel(GL_SMOOTH);						   // Smooth shading
-		glDepthFunc(GL_LEQUAL);							   // Depth testing type
-		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Perspective Calculations
-
-		// Enable alpha
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		glEnable(GL_BLEND);
-
-		if (glewInit() != GLEW_OK)
-		{
-			std::cout << "GLEW broke" << std::endl;
-			return false;
-		}
-
-		return true;
-	}
-
 	void REEngine::RegisterSystems()
 	{
 		m_coordinator.RegisterSystem<InputManager>();
@@ -70,9 +48,6 @@ namespace Rogue
 
 	void REEngine::init()
 	{
-		// Init OpenGL libraries.
-		RE_ASSERT(InitializeOpenGL(), "OpenGL not initialized");
-
 		// Register all systems.
 		RegisterSystems();
 
