@@ -37,17 +37,17 @@ namespace Rogue
 			//	continue;
 			//}
 			//		std::cout << "Entity " << *iEntity << std::endl;
-			auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
+			auto& currTransform = gEngine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
 			auto& currBoxCollider = gEngine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iEntity);
 			//	auto& circleCollider = gEngine.m_coordinator.GetComponent<CircleCollider2DComponent>(*iEntity);
 
 		// Update collidables
-			m_colliderManager.updateAABB(currBoxCollider.AABB(), transform);
-			m_colliderManager.updateOBB(currBoxCollider.OBB(), transform);
+			m_colliderManager.updateAABB(currBoxCollider.AABB(), currTransform);
+			m_colliderManager.updateOBB(currBoxCollider.OBB(), currTransform);
 
-			// Conduct spatial partitioning
+			// Conduct spatial partitioning (Broad phase)
 
-			// Test AABB/OBB Collision
+			// Test collisions and generate manifolds (Narrow phase)
 			std::set<Entity>::iterator iNextEntity = iEntity;
 
 			for (iNextEntity++; iNextEntity != m_entities.end(); ++iNextEntity)
@@ -78,7 +78,7 @@ namespace Rogue
 				}
 			}
 
-			// Collision Response (Contact, forces, etc)
+			// Collision Response (Resolve impulses)
 			// Rest, Impulse, Torque
 		}
 	}

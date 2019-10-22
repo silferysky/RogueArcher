@@ -82,6 +82,14 @@ namespace Rogue
 		return result;
 	}
 
+	template <typename T>
+	T REMath::abs(T x)
+	{
+		return x < 0 ?
+			-x :
+			x;
+	}
+
 	float REMath::REClamp(float x, float x0, float x1)
 	{
 		if (x < x0)
@@ -119,7 +127,8 @@ namespace Rogue
 		}
 	}
 
-	float REMath::REMin(float x, float y)
+	template <typename T>
+	T REMath::min(const T& x, const T& y)
 	{
 		if (x < y)
 		{
@@ -131,7 +140,8 @@ namespace Rogue
 		}
 	}
 
-	float REMath::REMax(float x, float y)
+	template <typename T>
+	T REMath::max(const T& x, const T& y)
 	{
 		if (x > y)
 		{
@@ -167,8 +177,8 @@ namespace Rogue
 	float REMath::REDistPointToRectangle(Vec2& pPos, Vec2& pRect, float wigDeltaTimeh, float height)
 	{
 		float dx, dy;
-		dx = REMax(abs(pPos.x - pRect.x) - wigDeltaTimeh / 2, 0.0f);
-		dy = REMax(abs(pPos.x - pRect.x) - height / 2, 0.0f);
+		dx = max(abs(pPos.x - pRect.x) - wigDeltaTimeh / 2, 0.0f);
+		dy = max(abs(pPos.x - pRect.x) - height / 2, 0.0f);
 		return (dx * dx + dy * dy);
 	}
 
@@ -190,14 +200,14 @@ namespace Rogue
 	float REMath::REDistCircleToRectangle(Vec2& pCenter, Vec2& pRect, float radius, float SizeX, float SizeY)
 	{
 		float DeltaX, DeltaY;
-		DeltaX = pCenter.x - REMax(pRect.x, REMin(pCenter.x, pRect.x + SizeX));
-		DeltaY = pCenter.y - REMax(pRect.y, REMin(pCenter.y, pRect.y + SizeY));
+		DeltaX = pCenter.x - max(pRect.x, min(pCenter.x, pRect.x + SizeX));
+		DeltaY = pCenter.y - max(pRect.y, min(pCenter.y, pRect.y + SizeY));
 		return (DeltaX * DeltaX + DeltaY * DeltaY) < (radius * radius);
 	}
 
 	float REMath::REDistRectangleToRectangle(const Vec2& pRect0, float SizeX0, float SizeY0, const Vec2& pRect1, float SizeX1, float SizeY1)
 	{
-		return REMax(abs(pRect1.x - pRect0.x) - (SizeX0 + SizeX1) / 2, abs(pRect1.y - pRect0.y) - (SizeY1 + SizeY0) / 2);
+		return max(abs(pRect1.x - pRect0.x) - (SizeX0 + SizeX1) / 2, abs(pRect1.y - pRect0.y) - (SizeY1 + SizeY0) / 2);
 	}
 
 
@@ -236,7 +246,7 @@ namespace Rogue
 	//		//pline0 = pline1
 	//		return sqrt((pPos.x - pLine0.x)*(pPos.x - pLine0.x) + (pPos.y - pLine0.y) * (pPos.y - pLine0.y));
 	//	}
-	//	const float t = REMax(0, REMin(1, Vec2DotProd(pPos - pLine0, pLine1 - pLine0) / length));
+	//	const float t = max(0, min(1, Vec2DotProd(pPos - pLine0, pLine1 - pLine0) / length));
 	//	const Vec2 projection = v + t * (pLine1 - pLine0);
 	//	return Vec2Distance(pPos, projection);
 	//}
