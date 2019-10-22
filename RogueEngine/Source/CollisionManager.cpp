@@ -1,41 +1,22 @@
 #include <iostream>
+#include <vector>
 #include "CollisionManager.h"
 #include "Main.h"
 #include "Logger.h"
-#include "BaseCollider.h"
-#include "AABB.h"
-#include "OBB.h"
-#include "REMath.h"
-#include "Vector2D.h"
-#include "TransformComponent.h"
-#include "RigidbodyComponent.h"
-#include "CircleCollider2DComponent.h"
 
 namespace Rogue
 {
-	Mtx33 CollisionManager::GetColliderWorldMatrix(const BaseCollider& collider, const TransformComponent& trans) const
-	{
-		return Mtx33CreateSRTMatrix(collider.getScale() + trans.getScale(),
-			collider.getRotation() + trans.getRotation(),
-			collider.getCenter() + trans.getPosition());
-	}
 	//_________________________________________________________________________
 	//_________________________________________________________________________|
 	//__________________________BOUNDING CIRCLE________________________________|
 	//_________________________________________________________________________|
 	//_________________________________________________________________________|
-	bool CollisionManager::StaticCircleVSCircle(const CircleCollider2DComponent& bc1, const CircleCollider2DComponent& bc2)
-	{
-		float RSquared = bc1.getRadius() + bc2.getRadius();
-		return RSquared <= Vec2SqDistance(bc1.getCenter(), bc2.getCenter()) ? true : false;
-	}
-
 	/******************************************************************************/
 	/*!
 		Check for collision between circle and line.
 	 */
 	 /******************************************************************************/
-	bool CollisionManager::DynamicCircleVsLineSegment(const REMath::Circle& circle,				//Circle data - input 
+	int CollisionManager::DynamicCircleVsLineSegment(const REMath::Circle& circle,				//Circle data - input 
 		const Vec2& ptEnd,			//End circle position - input
 		const REMath::LineSegment& lineSeg,			//Line segment - input 
 		Vec2& interPt,				//Intersection position of the circle - output 
@@ -113,7 +94,7 @@ namespace Rogue
 		Check for collision between moving circle and the edges of the line segment.
 	*/
 	/******************************************************************************/
-	bool CollisionManager::DynamicCircleVsLineEdge(bool withinBothLines,
+	int CollisionManager::DynamicCircleVsLineEdge(bool withinBothLines,
 		const REMath::Circle& circle,
 		const Vec2& ptEnd,
 		const REMath::LineSegment& lineSeg,
@@ -260,7 +241,7 @@ namespace Rogue
 		Check for collision between moving circle and static circle (Pillar).
 	 */
 	 /******************************************************************************/
-	bool CollisionManager::DynamicCircleVSRay(const REMath::Ray& ray,
+	int CollisionManager::CollisionIntersection_RayCircle(const REMath::Ray& ray,
 		const REMath::Circle& circle,
 		float& interTime)
 	{
@@ -290,7 +271,7 @@ namespace Rogue
 		{
 			float s = sqrt(circle.m_radius * circle.m_radius - nSquared);
 			float rayLength = Vec2Length(ray.m_dir);
-			interTime = REMath::min((m - s) / rayLength, (m + s) / rayLength);  // (m+-s)/||v||. min(Ti0, Ti1). For pillar, it's always Ti0.
+			interTime = REMath::REMin((m - s) / rayLength, (m + s) / rayLength);  // (m+-s)/||v||. min(Ti0, Ti1). For pillar, it's always Ti0.
 		}
 		if (interTime > 0.0f && interTime < 1.0f) // If time of intersection is between 0 and 1
 			return 1; // Ray intersects static circle (Pillar).
@@ -304,7 +285,7 @@ namespace Rogue
 		Check for collision between moving circle and static/dynamic circle.
 	 */
 	 /******************************************************************************/
-	bool CollisionManager::DynamicCircleVSCircle(const REMath::Circle& circleA,
+	int CollisionManager::CollisionIntersection_CircleCircle(const REMath::Circle& circleA,
 		const Vec2& velA,
 		const REMath::Circle& circleB,
 		const Vec2& velB,
@@ -322,7 +303,7 @@ namespace Rogue
 			circle.m_center = circleB.m_center; // Circle has the position of the pillar.
 			circle.m_radius = circleA.m_radius + circleB.m_radius;  // Circle has radius = pillar radius + ray radius.
 
-			if (DynamicCircleVSRay(ray, circle, interTime))
+			if (CollisionIntersection_RayCircle(ray, circle, interTime))
 			{
 				interPtA = circleA.m_center + interTime * velA; // Bi of ray. interPtB is not needed.
 				return 1;
@@ -337,7 +318,7 @@ namespace Rogue
 			ray.m_pt0 = circleA.m_center;
 			circle.m_center = circleB.m_center;
 			circle.m_radius = circleA.m_radius + circleB.m_radius;
-			if (DynamicCircleVSRay(ray, circle, interTime))
+			if (CollisionIntersection_RayCircle(ray, circle, interTime))
 			{
 				interPtA = circleA.m_center + interTime * velA;
 				interPtB = circleB.m_center + interTime * velB;
@@ -419,15 +400,12 @@ namespace Rogue
 	//_________________________________________________________________________|
 	//_________________________________________________________________________|
 	// Update the bounding box's m_min and m_max.
-	void CollisionManager::updateAABB(AABB& collider, const TransformComponent& trans) const
+	void CollisionManager::updateAABB(AABB& collider, const TransformComponent& transform)
 	{
-		Mtx33 matrix = GetColliderWorldMatrix(collider, trans);
-	
-		Vec2 min = { -0.5, -0.5 };
-		Vec2 max = { 0.5, 0.5 };
-		
-		collider.setMin(matrix * min);
-		collider.setMax(matrix * max);
+		collider.setMin(Vec2{ -HALF_SCALE * transform.getScale().x + transform.getPosition().x,
+							  -HALF_SCALE * transform.getScale().y + transform.getPosition().y });
+		collider.setMax(Vec2{ HALF_SCALE * transform.getScale().x + transform.getPosition().x,
+							  HALF_SCALE * transform.getScale().y + transform.getPosition().y });
 	}
 
 
@@ -614,37 +592,41 @@ namespace Rogue
 
 	void CollisionManager::initOBB(OBB& obb, const std::vector<Vec2>& modelVertices)
 	{
-		obb.setSize(modelVertices.size());
-
 		obb.modelVerts() = modelVertices;
-		obb.globVerts().reserve(obb.getSize());
-		obb.normals().reserve(obb.getSize());
+		obb.globVerts().reserve(modelVertices.size());
+		obb.normals().reserve(modelVertices.size());
 	}
 
-	void CollisionManager::updateOBB(OBB& obb, const TransformComponent& trans) const
+
+	void CollisionManager::updateOBB(OBB& obb, const TransformComponent& trans)
 	{
 		updateVertices(obb, trans);
 		updateNormals(obb);
 	}
 
 
-	void CollisionManager::updateVertices(OBB& obb, const TransformComponent& trans) const
+	void CollisionManager::updateVertices(OBB& obb, const TransformComponent& trans)
 	{
-		Mtx33 matrix = GetColliderWorldMatrix(obb, trans);
+		Mtx33 rot, sca;
+		Mtx33RotRad(rot, trans.getRotation());
+		Mtx33Scale(sca, trans.getScale().x, trans.getScale().y);
 
 		for (int i = 0; i < (int)obb.modelVerts().size(); i++)
 		{
-			obb.globVerts()[i] = matrix * obb.modelVerts()[i];;
+			obb.globVerts()[i] = rot * obb.modelVerts()[i];
+			obb.globVerts()[i] = sca * obb.globVerts()[i];
+			obb.globVerts()[i] += trans.getPosition();
 		}
 	}
 
 
-	void CollisionManager::updateNormals(OBB& obb) const
+	void CollisionManager::updateNormals(OBB& obb)
 	{
 		size_t i;
 		size_t max_sides = obb.modelVerts().size();
 
-		RE_ASSERT(max_sides, "OBB has no sides!");
+		if (!max_sides)
+			RE_CORE_ERROR("OBB has no sides!");
 
 		for (i = 0; i < max_sides - 1; ++i) // Traverse to the second last vertex
 			obb.normals()[i] = Vec2NormalOf(obb.globVerts()[i + 1] - obb.globVerts()[i]); // n1 till second last normal
@@ -675,6 +657,11 @@ namespace Rogue
 
 	bool CollisionManager::staticOBBvsOBB(OBB& lhs, OBB& rhs)
 	{
+		//	std::vector<Vec2>::iterator i;
+		//	for(i = lhs.globVerts().begin(); i != lhs.globVerts().cend(); ++i)
+		//		std::cout << *i << ',';
+		//	std::cout << std::endl;
+
 		for (Vec2 normal : lhs.normals())
 		{
 			SATFindMinMax(lhs, normal);
@@ -699,75 +686,11 @@ namespace Rogue
 
 	inline bool CollisionManager::checkOverlaps(const OBB& lhs, const OBB& rhs) const
 	{
-		return clamp(rhs.getMin(), lhs.getMin(), lhs.getMax()) || clamp(lhs.getMin(), rhs.getMin(), rhs.getMax());
+		return isBetweenBounds(rhs.getMin(), lhs.getMin(), lhs.getMax()) || isBetweenBounds(lhs.getMin(), rhs.getMin(), rhs.getMax());
 	}
 
-	inline bool CollisionManager::clamp(float val, float lowerBound, float upperBound) const
+	inline bool CollisionManager::isBetweenBounds(float val, float lowerBound, float upperBound) const
 	{
 		return lowerBound <= val && val <= upperBound;
-	}
-
-	void CollisionManager::insertColliderPair(Entity a, Entity b)
-	{
-		m_collidedPairs.push_back({ a, b });
-	}
-
-	void CollisionManager::generateManifoldAABBvsAABB(Manifold& manifold)
-	{
-		Entity a = manifold.m_bodyA;
-		Entity b = manifold.m_bodyB;
-
-		auto& BoxCompA = gEngine.m_coordinator.GetComponent<BoxCollider2DComponent>(a);
-		auto& BoxCompB = gEngine.m_coordinator.GetComponent<BoxCollider2DComponent>(b);
-
-		Vec2 scaleA = BoxCompA.AABB().getScale();
-		Vec2 scaleB = BoxCompB.AABB().getScale();
-		Vec2 centerA = BoxCompA.AABB().getCenter();
-		Vec2 centerB = BoxCompB.AABB().getCenter();
-		Vec2 vAB = centerB - centerA;
-
-		float AminX = BoxCompA.AABB().getMin().x;
-		float AminY = BoxCompA.AABB().getMin().y;
-		float AmaxX = BoxCompA.AABB().getMax().x;
-		float AmaxY = BoxCompA.AABB().getMax().y;
-		float BminX = BoxCompB.AABB().getMin().x;
-		float BminY = BoxCompB.AABB().getMin().y;
-		float BmaxX = BoxCompB.AABB().getMax().x;
-		float BmaxY = BoxCompB.AABB().getMax().y;
-
-		float AextentX = (AmaxX - AminX) / 2;
-		float BextentX = (BmaxX - BminX) / 2;
-		float AextentY = (AmaxY - AminY) / 2;
-		float BextentY = (BmaxY - BminY) / 2;
-
-		float x_overlap = AextentX + BextentX - REMath::abs(vAB.x);
-		float y_overlap = AextentY + BextentY - REMath::abs(vAB.y);
-
-		Vec2 CP1, CP2;
-		CP1.x = REMath::max(AminX, BminX);
-		CP1.y = REMath::max(AminY, BminY);
-		CP2.x = REMath::min(AmaxX, BmaxX);
-		CP2.y = REMath::min(AmaxY, BmaxY);
-
-		manifold.m_contactPoints.push_back(CP1);
-		manifold.m_contactPoints.push_back(CP2);
-
-		if (x_overlap > y_overlap)
-		{
-			// Point towards B
-			manifold.m_normal = vAB.x < 0 ? Vec2::unitX : -Vec2::unitX;
-			manifold.m_penetration = x_overlap;
-		}
-		else
-		{
-			// Point towards A
-			manifold.m_normal = vAB.y < 0 ? Vec2::unitY : -Vec2::unitY;
-			manifold.m_penetration = y_overlap;
-		}
-	}
-
-	Manifold CollisionManager::generateManifold(const OBB& obb1, const OBB& obb2)
-	{
-		return Manifold();
 	}
 }

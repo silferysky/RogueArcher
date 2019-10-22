@@ -350,12 +350,6 @@
     <ClInclude Include="Source\DebugDrawSystem.h">
       <Filter>RogueEngine\Systems\DebugDraw</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Manifold.h">
-      <Filter>RogueEngine\Systems\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\BaseCollider.h">
-      <Filter>RogueEngine\Systems\Collision</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -528,9 +522,6 @@
     </ClCompile>
     <ClCompile Include="Source\DebugDrawSystem.cpp">
       <Filter>RogueEngine\Systems\DebugDraw</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Manifold.cpp">
-      <Filter>RogueEngine\Systems\Collision</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

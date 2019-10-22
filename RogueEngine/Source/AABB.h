@@ -1,10 +1,9 @@
 #pragma once
 #include "Vector2D.h"
-#include "BaseCollider.h"
 
 namespace Rogue
 {
-	class AABB : public BaseCollider
+	class AABB // : public BaseComponent
 	{
 		Vec2 m_min;
 		Vec2 m_max;
