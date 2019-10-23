@@ -1,10 +1,11 @@
 #pragma once
 #include "Vector2D.h"
+#include "BaseCollider.h"
 #include <vector>
 
 namespace Rogue
 {
-	class OBB
+	class OBB : public BaseCollider
 	{
 		using VertexList = std::vector<Vec2>;
 

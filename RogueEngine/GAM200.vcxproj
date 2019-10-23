@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="Source\AIType.h" />
     <ClInclude Include="Source\BaseAI.h" />
+    <ClInclude Include="Source\BaseCollider.h" />
     <ClInclude Include="Source\BaseComponent.h" />
     <ClInclude Include="Source\BaseSystem.h" />
     <ClInclude Include="Source\BoxCollider2DComponent.h" />
@@ -57,6 +58,7 @@
     <ClInclude Include="Source\ISerializable.h" />
     <ClInclude Include="Source\LogicComponent.h" />
     <ClInclude Include="Source\LogicSystem.h" />
+    <ClInclude Include="Source\Manifold.h" />
     <ClInclude Include="Source\PhysicsSystem.h" />
     <ClInclude Include="Source\AABB.h" />
     <ClInclude Include="Source\Circle.h" />
@@ -137,6 +139,7 @@
     <ClCompile Include="Source\imgui_widgets.cpp" />
     <ClCompile Include="Source\LogicComponent.cpp" />
     <ClCompile Include="Source\LogicSystem.cpp" />
+    <ClCompile Include="Source\Manifold.cpp" />
     <ClCompile Include="Source\PhysicsSystem.cpp" />
     <ClCompile Include="Source\AABB.cpp" />
     <ClCompile Include="Source\Circle.cpp" />

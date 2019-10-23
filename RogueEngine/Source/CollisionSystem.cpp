@@ -26,60 +26,53 @@ namespace Rogue
 
 	void CollisionSystem::update()
 	{
-		std::set<Entity>::iterator iEntity;
-		for (iEntity = m_entities.begin()++; iEntity != m_entities.end(); ++iEntity)
+		for (int step = 0; step < gEngine.GetStepCount(); ++step)
 		{
-			auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
-
-			//// Skip any static rigidbodies.
-			//if (rigidbody.getIsStatic())
-			//{
-			//	continue;
-			//}
-			//		std::cout << "Entity " << *iEntity << std::endl;
-			auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
-			auto& currBoxCollider = gEngine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iEntity);
-			//	auto& circleCollider = gEngine.m_coordinator.GetComponent<CircleCollider2DComponent>(*iEntity);
-
-		// Update collidables
-			m_colliderManager.updateAABB(currBoxCollider.AABB(), transform);
-			m_colliderManager.updateOBB(currBoxCollider.OBB(), transform);
-
-			// Conduct spatial partitioning
-
-			// Test AABB/OBB Collision
-			std::set<Entity>::iterator iNextEntity = iEntity;
-
-			for (iNextEntity++; iNextEntity != m_entities.end(); ++iNextEntity)
+			std::set<Entity>::iterator iEntity;
+			for (iEntity = m_entities.begin()++; iEntity != m_entities.end(); ++iEntity)
 			{
-				auto& nextBoxCollider = gEngine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iNextEntity);
-				auto& currRigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
-				auto& nextRigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(*iNextEntity);
-				auto& currTransform = gEngine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
+				auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
+				auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
+				auto& currBoxCollider = gEngine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iEntity);
+				//	auto& circleCollider = gEngine.m_coordinator.GetComponent<CircleCollider2DComponent>(*iEntity);
 
-				if (m_colliderManager.staticAABBvsAABB(currBoxCollider.AABB(), nextBoxCollider.AABB()))
+			// Update collidables
+				m_colliderManager.updateAABB(currBoxCollider.m_aabb, transform);
+				m_colliderManager.updateOBB(currBoxCollider.m_obb, transform);
+
+				// Conduct spatial partitioning
+
+				// Test AABB/OBB Collision
+				std::set<Entity>::iterator iNextEntity = iEntity;
+
+				for (iNextEntity++; iNextEntity != m_entities.end(); ++iNextEntity)
 				{
-					//	if (checkAABB)
-					std::cout << "Entity " << *iEntity << " AABB collides with Entity " << *iNextEntity << " AABB" << std::endl;
+					auto& nextBoxCollider = gEngine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iNextEntity);
+					auto& nextRigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(*iNextEntity);
 
-					if (nextRigidbody.getIsStatic())
+					if (m_colliderManager.staticAABBvsAABB(currBoxCollider.m_aabb, nextBoxCollider.m_aabb))
 					{
-						currTransform.offSetPosition(Vec2(currRigidbody.getVelocity().x * gFixedDeltaTime, -currRigidbody.getVelocity().y) * gFixedDeltaTime);
-						currRigidbody.addForce(Vec2(0.0f, 5.0f));
+					//	std::cout << "Entity " << *iEntity << " AABB collides with Entity " << *iNextEntity << " AABB" << std::endl;
+
+						m_colliderManager.InsertColliderPair(*iEntity, *iNextEntity);
 					}
 
-					//	checkAABB = false;
-				}
-				if (m_colliderManager.staticOBBvsOBB(currBoxCollider.OBB(), nextBoxCollider.OBB()))
-				{
-					//	if (checkOBB)
-					std::cout << "Entity " << *iEntity << " OBB collides with Entity " << *iNextEntity << " OBB" << std::endl;
-					//	checkOBB = false;
-				}
-			}
+					if (m_colliderManager.staticOBBvsOBB(currBoxCollider.m_obb, nextBoxCollider.m_obb))
+					{
+					//	std::cout << "Entity " << *iEntity << " OBB collides with Entity " << *iNextEntity << " OBB" << std::endl;
+					}
 
-			// Collision Response (Contact, forces, etc)
-			// Rest, Impulse, Torque
+				//	bool a = rigidbody.getIsStatic();
+					//bool b = nextRigidbody.getIsStatic();
+				}
+
+				m_colliderManager.GenerateManifolds();
+
+				// Collision Response (Contact, forces, etc)
+				m_colliderManager.ResolveManifolds();
+
+				// Rest, Impulse, Torque
+			}
 		}
 	}
 
