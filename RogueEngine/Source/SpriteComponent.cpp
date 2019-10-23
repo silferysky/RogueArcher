@@ -20,9 +20,19 @@ namespace Rogue
 		return m_texture;
 	}
 
+	void SpriteComponent::setTexturePath(std::string texturePath)
+	{
+		m_texturePath = texturePath;
+	}
+
+	std::string SpriteComponent::getTexturePath() const
+	{
+		return m_texturePath;
+	}
+
 	std::string SpriteComponent::Serialize()
 	{
-		/*std::map<const char*, GLuint, str_cmp> textureMap = gEngine.m_coordinator.GetTextureManager().getTextureMap();
+		std::map<const char*, GLuint, str_cmp> textureMap = gEngine.m_coordinator.GetTextureManager().getTextureMap();
 
 		for (std::map<const char*, GLuint, str_cmp>::iterator it = textureMap.begin(); it != textureMap.end(); ++it)
 		{
@@ -30,12 +40,13 @@ namespace Rogue
 			{
 				return std::string(it->first);
 			}
-		}*/
-		return "test.bmp";
+		}
+		return getTexturePath();
 	}
 
 	void SpriteComponent::Deserialize(std::string toDeserialize)
 	{
+		setTexturePath(toDeserialize);
 		setTexture(toDeserialize.c_str());
 	}
 
