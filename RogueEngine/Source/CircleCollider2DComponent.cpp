@@ -4,21 +4,11 @@
 
 namespace Rogue
 {
-	float CircleCollider2DComponent::getRadius() const
-	{
-		return m_radius;
-	}
-
-	void CircleCollider2DComponent::setRadius(float radius)
-	{
-		m_radius = radius;
-	}
-
 	std::string CircleCollider2DComponent::Serialize()
 	{
 		//Radius
 		std::ostringstream ss;
-		ss << m_radius;
+		ss << m_collider.getRadius();
 
 		return ss.str();
 	}
@@ -32,7 +22,7 @@ namespace Rogue
 
 		while (std::getline(ss, s1, ';'))
 		{
-			m_radius = std::stof(s1);
+			m_collider.setRadius(std::stof(s1));
 		}
 	}
 }
