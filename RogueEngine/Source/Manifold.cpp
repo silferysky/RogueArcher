@@ -18,7 +18,7 @@ namespace Rogue
 	{
 		auto& bodyA = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(m_entityA);
 		auto& bodyB = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(m_entityB);
-
+			
 		// Relative velocity
 		Vec2 rv = bodyB.getVelocity() - bodyA.getVelocity();
 
@@ -40,5 +40,6 @@ namespace Rogue
 		Vec2 impulse = impulseMagnitude * m_normal;
 		bodyA.offSetVelocity(-bodyA.getInvMass() * impulse);
 		bodyB.offSetVelocity(bodyB.getInvMass() * impulse);
+
 	}
 }
