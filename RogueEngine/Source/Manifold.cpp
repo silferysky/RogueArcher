@@ -23,11 +23,10 @@ namespace Rogue
 		Vec2 rv = bodyB.getVelocity() - bodyA.getVelocity();
 		
 		// Relative velocity along the collision normal
-		Vec2 n = m_normal;
-		float velN = Vec2DotProd(rv, n);
+		float velOnNormal = Vec2DotProd(rv, m_normal);
 
 		// If velocities are already separating, don't resolve anything.
-		if (velN > 0)
+		if (velOnNormal > 0)
 		{
 			std::cout << m_entityA << " and " << m_entityB << " separating" << std::endl;
 			return;
@@ -36,7 +35,7 @@ namespace Rogue
 		m_restitution = REMax(bodyA.getBounciness(), bodyB.getBounciness());
 
 		// Scalar value of impulse
-		float impulseMagnitude = -(1 + m_restitution + 0.5f) * velN;
+		float impulseMagnitude = -(1 + m_restitution) * velOnNormal;
 		impulseMagnitude /= bodyA.getInvMass() + bodyB.getInvMass();
 
 		Vec2 impulse = impulseMagnitude * m_normal;

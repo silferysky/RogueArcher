@@ -1,5 +1,5 @@
 {
-    "EntityCount": 3,
+    "EntityCount": 6,
     "BackgroundTexture": "test.bmp",
     "Signature0": 95,
     "Signature1": 31,
@@ -11,10 +11,8 @@
     "Signature7": 31,
     "Entity0": "Sprite{test.bmp}|Rigidbody{0;0;0;0;1;1;0}|Transform{-4;0;1;1;0}|CircleCollider{0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;}||LogicComponent{0;0;}",
     "Entity1": "Sprite{test.bmp}|Rigidbody{0;0;0;0;1;1;0}|Transform{4;0;1;1;0}|CircleCollider{0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;}||",
-    "Entity2": "Sprite{test.bmp}|Rigidbody{0;0;0;0;1;1;1}|Transform{0;-4;18;1;0}|CircleCollider{0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;}||",
-    "Entity3": "Sprite{test.bmp}|Rigidbody{0.0;0.0;0.0;0.0;1.0;1.0}|Transform{4.0;0.0;1.0;1.0;0.0}|CircleCollider{0.0}|BoxCollider{6; 1.0; 0.0; 0.5; 1.0; -0.5; 1.0; -1.0; 0.0; -0.5; -1.0; 0.5; -1.0}|PlayerControllerComponent{}|LogicControllerComponent{1;3;3}",
-    "Entity4": "Sprite{test.bmp}|Rigidbody{0.0;0.0;0.0;0.0;1.0;1.0}|Transform{-4.0;0.0;1.0;1.0;0.0}|CircleCollider{0.0}|BoxCollider{4}|PlayerControllerComponent{}|LogicControllerComponent{1;3;3}",
-    "Entity5": "Sprite{test.bmp}|Rigidbody{0.0;0.0;0.0;0.0;1.0;1.0}|Transform{4.0;0.0;1.0;1.0;0.0}|CircleCollider{0.0}|BoxCollider{4}|PlayerControllerComponent{}|LogicControllerComponent{1;3;3}",
-    "Entity6": "Sprite{test.bmp}|Rigidbody{0.0;0.0;0.0;0.0;1.0;1.0}|Transform{-4.0;0.0;1.0;1.0;0.0}|CircleCollider{0.0}|BoxCollider{4}|PlayerControllerComponent{}|LogicControllerComponent{1;3;3}",
-    "Entity7": "Sprite{test.bmp}|Rigidbody{0.0;0.0;0.0;0.0;1.0;1.0}|Transform{4.0;0.0;1.0;1.0;0.0}|CircleCollider{0.0}|BoxCollider{4}|PlayerControllerComponent{}|LogicControllerComponent{1;3;3}"
+    "Entity2": "Sprite{test.bmp}|Rigidbody{0;0;0;0;1;1;1}|Transform{0;-4;12;1;0}|CircleCollider{0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;}||",
+    "Entity3": "Sprite{test.bmp}|Rigidbody{0;0;0;0;1;1;1}|Transform{0;4;12;1;0}|CircleCollider{0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;}||",
+    "Entity4": "Sprite{test.bmp}|Rigidbody{0;0;0;0;1;1;1}|Transform{-6;0;1;6;0}|CircleCollider{0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;}||",
+    "Entity5": "Sprite{test.bmp}|Rigidbody{0;0;0;0;1;1;1}|Transform{6;0;1;6;0}|CircleCollider{0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;}||"
 }
