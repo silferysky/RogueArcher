@@ -6,16 +6,6 @@
 
 namespace Rogue
 {
-	AABB& BoxCollider2DComponent::AABB()
-	{
-		return m_aabb;
-	}
-
-	OBB& BoxCollider2DComponent::OBB()
-	{
-		return m_obb;
-	}
-
 	std::string BoxCollider2DComponent::Serialize()
 	{
 		//Size, modelVertexList

@@ -25,8 +25,7 @@ namespace Rogue
 	{
 		transform.offSetPosition(rigidbody.getVelocity() * gFixedDeltaTime);
 
-		Vec2 vel = rigidbody.getAcceleration() * gFixedDeltaTime;
-		rigidbody.offSetVelocity(vel);
+		rigidbody.offSetVelocity(rigidbody.getAcceleration() * gFixedDeltaTime);
 		rigidbody.setVelocity(rigidbody.getVelocity() * rigidbody.getDamping());
 
 	}
@@ -71,26 +70,21 @@ namespace Rogue
 			{
 				auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
 
-				//// Skip any static rigidbodies.
-				//if (rigidbody.getIsStatic())
-				//{
-				//	continue;
-				//}
 				//		std::cout << "Entity " << *iEntity << std::endl;
 				auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
 				auto& currBoxCollider = gEngine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iEntity);
 				//	auto& circleCollider = gEngine.m_coordinator.GetComponent<CircleCollider2DComponent>(*iEntity);
 
-				if (!rigidbody.getIsStatic())
-				{
-					applyForces(rigidbody);
+				if (rigidbody.getIsStatic())
+					continue;
 
-					// Reset accForce
-					rigidbody.setAccForce(Vec2());
+				applyForces(rigidbody);
 
-					// Update positions
-					integrateAcceleration(rigidbody, transform);
-				}
+				// Reset accForce
+				rigidbody.setAccForce(Vec2());
+
+				// Update positions
+				integrateAcceleration(rigidbody, transform);
 
 
 				//	std::cout << "Entity " << iEntity << "'s pos: " << transform.getPosition() << std::endl;
@@ -116,7 +110,7 @@ namespace Rogue
 					{
 						auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
 						rigidbody.addForce(Vec2(-1.0f, 0.0f));
-						RE_INFO("Move A Left!");
+						//RE_INFO("Move A Left!");
 					}
 				}
 			}
@@ -128,7 +122,7 @@ namespace Rogue
 					{
 						auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
 						rigidbody.addForce(Vec2(1.0f, 0.0f));
-						RE_INFO("Move A Right!");
+						//RE_INFO("Move A Right!");
 					}
 				}
 			}
@@ -140,7 +134,7 @@ namespace Rogue
 					{
 						auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
 						rigidbody.addForce(Vec2(0.0f, 1.0f));
-						RE_INFO("Move A Up!");
+						//RE_INFO("Move A Up!");
 					}
 				}
 			}
@@ -152,7 +146,7 @@ namespace Rogue
 					{
 						auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
 						rigidbody.addForce(Vec2(0.0f, -1.0f));
-						RE_INFO("Move A Down!");
+						//RE_INFO("Move A Down!");
 					}
 				}
 			}
@@ -164,7 +158,7 @@ namespace Rogue
 					{
 						auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
 						rigidbody.addForce(Vec2(-1.0f, 0.0f));
-						RE_INFO("Move B Left!");
+						//RE_INFO("Move B Left!");
 					}
 				}
 			}
@@ -176,7 +170,7 @@ namespace Rogue
 					{
 						auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
 						rigidbody.addForce(Vec2(1.0f, 0.0f));
-						RE_INFO("Move B Right!");
+						//RE_INFO("Move B Right!");
 					}
 				}
 			}
@@ -188,7 +182,7 @@ namespace Rogue
 					{
 						auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
 						rigidbody.addForce(Vec2(0.0f, 1.0f));
-						RE_INFO("Move B Up!");
+						//RE_INFO("Move B Up!");
 					}
 				}
 			}
@@ -200,7 +194,7 @@ namespace Rogue
 					{
 						auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
 						rigidbody.addForce(Vec2(0.0f, -1.0f));
-						RE_INFO("Move B Down!");
+						//RE_INFO("Move B Down!");
 					}
 				}
 			}
@@ -208,21 +202,21 @@ namespace Rogue
 			{
 				auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>((Entity)(m_entities.size() - 1));
 				transform.offSetScale(Vec2(1.0f, 1.0f) * gFixedDeltaTime);
-				RE_INFO("Scaled Up!");
+				//RE_INFO("Scaled Up!");
 			}
 
 			else if (EvPressKey->GetKeyCode() == KeyPress::KeyQ)
 			{
 				auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>((Entity)(m_entities.size() - 1));
 				transform.offSetScale(Vec2(-1.0f, -1.0f) * gFixedDeltaTime);
-				RE_INFO("Scaled Down!");
+				//RE_INFO("Scaled Down!");
 			}
 
 			else if (EvPressKey->GetKeyCode() == KeyPress::KeyR)
 			{
 				auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>((Entity)(m_entities.size() - 1));
 				transform.offSetRotation(1.0f * gFixedDeltaTime);
-				RE_INFO("Rotated!");
+				//RE_INFO("Rotated!");
 			}
 			else if (EvPressKey->GetKeyCode() == KeyPress::KeyK)
 			{

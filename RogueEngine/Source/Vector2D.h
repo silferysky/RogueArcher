@@ -31,6 +31,9 @@ namespace Rogue
 
 		float m[2];
 
+		static const Vector2D unitX;
+		static const Vector2D unitY;
+
 		Vector2D() : x{ 0.0f }, y{ 0.0f } // Default constructor
 		{}
 
