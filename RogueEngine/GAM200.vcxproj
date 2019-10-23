@@ -44,10 +44,11 @@
     <ClInclude Include="Source\IEditable.h" />
     <ClInclude Include="Source\ILogic.h" />
     <ClInclude Include="Source\imconfig.h" />
-    <ClInclude Include="Source\imgui.h" />
     <ClInclude Include="Source\EditorManager.h" />
+    <ClInclude Include="Source\imgui.h" />
     <ClInclude Include="Source\imgui_impl_glfw.h" />
     <ClInclude Include="Source\imgui_impl_opengl3.h" />
+    <ClInclude Include="Source\imgui_impl_win32.h" />
     <ClInclude Include="Source\imgui_internal.h" />
     <ClInclude Include="Source\imgui_stl.h" />
     <ClInclude Include="Source\imstb_rectpack.h" />
@@ -106,7 +107,7 @@
     <ClInclude Include="Source\Vector2D.h" />
     <ClInclude Include="Source\VSync.h" />
     <ClInclude Include="Source\WindowHelper.h" />
-    <ClInclude Include="Source\WindowSystem.h" />
+    <ClInclude Include="Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\BaseAI.cpp" />
@@ -125,12 +126,13 @@
     <ClCompile Include="Source\EditorViewport.cpp" />
     <ClCompile Include="Source\Event.cpp" />
     <ClCompile Include="Source\EventDispatcher.cpp" />
-    <ClCompile Include="Source\imgui.cpp" />
     <ClCompile Include="Source\EditorManager.cpp" />
+    <ClCompile Include="Source\imgui.cpp" />
     <ClCompile Include="Source\imgui_demo.cpp" />
     <ClCompile Include="Source\imgui_draw.cpp" />
     <ClCompile Include="Source\imgui_impl_glfw.cpp" />
     <ClCompile Include="Source\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="Source\imgui_impl_win32.cpp" />
     <ClCompile Include="Source\imgui_stl.cpp" />
     <ClCompile Include="Source\imgui_widgets.cpp" />
     <ClCompile Include="Source\LogicComponent.cpp" />
@@ -166,7 +168,6 @@
     <ClCompile Include="Source\Vector2D.cpp" />
     <ClCompile Include="Source\VSync.cpp" />
     <ClCompile Include="Source\WindowHelper.cpp" />
-    <ClCompile Include="Source\WindowSystem.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
