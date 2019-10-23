@@ -36,7 +36,7 @@ namespace Rogue
 				auto& currBoxCollider = gEngine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iEntity);
 				//	auto& circleCollider = gEngine.m_coordinator.GetComponent<CircleCollider2DComponent>(*iEntity);
 
-			// Update collidables
+				// Update collidables
 				m_colliderManager.updateAABB(currBoxCollider.m_aabb, transform);
 				m_colliderManager.updateOBB(currBoxCollider.m_obb, transform);
 
@@ -52,18 +52,15 @@ namespace Rogue
 
 					if (m_colliderManager.staticAABBvsAABB(currBoxCollider.m_aabb, nextBoxCollider.m_aabb))
 					{
-					//	std::cout << "Entity " << *iEntity << " AABB collides with Entity " << *iNextEntity << " AABB" << std::endl;
+						std::cout << "Entity " << *iEntity << " AABB collides with Entity " << *iNextEntity << " AABB" << std::endl;
 
 						m_colliderManager.InsertColliderPair(*iEntity, *iNextEntity);
 					}
 
 					if (m_colliderManager.staticOBBvsOBB(currBoxCollider.m_obb, nextBoxCollider.m_obb))
 					{
-					//	std::cout << "Entity " << *iEntity << " OBB collides with Entity " << *iNextEntity << " OBB" << std::endl;
+						//	std::cout << "Entity " << *iEntity << " OBB collides with Entity " << *iNextEntity << " OBB" << std::endl;
 					}
-
-				//	bool a = rigidbody.getIsStatic();
-					//bool b = nextRigidbody.getIsStatic();
 				}
 
 				m_colliderManager.GenerateManifolds();
