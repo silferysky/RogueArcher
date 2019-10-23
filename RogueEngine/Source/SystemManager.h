@@ -11,6 +11,9 @@
 #include "SystemList.h"
 #include "BaseSystem.h"
 
+#include <vector>
+#include <utility>
+
 
 namespace Rogue
 {
@@ -27,10 +30,14 @@ namespace Rogue
 		void RegisterSystem()
 		{
 			std::type_index typeName = GetTypeIndex<T>();
-			RE_ASSERT(m_systems.find(typeName) == m_systems.end(), "Registering system more than once.");
+
+			auto i = std::find_if(m_systems.begin(), m_systems.end(),
+				[&typeName](const std::pair<std::type_index, std::shared_ptr<System>>& element) { return element.first == typeName; });
+
+			RE_ASSERT(i == m_systems.end(), "Registering system more than once.");
 
 			// Insert the newly created system pointer and typename into the map.
-			m_systems.insert({ typeName, std::make_shared<T>() });
+			m_systems.emplace_back(typeName, std::make_shared<T>());
 		}
 
 		template<typename T>
@@ -38,7 +45,9 @@ namespace Rogue
 		{
 			std::type_index SystemName = GetTypeIndex<T>();
 
-			auto i = m_systems.find(SystemName);
+			auto i = std::find_if(m_systems.begin(), m_systems.end(),
+				[&SystemName](const std::pair<std::type_index, std::shared_ptr<System>>& element) { return element.first == SystemName; });
+
 			if (i != m_systems.end())
 			{
 				return std::dynamic_pointer_cast<T>(i->second); // Casts the base shared_ptr to derived
@@ -139,6 +148,6 @@ namespace Rogue
 
 	private:
 		std::unordered_map<std::type_index, Signature> m_signatures;
-		std::unordered_map<std::type_index, std::shared_ptr<System>> m_systems;
+		std::vector<std::pair<std::type_index, std::shared_ptr<System>>> m_systems;
 	};
 }
