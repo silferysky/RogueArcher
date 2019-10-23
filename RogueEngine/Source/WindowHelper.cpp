@@ -3,6 +3,8 @@
 #include "wtypes.h"
 #include "Main.h"
 #include "GLHelper.hpp"
+#include "imgui_impl_win32.h"
+#include "EditorManager.h"
 
 namespace Rogue
 {
@@ -26,6 +28,11 @@ namespace Rogue
 
 	LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
+		IMGUI_IMPL_API LRESULT  ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+		if (ImGui_ImplWin32_WndProcHandler(hWnd, uMsg, wParam, lParam))
+		{
+			return true;
+		}
 		static PAINTSTRUCT ps;
 		switch (uMsg)
 		{
