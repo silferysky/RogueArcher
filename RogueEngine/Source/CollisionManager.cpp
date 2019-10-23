@@ -25,11 +25,13 @@ namespace Rogue
 
 		auto& BoxCompA = gEngine.m_coordinator.GetComponent<BoxCollider2DComponent>(a);
 		auto& BoxCompB = gEngine.m_coordinator.GetComponent<BoxCollider2DComponent>(b);
+		auto& TransA = gEngine.m_coordinator.GetComponent<TransformComponent>(a);
+		auto& TransB = gEngine.m_coordinator.GetComponent<TransformComponent>(b);
 
-		Vec2 scaleA = BoxCompA.m_aabb.getScale();
-		Vec2 scaleB = BoxCompB.m_aabb.getScale();
-		Vec2 centerA = BoxCompA.m_aabb.getCenter();
-		Vec2 centerB = BoxCompB.m_aabb.getCenter();
+		Vec2 scaleA = TransA.getScale();
+		Vec2 scaleB = TransB.getScale();
+		Vec2 centerA = TransA.getPosition();
+		Vec2 centerB = TransB.getPosition();
 		Vec2 vAB = centerB - centerA;
 
 		float AextentX = (BoxCompA.m_aabb.getMax().x - BoxCompA.m_aabb.getMin().x) / 2;
@@ -38,14 +40,10 @@ namespace Rogue
 		float BextentY = (BoxCompB.m_aabb.getMax().y - BoxCompB.m_aabb.getMin().y) / 2;
 
 		// ExtentA.x + ExtentB.x - displacement of AB.x
-		float x_overlap = (BoxCompA.m_aabb.getMax().x - BoxCompA.m_aabb.getMin().x) / 2 +
-			(BoxCompB.m_aabb.getMax().x - BoxCompB.m_aabb.getMin().x) / 2 -
-			REAbs(vAB.x);
+		float x_overlap = AextentX + BextentX - REAbs(vAB.x);
 
 		// ExtentA.y + ExtentB.y - displacement of AB.y
-		float y_overlap = (BoxCompA.m_aabb.getMax().y - BoxCompA.m_aabb.getMin().y) / 2 +
-			(BoxCompB.m_aabb.getMax().y - BoxCompB.m_aabb.getMin().y) / 2 -
-			REAbs(vAB.y);
+		float y_overlap = AextentY + BextentY - REAbs(vAB.y);
 
 		Vec2 CP1, CP2;
 		CP1.x = REMax(BoxCompA.m_aabb.getMin().x, BoxCompB.m_aabb.getMin().x);
@@ -59,13 +57,13 @@ namespace Rogue
 		if (x_overlap < y_overlap)
 		{
 			// Point towards B
-			manifold.m_normal = vAB.x < 0 ? Vec2{1, 0} : Vec2{-1, 0};
+			manifold.m_normal = vAB.x > 0 ? Vec2::unitX : -Vec2::unitX;
 			manifold.m_penetration = x_overlap;
 		}
 		else
 		{
 			// Point towards A
-			manifold.m_normal = vAB.y < 0 ? Vec2{0, 1} : Vec2{0, -1};
+			manifold.m_normal = vAB.y > 0 ? Vec2::unitY : -Vec2::unitY;
 			manifold.m_penetration = y_overlap;
 		}
 	}
