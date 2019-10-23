@@ -12,7 +12,6 @@
 #include "DebugDrawSystem.h"
 #include "FontSystem.h"
 #include "CollisionSystem.h"
-#include "WindowSystem.h"
 
 namespace Rogue
 {
@@ -21,18 +20,38 @@ namespace Rogue
 		m_gameIsRunning{ true }
 	{}
 
+	bool REEngine::InitializeOpenGL()
+	{
+		// Init OpenGL
+		glEnable(GL_TEXTURE_2D);						   // Texture Mapping
+		glEnable(GL_DEPTH_TEST);
+		glShadeModel(GL_SMOOTH);						   // Smooth shading
+		glDepthFunc(GL_LEQUAL);							   // Depth testing type
+		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Perspective Calculations
+
+		// Enable alpha
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glEnable(GL_BLEND);
+
+		if (glewInit() != GLEW_OK)
+		{
+			std::cout << "GLEW broke" << std::endl;
+			return false;
+		}
+
+		return true;
+	}
+
 	void REEngine::RegisterSystems()
 	{
 		m_coordinator.RegisterSystem<InputManager>();
 		m_coordinator.RegisterSystem<LogicSystem>();
 		m_coordinator.RegisterSystem<PhysicsSystem>();
 		m_coordinator.RegisterSystem<CollisionSystem>();
-		m_coordinator.RegisterSystem<WindowSystem>();
 		m_coordinator.RegisterSystem<GraphicsSystem>();
+		m_coordinator.RegisterSystem<Editor>();
 		m_coordinator.RegisterSystem<DebugDrawSystem>();
 		m_coordinator.RegisterSystem<FontSystem>();
-		m_coordinator.RegisterSystem<Editor>();
-
 	}
 
 	void REEngine::RegisterComponents()
@@ -46,8 +65,13 @@ namespace Rogue
 		m_coordinator.RegisterComponent<LogicComponent>();
 	}
 
-	void REEngine::init()
+	void REEngine::init(HWND hWnd)
 	{
+		m_hwnd = hWnd;
+
+		// Init OpenGL libraries.
+		RE_ASSERT(InitializeOpenGL(), "OpenGL not initialized");
+
 		// Register all systems.
 		RegisterSystems();
 
@@ -59,7 +83,7 @@ namespace Rogue
 		m_coordinator.Init();
 	}
 
-	void REEngine::update()
+	void REEngine::update(HDC hDC)
 	{
 		m_stepCount = 0;
 		std::chrono::high_resolution_clock mainLoopTimer;
@@ -92,6 +116,8 @@ namespace Rogue
 
 			m_coordinator.Update();
 
+			SwapBuffers(hDC);
+
 			m_loopEnd = mainLoopTimer.now();
 		}
 	}
@@ -109,6 +135,11 @@ namespace Rogue
 	int REEngine::GetStepCount() const
 	{
 		return m_stepCount;
+	}
+
+	HWND REEngine::GetWindowHandle() const
+	{
+		return m_hwnd;
 	}
 
 	void REEngine::SetGameIsRunning(bool set)

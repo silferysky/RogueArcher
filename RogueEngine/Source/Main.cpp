@@ -53,6 +53,25 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	UNREFERENCED_PARAMETER(lpszCmdLine);
 	UNREFERENCED_PARAMETER(hCurrentInst);
 
+	HDC   hDC;				/* device context */
+	HGLRC hRC;				/* opengl context */
+	HWND  hWnd;				/* window */
+	MSG   msg = { 0 };		/* message */
+
+	Rogue::REConfig config;
+	config.ConfigInit();
+	hWnd = Rogue::CreateOpenGLWindow(const_cast<char*>(config.GetTitle().c_str()), config.GetX(), config.GetY(),
+		config.GetWidth(), config.GetHeight(), 0, config.GetFlags());
+
+	if (hWnd == NULL)
+		exit(1);
+
+	hDC = GetDC(hWnd);
+	hRC = wglCreateContext(hDC);
+	wglMakeCurrent(hDC, hRC);
+
+	ShowWindow(hWnd, nCmdShow);
+
 	//if (EditorMode)
 	//{
 	//	Rogue::Editor Editor;
@@ -63,15 +82,37 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	//	return (int)msg.wParam;
 	//}
 
-	gEngine.init();
+	AllocConsole();
+	(void)freopen("CONIN$", "r", stdin);
+	(void)freopen("CONOUT$", "w", stdout);
+	(void)freopen("CONOUT$", "w", stderr);
+
+
+	//Ensures program closes properly 
+	SetConsoleCtrlHandler(Rogue::CtrlHandler, true);
+
+	//setVSync(1);
+
+	gEngine.init(hWnd);
+	
+	//////////////////////////
+	//Graphics Debug
+	/////////////////////////
+
+	std::cout << glGetString(GL_VERSION) << std::endl;
 
 	//BasicIO::WriteLevelJsonFile("Resources/TestJsonFileCreator.json", 1);
 	//BasicIO::WriteArchetypeJsonFile("Resources/TestArchetypeJsonFile.json", 3);
 	//BasicIO::WriteLevelJsonFile("Resources/Level 1.json", 8);
 
 	// Update engine.
-	gEngine.update();
+	gEngine.update(hDC);
 
-	return 0;
+	wglMakeCurrent(NULL, NULL);
+	ReleaseDC(hWnd, hDC);
+	wglDeleteContext(hRC);
+	DestroyWindow(hWnd);
+
+	return (int)msg.wParam;
 
 }
