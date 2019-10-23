@@ -13,9 +13,24 @@ namespace Rogue
 	//_________________________________________________________________________|
 	Mtx33 CollisionManager::GetColliderWorldMatrix(const BaseCollider& collider, const TransformComponent& trans) const
 	{
-		return Mtx33CreateSRTMatrix(collider.getScale() + trans.getScale(),
-			collider.getRotation() + trans.getRotation(),
-			collider.getCenter() + trans.getPosition());
+		return Mtx33CreateSRTMatrix(GetColliderScale(collider, trans),
+									GetColliderRotation(collider, trans),
+									GetColliderPosition(collider, trans));
+	}
+
+	inline Vec2 CollisionManager::GetColliderScale(const BaseCollider& collider, const TransformComponent& trans) const
+	{
+		return collider.getScaleOffSet() + trans.getScale();
+	}
+
+	inline Vec2 CollisionManager::GetColliderPosition(const BaseCollider& collider, const TransformComponent& trans) const
+	{
+		return collider.getCenterOffSet() + trans.getPosition();
+	}
+
+	inline float CollisionManager::GetColliderRotation(const BaseCollider& collider, const TransformComponent& trans) const
+	{
+		return collider.getRotationOffSet() + trans.getRotation();
 	}
 
 	void CollisionManager::GenerateManifoldAABBvsAABB(Manifold& manifold)
@@ -82,7 +97,7 @@ namespace Rogue
 	{
 		float totalRadius = circleA.m_collider.getRadius() + circleB.m_collider.getRadius();
 
-		return Vec2SqDistance(circleA.m_collider.getCenter(), circleB.m_collider.getCenter()) <
+		return Vec2SqDistance(circleA.m_collider.getCenterOffSet(), circleB.m_collider.getCenterOffSet()) <
 			totalRadius * totalRadius;
 	}
 
@@ -102,7 +117,7 @@ namespace Rogue
 		Vec2 P0 = lineSeg.m_pt0;			// One end of the line
 		Vec2 P1 = lineSeg.m_pt1;			// Other end of the line
 		Vec2 N = lineSeg.m_normal;		// Normal of the line
-		Vec2 Bs = circle.m_collider.getCenter();		// Starting point of the circle
+		Vec2 Bs = circle.m_collider.getCenterOffSet();		// Starting point of the circle
 		float R = circle.m_collider.getRadius();				// Radius of the circle
 
 
@@ -180,20 +195,20 @@ namespace Rogue
 		if (withinBothLines) // Bs is starting between both imaginary lines.
 		{
 			// Bs is closer to P0.
-			if (Vec2DotProd(lineSeg.m_pt0 - circle.m_collider.getCenter(), lineSeg.m_pt1 - lineSeg.m_pt0) > 0)
+			if (Vec2DotProd(lineSeg.m_pt0 - circle.m_collider.getCenterOffSet(), lineSeg.m_pt1 - lineSeg.m_pt0) > 0)
 			{
-				Vec2 circleVel = ptEnd - circle.m_collider.getCenter(); // Velocity vector of the circle.
+				Vec2 circleVel = ptEnd - circle.m_collider.getCenterOffSet(); // Velocity vector of the circle.
 				Vec2 circleDir; // Normalized directional vector of the circle.
 				Vec2Normalize(circleDir, circleVel);
 				// Dot product of circle to P0 and circle's vel vector
-				float m = Vec2DotProd(lineSeg.m_pt0 - circle.m_collider.getCenter(), circleDir);
+				float m = Vec2DotProd(lineSeg.m_pt0 - circle.m_collider.getCenterOffSet(), circleDir);
 
 
 				if (m > 0) // Circle is facing/moving towards P0
 				{
 					Vec2 M = { circleDir.y, -circleDir.x }; // Circle's normalized outward normal of it's velocity vector.
 
-					float dist0 = Vec2DotProd(lineSeg.m_pt0 - circle.m_collider.getCenter(), M);
+					float dist0 = Vec2DotProd(lineSeg.m_pt0 - circle.m_collider.getCenterOffSet(), M);
 					if (abs(dist0) > circle.m_collider.getRadius()) // Circle misses P0. Shortest distance is bigger than the radius
 						return 0;
 
@@ -203,7 +218,7 @@ namespace Rogue
 
 					if (interTime <= 1)
 					{
-						interPt = circle.m_collider.getCenter() + circleVel * interTime;
+						interPt = circle.m_collider.getCenterOffSet() + circleVel * interTime;
 						Vec2Normalize(normalAtCollision, interPt - lineSeg.m_pt0);
 						return 1;
 					}
@@ -211,17 +226,17 @@ namespace Rogue
 			}
 			else // Closer to P1 side
 			{
-				Vec2 circleVel = ptEnd - circle.m_collider.getCenter(); // Velocity vector of the circle.
+				Vec2 circleVel = ptEnd - circle.m_collider.getCenterOffSet(); // Velocity vector of the circle.
 				Vec2 circleDir; // Normalized directional vector of the circle.
 				Vec2Normalize(circleDir, circleVel);
 
 				// Dot product of circle to P0 and circle's vel vector
-				float m = Vec2DotProd(lineSeg.m_pt1 - circle.m_collider.getCenter(), circleDir);
+				float m = Vec2DotProd(lineSeg.m_pt1 - circle.m_collider.getCenterOffSet(), circleDir);
 
 				if (m > 0) // Circle is facing P1
 				{
 					Vec2 M = { circleDir.y, -circleDir.x }; // Circle's normalized outward normal of it's velocity vector.
-					float dist1 = Vec2DotProd(lineSeg.m_pt1 - circle.m_collider.getCenter(), M);
+					float dist1 = Vec2DotProd(lineSeg.m_pt1 - circle.m_collider.getCenterOffSet(), M);
 
 					if (abs(dist1) > circle.m_collider.getRadius()) // Circle misses P1. Shortest distance from velocity vector to P1 is greater than radius.
 						return 0;
@@ -232,7 +247,7 @@ namespace Rogue
 
 					if (interTime <= 1)
 					{
-						interPt = circle.m_collider.getCenter() + circleVel * interTime;
+						interPt = circle.m_collider.getCenterOffSet() + circleVel * interTime;
 						Vec2Normalize(normalAtCollision, interPt - lineSeg.m_pt1);
 						return 1;
 					}
@@ -241,13 +256,13 @@ namespace Rogue
 		}
 		else // Circle is NOT within imaginary lines.
 		{
-			Vec2 circleVel = ptEnd - circle.m_collider.getCenter(); // Velocity vector of the circle.
+			Vec2 circleVel = ptEnd - circle.m_collider.getCenterOffSet(); // Velocity vector of the circle.
 			Vec2 circleDir; // Normalized directional vector of the circle.
 			Vec2Normalize(circleDir, circleVel);
 			Vec2 M = { circleDir.y, -circleDir.x }; // Circle's normalized outward normal of it's velocity vector.
 			bool onP0Side = false;
-			float dist0 = Vec2DotProd(lineSeg.m_pt0 - circle.m_collider.getCenter(), M);
-			float dist1 = Vec2DotProd(lineSeg.m_pt1 - circle.m_collider.getCenter(), M);
+			float dist0 = Vec2DotProd(lineSeg.m_pt0 - circle.m_collider.getCenterOffSet(), M);
+			float dist1 = Vec2DotProd(lineSeg.m_pt1 - circle.m_collider.getCenterOffSet(), M);
 			float absDist0 = abs(dist0);
 			float absDist1 = abs(dist1);
 
@@ -256,8 +271,8 @@ namespace Rogue
 
 			else if (absDist0 <= circle.m_collider.getRadius() && absDist1 <= circle.m_collider.getRadius())
 			{
-				float m0 = Vec2DotProd(lineSeg.m_pt0 - circle.m_collider.getCenter(), circleDir);
-				float m1 = Vec2DotProd(lineSeg.m_pt1 - circle.m_collider.getCenter(), circleDir);
+				float m0 = Vec2DotProd(lineSeg.m_pt0 - circle.m_collider.getCenterOffSet(), circleDir);
+				float m1 = Vec2DotProd(lineSeg.m_pt1 - circle.m_collider.getCenterOffSet(), circleDir);
 				float absM0 = abs(m0);
 				float absM1 = abs(m1);
 
@@ -275,7 +290,7 @@ namespace Rogue
 
 			if (onP0Side) // Circle is closer to P0
 			{
-				float m = Vec2DotProd(lineSeg.m_pt0 - circle.m_collider.getCenter(), circleDir);
+				float m = Vec2DotProd(lineSeg.m_pt0 - circle.m_collider.getCenterOffSet(), circleDir);
 
 				if (m < 0)
 					return 0; // Circle is moving away from P0
@@ -285,14 +300,14 @@ namespace Rogue
 				interTime = (m - H) / Vec2Length(circleVel);
 				if (interTime <= 1)
 				{
-					interPt = circle.m_collider.getCenter() + circleVel * interTime;
+					interPt = circle.m_collider.getCenterOffSet() + circleVel * interTime;
 					Vec2Normalize(normalAtCollision, interPt - lineSeg.m_pt0);
 					return 1;
 				}
 			}
 			else // Circle is closer to P1
 			{
-				float m = Vec2DotProd(lineSeg.m_pt1 - circle.m_collider.getCenter(), circleDir);
+				float m = Vec2DotProd(lineSeg.m_pt1 - circle.m_collider.getCenterOffSet(), circleDir);
 
 				if (m < 0)
 					return 0; // Circle is moving away from P1
@@ -302,7 +317,7 @@ namespace Rogue
 				interTime = (m - H) / Vec2Length(circleVel);
 				if (interTime <= 1)
 				{
-					interPt = circle.m_collider.getCenter() + circleVel * interTime;
+					interPt = circle.m_collider.getCenterOffSet() + circleVel * interTime;
 					Vec2Normalize(normalAtCollision, interPt - lineSeg.m_pt1);
 					return 1;
 				}
@@ -322,20 +337,20 @@ namespace Rogue
 	{
 		Vec2 rayDirNormalized;
 		Vec2Normalize(rayDirNormalized, ray.m_dir); // Assign normalized ray directional vector
-		float m = Vec2DotProd(circle.m_collider.getCenter() - ray.m_pt0, rayDirNormalized); // Distance for the ray to travel to a point closest to the circle
+		float m = Vec2DotProd(circle.m_collider.getCenterOffSet() - ray.m_pt0, rayDirNormalized); // Distance for the ray to travel to a point closest to the circle
 
-		if (m < 0.0f && Vec2SqDistance(ray.m_pt0, circle.m_collider.getCenter()) > circle.m_collider.getRadius()* circle.m_collider.getRadius()) // If m < 0 and Bs is outside circle
+		if (m < 0.0f && Vec2SqDistance(ray.m_pt0, circle.m_collider.getCenterOffSet()) > circle.m_collider.getRadius()* circle.m_collider.getRadius()) // If m < 0 and Bs is outside circle
 			return 0; // Circle is behind ray origin.
 
-		float nSquared = Vec2SqDistance(ray.m_pt0, circle.m_collider.getCenter()) - m * m;
+		float nSquared = Vec2SqDistance(ray.m_pt0, circle.m_collider.getCenterOffSet()) - m * m;
 
 		if (nSquared > circle.m_collider.getRadius()* circle.m_collider.getRadius()) // If n is greater than r
 			return 0; // Ray will miss the circle.
 
 		// Compute interTime
 		float a = Vec2DotProd(ray.m_dir, ray.m_dir); // v.v
-		float b = -2 * Vec2DotProd((circle.m_collider.getCenter() - ray.m_pt0), ray.m_dir); // -2(C-Bs).v
-		float c = Vec2DotProd(circle.m_collider.getCenter() - ray.m_pt0, circle.m_collider.getCenter() - ray.m_pt0) - circle.m_collider.getRadius() * circle.m_collider.getRadius(); // (C-Bs).(C-Bs) - r^2
+		float b = -2 * Vec2DotProd((circle.m_collider.getCenterOffSet() - ray.m_pt0), ray.m_dir); // -2(C-Bs).v
+		float c = Vec2DotProd(circle.m_collider.getCenterOffSet() - ray.m_pt0, circle.m_collider.getCenterOffSet() - ray.m_pt0) - circle.m_collider.getRadius() * circle.m_collider.getRadius(); // (C-Bs).(C-Bs) - r^2
 		float det = b * b - (4 * a * c); // b^2 - 4ac
 
 		if (det < RE_EPSILON && det > -RE_EPSILON) // If determinant is 0, ray grazes circle.
@@ -373,14 +388,14 @@ namespace Rogue
 		{
 			Ray ray; // CircleA is treated as a ray
 			CircleCollider2DComponent circle; // Circle is a static pillar
-			ray.m_pt0 = circleA.m_collider.getCenter(); // Assign ray position
+			ray.m_pt0 = circleA.m_collider.getCenterOffSet(); // Assign ray position
 			ray.m_dir = velA;
-			circle.m_collider.setCenter(circleB.m_collider.getCenter()); // Circle has the position of the pillar.
+			circle.m_collider.setCenterOffSet(circleB.m_collider.getCenterOffSet()); // Circle has the position of the pillar.
 			circle.m_collider.setRadius(circleA.m_collider.getRadius() + circleB.m_collider.getRadius());  // Circle has radius = pillar radius + ray radius.
 
 			if (CollisionIntersection_RayCircle(ray, circle, interTime))
 			{
-				interPtA = circleA.m_collider.getCenter() + interTime * velA; // Bi of ray. interPtB is not needed.
+				interPtA = circleA.m_collider.getCenterOffSet() + interTime * velA; // Bi of ray. interPtB is not needed.
 				return 1;
 			}
 		}
@@ -390,13 +405,13 @@ namespace Rogue
 			CircleCollider2DComponent circle;
 
 			ray.m_dir = velA - velB;
-			ray.m_pt0 = circleA.m_collider.getCenter();
-			circle.m_collider.setCenter(circleB.m_collider.getCenter());
+			ray.m_pt0 = circleA.m_collider.getCenterOffSet();
+			circle.m_collider.setCenterOffSet(circleB.m_collider.getCenterOffSet());
 			circle.m_collider.setRadius(circleA.m_collider.getRadius() + circleB.m_collider.getRadius());
 			if (CollisionIntersection_RayCircle(ray, circle, interTime))
 			{
-				interPtA = circleA.m_collider.getCenter() + interTime * velA;
-				interPtB = circleB.m_collider.getCenter() + interTime * velB;
+				interPtA = circleA.m_collider.getCenterOffSet() + interTime * velA;
+				interPtB = circleB.m_collider.getCenterOffSet() + interTime * velB;
 
 				return 1;
 			}
@@ -477,13 +492,20 @@ namespace Rogue
 	// Update the bounding box's m_min and m_max.
 	void CollisionManager::updateAABB(AABB& collider, const TransformComponent& transform)
 	{
-		Mtx33 matrix = GetColliderWorldMatrix(collider, transform);
+		Vec2 pos = GetColliderPosition(collider, transform);
+		Vec2 size = GetColliderScale(collider, transform);
+		Mtx33 trans, scale;
+		
+		Mtx33Translate(trans, pos.x, pos.y);
+		Mtx33Scale(scale, size.x, size.y);
+
+		Mtx33 result = trans *= scale;
 
 		Vec2 min = { -0.5f, -0.5f };
 		Vec2 max = { 0.5f, 0.5f };
 
-		collider.setMin(matrix * min);
-		collider.setMax(matrix * max);
+		collider.setMin(result * min);
+		collider.setMax(result * max);
 	}
 
 
@@ -687,7 +709,7 @@ namespace Rogue
 	{
 		Mtx33 matrix = GetColliderWorldMatrix(obb, trans);
 
-		for (int i = 0; i < (int)obb.modelVerts().size(); i++)
+		for (size_t i = 0; i < obb.modelVerts().size(); i++)
 		{
 			obb.globVerts()[i] = matrix * obb.modelVerts()[i];
 		}
