@@ -1,7 +1,6 @@
 
 #include "REEditor.h"
 #include "EditorManager.h"
-#include "imgui_impl_win32.h"
 
 namespace Rogue
 {
@@ -14,19 +13,19 @@ namespace Rogue
 	{
 		const char* glsl_version = "#version 130";
 		/* Initialize the library */
-		//if (!glfwInit())
-		//{
-		//	std::cout << "help" << std::endl;
-		//}
-		//window = glfwCreateWindow(1640, 1480, "Rogue Editor", NULL, NULL);
-		//if (!window)
-		//{
-		//	glfwTerminate();
-		//}
-		//glfwMakeContextCurrent(window);
-		//
-		//if (glewInit() != GLEW_OK)
-		//	std::cout << "Oh damn" << std::endl;
+		if (!glfwInit())
+		{
+			std::cout << "help" << std::endl;
+		}
+		window = glfwCreateWindow(1640, 1480, "Rogue Editor", NULL, NULL);
+		if (!window)
+		{
+			glfwTerminate();
+		}
+		glfwMakeContextCurrent(window);
+
+		if (glewInit() != GLEW_OK)
+			std::cout << "Oh damn" << std::endl;
 
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
@@ -34,7 +33,7 @@ namespace Rogue
 		ImGui::StyleColorsClassic();
 		io.ConfigDockingWithShift = false;
 		io.ConfigFlags = ImGuiConfigFlags_DockingEnable;
-		ImGui_ImplWin32_Init(gEngine.GetWindowHandle());
+		ImGui_ImplGlfw_InitForOpenGL(window, true);
 		ImGui_ImplOpenGL3_Init(glsl_version);
 
 		for (std::shared_ptr<IEditable> i : m_WindowsVector)
@@ -44,10 +43,13 @@ namespace Rogue
 	}
 	void EditorManager::Update()
 	{
-
+		while (!glfwWindowShouldClose(window))
+		{
+			glfwPollEvents();
+			
 			// Start the Dear ImGui frame
 			ImGui_ImplOpenGL3_NewFrame();
-			ImGui_ImplWin32_NewFrame();
+			ImGui_ImplGlfw_NewFrame();
 			ImGui::NewFrame();
 			bool i = true;
 			static ImGuiDockNodeFlags opt_flags = ImGuiDockNodeFlags_None;
@@ -105,25 +107,26 @@ namespace Rogue
 			}*/
 			ImGui::End();
 			ImGui::Render();
-			//int display_w, display_h;
-			//glfwGetFramebufferSize(window, &display_w, &display_h);
-			//glViewport(0, 0, display_w, display_h);
+			int display_w, display_h;
+			glfwGetFramebufferSize(window, &display_w, &display_h);
+			glViewport(0, 0, display_w, display_h);
 			glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
 			glClear(GL_COLOR_BUFFER_BIT);
 			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-			//glfwSwapBuffers(window);
+			glfwSwapBuffers(window);
 			ImGui::EndFrame();
 			ImGui::UpdatePlatformWindows();
+		}
 	}
 	void EditorManager::Shutdown()
 	{
 		ImGui_ImplOpenGL3_Shutdown();
-		ImGui_ImplWin32_Shutdown();
+		ImGui_ImplGlfw_Shutdown();
 		ImGui::DestroyContext();
 
-		//glfwDestroyWindow(window);
-		//glfwTerminate();
+		glfwDestroyWindow(window);
+		glfwTerminate();
 	}
 }
 	
