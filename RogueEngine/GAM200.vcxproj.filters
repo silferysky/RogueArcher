@@ -289,6 +289,9 @@
     <ClInclude Include="Source\imgui.h">
       <Filter>RogueEditor\EditorLibrary</Filter>
     </ClInclude>
+    <ClInclude Include="Source\imgui_impl_glfw.h">
+      <Filter>RogueEditor\EditorLibrary</Filter>
+    </ClInclude>
     <ClInclude Include="Source\imgui_impl_opengl3.h">
       <Filter>RogueEditor\EditorLibrary</Filter>
     </ClInclude>
@@ -348,9 +351,6 @@
     </ClInclude>
     <ClInclude Include="Source\WindowSystem.h">
       <Filter>RogueEngine\Systems\Window</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\imgui_impl_win32.h">
-      <Filter>RogueEditor\EditorLibrary</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -486,6 +486,9 @@
     <ClCompile Include="Source\imgui_draw.cpp">
       <Filter>RogueEditor\EditorLibrary</Filter>
     </ClCompile>
+    <ClCompile Include="Source\imgui_impl_glfw.cpp">
+      <Filter>RogueEditor\EditorLibrary</Filter>
+    </ClCompile>
     <ClCompile Include="Source\imgui_impl_opengl3.cpp">
       <Filter>RogueEditor\EditorLibrary</Filter>
     </ClCompile>
@@ -524,9 +527,6 @@
     </ClCompile>
     <ClCompile Include="Source\WindowSystem.cpp">
       <Filter>RogueEngine\Systems\Window</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\imgui_impl_win32.cpp">
-      <Filter>RogueEditor\EditorLibrary</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

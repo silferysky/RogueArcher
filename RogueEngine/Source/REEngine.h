@@ -12,7 +12,7 @@ namespace Rogue
 		float m_accumulatedTime;
 		int	m_stepCount;
 		bool m_gameIsRunning;
-		HWND m_hwnd;
+
 		ChronoClock m_loopStart;
 		ChronoClock m_loopEnd;
 
@@ -30,7 +30,7 @@ namespace Rogue
 
 		float GetAccumulatedTime() const;
 		int GetStepCount() const;
-		HWND GetWindowHandle() const;
+
 		void SetGameIsRunning(bool set);
 	};
 }

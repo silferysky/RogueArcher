@@ -116,9 +116,4 @@ namespace Rogue
 		m_gameIsRunning = set;
 	}
 
-	HWND REEngine::GetWindowHandle() const
-	{
-		return m_hwnd;
-	}
-
 }
