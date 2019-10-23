@@ -104,123 +104,79 @@ namespace Rogue
 
 			if (EvPressKey->GetKeyCode() == KeyPress::KeyA)
 			{
-				for (auto entity : m_entities)
-				{
-					if (entity == 1) // Entity A
-					{
-						auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
-						rigidbody.addForce(Vec2(-1.0f, 0.0f));
-						//RE_INFO("Move A Left!");
-					}
-				}
+				auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(1);
+				rigidbody.addForce(Vec2(-1.0f, 0.0f));
+				//RE_INFO("Move A Left!");
 			}
 			else if (EvPressKey->GetKeyCode() == KeyPress::KeyD)
 			{
-				for (auto entity : m_entities)
-				{
-					if (entity == 1) // Entity A
-					{
-						auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
-						rigidbody.addForce(Vec2(1.0f, 0.0f));
-						//RE_INFO("Move A Right!");
-					}
-				}
+				auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(1);
+				rigidbody.addForce(Vec2(1.0f, 0.0f));
+				//RE_INFO("Move A Right!");
 			}
+			
 			else if (EvPressKey->GetKeyCode() == KeyPress::KeyW)
 			{
-				for (auto entity : m_entities)
-				{
-					if (entity == 1) // Entity A
-					{
-						auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
-						rigidbody.addForce(Vec2(0.0f, 1.0f));
-						//RE_INFO("Move A Up!");
-					}
-				}
+				auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(1);
+				rigidbody.addForce(Vec2(0.0f, 1.0f));
+				//RE_INFO("Move A Up!");
 			}
 			else if (EvPressKey->GetKeyCode() == KeyPress::KeyS)
 			{
-				for (auto entity : m_entities)
-				{
-					if (entity == 1) // Entity A
-					{
-						auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
-						rigidbody.addForce(Vec2(0.0f, -1.0f));
-						//RE_INFO("Move A Down!");
-					}
-				}
+				auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(1);
+				rigidbody.addForce(Vec2(0.0f, -1.0f));
+				//RE_INFO("Move A Down!");
+
 			}
 			if (EvPressKey->GetKeyCode() == KeyPress::KeyArrowLeft)
 			{
-				for (auto entity : m_entities)
-				{
-					if (entity == 2) // Entity B
-					{
-						auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
-						rigidbody.addForce(Vec2(-1.0f, 0.0f));
-						//RE_INFO("Move B Left!");
-					}
-				}
+				auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(2);
+				rigidbody.addForce(Vec2(-1.0f, 0.0f));
+				//RE_INFO("Move B Left!");
+
 			}
 			else if (EvPressKey->GetKeyCode() == KeyPress::KeyArrowRight)
 			{
-				for (auto entity : m_entities)
-				{
-					if (entity == 2) // Entity B
-					{
-						auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
-						rigidbody.addForce(Vec2(1.0f, 0.0f));
-						//RE_INFO("Move B Right!");
-					}
-				}
+				auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(2);
+				rigidbody.addForce(Vec2(1.0f, 0.0f));
+				//RE_INFO("Move B Right!");
 			}
 			else if (EvPressKey->GetKeyCode() == KeyPress::KeyArrowUp)
 			{
-				for (auto entity : m_entities)
-				{
-					if (entity == 2) // Entity B
-					{
-						auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
-						rigidbody.addForce(Vec2(0.0f, 1.0f));
-						//RE_INFO("Move B Up!");
-					}
-				}
+				auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(2);
+				rigidbody.addForce(Vec2(0.0f, 1.0f));
+				//RE_INFO("Move B Up!");
+
 			}
 			else if (EvPressKey->GetKeyCode() == KeyPress::KeyArrowDown)
 			{
-				for (auto entity : m_entities)
-				{
-					if (entity == 2) // Entity B
-					{
-						auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
-						rigidbody.addForce(Vec2(0.0f, -1.0f));
-						//RE_INFO("Move B Down!");
-					}
-				}
+				auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(2);
+				rigidbody.addForce(Vec2(0.0f, -1.0f));
+				//RE_INFO("Move B Down!");
 			}
 			else if (EvPressKey->GetKeyCode() == KeyPress::KeyE)
 			{
-				auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>((Entity)(m_entities.size() - 1));
+				auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>((Entity)(1));
 				transform.offSetScale(Vec2(1.0f, 1.0f) * gFixedDeltaTime);
 				//RE_INFO("Scaled Up!");
 			}
 
 			else if (EvPressKey->GetKeyCode() == KeyPress::KeyQ)
 			{
-				auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>((Entity)(m_entities.size() - 1));
+				auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>((Entity)(1));
 				transform.offSetScale(Vec2(-1.0f, -1.0f) * gFixedDeltaTime);
 				//RE_INFO("Scaled Down!");
 			}
 
 			else if (EvPressKey->GetKeyCode() == KeyPress::KeyR)
 			{
-				auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>((Entity)(m_entities.size() - 1));
+				auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>((Entity)1);
 				transform.offSetRotation(1.0f * gFixedDeltaTime);
 				//RE_INFO("Rotated!");
 			}
 			else if (EvPressKey->GetKeyCode() == KeyPress::KeyK)
 			{
-				auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>((Entity)(m_entities.size() - 1));
+				auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>((Entity)1);
 				transform.setPosition(Vec2(-2.0f, 0.0f));
 			}
 			else if (EvPressKey->GetKeyCode() == KeyPress::KeyL)
