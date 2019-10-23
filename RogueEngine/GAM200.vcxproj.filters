@@ -193,9 +193,6 @@
     <ClInclude Include="Source\BasicIO.h">
       <Filter>RogueEngine\Systems\I/O</Filter>
     </ClInclude>
-    <ClInclude Include="Source\CircleCollider2DComponent.h">
-      <Filter>RogueEngine\Systems\Physics\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Source\MaterialComponent.h">
       <Filter>RogueEngine\Systems\Physics\Components</Filter>
     </ClInclude>
@@ -206,9 +203,6 @@
       <Filter>RogueEngine\Systems\Physics\Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\TransformComponent.h">
-      <Filter>RogueEngine\Systems\Physics\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\BoxCollider2DComponent.h">
       <Filter>RogueEngine\Systems\Physics\Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\MemoryManager.h">
@@ -353,6 +347,18 @@
     <ClInclude Include="Source\imgui_internal.h">
       <Filter>RogueEditor\EditorLibrary</Filter>
     </ClInclude>
+    <ClInclude Include="Source\BaseCollider.h">
+      <Filter>RogueEngine\Systems\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CircleCollider2DComponent.h">
+      <Filter>RogueEngine\Systems\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BoxCollider2DComponent.h">
+      <Filter>RogueEngine\Systems\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Manifold.h">
+      <Filter>RogueEngine\Systems\Collision</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -412,9 +418,6 @@
     <ClCompile Include="Source\BasicIO.cpp">
       <Filter>RogueEngine\Systems\I/O</Filter>
     </ClCompile>
-    <ClCompile Include="Source\CircleCollider2DComponent.cpp">
-      <Filter>RogueEngine\Systems\Physics\Components</Filter>
-    </ClCompile>
     <ClCompile Include="Source\MaterialComponent.cpp">
       <Filter>RogueEngine\Systems\Physics\Components</Filter>
     </ClCompile>
@@ -425,9 +428,6 @@
       <Filter>RogueEngine\Systems\Physics\Components</Filter>
     </ClCompile>
     <ClCompile Include="Source\TransformComponent.cpp">
-      <Filter>RogueEngine\Systems\Physics\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\BoxCollider2DComponent.cpp">
       <Filter>RogueEngine\Systems\Physics\Components</Filter>
     </ClCompile>
     <ClCompile Include="Source\MemoryManager.cpp">
@@ -528,6 +528,15 @@
     </ClCompile>
     <ClCompile Include="Source\imgui_widgets.cpp">
       <Filter>RogueEditor\EditorLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CircleCollider2DComponent.cpp">
+      <Filter>RogueEngine\Systems\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BoxCollider2DComponent.cpp">
+      <Filter>RogueEngine\Systems\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Manifold.cpp">
+      <Filter>RogueEngine\Systems\Collision</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

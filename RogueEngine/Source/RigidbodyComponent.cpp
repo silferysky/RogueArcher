@@ -6,14 +6,16 @@
 namespace Rogue
 {
 
-	RigidbodyComponent::RigidbodyComponent(float mass, float volume, float damping)
+	RigidbodyComponent::RigidbodyComponent()
 		: m_acceleration{ Vec2() },
 		m_velocity{ Vec2() },
 		m_accForce{ Vec2() },
-		m_invMass{ 1 / mass },
-		m_volume{ volume },
-		m_damping{ damping },
-		m_isStatic{ false }
+		m_invMass{ 1.0f },
+		m_volume{ 1.0f },
+		m_damping{ 0.99f },
+		m_isStatic{ false },
+		m_restitution{ 0.1f },
+		m_friction{ 0.01f }
 	{}
 
 	Vec2 RigidbodyComponent::getVelocity() const
@@ -58,7 +60,7 @@ namespace Rogue
 
 	void RigidbodyComponent::setMass(float mass)
 	{
-		if (mass < REMath::EPSILON && mass > -REMath::EPSILON)
+		if (mass < RE_EPSILON && mass > -RE_EPSILON)
 			throw("Mass is 0!");
 
 		m_invMass = 1 / mass;
@@ -94,6 +96,16 @@ namespace Rogue
 		return m_isStatic;
 	}
 
+	float RigidbodyComponent::getBounciness() const
+	{
+		return m_restitution;
+	}
+
+	float RigidbodyComponent::getFriction() const
+	{
+		return m_friction;
+	}
+
 	void RigidbodyComponent::setDamping(float damping)
 	{
 		m_damping = damping;
@@ -102,6 +114,19 @@ namespace Rogue
 	void RigidbodyComponent::setIsStatic(bool set)
 	{
 		m_isStatic = set;
+
+		if(set == true)
+			m_invMass = 0.0f;
+	}
+
+	void RigidbodyComponent::setBounciness(float bounce)
+	{
+		m_restitution = bounce;
+	}
+
+	void RigidbodyComponent::setFriction(float friction)
+	{
+		m_friction = friction;
 	}
 
 	std::string RigidbodyComponent::Serialize()

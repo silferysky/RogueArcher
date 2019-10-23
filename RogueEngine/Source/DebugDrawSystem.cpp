@@ -57,7 +57,7 @@
 			if (entity)
 			{
 				drawAABB(&collider, &transform);
-				drawOBB(&collider);
+				//drawOBB(&collider);
 				drawVelocity(&rBody, &transform);
 			}
 		}
@@ -70,11 +70,11 @@
 		glBindVertexArray(m_VAO);
 		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 
-		float left = box->AABB().getMin().x;
-		float right = box->AABB().getMax().x;
+		float left = box->m_aabb.getMin().x;
+		float right = box->m_aabb.getMax().x;
 
-		float top = box->AABB().getMax().y;
-		float bottom = box->AABB().getMin().y;
+		float top = box->m_aabb.getMax().y;
+		float bottom = box->m_aabb.getMin().y;
 
 		Rogue::drawLine(Rogue::Vec2(left, top), Rogue::Vec2(right, top)); // top line
 		Rogue::drawLine(Rogue::Vec2(left, bottom), Rogue::Vec2(right, bottom)); // bottom line
@@ -92,7 +92,7 @@
 		glBindVertexArray(m_VAO);
 		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 
-		auto obb = box->OBB();
+		auto obb = box->m_obb;
 		for (unsigned int i = 0; i < obb.getSize() - 1; ++i)
 		{
 			drawLine(obb.globVerts()[i], obb.globVerts()[i + 1]);

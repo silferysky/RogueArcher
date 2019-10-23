@@ -5,7 +5,7 @@
 
 namespace Rogue
 {
-	void REMath::REBuildLineSegment(LineSegment& lineSegment,								//Line segment reference - output 
+	void BuildLineSegment(LineSegment& lineSegment,								//Line segment reference - output 
 		const Vec2& pos,							//position - input 
 		float scale,											//scale - input 
 		float dir)											//direction angle - input
@@ -30,59 +30,24 @@ namespace Rogue
 
 	}
 
-	double REMath::DegreesToRadians(double degrees)
+	double DegreesToRadians(double degrees)
 	{
-		return (degrees * REMath::PI / 180.0);
+		return (degrees * RE_PI / 180.0);
 	}
 
-	double REMath::RadiansToDegrees(double radians)
+	double RadiansToDegrees(double radians)
 	{
-		return (radians * 180.0 / REMath::PI);
+		return (radians * 180.0 / RE_PI);
 	}
 
-	float REMath::RESin(float x)
+	float REAbs(float x)
 	{
-		float result = sin(x);
-		return result;
+		return x > 0 ?
+			x :
+			-x;
 	}
 
-	float REMath::RECos(float x)
-	{
-		float result = cos(x);
-		return result;
-	}
-
-	float REMath::RETan(float x)
-	{
-		float result = tan(x);
-		return result;
-	}
-
-	float REMath::REASin(float x)
-	{
-		float result = asin(x);
-		return result;
-	}
-
-	float REMath::REACos(float x)
-	{
-		float result = acos(x);
-		return result;
-	}
-
-	float REMath::REATan(float x)
-	{
-		float result = atan(x);
-		return result;
-	}
-
-	double REMath::RELogBase2(double x)
-	{
-		double result = log2(x);
-		return result;
-	}
-
-	float REMath::REClamp(float x, float x0, float x1)
+	float REClamp(float x, float x0, float x1)
 	{
 		if (x < x0)
 		{
@@ -98,7 +63,7 @@ namespace Rogue
 		}
 	}
 
-	float REMath::REWrap(float x, float x0, float x1)
+	float REWrap(float x, float x0, float x1)
 	{
 		float range = x1 - x0;
 		if (x < (x0 - range) || (x > (x1 + range)))
@@ -119,7 +84,7 @@ namespace Rogue
 		}
 	}
 
-	float REMath::REMin(float x, float y)
+	float REMin(float x, float y)
 	{
 		if (x < y)
 		{
@@ -131,7 +96,7 @@ namespace Rogue
 		}
 	}
 
-	float REMath::REMax(float x, float y)
+	float REMax(float x, float y)
 	{
 		if (x > y)
 		{
@@ -143,7 +108,7 @@ namespace Rogue
 		}
 	}
 
-	bool REMath::REInRange(float x, float x0, float x1)
+	bool REInRange(float x, float x0, float x1)
 	{
 		if (x >= x0 || x <= x1)
 		{
@@ -155,7 +120,7 @@ namespace Rogue
 		}
 	}
 
-	float REMath::REDistPointToCircle(Vec2& pPos, Vec2& pCenter, float radius)
+	float REDistPointToCircle(Vec2& pPos, Vec2& pCenter, float radius)
 	{
 		float result;
 		float x1 = (pPos.x - pCenter.x) * (pPos.x - pCenter.x);
@@ -164,30 +129,30 @@ namespace Rogue
 		return result;
 	}
 
-	float REMath::REDistPointToRectangle(Vec2& pPos, Vec2& pRect, float wigDeltaTimeh, float height)
+	float REDistPointToRectangle(Vec2& pPos, Vec2& pRect, float width, float height)
 	{
 		float dx, dy;
-		dx = REMax(abs(pPos.x - pRect.x) - wigDeltaTimeh / 2, 0.0f);
+		dx = REMax(abs(pPos.x - pRect.x) - width / 2, 0.0f);
 		dy = REMax(abs(pPos.x - pRect.x) - height / 2, 0.0f);
 		return (dx * dx + dy * dy);
 	}
 
-	float REMath::REDistPointToLineSegment(const Vec2& pPos, const Vec2& pLine0, const Vec2& pLine1)
+	float REDistPointToLineSegment(const Vec2& pPos, const Vec2& pLine0, const Vec2& pLine1)
 	{
 		float distance1 = pLine1.x - pLine0.x;
 		float distance2 = pLine1.y - pLine0.y;
 		float distance3 = pLine1.x * pLine0.y - pLine1.y * pLine0.x;
 
-		return abs(distance1 * pPos.x + distance2 * pPos.y + distance3) / (distance1 * distance1 + distance2 * distance2);
+		return REAbs(distance1 * pPos.x + distance2 * pPos.y + distance3) / (distance1 * distance1 + distance2 * distance2);
 	}
 
-	float REMath::REDistCircleToCircle(Vec2& pCenter0, Vec2& pCenter1, float radius0, float radius1)
+	float REDistCircleToCircle(Vec2& pCenter0, Vec2& pCenter1, float radius0, float radius1)
 	{
 		float distance = Vec2Distance(pCenter0, pCenter1) - (radius0 + radius1);
 		return distance;
 	}
 
-	float REMath::REDistCircleToRectangle(Vec2& pCenter, Vec2& pRect, float radius, float SizeX, float SizeY)
+	float REDistCircleToRectangle(Vec2& pCenter, Vec2& pRect, float radius, float SizeX, float SizeY)
 	{
 		float DeltaX, DeltaY;
 		DeltaX = pCenter.x - REMax(pRect.x, REMin(pCenter.x, pRect.x + SizeX));
@@ -195,39 +160,39 @@ namespace Rogue
 		return (DeltaX * DeltaX + DeltaY * DeltaY) < (radius * radius);
 	}
 
-	float REMath::REDistRectangleToRectangle(const Vec2& pRect0, float SizeX0, float SizeY0, const Vec2& pRect1, float SizeX1, float SizeY1)
+	float REDistRectangleToRectangle(const Vec2& pRect0, float SizeX0, float SizeY0, const Vec2& pRect1, float SizeX1, float SizeY1)
 	{
-		return REMax(abs(pRect1.x - pRect0.x) - (SizeX0 + SizeX1) / 2, abs(pRect1.y - pRect0.y) - (SizeY1 + SizeY0) / 2);
+		return REMax(REAbs(pRect1.x - pRect0.x) - (SizeX0 + SizeX1) / 2, REAbs(pRect1.y - pRect0.y) - (SizeY1 + SizeY0) / 2);
 	}
 
 
 
-	//bool RETestPointToCircle(Vec2& pPos, Vec2& pCenter, float radius)
+	//bool TestPointToCircle(Vec2& pPos, Vec2& pCenter, float radius)
 	//{
 	//	return false;
 	//}
 	//
-	//bool RETestPointToRectangle(Vec2& pPos, Vec2& pRect, float SizeX, float SizeY)
+	//bool TestPointToRectangle(Vec2& pPos, Vec2& pRect, float SizeX, float SizeY)
 	//{
 	//	return false;
 	//}
 	//
-	//bool RETestCircleToCircle(Vec2& pCenter0, Vec2& pCenter1, float radius0, float radius1)
+	//bool TestCircleToCircle(Vec2& pCenter0, Vec2& pCenter1, float radius0, float radius1)
 	//{
 	//	return false;
 	//}
 	//
-	//bool RETestCircleToRectangle(Vec2& pCenter, Vec2 pRect, float radius, float SizeX, float SizeY)
+	//bool TestCircleToRectangle(Vec2& pCenter, Vec2 pRect, float radius, float SizeX, float SizeY)
 	//{
 	//	return false;
 	//}
 	//
-	//bool RETestRectangleToRectangle(Vec2& pRect0, Vec2 pRect1, float SizeX0, float SizeX1, float SizeY0, float SizeY1)
+	//bool TestRectangleToRectangle(Vec2& pRect0, Vec2 pRect1, float SizeX0, float SizeX1, float SizeY0, float SizeY1)
 	//{
 	//	return false;
 	//}
 
-	//float REMath::REStaticPointToStaticLineSegment(Vec2& pPos, REMath::LineSegment& pLine)
+	//float StaticPointToStaticLineSegment(Vec2& pPos, LineSegment& pLine)
 	//{
 	//	//return distance between line segment and point
 	//	const float length = (pLine1.x - pLine0.x) * (pLine1.x - pLine0.x) + (pLine1.y - pLine0.y) * (pLine1.y - pLine0.y);
@@ -236,42 +201,42 @@ namespace Rogue
 	//		//pline0 = pline1
 	//		return sqrt((pPos.x - pLine0.x)*(pPos.x - pLine0.x) + (pPos.y - pLine0.y) * (pPos.y - pLine0.y));
 	//	}
-	//	const float t = REMax(0, REMin(1, Vec2DotProd(pPos - pLine0, pLine1 - pLine0) / length));
+	//	const float t = Max(0, Min(1, Vec2DotProd(pPos - pLine0, pLine1 - pLine0) / length));
 	//	const Vec2 projection = v + t * (pLine1 - pLine0);
 	//	return Vec2Distance(pPos, projection);
 	//}
 
-	//float REMovingPointToStaticLineSegment(Vec2& pStart, Vec2& pEnd, LineSegment * pLine, Vec2& pInter)
+	//float MovingPointToStaticLineSegment(Vec2& pStart, Vec2& pEnd, LineSegment * pLine, Vec2& pInter)
 	//{
 	//	return 0.0f;
 	//}
 
-	//float REMovingCircleToStaticLineSegment(Vec2& pStart, Vec2& pEnd, float radius, LineSegment * pLine, Vec2& pInter)
+	//float MovingCircleToStaticLineSegment(Vec2& pStart, Vec2& pEnd, float radius, LineSegment * pLine, Vec2& pInter)
 	//{
 	//	return 0.0f;
 	//}
 
-	//float REReflectMovingPointToStaticLineSegment(Vec2& pStart, Vec2& pEnd, LineSegment * pLine, Vec2& pInter, Vec2& pReflect)
+	//float ReflectMovingPointToStaticLineSegment(Vec2& pStart, Vec2& pEnd, LineSegment * pLine, Vec2& pInter, Vec2& pReflect)
 	//{
 	//	return 0.0f;
 	//}
 	//
-	//float REMovingPointToStaticCircle(Vec2& pStart, Vec2& pEnd, Vec2& pCenter, float radius, Vec2& pInter)
+	//float MovingPointToStaticCircle(Vec2& pStart, Vec2& pEnd, Vec2& pCenter, float radius, Vec2& pInter)
 	//{
 	//	return 0.0f;
 	//}
 	//
-	//float REReflectMovingPointToStaticCircle(Vec2& pStart, Vec2& pEnd, Vec2& pCenter, float radius, Vec2& pInter, Vec2& pReflect)
+	//float ReflectMovingPointToStaticCircle(Vec2& pStart, Vec2& pEnd, Vec2& pCenter, float radius, Vec2& pInter, Vec2& pReflect)
 	//{
 	//	return 0.0f;
 	//}
 
-	//float REMovingCircleToStaticCircle(Vec2& pCenter0start, Vec2& pCenter0end, float radius0, Vec2& pCenter1, float radius1, Vec2& pInter)
+	//float MovingCircleToStaticCircle(Vec2& pCenter0start, Vec2& pCenter0end, float radius0, Vec2& pCenter1, float radius1, Vec2& pInter)
 	//{
 	//	return 0.0f;
 	//}
 	//
-	//float REReflectMovingCircleOnStaticCircle(Vec2& pCenter0, float radius0, Vec2& pCenter1, float radius1)
+	//float ReflectMovingCircleOnStaticCircle(Vec2& pCenter0, float radius0, Vec2& pCenter1, float radius1)
 	//{
 	//	return 0.0f;
 	//}

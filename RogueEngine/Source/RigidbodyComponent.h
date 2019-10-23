@@ -15,12 +15,13 @@ namespace Rogue
 		float m_volume;
 		float m_damping;
 
+		float m_restitution; // Bounciness
+		float m_friction;
+
 		bool m_isStatic;
 
 	public:
-		RigidbodyComponent(float mass = 1.0f,
-			float volume = 1.0f,
-			float damping = 0.99f);
+		RigidbodyComponent();
 		~RigidbodyComponent() = default;
 
 		Vec2 getVelocity() const;
@@ -30,6 +31,8 @@ namespace Rogue
 		float getVolume() const;
 		float getDamping() const;
 		bool getIsStatic() const;
+		float getBounciness() const;
+		float getFriction() const;
 
 		void setAccForce(const Vec2& accforce);
 		void setVelocity(const Vec2& vel);
@@ -41,6 +44,8 @@ namespace Rogue
 		void offSetAcceleration(const Vec2& accel);
 		void setDamping(float damping);
 		void setIsStatic(bool set);
+		void setBounciness(float bounce);
+		void setFriction(float friction);
 
 		std::string Serialize();
 		void Deserialize(std::string toDeserialize);
