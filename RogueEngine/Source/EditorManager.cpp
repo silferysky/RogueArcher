@@ -51,7 +51,7 @@ namespace Rogue
 		static ImGuiDockNodeFlags opt_flags = ImGuiDockNodeFlags_None;
 		ImGuiViewport* viewport = ImGui::GetMainViewport();
 		ImGui::SetNextWindowPos(viewport->Pos);
-		//ImGui::SetWindowSize(viewport->Size);
+		ImGui::SetWindowSize(viewport->Size);
 		ImGui::SetNextWindowViewport(viewport->ID);
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
@@ -62,7 +62,7 @@ namespace Rogue
 		ImGui::SetWindowPos({ 0.f,0.f });
 		ImGuiIO& io = ImGui::GetIO();
 		ImGuiID dockspace_id = ImGui::GetID("MainWindow");
-		//ImGui::SetNextWindowBgAlpha(0.0f);
+		ImGui::SetNextWindowBgAlpha(0.0f);
 		ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), opt_flags);
 
 		for (auto& i : m_WindowsVector)
