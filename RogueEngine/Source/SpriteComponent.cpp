@@ -32,10 +32,10 @@ namespace Rogue
 
 	std::string SpriteComponent::Serialize()
 	{
-		std::unordered_map<std::string, GLuint> textureMap = gEngine.m_coordinator.GetTextureManager().getTextureMap();
+		std::map<std::string, GLuint> textureMap = gEngine.m_coordinator.GetTextureManager().getTextureMap();
 		
 		//Cannot use find because need use value to find key
-		for (std::unordered_map<std::string, GLuint>::iterator it = textureMap.begin(); it != textureMap.end(); ++it)
+		for (std::map<std::string, GLuint>::iterator it = textureMap.begin(); it != textureMap.end(); ++it)
 		{
 			if (it->second == m_texture)
 			{
