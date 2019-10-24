@@ -61,7 +61,7 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	//	Editor.Shutdown();
 	//
 	//	return (int)msg.wParam;
-	//}
+	//} 
 
 	gEngine.init();
 
