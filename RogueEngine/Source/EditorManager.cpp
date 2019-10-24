@@ -1,6 +1,7 @@
 
 #include "REEditor.h"
 #include "EditorManager.h"
+#include "WindowSystem.h"
 
 namespace Rogue
 {
@@ -26,13 +27,16 @@ namespace Rogue
 		//if (glewInit() != GLEW_OK)
 		//	std::cout << "Oh damn" << std::endl;
 		//
+
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
 		ImGui::StyleColorsClassic();
 		io.ConfigDockingWithShift = false;
 		io.ConfigFlags = ImGuiConfigFlags_DockingEnable;
-		//ImGui_ImplWin32_Init(gEngine.GetWindowHandle());
+
+		std::shared_ptr<WindowSystem> wSystem = gEngine.m_coordinator.GetSystem<WindowSystem>();
+		ImGui_ImplWin32_Init(wSystem->GetHDC());
 		ImGui_ImplOpenGL3_Init(glsl_version);
 
 		for (std::shared_ptr<IEditable> i : m_WindowsVector)
