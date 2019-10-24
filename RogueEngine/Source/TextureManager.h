@@ -18,7 +18,7 @@ namespace Rogue
 
 	class TextureManager
 	{
-		std::unordered_map<std::string, GLuint> textureMap;
+		std::map<std::string, GLuint> textureMap;
 	public:
 		TextureManager() = default;
 		~TextureManager()
@@ -27,7 +27,7 @@ namespace Rogue
 				glDeleteTextures(1, &(itr->second));
 		}
 
-		std::unordered_map<std::string, GLuint> getTextureMap() const
+		std::map<std::string, GLuint> getTextureMap() const
 		{
 			return textureMap;
 		}
