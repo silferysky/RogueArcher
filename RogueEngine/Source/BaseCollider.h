@@ -11,28 +11,28 @@ namespace Rogue
 		float m_rotationOffset;
 
 	public:
-		Vec2 getScale() const
+		Vec2 getScaleOffSet() const
 		{
 			return m_scaleOffset;
 		}
-		float getRotation() const
+		float getRotationOffSet() const
 		{
 			return m_rotationOffset;
 		}
-		Vec2 getCenter() const
+		Vec2 getCenterOffSet() const
 		{
 			return m_centerOffset;
 		}
 
-		void setScale(const Vec2& scale)
+		void setScaleOffSet(const Vec2& scale)
 		{
 			m_scaleOffset = scale;
 		}
-		void setRotation(float rot)
+		void setRotationOffSet(float rot)
 		{
 			m_rotationOffset = rot;
 		}
-		void setCenter(const Vec2& center)
+		void setCenterOffSet(const Vec2& center)
 		{
 			m_centerOffset = center;
 		}

@@ -241,7 +241,6 @@
     <ClInclude Include="Source\BaseComponent.h">
       <Filter>RogueEngine\Core\ECS</Filter>
     </ClInclude>
-    <ClInclude Include="Texture.h" />
     <ClInclude Include="Source\LogicSystem.h">
       <Filter>RogueEngine\Systems\AI</Filter>
     </ClInclude>
@@ -358,6 +357,12 @@
     </ClInclude>
     <ClInclude Include="Source\Manifold.h">
       <Filter>RogueEngine\Systems\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\WindowSystem.h">
+      <Filter>RogueEngine\Systems\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\WindowManager.h">
+      <Filter>RogueEngine\Systems\Window</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -537,6 +542,9 @@
     </ClCompile>
     <ClCompile Include="Source\Manifold.cpp">
       <Filter>RogueEngine\Systems\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\WindowSystem.cpp">
+      <Filter>RogueEngine\Systems\Window</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

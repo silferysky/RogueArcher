@@ -315,6 +315,6 @@ namespace Rogue
 		Mtx33RotRad(rot, rotation);
 		Mtx33Translate(trans, translate.x, translate.y);
 
-		return trans *= rot *= sca;
+		return Mtx33(trans * rot * sca);
 	}
 }

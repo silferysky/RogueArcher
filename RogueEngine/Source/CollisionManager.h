@@ -19,8 +19,13 @@ namespace Rogue
 		std::vector<Manifold> m_manifolds; // To generate and resolve after collision tests
 
 		Mtx33 GetColliderWorldMatrix(const BaseCollider& collider, const TransformComponent& trans) const;
+		inline Vec2 GetColliderScale(const BaseCollider& collider, const TransformComponent& trans) const;
+		inline Vec2 GetColliderPosition(const BaseCollider& collider, const TransformComponent& trans) const;
+		inline float GetColliderRotation(const BaseCollider& collider, const TransformComponent& trans) const;
+
 		void GenerateManifoldAABBvsAABB(Manifold& manifold);
 		void GenerateManifoldOBBvsOBB(Manifold& manifold);
+
 	public:
 		CollisionManager() = default;
 		~CollisionManager() = default;
