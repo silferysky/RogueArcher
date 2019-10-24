@@ -1,7 +1,6 @@
 
 #include "REEditor.h"
 #include "EditorManager.h"
-#include "WindowSystem.h"
 
 namespace Rogue
 {
