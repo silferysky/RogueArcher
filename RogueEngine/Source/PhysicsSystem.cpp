@@ -26,7 +26,7 @@ namespace Rogue
 		transform.offSetPosition(rigidbody.getVelocity() * gFixedDeltaTime);
 
 		rigidbody.offSetVelocity(rigidbody.getAcceleration() * gFixedDeltaTime);
-		rigidbody.setVelocity(rigidbody.getVelocity() * rigidbody.getDamping());
+		rigidbody.setVelocity(rigidbody.getVelocity()/* * rigidbody.getDamping()*/);
 
 	}
 
