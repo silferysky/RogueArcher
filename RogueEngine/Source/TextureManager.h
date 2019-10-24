@@ -8,17 +8,17 @@
 namespace Rogue
 {
 	// to properly compare texture paths
-	struct str_cmp
+	/*struct str_cmp
 	{
 		bool operator()(char const* lhs, char const* rhs) const
 		{
 			return std::strcmp(lhs, rhs) < 0;
 		}
-	};
+	};*/
 
 	class TextureManager
 	{
-		std::map<const char*, GLuint, str_cmp> textureMap;
+		std::unordered_map<std::string, GLuint> textureMap;
 	public:
 		TextureManager() = default;
 		~TextureManager()
@@ -27,14 +27,14 @@ namespace Rogue
 				glDeleteTextures(1, &(itr->second));
 		}
 
-		std::map<const char*, GLuint, str_cmp> getTextureMap() const
+		std::unordered_map<std::string, GLuint> getTextureMap() const
 		{
 			return textureMap;
 		}
 
 		GLuint loadTexture(const char* texture)
 		{
-			auto itr = textureMap.find(texture);
+			auto itr = textureMap.find(std::string(texture));
 			if (itr != textureMap.end())
 				return itr->second;
 			else
@@ -50,7 +50,7 @@ namespace Rogue
 				if (newTexture == 0)
 					RE_INFO("SOIL error: ", SOIL_last_result());
 
-				textureMap.emplace(texture, newTexture);
+				textureMap.emplace(std::string(texture), newTexture);
 
 				auto itr1 = textureMap.find(texture);
 				return itr1->second;
