@@ -9,6 +9,7 @@
 #include "EventDispatcher.h"
 #include "ShaderManager.h"
 #include "TextureManager.h"
+#include "WindowManager.h"
 #include "Coordinator.h"
 #include "Types.h"
 #include "Timer.h"
@@ -23,6 +24,7 @@ namespace Rogue
 		std::unique_ptr<TextureManager> m_textureManager;
 		std::unique_ptr<ShaderManager> m_shaderManager;
 		std::unique_ptr<ObjectFactory> m_objectFactory;
+		std::unique_ptr<WindowManager> m_windowManager;
 
 	public:
 		Coordinator() :
@@ -31,14 +33,12 @@ namespace Rogue
 			m_systemManager{ std::make_unique<SystemManager>() },
 			m_textureManager{ std::make_unique<TextureManager>() },
 			m_shaderManager{ std::make_unique<ShaderManager>() },
-			m_objectFactory{ std::make_unique<ObjectFactory>() }
+			m_objectFactory{ std::make_unique<ObjectFactory>() },
+			m_windowManager{ std::make_unique<WindowManager>() }
 		{}
 
 		void Init()
 		{
-			// Emplace shaders into the map
-			m_shaderManager->Init();
-
 			// Init the systems and set their signatures.
 			m_systemManager->InitSystems();
 
@@ -191,6 +191,11 @@ namespace Rogue
 		TextureManager& GetTextureManager() const
 		{
 			return *m_textureManager;
+		}
+
+		ShaderManager& GetShaderManager() const
+		{
+			return *m_shaderManager;
 		}
 
 		template <typename T>
