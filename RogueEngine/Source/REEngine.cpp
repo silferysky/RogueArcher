@@ -31,7 +31,7 @@ namespace Rogue
 		m_coordinator.RegisterSystem<CollisionSystem>();
 		//m_coordinator.RegisterSystem<WindowSystem>();
 		m_coordinator.RegisterSystem<GraphicsSystem>();
-		m_coordinator.RegisterSystem<Editor>();
+		//m_coordinator.RegisterSystem<Editor>();
 		m_coordinator.RegisterSystem<DebugDrawSystem>();
 		m_coordinator.RegisterSystem<FontSystem>();
 	}
@@ -71,7 +71,7 @@ namespace Rogue
 		//Ensures program closes properly 
 		SetConsoleCtrlHandler(CtrlHandler, true);
 
-		setVSync(1);
+		setVSync(0);
 
 		// Register all systems.
 		RegisterSystems();
