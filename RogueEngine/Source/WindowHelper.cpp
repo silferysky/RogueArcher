@@ -8,22 +8,18 @@
 
 namespace Rogue
 {
-	float GetDesktopWidth()
+	float GetWindowWidth(HWND hWnd)
 	{
-		RECT desktop;
-		const HWND hDesktop = GetDesktopWindow();
-		// Get the size of screen to the desktop
-		GetWindowRect(hDesktop, &desktop);
-		return float(desktop.right);
+		RECT rect;
+		GetWindowRect(hWnd, &rect);
+		return float(rect.right - rect.left);
 	}
 
-	float GetDesktopHeight()
+	float GetWindowHeight(HWND hWnd)
 	{
-		RECT desktop;
-		const HWND hDesktop = GetDesktopWindow();
-		// Get the size of screen to the desktop
-		GetWindowRect(hDesktop, &desktop);
-		return float(desktop.bottom);
+		RECT rect;
+		GetWindowRect(hWnd, &rect);
+		return float(rect.bottom - rect.top);
 	}
 
 	LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
