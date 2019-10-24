@@ -109,7 +109,8 @@
     <ClInclude Include="Source\Vector2D.h" />
     <ClInclude Include="Source\VSync.h" />
     <ClInclude Include="Source\WindowHelper.h" />
-    <ClInclude Include="Texture.h" />
+    <ClInclude Include="Source\WindowManager.h" />
+    <ClInclude Include="Source\WindowSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\BaseAI.cpp" />
@@ -171,6 +172,7 @@
     <ClCompile Include="Source\Vector2D.cpp" />
     <ClCompile Include="Source\VSync.cpp" />
     <ClCompile Include="Source\WindowHelper.cpp" />
+    <ClCompile Include="Source\WindowSystem.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

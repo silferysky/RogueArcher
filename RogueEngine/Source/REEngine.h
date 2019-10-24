@@ -8,7 +8,6 @@ namespace Rogue
 		using ChronoClock = std::chrono::time_point <std::chrono::steady_clock>;
 
 		const float MICRO_TO_SECONDS = 1000000.0f;
-		HWND m_hwnd;
 		float m_accumulatedTime;
 		int	m_stepCount;
 		bool m_gameIsRunning;
@@ -16,7 +15,6 @@ namespace Rogue
 		ChronoClock m_loopStart;
 		ChronoClock m_loopEnd;
 
-		bool InitializeOpenGL();
 		void RegisterSystems();
 		void RegisterComponents();
 
@@ -25,13 +23,12 @@ namespace Rogue
 
 		Coordinator m_coordinator;
 
-		void init(HWND hWnd);
-		void update(HDC hDC);
+		void init();
+		void update();
 		void shutdown();
 
 		float GetAccumulatedTime() const;
 		int GetStepCount() const;
-		HWND GetWindowHandle() const;
 		void SetGameIsRunning(bool set);
 	};
 }

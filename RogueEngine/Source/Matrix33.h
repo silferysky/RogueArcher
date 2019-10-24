@@ -32,7 +32,11 @@ namespace Rogue
 
 		float m[9] = { 0.0f };
 
-		Matrix3x3() {}
+		Matrix3x3() :
+			m{ 1.0f, 0.0f, 0.0f,
+			   0.0f, 1.0f, 0.0f,
+			   0.0f, 0.0f, 1.0f }
+		{}
 		Matrix3x3(const float* pArr);
 		Matrix3x3(float _00, float _01, float _02,
 			float _10, float _11, float _12,

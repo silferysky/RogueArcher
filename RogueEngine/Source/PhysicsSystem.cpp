@@ -57,8 +57,6 @@ namespace Rogue
 
 	void PhysicsSystem::update()
 	{
-		//	RE_CORE_INFO("Running Update");
-
 		Timer TimerSystem;
 		TimerSystem.TimerInit("Physics System");
 
@@ -69,8 +67,6 @@ namespace Rogue
 			for (iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
 			{
 				auto& rigidbody = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
-
-				//		std::cout << "Entity " << *iEntity << std::endl;
 				auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
 				auto& currBoxCollider = gEngine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iEntity);
 				//	auto& circleCollider = gEngine.m_coordinator.GetComponent<CircleCollider2DComponent>(*iEntity);
@@ -85,9 +81,6 @@ namespace Rogue
 
 				// Update positions
 				integrateAcceleration(rigidbody, transform);
-
-
-				//	std::cout << "Entity " << iEntity << "'s pos: " << transform.getPosition() << std::endl;
 			}
 		}
 
