@@ -32,7 +32,7 @@ namespace Rogue
 		ImGui::StyleColorsClassic();
 		io.ConfigDockingWithShift = false;
 		io.ConfigFlags = ImGuiConfigFlags_DockingEnable;
-		ImGui_ImplWin32_Init(gEngine.GetWindowHandle());
+		//ImGui_ImplWin32_Init(gEngine.GetWindowHandle());
 		ImGui_ImplOpenGL3_Init(glsl_version);
 
 		for (std::shared_ptr<IEditable> i : m_WindowsVector)
