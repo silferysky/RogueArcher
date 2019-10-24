@@ -1,8 +1,11 @@
 #pragma once
 #include "Coordinator.h"
+#include "Config.h"
 
 namespace Rogue
 {
+	class REConfig;
+
 	class REEngine
 	{
 		using ChronoClock = std::chrono::time_point <std::chrono::steady_clock>;
@@ -18,6 +21,23 @@ namespace Rogue
 		void RegisterSystems();
 		void RegisterComponents();
 
+		/*********************************
+		******* Window Variables *********
+		**********************************/
+		HDC   hDC;				/* device context */
+		HGLRC hRC;				/* opengl context */
+		HWND  hWnd;				/* window */
+		MSG   msg = { 0 };		/* message */
+
+		int         pf;
+		WNDCLASS    wc;
+		PIXELFORMATDESCRIPTOR pfd{ 0 };
+		HINSTANCE hInstance;
+
+		REConfig config;
+
+		HWND CreateOpenGLWindow(char* title, int x, int y, int width, int height,
+			BYTE type, DWORD flags);
 	public:
 		REEngine();
 
@@ -27,6 +47,7 @@ namespace Rogue
 		void update();
 		void shutdown();
 
+		HWND GetWindowHandler() const;
 		float GetAccumulatedTime() const;
 		int GetStepCount() const;
 		void SetGameIsRunning(bool set);
