@@ -23,6 +23,7 @@ namespace Rogue
 		std::unique_ptr<TextureManager> m_textureManager;
 		std::unique_ptr<ShaderManager> m_shaderManager;
 		std::unique_ptr<ObjectFactory> m_objectFactory;
+		std::unique_ptr<EventDispatcher> m_eventDispatcher;
 
 	public:
 		Coordinator() :
@@ -31,7 +32,8 @@ namespace Rogue
 			m_systemManager{ std::make_unique<SystemManager>() },
 			m_textureManager{ std::make_unique<TextureManager>() },
 			m_shaderManager{ std::make_unique<ShaderManager>() },
-			m_objectFactory{ std::make_unique<ObjectFactory>() }
+			m_objectFactory{ std::make_unique<ObjectFactory>() },
+			m_eventDispatcher{std::make_unique<EventDispatcher>()}
 		{}
 
 		void Init()
@@ -51,7 +53,7 @@ namespace Rogue
 		{
 			// Update the core systems
 			m_systemManager->UpdateSystems();
-			EventDispatcher::instance().update(); // Should also be part of systems
+			//EventDispatcher::instance().update(); // Should also be part of systems
 		}
 
 		Entity CreateEntity()

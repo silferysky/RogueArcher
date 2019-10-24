@@ -4,6 +4,7 @@
 #include "SystemManager.h"
 #include "EventDispatcher.h"
 #include "Timer.h"
+#include "Main.h"
 
 namespace Rogue
 {
@@ -13,6 +14,10 @@ namespace Rogue
 
 	void EventDispatcher::init()
 	{
+		// Add components to signature
+		Signature signature;
+		gEngine.m_coordinator.SetSystemSignature<EventDispatcher>(signature);
+
 		EventQueue = std::queue<Event*>();
 		DelayedEventQueue = std::queue<Event*>();
 		ListenerMap = std::map<SystemID, LISTENER_HANDLER>();
@@ -81,16 +86,16 @@ namespace Rogue
 		TimerSystem.TimerInit("Event System");
 		if (isCombiningQueue)
 		{
-			CombineQueue();
-			isCombiningQueue = false;
+			instance().CombineQueue();
+			instance().isCombiningQueue = false;
 		}
 
 		//While queue is not empty, handle all events
-		while (!EventQueue.empty())
+		while (!instance().EventQueue.empty())
 		{
-			Event* nextEvent = GetQueueHead();
-			DispatchEvent(nextEvent);
-			EventQueue.pop();
+			Event* nextEvent = instance().GetQueueHead();
+			instance().DispatchEvent(nextEvent);
+			instance().EventQueue.pop();
 			delete nextEvent;
 		}
 		TimerSystem.TimerEnd("Event System");
