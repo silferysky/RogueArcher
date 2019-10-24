@@ -3,6 +3,7 @@
 #include <map>
 #include "SOIL.h"
 #include <iostream>
+#include "Logger.h"
 
 namespace Rogue
 {
@@ -47,7 +48,7 @@ namespace Rogue
 				);
 
 				if (newTexture == 0)
-					std::cout << "SOIL error: " << SOIL_last_result() << std::endl;
+					RE_INFO("SOIL error: ", SOIL_last_result());
 
 				textureMap.emplace(texture, newTexture);
 
