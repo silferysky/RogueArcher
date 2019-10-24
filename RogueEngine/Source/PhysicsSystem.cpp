@@ -57,9 +57,7 @@ namespace Rogue
 
 	void PhysicsSystem::update()
 	{
-		Timer TimerSystem;
-		TimerSystem.TimerInit("Physics System");
-
+		gEngine.m_coordinator.InitTimeSystem("Physics System");
 		for (int step = 0; step < gEngine.GetStepCount(); ++step)
 		{
 			// For all entities
@@ -84,7 +82,7 @@ namespace Rogue
 			}
 		}
 
-		TimerSystem.TimerEnd("Physics System");
+		gEngine.m_coordinator.EndTimeSystem("Physics System");
 	}
 
 	void PhysicsSystem::receive(Event* ev)

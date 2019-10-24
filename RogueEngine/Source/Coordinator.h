@@ -23,6 +23,7 @@ namespace Rogue
 		std::unique_ptr<TextureManager> m_textureManager;
 		std::unique_ptr<ShaderManager> m_shaderManager;
 		std::unique_ptr<ObjectFactory> m_objectFactory;
+		std::unique_ptr<Timer> m_Timer;
 
 	public:
 		Coordinator() :
@@ -31,7 +32,8 @@ namespace Rogue
 			m_systemManager{ std::make_unique<SystemManager>() },
 			m_textureManager{ std::make_unique<TextureManager>() },
 			m_shaderManager{ std::make_unique<ShaderManager>() },
-			m_objectFactory{ std::make_unique<ObjectFactory>() }
+			m_objectFactory{ std::make_unique<ObjectFactory>() },
+			m_Timer{ std::make_unique<Timer>() }
 		{}
 
 		void Init()
@@ -199,6 +201,18 @@ namespace Rogue
 		bool CheckIfComponentExists(Entity entity)
 		{
 			return m_entityManager->GetSignature(entity).test(GetComponentType<T>());
+		}
+		void InitTimeSystem(const char* system)
+		{
+			m_Timer->TimerInit(system);
+		}
+		void EndTimeSystem(const char* system)
+		{
+			m_Timer->TimerEnd(system);
+		}
+		std::map<const char*, float> GetTimeSystem()
+		{
+			return m_Timer->GetTimeSystem();
 		}
 	};
 }
