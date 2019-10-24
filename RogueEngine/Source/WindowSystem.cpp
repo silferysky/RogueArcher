@@ -44,7 +44,7 @@ namespace Rogue
 
 		//Ensures program closes properly 
 		SetConsoleCtrlHandler(CtrlHandler, true);
-		
+
 		setVSync(1);
 	}
 
