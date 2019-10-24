@@ -7,7 +7,7 @@ namespace Rogue
 {
 	SpriteComponent::SpriteComponent()
 	{
-		m_texture = gEngine.m_coordinator.loadTexture("CharaTest.bmp");
+		//m_texture = gEngine.m_coordinator.loadTexture("CharaTest.bmp");
 	}
 
 	void SpriteComponent::setTexture(const char* texture)
@@ -22,7 +22,7 @@ namespace Rogue
 
 	void SpriteComponent::setTexturePath(std::string texturePath)
 	{
-		m_texturePath = texturePath;
+		m_texturePath.assign(texturePath);
 	}
 
 	std::string SpriteComponent::getTexturePath() const
@@ -32,23 +32,23 @@ namespace Rogue
 
 	std::string SpriteComponent::Serialize()
 	{
-		std::map<const char*, GLuint, str_cmp> textureMap = gEngine.m_coordinator.GetTextureManager().getTextureMap();
+		std::unordered_map<std::string, GLuint> textureMap = gEngine.m_coordinator.GetTextureManager().getTextureMap();
 		
 		//Cannot use find because need use value to find key
-		/*for (std::map<const char*, GLuint, str_cmp>::iterator it = textureMap.begin(); it != textureMap.end(); ++it)
+		for (std::unordered_map<std::string, GLuint>::iterator it = textureMap.begin(); it != textureMap.end(); ++it)
 		{
 			if (it->second == m_texture)
 			{
-				return std::string(it->first);
+				return it->first;
 			}
-		}*/
+		}
 		return getTexturePath();
 	}
 
 	void SpriteComponent::Deserialize(std::string toDeserialize)
 	{
 		setTexturePath(toDeserialize);
-		setTexture(toDeserialize.c_str());
+		setTexture(m_texturePath.c_str());
 	}
 
 	/*void SpriteComponent::operator=(SpriteComponent sprite)
