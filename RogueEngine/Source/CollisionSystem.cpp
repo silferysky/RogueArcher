@@ -26,6 +26,7 @@ namespace Rogue
 
 	void CollisionSystem::update()
 	{
+		gEngine.m_coordinator.InitTimeSystem("Collision System");
 		for (int step = 0; step < gEngine.GetStepCount(); ++step)
 		{
 			std::set<Entity>::iterator iEntity;
@@ -71,6 +72,7 @@ namespace Rogue
 				// Rest, Impulse, Torque
 			}
 		}
+		gEngine.m_coordinator.EndTimeSystem("Collision System");
 	}
 
 	void CollisionSystem::receive(Event* ev)
