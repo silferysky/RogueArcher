@@ -31,6 +31,8 @@ namespace Rogue
 
 		m_shader = gEngine.m_coordinator.loadShader("Object Shader");
 
+		m_hWnd = gEngine.GetWindowHandler();
+
 		GenerateQuadPrimitive(m_VBO, m_VAO, m_EBO);
 
 		// OpenGL version
