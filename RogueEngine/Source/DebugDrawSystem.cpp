@@ -43,8 +43,7 @@
 
 	void DebugDrawSystem::update()
 	{
-		Rogue::Timer TimeSystem;
-		TimeSystem.TimerInit("Debug Draw System");
+		gEngine.m_coordinator.InitTimeSystem("Debug Draw System");
 
 		// For all entities
 		for (auto entity : m_entities)
@@ -62,7 +61,7 @@
 				drawVelocity(&rBody, &transform);
 			}
 		}
-		TimeSystem.TimerEnd("Graphics System");
+		gEngine.m_coordinator.EndTimeSystem("Debug Draw System");
 	}
 
 	void DebugDrawSystem::drawAABB(Rogue::BoxCollider2DComponent* box, Rogue::TransformComponent* transform)
