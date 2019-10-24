@@ -29,7 +29,7 @@ namespace Rogue
 		m_coordinator.RegisterSystem<CollisionSystem>();
 		m_coordinator.RegisterSystem<WindowSystem>();
 		m_coordinator.RegisterSystem<GraphicsSystem>();
-		m_coordinator.RegisterSystem<Editor>();
+		//m_coordinator.RegisterSystem<Editor>();
 		m_coordinator.RegisterSystem<DebugDrawSystem>();
 		m_coordinator.RegisterSystem<FontSystem>();
 	}
@@ -84,6 +84,8 @@ namespace Rogue
 			m_coordinator.Update();
 
 			m_loopEnd = mainLoopTimer.now();
+
+			//todo: SwapBuffer(hDc)
 		}
 	}
 
