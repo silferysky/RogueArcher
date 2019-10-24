@@ -30,7 +30,12 @@ namespace Rogue
 		1, 2, 3    // second triangle
 	};
 
-	static const glm::mat4 projMat = glm::ortho(-16.0f * 0.5f, 16.0f * 0.5f, -9.0f * 0.5f, 9.0f * 0.5f, -10.0f, 10.0f);
+	static glm::mat4 projMat = glm::ortho(-16.0f * 0.5f, 16.0f * 0.5f, -9.0f * 0.5f, 9.0f * 0.5f, -10.0f, 10.0f);
+
+	static void UpdateProjMatrix(const HWND& hWnd)
+	{
+		projMat = glm::ortho(-GetWindowWidth(hWnd) * 0.5f, GetWindowWidth(hWnd) * 0.5f, -GetWindowHeight(hWnd) * 0.5f, GetWindowHeight(hWnd) * 0.5f, -10.0f, 10.0f);
+	}
 
 	static void GenerateQuadPrimitive(GLuint& VBO, GLuint& VAO, GLuint& EBO)
 	{
