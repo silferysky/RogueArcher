@@ -1,3 +1,5 @@
+#define _CRT_SECURE_NO_WARNINGS
+
 #include "Logger.h"
 #include "InputManager.h"
 #include "EventDispatcher.h"
@@ -13,6 +15,7 @@
 #include "FontSystem.h"
 #include "CollisionSystem.h"
 #include "WindowSystem.h"
+#include "VSync.h"
 
 namespace Rogue
 {
@@ -27,9 +30,9 @@ namespace Rogue
 		m_coordinator.RegisterSystem<LogicSystem>();
 		m_coordinator.RegisterSystem<PhysicsSystem>();
 		m_coordinator.RegisterSystem<CollisionSystem>();
-		m_coordinator.RegisterSystem<WindowSystem>();
+		//m_coordinator.RegisterSystem<WindowSystem>();
 		m_coordinator.RegisterSystem<GraphicsSystem>();
-		//m_coordinator.RegisterSystem<Editor>();
+		m_coordinator.RegisterSystem<Editor>();
 		m_coordinator.RegisterSystem<DebugDrawSystem>();
 		m_coordinator.RegisterSystem<FontSystem>();
 	}
@@ -47,6 +50,30 @@ namespace Rogue
 
 	void REEngine::init()
 	{
+		config.ConfigInit();
+
+		hWnd = CreateOpenGLWindow(const_cast<char*>(config.GetTitle().c_str()), config.GetX(), config.GetY(),
+			config.GetWidth(), config.GetHeight(), 0, config.GetFlags());
+
+		if (hWnd == NULL)
+			exit(1);
+
+		hDC = GetDC(hWnd);
+		hRC = wglCreateContext(hDC);
+		wglMakeCurrent(hDC, hRC);
+
+		ShowWindow(hWnd, SW_SHOW);
+
+		AllocConsole();
+		(void)freopen("CONIN$", "r", stdin);
+		(void)freopen("CONOUT$", "w", stdout);
+		(void)freopen("CONOUT$", "w", stderr);
+
+		//Ensures program closes properly 
+		SetConsoleCtrlHandler(CtrlHandler, true);
+
+		setVSync(1);
+
 		// Register all systems.
 		RegisterSystems();
 
@@ -75,6 +102,12 @@ namespace Rogue
 
 			m_accumulatedTime += gDeltaTime;
 
+			while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+			{
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
+			}
+
 			while (m_accumulatedTime >= gFixedDeltaTime)
 			{
 				m_accumulatedTime -= gFixedDeltaTime;
@@ -83,15 +116,24 @@ namespace Rogue
 
 			m_coordinator.Update();
 
-			m_loopEnd = mainLoopTimer.now();
+			SwapBuffers(hDC);
 
-			//todo: SwapBuffer(hDc)
+			m_loopEnd = mainLoopTimer.now();
 		}
 	}
 
 	void REEngine::shutdown()
 	{
 		//put graphics shutdown here
+		wglMakeCurrent(NULL, NULL);
+		ReleaseDC(hWnd, hDC);
+		wglDeleteContext(hRC);
+		DestroyWindow(hWnd);
+	}
+
+	HWND REEngine::GetWindowHandler() const
+	{
+		return hWnd;
 	}
 
 	float REEngine::GetAccumulatedTime() const
@@ -107,6 +149,71 @@ namespace Rogue
 	void REEngine::SetGameIsRunning(bool set)
 	{
 		m_gameIsRunning = set;
+	}
+
+	HWND REEngine::CreateOpenGLWindow(char* title, int x, int y, int width, int height,
+		BYTE type, DWORD flags)
+	{
+		hInstance = GetModuleHandle(NULL);
+		wc.style = CS_OWNDC;
+		wc.lpfnWndProc = (WNDPROC)WndProc;
+		wc.cbClsExtra = 0;
+		wc.cbWndExtra = 0;
+		wc.hInstance = hInstance;
+		wc.hIcon = LoadIcon(NULL, IDI_WINLOGO);
+		wc.hCursor = LoadCursor(NULL, IDC_ARROW);
+		wc.hbrBackground = NULL;
+		wc.lpszMenuName = NULL;
+		wc.lpszClassName = "OpenGL";
+
+		if (!RegisterClass(&wc))
+		{
+			MessageBox(NULL, "RegisterClass() failed:  "
+				"Cannot register window class.", "Error", MB_OK);
+			return NULL;
+		}
+
+		hWnd = CreateWindow("OpenGL", title, WS_OVERLAPPEDWINDOW |
+			WS_CLIPSIBLINGS | WS_CLIPCHILDREN,
+			x, y, width, height, NULL, NULL, hInstance, NULL);
+
+		if (hWnd == NULL)
+		{
+			std::cout << GetLastError() << std::endl;
+			MessageBox(NULL, "CreateWindow() failed:  Cannot create a window.",
+				"Error", MB_OK);
+			return NULL;
+		}
+
+		hDC = GetDC(hWnd);
+
+		memset(&pfd, 0, sizeof(pfd));
+		pfd.nSize = sizeof(pfd);
+		pfd.nVersion = 1;
+		pfd.dwFlags = PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | flags | PFD_GENERIC_ACCELERATED | PFD_DOUBLEBUFFER;
+		pfd.iPixelType = type;
+		pfd.cColorBits = 32;
+
+		pf = ChoosePixelFormat(hDC, &pfd);
+		if (pf == 0)
+		{
+			MessageBox(NULL, "ChoosePixelFormat() failed:  "
+				"Cannot find a suitable pixel format.", "Error", MB_OK);
+			return 0;
+		}
+
+		if (SetPixelFormat(hDC, pf, &pfd) == FALSE)
+		{
+			MessageBox(NULL, "SetPixelFormat() failed:  "
+				"Cannot set format specified.", "Error", MB_OK);
+			return 0;
+		}
+
+		DescribePixelFormat(hDC, pf, sizeof(PIXELFORMATDESCRIPTOR), &pfd);
+
+		//ReleaseDC(hWnd, hDC);
+
+		return hWnd;
 	}
 
 }

@@ -35,8 +35,7 @@ namespace Rogue
 		io.ConfigDockingWithShift = false;
 		io.ConfigFlags = ImGuiConfigFlags_DockingEnable;
 
-		std::shared_ptr<WindowSystem> wSystem = gEngine.m_coordinator.GetSystem<WindowSystem>();
-		ImGui_ImplWin32_Init(wSystem->GetHDC());
+		ImGui_ImplWin32_Init(gEngine.GetWindowHandler());
 		ImGui_ImplOpenGL3_Init(glsl_version);
 
 		for (std::shared_ptr<IEditable> i : m_WindowsVector)

@@ -72,6 +72,8 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	// Update engine.
 	gEngine.update();
 
+	gEngine.shutdown();
+
 	return 0;
 
 }
