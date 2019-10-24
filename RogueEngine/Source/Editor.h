@@ -4,6 +4,7 @@
 #include "REEditor.h"
 #include "REEngine.h"
 
+
 namespace Rogue
 {
 	class Editor : public System, public EventListener

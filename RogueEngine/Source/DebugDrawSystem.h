@@ -18,7 +18,7 @@
 		void update() override;
 
 		void drawAABB(Rogue::BoxCollider2DComponent* box, Rogue::TransformComponent* transform);
-		void drawOBB(Rogue::BoxCollider2DComponent* box);
+		void drawOBB(Rogue::BoxCollider2DComponent* box, Rogue::RigidbodyComponent* body);
 		void drawVelocity(Rogue::RigidbodyComponent* rBody, Rogue::TransformComponent* transform);
 
 		void receive(Rogue::Event* ev);

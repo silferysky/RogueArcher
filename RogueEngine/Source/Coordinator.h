@@ -36,6 +36,9 @@ namespace Rogue
 
 		void Init()
 		{
+			// Emplace shaders into the map
+			m_shaderManager->Init();
+
 			// Init the systems and set their signatures.
 			m_systemManager->InitSystems();
 
@@ -188,11 +191,6 @@ namespace Rogue
 		TextureManager& GetTextureManager() const
 		{
 			return *m_textureManager;
-		}
-
-		ShaderManager& GetShaderManager() const
-		{
-			return *m_shaderManager;
 		}
 
 		template <typename T>

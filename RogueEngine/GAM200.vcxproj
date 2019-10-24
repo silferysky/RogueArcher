@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="Source\AIType.h" />
     <ClInclude Include="Source\BaseAI.h" />
+    <ClInclude Include="Source\BaseCollider.h" />
     <ClInclude Include="Source\BaseComponent.h" />
     <ClInclude Include="Source\BaseSystem.h" />
     <ClInclude Include="Source\BoxCollider2DComponent.h" />
@@ -44,10 +45,11 @@
     <ClInclude Include="Source\IEditable.h" />
     <ClInclude Include="Source\ILogic.h" />
     <ClInclude Include="Source\imconfig.h" />
-    <ClInclude Include="Source\imgui.h" />
     <ClInclude Include="Source\EditorManager.h" />
+    <ClInclude Include="Source\imgui.h" />
     <ClInclude Include="Source\imgui_impl_glfw.h" />
     <ClInclude Include="Source\imgui_impl_opengl3.h" />
+    <ClInclude Include="Source\imgui_impl_win32.h" />
     <ClInclude Include="Source\imgui_internal.h" />
     <ClInclude Include="Source\imgui_stl.h" />
     <ClInclude Include="Source\imstb_rectpack.h" />
@@ -56,6 +58,7 @@
     <ClInclude Include="Source\ISerializable.h" />
     <ClInclude Include="Source\LogicComponent.h" />
     <ClInclude Include="Source\LogicSystem.h" />
+    <ClInclude Include="Source\Manifold.h" />
     <ClInclude Include="Source\PhysicsSystem.h" />
     <ClInclude Include="Source\AABB.h" />
     <ClInclude Include="Source\Circle.h" />
@@ -106,7 +109,7 @@
     <ClInclude Include="Source\Vector2D.h" />
     <ClInclude Include="Source\VSync.h" />
     <ClInclude Include="Source\WindowHelper.h" />
-    <ClInclude Include="Source\WindowSystem.h" />
+    <ClInclude Include="Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\BaseAI.cpp" />
@@ -125,16 +128,18 @@
     <ClCompile Include="Source\EditorViewport.cpp" />
     <ClCompile Include="Source\Event.cpp" />
     <ClCompile Include="Source\EventDispatcher.cpp" />
-    <ClCompile Include="Source\imgui.cpp" />
     <ClCompile Include="Source\EditorManager.cpp" />
+    <ClCompile Include="Source\imgui.cpp" />
     <ClCompile Include="Source\imgui_demo.cpp" />
     <ClCompile Include="Source\imgui_draw.cpp" />
     <ClCompile Include="Source\imgui_impl_glfw.cpp" />
     <ClCompile Include="Source\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="Source\imgui_impl_win32.cpp" />
     <ClCompile Include="Source\imgui_stl.cpp" />
     <ClCompile Include="Source\imgui_widgets.cpp" />
     <ClCompile Include="Source\LogicComponent.cpp" />
     <ClCompile Include="Source\LogicSystem.cpp" />
+    <ClCompile Include="Source\Manifold.cpp" />
     <ClCompile Include="Source\PhysicsSystem.cpp" />
     <ClCompile Include="Source\AABB.cpp" />
     <ClCompile Include="Source\Circle.cpp" />
@@ -166,7 +171,6 @@
     <ClCompile Include="Source\Vector2D.cpp" />
     <ClCompile Include="Source\VSync.cpp" />
     <ClCompile Include="Source\WindowHelper.cpp" />
-    <ClCompile Include="Source\WindowSystem.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

@@ -9,8 +9,9 @@
 #include "REEditor.h"
 #include "imgui.h"
 #include "imgui_impl_opengl3.h"
-#include "imgui_impl_glfw.h"
 #include "IEditable.h"
+#include "imgui_impl_win32.h"
+
 namespace Rogue
 {
 	//class IEditable;
@@ -29,7 +30,7 @@ namespace Rogue
 		bool Inspector = true;
 		bool Dropbox = true;
 		bool Console = true;
-		GLFWwindow* window = nullptr;
+		//GLFWwindow* window = nullptr;
 		ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
 		template<typename T>

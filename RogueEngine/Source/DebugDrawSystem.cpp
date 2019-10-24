@@ -11,8 +11,9 @@
 
 //namespace Rogue
 //{
-	DebugDrawSystem::DebugDrawSystem()
-		:System(Rogue::SystemID::id_DEBUGDRAWSYSTEM) {}
+	DebugDrawSystem::DebugDrawSystem() :
+		m_EBO{ 0 }, m_VAO{ 0 }, m_VBO{ 0 }, m_shader{ Rogue::Shader() },
+		System(Rogue::SystemID::id_DEBUGDRAWSYSTEM) {}
 
 	// Public member functions
 	void DebugDrawSystem::init()
@@ -57,7 +58,7 @@
 			if (entity)
 			{
 				drawAABB(&collider, &transform);
-				drawOBB(&collider);
+				drawOBB(&collider, &rBody);
 				drawVelocity(&rBody, &transform);
 			}
 		}
@@ -70,30 +71,33 @@
 		glBindVertexArray(m_VAO);
 		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 
-		float left = box->AABB().getMin().x;
-		float right = box->AABB().getMax().x;
+		float left = box->m_aabb.getMin().x;
+		float right = box->m_aabb.getMax().x;
 
-		float top = box->AABB().getMax().y;
-		float bottom = box->AABB().getMin().y;
+		float top = box->m_aabb.getMax().y;
+		float bottom = box->m_aabb.getMin().y;
 
 		Rogue::drawLine(Rogue::Vec2(left, top), Rogue::Vec2(right, top)); // top line
 		Rogue::drawLine(Rogue::Vec2(left, bottom), Rogue::Vec2(right, bottom)); // bottom line
 		Rogue::drawLine(Rogue::Vec2(left, top), Rogue::Vec2(left, bottom)); // left line
 		Rogue::drawLine(Rogue::Vec2(right, top), Rogue::Vec2(right, bottom)); // right line
 
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);	
 		glBindVertexArray(0);
-		glUseProgram(0);
+		glUseProgram(0);	
 	}
 
-	void DebugDrawSystem::drawOBB(Rogue::BoxCollider2DComponent* box)
+	void DebugDrawSystem::drawOBB(Rogue::BoxCollider2DComponent* box, Rogue::RigidbodyComponent* body)
 	{
+		if (body->getIsStatic())
+			return;
+
 		glUseProgram(m_shader.GetShader());
 		glBindVertexArray(m_VAO);
 		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 
-		auto obb = box->OBB();
-		for (unsigned int i = 0; i < obb.getSize() - 1; ++i)
+		auto obb = box->m_obb;
+		for (size_t i = 0; i < obb.getSize() - 1; ++i)
 		{
 			drawLine(obb.globVerts()[i], obb.globVerts()[i + 1]);
 		}
@@ -107,6 +111,9 @@
 
 	void DebugDrawSystem::drawVelocity(Rogue::RigidbodyComponent* rBody, Rogue::TransformComponent* transform)
 	{
+		if (rBody->getIsStatic())
+			return;
+
 		glUseProgram(m_shader.GetShader());
 		glBindVertexArray(m_VAO);
 		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
@@ -114,7 +121,8 @@
 		float posX = transform->getPosition().x;
 		float posY = transform->getPosition().y;
 
-		drawLine(Rogue::Vec2(posX, posY), Rogue::Vec2(posX + rBody->getVelocity().x, posY + rBody->getVelocity().y));
+		drawLine(Rogue::Vec2(posX, posY), Rogue::Vec2(posX + rBody->getVelocity().x * 0.3f,
+													  posY + rBody->getVelocity().y * 0.3f));
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindVertexArray(0);

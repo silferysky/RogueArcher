@@ -15,8 +15,8 @@ namespace Rogue
 	class WinResizeEvent : public Event
 	{
 	public:
-		WinResizeEvent(unsigned int wigDeltaTimeh, unsigned int height)
-			: WinWigDeltaTimeh(wigDeltaTimeh), WinHeight(height) {}
+		WinResizeEvent(unsigned int width, unsigned int height)
+			: WinWigDeltaTimeh(width), WinHeight(height) {}
 
 		inline unsigned int GetWigDeltaTimeh() { return WinWigDeltaTimeh; }
 		inline unsigned int GetHeight() { return WinHeight; }
