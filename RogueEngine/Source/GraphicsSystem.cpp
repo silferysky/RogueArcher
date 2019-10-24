@@ -31,6 +31,8 @@ namespace Rogue
 
 		m_shader = gEngine.m_coordinator.loadShader("Object Shader");
 
+		m_hWnd = gEngine.GetWindowHandler();
+
 		GenerateQuadPrimitive(m_VBO, m_VAO, m_EBO);
 
 		// OpenGL version
@@ -39,8 +41,7 @@ namespace Rogue
 
 	void GraphicsSystem::update()
 	{
-		Timer TimeSystem;
-		TimeSystem.TimerInit("Graphics System");
+		gEngine.m_coordinator.InitTimeSystem("Graphics System");
 
 		// clear the buffer
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -56,7 +57,7 @@ namespace Rogue
 			//if (!entity)
 			draw(&sprite, &transform);
 		}
-		TimeSystem.TimerEnd("Graphics System");
+		gEngine.m_coordinator.EndTimeSystem("Graphics System");
 	}
 
 	void GraphicsSystem::draw(SpriteComponent* sprite, TransformComponent* transform)

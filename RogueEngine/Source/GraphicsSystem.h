@@ -18,6 +18,8 @@ namespace Rogue
 
 		Shader m_shader;
 
+		HWND m_hWnd;
+
 		bool InitializeOpenGL();
 	public:
 		GraphicsSystem();

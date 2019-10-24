@@ -43,12 +43,13 @@ namespace Rogue
 			}
 			ImGui::EndMenu();
 		}
-		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-		//std::map<const char*,float> i = engine.m_timer.GetTimeSystem();
-		//for (const auto& iter : i)
-		//{
-		//
-		//}
+		ImGui::Text("Application FPS (%.1f FPS)", ImGui::GetIO().Framerate);
+		
+		std::map<const char*, float> i = gEngine.m_coordinator.GetTimeSystem();
+		for (const auto& iter : i)
+		{
+			ImGui::Text("%s %.3f ms",iter.first,iter.second);
+		}
 
 		ImGui::End();
 	}
