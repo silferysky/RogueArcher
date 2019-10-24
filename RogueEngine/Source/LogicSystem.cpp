@@ -43,8 +43,7 @@ namespace Rogue
 
 	void LogicSystem::update()
 	{
-		Timer TimerSystem;
-		TimerSystem.TimerInit("Logic System");
+		gEngine.m_coordinator.InitTimeSystem("Logic System");
 		for (auto it = m_entityLogicMap.begin(); it != m_entityLogicMap.end(); ++it)
 		{
 			//Null checker
@@ -54,7 +53,7 @@ namespace Rogue
 			//Updates the current logic. The individual AI types will handle the state on their own
 			it->second->logicUpdate();
 		}
-		TimerSystem.TimerEnd("Logic System");
+		gEngine.m_coordinator.EndTimeSystem("Logic System");
 	}
 
 	void LogicSystem::receive(Event* ev)

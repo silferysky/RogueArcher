@@ -1,7 +1,7 @@
 #pragma once
 #include "IEditable.h"
 #include "Timer.h"
-#include "REEngine.h"
+#include "Main.h"
 
 namespace Rogue
 {
