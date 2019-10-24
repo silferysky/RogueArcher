@@ -56,9 +56,6 @@
     <Filter Include="RogueEngine\Systems\AI">
       <UniqueIdentifier>{e68acb32-5338-4384-a5ff-e96022bc6953}</UniqueIdentifier>
     </Filter>
-    <Filter Include="RogueEngine\Systems\Window">
-      <UniqueIdentifier>{0ecd1d51-418d-4be3-99a8-6cce0b2b1f2b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="RogueEngine\Systems\AI\AI Types">
       <UniqueIdentifier>{d574c589-f4a4-4c0f-a12d-0c7a4994e96d}</UniqueIdentifier>
     </Filter>
@@ -85,6 +82,9 @@
     </Filter>
     <Filter Include="RogueEngine\Systems\Collision">
       <UniqueIdentifier>{e4319b4b-0961-4d86-8ff7-4c14b6b262b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RogueEngine\Systems\Window">
+      <UniqueIdentifier>{9362b601-3681-4d18-a391-149befb2a6ce}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -216,9 +216,6 @@
     </ClInclude>
     <ClInclude Include="Source\Timer.h">
       <Filter>RogueEngine\Systems\Debug</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\WindowHelper.h">
-      <Filter>RogueEngine\Systems\Window</Filter>
     </ClInclude>
     <ClInclude Include="Source\TextureManager.h">
       <Filter>RogueEngine\Systems\Graphics</Filter>
@@ -358,10 +355,7 @@
     <ClInclude Include="Source\Manifold.h">
       <Filter>RogueEngine\Systems\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="Source\WindowSystem.h">
-      <Filter>RogueEngine\Systems\Window</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\WindowManager.h">
+    <ClInclude Include="Source\WindowHelper.h">
       <Filter>RogueEngine\Systems\Window</Filter>
     </ClInclude>
   </ItemGroup>
@@ -446,9 +440,6 @@
     </ClCompile>
     <ClCompile Include="Source\Timer.cpp">
       <Filter>RogueEngine\Systems\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\WindowHelper.cpp">
-      <Filter>RogueEngine\Systems\Window</Filter>
     </ClCompile>
     <ClCompile Include="Source\Shader.cpp">
       <Filter>RogueEngine\Systems\Graphics</Filter>
@@ -543,7 +534,7 @@
     <ClCompile Include="Source\Manifold.cpp">
       <Filter>RogueEngine\Systems\Collision</Filter>
     </ClCompile>
-    <ClCompile Include="Source\WindowSystem.cpp">
+    <ClCompile Include="Source\WindowHelper.cpp">
       <Filter>RogueEngine\Systems\Window</Filter>
     </ClCompile>
   </ItemGroup>

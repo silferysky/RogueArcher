@@ -21,6 +21,9 @@ namespace Rogue
 		void RegisterSystems();
 		void RegisterComponents();
 
+		/*********************************
+		******* Window Variables *********
+		**********************************/
 		HDC   hDC;				/* device context */
 		HGLRC hRC;				/* opengl context */
 		HWND  hWnd;				/* window */
