@@ -32,7 +32,11 @@ namespace Rogue
 
 		float m[9] = { 0.0f };
 
-		Matrix3x3() {}
+		Matrix3x3() :
+			m{ 1.0f, 0.0f, 0.0f,
+			   0.0f, 1.0f, 0.0f,
+			   0.0f, 0.0f, 1.0f }
+		{}
 		Matrix3x3(const float* pArr);
 		Matrix3x3(float _00, float _01, float _02,
 			float _10, float _11, float _12,
@@ -112,4 +116,6 @@ namespace Rogue
 	*/
 	/**************************************************************************/
 	void Mtx33Inverse(Matrix3x3& pResult, float& determinant, const Matrix3x3& pMtx);
+	
+	Mtx33 Mtx33CreateSRTMatrix(const Vec2& scale, float rotation, const Vec2& translate);
 }

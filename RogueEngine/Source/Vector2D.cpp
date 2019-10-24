@@ -4,6 +4,9 @@
 
 namespace Rogue
 {
+	const Vector2D Vector2D::unitX = { 1.0f, 0.0f };
+	const Vector2D Vector2D::unitY = { 0.0f, 1.0f };
+
 	Vector2D::Vector2D(const int num) : x{ static_cast<float>(num) }, y{ static_cast<float>(num) }
 	{}
 

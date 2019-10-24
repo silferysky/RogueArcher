@@ -17,8 +17,6 @@ namespace Rogue
 		GLuint m_EBO;
 
 		Shader m_shader;
-
-		bool InitializeOpenGL();
 	public:
 		GraphicsSystem();
 		~GraphicsSystem() = default;

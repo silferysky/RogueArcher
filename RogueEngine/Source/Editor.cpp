@@ -1,6 +1,8 @@
 #include "Editor.h"
 #include "EventDispatcher.h"
 #include "EventListener.h"
+
+
 namespace Rogue
 {
 	void Editor::init()
@@ -18,12 +20,12 @@ namespace Rogue
 		m_EditorManager->AddEditorWindow<ImGuiProject>("Project");
 		m_EditorManager->AddEditorWindow<ImGuiEditorViewport>("Viewport");
 
-		//m_EditorManager->Init();
+		m_EditorManager->Init();
 	}
 
 	void Editor::update()
 	{
-		//m_EditorManager->Update();
+		m_EditorManager->Update();
 	}
 
 	void Editor::receive(Event* ev)
@@ -33,7 +35,7 @@ namespace Rogue
 
 	void Editor::Shutdown()
 	{
-		//m_EditorManager->Shutdown();
+		m_EditorManager->Shutdown();
 	}
 }
 

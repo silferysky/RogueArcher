@@ -23,18 +23,9 @@ namespace Rogue
 		// Set graphics system signature
 		gEngine.m_coordinator.SetSystemSignature<GraphicsSystem>(signature);
 
-		// Init OpenGL libraries.
-		RE_ASSERT(InitializeOpenGL(), "OpenGL not initialized");
-
-		// Emplace shaders into the map
-		gEngine.m_coordinator.GetShaderManager().Init();
-
 		m_shader = gEngine.m_coordinator.loadShader("Object Shader");
 
 		GenerateQuadPrimitive(m_VBO, m_VAO, m_EBO);
-
-		// OpenGL version
-		std::cout << glGetString(GL_VERSION) << std::endl;
 	}
 
 	void GraphicsSystem::update()
@@ -90,28 +81,6 @@ namespace Rogue
 		glBindBuffer(GL_ARRAY_BUFFER, 0); //Reset
 		glBindVertexArray(0); //Reset
 		glUseProgram(0);
-	}
-
-	bool GraphicsSystem::InitializeOpenGL()
-	{
-		// Init OpenGL
-		glEnable(GL_TEXTURE_2D);						   // Texture Mapping
-		glEnable(GL_DEPTH_TEST);
-		glShadeModel(GL_SMOOTH);						   // Smooth shading
-		glDepthFunc(GL_LEQUAL);							   // Depth testing type
-		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Perspective Calculations
-
-		// Enable alpha
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		glEnable(GL_BLEND);
-
-		if (glewInit() != GLEW_OK)
-		{
-			std::cout << "GLEW broke" << std::endl;
-			return false;
-		}
-
-		return true;
 	}
 
 	void GraphicsSystem::receive(Event* ev)

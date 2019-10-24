@@ -230,7 +230,7 @@ namespace Rogue
 	void Mtx33RotDeg(Matrix3x3& pResult, float angle)
 	{
 		// Convert angle to radian, then do rotation transformation in radians.
-		angle *= static_cast<float>(REMath::PI / 180);
+		angle *= static_cast<float>(RE_PI / 180);
 		Mtx33RotRad(pResult, angle);
 	}
 
@@ -274,7 +274,7 @@ namespace Rogue
 		// Det = a(det12) - b(det02) + c(det01)
 		determinant = pMtx.m00 * det00 - pMtx.m01 * det01 + pMtx.m02 * det02;
 
-		if (determinant <= REMath::EPSILON && determinant >= -REMath::EPSILON)
+		if (determinant <= RE_EPSILON && determinant >= -RE_EPSILON)
 		{
 			pResult = NULL;
 			return;
@@ -303,5 +303,18 @@ namespace Rogue
 		/////////////////////   Inverse Matrix    /////////////////////
 		for (int i = 0; i < TOTAL_VALUES; ++i)
 			pResult.m[i] *= 1 / determinant;
+	}
+
+	Mtx33 Mtx33CreateSRTMatrix(const Vec2& scale, float rotation, const Vec2& translate)
+	{
+		Mtx33 sca;
+		Mtx33 rot;
+		Mtx33 trans;
+
+		Mtx33Scale(sca, scale.x, scale.y);
+		Mtx33RotRad(rot, rotation);
+		Mtx33Translate(trans, translate.x, translate.y);
+
+		return Mtx33(trans * rot * sca);
 	}
 }

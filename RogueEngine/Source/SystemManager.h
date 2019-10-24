@@ -13,8 +13,6 @@
 
 #include <vector>
 #include <utility>
-
-
 namespace Rogue
 {
 	class SystemManager
@@ -30,7 +28,6 @@ namespace Rogue
 		void RegisterSystem()
 		{
 			std::type_index typeName = GetTypeIndex<T>();
-
 			auto i = std::find_if(m_systems.begin(), m_systems.end(),
 				[&typeName](const std::pair<std::type_index, std::shared_ptr<System>>& element) { return element.first == typeName; });
 
@@ -47,7 +44,6 @@ namespace Rogue
 
 			auto i = std::find_if(m_systems.begin(), m_systems.end(),
 				[&SystemName](const std::pair<std::type_index, std::shared_ptr<System>>& element) { return element.first == SystemName; });
-
 			if (i != m_systems.end())
 			{
 				return std::dynamic_pointer_cast<T>(i->second); // Casts the base shared_ptr to derived
