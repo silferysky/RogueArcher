@@ -71,7 +71,7 @@ namespace Rogue
 		//Ensures program closes properly 
 		SetConsoleCtrlHandler(CtrlHandler, true);
 
-		setVSync(1);
+		setVSync(0);
 
 		// Register all systems.
 		RegisterSystems();
