@@ -65,6 +65,7 @@
 		}
 
 		glUseProgram(0);
+
 		g_Engine.m_coordinator.EndTimeSystem("Debug Draw System");
 	}
 

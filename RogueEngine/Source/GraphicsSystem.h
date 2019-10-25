@@ -36,6 +36,7 @@ namespace Rogue
 
 		void receive(Event* ev);
 
+		void UseFrameBuffer();
 		GLuint& getFBO();
 	};
 }
