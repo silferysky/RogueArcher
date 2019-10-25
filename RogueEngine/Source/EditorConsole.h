@@ -7,6 +7,8 @@ namespace Rogue
 {
 	class ImGuiConsole : public IEditable
 	{
+	private:
+		float m_check = 0.0f;
 	public:
 		ImGuiConsole();
 		~ImGuiConsole() = default;

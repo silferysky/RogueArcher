@@ -82,8 +82,7 @@ namespace Rogue
 
 	void EventDispatcher::update()
 	{
-		Timer TimerSystem;
-		TimerSystem.TimerInit("Event System");
+		gEngine.m_coordinator.InitTimeSystem("Event System");
 		if (isCombiningQueue)
 		{
 			instance().CombineQueue();
@@ -98,7 +97,7 @@ namespace Rogue
 			instance().EventQueue.pop();
 			delete nextEvent;
 		}
-		TimerSystem.TimerEnd("Event System");
+		gEngine.m_coordinator.EndTimeSystem("Event System");
 	}
 
 	void EventDispatcher::DispatchEvent(Event* toHandle)
