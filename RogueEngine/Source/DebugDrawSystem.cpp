@@ -24,14 +24,14 @@
 
 		// Add components to signature
 		Rogue::Signature signature;
-		signature.set(gEngine.m_coordinator.GetComponentType<Rogue::BoxCollider2DComponent>());
-		signature.set(gEngine.m_coordinator.GetComponentType<Rogue::TransformComponent>());
-		signature.set(gEngine.m_coordinator.GetComponentType<Rogue::RigidbodyComponent>());
+		signature.set(g_Engine.m_coordinator.GetComponentType<Rogue::BoxCollider2DComponent>());
+		signature.set(g_Engine.m_coordinator.GetComponentType<Rogue::TransformComponent>());
+		signature.set(g_Engine.m_coordinator.GetComponentType<Rogue::RigidbodyComponent>());
 
 		// Set graphics system signature
-		gEngine.m_coordinator.SetSystemSignature<DebugDrawSystem>(signature);
+		g_Engine.m_coordinator.SetSystemSignature<DebugDrawSystem>(signature);
 
-		m_shader = gEngine.m_coordinator.loadShader("Debug Shader");
+		m_shader = g_Engine.m_coordinator.loadShader("Debug Shader");
 
 		glUseProgram(m_shader.GetShader());
 
@@ -42,17 +42,17 @@
 
 	void DebugDrawSystem::update()
 	{
-		gEngine.m_coordinator.InitTimeSystem("Debug Draw System");
+		g_Engine.m_coordinator.InitTimeSystem("Debug Draw System");
 
 		glUseProgram(m_shader.GetShader());
-		glUniformMatrix4fv(m_transformLocation, 1, GL_FALSE, glm::value_ptr(gEngine.GetProjMat()));
+		glUniformMatrix4fv(m_transformLocation, 1, GL_FALSE, glm::value_ptr(g_Engine.GetProjMat()));
 
 		// For all entities
 		for (auto entity : m_entities)
 		{
-			auto& transform = gEngine.m_coordinator.GetComponent<Rogue::TransformComponent>(entity);
-			auto& collider = gEngine.m_coordinator.GetComponent<Rogue::BoxCollider2DComponent>(entity);
-			auto& rBody = gEngine.m_coordinator.GetComponent<Rogue::RigidbodyComponent>(entity);
+			auto& transform = g_Engine.m_coordinator.GetComponent<Rogue::TransformComponent>(entity);
+			auto& collider = g_Engine.m_coordinator.GetComponent<Rogue::BoxCollider2DComponent>(entity);
+			auto& rBody = g_Engine.m_coordinator.GetComponent<Rogue::RigidbodyComponent>(entity);
 
 			glDisable(GL_DEPTH_TEST);
 
@@ -65,7 +65,7 @@
 		}
 
 		glUseProgram(0);
-		gEngine.m_coordinator.EndTimeSystem("Debug Draw System");
+		g_Engine.m_coordinator.EndTimeSystem("Debug Draw System");
 	}
 
 	void DebugDrawSystem::drawAABB(Rogue::BoxCollider2DComponent* box, Rogue::TransformComponent* transform)

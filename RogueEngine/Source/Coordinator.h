@@ -114,7 +114,6 @@ namespace Rogue
 			{
 				if (sig.test(i))
 				{
-
 					auto& existingComponent = GetComponent<RigidbodyComponent>(existingEntity);
 					AddComponent(clonedEntity, existingComponent);
 				}
