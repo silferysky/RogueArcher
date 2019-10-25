@@ -24,5 +24,6 @@ namespace Rogue
 		~Manifold() = default;
 
 		void Resolve();
+		void PositionalCorrection();
 	};
 }

@@ -18,6 +18,9 @@ namespace Rogue
 		std::vector<std::pair<Entity, Entity>> m_collidedPairs; // Stored during collision tests
 		std::vector<Manifold> m_manifolds; // To generate and resolve after collision tests
 
+		static const float s_correction_factor;
+		static const float s_correction_slop; // Penetration threshold
+
 		Mtx33 GetColliderWorldMatrix(const BaseCollider& collider, const TransformComponent& trans) const;
 		inline Vec2 GetColliderScale(const BaseCollider& collider, const TransformComponent& trans) const;
 		inline Vec2 GetColliderPosition(const BaseCollider& collider, const TransformComponent& trans) const;
@@ -27,6 +30,7 @@ namespace Rogue
 		void GenerateManifoldOBBvsOBB(Manifold& manifold);
 
 	public:
+
 		CollisionManager() = default;
 		~CollisionManager() = default;
 
@@ -72,5 +76,8 @@ namespace Rogue
 		void InsertColliderPair(Entity a, Entity b);
 		void GenerateManifolds();
 		void ResolveManifolds();
+
+		static float GetCorrectionFactor();
+		static float GetCorrectionSlop();
 	};
 }

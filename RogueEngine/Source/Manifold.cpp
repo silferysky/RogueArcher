@@ -1,5 +1,6 @@
 #include "Manifold.h"
 #include "Main.h"
+#include "CollisionManager.h"
 
 namespace Rogue
 {
@@ -16,8 +17,8 @@ namespace Rogue
 
 	void Manifold::Resolve()
 	{
-		auto& bodyA = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(m_entityA);
-		auto& bodyB = gEngine.m_coordinator.GetComponent<RigidbodyComponent>(m_entityB);
+		auto& bodyA = g_Engine.m_coordinator.GetComponent<RigidbodyComponent>(m_entityA);
+		auto& bodyB = g_Engine.m_coordinator.GetComponent<RigidbodyComponent>(m_entityB);
 			
 		// Relative velocity
 		Vec2 rv = bodyB.getVelocity() - bodyA.getVelocity();
@@ -41,5 +42,22 @@ namespace Rogue
 		Vec2 impulse = impulseMagnitude * m_normal;
 		bodyA.offSetVelocity(-bodyA.getInvMass() * impulse);
 		bodyB.offSetVelocity(bodyB.getInvMass() * impulse);
+	}
+
+	void Manifold::PositionalCorrection()
+	{
+		auto& bodyA = g_Engine.m_coordinator.GetComponent<RigidbodyComponent>(m_entityA);
+		auto& bodyB = g_Engine.m_coordinator.GetComponent<RigidbodyComponent>(m_entityB);
+		auto& transA = g_Engine.m_coordinator.GetComponent<TransformComponent>(m_entityA);
+		auto& transB = g_Engine.m_coordinator.GetComponent<TransformComponent>(m_entityB);
+
+		float correctionFactor = CollisionManager::GetCorrectionFactor();
+		float correctionSlop = CollisionManager::GetCorrectionSlop();
+
+		Vec2 correction = REMax(m_penetration - correctionSlop, 0.0f) /
+			(bodyA.getInvMass() + bodyB.getInvMass()) * correctionFactor * m_normal;
+
+		transA.offSetPosition(-bodyA.getInvMass() * correctionFactor);
+		transB.offSetPosition(bodyB.getInvMass() * correctionFactor);
 	}
 }

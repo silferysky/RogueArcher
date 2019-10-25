@@ -28,9 +28,9 @@
 #include "REEditor.h"
 #include "Editor.h"
 
-Rogue::REEngine gEngine;
-float gDeltaTime;
-float gFixedDeltaTime;
+Rogue::REEngine g_Engine;
+float g_DeltaTime;
+float g_FixedDeltaTime;
 bool EditorMode = false;
 
 //const char* FileName = "/Resources/test.json";
@@ -63,16 +63,16 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	//	return (int)msg.wParam;
 	//} 
 
-	gEngine.init();
+	g_Engine.init();
 	
 	//BasicIO::WriteLevelJsonFile("Resources/TestJsonFileCreator.json", 1);
 	//BasicIO::WriteArchetypeJsonFile("Resources/TestArchetypeJsonFile.json", 3);
 	//BasicIO::WriteLevelJsonFile("Resources/Level 1.json", 8);
 
 	// Update engine.
-	gEngine.update();
+	g_Engine.update();
 
-	gEngine.shutdown();
+	g_Engine.shutdown();
 
 	return 0;
 
