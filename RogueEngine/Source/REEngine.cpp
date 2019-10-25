@@ -113,13 +113,11 @@ namespace Rogue
 				m_accumulatedTime -= gFixedDeltaTime;
 				m_stepCount++;
 			}
-			//glViewport(0, 0, GetWindowWidth(hWnd), GetWindowHeight(hWnd));
+			glViewport(0, 0, GetWindowWidth(hWnd), GetWindowHeight(hWnd));
 
 			m_coordinator.Update();
 
 			SwapBuffers(hDC);
-
-			auto width = GetWindowWidth(hWnd);
 
 			m_projMat = glm::ortho(-GetWindowWidth(hWnd) * 0.5f, GetWindowWidth(hWnd) * 0.5f, -GetWindowHeight(hWnd) * 0.5f, GetWindowHeight(hWnd) * 0.5f, -1024.0f, 1024.0f);
 			m_projMat = glm::ortho(-16.0f * 0.5f, 16.0f * 0.5f, -9.0f * 0.5f, 9.0f * 0.5f, -1024.0f, 1024.0f);
