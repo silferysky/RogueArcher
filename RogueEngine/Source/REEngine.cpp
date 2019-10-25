@@ -46,6 +46,7 @@ namespace Rogue
 		m_coordinator.RegisterComponent<BoxCollider2DComponent>();
 		m_coordinator.RegisterComponent<PlayerControllerComponent>();
 		m_coordinator.RegisterComponent<LogicComponent>();
+		m_coordinator.RegisterComponent<StatsComponent>();
 	}
 
 	void REEngine::init()

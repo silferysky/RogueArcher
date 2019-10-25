@@ -73,6 +73,7 @@
     <ClInclude Include="Source\Shader.h" />
     <ClInclude Include="Source\ShaderManager.h" />
     <ClInclude Include="Source\Shape.h" />
+    <ClInclude Include="Source\StatsComponent.h" />
     <ClInclude Include="Source\TextureManager.h" />
     <ClInclude Include="Source\TransformComponent.h" />
     <ClInclude Include="Source\AppEvent.h" />
@@ -152,6 +153,7 @@
     <ClCompile Include="Source\Shader.cpp" />
     <ClCompile Include="Source\Shape.cpp" />
     <ClCompile Include="Source\FontSystem.cpp" />
+    <ClCompile Include="Source\StatsComponent.cpp" />
     <ClCompile Include="Source\TransformComponent.cpp" />
     <ClCompile Include="Source\Config.cpp" />
     <ClCompile Include="Source\BasicIO.cpp" />

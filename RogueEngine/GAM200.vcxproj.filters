@@ -358,6 +358,9 @@
     <ClInclude Include="Source\WindowHelper.h">
       <Filter>RogueEngine\Systems\Window</Filter>
     </ClInclude>
+    <ClInclude Include="Source\StatsComponent.h">
+      <Filter>RogueEngine\Systems\AI\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -536,6 +539,9 @@
     </ClCompile>
     <ClCompile Include="Source\WindowHelper.cpp">
       <Filter>RogueEngine\Systems\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\StatsComponent.cpp">
+      <Filter>RogueEngine\Systems\AI\Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
