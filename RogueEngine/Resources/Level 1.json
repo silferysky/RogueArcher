@@ -1,5 +1,5 @@
 {
-    "EntityCount": 6,
+    "EntityCount": 7,
     "BackgroundTexture": "test.bmp",
     "Signature0": 95,
     "Signature1": 31,
@@ -14,5 +14,6 @@
     "Entity2": "Sprite{test.bmp}|Rigidbody{0;0;0;0;1;1;1}|Transform{0;-4;12;1;0}|CircleCollider{0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;}||",
     "Entity3": "Sprite{test.bmp}|Rigidbody{0;0;0;0;1;1;1}|Transform{0;4;12;1;0}|CircleCollider{0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;}||",
     "Entity4": "Sprite{test.bmp}|Rigidbody{0;0;0;0;1;1;1}|Transform{-6;0;1;6;0}|CircleCollider{0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;}||",
-    "Entity5": "Sprite{test.bmp}|Rigidbody{0;0;0;0;1;1;1}|Transform{6;0;1;6;0}|CircleCollider{0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;}||"
+    "Entity5": "Sprite{test.bmp}|Rigidbody{0;0;0;0;1;1;1}|Transform{6;0;1;6;0}|CircleCollider{0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;}||",
+    "Entity6": "Sprite{test.bmp}|Rigidbody{0;0;0;0;1;1;0}|Transform{0;0;1;1;0}|CircleCollider{0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;}||"
 }

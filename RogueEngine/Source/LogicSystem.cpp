@@ -68,6 +68,11 @@ namespace Rogue
 
 			if (keycode == KeyPress::KeyEsc)
 				gEngine.SetGameIsRunning(false);
+
+			if (keycode == KeyPress::KeyC)
+			{
+				gEngine.m_coordinator.clone(1);
+			}
 		}
 		}
 	}
