@@ -42,8 +42,13 @@
 
 	void DebugDrawSystem::update()
 	{
+		// Fake update. Timer will be inaccurate for debug draw
 		g_engine.m_coordinator.InitTimeSystem("Debug Draw System");
+		g_engine.m_coordinator.EndTimeSystem("Debug Draw System");
+	}
 
+	void DebugDrawSystem::TrueUpdate()
+	{
 		glUseProgram(m_shader.GetShader());
 		glUniformMatrix4fv(m_transformLocation, 1, GL_FALSE, glm::value_ptr(g_engine.GetProjMat()));
 
@@ -65,7 +70,6 @@
 		}
 
 		glUseProgram(0);
-		g_engine.m_coordinator.EndTimeSystem("Debug Draw System");
 	}
 
 	void DebugDrawSystem::drawAABB(Rogue::BoxCollider2DComponent* box, Rogue::TransformComponent* transform)

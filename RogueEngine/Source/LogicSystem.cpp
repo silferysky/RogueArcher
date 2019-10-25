@@ -67,12 +67,12 @@ namespace Rogue
 			KeyPress keycode = keypressevent->GetKeyCode();
 
 			if (keycode == KeyPress::KeyEsc)
-				g_Engine.SetGameIsRunning(false);
+				g_engine.SetGameIsRunning(false);
 
 			
 			if (keycode == KeyPress::KeyC)
 			{
-				g_Engine.m_coordinator.clone(1);
+				g_engine.m_coordinator.clone(1);
 			}
 		}
 		}

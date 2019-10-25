@@ -36,7 +36,7 @@ namespace Rogue
 
 		GenerateQuadPrimitive(m_VBO, m_VAO, m_EBO);
 
-		auto handle = g_Engine.GetWindowHandler();
+		auto handle = g_engine.GetWindowHandler();
 
 		GenerateFrameBuffer(m_FBO, m_texColourBuffer, m_RBO, GetWindowWidth(handle), GetWindowHeight(handle));
 
@@ -69,7 +69,7 @@ namespace Rogue
 
 		glUseProgram(0);
 
-		g_engine.m_coordinator.GetSystem<DebugDrawSystem>()->update();
+		g_engine.m_coordinator.GetSystem<DebugDrawSystem>()->TrueUpdate();
 
 		UseFrameBuffer();
 
