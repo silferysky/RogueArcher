@@ -147,6 +147,7 @@
     <ClCompile Include="Source\CollisionManager.cpp" />
     <ClCompile Include="Source\MaterialComponent.cpp" />
     <ClCompile Include="Source\OBB.cpp" />
+    <ClCompile Include="Source\PlayerControllerComponent.cpp" />
     <ClCompile Include="Source\Polygon.cpp" />
     <ClCompile Include="Source\RigidbodyComponent.cpp" />
     <ClCompile Include="Source\RotatableComponent.cpp" />
