@@ -13,7 +13,7 @@ namespace Rogue
 	{
 		auto EndTimer = timer.now();
 		totaltime = std::chrono::duration_cast<std::chrono::microseconds>(EndTimer - StartTimer).count() / 1000000.0f;
-		totaltime = (totaltime / gDeltaTime) * 100;
+		totaltime = (totaltime / g_DeltaTime) * 100;
 		std::map<const char*, float>::iterator it = time.find(System);
 		if (it != time.end())
 		{
