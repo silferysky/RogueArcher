@@ -30,10 +30,15 @@ namespace Rogue
 		g_engine.m_coordinator.GetShaderManager().Init();
 
 		m_shader = g_engine.m_coordinator.loadShader("Object Shader");
+		m_screenShader = g_engine.m_coordinator.loadShader("Screen Shader");
 
 		m_transformLocation = glGetUniformLocation(m_shader.GetShader(), "transform");
 
 		GenerateQuadPrimitive(m_VBO, m_VAO, m_EBO);
+
+		auto handle = g_Engine.GetWindowHandler();
+
+		GenerateFrameBuffer(m_FBO, m_texColourBuffer, m_RBO, GetWindowWidth(handle), GetWindowHeight(handle));
 
 		// OpenGL version
 		std::cout << glGetString(GL_VERSION) << std::endl;
@@ -42,6 +47,9 @@ namespace Rogue
 	void GraphicsSystem::update()
 	{
 		g_engine.m_coordinator.InitTimeSystem("Graphics System");
+
+		glBindFramebuffer(GL_FRAMEBUFFER, m_FBO);
+
 		// clear the buffer
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -60,6 +68,10 @@ namespace Rogue
 		}
 
 		glUseProgram(0);
+
+		g_engine.m_coordinator.GetSystem<DebugDrawSystem>()->update();
+
+		UseFrameBuffer();
 
 		g_engine.m_coordinator.EndTimeSystem("Graphics System");
 	}
@@ -105,6 +117,26 @@ namespace Rogue
 		default:
 			return;
 		}*/
+	}
+
+	void GraphicsSystem::UseFrameBuffer()
+	{
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		glDisable(GL_DEPTH_TEST);
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		glUseProgram(m_screenShader.GetShader());
+		glBindVertexArray(m_VAO);
+		glBindTexture(GL_TEXTURE_2D, m_texColourBuffer);
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+
+		glBindVertexArray(0);
+		glUseProgram(0);
+	}
+
+	GLuint& GraphicsSystem::getFBO()
+	{
+		return m_FBO;
 	}
 
 	bool GraphicsSystem::InitializeOpenGL()
