@@ -29,7 +29,7 @@ namespace Rogue
 		Entity entCount = level["EntityCount"].GetInt();
 
 		//For Background
-		Entity backgroundEnt = g_Engine.m_coordinator.CreateEntity();
+		Entity backgroundEnt = g_engine.m_coordinator.CreateEntity();
 		std::string backgroundStr = level["BackgroundTexture"].GetString();
 		SpriteComponent backgroundSprite = SpriteComponent();
 		backgroundSprite.setTexture(backgroundStr.c_str());
@@ -39,13 +39,13 @@ namespace Rogue
 		backgroundTransform.setScale(Vec2(18.0f, 12.0f));
 		backgroundTransform.setRotation(0.0f);
 
-		g_Engine.m_coordinator.AddComponent(backgroundEnt, backgroundSprite);
-		g_Engine.m_coordinator.AddComponent(backgroundEnt, backgroundTransform);
+		g_engine.m_coordinator.AddComponent(backgroundEnt, backgroundSprite);
+		g_engine.m_coordinator.AddComponent(backgroundEnt, backgroundTransform);
 		m_activeEntities.push_back(backgroundEnt);
 
 		for (Entity entity = 0; entity < entCount; ++entity)
 		{
-			Entity curEnt = g_Engine.m_coordinator.CreateEntity();
+			Entity curEnt = g_engine.m_coordinator.CreateEntity();
 
 			//Setting signature
 			CLEARSTR(ostrstream);
@@ -63,7 +63,7 @@ namespace Rogue
 			FactoryLoadComponent(curEnt, currentSignature, ostrstream.str());
 			m_activeEntities.push_back(curEnt);
 
-			debugStr << "Entity " << curEnt << "'s Signature: " << g_Engine.m_coordinator.GetEntityManager().GetSignature(curEnt).to_ulong();
+			debugStr << "Entity " << curEnt << "'s Signature: " << g_engine.m_coordinator.GetEntityManager().GetSignature(curEnt).to_ulong();
 			RE_INFO(debugStr.str());
 			CLEARSTR(debugStr);
 		}
@@ -82,7 +82,7 @@ namespace Rogue
 		//Minus one off due to Background being part of the list as well.
 		//Background is unique and will not be counted to the entCount
 		Entity entCount = static_cast<Entity>(m_activeEntities.size() - 1);
-		EntityManager* em = &g_Engine.m_coordinator.GetEntityManager();
+		EntityManager* em = &g_engine.m_coordinator.GetEntityManager();
 		int intVar = (int)entCount;
 		RESerialiser::WriteToFile(fileName, "EntityCount", &intVar);
 
@@ -117,37 +117,37 @@ namespace Rogue
 					{
 						case static_cast<int>(SPRITE) :
 						{
-							strstream << "Sprite{" << g_Engine.m_coordinator.GetComponent<SpriteComponent>(curEntity).Serialize().c_str() << "}";
+							strstream << "Sprite{" << g_engine.m_coordinator.GetComponent<SpriteComponent>(curEntity).Serialize().c_str() << "}";
 							break;
 						}
 						case static_cast<int>(RIGIDBODY) :
 						{
-							strstream << "Rigidbody{" << g_Engine.m_coordinator.GetComponent<RigidbodyComponent>(curEntity).Serialize().c_str() << "}";
+							strstream << "Rigidbody{" << g_engine.m_coordinator.GetComponent<RigidbodyComponent>(curEntity).Serialize().c_str() << "}";
 							break;
 						}
 						case static_cast<int>(TRANSFORM) :
 						{
-							strstream << "Transform{" << g_Engine.m_coordinator.GetComponent<TransformComponent>(curEntity).Serialize() << "}";
+							strstream << "Transform{" << g_engine.m_coordinator.GetComponent<TransformComponent>(curEntity).Serialize() << "}";
 							break;
 						}
 						case static_cast<int>(CIRCLECOLLIDER2D) :
 						{
-							strstream << "CircleCollider{" << g_Engine.m_coordinator.GetComponent<CircleCollider2DComponent>(curEntity).Serialize() << "}";
+							strstream << "CircleCollider{" << g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(curEntity).Serialize() << "}";
 							break;
 						}
 						case static_cast<int>(BOXCOLLIDER2D) :
 						{
-							strstream << "BoxCollider{" << g_Engine.m_coordinator.GetComponent<BoxCollider2DComponent>(curEntity).Serialize() << "}";
+							strstream << "BoxCollider{" << g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(curEntity).Serialize() << "}";
 							break;
 						}
 						case static_cast<int>(PLAYERCONTROLLER) :
 						{
-							strstream << "PlayerController{" << g_Engine.m_coordinator.GetComponent<PlayerControllerComponent>(curEntity).Serialize() << "}";
+							strstream << "PlayerController{" << g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(curEntity).Serialize() << "}";
 							break;
 						}
 						case static_cast<int>(LOGIC) :
 						{
-							strstream << "LogicComponent{" << g_Engine.m_coordinator.GetComponent<LogicComponent>(curEntity).Serialize() << "}";
+							strstream << "LogicComponent{" << g_engine.m_coordinator.GetComponent<LogicComponent>(curEntity).Serialize() << "}";
 							break;
 						}
 						default:
@@ -240,8 +240,8 @@ namespace Rogue
 
 	void ObjectFactory::Clone(Entity toClone)
 	{
-		Signature toCloneSignature = g_Engine.m_coordinator.GetEntityManager().GetSignature(toClone);
-		Entity clonedEntity = g_Engine.m_coordinator.CreateEntity();
+		Signature toCloneSignature = g_engine.m_coordinator.GetEntityManager().GetSignature(toClone);
+		Entity clonedEntity = g_engine.m_coordinator.CreateEntity();
 		for (int index = 0; index != LASTCOMP; ++index)
 		{
 			if (toCloneSignature.test(index))
@@ -250,37 +250,37 @@ namespace Rogue
 				{
 					case static_cast<int>(SPRITE) :
 					{
-						g_Engine.m_coordinator.CopyComponent<SpriteComponent>(clonedEntity, toClone);
+						g_engine.m_coordinator.CopyComponent<SpriteComponent>(clonedEntity, toClone);
 						break;
 					}
 					case static_cast<int>(RIGIDBODY) :
 					{
-						g_Engine.m_coordinator.CopyComponent<RigidbodyComponent>(clonedEntity, toClone);
+						g_engine.m_coordinator.CopyComponent<RigidbodyComponent>(clonedEntity, toClone);
 						break;
 					}
 					case static_cast<int>(TRANSFORM) :
 					{
-						g_Engine.m_coordinator.CopyComponent<TransformComponent>(clonedEntity, toClone);
+						g_engine.m_coordinator.CopyComponent<TransformComponent>(clonedEntity, toClone);
 						break;
 					}
 					case static_cast<int>(CIRCLECOLLIDER2D) :
 					{
-						g_Engine.m_coordinator.CopyComponent<CircleCollider2DComponent>(clonedEntity, toClone);
+						g_engine.m_coordinator.CopyComponent<CircleCollider2DComponent>(clonedEntity, toClone);
 						break;
 					}
 					case static_cast<int>(BOXCOLLIDER2D) :
 					{
-						g_Engine.m_coordinator.CopyComponent<BoxCollider2DComponent>(clonedEntity, toClone);
+						g_engine.m_coordinator.CopyComponent<BoxCollider2DComponent>(clonedEntity, toClone);
 						break;
 					}
 					case static_cast<int>(PLAYERCONTROLLER) :
 					{
-						g_Engine.m_coordinator.CopyComponent<PlayerControllerComponent>(clonedEntity, toClone);
+						g_engine.m_coordinator.CopyComponent<PlayerControllerComponent>(clonedEntity, toClone);
 						break;
 					}
 					case static_cast<int>(LOGIC) :
 					{
-						g_Engine.m_coordinator.CopyComponent<LogicComponent>(clonedEntity, toClone);
+						g_engine.m_coordinator.CopyComponent<LogicComponent>(clonedEntity, toClone);
 						break;
 					}
 					default:
@@ -300,7 +300,7 @@ namespace Rogue
 		//If the key exists
 		if (m_archetypes.count(archetype))
 		{
-			Entity curEnt = g_Engine.m_coordinator.CreateEntity();
+			Entity curEnt = g_engine.m_coordinator.CreateEntity();
 			Signature curSignature = m_archetypeSignature[archetype];
 
 			//Does the actual clone
@@ -331,37 +331,37 @@ namespace Rogue
 				{
 					case static_cast<int>(SPRITE) :
 					{
-						g_Engine.m_coordinator.LoadComponent<SpriteComponent>(curEnt, readstr);
+						g_engine.m_coordinator.LoadComponent<SpriteComponent>(curEnt, readstr);
 						break;
 					}
 					case static_cast<int>(RIGIDBODY) :
 					{
-						g_Engine.m_coordinator.LoadComponent<RigidbodyComponent>(curEnt, readstr);
+						g_engine.m_coordinator.LoadComponent<RigidbodyComponent>(curEnt, readstr);
 						break;
 					}
 					case static_cast<int>(TRANSFORM) :
 					{
-						g_Engine.m_coordinator.LoadComponent<TransformComponent>(curEnt, readstr);
+						g_engine.m_coordinator.LoadComponent<TransformComponent>(curEnt, readstr);
 						break;
 					}
 					case static_cast<int>(CIRCLECOLLIDER2D) :
 					{
-						g_Engine.m_coordinator.LoadComponent<CircleCollider2DComponent>(curEnt, readstr);
+						g_engine.m_coordinator.LoadComponent<CircleCollider2DComponent>(curEnt, readstr);
 						break;
 					}
 					case static_cast<int>(BOXCOLLIDER2D) :
 					{
-						g_Engine.m_coordinator.LoadComponent<BoxCollider2DComponent>(curEnt, readstr);
+						g_engine.m_coordinator.LoadComponent<BoxCollider2DComponent>(curEnt, readstr);
 						break;
 					}
 					case static_cast<int>(PLAYERCONTROLLER) :
 					{
-						g_Engine.m_coordinator.LoadComponent<PlayerControllerComponent>(curEnt, readstr);
+						g_engine.m_coordinator.LoadComponent<PlayerControllerComponent>(curEnt, readstr);
 						break;
 					}
 					case static_cast<int>(LOGIC) :
 					{
-						g_Engine.m_coordinator.LoadComponent<LogicComponent>(curEnt, readstr);
+						g_engine.m_coordinator.LoadComponent<LogicComponent>(curEnt, readstr);
 						break;
 					}
 					default:

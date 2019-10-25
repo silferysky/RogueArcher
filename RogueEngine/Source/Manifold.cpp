@@ -17,8 +17,8 @@ namespace Rogue
 
 	void Manifold::Resolve()
 	{
-		auto& bodyA = g_Engine.m_coordinator.GetComponent<RigidbodyComponent>(m_entityA);
-		auto& bodyB = g_Engine.m_coordinator.GetComponent<RigidbodyComponent>(m_entityB);
+		auto& bodyA = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(m_entityA);
+		auto& bodyB = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(m_entityB);
 			
 		// Relative velocity
 		Vec2 rv = bodyB.getVelocity() - bodyA.getVelocity();
@@ -46,10 +46,10 @@ namespace Rogue
 
 	void Manifold::PositionalCorrection()
 	{
-		auto& bodyA = g_Engine.m_coordinator.GetComponent<RigidbodyComponent>(m_entityA);
-		auto& bodyB = g_Engine.m_coordinator.GetComponent<RigidbodyComponent>(m_entityB);
-		auto& transA = g_Engine.m_coordinator.GetComponent<TransformComponent>(m_entityA);
-		auto& transB = g_Engine.m_coordinator.GetComponent<TransformComponent>(m_entityB);
+		auto& bodyA = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(m_entityA);
+		auto& bodyB = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(m_entityB);
+		auto& transA = g_engine.m_coordinator.GetComponent<TransformComponent>(m_entityA);
+		auto& transB = g_engine.m_coordinator.GetComponent<TransformComponent>(m_entityB);
 
 		float correctionFactor = CollisionManager::GetCorrectionFactor();
 		float correctionSlop = CollisionManager::GetCorrectionSlop();

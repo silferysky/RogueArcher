@@ -17,19 +17,19 @@ namespace Rogue
 
 		// Add components to signature
 		Signature signature;
-		signature.set(g_Engine.m_coordinator.GetComponentType<SpriteComponent>());
-		signature.set(g_Engine.m_coordinator.GetComponentType<TransformComponent>());
+		signature.set(g_engine.m_coordinator.GetComponentType<SpriteComponent>());
+		signature.set(g_engine.m_coordinator.GetComponentType<TransformComponent>());
 
 		// Set graphics system signature
-		g_Engine.m_coordinator.SetSystemSignature<GraphicsSystem>(signature);
+		g_engine.m_coordinator.SetSystemSignature<GraphicsSystem>(signature);
 
 		// Init OpenGL libraries.
 		RE_ASSERT(InitializeOpenGL(), "OpenGL not initialized");
 
 		// Emplace shaders into the map
-		g_Engine.m_coordinator.GetShaderManager().Init();
+		g_engine.m_coordinator.GetShaderManager().Init();
 
-		m_shader = g_Engine.m_coordinator.loadShader("Object Shader");
+		m_shader = g_engine.m_coordinator.loadShader("Object Shader");
 
 		m_transformLocation = glGetUniformLocation(m_shader.GetShader(), "transform");
 
@@ -41,7 +41,7 @@ namespace Rogue
 
 	void GraphicsSystem::update()
 	{
-		g_Engine.m_coordinator.InitTimeSystem("Graphics System");
+		g_engine.m_coordinator.InitTimeSystem("Graphics System");
 		// clear the buffer
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -50,8 +50,8 @@ namespace Rogue
 		// For all entities
 		for (auto entity : m_entities)
 		{
-			auto& sprite = g_Engine.m_coordinator.GetComponent<SpriteComponent>(entity);
-			auto& transform = g_Engine.m_coordinator.GetComponent<TransformComponent>(entity);
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(entity);
+			auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
 
 			//glDisable(GL_DEPTH_TEST);
 
@@ -61,7 +61,7 @@ namespace Rogue
 
 		glUseProgram(0);
 
-		g_Engine.m_coordinator.EndTimeSystem("Graphics System");
+		g_engine.m_coordinator.EndTimeSystem("Graphics System");
 	}
 
 	void GraphicsSystem::draw(SpriteComponent* sprite, TransformComponent* transform)
@@ -82,7 +82,7 @@ namespace Rogue
 
 		//offset by translation of camera, inverse of rotation
 
-		transformMat = g_Engine.GetProjMat() * transformMat;
+		transformMat = g_engine.GetProjMat() * transformMat;
 
 		glUniformMatrix4fv(m_transformLocation, 1, GL_FALSE, glm::value_ptr(transformMat));
 

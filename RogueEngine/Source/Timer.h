@@ -10,11 +10,14 @@ namespace Rogue
 		Timer() = default;
 		void TimerInit(const char* System);
 		void TimerEnd(const char* System);
-		std::map<const char*, float> GetTimeSystem() const;
+		const std::map<const char*, float>& GetSystemTimes() const;
 	private:
-		std::map<const char*, float> time;
-		std::chrono::time_point<std::chrono::steady_clock> StartTimer;
-		float totaltime;
-		std::chrono::high_resolution_clock timer;
+		std::chrono::time_point<std::chrono::steady_clock> m_startTimer;
+		std::chrono::high_resolution_clock m_timer;
+
+		std::map<const char*, float> m_timeMap;
+		float m_totalTime;
+
+		static const float s_microToSeconds;
 	};
 }
