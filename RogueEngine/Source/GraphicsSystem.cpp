@@ -31,7 +31,7 @@ namespace Rogue
 
 		m_shader = gEngine.m_coordinator.loadShader("Object Shader");
 
-		m_hWnd = gEngine.GetWindowHandler();
+		m_transformLocation = glGetUniformLocation(m_shader.GetShader(), "transform");
 
 		GenerateQuadPrimitive(m_VBO, m_VAO, m_EBO);
 
@@ -45,7 +45,7 @@ namespace Rogue
 		// clear the buffer
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		glViewport(0, 0, GetWindowWidth(gEngine.GetWindowHandler()), GetWindowHeight(gEngine.GetWindowHandler()));
+		glUseProgram(m_shader.GetShader());
 
 		// For all entities
 		for (auto entity : m_entities)
@@ -58,6 +58,9 @@ namespace Rogue
 			//if (!entity)
 			draw(&sprite, &transform);
 		}
+
+		glUseProgram(0);
+
 		gEngine.m_coordinator.EndTimeSystem("Graphics System");
 	}
 
@@ -79,19 +82,15 @@ namespace Rogue
 
 		//offset by translation of camera, inverse of rotation
 
-		glUseProgram(m_shader.GetShader());
-
 		transformMat = gEngine.GetProjMat() * transformMat;
 
-		GLint transformLocation = glGetUniformLocation(m_shader.GetShader(), "transform");
-		glUniformMatrix4fv(transformLocation, 1, GL_FALSE, glm::value_ptr(transformMat));
+		glUniformMatrix4fv(m_transformLocation, 1, GL_FALSE, glm::value_ptr(transformMat));
 
 		// Draw the Mesh
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0); //Reset
 		glBindVertexArray(0); //Reset
-		glUseProgram(0);
 	}
 
 	void GraphicsSystem::receive(Event* ev)
