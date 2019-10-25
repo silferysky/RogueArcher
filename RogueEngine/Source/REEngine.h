@@ -36,6 +36,8 @@ namespace Rogue
 
 		REConfig config;
 
+		glm::mat4 m_projMat;
+
 		HWND CreateOpenGLWindow(char* title, int x, int y, int width, int height,
 			BYTE type, DWORD flags);
 	public:
@@ -48,6 +50,7 @@ namespace Rogue
 		void shutdown();
 
 		HWND GetWindowHandler() const;
+		glm::mat4 GetProjMat() const;
 		float GetAccumulatedTime() const;
 		int GetStepCount() const;
 		void SetGameIsRunning(bool set);

@@ -35,8 +35,7 @@
 
 		glUseProgram(m_shader.GetShader());
 
-		GLint transformLocation = glGetUniformLocation(m_shader.GetShader(), "transform");
-		glUniformMatrix4fv(transformLocation, 1, GL_FALSE, glm::value_ptr(Rogue::projMat));
+		m_transformLocation = glGetUniformLocation(m_shader.GetShader(), "transform");
 
 		Rogue::GenerateLinePrimitive(m_VBO, m_VAO);
 	}
@@ -44,6 +43,8 @@
 	void DebugDrawSystem::update()
 	{
 		gEngine.m_coordinator.InitTimeSystem("Debug Draw System");
+
+		glUniformMatrix4fv(m_transformLocation, 1, GL_FALSE, glm::value_ptr(gEngine.GetProjMat()));
 
 		// For all entities
 		for (auto entity : m_entities)

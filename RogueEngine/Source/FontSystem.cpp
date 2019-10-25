@@ -73,7 +73,7 @@ namespace Rogue
 		glUseProgram(m_shader.GetShader());
 
 		GLint transformLocation = glGetUniformLocation(m_shader.GetShader(), "transform");
-		glUniformMatrix4fv(transformLocation, 1, GL_FALSE, glm::value_ptr(projMat));
+		glUniformMatrix4fv(transformLocation, 1, GL_FALSE, glm::value_ptr(gEngine.GetProjMat()));
 
 		glGenVertexArrays(1, &m_VAO);
 		glGenBuffers(1, &m_VBO);

@@ -10,6 +10,7 @@
 		GLuint m_EBO;
 
 		Rogue::Shader m_shader;
+		GLint m_transformLocation;
 	public:
 		DebugDrawSystem();
 		~DebugDrawSystem() = default;
