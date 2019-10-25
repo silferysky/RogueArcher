@@ -8,6 +8,14 @@ namespace Rogue
 {
 	//_________________________________________________________________________
 	//_________________________________________________________________________|
+	//__________________________STATIC CONSTANTS_______________________________|
+	//_________________________________________________________________________|
+	//_________________________________________________________________________|
+	const float CollisionManager::s_correction_factor = 0.2f;
+	const float CollisionManager::s_correction_slop = 0.01f; // Penetration threshold
+
+	//_________________________________________________________________________
+	//_________________________________________________________________________|
 	//__________________________PRIVATE HELPER FUNCTIONS_______________________|
 	//_________________________________________________________________________|
 	//_________________________________________________________________________|
@@ -806,8 +814,17 @@ namespace Rogue
 		for (auto manifold : m_manifolds)
 		{
 			manifold.Resolve();
+			manifold.PositionalCorrection();
 		}
 
 		m_manifolds.clear();
+	}
+	float CollisionManager::GetCorrectionFactor()
+	{
+		return s_correction_factor;
+	}
+	float CollisionManager::GetCorrectionSlop()
+	{
+		return s_correction_slop;
 	}
 }
