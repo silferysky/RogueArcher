@@ -12,6 +12,7 @@ namespace Rogue
 		virtual ~ILogic() = default;
 
 		//AI behavior checker to update
+		virtual void AIDetect() {}
 		virtual void AIActiveStateUpdate() {}
 
 		//All of the AI types to update
