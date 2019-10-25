@@ -543,5 +543,8 @@
     <ClCompile Include="Source\StatsComponent.cpp">
       <Filter>RogueEngine\Systems\AI\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Source\PlayerControllerComponent.cpp">
+      <Filter>RogueEngine\Systems\Input</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

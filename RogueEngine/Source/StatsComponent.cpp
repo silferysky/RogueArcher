@@ -69,7 +69,6 @@ namespace Rogue
 	{
 		std::istringstream ss(toDeserialize);
 		std::string s1;
-		int counter = 0;		//Needed to take in for multiple values
 
 		std::getline(ss, s1, ';');
 		m_health = std::stoi(s1);
