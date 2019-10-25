@@ -45,12 +45,28 @@ namespace Rogue
 		}
 		ImGui::Text("Application FPS (%.1f FPS)", ImGui::GetIO().Framerate);
 		
+
 		std::map<const char*, float> i = gEngine.m_coordinator.GetTimeSystem();
+		std::vector<float> m_Percent;
+		float col_size = ImGui::GetWindowWidth() * 0.75f;
 		for (const auto& iter : i)
 		{
-			ImGui::Text("%s %.3f ms",iter.first,iter.second);
+			m_Percent.push_back(iter.second);
 		}
+		ImGui::PlotHistogram("", m_Percent.data(), int(m_Percent.size()), 0, "Profile Time Graph", 0.0f, 100.0f, ImVec2{ col_size, 100.0f });
 
+		for (const auto& iter : i)
+		{
+			m_check = iter.second;
+			if (m_check > 25.0f)
+			{
+				ImGui::TextColored({ 1.0f,1.0f,0.0f,1.0f },"%s %.3f ms", iter.first, iter.second);
+			}
+			else
+			{
+				ImGui::Text("%s %.3f ms", iter.first, iter.second);
+			}
+		}
 		ImGui::End();
 	}
 
