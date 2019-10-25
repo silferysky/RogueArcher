@@ -62,6 +62,10 @@ namespace Rogue
 		{
 			for (auto system : m_systems)
 			{
+				// skip Debug Draw
+				//if (system.first == GetTypeIndex<DebugDrawSystem>())
+					//continue;
+
 				system.second->update();
 			}
 		}

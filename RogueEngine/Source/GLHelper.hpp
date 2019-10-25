@@ -79,6 +79,32 @@ namespace Rogue
 		glBindVertexArray(0); //Reset
 	}
 
+	static void GenerateFrameBuffer(GLuint& FBO, GLuint& texColourBuffer, GLuint& RBO, const float& width, const float& height)
+	{
+		glGenFramebuffers(1, &FBO);
+		glBindFramebuffer(GL_FRAMEBUFFER, FBO);
+
+		// create color attachment texture
+		glGenTextures(1, &texColourBuffer);
+		glBindTexture(GL_TEXTURE_2D, texColourBuffer);
+
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texColourBuffer, 0);
+
+		// create a renderbuffer object for depth and stencil attachment
+		glGenRenderbuffers(1, &RBO);
+		glBindRenderbuffer(GL_RENDERBUFFER, RBO);
+		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
+		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, RBO);
+		
+		// check if framebuffer is complete
+		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+			std::cout << "Error: Framebuffer is not complete." << std::endl;
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	}
+
 	static void drawLine(const Vector2D& p1, const Vector2D& p2)
 	{
 		float start[] =
