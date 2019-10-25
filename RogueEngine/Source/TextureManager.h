@@ -1,6 +1,6 @@
 #pragma once
 #include <GL/glew.h>
-#include <map>
+#include <unordered_map>
 #include "SOIL.h"
 #include <iostream>
 
@@ -17,7 +17,7 @@ namespace Rogue
 
 	class TextureManager
 	{
-		std::map<const char*, GLuint, str_cmp> textureMap;
+		std::unordered_map<const char*, GLuint> textureMap;
 	public:
 		TextureManager() = default;
 		~TextureManager()
@@ -26,7 +26,7 @@ namespace Rogue
 				glDeleteTextures(1, &(itr->second));
 		}
 
-		std::map<const char*, GLuint, str_cmp> getTextureMap() const
+		std::unordered_map<const char*, GLuint> getTextureMap() const
 		{
 			return textureMap;
 		}

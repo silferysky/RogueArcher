@@ -42,9 +42,10 @@ namespace Rogue
 	void GraphicsSystem::update()
 	{
 		gEngine.m_coordinator.InitTimeSystem("Graphics System");
-
 		// clear the buffer
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		glViewport(0, 0, GetWindowWidth(gEngine.GetWindowHandler()), GetWindowHeight(gEngine.GetWindowHandler()));
 
 		// For all entities
 		for (auto entity : m_entities)
@@ -80,7 +81,7 @@ namespace Rogue
 
 		glUseProgram(m_shader.GetShader());
 
-		transformMat = projMat * transformMat;
+		transformMat = gEngine.GetProjMat() * transformMat;
 
 		GLint transformLocation = glGetUniformLocation(m_shader.GetShader(), "transform");
 		glUniformMatrix4fv(transformLocation, 1, GL_FALSE, glm::value_ptr(transformMat));
