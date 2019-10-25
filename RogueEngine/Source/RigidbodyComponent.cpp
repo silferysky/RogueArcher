@@ -135,7 +135,10 @@ namespace Rogue
 		std::ostringstream ss;
 		ss << m_acceleration.x << ";" << m_acceleration.y << ";";
 		ss << m_velocity.x << ";" << m_velocity.y << ";";
-		ss << m_invMass << ";";
+		if (m_invMass != 0.0f)
+			ss << m_invMass << ";";
+		else
+			ss << 1 << ";";
 		ss << m_volume << ";";
 		ss << m_isStatic;
 

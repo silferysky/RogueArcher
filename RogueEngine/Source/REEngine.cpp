@@ -34,6 +34,7 @@ namespace Rogue
 		//m_coordinator.RegisterSystem<Editor>();
 		m_coordinator.RegisterSystem<DebugDrawSystem>();
 		m_coordinator.RegisterSystem<FontSystem>();
+		m_coordinator.RegisterSystem<EventDispatcher>();
 	}
 
 	void REEngine::RegisterComponents()
