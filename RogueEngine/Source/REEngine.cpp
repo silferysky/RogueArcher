@@ -88,18 +88,18 @@ namespace Rogue
 	{
 		m_stepCount = 0;
 		std::chrono::high_resolution_clock mainLoopTimer;
-		gFixedDeltaTime = 0.016f;
+		g_FixedDeltaTime = 0.016f;
 
 		while (m_gameIsRunning)
 		{
-			//std::cout << 1/gDeltaTime << std::endl;
-			gDeltaTime = std::chrono::duration_cast<std::chrono::microseconds>(m_loopEnd - m_loopStart).count() / MICRO_TO_SECONDS;
+			//std::cout << 1/g_DeltaTime << std::endl;
+			g_DeltaTime = std::chrono::duration_cast<std::chrono::microseconds>(m_loopEnd - m_loopStart).count() / MICRO_TO_SECONDS;
 
 			m_loopStart = mainLoopTimer.now();
 
 			m_stepCount = 0;
 
-			m_accumulatedTime += gDeltaTime;
+			m_accumulatedTime += g_DeltaTime;
 
 			while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
 			{
@@ -107,9 +107,9 @@ namespace Rogue
 				DispatchMessage(&msg);
 			}
 
-			while (m_accumulatedTime >= gFixedDeltaTime)
+			while (m_accumulatedTime >= g_FixedDeltaTime)
 			{
-				m_accumulatedTime -= gFixedDeltaTime;
+				m_accumulatedTime -= g_FixedDeltaTime;
 				m_stepCount++;
 			}
 			glViewport(0, 0, GetWindowWidth(hWnd), GetWindowHeight(hWnd));

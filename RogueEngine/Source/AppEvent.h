@@ -16,16 +16,16 @@ namespace Rogue
 	{
 	public:
 		WinResizeEvent(unsigned int width, unsigned int height)
-			: WinWigDeltaTimeh(width), WinHeight(height) {}
+			: WinWig_DeltaTimeh(width), WinHeight(height) {}
 
-		inline unsigned int GetWigDeltaTimeh() { return WinWigDeltaTimeh; }
+		inline unsigned int GetWig_DeltaTimeh() { return WinWig_DeltaTimeh; }
 		inline unsigned int GetHeight() { return WinHeight; }
 
 		SET_EVENT_CATEGORY(EventCatApp)
 			SET_EVENT_TYPE(EvWindowResize)
 
 	private:
-		unsigned int WinWigDeltaTimeh, WinHeight;
+		unsigned int WinWig_DeltaTimeh, WinHeight;
 	};
 
 	class WinFocusEvent : public Event

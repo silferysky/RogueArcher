@@ -102,7 +102,7 @@ namespace Rogue
 
 		//offset by translation of camera, inverse of rotation
 
-		transformMat = gEngine.GetProjMat() * transformMat;
+		transformMat = g_Engine.GetProjMat() * transformMat;
 
 		glUniformMatrix4fv(m_transformLocation, 1, GL_FALSE, glm::value_ptr(transformMat));
 
