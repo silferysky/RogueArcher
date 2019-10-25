@@ -1,5 +1,5 @@
 #pragma once
-#include "ILogic.h"
+#include "BaseAI.h"
 #include "EventListener.h"
 
 namespace Rogue
@@ -13,8 +13,10 @@ namespace Rogue
 		~LogicSystem() = default;
 
 		//For entity logic
-		void AddLogicInterface(Entity, ILogic*);
+		void AddLogicInterface(Entity, BaseAI*);
 		void RemoveLogicInterface(Entity);
+
+		void SeekNearestWaypoint(Entity ent);
 
 		//Basic System 
 		void init();
@@ -22,7 +24,7 @@ namespace Rogue
 		void receive(Event* ev) override;
 
 	private:
-		std::map<Entity, ILogic*> m_entityLogicMap;
+		std::map<Entity, BaseAI*> m_entityLogicMap;
 	};
 
 }
