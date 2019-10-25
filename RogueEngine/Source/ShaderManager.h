@@ -17,6 +17,7 @@ namespace Rogue
 		void Init()
 		{
 			ShaderMap.emplace("Object Shader", Shader("vertexShader.txt", "fragmentShader.txt"));
+			ShaderMap.emplace("Screen Shader", Shader("vertexScreenShader.txt", "fragmentScreenShader.txt"));
 			ShaderMap.emplace("Debug Shader", Shader("vertexLineShader.txt", "fragmentLineShader.txt"));
 			ShaderMap.emplace("Font Shader", Shader("vertexFontShader.txt", "fragmentFontShader.txt"));
 		}
