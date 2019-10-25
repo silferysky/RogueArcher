@@ -16,6 +16,11 @@ namespace Rogue
 		GLuint m_VBO;
 		GLuint m_EBO;
 
+		GLuint m_FBO;
+		GLuint m_texColourBuffer;
+		GLuint m_RBO;
+
+		Shader m_screenShader;
 		Shader m_shader;
 		GLint m_transformLocation;
 
@@ -30,5 +35,7 @@ namespace Rogue
 		void draw(SpriteComponent* sprite, TransformComponent* transform);
 
 		void receive(Event* ev);
+
+		GLuint& getFBO();
 	};
 }
