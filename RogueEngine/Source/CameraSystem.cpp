@@ -18,7 +18,7 @@ namespace Rogue
 		// Add components to signature.
 		Signature signature;
 		// Set system signature.
-		g_Engine.m_coordinator.SetSystemSignature<CameraSystem>(signature);
+		g_engine.m_coordinator.SetSystemSignature<CameraSystem>(signature);
 
 		glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
 		glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -35,10 +35,10 @@ namespace Rogue
 
 	void CameraSystem::update()
 	{
-		g_Engine.m_coordinator.InitTimeSystem("Camera System");
+		g_engine.m_coordinator.InitTimeSystem("Camera System");
 		
 
-		g_Engine.m_coordinator.EndTimeSystem("Camera System");
+		g_engine.m_coordinator.EndTimeSystem("Camera System");
 	}
 
 	void CameraSystem::receive(Event* ev)
