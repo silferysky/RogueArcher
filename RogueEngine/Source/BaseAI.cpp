@@ -11,10 +11,6 @@ namespace Rogue
 		logicInit();
 	}
 
-	BaseAI::~BaseAI()
-	{
-	}
-
 	void BaseAI::logicInit()
 	{
 		//Put in order of importance
@@ -28,6 +24,7 @@ namespace Rogue
 	void BaseAI::logicUpdate()
 	{
 		//To set all flags of potential behavior
+		AIDetect();
 		m_logicComponent->ResetActiveStateBit();
 		AIActiveStateUpdate();
 
@@ -63,6 +60,10 @@ namespace Rogue
 				break;
 			}
 		}
+	}
+
+	void BaseAI::AIDetect()
+	{
 	}
 
 	void BaseAI::AIActiveStateUpdate()

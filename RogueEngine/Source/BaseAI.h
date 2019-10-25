@@ -11,11 +11,12 @@ namespace Rogue
 	public:
 
 		BaseAI(LogicComponent& logicComp);
-		~BaseAI();
+		virtual ~BaseAI() = default;
 
 		//From ILogic
 		void logicInit() override;
 		void logicUpdate() override;
+		void AIDetect() override;
 		void AIActiveStateUpdate() override;
 
 		//Getter/Setter
