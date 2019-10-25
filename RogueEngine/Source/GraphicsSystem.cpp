@@ -69,17 +69,9 @@ namespace Rogue
 
 		glUseProgram(0);
 
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		glDisable(GL_DEPTH_TEST);
-		glClear(GL_COLOR_BUFFER_BIT);
+		g_Engine.m_coordinator.GetSystem<DebugDrawSystem>()->update();
 
-		glUseProgram(m_screenShader.GetShader());
-		glBindVertexArray(m_VAO);
-		glBindTexture(GL_TEXTURE_2D, m_texColourBuffer);
-		glDrawArrays(GL_TRIANGLES, 0, 6);
-
-		glBindVertexArray(0);
-		glUseProgram(0);
+		UseFrameBuffer();
 
 		g_Engine.m_coordinator.EndTimeSystem("Graphics System");
 	}
@@ -125,6 +117,21 @@ namespace Rogue
 		default:
 			return;
 		}*/
+	}
+
+	void GraphicsSystem::UseFrameBuffer()
+	{
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		glDisable(GL_DEPTH_TEST);
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		glUseProgram(m_screenShader.GetShader());
+		glBindVertexArray(m_VAO);
+		glBindTexture(GL_TEXTURE_2D, m_texColourBuffer);
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+
+		glBindVertexArray(0);
+		glUseProgram(0);
 	}
 
 	GLuint& GraphicsSystem::getFBO()
