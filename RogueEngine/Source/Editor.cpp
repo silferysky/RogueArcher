@@ -8,7 +8,7 @@ namespace Rogue
 	void Editor::init()
 	{
 		Signature signature;
-		g_Engine.m_coordinator.SetSystemSignature<Editor>(signature);
+		g_engine.m_coordinator.SetSystemSignature<Editor>(signature);
 		REGISTER_LISTENER(SystemID::id_EDITOR, Editor::receive);
 		m_EditorManager->AddEditorWindow<ImGuiEditorFile>("File");
 		m_EditorManager->AddEditorWindow<ImGuiEditorEdit>("Edit");

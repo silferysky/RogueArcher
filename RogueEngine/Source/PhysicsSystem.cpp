@@ -23,9 +23,9 @@ namespace Rogue
 
 	void PhysicsSystem::integrateAcceleration(RigidbodyComponent& rigidbody, TransformComponent& transform)
 	{
-		transform.offSetPosition(rigidbody.getVelocity() * g_FixedDeltaTime);
+		transform.offSetPosition(rigidbody.getVelocity() * g_fixedDeltaTime);
 
-		rigidbody.offSetVelocity(rigidbody.getAcceleration() * g_FixedDeltaTime);
+		rigidbody.offSetVelocity(rigidbody.getAcceleration() * g_fixedDeltaTime);
 		rigidbody.setVelocity(rigidbody.getVelocity() * rigidbody.getDamping());
 
 	}
@@ -45,29 +45,29 @@ namespace Rogue
 
 		// Add components to signature.
 		Signature signature;
-		signature.set(g_Engine.m_coordinator.GetComponentType<RigidbodyComponent>());
-		signature.set(g_Engine.m_coordinator.GetComponentType<TransformComponent>());
-		signature.set(g_Engine.m_coordinator.GetComponentType<BoxCollider2DComponent>());
-		//signature.set(g_Engine.m_coordinator.GetComponentType<CircleCollider2DComponent>());
+		signature.set(g_engine.m_coordinator.GetComponentType<RigidbodyComponent>());
+		signature.set(g_engine.m_coordinator.GetComponentType<TransformComponent>());
+		signature.set(g_engine.m_coordinator.GetComponentType<BoxCollider2DComponent>());
+		//signature.set(g_engine.m_coordinator.GetComponentType<CircleCollider2DComponent>());
 
 		// Set physics system signature.
-		g_Engine.m_coordinator.SetSystemSignature<PhysicsSystem>(signature);
+		g_engine.m_coordinator.SetSystemSignature<PhysicsSystem>(signature);
 		m_gravity = { 0.0f, -1.0f };
 	}
 
 	void PhysicsSystem::update()
 	{
-		g_Engine.m_coordinator.InitTimeSystem("Physics System");
-		for (int step = 0; step < g_Engine.GetStepCount(); ++step)
+		g_engine.m_coordinator.InitTimeSystem("Physics System");
+		for (int step = 0; step < g_engine.GetStepCount(); ++step)
 		{
 			// For all entities
 			std::set<Entity>::iterator iEntity;
 			for (iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
 			{
-				auto& rigidbody = g_Engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
-				auto& transform = g_Engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
-				auto& currBoxCollider = g_Engine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iEntity);
-				//	auto& circleCollider = g_Engine.m_coordinator.GetComponent<CircleCollider2DComponent>(*iEntity);
+				auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
+				auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
+				auto& currBoxCollider = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iEntity);
+				//	auto& circleCollider = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(*iEntity);
 
 				if (rigidbody.getIsStatic())
 					continue;
@@ -82,7 +82,7 @@ namespace Rogue
 			}
 		}
 
-		g_Engine.m_coordinator.EndTimeSystem("Physics System");
+		g_engine.m_coordinator.EndTimeSystem("Physics System");
 	}
 
 	void PhysicsSystem::receive(Event* ev)
@@ -95,84 +95,84 @@ namespace Rogue
 
 			if (EvPressKey->GetKeyCode() == KeyPress::KeyA)
 			{
-				auto& rigidbody = g_Engine.m_coordinator.GetComponent<RigidbodyComponent>(1);
+				auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(1);
 				rigidbody.addForce(Vec2(-1.0f, 0.0f));
 				//RE_INFO("Move A Left!");
 			}
 			else if (EvPressKey->GetKeyCode() == KeyPress::KeyD)
 			{
-				auto& rigidbody = g_Engine.m_coordinator.GetComponent<RigidbodyComponent>(1);
+				auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(1);
 				rigidbody.addForce(Vec2(1.0f, 0.0f));
 				//RE_INFO("Move A Right!");
 			}
 			
 			else if (EvPressKey->GetKeyCode() == KeyPress::KeyW)
 			{
-				auto& rigidbody = g_Engine.m_coordinator.GetComponent<RigidbodyComponent>(1);
+				auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(1);
 				rigidbody.addForce(Vec2(0.0f, 1.0f));
 				//RE_INFO("Move A Up!");
 			}
 			else if (EvPressKey->GetKeyCode() == KeyPress::KeyS)
 			{
-				auto& rigidbody = g_Engine.m_coordinator.GetComponent<RigidbodyComponent>(1);
+				auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(1);
 				rigidbody.addForce(Vec2(0.0f, -1.0f));
 				//RE_INFO("Move A Down!");
 
 			}
 			if (EvPressKey->GetKeyCode() == KeyPress::KeyArrowLeft)
 			{
-				auto& rigidbody = g_Engine.m_coordinator.GetComponent<RigidbodyComponent>(2);
+				auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(2);
 				rigidbody.addForce(Vec2(-1.0f, 0.0f));
 				//RE_INFO("Move B Left!");
 
 			}
 			else if (EvPressKey->GetKeyCode() == KeyPress::KeyArrowRight)
 			{
-				auto& rigidbody = g_Engine.m_coordinator.GetComponent<RigidbodyComponent>(2);
+				auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(2);
 				rigidbody.addForce(Vec2(1.0f, 0.0f));
 				//RE_INFO("Move B Right!");
 			}
 			else if (EvPressKey->GetKeyCode() == KeyPress::KeyArrowUp)
 			{
-				auto& rigidbody = g_Engine.m_coordinator.GetComponent<RigidbodyComponent>(2);
+				auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(2);
 				rigidbody.addForce(Vec2(0.0f, 1.0f));
 				//RE_INFO("Move B Up!");
 
 			}
 			else if (EvPressKey->GetKeyCode() == KeyPress::KeyArrowDown)
 			{
-				auto& rigidbody = g_Engine.m_coordinator.GetComponent<RigidbodyComponent>(2);
+				auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(2);
 				rigidbody.addForce(Vec2(0.0f, -1.0f));
 				//RE_INFO("Move B Down!");
 			}
 			else if (EvPressKey->GetKeyCode() == KeyPress::KeyE)
 			{
-				auto& transform = g_Engine.m_coordinator.GetComponent<TransformComponent>((Entity)(1));
-				transform.offSetScale(Vec2(1.0f, 1.0f) * g_FixedDeltaTime);
+				auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>((Entity)(1));
+				transform.offSetScale(Vec2(1.0f, 1.0f) * g_fixedDeltaTime);
 				//RE_INFO("Scaled Up!");
 			}
 
 			else if (EvPressKey->GetKeyCode() == KeyPress::KeyQ)
 			{
-				auto& transform = g_Engine.m_coordinator.GetComponent<TransformComponent>((Entity)(1));
-				transform.offSetScale(Vec2(-1.0f, -1.0f) * g_FixedDeltaTime);
+				auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>((Entity)(1));
+				transform.offSetScale(Vec2(-1.0f, -1.0f) * g_fixedDeltaTime);
 				//RE_INFO("Scaled Down!");
 			}
 
 			else if (EvPressKey->GetKeyCode() == KeyPress::KeyR)
 			{
-				auto& transform = g_Engine.m_coordinator.GetComponent<TransformComponent>((Entity)1);
-				transform.offSetRotation(1.0f * g_FixedDeltaTime);
+				auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>((Entity)1);
+				transform.offSetRotation(1.0f * g_fixedDeltaTime);
 				//RE_INFO("Rotated!");
 			}
 			else if (EvPressKey->GetKeyCode() == KeyPress::KeyK)
 			{
-				auto& transform = g_Engine.m_coordinator.GetComponent<TransformComponent>((Entity)1);
+				auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>((Entity)1);
 				transform.setPosition(Vec2(-2.0f, 0.0f));
 			}
 			else if (EvPressKey->GetKeyCode() == KeyPress::KeyL)
 			{
-				auto& transform = g_Engine.m_coordinator.GetComponent<TransformComponent>((Entity)2);
+				auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>((Entity)2);
 				transform.setPosition(Vec2(2.0f, 0.0f));
 			}
 

@@ -34,7 +34,7 @@ namespace Rogue
 		io.ConfigDockingWithShift = false;
 		io.ConfigFlags = ImGuiConfigFlags_DockingEnable;
 
-		ImGui_ImplWin32_Init(g_Engine.GetWindowHandler());
+		ImGui_ImplWin32_Init(g_engine.GetWindowHandler());
 		ImGui_ImplOpenGL3_Init(glsl_version);
 
 		for (std::shared_ptr<IEditable> i : m_WindowsVector)
@@ -45,7 +45,7 @@ namespace Rogue
 
 	void EditorManager::Update()
 	{
-		g_Engine.m_coordinator.InitTimeSystem("Editor");
+		g_engine.m_coordinator.InitTimeSystem("Editor");
 		// Start the Dear ImGui frame
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplWin32_NewFrame();
@@ -115,7 +115,7 @@ namespace Rogue
 
 		ImGui::EndFrame();
 		ImGui::UpdatePlatformWindows();
-		g_Engine.m_coordinator.EndTimeSystem("Editor");
+		g_engine.m_coordinator.EndTimeSystem("Editor");
 	}
 
 	void EditorManager::Shutdown()

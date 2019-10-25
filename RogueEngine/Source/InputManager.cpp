@@ -42,7 +42,7 @@ namespace Rogue
 		ResetState(&PrevKeyboardState);
 
 		Signature signature;
-		g_Engine.m_coordinator.SetSystemSignature<InputManager>(signature);
+		g_engine.m_coordinator.SetSystemSignature<InputManager>(signature);
 	}
 
 	void InputManager::update()

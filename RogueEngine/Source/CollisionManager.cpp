@@ -46,10 +46,10 @@ namespace Rogue
 		Entity a = manifold.m_entityA;
 		Entity b = manifold.m_entityB;
 
-		auto& BoxCompA = g_Engine.m_coordinator.GetComponent<BoxCollider2DComponent>(a);
-		auto& BoxCompB = g_Engine.m_coordinator.GetComponent<BoxCollider2DComponent>(b);
-		auto& TransA = g_Engine.m_coordinator.GetComponent<TransformComponent>(a);
-		auto& TransB = g_Engine.m_coordinator.GetComponent<TransformComponent>(b);
+		auto& BoxCompA = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(a);
+		auto& BoxCompB = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(b);
+		auto& TransA = g_engine.m_coordinator.GetComponent<TransformComponent>(a);
+		auto& TransB = g_engine.m_coordinator.GetComponent<TransformComponent>(b);
 
 		Vec2 scaleA = TransA.getScale();
 		Vec2 scaleB = TransB.getScale();
@@ -550,7 +550,7 @@ namespace Rogue
 	{
 		// Calculate new relative velocity Vb using vel2
 		float tFirst = 0;
-		float tLast = g_DeltaTime;
+		float tLast = g_deltaTime;
 
 		Vec2 Vb(body2.getVelocity() - body1.getVelocity());
 

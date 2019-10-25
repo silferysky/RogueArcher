@@ -46,19 +46,18 @@ namespace Rogue
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 		
 
-		std::map<const char*, float> i = g_Engine.m_coordinator.GetTimeSystem();
-		std::vector<float> m_Percent;
-		float col_size = ImGui::GetWindowWidth() * 0.75f;
-		for (const auto& iter : i)
-		{
-			m_Percent.push_back(iter.second/100);
-		}
-		ImGui::PlotHistogram("", m_Percent.data(), int(m_Percent.size()), 0, "Profile Time Graph", 0.0f, 7.0f, ImVec2{ col_size, 100.0f });
+		std::map<const char*, float> timeSystem = g_engine.m_coordinator.GetSystemTimes();
 
-		for (const auto& iter : i)
+		float col_size = ImGui::GetWindowWidth() * 0.75f;
+
+		auto iter = timeSystem.begin();
+
+		ImGui::PlotHistogram("", &iter->second, int(timeSystem.size()), 0, "Profile Time Graph", 0.0f, 7.0f, ImVec2{ col_size, 100.0f });
+
+		for (const auto& iter : timeSystem)
 		{
-			m_check = iter.second/100;
-			if (m_check > 0.5f)
+			m_check = iter.second;
+			if (m_check > 50.0f)
 			{
 				ImGui::TextColored({ 1.0f,1.0f,0.0f,1.0f },"%s %.3f ms", iter.first, iter.second/100);
 			}
