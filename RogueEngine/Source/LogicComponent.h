@@ -13,18 +13,19 @@ namespace Rogue
 		LogicComponent() = default;
 		~LogicComponent() = default;
 
-		std::vector<AIState> AllStates();
-		AIState CurState() const;
-		void	CurState(AIState newState);
-		AIType	LogicType() const;
-		void	LogicType(AIType newType);
-		void	SetActiveStateBit(size_t pos);
-		void	ResetActiveStateBit();
-		bool	GetActiveStateBit(size_t pos) const;
+		std::vector<AIState> AllAIStates() const;
 		void	AddAIState(AIState newState);
 		void	AddAIStateInactive(AIState newState);
 
-		std::vector<AIState> AllAIStates() const;
+		AIState CurState() const;
+		void	CurState(AIState newState);
+
+		AIType	LogicType() const;
+		void	LogicType(AIType newType);
+
+		void	SetActiveStateBit(size_t pos);
+		void	ResetActiveStateBit();
+		bool	GetActiveStateBit(size_t pos) const;
 
 		//From BaseComponent
 		//ISerializable
@@ -39,5 +40,6 @@ namespace Rogue
 		//Multiple states can be active, but the first active state will be executed
 		std::bitset<static_cast<size_t>(AIState::AIState_Last)> m_activeStates;
 		enum AIState m_currentState;
+		bool m_isActive;
 	};
 }

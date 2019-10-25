@@ -1,15 +1,27 @@
 #include <vector>
 #include <sstream>
 
-#include "BaseComponent.h"
 #include "LogicComponent.h"
 #include "Vector2D.h"
 
 namespace Rogue
 {
-	std::vector<AIState> LogicComponent::AllStates()
+	std::vector<AIState> LogicComponent::AllAIStates() const
 	{
 		return m_allStates;
+	}
+
+	void LogicComponent::AddAIState(AIState newState)
+	{
+		//Assumes the new state is not in yet
+		m_allStates.push_back(newState);
+		m_activeStates.set(static_cast<size_t>(newState), true);
+	}
+
+	void LogicComponent::AddAIStateInactive(AIState newState)
+	{
+		//Assumes the new state is not in yet
+		m_allStates.push_back(newState);
 	}
 
 	AIState LogicComponent::CurState() const
@@ -47,24 +59,6 @@ namespace Rogue
 		return m_activeStates.test(pos);
 	}
 
-	void LogicComponent::AddAIState(AIState newState)
-	{
-		//Assumes the new state is not in yet
-		m_allStates.push_back(newState);
-		m_activeStates.set(static_cast<size_t>(newState), true);
-	}
-
-	void LogicComponent::AddAIStateInactive(AIState newState)
-	{
-		//Assumes the new state is not in yet
-		m_allStates.push_back(newState);
-	}
-
-	std::vector<AIState> LogicComponent::AllAIStates() const
-	{
-		return m_allStates;
-	}
-
 	std::string LogicComponent::Serialize()
 	{
 		//Acceleration, Velocity, Mass, Volume, isStatic
@@ -88,7 +82,6 @@ namespace Rogue
 		std::string s1;
 		int counter = 0;		//Needed to take in for multiple values
 		std::vector<AIState> allStates{};
-		size_t size = 0;
 
 		while (std::getline(ss, s1, ';'))
 		{

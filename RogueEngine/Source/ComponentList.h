@@ -8,6 +8,7 @@
 #include "BoxCollider2DComponent.h"
 #include "PlayerControllerComponent.h"
 #include "LogicComponent.h"
+#include "StatsComponent.h"
 
 namespace Rogue
 {
@@ -20,6 +21,7 @@ namespace Rogue
 		BOXCOLLIDER2D,
 		PLAYERCONTROLLER,
 		LOGIC,
+		STATS,
 		LASTCOMP
 	};
 }

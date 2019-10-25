@@ -365,6 +365,11 @@ namespace Rogue
 						gEngine.m_coordinator.LoadComponent<LogicComponent>(curEnt, readstr);
 						break;
 					}
+					case static_cast<int>(STATS) :
+					{
+						gEngine.m_coordinator.LoadComponent<StatsComponent>(curEnt, readstr);
+						break;
+					}
 					default:
 					{
 						RE_CORE_WARN("OUT OF BOUNDS INDEX TO CLONE");
