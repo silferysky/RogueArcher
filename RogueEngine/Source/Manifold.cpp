@@ -33,10 +33,10 @@ namespace Rogue
 			return;
 		}
 		// Mixed restitution of both bodies
-		m_restitution = REMax(bodyA.getBounciness(), bodyB.getBounciness());
+		m_restitution = REMin(bodyA.getBounciness(), bodyB.getBounciness());
 
 		// Scalar value of impulse
-		float impulseMagnitude = -(1 + m_restitution) * velOnNormal;
+		float impulseMagnitude = -(1 + 0.4) * velOnNormal;
 		impulseMagnitude /= bodyA.getInvMass() + bodyB.getInvMass();
 
 		Vec2 impulse = impulseMagnitude * m_normal;
