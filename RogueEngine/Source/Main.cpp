@@ -56,23 +56,23 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	//if (EditorMode)
 	//{
 	//	Rogue::Editor Editor;
-	//	Editor.init();
-	//	Editor.update();
+	//	Editor.Init();
+	//	Editor.Update();
 	//	Editor.Shutdown();
 	//
 	//	return (int)msg.wParam;
 	//} 
 
-	g_engine.init();
+	g_engine.Init();
 	
 	//BasicIO::WriteLevelJsonFile("Resources/TestJsonFileCreator.json", 1);
 	//BasicIO::WriteArchetypeJsonFile("Resources/TestArchetypeJsonFile.json", 3);
 	//BasicIO::WriteLevelJsonFile("Resources/Level 1.json", 8);
 
 	// Update engine.
-	g_engine.update();
+	g_engine.Update();
 
-	g_engine.shutdown();
+	g_engine.Shutdown();
 
 	return 0;
 

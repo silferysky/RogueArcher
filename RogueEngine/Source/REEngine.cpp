@@ -47,7 +47,7 @@ namespace Rogue
 		m_coordinator.RegisterComponent<LogicComponent>();
 	}
 
-	void REEngine::init()
+	void REEngine::Init()
 	{
 		config.ConfigInit();
 
@@ -84,7 +84,7 @@ namespace Rogue
 		m_coordinator.Init();
 	}
 
-	void REEngine::update()
+	void REEngine::Update()
 	{
 		m_stepCount = 0;
 		Timer::ChronoClock mainLoopTimer;
@@ -124,8 +124,10 @@ namespace Rogue
 		}
 	}
 
-	void REEngine::shutdown()
+	void REEngine::Shutdown()
 	{
+		m_coordinator.Shutdown();
+
 		//put graphics shutdown here
 		wglMakeCurrent(NULL, NULL);
 		ReleaseDC(hWnd, hDC);

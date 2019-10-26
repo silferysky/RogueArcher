@@ -29,9 +29,9 @@ namespace Rogue
 		m_entityLogicMap.erase(entity);
 	}
 
-	void LogicSystem::init()
+	void LogicSystem::Init()
 	{
-		REGISTER_LISTENER(SystemID::id_LOGICSYSTEM, LogicSystem::receive);
+		REGISTER_LISTENER(SystemID::id_LOGICSYSTEM, LogicSystem::Receive);
 
 		Signature signature;
 		signature.set(g_engine.m_coordinator.GetComponentType<TransformComponent>());
@@ -41,7 +41,7 @@ namespace Rogue
 		g_engine.m_coordinator.SetSystemSignature<LogicSystem>(signature);
 	}
 
-	void LogicSystem::update()
+	void LogicSystem::Update()
 	{
 		g_engine.m_coordinator.InitTimeSystem("Logic System");
 		for (auto it = m_entityLogicMap.begin(); it != m_entityLogicMap.end(); ++it)
@@ -56,7 +56,7 @@ namespace Rogue
 		g_engine.m_coordinator.EndTimeSystem("Logic System");
 	}
 
-	void LogicSystem::receive(Event* ev)
+	void LogicSystem::Receive(Event* ev)
 	{
 		switch (ev->GetEventType())
 		{
@@ -85,5 +85,8 @@ namespace Rogue
 		}
 		}
 	}
+
+	void LogicSystem::Shutdown()
+	{}
 
 }

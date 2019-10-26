@@ -55,7 +55,7 @@ namespace Rogue
 		{
 			for (auto system : m_systems)
 			{
-				system.second->init();
+				system.second->Init();
 			}
 		}
 
@@ -65,7 +65,15 @@ namespace Rogue
 			{
 				// Note: Debug draw system currently doesn't update here.
 
-				system.second->update();
+				system.second->Update();
+			}
+		}
+
+		void ShutdownSystems()
+		{
+			for (auto system : m_systems)
+			{
+				system.second->Shutdown();
 			}
 		}
 

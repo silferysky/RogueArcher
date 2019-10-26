@@ -24,8 +24,9 @@ namespace Rogue
 		CameraSystem();
 		~CameraSystem() = default;
 
-		void init();
-		void update() override;
-		void receive(Event* ev) override;
+		void Init() override;
+		void Update() override;
+		void Shutdown() override;
+		void Receive(Event* ev) override;
 	};
 }
