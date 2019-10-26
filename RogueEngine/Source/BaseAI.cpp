@@ -42,9 +42,6 @@ namespace Rogue
 				case AIState::AIState_Chase:
 					AIChaseUpdate();
 					break;
-				case AIState::AIState_Look:
-					AILookUpdate();
-					break;
 				case AIState::AIState_Patrol:
 					AIPatrolUpdate();
 					break;
@@ -79,6 +76,21 @@ namespace Rogue
 	void BaseAI::AIActiveStateUpdate()
 	{
 		m_logicComponent->SetActiveStateBit((size_t)AIState::AIState_Idle);
+	}
+
+	void BaseAI::AIChaseUpdate()
+	{
+		RE_INFO("CHASING PLAYER");
+	}
+
+	void BaseAI::AIPatrolUpdate()
+	{
+		RE_INFO("AI PATROLLING");
+	}
+
+	void BaseAI::AIIdleUpdate()
+	{
+		RE_INFO("AI IDLE");
 	}
 
 	std::shared_ptr<LogicComponent> BaseAI::getLogicComponent()

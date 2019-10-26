@@ -5,6 +5,7 @@
 #include "BaseSystem.h"
 #include "LogicSystem.h"
 #include "EventDispatcher.h"
+#include "GameEvent.h"
 #include "KeyEvent.h"
 #include "TransformComponent.h"
 #include "BoxCollider2DComponent.h"
@@ -61,6 +62,13 @@ namespace Rogue
 		m_entityLogicMap[ent]->AddNextPoint(*nearestWaypoint);
 	}
 
+	void LogicSystem::CreateMoveEvent(Entity ent, Vec2 vec)
+	{
+		EntMoveEvent* moveEvent = new EntMoveEvent(ent, false, vec);
+		moveEvent->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
+		EventDispatcher::instance().AddEvent(moveEvent);
+	}
+
 
 	void LogicSystem::init()
 	{
@@ -68,7 +76,6 @@ namespace Rogue
 
 		Signature signature;
 		signature.set(gEngine.m_coordinator.GetComponentType<TransformComponent>());
-		signature.set(gEngine.m_coordinator.GetComponentType<BoxCollider2DComponent>());
 		signature.set(gEngine.m_coordinator.GetComponentType<LogicComponent>());
 
 		gEngine.m_coordinator.SetSystemSignature<LogicSystem>(signature);

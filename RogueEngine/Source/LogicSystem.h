@@ -13,10 +13,12 @@ namespace Rogue
 		~LogicSystem() = default;
 
 		//For entity logic
-		void AddLogicInterface(Entity, BaseAI*);
+		void AddLogicInterface(Entity entity, BaseAI* logicInterface);
 		void RemoveLogicInterface(Entity);
 
 		void SeekNearestWaypoint(Entity ent);
+
+		void CreateMoveEvent(Entity ent, Vec2 vec);
 
 		//Basic System 
 		void init();

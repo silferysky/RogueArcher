@@ -4,6 +4,7 @@
 #include "ComponentList.h"
 #include "Timer.h"
 #include "KeyEvent.h"
+#include "GameEvent.h"
 #include "EventDispatcher.h"
 #include "Logger.h"
 #include "REEngine.h"
@@ -185,6 +186,17 @@ namespace Rogue
 			if (EvTriggeredKey->GetKeyCode() == KeyPress::KeyG)
 				allowGravity = allowGravity ? false : true;
 
+			return;
+		}
+		case EventType::EvEntityMove:
+		{
+			EntMoveEvent* EvEntMove = dynamic_cast<EntMoveEvent*>(ev);
+			
+			if (gEngine.m_coordinator.CheckIfComponentExists<TransformComponent>(EvEntMove->GetEntityID()))
+			{
+
+			}
+			
 			return;
 		}
 		default:

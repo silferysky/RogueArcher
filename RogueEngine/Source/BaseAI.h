@@ -17,12 +17,17 @@ namespace Rogue
 		virtual ~BaseAI() = default;
 
 		//From ILogic (Component Related)
-		void logicInit() override;
-		void logicUpdate() override;
+		virtual void logicInit() override;
+		virtual void logicUpdate() override;
 
-		//From ILogic (Logic related)
-		void AIDetect() override;
-		void AIActiveStateUpdate() override;
+		//AI behavior checker to update
+		virtual void AIDetect();
+		virtual void AIActiveStateUpdate();
+
+		//All of the AI types to update
+		virtual void AIChaseUpdate();
+		virtual void AIPatrolUpdate();
+		virtual void AIIdleUpdate();
 
 		//Getter/Setter
 		std::shared_ptr<LogicComponent> getLogicComponent();
