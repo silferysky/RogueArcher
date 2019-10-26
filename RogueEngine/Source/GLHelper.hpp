@@ -79,7 +79,7 @@ namespace Rogue
 		glBindVertexArray(0); //Reset
 	}
 
-	static void GenerateFrameBuffer(GLuint& FBO, GLuint& texColourBuffer, GLuint& RBO, const float& width, const float& height)
+	static void GenerateFrameBuffer(GLuint& FBO, GLuint& texColourBuffer, GLuint& RBO, const int& width, const int& height)
 	{
 		glGenFramebuffers(1, &FBO);
 		glBindFramebuffer(GL_FRAMEBUFFER, FBO);

@@ -8,7 +8,10 @@
 namespace Rogue
 {
 	GraphicsSystem::GraphicsSystem()
-		: System(SystemID::id_GRAPHICSSYSTEM) {}
+		: System(SystemID::id_GRAPHICSSYSTEM), m_VAO{ 0 }, m_VBO{ 0 }, m_EBO{ 0 },
+		m_FBO{ 0 }, m_texColourBuffer{ 0 }, m_RBO{ 0 },
+		m_screenShader{ }, m_shader{ }, m_transformLocation{ 0 }
+	{}
 
 	// Public member functions 
 	void GraphicsSystem::Init()
@@ -55,7 +58,7 @@ namespace Rogue
 		// clear the buffer
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		if (TranslateMessage(&msg) == WM_SIZE || WM_DISPLAYCHANGE)
+		if (TranslateMessage(&msg) == WM_SIZE || TranslateMessage(&msg) == WM_DISPLAYCHANGE)
 		{
 			auto handle = g_engine.GetWindowHandler();
 
