@@ -38,8 +38,8 @@ namespace Rogue
 				//	auto& circleCollider = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(*iEntity);
 
 				// Update collidables
-				m_colliderManager.updateAABB(currBoxCollider.m_aabb, transform);
-				m_colliderManager.updateOBB(currBoxCollider.m_obb, transform);
+				m_colliderManager.UpdateAABB(currBoxCollider.m_aabb, transform);
+				m_colliderManager.UpdateOBB(currBoxCollider.m_obb, transform);
 
 				// Conduct spatial partitioning
 
@@ -51,14 +51,14 @@ namespace Rogue
 					auto& nextBoxCollider = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iNextEntity);
 					auto& nextRigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iNextEntity);
 
-					if (m_colliderManager.staticAABBvsAABB(currBoxCollider.m_aabb, nextBoxCollider.m_aabb))
+					if (m_colliderManager.DiscreteAABBvsAABB(currBoxCollider.m_aabb, nextBoxCollider.m_aabb))
 					{
 						std::cout << "Entity " << *iEntity << " AABB collides with Entity " << *iNextEntity << " AABB" << std::endl;
 
 						m_colliderManager.InsertColliderPair(*iEntity, *iNextEntity);
 					}
 
-					if (m_colliderManager.staticOBBvsOBB(currBoxCollider.m_obb, nextBoxCollider.m_obb))
+					if (m_colliderManager.DiscreteOBBvsOBB(currBoxCollider.m_obb, nextBoxCollider.m_obb))
 					{
 						//	std::cout << "Entity " << *iEntity << " OBB collides with Entity " << *iNextEntity << " OBB" << std::endl;
 					}
