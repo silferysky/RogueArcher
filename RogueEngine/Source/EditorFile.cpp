@@ -47,7 +47,7 @@ namespace Rogue
 				}
 				if (ImGui::MenuItem("Exit"))
 				{
-					//gsm change state here
+
 				}
 				ImGui::EndMenu();
 			}
