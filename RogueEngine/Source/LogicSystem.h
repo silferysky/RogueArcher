@@ -12,6 +12,11 @@ namespace Rogue
 		LogicSystem();
 		~LogicSystem() = default;
 
+		//Basic System 
+		void init();
+		void update() override;
+		void receive(Event * ev) override;
+
 		//For entity logic
 		void AddLogicInterface(Entity entity, BaseAI* logicInterface);
 		void RemoveLogicInterface(Entity);
@@ -19,11 +24,6 @@ namespace Rogue
 		void SeekNearestWaypoint(Entity ent);
 
 		void CreateMoveEvent(Entity ent, Vec2 vec);
-
-		//Basic System 
-		void init();
-		void update() override;
-		void receive(Event* ev) override;
 
 	private:
 		std::map<Entity, BaseAI*> m_entityLogicMap;

@@ -261,7 +261,7 @@ namespace Rogue
 	{
 		KeyPressEvent* event = new KeyPressEvent(key, repeat);
 		event->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
-		event->SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
+		event->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
 		EventDispatcher::instance().AddEvent(event);
 	}
 
@@ -269,7 +269,7 @@ namespace Rogue
 	{
 		KeyReleaseEvent* event = new KeyReleaseEvent(key);
 		event->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
-		event->SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
+		event->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
 		EventDispatcher::instance().AddEvent(event);
 	}
 
@@ -277,7 +277,7 @@ namespace Rogue
 	{
 		KeyTriggeredEvent* event = new KeyTriggeredEvent(key);
 		event->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
-		event->SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
+		event->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
 		EventDispatcher::instance().AddEvent(event);
 	}
 }

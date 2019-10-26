@@ -229,9 +229,6 @@
     <ClInclude Include="Source\GLHelper.hpp">
       <Filter>RogueEngine\Systems\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Source\PlayerControllerComponent.h">
-      <Filter>RogueEngine\Systems\Input</Filter>
-    </ClInclude>
     <ClInclude Include="Source\ISerializable.h">
       <Filter>RogueEngine\Systems\I/O</Filter>
     </ClInclude>
@@ -369,6 +366,12 @@
     </ClInclude>
     <ClInclude Include="Source\Timer.h">
       <Filter>RogueEngine\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PlayerControllerSystem.h">
+      <Filter>RogueEngine\Systems\PlayerController</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PlayerControllerComponent.h">
+      <Filter>RogueEngine\Systems\PlayerController</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -546,9 +549,6 @@
     <ClCompile Include="Source\StatsComponent.cpp">
       <Filter>RogueEngine\Systems\AI\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Source\PlayerControllerComponent.cpp">
-      <Filter>RogueEngine\Systems\Input</Filter>
-    </ClCompile>
     <ClCompile Include="Source\CameraSystem.cpp">
       <Filter>RogueEngine\Systems\Camera</Filter>
     </ClCompile>
@@ -557,6 +557,12 @@
     </ClCompile>
     <ClCompile Include="Source\Timer.cpp">
       <Filter>RogueEngine\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PlayerControllerSystem.cpp">
+      <Filter>RogueEngine\Systems\PlayerController</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PlayerControllerComponent.cpp">
+      <Filter>RogueEngine\Systems\PlayerController</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
