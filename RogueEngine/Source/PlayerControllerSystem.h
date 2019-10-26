@@ -13,9 +13,10 @@ namespace Rogue
 		~PlayerControllerSystem() = default;
 
 		//Basic System 
-		void init() override;
-		void update() override;
-		void receive(Event * ev) override;
+		void Init() override;
+		void Update() override;
+		void Receive(Event * ev) override;
+		void Shutdown() override;
 
 	private:
 
