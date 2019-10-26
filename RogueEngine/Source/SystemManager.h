@@ -44,7 +44,8 @@ namespace Rogue
 
 			auto i = std::find_if(m_systems.begin(), m_systems.end(),
 				[&SystemName](const std::pair<std::type_index, std::shared_ptr<System>>& element) { return element.first == SystemName; });
-			if (i != m_systems.end())
+			
+			RE_ASSERT(i != m_systems.end(), "System not found!")
 			{
 				return std::dynamic_pointer_cast<T>(i->second); // Casts the base shared_ptr to derived
 			}
