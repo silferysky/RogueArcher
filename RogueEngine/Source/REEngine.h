@@ -50,6 +50,7 @@ namespace Rogue
 		void shutdown();
 
 		HWND GetWindowHandler() const;
+		MSG GetWindowMessage() const;
 		glm::mat4 GetProjMat() const;
 		float GetAccumulatedTime() const;
 		int GetStepCount() const;
