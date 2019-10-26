@@ -44,32 +44,43 @@ namespace Rogue
 			ImGui::EndMenu();
 		}
 		ImGui::Text("%.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-		ImGui::Text("%.3f ms/frame (%.1f FPS)", g_deltaTime * 1000.0f, 1 / g_deltaTime);
-		
+		ImGui::Text("%.3f ms/frame (%.1f FPS)", g_deltaTime * Timer::s_millisecondsPerSecond, 1 / g_deltaTime);
 
+
+		// Time is in microseconds
 		std::map<const char*, float> timeSystem = g_engine.m_coordinator.GetSystemTimes();
+		std::vector<float> vecTimeSystem; // For histogram
+
+		for (auto i = timeSystem.begin(); i != timeSystem.end(); i++)
+		{
+		}
 
 		float col_size = ImGui::GetWindowWidth() * 0.75f;
+		float dtInMilliseconds = g_deltaTime / Timer::s_millisecondsPerSecond;
 
+		
 		auto iter = timeSystem.begin();
-
-		ImGui::PlotHistogram("", &iter->second, int(timeSystem.size()), 0, "Profile Time Graph", 0.0f, 7.0f, ImVec2{ col_size, 100.0f });
-
 		for (const auto& iter : timeSystem)
 		{
-			float systemTime = iter.second / Timer::s_microToSeconds;
+			float systemTime = iter.second / Timer::s_microsecondsPerSecond;
 			systemTime = systemTime / g_deltaTime * 100.0f;
 
 			m_check = iter.second;
 			if (m_check > 50.0f)
 			{
-				ImGui::TextColored({ 1.0f,1.0f,0.0f,1.0f }, "%s %.1f %", iter.first, systemTime);
+				ImGui::TextColored({ 1.0f,1.0f,0.0f,1.0f }, "%s %.2f %", iter.first, systemTime);
 			}
 			else
 			{
-				ImGui::Text("%s %.1f %", iter.first, systemTime);
+				ImGui::Text("%s %.2f %", iter.first, systemTime);
 			}
+
+			// Time is in milliseconds
+			vecTimeSystem.push_back(systemTime);
 		}
+
+		ImGui::PlotHistogram("", vecTimeSystem.data(), int(vecTimeSystem.size()), 0, "Profile Time Graph", 0.0f, 100.0f, ImVec2{ col_size, 100.0f });
+
 		ImGui::End();
 	}
 

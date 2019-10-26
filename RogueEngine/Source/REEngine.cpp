@@ -27,12 +27,12 @@ namespace Rogue
 	{
 		m_coordinator.RegisterSystem<InputManager>();
 		m_coordinator.RegisterSystem<LogicSystem>();
+		m_coordinator.RegisterSystem<EventDispatcher>();
 		m_coordinator.RegisterSystem<PhysicsSystem>();
 		m_coordinator.RegisterSystem<CollisionSystem>();
 		m_coordinator.RegisterSystem<GraphicsSystem>();
 		m_coordinator.RegisterSystem<DebugDrawSystem>();
 		m_coordinator.RegisterSystem<FontSystem>();
-		m_coordinator.RegisterSystem<EventDispatcher>();
 		m_coordinator.RegisterSystem<Editor>();
 	}
 
@@ -92,7 +92,7 @@ namespace Rogue
 
 		while (m_gameIsRunning)
 		{
-			g_deltaTime = std::chrono::duration_cast<std::chrono::microseconds>(m_loopEnd - m_loopStart).count() / Timer::s_microToSeconds;
+			g_deltaTime = std::chrono::duration_cast<std::chrono::microseconds>(m_loopEnd - m_loopStart).count() / Timer::s_microsecondsPerSecond;
 
 			m_loopStart = mainLoopTimer.now();
 
