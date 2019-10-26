@@ -20,7 +20,7 @@ namespace Rogue
 {
 	REEngine::REEngine() :
 		m_coordinator{}, m_accumulatedTime{ 0.0f }, m_stepCount{ 0 },
-		m_gameIsRunning{ true }
+		m_gameIsRunning{ true }, m_projMat{ 1.0f }
 	{}
 
 	void REEngine::RegisterSystems()
@@ -114,10 +114,14 @@ namespace Rogue
 				m_accumulatedTime -= gFixedDeltaTime;
 				m_stepCount++;
 			}
+			glViewport(0, 0, GetWindowWidth(hWnd), GetWindowHeight(hWnd));
 
 			m_coordinator.Update();
 
 			SwapBuffers(hDC);
+
+			m_projMat = glm::ortho(-GetWindowWidth(hWnd) * 0.5f, GetWindowWidth(hWnd) * 0.5f, -GetWindowHeight(hWnd) * 0.5f, GetWindowHeight(hWnd) * 0.5f, -1024.0f, 1024.0f);
+			m_projMat = glm::ortho(-16.0f * 0.5f, 16.0f * 0.5f, -9.0f * 0.5f, 9.0f * 0.5f, -1024.0f, 1024.0f);
 
 			m_loopEnd = mainLoopTimer.now();
 		}
@@ -135,6 +139,11 @@ namespace Rogue
 	HWND REEngine::GetWindowHandler() const
 	{
 		return hWnd;
+	}
+
+	glm::mat4 REEngine::GetProjMat() const
+	{
+		return m_projMat;
 	}
 
 	float REEngine::GetAccumulatedTime() const

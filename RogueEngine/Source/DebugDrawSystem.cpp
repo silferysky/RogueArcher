@@ -35,8 +35,7 @@
 
 		glUseProgram(m_shader.GetShader());
 
-		GLint transformLocation = glGetUniformLocation(m_shader.GetShader(), "transform");
-		glUniformMatrix4fv(transformLocation, 1, GL_FALSE, glm::value_ptr(Rogue::projMat));
+		m_transformLocation = glGetUniformLocation(m_shader.GetShader(), "transform");
 
 		Rogue::GenerateLinePrimitive(m_VBO, m_VAO);
 	}
@@ -44,6 +43,9 @@
 	void DebugDrawSystem::update()
 	{
 		gEngine.m_coordinator.InitTimeSystem("Debug Draw System");
+
+		glUseProgram(m_shader.GetShader());
+		glUniformMatrix4fv(m_transformLocation, 1, GL_FALSE, glm::value_ptr(gEngine.GetProjMat()));
 
 		// For all entities
 		for (auto entity : m_entities)
@@ -61,12 +63,13 @@
 				drawVelocity(&rBody, &transform);
 			}
 		}
+
+		glUseProgram(0);
 		gEngine.m_coordinator.EndTimeSystem("Debug Draw System");
 	}
 
 	void DebugDrawSystem::drawAABB(Rogue::BoxCollider2DComponent* box, Rogue::TransformComponent* transform)
 	{
-		glUseProgram(m_shader.GetShader());
 		glBindVertexArray(m_VAO);
 		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 
@@ -83,7 +86,6 @@
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);	
 		glBindVertexArray(0);
-		glUseProgram(0);	
 	}
 
 	void DebugDrawSystem::drawOBB(Rogue::BoxCollider2DComponent* box, Rogue::RigidbodyComponent* body)
@@ -91,7 +93,6 @@
 		if (body->getIsStatic())
 			return;
 
-		glUseProgram(m_shader.GetShader());
 		glBindVertexArray(m_VAO);
 		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 
@@ -105,7 +106,6 @@
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindVertexArray(0);
-		glUseProgram(0);
 	}
 
 	void DebugDrawSystem::drawVelocity(Rogue::RigidbodyComponent* rBody, Rogue::TransformComponent* transform)
@@ -113,7 +113,6 @@
 		if (rBody->getIsStatic())
 			return;
 
-		glUseProgram(m_shader.GetShader());
 		glBindVertexArray(m_VAO);
 		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 
@@ -125,7 +124,6 @@
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindVertexArray(0);
-		glUseProgram(0);
 	}
 
 	void DebugDrawSystem::receive(Rogue::Event* ev)

@@ -15,6 +15,9 @@ namespace Rogue
 		LISTENER_HANDLER hand = std::bind(&FontSystem::receive, this, std::placeholders::_1);
 		EventDispatcher::instance().AddListener(SystemID::id_FONTSYSTEM, hand);
 
+		Signature signature;
+		gEngine.m_coordinator.SetSystemSignature<FontSystem>(signature);
+
 		if (FT_Init_FreeType(&ft))
 			std::cout << "ERROR::FREETYPE: Could not init FreeType Library" << std::endl;
 
@@ -73,7 +76,7 @@ namespace Rogue
 		glUseProgram(m_shader.GetShader());
 
 		GLint transformLocation = glGetUniformLocation(m_shader.GetShader(), "transform");
-		glUniformMatrix4fv(transformLocation, 1, GL_FALSE, glm::value_ptr(projMat));
+		glUniformMatrix4fv(transformLocation, 1, GL_FALSE, glm::value_ptr(gEngine.GetProjMat()));
 
 		glGenVertexArrays(1, &m_VAO);
 		glGenBuffers(1, &m_VBO);
@@ -84,19 +87,18 @@ namespace Rogue
 		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), 0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindVertexArray(0);
+		glUseProgram(0);
 
-		Signature signature;
-		gEngine.m_coordinator.SetSystemSignature<FontSystem>(signature);
 	}
 
 	void FontSystem::update()
 	{
 		Timer TimeSystem;
-		TimeSystem.TimerInit("Graphics System");
+		TimeSystem.TimerInit("Font System");
 
 		RenderText("This is sample text", -4.0f, 0.0f, 1.0f, glm::vec3(0.5, 0.8f, 0.2f));
 
-		TimeSystem.TimerEnd("Graphics System");
+		TimeSystem.TimerEnd("Font System");
 	}
 
 
@@ -142,6 +144,7 @@ namespace Rogue
 		}
 		glBindVertexArray(0);
 		glBindTexture(GL_TEXTURE_2D, 0);
+		glUseProgram(0);
 	}
 
 	void FontSystem::receive(Event* ev)
