@@ -68,6 +68,7 @@
     <ClInclude Include="Source\MaterialComponent.h" />
     <ClInclude Include="Source\OBB.h" />
     <ClInclude Include="Source\PlayerControllerComponent.h" />
+    <ClInclude Include="Source\PlayerControllerSystem.h" />
     <ClInclude Include="Source\Polygon.h" />
     <ClInclude Include="Source\RigidbodyComponent.h" />
     <ClInclude Include="Source\RotatableComponent.h" />
@@ -150,6 +151,7 @@
     <ClCompile Include="Source\MaterialComponent.cpp" />
     <ClCompile Include="Source\OBB.cpp" />
     <ClCompile Include="Source\PlayerControllerComponent.cpp" />
+    <ClCompile Include="Source\PlayerControllerSystem.cpp" />
     <ClCompile Include="Source\Polygon.cpp" />
     <ClCompile Include="Source\RigidbodyComponent.cpp" />
     <ClCompile Include="Source\RotatableComponent.cpp" />

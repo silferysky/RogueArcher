@@ -14,6 +14,7 @@
 #include "DebugDrawSystem.h"
 #include "FontSystem.h"
 #include "CollisionSystem.h"
+#include "PlayerControllerSystem.h"
 #include "VSync.h"
 
 namespace Rogue
@@ -27,6 +28,7 @@ namespace Rogue
 	{
 		m_coordinator.RegisterSystem<InputManager>();
 		m_coordinator.RegisterSystem<LogicSystem>();
+		m_coordinator.RegisterSystem<PlayerControllerSystem>();
 		m_coordinator.RegisterSystem<EventDispatcher>();
 		m_coordinator.RegisterSystem<PhysicsSystem>();
 		m_coordinator.RegisterSystem<CollisionSystem>();
