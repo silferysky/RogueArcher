@@ -10,14 +10,5 @@ namespace Rogue
 		//Do not override this, it is already done in BaseAI. Anything just modify BaseAI
 		virtual void logicUpdate() = 0;
 		virtual ~ILogic() = default;
-
-		//AI behavior checker to update
-		virtual void AIActiveStateUpdate() {}
-
-		//All of the AI types to update
-		virtual void AIChaseUpdate() {}
-		virtual void AIPatrolUpdate() {}
-		virtual void AILookUpdate() {}
-		virtual void AIIdleUpdate() {}
 	};
 }

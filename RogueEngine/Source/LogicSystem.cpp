@@ -2,9 +2,9 @@
 #include <map>
 
 #include "Main.h"
-#include "BaseSystem.h"
 #include "LogicSystem.h"
 #include "EventDispatcher.h"
+#include "GameEvent.h"
 #include "KeyEvent.h"
 #include "TransformComponent.h"
 #include "BoxCollider2DComponent.h"
@@ -16,18 +16,9 @@ namespace Rogue
 	LogicSystem::LogicSystem()
 		: System(SystemID::id_LOGICSYSTEM)
 	{
-		m_entityLogicMap = std::map<Entity, ILogic*>();
+		m_entityLogicMap = std::map<Entity, BaseAI*>();
 	}
 
-	void LogicSystem::AddLogicInterface(Entity entity, ILogic* logicInterface)
-	{
-		m_entityLogicMap.insert({ entity, logicInterface });
-	}
-
-	void LogicSystem::RemoveLogicInterface(Entity entity)
-	{
-		m_entityLogicMap.erase(entity);
-	}
 
 	void LogicSystem::Init()
 	{
@@ -35,7 +26,6 @@ namespace Rogue
 
 		Signature signature;
 		signature.set(g_engine.m_coordinator.GetComponentType<TransformComponent>());
-		signature.set(g_engine.m_coordinator.GetComponentType<BoxCollider2DComponent>());
 		signature.set(g_engine.m_coordinator.GetComponentType<LogicComponent>());
 
 		g_engine.m_coordinator.SetSystemSignature<LogicSystem>(signature);
@@ -50,6 +40,7 @@ namespace Rogue
 			if (!it->second)
 				continue;
 
+
 			//Updates the current logic. The individual AI types will handle the state on their own
 			it->second->logicUpdate();
 		}
@@ -58,32 +49,55 @@ namespace Rogue
 
 	void LogicSystem::Receive(Event* ev)
 	{
-		switch (ev->GetEventType())
+	}
+
+	void LogicSystem::AddLogicInterface(Entity entity, BaseAI* logicInterface)
+	{
+		m_entityLogicMap.insert({ entity, logicInterface });
+	}
+
+	void LogicSystem::RemoveLogicInterface(Entity entity)
+	{
+		m_entityLogicMap.erase(entity);
+	}
+
+	void LogicSystem::SeekNearestWaypoint(Entity ent)
+	{
+		Vec2* currentLocation = &g_engine.m_coordinator.GetComponent<TransformComponent>(ent).getPosition();
+		Vec2* nearestWaypoint = nullptr;
+		float distance = 0.0f;
+		for (std::vector<Vec2>::iterator it = m_entityLogicMap[ent]->GetWaypoints().begin(); it != m_entityLogicMap[ent]->GetWaypoints().end(); ++it)
 		{
-		case EventType::EvKeyPressed:
-		{
-			KeyPressEvent* keypressevent = dynamic_cast<KeyPressEvent*>(ev);
-
-			KeyPress keycode = keypressevent->GetKeyCode();
-
-			if (keycode == KeyPress::KeyEsc)
-				g_engine.SetGameIsRunning(false);
-
-			return;
-		}
-		case EventType::EvKeyTriggered:
-		{
-			KeyTriggeredEvent* keyTriggeredEvent = dynamic_cast<KeyTriggeredEvent*>(ev);
-			auto keycode = keyTriggeredEvent->GetKeyCode();
-
-			if (keycode == KeyPress::KeyC)
+			//First iteration sets first value by default
+			if (nearestWaypoint == nullptr)
 			{
-				g_engine.m_coordinator.clone(1);
+				nearestWaypoint = &*it;
+				distance = Vec2Distance(*currentLocation, *it);
+				continue;
 			}
 
+			//For all other iterations
+			float tempDistance = Vec2Distance(*currentLocation, *it);
+			if (tempDistance < distance)
+			{
+				nearestWaypoint = &*it;
+				distance = tempDistance;
+			}
+		}
+
+		//Null checker
+		if (!nearestWaypoint)
 			return;
-		}
-		}
+		
+		//Sets the best waypoint into the new location
+		m_entityLogicMap[ent]->AddNextPoint(*nearestWaypoint);
+	}
+
+	void LogicSystem::CreateMoveEvent(Entity ent, Vec2 vec)
+	{
+		EntMoveEvent* moveEvent = new EntMoveEvent(ent, false, vec);
+		moveEvent->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
+		EventDispatcher::instance().AddEvent(moveEvent);
 	}
 
 	void LogicSystem::Shutdown()

@@ -1,6 +1,5 @@
 #pragma once
 #include "REEngine.h"
-#include "ObjectFactory.h"
 
 extern Rogue::REEngine g_engine;
 extern float g_deltaTime;

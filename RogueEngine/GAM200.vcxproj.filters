@@ -74,6 +74,9 @@
     <Filter Include="RogueEngine\Systems\Camera">
       <UniqueIdentifier>{508febc0-b3e9-4c4b-9cc8-7e422407a8bc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="RogueEngine\Systems\PlayerController">
+      <UniqueIdentifier>{0d94350a-4a50-4e83-8f56-fb5c30539fb8}</UniqueIdentifier>
+    </Filter>
     <Filter Include="RogueEngine\Debug">
       <UniqueIdentifier>{c8c7defc-4043-4b41-8c06-6572d6de7638}</UniqueIdentifier>
     </Filter>
@@ -226,9 +229,6 @@
     <ClInclude Include="Source\GLHelper.hpp">
       <Filter>RogueEngine\Systems\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Source\PlayerControllerComponent.h">
-      <Filter>RogueEngine\Systems\Input</Filter>
-    </ClInclude>
     <ClInclude Include="Source\ISerializable.h">
       <Filter>RogueEngine\I/O</Filter>
     </ClInclude>
@@ -355,6 +355,9 @@
     <ClInclude Include="Source\WindowHelper.h">
       <Filter>RogueEngine\Window</Filter>
     </ClInclude>
+    <ClInclude Include="Source\StatsComponent.h">
+      <Filter>RogueEngine\Systems\AI\Components</Filter>
+    </ClInclude>
     <ClInclude Include="Source\CameraSystem.h">
       <Filter>RogueEngine\Systems\Camera</Filter>
     </ClInclude>
@@ -364,8 +367,17 @@
     <ClInclude Include="Source\Timer.h">
       <Filter>RogueEngine\Debug</Filter>
     </ClInclude>
+    <ClInclude Include="Source\PlayerControllerSystem.h">
+      <Filter>RogueEngine\Systems\PlayerController</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PlayerControllerComponent.h">
+      <Filter>RogueEngine\Systems\PlayerController</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Main.h">
       <Filter>RogueEngine\Entry Point</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneManager.h">
+      <Filter>RogueEngine\I/O</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -537,6 +549,9 @@
     <ClCompile Include="Source\WindowHelper.cpp">
       <Filter>RogueEngine\Window</Filter>
     </ClCompile>
+    <ClCompile Include="Source\StatsComponent.cpp">
+      <Filter>RogueEngine\Systems\AI\Components</Filter>
+    </ClCompile>
     <ClCompile Include="Source\CameraSystem.cpp">
       <Filter>RogueEngine\Systems\Camera</Filter>
     </ClCompile>
@@ -546,8 +561,17 @@
     <ClCompile Include="Source\Timer.cpp">
       <Filter>RogueEngine\Debug</Filter>
     </ClCompile>
+    <ClCompile Include="Source\PlayerControllerSystem.cpp">
+      <Filter>RogueEngine\Systems\PlayerController</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PlayerControllerComponent.cpp">
+      <Filter>RogueEngine\Systems\PlayerController</Filter>
+    </ClCompile>
     <ClCompile Include="Source\Main.cpp">
       <Filter>RogueEngine\Entry Point</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneManager.cpp">
+      <Filter>RogueEngine\I/O</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

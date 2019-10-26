@@ -4,7 +4,7 @@
 #include "EntityManager.h"
 #include "GraphicsSystem.h"
 #include "DebugDrawSystem.h"
-#include "ObjectFactory.h"
+#include "SceneManager.h"
 #include "PhysicsSystem.h"
 #include "EventDispatcher.h"
 #include "ShaderManager.h"
@@ -22,7 +22,7 @@ namespace Rogue
 		std::unique_ptr<SystemManager> m_systemManager;
 		std::unique_ptr<TextureManager> m_textureManager;
 		std::unique_ptr<ShaderManager> m_shaderManager;
-		std::unique_ptr<ObjectFactory> m_objectFactory;
+		std::unique_ptr<SceneManager> m_sceneManager;
 		std::unique_ptr<EventDispatcher> m_eventDispatcher;
 		std::unique_ptr<Timer> m_Timer;
 
@@ -33,7 +33,7 @@ namespace Rogue
 			m_systemManager{ std::make_unique<SystemManager>() },
 			m_textureManager{ std::make_unique<TextureManager>() },
 			m_shaderManager{ std::make_unique<ShaderManager>() },
-			m_objectFactory{ std::make_unique<ObjectFactory>() },
+			m_sceneManager{ std::make_unique<SceneManager>() },
 			m_eventDispatcher{std::make_unique<EventDispatcher>()},
 			m_Timer{ std::make_unique<Timer>() }
 		{}
@@ -44,8 +44,8 @@ namespace Rogue
 			m_systemManager->InitSystems();
 
 			// Load first scene
-			m_objectFactory->LoadLevel("Resources/Level 1.json");
-			m_objectFactory->LoadArchetypes("Resources/Archetypes.json");
+			m_sceneManager->LoadLevel("Resources/Level 1.json");
+			m_sceneManager->LoadArchetypes("Resources/Archetypes.json");
 			//for(int i = 0; i < 1500; i++)
 				//m_objectFactory->Clone("Stuff");
 			//m_objectFactory->SaveLevel("Resources/Level 1.json");
@@ -75,6 +75,16 @@ namespace Rogue
 			m_componentManager->EntityDestroyed(entity);
 
 			m_systemManager->EntityDestroyed(entity);
+		}
+
+		void DestroyAllEntity()
+		{
+			Entity count = m_entityManager->GetActiveEntityCount();
+
+			for (Entity it = 0; it < count; ++it)
+			{
+				DestroyEntity(it);
+			}
 		}
 
 		GLuint loadTexture(const char* texture)
@@ -119,12 +129,12 @@ namespace Rogue
 			m_entityManager->SetSignature(clonedEntity, newEntitySignature);
 			m_systemManager->EntitySignatureChanged(clonedEntity, newEntitySignature);*/
 
-			m_objectFactory->Clone(existingEntity);
+			m_sceneManager->Clone(existingEntity);
 		}
 
 		void cloneArchetypes(const char* archetype)
 		{
-			m_objectFactory->Clone(archetype);
+			m_sceneManager->Clone(archetype);
 		}
 
 		template<typename T>
@@ -202,6 +212,11 @@ namespace Rogue
 		ShaderManager& GetShaderManager() const
 		{
 			return *m_shaderManager;
+		}
+
+		SceneManager& GetSceneManager() const
+		{
+			return *m_sceneManager;
 		}
 
 		template <typename T>
