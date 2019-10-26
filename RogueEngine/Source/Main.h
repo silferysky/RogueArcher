@@ -2,6 +2,6 @@
 #include "REEngine.h"
 #include "ObjectFactory.h"
 
-extern Rogue::REEngine gEngine;
-extern float gDeltaTime;
-extern float gFixedDeltaTime;
+extern Rogue::REEngine g_engine;
+extern float g_deltaTime;
+extern float g_fixedDeltaTime;

@@ -29,9 +29,8 @@ namespace Rogue
 		m_coordinator.RegisterSystem<LogicSystem>();
 		m_coordinator.RegisterSystem<PhysicsSystem>();
 		m_coordinator.RegisterSystem<CollisionSystem>();
-		//m_coordinator.RegisterSystem<WindowSystem>();
 		m_coordinator.RegisterSystem<GraphicsSystem>();
-		//m_coordinator.RegisterSystem<Editor>();
+		m_coordinator.RegisterSystem<Editor>();
 		m_coordinator.RegisterSystem<DebugDrawSystem>();
 		m_coordinator.RegisterSystem<FontSystem>();
 		m_coordinator.RegisterSystem<EventDispatcher>();
@@ -90,18 +89,18 @@ namespace Rogue
 	{
 		m_stepCount = 0;
 		std::chrono::high_resolution_clock mainLoopTimer;
-		gFixedDeltaTime = 0.016f;
+		g_fixedDeltaTime = 0.016f;
 
 		while (m_gameIsRunning)
 		{
-			//std::cout << 1/gDeltaTime << std::endl;
-			gDeltaTime = std::chrono::duration_cast<std::chrono::microseconds>(m_loopEnd - m_loopStart).count() / MICRO_TO_SECONDS;
+			//std::cout << 1/g_deltaTime << std::endl;
+			g_deltaTime = std::chrono::duration_cast<std::chrono::microseconds>(m_loopEnd - m_loopStart).count() / MICRO_TO_SECONDS;
 
 			m_loopStart = mainLoopTimer.now();
 
 			m_stepCount = 0;
 
-			m_accumulatedTime += gDeltaTime;
+			m_accumulatedTime += g_deltaTime;
 
 			while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
 			{
@@ -109,9 +108,9 @@ namespace Rogue
 				DispatchMessage(&msg);
 			}
 
-			while (m_accumulatedTime >= gFixedDeltaTime)
+			while (m_accumulatedTime >= g_fixedDeltaTime)
 			{
-				m_accumulatedTime -= gFixedDeltaTime;
+				m_accumulatedTime -= g_fixedDeltaTime;
 				m_stepCount++;
 			}
 			glViewport(0, 0, GetWindowWidth(hWnd), GetWindowHeight(hWnd));

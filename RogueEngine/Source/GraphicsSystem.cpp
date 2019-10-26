@@ -17,23 +17,28 @@ namespace Rogue
 
 		// Add components to signature
 		Signature signature;
-		signature.set(gEngine.m_coordinator.GetComponentType<SpriteComponent>());
-		signature.set(gEngine.m_coordinator.GetComponentType<TransformComponent>());
+		signature.set(g_engine.m_coordinator.GetComponentType<SpriteComponent>());
+		signature.set(g_engine.m_coordinator.GetComponentType<TransformComponent>());
 
 		// Set graphics system signature
-		gEngine.m_coordinator.SetSystemSignature<GraphicsSystem>(signature);
+		g_engine.m_coordinator.SetSystemSignature<GraphicsSystem>(signature);
 
 		// Init OpenGL libraries.
 		RE_ASSERT(InitializeOpenGL(), "OpenGL not initialized");
 
 		// Emplace shaders into the map
-		gEngine.m_coordinator.GetShaderManager().Init();
+		g_engine.m_coordinator.GetShaderManager().Init();
 
-		m_shader = gEngine.m_coordinator.loadShader("Object Shader");
+		m_shader = g_engine.m_coordinator.loadShader("Object Shader");
+		m_screenShader = g_engine.m_coordinator.loadShader("Screen Shader");
 
 		m_transformLocation = glGetUniformLocation(m_shader.GetShader(), "transform");
 
 		GenerateQuadPrimitive(m_VBO, m_VAO, m_EBO);
+
+		auto handle = g_engine.GetWindowHandler();
+
+		GenerateFrameBuffer(m_FBO, m_texColourBuffer, m_RBO, GetWindowWidth(handle), GetWindowHeight(handle));
 
 		// OpenGL version
 		std::cout << glGetString(GL_VERSION) << std::endl;
@@ -41,7 +46,14 @@ namespace Rogue
 
 	void GraphicsSystem::update()
 	{
-		gEngine.m_coordinator.InitTimeSystem("Graphics System");
+		g_engine.m_coordinator.InitTimeSystem("Graphics System");
+
+		auto handle = g_engine.GetWindowHandler();
+
+		glBindFramebuffer(GL_FRAMEBUFFER, m_FBO);
+
+		UpdateFrameBuffer(m_texColourBuffer, m_RBO, GetWindowWidth(handle), GetWindowHeight(handle));
+
 		// clear the buffer
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -50,8 +62,8 @@ namespace Rogue
 		// For all entities
 		for (auto entity : m_entities)
 		{
-			auto& sprite = gEngine.m_coordinator.GetComponent<SpriteComponent>(entity);
-			auto& transform = gEngine.m_coordinator.GetComponent<TransformComponent>(entity);
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(entity);
+			auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
 
 			//glDisable(GL_DEPTH_TEST);
 
@@ -61,7 +73,11 @@ namespace Rogue
 
 		glUseProgram(0);
 
-		gEngine.m_coordinator.EndTimeSystem("Graphics System");
+		g_engine.m_coordinator.GetSystem<DebugDrawSystem>()->TrueUpdate();
+
+		UseFrameBuffer();
+
+		g_engine.m_coordinator.EndTimeSystem("Graphics System");
 	}
 
 	void GraphicsSystem::draw(SpriteComponent* sprite, TransformComponent* transform)
@@ -82,7 +98,7 @@ namespace Rogue
 
 		//offset by translation of camera, inverse of rotation
 
-		transformMat = gEngine.GetProjMat() * transformMat;
+		transformMat = g_engine.GetProjMat() * transformMat;
 
 		glUniformMatrix4fv(m_transformLocation, 1, GL_FALSE, glm::value_ptr(transformMat));
 
@@ -105,6 +121,26 @@ namespace Rogue
 		default:
 			return;
 		}*/
+	}
+
+	void GraphicsSystem::UseFrameBuffer()
+	{
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		glDisable(GL_DEPTH_TEST);
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		glUseProgram(m_screenShader.GetShader());
+		glBindVertexArray(m_VAO);
+		glBindTexture(GL_TEXTURE_2D, m_texColourBuffer);
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+
+		glBindVertexArray(0);
+		glUseProgram(0);
+	}
+
+	GLuint& GraphicsSystem::getFBO()
+	{
+		return m_FBO;
 	}
 
 	bool GraphicsSystem::InitializeOpenGL()

@@ -29,9 +29,6 @@
     <Filter Include="RogueEngine\Systems\Events\Events">
       <UniqueIdentifier>{874017b0-c223-4a1e-9f81-5e68b60e39c5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="RogueEngine\Systems\Debug">
-      <UniqueIdentifier>{dd569528-c110-4600-89f9-e2702d70a3fd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="RogueEngine\Systems\I/O">
       <UniqueIdentifier>{04f37cb7-cc36-4083-9b39-54efe633ae0c}</UniqueIdentifier>
     </Filter>
@@ -86,6 +83,9 @@
     <Filter Include="RogueEngine\Systems\Window">
       <UniqueIdentifier>{9362b601-3681-4d18-a391-149befb2a6ce}</UniqueIdentifier>
     </Filter>
+    <Filter Include="RogueEngine\Systems\Camera">
+      <UniqueIdentifier>{508febc0-b3e9-4c4b-9cc8-7e422407a8bc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Resource.h">
@@ -113,7 +113,7 @@
       <Filter>RogueEngine\Systems\Input</Filter>
     </ClInclude>
     <ClInclude Include="Source\Logger.h">
-      <Filter>RogueEngine\Systems\Debug</Filter>
+      <Filter>RogueEngine\Debug</Filter>
     </ClInclude>
     <ClInclude Include="Source\FileIO.h">
       <Filter>RogueEngine\Systems\I/O</Filter>
@@ -215,7 +215,7 @@
       <Filter>RogueEngine\Systems\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Source\Timer.h">
-      <Filter>RogueEngine\Systems\Debug</Filter>
+      <Filter>RogueEngine\Debug</Filter>
     </ClInclude>
     <ClInclude Include="Source\TextureManager.h">
       <Filter>RogueEngine\Systems\Graphics</Filter>
@@ -361,6 +361,9 @@
     <ClInclude Include="Source\StatsComponent.h">
       <Filter>RogueEngine\Systems\AI\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Source\CameraSystem.h">
+      <Filter>RogueEngine\Systems\Camera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -370,7 +373,7 @@
       <Filter>RogueEngine\Systems\Input</Filter>
     </ClCompile>
     <ClCompile Include="Source\Logger.cpp">
-      <Filter>RogueEngine\Systems\Debug</Filter>
+      <Filter>RogueEngine\Debug</Filter>
     </ClCompile>
     <ClCompile Include="Source\FileIO.cpp">
       <Filter>RogueEngine\Systems\I/O</Filter>
@@ -442,7 +445,7 @@
       <Filter>RogueEngine\Systems\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Source\Timer.cpp">
-      <Filter>RogueEngine\Systems\Debug</Filter>
+      <Filter>RogueEngine\Debug</Filter>
     </ClCompile>
     <ClCompile Include="Source\Shader.cpp">
       <Filter>RogueEngine\Systems\Graphics</Filter>
@@ -545,6 +548,9 @@
     </ClCompile>
     <ClCompile Include="Source\PlayerControllerComponent.cpp">
       <Filter>RogueEngine\Systems\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CameraSystem.cpp">
+      <Filter>RogueEngine\Systems\Camera</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

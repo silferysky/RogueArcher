@@ -114,7 +114,6 @@ namespace Rogue
 			{
 				if (sig.test(i))
 				{
-
 					auto& existingComponent = GetComponent<RigidbodyComponent>(existingEntity);
 					AddComponent(clonedEntity, existingComponent);
 				}
@@ -212,9 +211,9 @@ namespace Rogue
 		{
 			m_Timer->TimerEnd(system);
 		}
-		std::map<const char*, float> GetTimeSystem()
+		const std::map<const char*, float>& GetSystemTimes()
 		{
-			return m_Timer->GetTimeSystem();
+			return m_Timer->GetSystemTimes();
 		}
 	};
 }
