@@ -11,9 +11,9 @@ namespace Rogue
 		: System(SystemID::id_GRAPHICSSYSTEM) {}
 
 	// Public member functions 
-	void GraphicsSystem::init()
+	void GraphicsSystem::Init()
 	{
-		REGISTER_LISTENER(SystemID::id_GRAPHICSSYSTEM, GraphicsSystem::receive);
+		REGISTER_LISTENER(SystemID::id_GRAPHICSSYSTEM, GraphicsSystem::Receive);
 
 		// Add components to signature
 		Signature signature;
@@ -44,7 +44,7 @@ namespace Rogue
 		std::cout << glGetString(GL_VERSION) << std::endl;
 	}
 
-	void GraphicsSystem::update()
+	void GraphicsSystem::Update()
 	{
 		g_engine.m_coordinator.InitTimeSystem("Graphics System");
 
@@ -119,7 +119,7 @@ namespace Rogue
 		glBindVertexArray(0); //Reset
 	}
 
-	void GraphicsSystem::receive(Event* ev)
+	void GraphicsSystem::Receive(Event* ev)
 	{
 		/*switch (ev->GetEventType())
 		{
@@ -186,4 +186,7 @@ namespace Rogue
 
 		return true;
 	}
+
+	void GraphicsSystem::Shutdown()
+	{}
 }

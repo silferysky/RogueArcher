@@ -81,6 +81,12 @@ namespace Rogue
 				RE_CORE_INFO("Components Removed\n");
 			}
 		}
+		
+		void clone(Entity existingEntity, Entity toClone)
+		{
+			for(auto i = REComponentArrays.begin(); i != REComponentArrays.cend(); i++)
+				i->second->clone(existingEntity, toClone);
+		}
 
 		size_t Size() const
 		{

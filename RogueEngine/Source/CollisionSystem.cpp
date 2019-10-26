@@ -9,9 +9,9 @@ namespace Rogue
 		: System(SystemID::id_COLLISIONSYSTEM)
 	{}
 
-	void CollisionSystem::init()
+	void CollisionSystem::Init()
 	{
-		REGISTER_LISTENER(SystemID::id_COLLISIONSYSTEM, CollisionSystem::receive);
+		REGISTER_LISTENER(SystemID::id_COLLISIONSYSTEM, CollisionSystem::Receive);
 
 		// Add components to signature.
 		Signature signature;
@@ -24,7 +24,7 @@ namespace Rogue
 		g_engine.m_coordinator.SetSystemSignature<CollisionSystem>(signature);
 	}
 
-	void CollisionSystem::update()
+	void CollisionSystem::Update()
 	{
 		g_engine.m_coordinator.InitTimeSystem("Collision System");
 		for (int step = 0; step < g_engine.GetStepCount(); ++step)
@@ -75,7 +75,9 @@ namespace Rogue
 		g_engine.m_coordinator.EndTimeSystem("Collision System");
 	}
 
-	void CollisionSystem::receive(Event* ev)
-	{
-	}
+	void CollisionSystem::Receive(Event* ev)
+	{}
+
+	void CollisionSystem::Shutdown()
+	{}
 }

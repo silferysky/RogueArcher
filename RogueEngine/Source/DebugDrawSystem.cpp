@@ -16,11 +16,11 @@
 		System(Rogue::SystemID::id_DEBUGDRAWSYSTEM) {}
 
 	// Public member functions
-	void DebugDrawSystem::init()
+	void DebugDrawSystem::Init()
 	{
 		//Rogue::LISTENER_HANDLER hand = std::bind(&receive, this, std::placeholders::_1);
 		//Rogue::EventDispatcher::instance().AddListener(Rogue::SystemID::id_DEBUGDRAWSYSTEM, hand);
-		//REGISTER_LISTENER(SystemID::id_DEBUGDRAWSYSTEM, DebugDrawSystem::receive);
+		//REGISTER_LISTENER(SystemID::id_DEBUGDRAWSYSTEM, DebugDrawSystem::Receive);
 
 		// Add components to signature
 		Rogue::Signature signature;
@@ -40,7 +40,7 @@
 		Rogue::GenerateLinePrimitive(m_VBO, m_VAO);
 	}
 
-	void DebugDrawSystem::update()
+	void DebugDrawSystem::Update()
 	{
 		// Fake update. Timer will be inaccurate for debug draw
 		g_engine.m_coordinator.InitTimeSystem("Debug Draw System");
@@ -130,7 +130,7 @@
 		glBindVertexArray(0);
 	}
 
-	void DebugDrawSystem::receive(Rogue::Event* ev)
+	void DebugDrawSystem::Receive(Rogue::Event* ev)
 	{
 		/*switch (ev->GetEventType())
 		{
@@ -141,4 +141,7 @@
 			return;
 		}*/
 	}
+
+	void DebugDrawSystem::Shutdown()
+	{}
 //}

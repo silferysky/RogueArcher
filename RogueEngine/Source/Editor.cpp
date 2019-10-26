@@ -5,11 +5,11 @@
 
 namespace Rogue
 {
-	void Editor::init()
+	void Editor::Init()
 	{
 		Signature signature;
 		g_engine.m_coordinator.SetSystemSignature<Editor>(signature);
-		REGISTER_LISTENER(SystemID::id_EDITOR, Editor::receive);
+		REGISTER_LISTENER(SystemID::id_EDITOR, Editor::Receive);
 		m_EditorManager->AddEditorWindow<ImGuiEditorFile>("File");
 		m_EditorManager->AddEditorWindow<ImGuiEditorEdit>("Edit");
 		m_EditorManager->AddEditorWindow<ImGuiComponent>("Component");
@@ -23,12 +23,12 @@ namespace Rogue
 		m_EditorManager->Init();
 	}
 
-	void Editor::update()
+	void Editor::Update()
 	{
 		m_EditorManager->Update();
 	}
 
-	void Editor::receive(Event* ev)
+	void Editor::Receive(Event* ev)
 	{
 
 	}
