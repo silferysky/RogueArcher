@@ -22,6 +22,7 @@
 
 		void drawAABB(Rogue::BoxCollider2DComponent* box, Rogue::TransformComponent* transform);
 		void drawOBB(Rogue::BoxCollider2DComponent* box, Rogue::RigidbodyComponent* body);
+		void drawCircle(Rogue::CircleCollider2DComponent* circle, Rogue::TransformComponent* transform);
 		void drawVelocity(Rogue::RigidbodyComponent* rBody, Rogue::TransformComponent* transform);
 
 		void Receive(Rogue::Event* ev) override;

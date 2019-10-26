@@ -25,6 +25,7 @@
 		// Add components to signature
 		Rogue::Signature signature;
 		signature.set(g_engine.m_coordinator.GetComponentType<Rogue::BoxCollider2DComponent>());
+		signature.set(g_engine.m_coordinator.GetComponentType<Rogue::CircleCollider2DComponent>());
 		signature.set(g_engine.m_coordinator.GetComponentType<Rogue::TransformComponent>());
 		signature.set(g_engine.m_coordinator.GetComponentType<Rogue::RigidbodyComponent>());
 
@@ -57,6 +58,7 @@
 		{
 			auto& transform = g_engine.m_coordinator.GetComponent<Rogue::TransformComponent>(entity);
 			auto& collider = g_engine.m_coordinator.GetComponent<Rogue::BoxCollider2DComponent>(entity);
+			auto& circle = g_engine.m_coordinator.GetComponent<Rogue::CircleCollider2DComponent>(entity);
 			auto& rBody = g_engine.m_coordinator.GetComponent<Rogue::RigidbodyComponent>(entity);
 
 			glDisable(GL_DEPTH_TEST);
@@ -65,6 +67,7 @@
 			{
 				drawAABB(&collider, &transform);
 				drawOBB(&collider, &rBody);
+				drawCircle(&circle, &transform);
 				drawVelocity(&rBody, &transform);
 			}
 		}
@@ -110,6 +113,32 @@
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindVertexArray(0);
+	}
+
+	void DebugDrawSystem::drawCircle(Rogue::CircleCollider2DComponent* circle, Rogue::TransformComponent* transform)
+	{
+		const float k_segments = 16.0f;
+		const float k_increment = 2.0f * 3.1415f / k_segments;
+
+		float radius = circle->m_collider.getRadius();
+		Rogue::Vec2 center = transform->getPosition();
+
+		float sinInc = sinf(k_increment);
+		float cosInc = cosf(k_increment);
+		Rogue::Vec2 r1(1.0f, 0.0f);
+		Rogue::Vec2 v1 = { center.x + radius * r1.x, center.y + radius * r1.y};
+
+		for (int i = 0; i < k_segments; ++i)
+		{
+			// Perform rotation to avoid additional trigonometry.
+			Rogue::Vec2 r2;
+			r2.x = cosInc * r1.x - sinInc * r1.y;
+			r2.y = sinInc * r1.x + cosInc * r1.y;
+			Rogue::Vec2 v2 = { center.x + radius * r2.x, center.y + radius * r2.y};
+			drawLine(v1, v2);
+			r1 = r2;
+			v1 = v2;
+		}
 	}
 
 	void DebugDrawSystem::drawVelocity(Rogue::RigidbodyComponent* rBody, Rogue::TransformComponent* transform)
