@@ -366,7 +366,7 @@ namespace Rogue
 					}
 					case static_cast<int>(STATS) :
 					{
-						gEngine.m_coordinator.LoadComponent<StatsComponent>(curEnt, readstr);
+						g_engine.m_coordinator.LoadComponent<StatsComponent>(curEnt, readstr);
 						break;
 					}
 					default:

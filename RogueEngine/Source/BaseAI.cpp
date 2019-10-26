@@ -61,12 +61,12 @@ namespace Rogue
 
 	void BaseAI::AIDetect()
 	{
-		/*auto gameFactory = gEngine.m_coordinator.GetSystem<ObjectFactory>();
+		/*auto gameFactory = g_engine.m_coordinator.GetSystem<ObjectFactory>();
 		for (auto it = gameFactory->GetActiveEntity().begin(); it != gameFactory->GetActiveEntity().end(); ++it)
 		{
-			if (gEngine.m_coordinator.CheckIfComponentExists<PlayerControllerComponent>(*it))
+			if (g_engine.m_coordinator.CheckIfComponentExists<PlayerControllerComponent>(*it))
 			{
-				//if(gEngine.m_coordinator.get)
+				//if(g_engine.m_coordinator.get)
 				RE_INFO("SPOTTED THROUGH WALLS");
 				break;
 			}
