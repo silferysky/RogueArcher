@@ -58,8 +58,8 @@ namespace Rogue
 		// clear the buffer
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		if (TranslateMessage(&msg) == WM_SIZE || TranslateMessage(&msg) == WM_DISPLAYCHANGE)
-		{
+		//if (TranslateMessage(&msg) == WM_SIZE || TranslateMessage(&msg) == WM_DISPLAYCHANGE)
+		//{
 			auto handle = g_engine.GetWindowHandler();
 
 			glBindTexture(GL_TEXTURE_2D, m_texColourBuffer);
@@ -68,7 +68,7 @@ namespace Rogue
 
 			glBindRenderbuffer(GL_RENDERBUFFER, m_RBO);
 			glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, GetWindowWidth(handle), GetWindowHeight(handle));
-		}
+		//}
 
 		glUseProgram(m_shader.GetShader());
 
