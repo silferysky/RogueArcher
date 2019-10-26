@@ -13,9 +13,10 @@ namespace Rogue
 		~LogicSystem() = default;
 
 		//Basic System 
-		void init();
-		void update() override;
-		void receive(Event * ev) override;
+		void Init() override;
+		void Update() override;
+		void Shutdown() override;
+		void Receive(Event* ev) override;
 
 		//For entity logic
 		void AddLogicInterface(Entity entity, BaseAI* logicInterface);

@@ -42,9 +42,9 @@ namespace Rogue
 
 		Coordinator m_coordinator;
 
-		void init();
-		void update();
-		void shutdown();
+		void Init();
+		void Update();
+		void Shutdown();
 
 		HWND GetWindowHandler() const;
 		glm::mat4 GetProjMat() const;
