@@ -53,7 +53,7 @@ namespace Rogue
 
 		// Set physics system signature.
 		g_engine.m_coordinator.SetSystemSignature<PhysicsSystem>(signature);
-		m_gravity = { 0.0f, -1.0f };
+		m_gravity = { 0.0f, -100.0f };
 	}
 
 	void PhysicsSystem::update()
@@ -97,84 +97,84 @@ namespace Rogue
 			if (EvPressKey->GetKeyCode() == KeyPress::KeyA)
 			{
 				auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(1);
-				rigidbody.addForce(Vec2(-1.0f, 0.0f));
+				rigidbody.addForce(Vec2(-100.0f, 0.0f));
 				//RE_INFO("Move A Left!");
 			}
 			else if (EvPressKey->GetKeyCode() == KeyPress::KeyD)
 			{
 				auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(1);
-				rigidbody.addForce(Vec2(1.0f, 0.0f));
+				rigidbody.addForce(Vec2(100.0f, 0.0f));
 				//RE_INFO("Move A Right!");
 			}
 			
 			else if (EvPressKey->GetKeyCode() == KeyPress::KeyW)
 			{
 				auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(1);
-				rigidbody.addForce(Vec2(0.0f, 1.0f));
+				rigidbody.addForce(Vec2(0.0f, 100.0f));
 				//RE_INFO("Move A Up!");
 			}
 			else if (EvPressKey->GetKeyCode() == KeyPress::KeyS)
 			{
 				auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(1);
-				rigidbody.addForce(Vec2(0.0f, -1.0f));
+				rigidbody.addForce(Vec2(0.0f, -100.0f));
 				//RE_INFO("Move A Down!");
 
 			}
 			if (EvPressKey->GetKeyCode() == KeyPress::KeyArrowLeft)
 			{
 				auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(2);
-				rigidbody.addForce(Vec2(-1.0f, 0.0f));
+				rigidbody.addForce(Vec2(-100.0f, 0.0f));
 				//RE_INFO("Move B Left!");
 
 			}
 			else if (EvPressKey->GetKeyCode() == KeyPress::KeyArrowRight)
 			{
 				auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(2);
-				rigidbody.addForce(Vec2(1.0f, 0.0f));
+				rigidbody.addForce(Vec2(100.0f, 0.0f));
 				//RE_INFO("Move B Right!");
 			}
 			else if (EvPressKey->GetKeyCode() == KeyPress::KeyArrowUp)
 			{
 				auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(2);
-				rigidbody.addForce(Vec2(0.0f, 1.0f));
+				rigidbody.addForce(Vec2(0.0f, 100.0f));
 				//RE_INFO("Move B Up!");
 
 			}
 			else if (EvPressKey->GetKeyCode() == KeyPress::KeyArrowDown)
 			{
 				auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(2);
-				rigidbody.addForce(Vec2(0.0f, -1.0f));
+				rigidbody.addForce(Vec2(0.0f, -100.0f));
 				//RE_INFO("Move B Down!");
 			}
 			else if (EvPressKey->GetKeyCode() == KeyPress::KeyE)
 			{
 				auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>((Entity)(1));
-				transform.offSetScale(Vec2(1.0f, 1.0f) * g_fixedDeltaTime);
+				transform.offSetScale(Vec2(100.0f, 100.0f) * g_fixedDeltaTime);
 				//RE_INFO("Scaled Up!");
 			}
 
 			else if (EvPressKey->GetKeyCode() == KeyPress::KeyQ)
 			{
 				auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>((Entity)(1));
-				transform.offSetScale(Vec2(-1.0f, -1.0f) * g_fixedDeltaTime);
+				transform.offSetScale(Vec2(-100.0f, -100.0f) * g_fixedDeltaTime);
 				//RE_INFO("Scaled Down!");
 			}
 
 			else if (EvPressKey->GetKeyCode() == KeyPress::KeyR)
 			{
 				auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>((Entity)1);
-				transform.offSetRotation(1.0f * g_fixedDeltaTime);
+				transform.offSetRotation(100.0f * g_fixedDeltaTime);
 				//RE_INFO("Rotated!");
 			}
 			else if (EvPressKey->GetKeyCode() == KeyPress::KeyK)
 			{
 				auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>((Entity)1);
-				transform.setPosition(Vec2(-2.0f, 0.0f));
+				transform.setPosition(Vec2(-200.0f, 0.0f));
 			}
 			else if (EvPressKey->GetKeyCode() == KeyPress::KeyL)
 			{
 				auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>((Entity)2);
-				transform.setPosition(Vec2(2.0f, 0.0f));
+				transform.setPosition(Vec2(200.0f, 0.0f));
 			}
 
 			return;
