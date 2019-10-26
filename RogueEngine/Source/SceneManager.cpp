@@ -5,13 +5,24 @@ namespace Rogue
 {
 	SceneManager::SceneManager()
 	:	m_objectFactory {std::make_unique<ObjectFactory>()},
-		m_activeEntities {std::vector<Entity>()}
+		m_activeEntities {std::vector<Entity>()},
+		m_currentFileName {std::string()}
 	{
 	}
 
 	SceneManager::~SceneManager()
 	{
 		ClearActiveEntities();
+	}
+
+	std::string SceneManager::getCurrentFileName() const
+	{
+		return m_currentFileName;
+	}
+
+	void SceneManager::setCurrentFileName(std::string curFileName)
+	{
+		m_currentFileName = curFileName;
 	}
 
 	void SceneManager::ClearActiveEntities()
@@ -53,6 +64,7 @@ namespace Rogue
 	{
 		m_objectFactory->Clone(archetype);
 	}
+
 	Entity SceneManager::CreateDefaultEntity()
 	{
 		Entity newEnt = g_engine.m_coordinator.CreateEntity();
