@@ -28,9 +28,9 @@ namespace Rogue
 			if (ImGui::Selectable("2D Sprite"))
 			{
 				HierarchyInfo temp;
-				temp.count = iterator;
+				temp.m_Entity = iterator;
 				temp.m_objectName = "Game Object ";
-				temp.m_objectName += temp.count + '0';
+				temp.m_objectName += temp.m_Entity + '0';
 				m_currentActiveObjects.push_back(temp);
 				++iterator;
 			}
@@ -51,7 +51,7 @@ namespace Rogue
 		{
 			if (ImGui::Selectable(i.m_objectName.c_str(), i.m_selected, ImGuiSelectableFlags_AllowDoubleClick))
 			{
-				
+				Entity GameObjectEntity = g_engine.m_coordinator.CreateEntity();
 			}
 		}
 		ImGui::End();
