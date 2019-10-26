@@ -373,6 +373,9 @@
     <ClInclude Include="Source\PlayerControllerComponent.h">
       <Filter>RogueEngine\Systems\PlayerController</Filter>
     </ClInclude>
+    <ClInclude Include="Source\SceneManager.h">
+      <Filter>RogueEngine\Systems\I/O</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -563,6 +566,9 @@
     </ClCompile>
     <ClCompile Include="Source\PlayerControllerComponent.cpp">
       <Filter>RogueEngine\Systems\PlayerController</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneManager.cpp">
+      <Filter>RogueEngine\Systems\I/O</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
