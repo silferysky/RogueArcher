@@ -106,16 +106,6 @@ namespace Rogue
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}
 
-	static void UpdateFrameBuffer(GLuint& texColourBuffer, GLuint& RBO, const float& width, const float& height)
-	{
-		glBindTexture(GL_TEXTURE_2D, texColourBuffer);
-
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
-
-		glBindRenderbuffer(GL_RENDERBUFFER, RBO);
-		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
-	}
-
 	static void drawLine(const Vector2D& p1, const Vector2D& p2)
 	{
 		float start[] =

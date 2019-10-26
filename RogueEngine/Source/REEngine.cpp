@@ -139,6 +139,11 @@ namespace Rogue
 		return hWnd;
 	}
 
+	MSG REEngine::GetWindowMessage() const
+	{
+		return msg;
+	}
+
 	glm::mat4 REEngine::GetProjMat() const
 	{
 		return m_projMat;

@@ -39,6 +39,7 @@ namespace Rogue
 			return 0;
 		case WM_SIZE:
 			glViewport(0, 0, LOWORD(lParam), HIWORD(lParam));
+			//g_engine.m_coordinator.GetSystem<GraphicsSystem>()->UpdateFrameBuffer();
 			PostMessage(hWnd, WM_PAINT, 0, 0);
 			return 0;
 		case WM_DESTROY:
