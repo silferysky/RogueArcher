@@ -1,4 +1,5 @@
 #include "EditorFile.h"
+#include "Main.h"
 
 namespace Rogue
 {
@@ -23,7 +24,7 @@ namespace Rogue
 			{
 				if (ImGui::MenuItem("New Scene"))
 				{
-		
+					//g_engine.m_coordinator.
 				}
 				if (ImGui::MenuItem("Open Scene"))
 				{
