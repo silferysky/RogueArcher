@@ -75,7 +75,7 @@ namespace Rogue
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(entity);
 			auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
 
-			//glDisable(GL_DEPTH_TEST);
+			glDisable(GL_DEPTH_TEST);
 
 			//if (!entity)
 			draw(&sprite, &transform);
