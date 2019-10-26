@@ -41,7 +41,7 @@ namespace Rogue
 
 		g_engine.m_coordinator.AddComponent(backgroundEnt, backgroundSprite);
 		g_engine.m_coordinator.AddComponent(backgroundEnt, backgroundTransform);
-		m_activeEntities.push_back(backgroundEnt);
+		m_recentEntities.push_back(backgroundEnt);
 
 		for (Entity entity = 0; entity < entCount; ++entity)
 		{
@@ -61,7 +61,7 @@ namespace Rogue
 			ostrstream.str(level[cstr].GetString());
 
 			FactoryLoadComponent(curEnt, currentSignature, ostrstream.str());
-			m_activeEntities.push_back(curEnt);
+			m_recentEntities.push_back(curEnt);
 
 			debugStr << "Entity " << curEnt << "'s Signature: " << g_engine.m_coordinator.GetEntityManager().GetSignature(curEnt).to_ulong();
 			RE_INFO(debugStr.str());
@@ -81,14 +81,14 @@ namespace Rogue
 
 		//Minus one off due to Background being part of the list as well.
 		//Background is unique and will not be counted to the entCount
-		Entity entCount = static_cast<Entity>(m_activeEntities.size() - 1);
+		Entity entCount = static_cast<Entity>(m_recentEntities.size() - 1);
 		EntityManager* em = &g_engine.m_coordinator.GetEntityManager();
 		int intVar = (int)entCount;
 		RESerialiser::WriteToFile(fileName, "EntityCount", &intVar);
 
 		bool writingBackground = true;
 
-		for (Entity curEntity : m_activeEntities)
+		for (Entity curEntity : m_recentEntities)
 		{
 			//Skips background layer
 			if (writingBackground)
@@ -291,7 +291,7 @@ namespace Rogue
 				}
 			}
 		}
-		m_activeEntities.push_back(clonedEntity);
+		m_recentEntities.push_back(clonedEntity);
 
 	}
 
@@ -306,13 +306,18 @@ namespace Rogue
 			//Does the actual clone
 			std::string toDeserialise = m_archetypes[archetype];
 			FactoryLoadComponent(curEnt, curSignature, toDeserialise);
-			m_activeEntities.push_back(curEnt);
+			m_recentEntities.push_back(curEnt);
 		}
 	}
 
-	std::vector<Entity> ObjectFactory::GetActiveEntity() const
+	std::vector<Entity> ObjectFactory::GetRecentEntities() const
 	{
-		return m_activeEntities;
+		return m_recentEntities;
+	}
+
+	void ObjectFactory::ClearRecentEntities()
+	{
+		m_recentEntities.clear();
 	}
 
 	void ObjectFactory::FactoryLoadComponent(Entity curEnt, Signature signature, std::string value)

@@ -1,6 +1,5 @@
 #pragma once
-#include "REEngine.h"
-
+#include "Main.h"
 
 namespace Rogue
 {
@@ -17,7 +16,8 @@ namespace Rogue
 		void Clone(Entity toClone);
 		void Clone(const char* archetype);
 
-		std::vector<Entity> GetActiveEntity() const;
+		std::vector<Entity> GetRecentEntities() const;
+		void ClearRecentEntities();
 
 	private:
 
@@ -25,7 +25,7 @@ namespace Rogue
 		void FactoryLoadComponent(Entity curEnt, Signature signature, std::string value);
 		void SetArchetype(std::string archetypeName, std::string archetypeValue, Signature archetypeSignature);
 
-		std::vector<Entity> m_activeEntities;
+		std::vector<Entity> m_recentEntities;
 		std::map<std::string, std::string> m_archetypes;
 		std::map<std::string, Signature> m_archetypeSignature;
 
