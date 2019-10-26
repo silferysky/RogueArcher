@@ -1,5 +1,6 @@
 #pragma once
 #include "Event.h"
+#include "Vector2D.h"
 
 namespace Rogue
 {
@@ -8,7 +9,7 @@ namespace Rogue
 	public:
 		SET_EVENT_CATEGORY(EventCatEntity)
 
-			inline int GetEntityID() { return ID; }
+		inline int GetEntityID() { return ID; }
 
 	protected:
 		EntityEvent(int id)
@@ -24,9 +25,9 @@ namespace Rogue
 			: EntityEvent(id), EnemyState(newState) {}
 
 		SET_EVENT_CATEGORY(EventCatEntChangeState)
-			SET_EVENT_TYPE(EvEntityChangeState)
+		SET_EVENT_TYPE(EvEntityChangeState)
 
-			inline int GetState() { return EnemyState; }
+		inline int GetState() { return EnemyState; }
 
 	private:
 		int EnemyState;
@@ -41,9 +42,9 @@ namespace Rogue
 		virtual ~EntTeleportEvent() = default;
 
 		SET_EVENT_CATEGORY(EventCatEntMove)
-			SET_EVENT_TYPE(EvEntityTeleport)
+		SET_EVENT_TYPE(EvEntityTeleport)
 
-			inline bool isAffectedByForce() { return AffectedByForce; }
+		inline bool isAffectedByForce() { return AffectedByForce; }
 
 	protected:
 		bool AffectedByForce;
@@ -53,16 +54,18 @@ namespace Rogue
 	{
 	public:
 		EntMoveEvent(int id, bool forceAffected, float x, float y)
-			: EntTeleportEvent(id, forceAffected), xMovement(x), yMovement(y) {}
+			: EntTeleportEvent(id, forceAffected), moveVector{Vec2(x,y)} {}
+		EntMoveEvent(int id, bool forceAffected, Vec2 vec)
+			: EntTeleportEvent(id, forceAffected), moveVector{ vec } {}
 
 		SET_EVENT_CATEGORY(EventCatEntMove)
-			SET_EVENT_TYPE(EvEntityMove)
+		SET_EVENT_TYPE(EvEntityMove)
 
-			inline float GetXMovement() { return xMovement; }
-		inline float GetYMovement() { return yMovement; }
+		inline float GetXMovement() { return moveVector.x; }
+		inline float GetYMovement() { return moveVector.y; }
 
 	private:
-		float xMovement, yMovement;
+		Vec2 moveVector;
 	};
 
 	class EntAttackEvent : public EntityEvent
@@ -70,7 +73,7 @@ namespace Rogue
 	public:
 		SET_EVENT_CATEGORY(EventCatEntAttack)
 
-			inline int GetDamage() { return Damage; }
+		inline int GetDamage() { return Damage; }
 
 	protected:
 		EntAttackEvent(int id, int damage)
@@ -104,6 +107,6 @@ namespace Rogue
 			: EntityEvent(id) {}
 
 		SET_EVENT_CATEGORY(EventCatEntDestroy)
-			SET_EVENT_TYPE(EvEntityDestroy)
+		SET_EVENT_TYPE(EvEntityDestroy)
 	};
 }

@@ -15,7 +15,6 @@ namespace Rogue
 	{
 		AIState_Chase,
 		AIState_Patrol,
-		AIState_Look,
 		AIState_Idle,
 		AIState_Last
 	};

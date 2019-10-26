@@ -63,6 +63,11 @@ namespace Rogue
 			return RESignatures[entity];
 		}
 
+		uint32_t GetActiveEntityCount()
+		{
+			return REActiveEntityCount;
+		}
+
 	private:
 
 		std::queue<Entity> REAvailableEntities{};

@@ -130,11 +130,15 @@ namespace Rogue
 			strstream << "BoxCollider{4}|";
 
 			//PlayerController
-			strstream << "PlayerController{}|";
+			strstream << "PlayerController{1}|";
 
 			//LogicComponent
 			//AI Type, First State, All States available (Can be more than 3 values, and does not need to be ascending)
 			strstream << "LogicController{1;3;3}";
+
+			//StatsComponent
+			//HP, Speed, Detect Range, Attack Range
+			strstream << "StatsComponent{1;1;3;3}";
 
 			//End
 			strstream << "\"";
