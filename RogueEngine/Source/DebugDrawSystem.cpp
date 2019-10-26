@@ -117,6 +117,9 @@
 
 	void DebugDrawSystem::drawCircle(Rogue::CircleCollider2DComponent* circle, Rogue::TransformComponent* transform)
 	{
+		glBindVertexArray(m_VAO);
+		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+
 		const float k_segments = 16.0f;
 		const float k_increment = 2.0f * 3.1415f / k_segments;
 
@@ -136,9 +139,13 @@
 			r2.y = sinInc * r1.x + cosInc * r1.y;
 			Rogue::Vec2 v2 = { center.x + radius * r2.x, center.y + radius * r2.y};
 			drawLine(v1, v2);
+
 			r1 = r2;
 			v1 = v2;
 		}
+
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindVertexArray(0);
 	}
 
 	void DebugDrawSystem::drawVelocity(Rogue::RigidbodyComponent* rBody, Rogue::TransformComponent* transform)

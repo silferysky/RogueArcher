@@ -11,9 +11,9 @@
     "Signature7": 31,
     "Entity0": "Sprite{test.bmp}|Rigidbody{0;0;0;0;1;1;0}|Transform{-400;0;100;100;0}|CircleCollider{0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;}||LogicComponent{0;0;}",
     "Entity1": "Sprite{test.bmp}|Rigidbody{0;0;0;0;1;1;0}|Transform{400;0;100;100;0}|CircleCollider{0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;}||",
-    "Entity2": "Sprite{test.bmp}|Rigidbody{0;0;0;0;1;1;1}|Transform{0;-400;1200;100;0}|CircleCollider{0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;}||",
-    "Entity3": "Sprite{test.bmp}|Rigidbody{0;0;0;0;1;1;1}|Transform{0;400;1200;100;0}|CircleCollider{0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;}||",
-    "Entity4": "Sprite{test.bmp}|Rigidbody{0;0;0;0;1;1;1}|Transform{-600;0;100;600;0}|CircleCollider{0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;}||",
-    "Entity5": "Sprite{test.bmp}|Rigidbody{0;0;0;0;1;1;1}|Transform{600;0;100;600;0}|CircleCollider{0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;}||",
+    "Entity2": "Sprite{test.bmp}|Rigidbody{0;0;0;0;1;1;1}|Transform{0;-400;1200;100;0}|CircleCollider{200}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;}||",
+    "Entity3": "Sprite{test.bmp}|Rigidbody{0;0;0;0;1;1;1}|Transform{0;400;1200;100;0}|CircleCollider{600}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;}||",
+    "Entity4": "Sprite{test.bmp}|Rigidbody{0;0;0;0;1;1;1}|Transform{-600;0;100;600;0}|CircleCollider{400}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;}||",
+    "Entity5": "Sprite{test.bmp}|Rigidbody{0;0;0;0;1;1;1}|Transform{600;0;100;600;0}|CircleCollider{2000}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;}||",
     "Entity6": "Sprite{test.bmp}|Rigidbody{0;0;0;0;1;1;0}|Transform{0;0;100;100;0}|CircleCollider{0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;}||"
 }
