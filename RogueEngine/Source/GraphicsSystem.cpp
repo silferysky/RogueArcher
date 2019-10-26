@@ -156,8 +156,8 @@ namespace Rogue
 
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, GetWindowWidth(handle), GetWindowHeight(handle), 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
 
-		glBindRenderbuffer(GL_RENDERBUFFER, m_RBO);
-		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, GetWindowWidth(handle), GetWindowHeight(handle));
+		//glBindRenderbuffer(GL_RENDERBUFFER, m_RBO);
+		//glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, GetWindowWidth(handle), GetWindowHeight(handle));
 	}
 
 	GLuint& GraphicsSystem::getFBO()
