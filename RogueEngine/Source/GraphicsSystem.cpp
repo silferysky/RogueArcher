@@ -48,7 +48,11 @@ namespace Rogue
 	{
 		g_engine.m_coordinator.InitTimeSystem("Graphics System");
 
+		auto handle = g_engine.GetWindowHandler();
+
 		glBindFramebuffer(GL_FRAMEBUFFER, m_FBO);
+
+		UpdateFrameBuffer(m_texColourBuffer, m_RBO, GetWindowWidth(handle), GetWindowHeight(handle));
 
 		// clear the buffer
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
