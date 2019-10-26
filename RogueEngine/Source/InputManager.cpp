@@ -27,10 +27,10 @@ namespace Rogue
 	InputManager::InputManager()
 		:System(SystemID::id_INPUTMANAGER)
 	{
-		//init();
+		//Init();
 	}
 
-	void InputManager::init()
+	void InputManager::Init()
 	{
 		CurKeyboardState = KeyboardState();
 		PrevKeyboardState = KeyboardState();
@@ -45,7 +45,7 @@ namespace Rogue
 		g_engine.m_coordinator.SetSystemSignature<InputManager>(signature);
 	}
 
-	void InputManager::update()
+	void InputManager::Update()
 	{
 		Timer TimerSystem;
 		TimerSystem.TimerInit("Input System");
@@ -280,4 +280,7 @@ namespace Rogue
 		event->SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
 		EventDispatcher::instance().AddEvent(event);
 	}
+
+	void InputManager::Shutdown()
+	{}
 }

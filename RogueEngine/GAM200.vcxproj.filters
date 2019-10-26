@@ -20,17 +20,11 @@
     <Filter Include="RogueEngine\Systems\Physics">
       <UniqueIdentifier>{b287f5c9-4fd6-4555-a072-9e44eaea785d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="RogueEngine\Systems\Input">
-      <UniqueIdentifier>{3a918ea4-3468-4a85-9107-f225a7c6b8cf}</UniqueIdentifier>
-    </Filter>
     <Filter Include="RogueEngine\Systems\Events">
       <UniqueIdentifier>{8ed8a40a-ae7c-43fa-aac3-45f06a6593ca}</UniqueIdentifier>
     </Filter>
     <Filter Include="RogueEngine\Systems\Events\Events">
       <UniqueIdentifier>{874017b0-c223-4a1e-9f81-5e68b60e39c5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="RogueEngine\Systems\I/O">
-      <UniqueIdentifier>{04f37cb7-cc36-4083-9b39-54efe633ae0c}</UniqueIdentifier>
     </Filter>
     <Filter Include="RogueEngine\Systems\Physics\Polygons">
       <UniqueIdentifier>{bd0e46e0-5af7-4458-b9da-3f6a931851a0}</UniqueIdentifier>
@@ -46,9 +40,6 @@
     </Filter>
     <Filter Include="RogueEngine\Systems\Physics\Components">
       <UniqueIdentifier>{846770d4-715c-44f0-88bf-591217db1294}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="RogueEngine\Systems\Memory">
-      <UniqueIdentifier>{c7c96828-3cac-4aeb-bc20-6a26e3a1a849}</UniqueIdentifier>
     </Filter>
     <Filter Include="RogueEngine\Systems\AI">
       <UniqueIdentifier>{e68acb32-5338-4384-a5ff-e96022bc6953}</UniqueIdentifier>
@@ -80,19 +71,31 @@
     <Filter Include="RogueEngine\Systems\Collision">
       <UniqueIdentifier>{e4319b4b-0961-4d86-8ff7-4c14b6b262b4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="RogueEngine\Systems\Window">
-      <UniqueIdentifier>{9362b601-3681-4d18-a391-149befb2a6ce}</UniqueIdentifier>
-    </Filter>
     <Filter Include="RogueEngine\Systems\Camera">
       <UniqueIdentifier>{508febc0-b3e9-4c4b-9cc8-7e422407a8bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RogueEngine\Debug">
+      <UniqueIdentifier>{c8c7defc-4043-4b41-8c06-6572d6de7638}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RogueEngine\I/O">
+      <UniqueIdentifier>{04f37cb7-cc36-4083-9b39-54efe633ae0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RogueEngine\Memory">
+      <UniqueIdentifier>{c7c96828-3cac-4aeb-bc20-6a26e3a1a849}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RogueEngine\Window">
+      <UniqueIdentifier>{9362b601-3681-4d18-a391-149befb2a6ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RogueEngine\Entry Point">
+      <UniqueIdentifier>{9eeb187a-fe64-4147-bf8b-6b387e91f8d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RogueEngine\Systems\Input">
+      <UniqueIdentifier>{3a918ea4-3468-4a85-9107-f225a7c6b8cf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Resource.h">
       <Filter>Resource Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Main.h">
-      <Filter>RogueEngine</Filter>
     </ClInclude>
     <ClInclude Include="Source\Event.h">
       <Filter>RogueEngine\Systems\Events\Events</Filter>
@@ -112,11 +115,8 @@
     <ClInclude Include="Source\InputManager.h">
       <Filter>RogueEngine\Systems\Input</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Logger.h">
-      <Filter>RogueEngine\Debug</Filter>
-    </ClInclude>
     <ClInclude Include="Source\FileIO.h">
-      <Filter>RogueEngine\Systems\I/O</Filter>
+      <Filter>RogueEngine\I/O</Filter>
     </ClInclude>
     <ClInclude Include="Source\OBB.h">
       <Filter>RogueEngine\Systems\Collision</Filter>
@@ -152,7 +152,7 @@
       <Filter>RogueEngine\Systems\Events\Events</Filter>
     </ClInclude>
     <ClInclude Include="Source\MemoryType.h">
-      <Filter>RogueEngine\Systems\Memory</Filter>
+      <Filter>RogueEngine\Memory</Filter>
     </ClInclude>
     <ClInclude Include="Source\GraphicsSystem.h">
       <Filter>RogueEngine\Systems\Graphics</Filter>
@@ -191,7 +191,7 @@
       <Filter>RogueEngine\Core\ECS</Filter>
     </ClInclude>
     <ClInclude Include="Source\BasicIO.h">
-      <Filter>RogueEngine\Systems\I/O</Filter>
+      <Filter>RogueEngine\I/O</Filter>
     </ClInclude>
     <ClInclude Include="Source\MaterialComponent.h">
       <Filter>RogueEngine\Systems\Physics\Components</Filter>
@@ -206,16 +206,13 @@
       <Filter>RogueEngine\Systems\Physics\Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\MemoryManager.h">
-      <Filter>RogueEngine\Systems\Memory</Filter>
+      <Filter>RogueEngine\Memory</Filter>
     </ClInclude>
     <ClInclude Include="Source\ObjectFactory.h">
       <Filter>RogueEngine\Core\ECS</Filter>
     </ClInclude>
     <ClInclude Include="Source\VSync.h">
       <Filter>RogueEngine\Systems\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Timer.h">
-      <Filter>RogueEngine\Debug</Filter>
     </ClInclude>
     <ClInclude Include="Source\TextureManager.h">
       <Filter>RogueEngine\Systems\Graphics</Filter>
@@ -233,7 +230,7 @@
       <Filter>RogueEngine\Systems\Input</Filter>
     </ClInclude>
     <ClInclude Include="Source\ISerializable.h">
-      <Filter>RogueEngine\Systems\I/O</Filter>
+      <Filter>RogueEngine\I/O</Filter>
     </ClInclude>
     <ClInclude Include="Source\BaseComponent.h">
       <Filter>RogueEngine\Core\ECS</Filter>
@@ -356,24 +353,27 @@
       <Filter>RogueEngine\Systems\Collision</Filter>
     </ClInclude>
     <ClInclude Include="Source\WindowHelper.h">
-      <Filter>RogueEngine\Systems\Window</Filter>
+      <Filter>RogueEngine\Window</Filter>
     </ClInclude>
     <ClInclude Include="Source\CameraSystem.h">
       <Filter>RogueEngine\Systems\Camera</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Logger.h">
+      <Filter>RogueEngine\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Timer.h">
+      <Filter>RogueEngine\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Main.h">
+      <Filter>RogueEngine\Entry Point</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Main.cpp">
-      <Filter>RogueEngine</Filter>
-    </ClCompile>
     <ClCompile Include="Source\InputManager.cpp">
       <Filter>RogueEngine\Systems\Input</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Logger.cpp">
-      <Filter>RogueEngine\Debug</Filter>
-    </ClCompile>
     <ClCompile Include="Source\FileIO.cpp">
-      <Filter>RogueEngine\Systems\I/O</Filter>
+      <Filter>RogueEngine\I/O</Filter>
     </ClCompile>
     <ClCompile Include="Source\OBB.cpp">
       <Filter>RogueEngine\Systems\Collision</Filter>
@@ -418,7 +418,7 @@
       <Filter>RogueEngine\Core</Filter>
     </ClCompile>
     <ClCompile Include="Source\BasicIO.cpp">
-      <Filter>RogueEngine\Systems\I/O</Filter>
+      <Filter>RogueEngine\I/O</Filter>
     </ClCompile>
     <ClCompile Include="Source\MaterialComponent.cpp">
       <Filter>RogueEngine\Systems\Physics\Components</Filter>
@@ -433,16 +433,13 @@
       <Filter>RogueEngine\Systems\Physics\Components</Filter>
     </ClCompile>
     <ClCompile Include="Source\MemoryManager.cpp">
-      <Filter>RogueEngine\Systems\Memory</Filter>
+      <Filter>RogueEngine\Memory</Filter>
     </ClCompile>
     <ClCompile Include="Source\ObjectFactory.cpp">
       <Filter>RogueEngine\Core\ECS</Filter>
     </ClCompile>
     <ClCompile Include="Source\VSync.cpp">
       <Filter>RogueEngine\Systems\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Timer.cpp">
-      <Filter>RogueEngine\Debug</Filter>
     </ClCompile>
     <ClCompile Include="Source\Shader.cpp">
       <Filter>RogueEngine\Systems\Graphics</Filter>
@@ -538,10 +535,19 @@
       <Filter>RogueEngine\Systems\Collision</Filter>
     </ClCompile>
     <ClCompile Include="Source\WindowHelper.cpp">
-      <Filter>RogueEngine\Systems\Window</Filter>
+      <Filter>RogueEngine\Window</Filter>
     </ClCompile>
     <ClCompile Include="Source\CameraSystem.cpp">
       <Filter>RogueEngine\Systems\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Logger.cpp">
+      <Filter>RogueEngine\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Timer.cpp">
+      <Filter>RogueEngine\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Main.cpp">
+      <Filter>RogueEngine\Entry Point</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

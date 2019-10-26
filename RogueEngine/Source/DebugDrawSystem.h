@@ -15,14 +15,15 @@
 		DebugDrawSystem();
 		~DebugDrawSystem() = default;
 
-		void init();
-		void update() override;
+		void Init() override;
+		void Update() override;
+		void Shutdown() override;
 		void TrueUpdate();
 
 		void drawAABB(Rogue::BoxCollider2DComponent* box, Rogue::TransformComponent* transform);
 		void drawOBB(Rogue::BoxCollider2DComponent* box, Rogue::RigidbodyComponent* body);
 		void drawVelocity(Rogue::RigidbodyComponent* rBody, Rogue::TransformComponent* transform);
 
-		void receive(Rogue::Event* ev);
+		void Receive(Rogue::Event* ev) override;
 	};
 //}

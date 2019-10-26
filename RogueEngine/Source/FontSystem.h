@@ -35,11 +35,12 @@ namespace Rogue
 		FontSystem();
 		~FontSystem() = default;
 
-		void init();
-		void update() override;
+		void Init() override;
+		void Update() override;
+		void Shutdown() override;
 
 		void RenderText(std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color);
 
-		void receive(Event* ev);
+		void Receive(Event* ev);
 	};
 }

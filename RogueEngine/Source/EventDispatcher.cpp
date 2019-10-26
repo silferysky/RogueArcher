@@ -12,7 +12,7 @@ namespace Rogue
 		: System(SystemID::id_EVENTMANAGER)
 	{}
 
-	void EventDispatcher::init()
+	void EventDispatcher::Init()
 	{
 		// Add components to signature
 		Signature signature;
@@ -80,7 +80,7 @@ namespace Rogue
 		DelayedEventQueue.push(e);
 	}
 
-	void EventDispatcher::update()
+	void EventDispatcher::Update()
 	{
 		g_engine.m_coordinator.InitTimeSystem("Event System");
 		if (isCombiningQueue)
@@ -114,4 +114,7 @@ namespace Rogue
 			++sysIt;
 		}
 	}
+
+	void EventDispatcher::Shutdown()
+	{}
 }

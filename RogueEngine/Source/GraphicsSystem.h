@@ -29,15 +29,16 @@ namespace Rogue
 		GraphicsSystem();
 		~GraphicsSystem() = default;
 
-		void init();
-		void update() override;
+		void Init() override;
+		void Update() override;
+		void Shutdown() override;
 
 		void draw(SpriteComponent* sprite, TransformComponent* transform);
 
-		void receive(Event* ev);
+		void Receive(Event* ev);
 
 		void UseFrameBuffer();
-		void UpdateFrameBuffer();
+
 		GLuint& getFBO();
 	};
 }

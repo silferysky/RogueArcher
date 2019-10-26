@@ -18,7 +18,7 @@ namespace Rogue
 		EventDispatcher();
 		~EventDispatcher() = default;
 
-		void init();
+		void Init() override;
 
 		//Queue functions
 		Event* GetQueueHead();
@@ -35,7 +35,8 @@ namespace Rogue
 		void AddEvent(Event* e);
 		void AddEventDelayed(Event* e);
 
-		void update();
+		void Update() override;
+		void Shutdown() override;
 
 		//Dispatch sends it to the relavent system to execute event
 		void DispatchEvent(Event* toHandle);

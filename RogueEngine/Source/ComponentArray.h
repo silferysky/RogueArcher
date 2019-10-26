@@ -10,6 +10,7 @@ namespace Rogue
 	{
 	public:
 		virtual ~BaseComponentArray() = default;
+		virtual void clone(Entity, Entity) = 0;
 		virtual void EntityDestroyed(Entity entity) = 0;
 	};
 
@@ -63,8 +64,21 @@ namespace Rogue
 				RemoveData(entity);
 			}
 		}
+		
+		void clone(Entity existingEntity, Entity toClone)
+		{
+			if (ComponentExists(existingEntity))
+			{
+				InsertData(toClone, T{ GetData(existingEntity) });
+			}
+		}
 
 	private:
+
+		inline bool ComponentExists(Entity entity)
+		{
+			return REEntityToIndexMap.find(entity) != REEntityToIndexMap.end();
+		}
 
 		std::array<T, MAX_ENTITIES> REComponentArray;
 

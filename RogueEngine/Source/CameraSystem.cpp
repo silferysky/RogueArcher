@@ -11,9 +11,9 @@ namespace Rogue
 	CameraSystem::CameraSystem()
 		: System(SystemID::id_CAMERASYSTEM) {}
 
-	void CameraSystem::init()
+	void CameraSystem::Init()
 	{
-		REGISTER_LISTENER(SystemID::id_CAMERASYSTEM, CameraSystem::receive);
+		REGISTER_LISTENER(SystemID::id_CAMERASYSTEM, CameraSystem::Receive);
 
 		// Add components to signature.
 		Signature signature;
@@ -33,7 +33,7 @@ namespace Rogue
 			glm::vec3(0.0f, 1.0f, 0.0f));
 	}
 
-	void CameraSystem::update()
+	void CameraSystem::Update()
 	{
 		g_engine.m_coordinator.InitTimeSystem("Camera System");
 		
@@ -41,7 +41,10 @@ namespace Rogue
 		g_engine.m_coordinator.EndTimeSystem("Camera System");
 	}
 
-	void CameraSystem::receive(Event* ev)
+	void CameraSystem::Receive(Event* ev)
 	{
 	}
+
+	void CameraSystem::Shutdown()
+	{}
 }
