@@ -69,11 +69,19 @@ namespace Rogue
 			if (keycode == KeyPress::KeyEsc)
 				g_engine.SetGameIsRunning(false);
 
-			
+			return;
+		}
+		case EventType::EvKeyTriggered:
+		{
+			KeyTriggeredEvent* keyTriggeredEvent = dynamic_cast<KeyTriggeredEvent*>(ev);
+			auto keycode = keyTriggeredEvent->GetKeyCode();
+
 			if (keycode == KeyPress::KeyC)
 			{
 				g_engine.m_coordinator.clone(1);
 			}
+
+			return;
 		}
 		}
 	}
