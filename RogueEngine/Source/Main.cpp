@@ -53,16 +53,6 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 	UNREFERENCED_PARAMETER(lpszCmdLine);
 	UNREFERENCED_PARAMETER(hCurrentInst);
 
-	//if (EditorMode)
-	//{
-	//	Rogue::Editor Editor;
-	//	Editor.Init();
-	//	Editor.Update();
-	//	Editor.Shutdown();
-	//
-	//	return (int)msg.wParam;
-	//} 
-
 	g_engine.Init();
 	
 	//BasicIO::WriteLevelJsonFile("Resources/TestJsonFileCreator.json", 1);

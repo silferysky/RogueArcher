@@ -101,7 +101,7 @@ namespace Rogue
 	//__________________________BOUNDING CIRCLE________________________________|
 	//_________________________________________________________________________|
 	//_________________________________________________________________________|
-	bool CollisionManager::StaticCircleVSCircle(const CircleCollider2DComponent& circleA, const CircleCollider2DComponent& circleB)
+	bool CollisionManager::DiscreteCircleVsCircle(const CircleCollider2DComponent& circleA, const CircleCollider2DComponent& circleB)
 	{
 		float totalRadius = circleA.m_collider.getRadius() + circleB.m_collider.getRadius();
 
@@ -114,7 +114,7 @@ namespace Rogue
 		Check for collision between circle and line.
 	 */
 	 /******************************************************************************/
-	int CollisionManager::DynamicCircleVsLineSegment(const CircleCollider2DComponent& circle,
+	int CollisionManager::ContinuousCircleVsLineSegment(const CircleCollider2DComponent& circle,
 		const Vec2& ptEnd,
 		const LineSegment& lineSeg,
 		Vec2& interPt,
@@ -150,7 +150,7 @@ namespace Rogue
 				}
 			}
 			else if (checkLineEdges)
-				return DynamicCircleVsLineEdge(false, circle, ptEnd, lineSeg, interPt, normalAtCollision, interTime);
+				return ContinuousCircleVsLineEdge(false, circle, ptEnd, lineSeg, interPt, normalAtCollision, interTime);
 			else
 				return 0;
 		}
@@ -175,13 +175,13 @@ namespace Rogue
 				}
 			}
 			else if (checkLineEdges)
-				return DynamicCircleVsLineEdge(false, circle, ptEnd, lineSeg, interPt, normalAtCollision, interTime);
+				return ContinuousCircleVsLineEdge(false, circle, ptEnd, lineSeg, interPt, normalAtCollision, interTime);
 			else
 				return 0;
 		}
 
 		if (checkLineEdges)
-			return DynamicCircleVsLineEdge(true, circle, ptEnd, lineSeg, interPt, normalAtCollision, interTime); // Check for line edges
+			return ContinuousCircleVsLineEdge(true, circle, ptEnd, lineSeg, interPt, normalAtCollision, interTime); // Check for line edges
 		else
 			return 0;
 	}
@@ -192,7 +192,7 @@ namespace Rogue
 		Check for collision between moving circle and the edges of the line segment.
 	*/
 	/******************************************************************************/
-	int CollisionManager::DynamicCircleVsLineEdge(bool withinBothLines,
+	int CollisionManager::ContinuousCircleVsLineEdge(bool withinBothLines,
 		const CircleCollider2DComponent& circle,
 		const Vec2& ptEnd,
 		const LineSegment& lineSeg,
@@ -339,7 +339,7 @@ namespace Rogue
 		Check for collision between moving circle and static circle (Pillar).
 	 */
 	 /******************************************************************************/
-	int CollisionManager::CollisionIntersection_RayCircle(const Ray& ray,
+	int CollisionManager::ContinuousCircleVsRay(const Ray& ray,
 		const CircleCollider2DComponent& circle,
 		float& interTime)
 	{
@@ -383,7 +383,7 @@ namespace Rogue
 		Check for collision between moving circle and static/dynamic circle.
 	 */
 	 /******************************************************************************/
-	int CollisionManager::CollisionIntersection_CircleCircle(const CircleCollider2DComponent& circleA,
+	int CollisionManager::ContinuousCircleVsCircle(const CircleCollider2DComponent& circleA,
 		const Vec2& velA,
 		const CircleCollider2DComponent& circleB,
 		const Vec2& velB,
@@ -401,7 +401,7 @@ namespace Rogue
 			circle.m_collider.setCenterOffSet(circleB.m_collider.getCenterOffSet()); // Circle has the position of the pillar.
 			circle.m_collider.setRadius(circleA.m_collider.getRadius() + circleB.m_collider.getRadius());  // Circle has radius = pillar radius + ray radius.
 
-			if (CollisionIntersection_RayCircle(ray, circle, interTime))
+			if (ContinuousCircleVsRay(ray, circle, interTime))
 			{
 				interPtA = circleA.m_collider.getCenterOffSet() + interTime * velA; // Bi of ray. interPtB is not needed.
 				return 1;
@@ -416,7 +416,7 @@ namespace Rogue
 			ray.m_pt0 = circleA.m_collider.getCenterOffSet();
 			circle.m_collider.setCenterOffSet(circleB.m_collider.getCenterOffSet());
 			circle.m_collider.setRadius(circleA.m_collider.getRadius() + circleB.m_collider.getRadius());
-			if (CollisionIntersection_RayCircle(ray, circle, interTime))
+			if (ContinuousCircleVsRay(ray, circle, interTime))
 			{
 				interPtA = circleA.m_collider.getCenterOffSet() + interTime * velA;
 				interPtB = circleB.m_collider.getCenterOffSet() + interTime * velB;
@@ -435,7 +435,7 @@ namespace Rogue
 		Reflection computations for circle and line segment collisions.
 	 */
 	 /******************************************************************************/
-	void CollisionManager::CollisionResponse_CircleLineSegment(const Vec2& ptInter,
+	void CollisionManager::ReflectCircleOnLineSegment(const Vec2& ptInter,
 		const Vec2& normal,
 		Vec2& ptEnd,
 		Vec2& reflected)
@@ -451,7 +451,7 @@ namespace Rogue
 		Reflection computations for moving circle and static circle (Pillar) collisions.
 	 */
 	 /******************************************************************************/
-	void CollisionManager::CollisionResponse_CirclePillar(const Vec2& normal,
+	void CollisionManager::ReflectCircleOnPillar(const Vec2& normal,
 		const float& interTime,
 		const Vec2& ptStart,
 		const Vec2& ptInter,
@@ -472,7 +472,7 @@ namespace Rogue
 		Extra credits: Reflection computation for moving circle and moving circle.
 	 */
 	 /******************************************************************************/
-	void CollisionManager::CollisionResponse_CircleCircle(Vec2& normal,
+	void CollisionManager::ReflectCircleOnCircle(Vec2& normal,
 		const float interTime,
 		Vec2& velA,
 		const float& massA,
@@ -498,7 +498,7 @@ namespace Rogue
 	//_________________________________________________________________________|
 	//_________________________________________________________________________|
 	// Update the bounding box's m_min and m_max.
-	void CollisionManager::updateAABB(AABB& collider, const TransformComponent& transform)
+	void CollisionManager::UpdateAABB(AABB& collider, const TransformComponent& transform)
 	{
 		Vec2 pos = GetColliderPosition(collider, transform);
 		Vec2 size = GetColliderScale(collider, transform);
@@ -523,7 +523,7 @@ namespace Rogue
 	Returns a boolean.
 	*/
 	/**************************************************************************/
-	bool CollisionManager::staticAABBvsAABB(const AABB& aabb1, const AABB& aabb2)
+	bool CollisionManager::DiscreteAABBvsAABB(const AABB& aabb1, const AABB& aabb2)
 	{
 		// Static collision check
 		// Check for m_min and m_max values and eliminate false scenarios
@@ -545,7 +545,7 @@ namespace Rogue
 	Collision passes.
 	*/
 	/**************************************************************************/
-	bool CollisionManager::dynamicAABBvsAABB(const AABB& aabb1, const AABB& aabb2,
+	bool CollisionManager::ContinuousAABBvsAABB(const AABB& aabb1, const AABB& aabb2,
 		const RigidbodyComponent& body1, const RigidbodyComponent& body2)
 	{
 		// Calculate new relative velocity Vb using vel2
@@ -698,7 +698,7 @@ namespace Rogue
 		std::cout << std::endl;
 	}
 
-	void CollisionManager::initOBB(OBB& obb, const std::vector<Vec2>& modelVertices) const
+	void CollisionManager::InitOBB(OBB& obb, const std::vector<Vec2>& modelVertices) const
 	{
 		obb.modelVerts() = modelVertices;
 		obb.globVerts().reserve(modelVertices.size());
@@ -706,14 +706,14 @@ namespace Rogue
 	}
 
 
-	void CollisionManager::updateOBB(OBB& obb, const TransformComponent& trans) const
+	void CollisionManager::UpdateOBB(OBB& obb, const TransformComponent& trans) const
 	{
-		updateVertices(obb, trans);
-		updateNormals(obb);
+		UpdateVertices(obb, trans);
+		UpdateNormals(obb);
 	}
 
 
-	void CollisionManager::updateVertices(OBB& obb, const TransformComponent& trans) const
+	void CollisionManager::UpdateVertices(OBB& obb, const TransformComponent& trans) const
 	{
 		Mtx33 matrix = GetColliderWorldMatrix(obb, trans);
 
@@ -724,7 +724,7 @@ namespace Rogue
 	}
 
 
-	void CollisionManager::updateNormals(OBB& obb) const
+	void CollisionManager::UpdateNormals(OBB& obb) const
 	{
 		size_t i;
 		size_t max_sides = obb.modelVerts().size();
@@ -758,14 +758,14 @@ namespace Rogue
 	}
 
 
-	bool CollisionManager::staticOBBvsOBB(OBB& lhs, OBB& rhs) const
+	bool CollisionManager::DiscreteOBBvsOBB(OBB& lhs, OBB& rhs) const
 	{
 		for (Vec2 normal : lhs.normals())
 		{
 			SATFindMinMax(lhs, normal);
 			SATFindMinMax(rhs, normal);
 
-			if (checkOverlaps(lhs, rhs) == false)
+			if (CheckOverlaps(lhs, rhs) == false)
 				return false; // No intersection
 		}
 
@@ -774,7 +774,7 @@ namespace Rogue
 			SATFindMinMax(lhs, normal);
 			SATFindMinMax(rhs, normal);
 
-			if (checkOverlaps(rhs, lhs) == false)
+			if (CheckOverlaps(rhs, lhs) == false)
 				return false; // No intersection
 		}
 
@@ -782,12 +782,12 @@ namespace Rogue
 	}
 
 
-	inline bool CollisionManager::checkOverlaps(const OBB& lhs, const OBB& rhs) const
+	inline bool CollisionManager::CheckOverlaps(const OBB& lhs, const OBB& rhs) const
 	{
-		return isBetweenBounds(rhs.getMin(), lhs.getMin(), lhs.getMax()) || isBetweenBounds(lhs.getMin(), rhs.getMin(), rhs.getMax());
+		return IsBetweenBounds(rhs.getMin(), lhs.getMin(), lhs.getMax()) || IsBetweenBounds(lhs.getMin(), rhs.getMin(), rhs.getMax());
 	}
 
-	inline bool CollisionManager::isBetweenBounds(float val, float lowerBound, float upperBound) const
+	inline bool CollisionManager::IsBetweenBounds(float val, float lowerBound, float upperBound) const
 	{
 		return lowerBound <= val && val <= upperBound;
 	}
