@@ -79,7 +79,7 @@ namespace Rogue
 		glBindVertexArray(0); //Reset
 	}
 
-	static void GenerateFrameBuffer(GLuint& FBO, GLuint& texColourBuffer, GLuint& RBO, const float& width, const float& height)
+	static void GenerateFrameBuffer(GLuint& FBO, GLuint& texColourBuffer, GLuint& RBO, unsigned int width, unsigned int height)
 	{
 		glGenFramebuffers(1, &FBO);
 		glBindFramebuffer(GL_FRAMEBUFFER, FBO);
@@ -106,7 +106,7 @@ namespace Rogue
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}
 
-	static void UpdateFrameBuffer(GLuint& texColourBuffer, GLuint& RBO, const float& width, const float& height)
+	static void UpdateFrameBuffer(GLuint& texColourBuffer, GLuint& RBO, unsigned int width, unsigned int height)
 	{
 		glBindTexture(GL_TEXTURE_2D, texColourBuffer);
 

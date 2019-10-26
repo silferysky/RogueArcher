@@ -8,18 +8,18 @@
 
 namespace Rogue
 {
-	float GetWindowWidth(HWND hWnd)
+	int GetWindowWidth(HWND hWnd)
 	{
 		RECT rect;
 		GetWindowRect(hWnd, &rect);
-		return float(rect.right - rect.left);
+		return rect.right - rect.left;
 	}
 
-	float GetWindowHeight(HWND hWnd)
+	int GetWindowHeight(HWND hWnd)
 	{
 		RECT rect;
 		GetWindowRect(hWnd, &rect);
-		return float(rect.bottom - rect.top);
+		return rect.bottom - rect.top;
 	}
 
 	LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
