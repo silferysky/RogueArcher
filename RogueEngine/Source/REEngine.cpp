@@ -30,10 +30,10 @@ namespace Rogue
 		m_coordinator.RegisterSystem<PhysicsSystem>();
 		m_coordinator.RegisterSystem<CollisionSystem>();
 		m_coordinator.RegisterSystem<GraphicsSystem>();
-		m_coordinator.RegisterSystem<Editor>();
 		m_coordinator.RegisterSystem<DebugDrawSystem>();
 		m_coordinator.RegisterSystem<FontSystem>();
 		m_coordinator.RegisterSystem<EventDispatcher>();
+		m_coordinator.RegisterSystem<Editor>();
 	}
 
 	void REEngine::RegisterComponents()
@@ -87,13 +87,12 @@ namespace Rogue
 	void REEngine::update()
 	{
 		m_stepCount = 0;
-		std::chrono::high_resolution_clock mainLoopTimer;
-		g_fixedDeltaTime = 0.016f;
+		Timer::ChronoClock mainLoopTimer;
+		g_fixedDeltaTime = 1/60.0f;
 
 		while (m_gameIsRunning)
 		{
-			//std::cout << 1/g_deltaTime << std::endl;
-			g_deltaTime = std::chrono::duration_cast<std::chrono::microseconds>(m_loopEnd - m_loopStart).count() / MICRO_TO_SECONDS;
+			g_deltaTime = std::chrono::duration_cast<std::chrono::microseconds>(m_loopEnd - m_loopStart).count() / Timer::s_microToSeconds;
 
 			m_loopStart = mainLoopTimer.now();
 
@@ -118,8 +117,8 @@ namespace Rogue
 
 			SwapBuffers(hDC);
 
+			//m_projMat = glm::ortho(-16.0f * 0.5f, 16.0f * 0.5f, -9.0f * 0.5f, 9.0f * 0.5f, -1024.0f, 1024.0f);
 			m_projMat = glm::ortho(-GetWindowWidth(hWnd) * 0.5f, GetWindowWidth(hWnd) * 0.5f, -GetWindowHeight(hWnd) * 0.5f, GetWindowHeight(hWnd) * 0.5f, -1024.0f, 1024.0f);
-			m_projMat = glm::ortho(-16.0f * 0.5f, 16.0f * 0.5f, -9.0f * 0.5f, 9.0f * 0.5f, -1024.0f, 1024.0f);
 
 			m_loopEnd = mainLoopTimer.now();
 		}
@@ -223,5 +222,4 @@ namespace Rogue
 
 		return hWnd;
 	}
-
 }

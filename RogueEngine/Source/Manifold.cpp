@@ -57,7 +57,7 @@ namespace Rogue
 		Vec2 correction = REMax(m_penetration - correctionSlop, 0.0f) /
 			(bodyA.getInvMass() + bodyB.getInvMass()) * correctionFactor * m_normal;
 
-		transA.offSetPosition(-bodyA.getInvMass() * correctionFactor);
-		transB.offSetPosition(bodyB.getInvMass() * correctionFactor);
+		transA.offSetPosition(-bodyA.getInvMass() * correction);
+		transB.offSetPosition(bodyB.getInvMass() * correction);
 	}
 }

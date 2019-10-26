@@ -8,15 +8,12 @@ namespace Rogue
 
 	class REEngine
 	{
-		using ChronoClock = std::chrono::time_point <std::chrono::steady_clock>;
-
-		const float MICRO_TO_SECONDS = 1000000.0f;
 		float m_accumulatedTime;
 		int	m_stepCount;
 		bool m_gameIsRunning;
 
-		ChronoClock m_loopStart;
-		ChronoClock m_loopEnd;
+		Timer::ChronoTime m_loopStart;
+		Timer::ChronoTime m_loopEnd;
 
 		void RegisterSystems();
 		void RegisterComponents();

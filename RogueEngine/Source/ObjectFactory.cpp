@@ -36,7 +36,7 @@ namespace Rogue
 
 		TransformComponent backgroundTransform = TransformComponent();
 		backgroundTransform.setPosition(Vec2(0.0f, 0.0f));
-		backgroundTransform.setScale(Vec2(18.0f, 12.0f));
+		backgroundTransform.setScale(Vec2(GetWindowWidth(g_engine.GetWindowHandler()), GetWindowHeight(g_engine.GetWindowHandler())));
 		backgroundTransform.setRotation(0.0f);
 
 		g_engine.m_coordinator.AddComponent(backgroundEnt, backgroundSprite);
