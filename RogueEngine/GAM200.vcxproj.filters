@@ -86,6 +86,9 @@
     <Filter Include="RogueEngine\Systems\Camera">
       <UniqueIdentifier>{508febc0-b3e9-4c4b-9cc8-7e422407a8bc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="RogueEngine\Systems\PlayerController">
+      <UniqueIdentifier>{0d94350a-4a50-4e83-8f56-fb5c30539fb8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Resource.h">
@@ -111,9 +114,6 @@
     </ClInclude>
     <ClInclude Include="Source\InputManager.h">
       <Filter>RogueEngine\Systems\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Logger.h">
-      <Filter>RogueEngine\Debug</Filter>
     </ClInclude>
     <ClInclude Include="Source\FileIO.h">
       <Filter>RogueEngine\Systems\I/O</Filter>
@@ -213,9 +213,6 @@
     </ClInclude>
     <ClInclude Include="Source\VSync.h">
       <Filter>RogueEngine\Systems\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Timer.h">
-      <Filter>RogueEngine\Debug</Filter>
     </ClInclude>
     <ClInclude Include="Source\TextureManager.h">
       <Filter>RogueEngine\Systems\Graphics</Filter>
@@ -364,6 +361,8 @@
     <ClInclude Include="Source\CameraSystem.h">
       <Filter>RogueEngine\Systems\Camera</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Logger.h" />
+    <ClInclude Include="Source\Timer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -371,9 +370,6 @@
     </ClCompile>
     <ClCompile Include="Source\InputManager.cpp">
       <Filter>RogueEngine\Systems\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Logger.cpp">
-      <Filter>RogueEngine\Debug</Filter>
     </ClCompile>
     <ClCompile Include="Source\FileIO.cpp">
       <Filter>RogueEngine\Systems\I/O</Filter>
@@ -443,9 +439,6 @@
     </ClCompile>
     <ClCompile Include="Source\VSync.cpp">
       <Filter>RogueEngine\Systems\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Timer.cpp">
-      <Filter>RogueEngine\Debug</Filter>
     </ClCompile>
     <ClCompile Include="Source\Shader.cpp">
       <Filter>RogueEngine\Systems\Graphics</Filter>
@@ -552,5 +545,7 @@
     <ClCompile Include="Source\CameraSystem.cpp">
       <Filter>RogueEngine\Systems\Camera</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Logger.cpp" />
+    <ClCompile Include="Source\Timer.cpp" />
   </ItemGroup>
 </Project>
