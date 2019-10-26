@@ -16,7 +16,7 @@ namespace Rogue
 		EventDispatcher::instance().AddListener(SystemID::id_FONTSYSTEM, hand);
 
 		Signature signature;
-		gEngine.m_coordinator.SetSystemSignature<FontSystem>(signature);
+		g_engine.m_coordinator.SetSystemSignature<FontSystem>(signature);
 
 		if (FT_Init_FreeType(&ft))
 			std::cout << "ERROR::FREETYPE: Could not init FreeType Library" << std::endl;
@@ -71,12 +71,12 @@ namespace Rogue
 		FT_Done_Face(face);
 		FT_Done_FreeType(ft);
 
-		m_shader = gEngine.m_coordinator.loadShader("Font Shader");
+		m_shader = g_engine.m_coordinator.loadShader("Font Shader");
 
 		glUseProgram(m_shader.GetShader());
 
 		GLint transformLocation = glGetUniformLocation(m_shader.GetShader(), "transform");
-		glUniformMatrix4fv(transformLocation, 1, GL_FALSE, glm::value_ptr(gEngine.GetProjMat()));
+		glUniformMatrix4fv(transformLocation, 1, GL_FALSE, glm::value_ptr(g_engine.GetProjMat()));
 
 		glGenVertexArrays(1, &m_VAO);
 		glGenBuffers(1, &m_VBO);

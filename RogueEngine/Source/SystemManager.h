@@ -10,9 +10,9 @@
 #include "Event.h"
 #include "SystemList.h"
 #include "BaseSystem.h"
-
 #include <vector>
 #include <utility>
+
 namespace Rogue
 {
 	class SystemManager
@@ -62,6 +62,8 @@ namespace Rogue
 		{
 			for (auto system : m_systems)
 			{
+				// Note: Debug draw system currently doesn't update here.
+
 				system.second->update();
 			}
 		}
