@@ -12,14 +12,15 @@ namespace Rogue
 	struct HierarchyInfo
 	{
 		std::string m_objectName;
-		bool m_selected = false;
-
+		bool m_selected = true;
+		int count = 0;
 	};
+
 	class ImGuiEditorHierarchy : public IEditable
 	{
 	private:
-		std::vector <std::string> m_currentActiveObjects;
-		int count = 0;
+		std::vector <HierarchyInfo> m_currentActiveObjects;
+		int iterator = 0;
 	public:
 		ImGuiEditorHierarchy();
 		~ImGuiEditorHierarchy();

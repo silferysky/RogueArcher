@@ -2,6 +2,7 @@
 
 namespace Rogue
 {
+
 	ImGuiEditorHierarchy::ImGuiEditorHierarchy()
 	{
 	}
@@ -26,10 +27,12 @@ namespace Rogue
 		{
 			if (ImGui::Selectable("2D Sprite"))
 			{
-				std::string name = "Game Object ";
-				name += count + '0';
-				m_currentActiveObjects.push_back(name);
-				++count;
+				HierarchyInfo temp;
+				temp.count = iterator;
+				temp.m_objectName = "Game Object ";
+				temp.m_objectName += temp.count + '0';
+				m_currentActiveObjects.push_back(temp);
+				++iterator;
 			}
 			if (ImGui::Selectable("Camera"))
 			{
@@ -43,12 +46,12 @@ namespace Rogue
 		static char bufferX[64] = "";
 		ImGui::InputText("", bufferX, 64);
 		ImGui::Separator();
-		static int selected = -1;
-		for (const auto& i : m_currentActiveObjects)
+		static int j = -1;
+		for (auto& i : m_currentActiveObjects)
 		{
-			if (ImGui::Selectable(i.data(), selected))
+			if (ImGui::Selectable(i.m_objectName.c_str(), i.m_selected, ImGuiSelectableFlags_AllowDoubleClick))
 			{
-			
+				
 			}
 		}
 		ImGui::End();
