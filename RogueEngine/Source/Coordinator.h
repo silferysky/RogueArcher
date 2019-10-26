@@ -77,6 +77,16 @@ namespace Rogue
 			m_systemManager->EntityDestroyed(entity);
 		}
 
+		void DestroyAllEntity()
+		{
+			Entity count = m_entityManager->GetActiveEntityCount();
+
+			for (Entity it = 0; it < count; ++it)
+			{
+				DestroyEntity(it);
+			}
+		}
+
 		GLuint loadTexture(const char* texture)
 		{
 			return m_textureManager->loadTexture(texture);
@@ -202,6 +212,11 @@ namespace Rogue
 		ShaderManager& GetShaderManager() const
 		{
 			return *m_shaderManager;
+		}
+
+		SceneManager& GetSceneManager() const
+		{
+			return *m_sceneManager;
 		}
 
 		template <typename T>

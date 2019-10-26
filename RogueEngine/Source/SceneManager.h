@@ -10,13 +10,16 @@ namespace Rogue
 	{
 		std::unique_ptr<ObjectFactory> m_objectFactory;
 		std::vector<Entity> m_activeEntities;
-
-		//Helper function
-		void ClearActiveEntities();
+		std::string m_currentFileName;
 
 	public:
 		SceneManager();
 		~SceneManager();
+
+		std::string getCurrentFileName() const;
+		void setCurrentFileName(std::string curFileName);
+
+		void ClearActiveEntities();
 
 		void LoadLevel(const char* fileName);
 		void SaveLevel(const char* fileName);
