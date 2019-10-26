@@ -47,7 +47,7 @@ namespace Rogue
 				}
 				if (ImGui::MenuItem("Exit"))
 				{
-
+					g_engine.SetGameIsRunning(false);
 				}
 				ImGui::EndMenu();
 			}
