@@ -50,9 +50,14 @@ namespace Rogue
 		m_coordinator.RegisterComponent<StatsComponent>();
 	}
 
-	void REEngine::init()
+	void REEngine::Init()
 	{
 		config.ConfigInit();
+
+		AllocConsole();
+		(void)freopen("CONIN$", "r", stdin);
+		(void)freopen("CONOUT$", "w", stdout);
+		(void)freopen("CONOUT$", "w", stderr);
 
 		hWnd = CreateOpenGLWindow(const_cast<char*>(config.GetTitle().c_str()), config.GetX(), config.GetY(),
 			config.GetWidth(), config.GetHeight(), 0, config.GetFlags());
@@ -65,11 +70,6 @@ namespace Rogue
 		wglMakeCurrent(hDC, hRC);
 
 		ShowWindow(hWnd, SW_SHOW);
-
-		AllocConsole();
-		(void)freopen("CONIN$", "r", stdin);
-		(void)freopen("CONOUT$", "w", stdout);
-		(void)freopen("CONOUT$", "w", stderr);
 
 		//Ensures program closes properly 
 		SetConsoleCtrlHandler(CtrlHandler, true);
@@ -87,7 +87,7 @@ namespace Rogue
 		m_coordinator.Init();
 	}
 
-	void REEngine::update()
+	void REEngine::Update()
 	{
 		m_stepCount = 0;
 		Timer::ChronoClock mainLoopTimer;
@@ -127,8 +127,10 @@ namespace Rogue
 		}
 	}
 
-	void REEngine::shutdown()
+	void REEngine::Shutdown()
 	{
+		m_coordinator.Shutdown();
+
 		//put graphics shutdown here
 		wglMakeCurrent(NULL, NULL);
 		ReleaseDC(hWnd, hDC);

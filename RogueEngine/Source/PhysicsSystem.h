@@ -23,9 +23,10 @@ namespace Rogue
 		PhysicsSystem(Vec2 gravity = { 0.0f, -9.81f });
 		~PhysicsSystem() = default;
 
-		void init();
-		void update() override;
-		void receive(Event* ev) override;
+		void Init() override;
+		void Update() override;
+		void Shutdown() override;
+		void Receive(Event* ev) override;
 
 		void setGravity(const Vec2& gravity);
 		const Vec2& getGravity() const;

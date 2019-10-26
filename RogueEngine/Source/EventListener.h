@@ -17,7 +17,7 @@ namespace Rogue
 	{
 	public:
 		virtual ~EventListener() override {};
-		virtual void receive(Event* event) = 0;
+		virtual void Receive(Event* event) = 0;
 	};
 
 	using LISTENER_HANDLER = std::function<void(Event*)>;

@@ -40,9 +40,9 @@ namespace Rogue
 		m_gravity{ gravity }, checkAABB{ true }, checkOBB{ true }, allowGravity{ true }
 	{}
 
-	void PhysicsSystem::init()
+	void PhysicsSystem::Init()
 	{
-		REGISTER_LISTENER(SystemID::id_PHYSICSSYSTEM, PhysicsSystem::receive);
+		REGISTER_LISTENER(SystemID::id_PHYSICSSYSTEM, PhysicsSystem::Receive);
 
 		// Add components to signature.
 		Signature signature;
@@ -56,7 +56,7 @@ namespace Rogue
 		m_gravity = { 0.0f, -100.0f };
 	}
 
-	void PhysicsSystem::update()
+	void PhysicsSystem::Update()
 	{
 		g_engine.m_coordinator.InitTimeSystem("Physics System");
 		for (int step = 0; step < g_engine.GetStepCount(); ++step)
@@ -86,7 +86,7 @@ namespace Rogue
 		g_engine.m_coordinator.EndTimeSystem("Physics System");
 	}
 
-	void PhysicsSystem::receive(Event* ev)
+	void PhysicsSystem::Receive(Event* ev)
 	{
 		switch (ev->GetEventType())
 		{
@@ -127,4 +127,7 @@ namespace Rogue
 	{
 		return m_gravity;
 	}
+
+	void PhysicsSystem::Shutdown()
+	{}
 }
