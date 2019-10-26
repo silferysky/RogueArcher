@@ -13,9 +13,9 @@ namespace Rogue
 	{
 	}
 
-	void PlayerControllerSystem::init()
+	void PlayerControllerSystem::Init()
 	{
-		REGISTER_LISTENER(SystemID::id_PLAYERCONTROLLERSYSTEM, PlayerControllerSystem::receive);
+		REGISTER_LISTENER(SystemID::id_PLAYERCONTROLLERSYSTEM, PlayerControllerSystem::Receive);
 
 		Signature signature;
 		signature.set(g_engine.m_coordinator.GetComponentType<PlayerControllerComponent>());
@@ -23,12 +23,12 @@ namespace Rogue
 		g_engine.m_coordinator.SetSystemSignature<PlayerControllerSystem>(signature);
 	}
 
-	void PlayerControllerSystem::update()
+	void PlayerControllerSystem::Update()
 	{
 		//PlayerControllerSystem does not update, since it only handles player events (aka button pushes that affect player)
 	}
 
-	void PlayerControllerSystem::receive(Event* ev)
+	void PlayerControllerSystem::Receive(Event* ev)
 	{
 		switch (ev->GetEventType())
 		{
@@ -138,4 +138,10 @@ namespace Rogue
 		}
 		}
 	}
+
+	void PlayerControllerSystem::Shutdown()
+	{
+	}
+
+
 }
