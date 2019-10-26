@@ -7,22 +7,21 @@ namespace Rogue
 
 	void Timer::TimerInit(const char* System)
 	{
-		m_timeMap.insert(std::make_pair(System, m_totalTime));
+		m_timeMap.insert(std::make_pair(System, 0.0f));
 		m_startTimer = m_timer.now();
 	}
 
 	void Timer::TimerEnd(const char* SystemName)
 	{
 		auto EndTimer = m_timer.now();
-
-		m_totalTime = std::chrono::duration_cast<std::chrono::microseconds>(EndTimer - m_startTimer).count();
+		FloatSec delta = EndTimer - m_startTimer;
 
 		auto i = std::find_if(m_timeMap.begin(), m_timeMap.end(),
 			[&SystemName](const std::pair<const char*, float>& element) { return element.first == SystemName; });
 
 		RE_ASSERT(i != m_timeMap.end(), "Cannot find system in timer!");
 		
-		i->second = m_totalTime;
+		i->second = static_cast<float>(std::chrono::duration_cast<std::chrono::microseconds>(delta).count()); // Long long to float
 	}
 
 	const std::map<const char*, float>& Timer::GetSystemTimes() const

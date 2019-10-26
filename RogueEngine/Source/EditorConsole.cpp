@@ -43,7 +43,8 @@ namespace Rogue
 			}
 			ImGui::EndMenu();
 		}
-		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+		ImGui::Text("%.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+		ImGui::Text("%.3f ms/frame (%.1f FPS)", g_deltaTime * 1000.0f, 1 / g_deltaTime);
 		
 
 		std::map<const char*, float> timeSystem = g_engine.m_coordinator.GetSystemTimes();
@@ -56,14 +57,17 @@ namespace Rogue
 
 		for (const auto& iter : timeSystem)
 		{
+			float systemTime = iter.second / Timer::s_microToSeconds;
+			systemTime = systemTime / g_deltaTime * 100.0f;
+
 			m_check = iter.second;
 			if (m_check > 50.0f)
 			{
-				ImGui::TextColored({ 1.0f,1.0f,0.0f,1.0f },"%s %.3f ms", iter.first, iter.second/100);
+				ImGui::TextColored({ 1.0f,1.0f,0.0f,1.0f }, "%s %.1f %", iter.first, systemTime);
 			}
 			else
 			{
-				ImGui::Text("%s %.3f ms", iter.first, iter.second/100);
+				ImGui::Text("%s %.1f %", iter.first, systemTime);
 			}
 		}
 		ImGui::End();
