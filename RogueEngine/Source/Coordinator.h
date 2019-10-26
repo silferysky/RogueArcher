@@ -109,15 +109,16 @@ namespace Rogue
 		{
 			Entity clonedEntity = CreateEntity();
 			Signature sig = m_entityManager->GetSignature(existingEntity);
+			m_objectFactory->Clone(existingEntity);
 
-			for (int i = 0; i < LASTCOMP; i++)
+			/*for (int i = 0; i < LASTCOMP; i++)
 			{
 				if (sig.test(i))
 				{
 					auto& existingComponent = GetComponent<RigidbodyComponent>(existingEntity);
 					AddComponent(clonedEntity, existingComponent);
 				}
-			}
+			}*/
 
 		}
 

@@ -101,11 +101,11 @@ namespace Rogue
 	{
 		switch (ev->GetEventType())
 		{
-		case EventType::EvKeyPressed:
+		case EventType::EvKeyTriggered:
 		{
-			KeyPressEvent* keypressevent = dynamic_cast<KeyPressEvent*>(ev);
+			KeyTriggeredEvent* keytriggeredevent = dynamic_cast<KeyTriggeredEvent*>(ev);
 
-			KeyPress keycode = keypressevent->GetKeyCode();
+			KeyPress keycode = keytriggeredevent->GetKeyCode();
 
 			if (keycode == KeyPress::KeyEsc)
 				g_engine.SetGameIsRunning(false);
