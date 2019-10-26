@@ -17,8 +17,7 @@ namespace Rogue
 		GLuint m_EBO;
 
 		Shader m_shader;
-
-		HWND m_hWnd;
+		GLint m_transformLocation;
 
 		bool InitializeOpenGL();
 	public:
