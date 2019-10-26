@@ -6,6 +6,7 @@
 #include "glew.h"
 #include <vector>
 #include "REEngine.h"
+#include "Main.h"
 
 namespace Rogue
 {
@@ -13,14 +14,14 @@ namespace Rogue
 	{
 		std::string m_objectName;
 		bool m_selected = true;
-		int count = 0;
+		Entity m_Entity = 0;
 	};
 
 	class ImGuiEditorHierarchy : public IEditable
 	{
 	private:
 		std::vector <HierarchyInfo> m_currentActiveObjects;
-		int iterator = 0;
+		unsigned int iterator = 0;
 	public:
 		ImGuiEditorHierarchy();
 		~ImGuiEditorHierarchy();
