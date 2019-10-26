@@ -27,12 +27,12 @@ namespace Rogue
 		~InputManager() = default;
 
 		//Initialization
-		void init();
+		void Init();
 
 		//State management
 
 		//Updates current and previous keyboard state
-		void update();
+		void Update();
 		//Handles the current keyboard state
 		void HandleState();
 		//Hard reset keyboard states
@@ -68,6 +68,9 @@ namespace Rogue
 		void CreateKeyPressEvent(KeyPress key, int repeat = 0);
 		void CreateKeyReleaseEvent(KeyPress key);
 		void CreateKeyTriggeredEvent(KeyPress key);
+
+		// Shutdown
+		void Shutdown() override;
 
 	private:
 		KeyboardState CurKeyboardState;

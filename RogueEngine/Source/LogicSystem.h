@@ -17,9 +17,11 @@ namespace Rogue
 		void RemoveLogicInterface(Entity);
 
 		//Basic System 
-		void init();
-		void update() override;
-		void receive(Event* ev) override;
+		void Init() override;
+		void Update() override;
+		void Shutdown() override;
+		void Receive(Event* ev) override;
+	
 
 	private:
 		std::map<Entity, ILogic*> m_entityLogicMap;

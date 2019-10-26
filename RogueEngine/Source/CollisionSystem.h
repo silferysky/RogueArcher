@@ -10,8 +10,9 @@ namespace Rogue
 	public:
 		CollisionSystem();
 
-		void init() override;
-		void update() override;
-		void receive(Event* ev) override;
+		void Init() override;
+		void Update() override;
+		void Shutdown() override;
+		void Receive(Event* ev) override;
 	};
 }
