@@ -32,4 +32,8 @@ namespace Rogue
 
 		Entity CreateDefaultEntity();
 	};
+
+#define MOVE_OBJECTFACTORY_TO_SCENEMANAGER	std::vector<Entity> entityVector = m_objectFactory->GetRecentEntities(); \
+											m_activeEntities.insert(m_activeEntities.begin(), entityVector.begin(), entityVector.end()); \
+											m_objectFactory->ClearRecentEntities()
 }
