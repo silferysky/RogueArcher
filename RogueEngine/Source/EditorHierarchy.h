@@ -8,6 +8,7 @@
 #include "REEngine.h"
 #include "Main.h"
 
+
 namespace Rogue
 {
 	struct HierarchyInfo
@@ -15,6 +16,8 @@ namespace Rogue
 		std::string m_objectName;
 		bool m_selected = false;
 		Entity m_Entity = 0;
+		float x = 0.0f;
+		float y = 0.0f;
 	};
 
 	class ImGuiEditorHierarchy : public IEditable
@@ -22,11 +25,17 @@ namespace Rogue
 	private:
 		std::vector <HierarchyInfo> m_currentActiveObjects;
 		unsigned int iterator = 0;
+		ImGuiEditorHierarchy(){}
 	public:
 		ImGuiEditorHierarchy();
 		~ImGuiEditorHierarchy();
 		virtual void Init() override;
 		virtual void Update() override;
 		virtual void Shutdown() override;
+		std::vector <HierarchyInfo>& m_getActiveObjects();
 	};
+#define SETSTRING(str, i1, cmp) str << "Entity" << i1 << cmp
+#define SETSSTOSTR(ss) stdstr = ss.str(); cstr = stdstr.c_str()
+#define CLEARSTR(s) s.clear(); s.str("")
+#define CLEARNSETSTR(s, i1, cmp) CLEARSTR(s); SETSTRING(s, i1, cmp); SETSSTOSTR(s)
 }
