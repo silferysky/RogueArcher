@@ -26,14 +26,20 @@ namespace Rogue
 				{
 					SceneManager& sceneManager = g_engine.m_coordinator.GetSceneManager();
 					sceneManager.ClearActiveEntities();
-					g_engine.m_coordinator.DestroyAllEntity();
 				}
-				if (ImGui::MenuItem("Open Scene"))
+				if (ImGui::BeginMenu("Open Scene"))
 				{
-					SceneManager& sceneManager = g_engine.m_coordinator.GetSceneManager();
-					sceneManager.ClearActiveEntities();
-					g_engine.m_coordinator.DestroyAllEntity();
-					//sceneManager.LoadLevel(sceneManager.getCurrentFileName().c_str());
+					if (ImGui::MenuItem("Level 1"))
+					{
+						SceneManager& sceneManager = g_engine.m_coordinator.GetSceneManager();
+						sceneManager.ClearActiveEntities();
+						sceneManager.LoadLevel("Resources/Level 1.json");
+					}
+					if (ImGui::MenuItem("Level 2"))
+					{
+
+					}
+					ImGui::EndMenu();
 				}
 				if (ImGui::MenuItem("Save Scene"))
 				{
