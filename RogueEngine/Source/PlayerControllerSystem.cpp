@@ -117,49 +117,52 @@ namespace Rogue
 						}
 					}
 
-					//For 2nd Entity
-					else if (*iEntity == 2)
-					{
-						if (g_engine.m_coordinator.CheckIfComponentExists<RigidbodyComponent>(*iEntity))
-						{
-							if (keycode == KeyPress::KeyArrowLeft)
-							{
-								auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
-								rigidbody.addForce(Vec2(-100.0f, 0.0f));
-								//RE_INFO("Move B Left!");
-
-							}
-							else if (keycode == KeyPress::KeyArrowRight)
-							{
-								auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
-								rigidbody.addForce(Vec2(100.0f, 0.0f));
-								//RE_INFO("Move B Right!");
-							}
-							else if (keycode == KeyPress::KeyArrowUp)
-							{
-								auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
-								rigidbody.addForce(Vec2(0.0f, 100.0f));
-								//RE_INFO("Move B Up!");
-
-							}
-							else if (keycode == KeyPress::KeyArrowDown)
-							{
-								auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
-								rigidbody.addForce(Vec2(0.0f, -100.0f));
-								//RE_INFO("Move B Down!");
-							}
-						}
-
-						if (g_engine.m_coordinator.CheckIfComponentExists<TransformComponent>(*iEntity))
-							if (keycode == KeyPress::KeyL)
-							{
-								auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
-								transform.setPosition(Vec2(200.0f, 0.0f));
-							}
-					}
+					continue;
 				}
+				//For 2nd Entity
+				else if (*iEntity == 2)
+				{
+					if (g_engine.m_coordinator.CheckIfComponentExists<RigidbodyComponent>(*iEntity))
+					{
+						if (keycode == KeyPress::KeyArrowLeft)
+						{
+							auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
+							rigidbody.addForce(Vec2(-100.0f, 0.0f));
+							//RE_INFO("Move B Left!");
 
-				return;
+						}
+						else if (keycode == KeyPress::KeyArrowRight)
+						{
+							auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
+							rigidbody.addForce(Vec2(100.0f, 0.0f));
+							//RE_INFO("Move B Right!");
+						}
+						else if (keycode == KeyPress::KeyArrowUp)
+						{
+							auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
+							rigidbody.addForce(Vec2(0.0f, 100.0f));
+							//RE_INFO("Move B Up!");
+
+						}
+						else if (keycode == KeyPress::KeyArrowDown)
+						{
+							auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
+							rigidbody.addForce(Vec2(0.0f, -100.0f));
+							//RE_INFO("Move B Down!");
+						}
+					}
+
+					if (g_engine.m_coordinator.CheckIfComponentExists<TransformComponent>(*iEntity))
+					{
+						if (keycode == KeyPress::KeyL)
+						{
+							auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
+							transform.setPosition(Vec2(200.0f, 0.0f));
+						}
+					}
+
+					continue;
+				}
 			}
 		}
 		}
