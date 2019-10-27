@@ -44,6 +44,12 @@ namespace Rogue
 			if (keycode == KeyPress::KeyC)
 				g_engine.m_coordinator.clone(1);
 
+			if (keycode == KeyPress::KeyB)
+				g_engine.m_coordinator.cloneArchetypes("Box");
+
+			if (keycode == KeyPress::KeyN)
+				g_engine.m_coordinator.cloneArchetypes("Circle");
+
 			return;
 		}
 		case EventType::EvKeyPressed:

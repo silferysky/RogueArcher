@@ -48,9 +48,7 @@ namespace Rogue
 		Signature signature;
 		signature.set(g_engine.m_coordinator.GetComponentType<RigidbodyComponent>());
 		signature.set(g_engine.m_coordinator.GetComponentType<TransformComponent>());
-		signature.set(g_engine.m_coordinator.GetComponentType<BoxCollider2DComponent>());
-		//signature.set(g_engine.m_coordinator.GetComponentType<CircleCollider2DComponent>());
-
+		
 		// Set physics system signature.
 		g_engine.m_coordinator.SetSystemSignature<PhysicsSystem>(signature);
 		m_gravity = { 0.0f, -100.0f };
@@ -67,9 +65,7 @@ namespace Rogue
 			{
 				auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
 				auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
-				auto& currBoxCollider = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iEntity);
-				//	auto& circleCollider = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(*iEntity);
-
+			
 				if (rigidbody.getIsStatic())
 					continue;
 

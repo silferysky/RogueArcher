@@ -101,11 +101,12 @@ namespace Rogue
 	//__________________________BOUNDING CIRCLE________________________________|
 	//_________________________________________________________________________|
 	//_________________________________________________________________________|
-	bool CollisionManager::DiscreteCircleVsCircle(const CircleCollider2DComponent& circleA, const CircleCollider2DComponent& circleB)
+	bool CollisionManager::DiscreteCircleVsCircle(const CircleCollider2DComponent& circleA, const CircleCollider2DComponent& circleB,
+		const TransformComponent& transA, const TransformComponent& transB)
 	{
 		float totalRadius = circleA.m_collider.getRadius() + circleB.m_collider.getRadius();
 
-		return Vec2SqDistance(circleA.m_collider.getCenterOffSet(), circleB.m_collider.getCenterOffSet()) <
+		return Vec2SqDistance(transA.getPosition() + circleA.m_collider.getCenterOffSet(), transB.getPosition() + circleB.m_collider.getCenterOffSet()) <
 			totalRadius * totalRadius;
 	}
 

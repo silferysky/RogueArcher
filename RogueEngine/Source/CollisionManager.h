@@ -35,7 +35,8 @@ namespace Rogue
 		~CollisionManager() = default;
 
 		// BOUNDING CIRCLE
-		bool DiscreteCircleVsCircle(const CircleCollider2DComponent& circleA, const CircleCollider2DComponent& circleB);
+		bool DiscreteCircleVsCircle(const CircleCollider2DComponent& circleA, const CircleCollider2DComponent& circleB,
+			const TransformComponent& transA, const TransformComponent& transB);
 
 		int ContinuousCircleVsLineSegment(const CircleCollider2DComponent& circle, const Vec2& ptEnd, const LineSegment& lineSeg,	
 			Vec2& interPt, Vec2& normalAtCollision, float& interTime, bool& checkLineEdges);
