@@ -13,7 +13,7 @@ namespace Rogue
 	struct HierarchyInfo
 	{
 		std::string m_objectName;
-		bool m_selected = true;
+		bool m_selected = false;
 		Entity m_Entity = 0;
 	};
 

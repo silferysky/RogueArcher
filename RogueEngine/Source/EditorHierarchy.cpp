@@ -51,7 +51,20 @@ namespace Rogue
 		{
 			if (ImGui::Selectable(i.m_objectName.c_str(), i.m_selected, ImGuiSelectableFlags_AllowDoubleClick))
 			{
-				Entity GameObjectEntity = g_engine.m_coordinator.CreateEntity();
+				if (ImGui::IsMouseClicked(0))
+				{
+					i.m_selected = !i.m_selected;
+					int temp = i.m_Entity;
+					for (auto& i : m_currentActiveObjects)
+					{
+						if (i.m_Entity == temp)
+							continue;
+						else
+						{
+							i.m_selected = false;
+						}
+					}
+				}
 			}
 		}
 		ImGui::End();
