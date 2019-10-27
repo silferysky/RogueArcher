@@ -28,11 +28,11 @@ namespace Rogue
 	void SceneManager::ClearActiveEntities()
 	{
 		m_activeEntities.clear();
+		g_engine.m_coordinator.DestroyAllEntity();
 	}
 
 	void SceneManager::LoadLevel(const char* fileName)
 	{
-		m_activeEntities.clear();
 		m_objectFactory->LoadLevel(fileName);
 		MOVE_OBJECTFACTORY_TO_SCENEMANAGER;
 	}
@@ -62,6 +62,18 @@ namespace Rogue
 	{
 		m_objectFactory->Clone(archetype);
 		MOVE_OBJECTFACTORY_TO_SCENEMANAGER;
+	}
+
+	void SceneManager::AddToActiveEntities(Entity ent)
+	{
+		//Safety Check
+		for (auto iterator = m_activeEntities.begin(); iterator != m_activeEntities.end(); ++iterator)
+		{
+			if (*iterator == ent)
+				return;
+		}
+
+		m_activeEntities.push_back(ent);
 	}
 
 	Entity SceneManager::CreateDefaultEntity()

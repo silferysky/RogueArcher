@@ -30,6 +30,9 @@ namespace Rogue
 		void Clone(Entity toClone);
 		void Clone(const char* archetype);
 
+		//For other systems to add entites here
+		void AddToActiveEntities(Entity ent);
+
 		Entity CreateDefaultEntity();
 	};
 
