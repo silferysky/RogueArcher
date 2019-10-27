@@ -10,8 +10,32 @@
 
 namespace Rogue
 {
+	class HierarchyInfo
+	{
+	public:
+		std::string m_objectName;
+		bool m_selected = false;
+		Entity m_Entity = 0;
+		float m_scaleX = 10.0f;
+		float m_scaleY = 0.0f;
+		float m_rotateX = 0.0f;
+		float m_rotateY = 0.0f;
+		float m_translateX = 0.0f;
+		float m_translateY = 0.0f;
+	};
+
 	class EntityManager
 	{
+	private:
+
+		std::queue<Entity> REAvailableEntities{};
+
+		std::array<Signature, MAX_ENTITIES> RESignatures{};
+
+		std::vector <HierarchyInfo> m_currentActiveObjects;
+
+		uint32_t REActiveEntityCount{};
+
 	public:
 		EntityManager()
 		{
@@ -20,7 +44,7 @@ namespace Rogue
 				REAvailableEntities.push(entity);
 			}
 		}
-
+		
 		Entity CreateEntity()
 		{
 			// Take an ID from the front of the queue
@@ -68,12 +92,10 @@ namespace Rogue
 			return REActiveEntityCount;
 		}
 
-	private:
+		std::vector <HierarchyInfo>& m_getActiveObjects()
+		{
+			return m_currentActiveObjects;
+		}
 
-		std::queue<Entity> REAvailableEntities{};
-
-		std::array<Signature, MAX_ENTITIES> RESignatures{};
-
-		uint32_t REActiveEntityCount{};
 	};
 }
