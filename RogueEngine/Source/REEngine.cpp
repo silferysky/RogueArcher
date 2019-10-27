@@ -108,6 +108,13 @@ namespace Rogue
 				DispatchMessage(&msg);
 			}
 
+
+			// Avoid spiral of death and clamp dt, thus clamping
+			// how many times the UpdatePhysics can be called in
+			// a single game loop.
+			if (m_accumulatedTime > 0.2f)
+				m_accumulatedTime = 0.2f;
+
 			while (m_accumulatedTime >= g_fixedDeltaTime)
 			{
 				m_accumulatedTime -= g_fixedDeltaTime;
