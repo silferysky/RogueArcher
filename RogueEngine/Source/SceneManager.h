@@ -20,6 +20,7 @@ namespace Rogue
 		void setCurrentFileName(std::string curFileName);
 
 		void ClearActiveEntities();
+		void ClearAllEntities();
 
 		void LoadLevel(const char* fileName);
 		void SaveLevel(const char* fileName);

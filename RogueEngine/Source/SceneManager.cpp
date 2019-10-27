@@ -28,6 +28,11 @@ namespace Rogue
 	void SceneManager::ClearActiveEntities()
 	{
 		m_activeEntities.clear();
+	}
+
+	void SceneManager::ClearAllEntities()
+	{
+		m_activeEntities.clear();
 		g_engine.m_coordinator.DestroyAllEntity();
 	}
 
