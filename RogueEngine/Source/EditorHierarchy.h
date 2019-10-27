@@ -25,7 +25,6 @@ namespace Rogue
 	private:
 		std::vector <HierarchyInfo> m_currentActiveObjects;
 		unsigned int iterator = 0;
-		ImGuiEditorHierarchy(){}
 	public:
 		ImGuiEditorHierarchy();
 		~ImGuiEditorHierarchy();
