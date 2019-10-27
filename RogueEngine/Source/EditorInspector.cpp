@@ -19,6 +19,8 @@ namespace Rogue
 		ImGui::Begin("Inspector");
 		if (ImGui::CollapsingHeader("Transform"))
 		{
+			ImGui::TextDisabled("Name");
+			ImGui::PushItemWidth(20);
 			static char bufferX[64] = "";
 			static char bufferY[64] = "";
 			static char bufferZ[64] = "";
