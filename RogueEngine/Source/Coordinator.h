@@ -219,6 +219,11 @@ namespace Rogue
 			return *m_sceneManager;
 		}
 
+		std::vector <HierarchyInfo>& GetActiveObjects()
+		{
+			return m_entityManager->m_getActiveObjects();
+		}
+
 		template <typename T>
 		bool CheckIfComponentExists(Entity entity)
 		{

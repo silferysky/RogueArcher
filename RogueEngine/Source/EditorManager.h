@@ -14,7 +14,6 @@
 
 namespace Rogue
 {
-	//class IEditable;
 	class EditorManager
 	{
 	public:

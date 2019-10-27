@@ -33,7 +33,7 @@ namespace Rogue
 				strstream << str << iterator;
 				temp.m_Entity = iterator;
 				temp.m_objectName = strstream.str();
-				m_currentActiveObjects.push_back(temp);
+				vector.push_back(temp);
 				++iterator;
 			}
 			if (ImGui::Selectable("Camera"))
@@ -49,7 +49,7 @@ namespace Rogue
 		ImGui::InputText("", bufferX, 64);
 		ImGui::Separator();
 		static int j = -1;
-		for (auto& i : m_currentActiveObjects)
+		for (auto& i : vector)
 		{
 			if (ImGui::Selectable(i.m_objectName.c_str(), i.m_selected, ImGuiSelectableFlags_AllowDoubleClick))
 			{
@@ -57,7 +57,7 @@ namespace Rogue
 				{
 					i.m_selected = !i.m_selected;
 					int temp = i.m_Entity;
-					for (auto& i : m_currentActiveObjects)
+					for (auto& i : vector)
 					{
 						if (i.m_Entity == temp)
 							continue;
@@ -74,10 +74,6 @@ namespace Rogue
 
 	void ImGuiEditorHierarchy::Shutdown()
 	{
-	}
-	std::vector<HierarchyInfo>& ImGuiEditorHierarchy::m_getActiveObjects()
-	{
-		return m_currentActiveObjects;
 	}
 }
 
