@@ -121,15 +121,15 @@ namespace Rogue
 		}
 
 		void clone(Entity existingEntity)
-		{/*
+		{
 			Entity clonedEntity = CreateEntity();
 			m_componentManager->clone(existingEntity, clonedEntity);
 
 			Signature newEntitySignature = m_entityManager->GetSignature(existingEntity);
 			m_entityManager->SetSignature(clonedEntity, newEntitySignature);
-			m_systemManager->EntitySignatureChanged(clonedEntity, newEntitySignature);*/
+			m_systemManager->EntitySignatureChanged(clonedEntity, newEntitySignature);
 
-			m_sceneManager->Clone(existingEntity);
+		//	m_sceneManager->Clone(existingEntity);
 		}
 
 		void cloneArchetypes(const char* archetype)
