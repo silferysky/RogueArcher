@@ -53,9 +53,10 @@ namespace Rogue
 
 		void Update()
 		{
+			EventDispatcher::instance().Update(); // Should also be part of systems
+
 			// Update the core systems
 			m_systemManager->UpdateSystems();
-			EventDispatcher::instance().Update(); // Should also be part of systems
 		}
 
 		void Shutdown()
