@@ -44,6 +44,12 @@ namespace Rogue
 			if (keycode == KeyPress::KeyC)
 				g_engine.m_coordinator.clone(1);
 
+			if (keycode == KeyPress::KeyB)
+				g_engine.m_coordinator.cloneArchetypes("Box");
+
+			if (keycode == KeyPress::KeyN)
+				g_engine.m_coordinator.cloneArchetypes("Circle");
+
 			return;
 		}
 		case EventType::EvKeyPressed:
@@ -54,73 +60,73 @@ namespace Rogue
 			if (keycode == KeyPress::KeyA)
 			{
 				auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(1);
-				rigidbody.addForce(Vec2(-100.0f, 0.0f));
+				rigidbody.addForce(Vec2(-100.0f, 0.0f) * g_deltaTime * 1000);
 				//RE_INFO("Move A Left!");
 			}
 			else if (keycode == KeyPress::KeyD)
 			{
 				auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(1);
-				rigidbody.addForce(Vec2(100.0f, 0.0f));
+				rigidbody.addForce(Vec2(100.0f, 0.0f) * g_deltaTime * 1000);
 				//RE_INFO("Move A Right!");
 			}
 
 			else if (keycode == KeyPress::KeyW)
 			{
 				auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(1);
-				rigidbody.addForce(Vec2(0.0f, 100.0f));
+				rigidbody.addForce(Vec2(0.0f, 100.0f) * g_deltaTime * 1000);
 				//RE_INFO("Move A Up!");
 			}
 			else if (keycode == KeyPress::KeyS)
 			{
 				auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(1);
-				rigidbody.addForce(Vec2(0.0f, -100.0f));
+				rigidbody.addForce(Vec2(0.0f, -100.0f) * g_deltaTime * 1000);
 				//RE_INFO("Move A Down!");
 
 			}
 			if (keycode == KeyPress::KeyArrowLeft)
 			{
 				auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(2);
-				rigidbody.addForce(Vec2(-100.0f, 0.0f));
+				rigidbody.addForce(Vec2(-100.0f, 0.0f) * g_deltaTime * 1000);
 				//RE_INFO("Move B Left!");
 
 			}
 			else if (keycode == KeyPress::KeyArrowRight)
 			{
 				auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(2);
-				rigidbody.addForce(Vec2(100.0f, 0.0f));
+				rigidbody.addForce(Vec2(100.0f, 0.0f) * g_deltaTime * 1000);
 				//RE_INFO("Move B Right!");
 			}
 			else if (keycode == KeyPress::KeyArrowUp)
 			{
 				auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(2);
-				rigidbody.addForce(Vec2(0.0f, 100.0f));
+				rigidbody.addForce(Vec2(0.0f, 100.0f) * g_deltaTime * 1000);
 				//RE_INFO("Move B Up!");
 
 			}
 			else if (keycode == KeyPress::KeyArrowDown)
 			{
 				auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(2);
-				rigidbody.addForce(Vec2(0.0f, -100.0f));
+				rigidbody.addForce(Vec2(0.0f, -100.0f) * g_deltaTime * 1000);
 				//RE_INFO("Move B Down!");
 			}
 			else if (keycode == KeyPress::KeyE)
 			{
 				auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>((Entity)(1));
-				transform.offSetScale(Vec2(100.0f, 100.0f) * g_fixedDeltaTime);
+				transform.offSetScale(Vec2(100.0f, 100.0f) * g_deltaTime * 10);
 				//RE_INFO("Scaled Up!");
 			}
 
 			else if (keycode == KeyPress::KeyQ)
 			{
 				auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>((Entity)(1));
-				transform.offSetScale(Vec2(-100.0f, -100.0f) * g_fixedDeltaTime);
+				transform.offSetScale(Vec2(-100.0f, -100.0f) * g_deltaTime * 10);
 				//RE_INFO("Scaled Down!");
 			}
 
 			else if (keycode == KeyPress::KeyR)
 			{
 				auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>((Entity)1);
-				transform.offSetRotation(100.0f * g_fixedDeltaTime);
+				transform.offSetRotation(100.0f * g_deltaTime * 10);
 				//RE_INFO("Rotated!");
 			}
 			else if (keycode == KeyPress::KeyK)
