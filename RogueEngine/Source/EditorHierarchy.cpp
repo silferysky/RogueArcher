@@ -28,9 +28,11 @@ namespace Rogue
 			if (ImGui::Selectable("2D Sprite"))
 			{
 				HierarchyInfo temp;
+				std::stringstream strstream;
+				std::string str = "Game Object ";
+				strstream << str << iterator;
 				temp.m_Entity = iterator;
-				temp.m_objectName = "Game Object ";
-				temp.m_objectName += temp.m_Entity + '0';
+				temp.m_objectName = strstream.str();
 				m_currentActiveObjects.push_back(temp);
 				++iterator;
 			}
@@ -72,6 +74,10 @@ namespace Rogue
 
 	void ImGuiEditorHierarchy::Shutdown()
 	{
+	}
+	std::vector<HierarchyInfo>& ImGuiEditorHierarchy::m_getActiveObjects()
+	{
+		return m_currentActiveObjects;
 	}
 }
 
