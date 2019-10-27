@@ -55,7 +55,7 @@ namespace Rogue
 		{
 			// Update the core systems
 			m_systemManager->UpdateSystems();
-			//EventDispatcher::instance().Update(); // Should also be part of systems
+			EventDispatcher::instance().Update(); // Should also be part of systems
 		}
 
 		void Shutdown()
@@ -81,7 +81,7 @@ namespace Rogue
 		{
 			Entity count = m_entityManager->GetActiveEntityCount();
 
-			for (Entity it = 0; it < count; ++it)
+			for (Entity it = 0; it < count - 1; ++it)
 			{
 				DestroyEntity(it);
 			}
@@ -128,8 +128,9 @@ namespace Rogue
 			Signature newEntitySignature = m_entityManager->GetSignature(existingEntity);
 			m_entityManager->SetSignature(clonedEntity, newEntitySignature);
 			m_systemManager->EntitySignatureChanged(clonedEntity, newEntitySignature);
+			m_sceneManager->AddToActiveEntities(clonedEntity);
 
-		//	m_sceneManager->Clone(existingEntity);
+			//m_sceneManager->Clone(existingEntity);
 		}
 
 		void cloneArchetypes(const char* archetype)
@@ -217,6 +218,11 @@ namespace Rogue
 		SceneManager& GetSceneManager() const
 		{
 			return *m_sceneManager;
+		}
+
+		std::vector <HierarchyInfo>& GetActiveObjects()
+		{
+			return m_entityManager->m_getActiveObjects();
 		}
 
 		template <typename T>

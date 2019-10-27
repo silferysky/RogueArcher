@@ -11,27 +11,18 @@
 
 namespace Rogue
 {
-	struct HierarchyInfo
-	{
-		std::string m_objectName;
-		bool m_selected = false;
-		Entity m_Entity = 0;
-		float x = 0.0f;
-		float y = 0.0f;
-	};
-
 	class ImGuiEditorHierarchy : public IEditable
 	{
 	private:
-		std::vector <HierarchyInfo> m_currentActiveObjects;
 		unsigned int iterator = 0;
+		std::vector<HierarchyInfo>& vector = g_engine.m_coordinator.GetActiveObjects();
 	public:
 		ImGuiEditorHierarchy();
 		~ImGuiEditorHierarchy();
 		virtual void Init() override;
 		virtual void Update() override;
 		virtual void Shutdown() override;
-		std::vector <HierarchyInfo>& m_getActiveObjects();
+		
 	};
 #define SETSTRING(str, i1, cmp) str << "Entity" << i1 << cmp
 #define SETSSTOSTR(ss) stdstr = ss.str(); cstr = stdstr.c_str()
