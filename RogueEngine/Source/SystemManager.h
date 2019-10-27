@@ -96,10 +96,8 @@ namespace Rogue
 				system->m_entities.erase(entity);
 
 				std::stringstream str;
-				str << "Entity " << entity << " Removed from all systems";
+				str << "Entity " << entity << " Removed from " << pair.first.name();
 				RE_CORE_INFO(str.str());
-
-				break;
 			}
 		}
 

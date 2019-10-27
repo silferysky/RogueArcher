@@ -6,7 +6,7 @@ namespace Rogue
 	SceneManager::SceneManager()
 	:	m_objectFactory {std::make_unique<ObjectFactory>()},
 		m_activeEntities {std::vector<Entity>()},
-		m_currentFileName {std::string()}
+		m_currentFileName { "Resources/Level 1.json"}
 	{
 	}
 
@@ -34,10 +34,7 @@ namespace Rogue
 	{
 		m_activeEntities.clear();
 		m_objectFactory->LoadLevel(fileName);
-		//Note, start at begin since m_activeEntites is empty
-		std::vector<Entity> entityVector = m_objectFactory->GetRecentEntities();
-		m_activeEntities.insert(m_activeEntities.begin(), entityVector.begin(), entityVector.end());
-		m_objectFactory->ClearRecentEntities();
+		MOVE_OBJECTFACTORY_TO_SCENEMANAGER;
 	}
 
 	void SceneManager::SaveLevel(const char* fileName)
@@ -58,17 +55,20 @@ namespace Rogue
 	void SceneManager::Clone(Entity toClone)
 	{
 		m_objectFactory->Clone(toClone);
+		MOVE_OBJECTFACTORY_TO_SCENEMANAGER;
 	}
 
 	void SceneManager::Clone(const char* archetype)
 	{
 		m_objectFactory->Clone(archetype);
+		MOVE_OBJECTFACTORY_TO_SCENEMANAGER;
 	}
 
 	Entity SceneManager::CreateDefaultEntity()
 	{
 		Entity newEnt = g_engine.m_coordinator.CreateEntity();
 		g_engine.m_coordinator.CreateComponent<TransformComponent>(newEnt);
+		m_activeEntities.push_back(newEnt);
 		return newEnt;
 	}
 }
