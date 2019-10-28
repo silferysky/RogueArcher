@@ -2,6 +2,7 @@
 #include "BaseComponent.h"
 #include "GL/glew.h"
 #include <string>
+#include "TextureManager.h"
 
 namespace Rogue
 {
@@ -9,13 +10,13 @@ namespace Rogue
 		: public BaseComponent
 	{
 		std::string m_texturePath;
-		GLuint m_texture;
+		Texture m_texture;
 	public:
-		SpriteComponent();
+		SpriteComponent() = default;
 		~SpriteComponent() = default;
 
 		void setTexture(const char* texture);
-		GLuint getTexture() const;
+		Texture getTexture() const;
 
 		void setTexturePath(std::string texturePath);
 		std::string getTexturePath() const;
