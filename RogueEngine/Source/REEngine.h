@@ -11,6 +11,7 @@ namespace Rogue
 		float m_accumulatedTime;
 		int	m_stepCount;
 		bool m_gameIsRunning;
+		float m_timeScale;
 
 		Timer::ChronoTime m_loopStart;
 		Timer::ChronoTime m_loopEnd;
@@ -50,7 +51,10 @@ namespace Rogue
 		MSG GetWindowMessage() const;
 		glm::mat4 GetProjMat() const;
 		float GetAccumulatedTime() const;
+		float GetTimeScale() const;
 		int GetStepCount() const;
+
 		void SetGameIsRunning(bool set);
+		void SetTimeScale(float timeScale);
 	};
 }

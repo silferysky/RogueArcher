@@ -54,6 +54,8 @@ namespace Rogue
 		{
 			// Update the core systems
 			m_systemManager->UpdateSystems(); 
+
+			// If placed before ^, will cause memory leak.
 			EventDispatcher::instance().Update(); // Should also be part of systems
 		}
 
@@ -78,11 +80,12 @@ namespace Rogue
 
 		void DestroyAllEntity()
 		{
-			Entity count = m_entityManager->GetActiveEntityCount();
+			size_t count = m_entityManager->GetActiveEntityCount();
 
-			for (Entity it = 0; it < count - 1; ++it)
+			for (size_t it = 0; it < count; ++it)
 			{
-				DestroyEntity(it);
+				//Entity ent = m_entityManager->
+				//DestroyEntity(it);
 			}
 		}
 

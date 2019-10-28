@@ -21,7 +21,7 @@
 namespace Rogue
 {
 	REEngine::REEngine() :
-		m_coordinator{}, m_accumulatedTime{ 0.0f }, m_stepCount{ 0 },
+		m_coordinator{}, m_accumulatedTime{ 0.0f }, m_timeScale{ 1.0f }, m_stepCount{ 0 },
 		m_gameIsRunning{ true }, m_projMat{ 1.0f }
 	{}
 
@@ -165,6 +165,11 @@ namespace Rogue
 		return m_accumulatedTime;
 	}
 
+	float REEngine::GetTimeScale() const
+	{
+		return m_timeScale;
+	}
+
 	int REEngine::GetStepCount() const
 	{
 		return m_stepCount;
@@ -173,6 +178,11 @@ namespace Rogue
 	void REEngine::SetGameIsRunning(bool set)
 	{
 		m_gameIsRunning = set;
+	}
+
+	void REEngine::SetTimeScale(float timeScale)
+	{
+		m_timeScale = timeScale;
 	}
 
 	HWND REEngine::CreateOpenGLWindow(char* title, int x, int y, int width, int height,
