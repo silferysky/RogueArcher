@@ -85,7 +85,7 @@ namespace Rogue
 				DestroyEntity(GetActiveObjects().back().m_Entity);
 				GetActiveObjects().pop_back();
 			}
-			m_sceneManager->ResetIterator();
+			m_sceneManager->ResetObjectIterator();
 		}
 
 		Texture loadTexture(const char* texture)
