@@ -50,15 +50,15 @@ namespace Rogue
 					SceneManager& sceneManager = g_engine.m_coordinator.GetSceneManager();
 					g_engine.m_coordinator.GetSceneManager().SaveLevel(sceneManager.getCurrentFileName().c_str());
 				}
-				if (ImGui::MenuItem("Save Scene As"))
+				if (ImGui::MenuItem("Save Scene As",nullptr,false,false))
 				{
 					
 				}
-				if (ImGui::MenuItem("New Project"))
+				if (ImGui::MenuItem("New Project",nullptr,false,false))
 				{
 					
 				}
-				if (ImGui::MenuItem("Save Project"))
+				if (ImGui::MenuItem("Save Project",nullptr,false,false))
 				{
 		
 				}

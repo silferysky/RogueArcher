@@ -72,11 +72,12 @@ namespace Rogue
 		std::ostringstream strstream;
 
 		//For EntCount
-		strstream << "{\n    \"EntityCount\": " << numOfEnt;
+		strstream << "{\n  \"MaxEntityCount\": " << numOfEnt;
+		strstream << ",\n  \"EntityCount\": " << 0;
 
 		//For Background Texture
 		if (includeBackground)
-			strstream << ",\n    \"BackgroundTexture\": \"test.bmp\"";
+			strstream << ",\n  \"BackgroundTexture\": \"test.bmp\"";
 
 		//For Signature
 		strstream << InitializeSignatureJsonFile(numOfEnt);
@@ -91,7 +92,7 @@ namespace Rogue
 		//For Signature
 		for (size_t i = 0; i < numOfEnt; ++i)
 		{
-			strstream << ",\n    \"Signature" << i << "\": 0";
+			strstream << ",\n  \"Signature" << i << "\": 0";
 		}
 		return strstream.str();
 	}
@@ -100,10 +101,10 @@ namespace Rogue
 	{
 		std::ostringstream strstream;
 
-		for (size_t i = 0; i < numOfEnt;)
+		for (size_t i = 0; i < numOfEnt; ++i)
 		{
 			//Header
-			strstream << ",\n    \"Entity" << i << "\": \"";
+			strstream << ",\n  \"Entity" << i << "\": \"";
 
 			if (!writingLevel)
 			{
@@ -142,9 +143,6 @@ namespace Rogue
 
 			//End
 			strstream << "\"";
-
-			if (++i < numOfEnt)
-				strstream << ",";
 		}
 		return strstream.str();
 	}

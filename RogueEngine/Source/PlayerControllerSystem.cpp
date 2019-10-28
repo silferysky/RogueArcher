@@ -40,9 +40,8 @@ namespace Rogue
 			if (keycode == KeyPress::KeyEsc)
 				g_engine.SetGameIsRunning(false);
 
-
 			if (keycode == KeyPress::KeyC)
-				g_engine.m_coordinator.clone(1);
+				g_engine.m_coordinator.clone(*m_entities.begin());
 
 			if (keycode == KeyPress::KeyB)
 				g_engine.m_coordinator.cloneArchetypes("Box");
@@ -62,11 +61,10 @@ namespace Rogue
 			KeyPressEvent* EvPressKey = dynamic_cast<KeyPressEvent*>(ev);
 			KeyPress keycode = EvPressKey->GetKeyCode();
 
-			std::set<Entity>::iterator iEntity;
-			for (iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
+			for (std::set<Entity>::iterator iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
 			{
 				//For 1st entity
-				if (*iEntity == 1)
+				if (iEntity == m_entities.begin())
 				{
 					auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
 
@@ -113,7 +111,8 @@ namespace Rogue
 					}
 				}
 				//For 2nd Entity
-				else if (*iEntity == 2)
+				//To be deleted in future (Since by right only one entityt should exist here for player
+				else if (iEntity != m_entities.begin())
 				{
 					auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
 					if (keycode == KeyPress::KeyArrowLeft)
@@ -145,8 +144,6 @@ namespace Rogue
 					{
 						transform.setPosition(Vec2(200.0f, 0.0f));
 					}
-
-					break;
 				} // Entity 2 
 			} // End of Entity for-loop
 
