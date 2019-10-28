@@ -1,11 +1,12 @@
 #include "SceneManager.h"
 #include "ObjectFactory.h"
+#include "EditorHierarchyInfo.h"
+#include <sstream>
 
 namespace Rogue
 {
 	SceneManager::SceneManager()
 	:	m_objectFactory {std::make_unique<ObjectFactory>()},
-		m_activeEntities {std::vector<Entity>()},
 		m_currentFileName { "Resources/Level 1.json"}
 	{
 	}
@@ -27,14 +28,20 @@ namespace Rogue
 
 	void SceneManager::ClearActiveEntities()
 	{
-		m_activeEntities.clear();
+		g_engine.m_coordinator.GetEntityManager().m_getActiveObjects().clear();
+	}
+
+	void SceneManager::ClearAllEntities()
+	{
+		ClearActiveEntities();
 		g_engine.m_coordinator.DestroyAllEntity();
 	}
 
 	void SceneManager::LoadLevel(const char* fileName)
 	{
-		m_objectFactory->LoadLevel(fileName);
+		m_objectFactory->LoadLevel(fileName); 
 		MOVE_OBJECTFACTORY_TO_SCENEMANAGER;
+		m_objectFactory->ClearRecentEntities();
 	}
 
 	void SceneManager::SaveLevel(const char* fileName)
@@ -64,23 +71,50 @@ namespace Rogue
 		MOVE_OBJECTFACTORY_TO_SCENEMANAGER;
 	}
 
-	void SceneManager::AddToActiveEntities(Entity ent)
+	void SceneManager::IncrementIterator()
+	{
+		iterator++;
+	}
+
+	unsigned int SceneManager::GetIterator() const
+	{
+		return iterator;
+	}
+
+	void SceneManager::AddToActiveEntities(Entity newEnt)
 	{
 		//Safety Check
-		for (auto iterator = m_activeEntities.begin(); iterator != m_activeEntities.end(); ++iterator)
+		auto& activeObjects = g_engine.m_coordinator.GetEntityManager().m_getActiveObjects();
+		for (auto iterator = activeObjects.begin(); iterator != activeObjects.end(); ++iterator)
 		{
-			if (*iterator == ent)
+			if (iterator->m_Entity == newEnt)
 				return;
 		}
 
-		m_activeEntities.push_back(ent);
+		HierarchyInfo newInfo{};
+		newInfo.m_Entity = newEnt;
+		std::ostringstream strstream;
+		std::string sstr;
+		strstream << "Game Object " << iterator++;
+		sstr = strstream.str();
+		newInfo.m_objectName = sstr;
+		g_engine.m_coordinator.GetEntityManager().m_getActiveObjects().push_back(newInfo);
 	}
 
 	Entity SceneManager::CreateDefaultEntity()
 	{
 		Entity newEnt = g_engine.m_coordinator.CreateEntity();
 		g_engine.m_coordinator.CreateComponent<TransformComponent>(newEnt);
-		m_activeEntities.push_back(newEnt);
+
+		HierarchyInfo newInfo{};
+		newInfo.m_Entity = newEnt;
+		std::ostringstream strstream;
+		std::string sstr;
+		strstream << "Game Object " << iterator++;
+		sstr = strstream.str();
+		newInfo.m_objectName = sstr;
+		g_engine.m_coordinator.GetEntityManager().m_getActiveObjects().push_back(newInfo);
+
 		return newEnt;
 	}
 }

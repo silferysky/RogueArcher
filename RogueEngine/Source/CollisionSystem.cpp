@@ -30,7 +30,7 @@ namespace Rogue
 		for (int step = 0; step < g_engine.GetStepCount(); ++step)
 		{
 			std::set<Entity>::iterator iEntity;
-			for (iEntity = m_entities.begin()++; iEntity != m_entities.end(); ++iEntity)
+			for (iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
 			{
 				auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
 				auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
