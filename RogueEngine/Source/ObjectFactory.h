@@ -1,8 +1,12 @@
 #pragma once
 #include "Main.h"
 
+#define FILETYPE_LEVEL 0
+#define FILETYPE_ARCHETYPE 1
+
 namespace Rogue
 {
+
 	class ObjectFactory
 	{
 
@@ -19,12 +23,16 @@ namespace Rogue
 		std::vector<Entity> GetRecentEntities() const;
 		void ClearRecentEntities();
 
+		bool CheckFileTooSmall(size_t type, size_t size);
+
 	private:
 
 		//Helper function
 		void FactoryLoadComponent(Entity curEnt, Signature signature, std::string value);
 		void SetArchetype(std::string archetypeName, std::string archetypeValue, Signature archetypeSignature);
 
+		size_t m_maxEntityCount;
+		size_t m_maxArcheTypeCount;
 		std::vector<Entity> m_recentEntities;
 		std::map<std::string, std::string> m_archetypes;
 		std::map<std::string, Signature> m_archetypeSignature;

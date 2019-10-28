@@ -26,6 +26,7 @@ namespace Rogue
 		const char* cstr;
 
 		//For Entity Count
+		m_maxEntityCount = level["MaxEntityCount"].GetInt();
 		Entity entCount = level["EntityCount"].GetInt();
 
 		//For Background
@@ -179,6 +180,7 @@ namespace Rogue
 		Signature curSignature;
 
 		rapidjson::Document level = RESerialiser::DeserialiseFromFile(fileName);
+		m_maxArcheTypeCount = level["EntityCount"].GetInt();
 		Entity entCount = level["EntityCount"].GetInt();
 
 		for (Entity count = 0; count < entCount; ++count)
@@ -318,6 +320,14 @@ namespace Rogue
 	void ObjectFactory::ClearRecentEntities()
 	{
 		m_recentEntities.clear();
+	}
+
+	bool ObjectFactory::CheckFileTooSmall(size_t type, size_t size)
+	{
+		if (type == FILETYPE_LEVEL)
+			return size < m_maxEntityCount;
+		else
+			return size < m_maxArcheTypeCount; 
 	}
 
 	void ObjectFactory::FactoryLoadComponent(Entity curEnt, Signature signature, std::string value)
