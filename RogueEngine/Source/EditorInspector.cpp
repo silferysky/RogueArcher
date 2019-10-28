@@ -20,41 +20,65 @@ namespace Rogue
 		if (ImGui::CollapsingHeader("Transform"))
 		{
 			ImGui::TextDisabled("Name");
-			for (auto& i : vector)
+			for (auto& i : activeObjects)
 			{
 				if (i.m_selected == true)
 				{
+					Vec2 Scale = g_engine.m_coordinator.GetComponent<TransformComponent>(i.m_Entity).getScale();
+					Vec2 Position = g_engine.m_coordinator.GetComponent<TransformComponent>(i.m_Entity).getPosition();
+					float Rotation = g_engine.m_coordinator.GetComponent<TransformComponent>(i.m_Entity).getRotation();
 					ImGui::Text("%s", i.m_objectName.c_str());
 					ImGui::Text("Scale    ");
 					ImGui::SameLine();
 					ImGui::PushItemWidth(75);
-					ImGui::DragFloat(" ", &i.m_scaleX);
+					ImGui::DragFloat(" ", &Scale.x);
 					ImGui::SameLine(0.0f, 36.0f);
-					ImGui::DragFloat("  ", &i.m_scaleY);
+					ImGui::DragFloat("  ", &Scale.y);
+					g_engine.m_coordinator.GetComponent<TransformComponent>(i.m_Entity).setScale(Scale);
+
 					ImGui::Text("Rotation ");
 					ImGui::SameLine();
-					ImGui::DragFloat("   ", &i.m_rotateX);
-					ImGui::SameLine(0.0f, 22.0f);
-					ImGui::PushItemWidth(75);
-					ImGui::DragFloat("    ", &i.m_rotateY);
+					ImGui::DragFloat("   ", &Rotation,0.1f,0.0f,6.28f);
+					g_engine.m_coordinator.GetComponent<TransformComponent>(i.m_Entity).setRotation(Rotation);
 					ImGui::Text("Translate");
 					ImGui::SameLine();
 					ImGui::PushItemWidth(75);
-					ImGui::DragFloat("     ", &i.m_translateX);
+					ImGui::DragFloat("     ", &Position.x);
 					ImGui::SameLine();
 					ImGui::PushItemWidth(75);
-					ImGui::DragFloat("      ", &i.m_translateY);
+					ImGui::DragFloat("      ", &Position.y);
+					g_engine.m_coordinator.GetComponent<TransformComponent>(i.m_Entity).setPosition(Position);
 				}
 			}			
 
+			ImGui::PushItemWidth(50);
+			if (ImGui::Button("Add Component"))
+			{
+				ImGui::OpenPopup("Component");
+			}
+			if (ImGui::BeginPopup("Component"))
+			{
+				if (ImGui::Selectable("Sprite Component"))
+				{
 
+				}
+				if (ImGui::Selectable("Transform Component"))
+				{
+
+				}
+				if (ImGui::Selectable("Player Controller Component"))
+				{
+
+				}
+				if (ImGui::Selectable("Logic Component"))
+				{
+
+				}
+				ImGui::EndPopup();
+			}
 
 		}
-		ImGui::PushItemWidth(50);
-		if (ImGui::Button("Add Component"))
-		{
 
-		}
 		ImGui::End();
 	}
 	void ImGuiInspector::Shutdown()

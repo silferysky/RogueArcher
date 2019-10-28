@@ -10,15 +10,9 @@ namespace Rogue
 		std::string m_objectName;
 		bool m_selected = false;
 		Entity m_Entity = 0;
-		float m_scaleX = 0.0f;
-		float m_scaleY = 0.0f;
-		float m_rotateX = 0.0f;
-		float m_rotateY = 0.0f;
-		float m_translateX = 0.0f;
-		float m_translateY = 0.0f;
 
 		HierarchyInfo() = default;
-		HierarchyInfo(Entity entValue, std::string name)
-			: m_Entity{ entValue }, m_objectName{ name } {}
+		HierarchyInfo(Entity entity, std::string name)
+			: m_Entity{ entity }, m_objectName{ name }{}
 	};
 }

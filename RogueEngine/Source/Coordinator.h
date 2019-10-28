@@ -88,7 +88,7 @@ namespace Rogue
 			m_sceneManager->ResetIterator();
 		}
 
-		GLuint loadTexture(const char* texture)
+		Texture loadTexture(const char* texture)
 		{
 			return m_textureManager->loadTexture(texture);
 		}
