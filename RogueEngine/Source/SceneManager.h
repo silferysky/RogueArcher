@@ -10,7 +10,7 @@ namespace Rogue
 	{
 		std::unique_ptr<ObjectFactory> m_objectFactory;
 		std::string m_currentFileName;
-		unsigned int iterator = 0;
+		unsigned int m_iterator = 0;
 
 	public:
 		SceneManager();

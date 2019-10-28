@@ -1,4 +1,5 @@
 {
+  "MaxEntityCount": 7,
   "EntityCount": 7,
   "BackgroundTexture": "test.bmp",
   "Signature0": 255,
