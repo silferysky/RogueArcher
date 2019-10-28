@@ -42,7 +42,7 @@ namespace Rogue
 
 
 			if (keycode == KeyPress::KeyC)
-				g_engine.m_coordinator.clone(1);
+				g_engine.m_coordinator.clone(*m_entities.begin());
 
 			if (keycode == KeyPress::KeyB)
 				g_engine.m_coordinator.cloneArchetypes("Box");
