@@ -41,8 +41,8 @@ namespace Rogue
 		Entity CreateDefaultEntity();
 	};
 
-#define MOVE_OBJECTFACTORY_TO_SCENEMANAGER	auto& entityManager = g_engine.m_coordinator.GetEntityManager(); \
+/*#define MOVE_OBJECTFACTORY_TO_SCENEMANAGER	auto& entityManager = g_engine.m_coordinator.GetEntityManager(); \
 											std::vector<Entity> entityVector = m_objectFactory->GetRecentEntities(); \
 											for (auto& entity : entityVector) \
-												AddToActiveEntities(entity);
+												AddToActiveEntities(entity);*/
 }

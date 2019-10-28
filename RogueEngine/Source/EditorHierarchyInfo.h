@@ -16,5 +16,9 @@ namespace Rogue
 		float m_rotateY = 0.0f;
 		float m_translateX = 0.0f;
 		float m_translateY = 0.0f;
+
+		HierarchyInfo() = default;
+		HierarchyInfo(Entity entValue, std::string name)
+			: m_Entity{ entValue }, m_objectName{ name } {}
 	};
 }

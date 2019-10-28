@@ -41,8 +41,6 @@ namespace Rogue
 	void SceneManager::LoadLevel(const char* fileName)
 	{
 		m_objectFactory->LoadLevel(fileName); 
-		MOVE_OBJECTFACTORY_TO_SCENEMANAGER;
-		m_objectFactory->ClearRecentEntities();
 	}
 
 	void SceneManager::SaveLevel(const char* fileName)
@@ -67,13 +65,13 @@ namespace Rogue
 	void SceneManager::Clone(Entity toClone)
 	{
 		m_objectFactory->Clone(toClone);
-		MOVE_OBJECTFACTORY_TO_SCENEMANAGER;
+		//MOVE_OBJECTFACTORY_TO_SCENEMANAGER;
 	}
 
 	void SceneManager::Clone(const char* archetype)
 	{
 		m_objectFactory->Clone(archetype);
-		MOVE_OBJECTFACTORY_TO_SCENEMANAGER;
+		//MOVE_OBJECTFACTORY_TO_SCENEMANAGER;
 	}
 
 	void SceneManager::IncrementIterator()
