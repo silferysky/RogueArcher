@@ -18,7 +18,7 @@ namespace Rogue
 		{
 			if (ImGui::BeginMenu("Edit"))
 			{
-				if (ImGui::MenuItem("Undo", "CTRL+Z"))
+				if (ImGui::MenuItem("Undo", "CTRL+Z",false,false))
 				{
 
 				}
@@ -27,15 +27,15 @@ namespace Rogue
 
 				}  // Disabled item
 				ImGui::Separator();
-				if (ImGui::MenuItem("Cut", "CTRL+X"))
+				if (ImGui::MenuItem("Cut", "CTRL+X",false,false))
 				{
 
 				}
-				if (ImGui::MenuItem("Copy", "CTRL+C"))
+				if (ImGui::MenuItem("Copy", "CTRL+C",false,false))
 				{
 
 				}
-				if (ImGui::MenuItem("Paste", "CTRL+V"))
+				if (ImGui::MenuItem("Paste", "CTRL+V",false,false))
 				{
 
 				}
