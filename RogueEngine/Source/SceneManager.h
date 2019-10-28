@@ -32,6 +32,7 @@ namespace Rogue
 		void Clone(const char* archetype);
 
 		void IncrementIterator();
+		void ResetIterator();
 		unsigned int GetIterator() const;
 
 		//For other systems to add entites here

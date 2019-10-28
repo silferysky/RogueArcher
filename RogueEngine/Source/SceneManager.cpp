@@ -33,8 +33,8 @@ namespace Rogue
 
 	void SceneManager::ClearAllEntities()
 	{
-		ClearActiveEntities();
 		g_engine.m_coordinator.DestroyAllEntity();
+		ClearActiveEntities();
 	}
 
 	void SceneManager::LoadLevel(const char* fileName)
@@ -74,6 +74,11 @@ namespace Rogue
 	void SceneManager::IncrementIterator()
 	{
 		iterator++;
+	}
+
+	void SceneManager::ResetIterator()
+	{
+		iterator = 0;
 	}
 
 	unsigned int SceneManager::GetIterator() const
