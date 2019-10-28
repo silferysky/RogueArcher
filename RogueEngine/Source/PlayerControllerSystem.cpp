@@ -52,7 +52,7 @@ namespace Rogue
 
 			if (keycode == KeyPress::MB2)
 			{
-				g_engine.SetTimeScale(0.5f);
+				g_engine.SetTimeScale(0.1f);
 			}
 
 			return;

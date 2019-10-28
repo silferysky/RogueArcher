@@ -12,7 +12,7 @@ namespace Rogue
 		m_accForce{ Vec2() },
 		m_invMass{ 1.0f },
 		m_volume{ 1.0f },
-		m_damping{ 0.99f },
+		m_damping{ 0.50f },
 		m_isStatic{ false },
 		m_restitution{ 0.1f },
 		m_friction{ 0.01f }
