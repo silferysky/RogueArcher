@@ -4,6 +4,7 @@
 #include "GL/glew.h"
 #include "GLHelper.hpp"
 #include "ComponentList.h"
+#include "CameraSystem.h"
 
 namespace Rogue
 {
@@ -26,6 +27,8 @@ namespace Rogue
 		Shader m_screenShader;
 		Shader m_shader;
 		GLint m_transformLocation;
+
+		std::shared_ptr<CameraSystem> m_pCamera;
 
 		bool InitializeOpenGL();
 	public:

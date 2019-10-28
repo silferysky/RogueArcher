@@ -163,6 +163,11 @@ namespace Rogue
 							strstream << "Animation{" << g_engine.m_coordinator.GetComponent<AnimationComponent>(curEntity).Serialize().c_str() << "}";
 							break;
 						}
+						case static_cast<int>(CAMERA) :
+						{
+							strstream << "Camera{" << g_engine.m_coordinator.GetComponent<CameraComponent>(curEntity).Serialize().c_str() << "}";
+							break;
+						}
 						default:
 						{
 							RE_CORE_WARN("OUT OF BOUNDS OBJECT COMPONENT SAVING");
@@ -303,6 +308,11 @@ namespace Rogue
 						g_engine.m_coordinator.CopyComponent<AnimationComponent>(clonedEntity, toClone);
 						break;
 					}
+					case static_cast<int>(CAMERA) :
+					{
+						g_engine.m_coordinator.CopyComponent<CameraComponent>(clonedEntity, toClone);
+						break;
+					}
 					default:
 					{
 						RE_CORE_WARN("OUT OF BOUNDS INDEX TO CLONE");
@@ -400,6 +410,11 @@ namespace Rogue
 					case static_cast<int>(ANIMATION) :
 					{
 						g_engine.m_coordinator.LoadComponent<AnimationComponent>(curEnt, readstr);
+						break;
+					}
+					case static_cast<int>(CAMERA) :
+					{
+						g_engine.m_coordinator.LoadComponent<CameraComponent>(curEnt, readstr);
 						break;
 					}
 					default:

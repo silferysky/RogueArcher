@@ -44,6 +44,8 @@ namespace Rogue
 
 		GenerateFrameBuffer(m_FBO, m_texColourBuffer, m_RBO, GetWindowWidth(handle), GetWindowHeight(handle));
 
+		m_pCamera = g_engine.m_coordinator.GetSystem<CameraSystem>();
+
 		// OpenGL version
 		std::cout << glGetString(GL_VERSION) << std::endl;
 	}
@@ -104,7 +106,7 @@ namespace Rogue
 
 		//offset by translation of camera, inverse of rotation
 
-		transformMat = g_engine.GetProjMat() * transformMat;
+		transformMat = g_engine.GetProjMat() * m_pCamera->GetViewMatrix() * transformMat;
 
 		glUniformMatrix4fv(m_transformLocation, 1, GL_FALSE, glm::value_ptr(transformMat));
 
