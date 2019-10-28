@@ -13,6 +13,16 @@ namespace Rogue
 		return m_frames;
 	}
 
+	void AnimationComponent::setOffSet(const int& offSet)
+	{
+		m_offSet = offSet;
+	}
+
+	int AnimationComponent::getOffSet() const
+	{
+		return m_offSet;
+	}
+
 	void AnimationComponent::setSecondsPerFrame(const float& secondsPerFrame)
 	{
 		m_secondsPerFrame = secondsPerFrame;

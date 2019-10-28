@@ -86,7 +86,7 @@ namespace Rogue
 			}
 		}
 
-		GLuint loadTexture(const char* texture)
+		Texture loadTexture(const char* texture)
 		{
 			return m_textureManager->loadTexture(texture);
 		}
