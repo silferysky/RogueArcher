@@ -2,6 +2,7 @@
 #include "ObjectFactory.h"
 #include "EditorHierarchyInfo.h"
 #include <sstream>
+#include "BasicIO.h"
 
 namespace Rogue
 {
@@ -46,6 +47,8 @@ namespace Rogue
 
 	void SceneManager::SaveLevel(const char* fileName)
 	{
+		if (m_objectFactory->CheckFileTooSmall(FILETYPE_LEVEL, g_engine.m_coordinator.GetActiveObjects().size()))
+			BasicIO::WriteLevelJsonFile(fileName, g_engine.m_coordinator.GetActiveObjects().size());
 		m_objectFactory->SaveLevel(fileName);
 	}
 
@@ -56,6 +59,8 @@ namespace Rogue
 
 	void SceneManager::SaveArchetypes(const char* fileName)
 	{
+		//if (m_objectFactory->CheckFileTooSmall(FILETYPE_ARCHETYPE, g_engine.m_coordinator.GetActiveObjects().size()))
+			//BasicIO::WriteLevelJsonFile(fileName, g_engine.m_coordinator.GetActiveObjects().size());
 		m_objectFactory->SaveArchetypes(fileName);
 	}
 
