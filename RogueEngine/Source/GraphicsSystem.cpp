@@ -38,6 +38,7 @@ namespace Rogue
 		m_transformLocation = glGetUniformLocation(m_shader.GetShader(), "transform");
 
 		GenerateQuadPrimitive(m_VBO, m_VAO, m_EBO);
+		GenerateFrameQuad(m_frameVAO, m_frameVBO);
 
 		auto handle = g_engine.GetWindowHandler();
 
@@ -141,7 +142,7 @@ namespace Rogue
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		glUseProgram(m_screenShader.GetShader());
-		glBindVertexArray(m_VAO);
+		glBindVertexArray(m_frameVAO);
 		glBindTexture(GL_TEXTURE_2D, m_texColourBuffer);
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 
