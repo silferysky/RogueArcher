@@ -30,11 +30,11 @@ namespace Rogue
 				HierarchyInfo temp;
 				std::stringstream strstream;
 				std::string str = "Game Object ";
-				strstream << str << iterator;
-				temp.m_Entity = iterator;
+				strstream << str << g_engine.m_coordinator.GetSceneManager().GetIterator();
+				temp.m_Entity = g_engine.m_coordinator.GetSceneManager().GetIterator();
 				temp.m_objectName = strstream.str();
 				vector.push_back(temp);
-				++iterator;
+				g_engine.m_coordinator.GetSceneManager().IncrementIterator();
 			}
 			if (ImGui::Selectable("Camera"))
 			{

@@ -1,6 +1,7 @@
 #include "SceneManager.h"
 #include "ObjectFactory.h"
 #include "EditorHierarchyInfo.h"
+#include <sstream>
 
 namespace Rogue
 {
@@ -38,8 +39,9 @@ namespace Rogue
 
 	void SceneManager::LoadLevel(const char* fileName)
 	{
-		m_objectFactory->LoadLevel(fileName);
+		m_objectFactory->LoadLevel(fileName); 
 		MOVE_OBJECTFACTORY_TO_SCENEMANAGER;
+		m_objectFactory->ClearRecentEntities();
 	}
 
 	void SceneManager::SaveLevel(const char* fileName)
@@ -69,18 +71,33 @@ namespace Rogue
 		MOVE_OBJECTFACTORY_TO_SCENEMANAGER;
 	}
 
-	void SceneManager::AddToActiveEntities(Entity ent)
+	void SceneManager::IncrementIterator()
+	{
+		iterator++;
+	}
+
+	unsigned int SceneManager::GetIterator() const
+	{
+		return iterator;
+	}
+
+	void SceneManager::AddToActiveEntities(Entity newEnt)
 	{
 		//Safety Check
 		auto& activeObjects = g_engine.m_coordinator.GetEntityManager().m_getActiveObjects();
 		for (auto iterator = activeObjects.begin(); iterator != activeObjects.end(); ++iterator)
 		{
-			if (iterator->m_Entity == ent)
+			if (iterator->m_Entity == newEnt)
 				return;
 		}
 
 		HierarchyInfo newInfo{};
-		newInfo.m_Entity = ent;
+		newInfo.m_Entity = newEnt;
+		std::ostringstream strstream;
+		std::string sstr;
+		strstream << "Game Object " << iterator++;
+		sstr = strstream.str();
+		newInfo.m_objectName = sstr;
 		g_engine.m_coordinator.GetEntityManager().m_getActiveObjects().push_back(newInfo);
 	}
 
@@ -88,9 +105,16 @@ namespace Rogue
 	{
 		Entity newEnt = g_engine.m_coordinator.CreateEntity();
 		g_engine.m_coordinator.CreateComponent<TransformComponent>(newEnt);
+
 		HierarchyInfo newInfo{};
 		newInfo.m_Entity = newEnt;
+		std::ostringstream strstream;
+		std::string sstr;
+		strstream << "Game Object " << iterator++;
+		sstr = strstream.str();
+		newInfo.m_objectName = sstr;
 		g_engine.m_coordinator.GetEntityManager().m_getActiveObjects().push_back(newInfo);
+
 		return newEnt;
 	}
 }

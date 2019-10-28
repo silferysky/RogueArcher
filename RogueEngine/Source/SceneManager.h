@@ -10,6 +10,7 @@ namespace Rogue
 	{
 		std::unique_ptr<ObjectFactory> m_objectFactory;
 		std::string m_currentFileName;
+		unsigned int iterator = 0;
 
 	public:
 		SceneManager();
@@ -30,6 +31,9 @@ namespace Rogue
 		void Clone(Entity toClone);
 		void Clone(const char* archetype);
 
+		void IncrementIterator();
+		unsigned int GetIterator() const;
+
 		//For other systems to add entites here
 		void AddToActiveEntities(Entity ent);
 
@@ -38,6 +42,6 @@ namespace Rogue
 
 #define MOVE_OBJECTFACTORY_TO_SCENEMANAGER	auto& entityManager = g_engine.m_coordinator.GetEntityManager(); \
 											std::vector<Entity> entityVector = m_objectFactory->GetRecentEntities(); \
-											entityManager.AddActiveObjects(entityVector); \
-											m_objectFactory->ClearRecentEntities()
+											for (auto& entity : entityVector) \
+												AddToActiveEntities(entity);
 }

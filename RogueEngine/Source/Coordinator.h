@@ -84,7 +84,7 @@ namespace Rogue
 
 			for (size_t it = 0; it < count; ++it)
 			{
-
+				//Entity ent = m_entityManager->
 				//DestroyEntity(it);
 			}
 		}

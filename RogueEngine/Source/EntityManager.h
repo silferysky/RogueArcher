@@ -85,15 +85,5 @@ namespace Rogue
 			return m_currentActiveObjects;
 		}
 
-		void AddActiveObjects(std::vector<Entity>& entityVector)
-		{
-			for (Entity iterator : entityVector)
-			{
-				HierarchyInfo temp{};
-				temp.m_Entity = iterator;
-				m_currentActiveObjects.push_back(temp);
-			}
-		}
-
 	};
 }
