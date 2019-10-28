@@ -38,7 +38,7 @@ namespace Rogue
 			EndPaint(hWnd, &ps);
 			return 0;
 		case WM_SIZE:
-			glViewport(0, 0, LOWORD(lParam), HIWORD(lParam));
+			glViewport(0, 0, GetWindowWidth(hWnd), GetWindowHeight(hWnd));
 			//g_engine.m_coordinator.GetSystem<GraphicsSystem>()->UpdateFrameBuffer();
 			PostMessage(hWnd, WM_PAINT, 0, 0);
 			return 0;

@@ -39,6 +39,12 @@ namespace Rogue
 				4
 			);
 
+			glBindTexture(GL_TEXTURE_2D, newTexture.m_texture);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
 			if (newTexture.m_data == NULL)
 				RE_INFO("STBI error: ", stbi_failure_reason());
 
