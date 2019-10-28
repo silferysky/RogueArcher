@@ -45,7 +45,7 @@ namespace Rogue
 
 	//MACROS (HIERARCHY)
 #define CREATE_HIERARCHY_OBJ(entityValue, ss)	CLEARSTR(ss);\
-												ss << "Game Object" << g_engine.m_coordinator.GetSceneManager().GetIterator(); \
+												ss << "Game Object " << g_engine.m_coordinator.GetSceneManager().GetIterator(); \
 												stdstr = ss.str(); \
 												HierarchyInfo newInfo(entityValue, stdstr); \
 												g_engine.m_coordinator.GetEntityManager().m_getActiveObjects().push_back(newInfo); \
