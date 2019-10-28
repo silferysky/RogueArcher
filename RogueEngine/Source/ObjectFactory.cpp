@@ -83,12 +83,13 @@ namespace Rogue
 
 		//Minus one off due to Background being part of the list as well.
 		//Background is unique and will not be counted to the entCount
-		Entity entCount = 0;//static_cast<Entity>(m_recentEntities.size() - 1);
+		Entity entCount = static_cast<Entity>(g_engine.m_coordinator.GetActiveObjects().size() - 1);
 		EntityManager* em = &g_engine.m_coordinator.GetEntityManager();
-		int intVar = (int)entCount;
+		int intVar = static_cast<int>(entCount);
 		RESerialiser::WriteToFile(fileName, "EntityCount", &intVar);
 
 		bool writingBackground = true;
+		Entity entityVal = 0;
 
 		for (HierarchyInfo curHierarchy : g_engine.m_coordinator.GetActiveObjects())
 		{
@@ -101,8 +102,7 @@ namespace Rogue
 			}
 
 			//Entity value acts as the value to store (-1 because of background)
-			Entity entityVal = curEntity - 1;
-			Signature currentSignature = em->GetSignature(curEntity);
+			Signature currentSignature = em->GetSignature(curHierarchy.m_Entity);
 
 			//cstr will go out of scope if you choose to do strstream.str().c_str()
 			//This is the proper (Non macro) way of setting the string
@@ -153,6 +153,11 @@ namespace Rogue
 							strstream << "LogicComponent{" << g_engine.m_coordinator.GetComponent<LogicComponent>(curEntity).Serialize() << "}";
 							break;
 						}
+						case static_cast<int>(STATS) :
+						{
+							strstream << "StatsComponent{" << g_engine.m_coordinator.GetComponent<StatsComponent>(curEntity).Serialize() << "}";
+							break;
+						}
 						default:
 						{
 							RE_CORE_WARN("OUT OF BOUNDS OBJECT COMPONENT SAVING");
@@ -169,6 +174,7 @@ namespace Rogue
 			CLEARSTR(strstream);
 			strstream << "Entity" << entityVal;
 			RESerialiser::WriteToFile(fileName, strstream.str().c_str(), cstr);
+			++entityVal;
 		}
 
 		RE_INFO("LEVEL SAVED");
@@ -322,9 +328,9 @@ namespace Rogue
 	bool ObjectFactory::CheckFileTooSmall(size_t type, size_t size)
 	{
 		if (type == FILETYPE_LEVEL)
-			return size < m_maxEntityCount;
+			return size > m_maxEntityCount + 1; // +1 for background
 		else
-			return size < m_maxArcheTypeCount; 
+			return size > m_maxArcheTypeCount; 
 	}
 
 	void ObjectFactory::FactoryLoadComponent(Entity curEnt, Signature signature, std::string value)
