@@ -1,5 +1,6 @@
 #include "EditorFile.h"
 #include "Main.h"
+#include <sstream>
 
 namespace Rogue
 {
@@ -8,7 +9,7 @@ namespace Rogue
 	}
 
 	ImGuiEditorFile::~ImGuiEditorFile()
-	{
+	{	
 	}
 
 	void ImGuiEditorFile::Init()
@@ -26,6 +27,11 @@ namespace Rogue
 				{
 					SceneManager& sceneManager = g_engine.m_coordinator.GetSceneManager();
 					sceneManager.ClearAllEntities();
+					sceneManager.IncrementSceneIterator();
+					std::ostringstream ostrstream;
+					ostrstream << "Level " << sceneManager.GetSceneIterator() << ".json";
+					sceneManager.setCurrentFileName(ostrstream.str().c_str());
+					sceneManager.AddToLoadedLevels(ostrstream.str());
 				}
 				if (ImGui::BeginMenu("Open Scene"))
 				{

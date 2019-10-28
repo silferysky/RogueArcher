@@ -34,10 +34,15 @@ namespace Rogue
 		void Clone(const char* archetype);
 
 		std::vector<std::string> GetLoadedLevels() const;
+		void AddToLoadedLevels(std::string name);
 
-		void IncrementIterator();
-		void ResetIterator();
-		unsigned int GetIterator() const;
+		void IncrementObjectIterator();
+		void ResetObjectIterator();
+		unsigned int GetObjectIterator() const;
+
+		void IncrementSceneIterator();
+		void ResetSceneIterator();
+		unsigned int GetSceneIterator() const;
 
 		//For other systems to add entites here
 		void AddToActiveEntities(Entity ent);

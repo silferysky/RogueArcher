@@ -83,7 +83,9 @@ namespace Rogue
 
 		//Minus one off due to Background being part of the list as well.
 		//Background is unique and will not be counted to the entCount
-		Entity entCount = static_cast<Entity>(g_engine.m_coordinator.GetActiveObjects().size() - 1);
+		Entity entCount = 0;
+		if (g_engine.m_coordinator.GetActiveObjects().size() != 0)
+			entCount = static_cast<Entity>(g_engine.m_coordinator.GetActiveObjects().size() - 1);
 		EntityManager* em = &g_engine.m_coordinator.GetEntityManager();
 		int intVar = static_cast<int>(entCount);
 		RESerialiser::WriteToFile(fileName, "EntityCount", &intVar);
@@ -193,7 +195,7 @@ namespace Rogue
 		Signature curSignature;
 
 		rapidjson::Document level = RESerialiser::DeserialiseFromFile(fileName);
-		m_maxArcheTypeCount = level["EntityCount"].GetInt();
+		m_maxArchetypeCount = level["EntityCount"].GetInt();
 		Entity entCount = level["EntityCount"].GetInt();
 
 		for (Entity count = 0; count < entCount; ++count)
@@ -338,9 +340,18 @@ namespace Rogue
 	bool ObjectFactory::CheckFileTooSmall(size_t type, size_t size)
 	{
 		if (type == FILETYPE_LEVEL)
-			return size > m_maxEntityCount + 1; // +1 for background
+			//If the max entity count is 0 (File is empty), always return true
+			if (m_maxEntityCount == 0)
+				return true;
+			else
+				return size > m_maxEntityCount + 1; // +1 for background
 		else
-			return size > m_maxArcheTypeCount; 
+			return size > m_maxArchetypeCount; 
+	}
+
+	void ObjectFactory::ResetMaxEntity()
+	{
+		m_maxEntityCount = 0;
 	}
 
 	void ObjectFactory::FactoryLoadComponent(Entity curEnt, Signature signature, std::string value)
