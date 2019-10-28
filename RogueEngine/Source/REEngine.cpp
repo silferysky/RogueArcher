@@ -15,6 +15,7 @@
 #include "FontSystem.h"
 #include "CollisionSystem.h"
 #include "PlayerControllerSystem.h"
+#include "AnimationSystem.h"
 #include "VSync.h"
 
 namespace Rogue

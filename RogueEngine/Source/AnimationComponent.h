@@ -9,7 +9,9 @@ namespace Rogue
 		: public BaseComponent
 	{
 		int m_frames;
-		bool m_isAnimating = 0;
+		float m_secondsPerFrame = 0.1f;
+		bool m_isAnimating = false;
+		bool m_isLooping = false;
 	public:
 		AnimationComponent() = default;
 		~AnimationComponent() = default;
@@ -17,8 +19,14 @@ namespace Rogue
 		void setFrames(const int& frames);
 		int getFrames() const;
 
+		void setSecondsPerFrame(const float& secondsPerFrame);
+		float getSecondsPerFrame() const;
+
 		void setIsAnimating(const bool& isAnimating);
 		bool getIsAnimating() const;
+
+		void setIsLooping(const bool& isLooping);
+		bool getIsLooping() const;
 
 		//Serialize
 		virtual std::string Serialize();
