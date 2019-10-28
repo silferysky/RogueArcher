@@ -17,6 +17,18 @@ namespace Rogue
 		-0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f, 1.0f,   0.0f, 1.0f   // top left 
 	};
 
+	static const float frameVertices[] = 
+	{
+		// positions   // texCoords
+		-1.0f,  1.0f,  0.0f, 1.0f,
+		-1.0f, -1.0f,  0.0f, 0.0f,
+		 1.0f, -1.0f,  1.0f, 0.0f,
+
+		-1.0f,  1.0f,  0.0f, 1.0f,
+		 1.0f, -1.0f,  1.0f, 0.0f,
+		 1.0f,  1.0f,  1.0f, 1.0f
+	};
+
 	static const float lineVertices[] =
 	{
 		// positions          // colors
@@ -74,6 +86,25 @@ namespace Rogue
 		// color attribute
 		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (const void*)(3 * sizeof(float)));
 		glEnableVertexAttribArray(1);
+
+		glBindBuffer(GL_ARRAY_BUFFER, 0); //Reset
+		glBindVertexArray(0); //Reset
+	}
+
+	static void GenerateFrameQuad(GLuint& frameVAO, GLuint& frameVBO)
+	{
+		glGenVertexArrays(1, &frameVAO);
+		glGenBuffers(1, &frameVBO);
+
+		glBindVertexArray(frameVAO);
+		glBindBuffer(GL_ARRAY_BUFFER, frameVBO);
+
+		glBufferData(GL_ARRAY_BUFFER, sizeof(frameVertices), &frameVertices, GL_STATIC_DRAW);
+
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+		glEnableVertexAttribArray(1);
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0); //Reset
 		glBindVertexArray(0); //Reset

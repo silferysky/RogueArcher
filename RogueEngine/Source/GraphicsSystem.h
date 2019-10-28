@@ -20,6 +20,9 @@ namespace Rogue
 		GLuint m_texColourBuffer;
 		GLuint m_RBO;
 
+		GLuint m_frameVAO;
+		GLuint m_frameVBO;
+
 		Shader m_screenShader;
 		Shader m_shader;
 		GLint m_transformLocation;

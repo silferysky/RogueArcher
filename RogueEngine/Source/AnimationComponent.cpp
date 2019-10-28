@@ -13,6 +13,16 @@ namespace Rogue
 		return m_frames;
 	}
 
+	void AnimationComponent::setCurrentFrame(const int& frame)
+	{
+		m_currentFrame = frame;
+	}
+
+	int AnimationComponent::getCurrentFrame() const
+	{
+		return m_currentFrame;
+	}
+
 	void AnimationComponent::setOffSet(const int& offSet)
 	{
 		m_offSet = offSet;
@@ -57,6 +67,7 @@ namespace Rogue
 	{
 		std::ostringstream ss;
 		ss << m_frames << ";";
+		ss << m_currentFrame << ";";
 		ss << m_offSet << ";";
 		ss << m_secondsPerFrame << ";";
 		ss << m_isAnimating << ";";
@@ -78,15 +89,17 @@ namespace Rogue
 				setFrames(std::stof(s1));
 				break;
 			case 1:
+				setCurrentFrame(std::stof(s1));
+			case 2:
 				setOffSet(std::stof(s1));
 				break;
-			case 2:
+			case 3:
 				setSecondsPerFrame(std::stof(s1));
 				break;
-			case 3:
+			case 4:
 				setIsAnimating(std::stof(s1));
 				break;
-			case 4:
+			case 5:
 				setIsLooping(std::stof(s1));
 				break;
 			default:

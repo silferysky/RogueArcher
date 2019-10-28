@@ -42,6 +42,13 @@ namespace Rogue
 
 	void AnimationSystem::UpdateTexture(AnimationComponent* animate, SpriteComponent* sprite)
 	{
+		int frame = animate->getCurrentFrame();
+
+		animate->setCurrentFrame(++frame);
+
+		// reset the frame number
+		if (frame == animate->getFrames())
+			animate->setCurrentFrame(0);
 
 		if (animate->getIsLooping())
 			return;
