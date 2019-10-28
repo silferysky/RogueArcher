@@ -9,6 +9,7 @@ namespace Rogue
 		: public BaseComponent
 	{
 		int m_frames;
+		int m_currentFrame;
 		float m_offSet; // each frame in pixels
 		float m_secondsPerFrame = 0.1f;
 		bool m_isAnimating = false;
@@ -19,6 +20,9 @@ namespace Rogue
 
 		void setFrames(const int& frames);
 		int getFrames() const;
+
+		void setCurrentFrame(const int& frame);
+		int getCurrentFrame() const;
 
 		void setOffSet(const int& offSet);
 		int getOffSet() const;

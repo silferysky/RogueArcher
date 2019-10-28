@@ -42,6 +42,7 @@ namespace Rogue
 
 	void AnimationSystem::UpdateTexture(AnimationComponent* animate, SpriteComponent* sprite)
 	{
+
 		if (animate->getIsLooping())
 			return;
 
