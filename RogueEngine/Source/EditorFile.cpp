@@ -29,19 +29,15 @@ namespace Rogue
 				}
 				if (ImGui::BeginMenu("Open Scene"))
 				{
-					if (ImGui::MenuItem("Level 1"))
+					for (auto& levelStrIterator : g_engine.m_coordinator.GetSceneManager().GetLoadedLevels())
 					{
-						SceneManager& sceneManager = g_engine.m_coordinator.GetSceneManager();
-						sceneManager.setCurrentFileName("Resources/Level 1.json");
-						sceneManager.ClearAllEntities();
-						sceneManager.LoadLevel(sceneManager.getCurrentFileName().c_str());
-					}
-					if (ImGui::MenuItem("Level 2"))
-					{
-						SceneManager& sceneManager = g_engine.m_coordinator.GetSceneManager();
-						sceneManager.setCurrentFileName("Resources/Level 2.json");
-						sceneManager.ClearAllEntities();
-						sceneManager.LoadLevel(sceneManager.getCurrentFileName().c_str());
+						if (ImGui::MenuItem(levelStrIterator.c_str()))
+						{
+							SceneManager& sceneManager = g_engine.m_coordinator.GetSceneManager();
+							sceneManager.setCurrentFileName(levelStrIterator.c_str());
+							sceneManager.ClearAllEntities();
+							sceneManager.LoadLevel(sceneManager.getCurrentFileName().c_str());
+						}
 					}
 					ImGui::EndMenu();
 				}
@@ -52,17 +48,14 @@ namespace Rogue
 				}
 				if (ImGui::BeginMenu("Save Scene As"))
 				{
-					if (ImGui::MenuItem("Level 1"))
+					for (auto& levelStrIterator : g_engine.m_coordinator.GetSceneManager().GetLoadedLevels())
 					{
-						SceneManager& sceneManager = g_engine.m_coordinator.GetSceneManager();
-						sceneManager.setCurrentFileName("Resources/Level 1.json");
-						g_engine.m_coordinator.GetSceneManager().SaveLevel(sceneManager.getCurrentFileName().c_str());
-					}
-					if (ImGui::MenuItem("Level 2"))
-					{
-						SceneManager& sceneManager = g_engine.m_coordinator.GetSceneManager();
-						sceneManager.setCurrentFileName("Resources/Level 2.json");
-						g_engine.m_coordinator.GetSceneManager().SaveLevel(sceneManager.getCurrentFileName().c_str());
+						if (ImGui::MenuItem(levelStrIterator.c_str()))
+						{
+							SceneManager& sceneManager = g_engine.m_coordinator.GetSceneManager();
+							sceneManager.setCurrentFileName(levelStrIterator.c_str());
+							g_engine.m_coordinator.GetSceneManager().SaveLevel(sceneManager.getCurrentFileName().c_str());
+						}
 					}
 					ImGui::EndMenu();
 				}

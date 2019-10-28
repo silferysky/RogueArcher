@@ -8,8 +8,12 @@ namespace Rogue
 {
 	SceneManager::SceneManager()
 	:	m_objectFactory {std::make_unique<ObjectFactory>()},
-		m_currentFileName { "Resources/Level 1.json"}
+		m_loadedLevels {std::vector<std::string>()},
+		m_currentFileName { "Level 1.json"},
+		m_sceneIterator{ 2 }
 	{
+		m_loadedLevels.push_back("Level 1.json");
+		m_loadedLevels.push_back("Level 2.json");
 	}
 
 	SceneManager::~SceneManager()
@@ -40,7 +44,12 @@ namespace Rogue
 
 	void SceneManager::LoadLevel(const char* fileName)
 	{
-		m_objectFactory->LoadLevel(fileName); 
+		std::ostringstream ostrstream;
+		ostrstream << "Resources/" << fileName;
+		m_objectFactory->LoadLevel(ostrstream.str().c_str()); 
+		std::vector<std::string>::iterator it = std::find(m_loadedLevels.begin(), m_loadedLevels.end(), std::string(fileName));
+		if (it == m_loadedLevels.end())
+			m_loadedLevels.push_back(std::string(fileName));
 	}
 
 	void SceneManager::SaveLevel(const char* fileName)
@@ -74,19 +83,24 @@ namespace Rogue
 		//MOVE_OBJECTFACTORY_TO_SCENEMANAGER;
 	}
 
+	std::vector<std::string> SceneManager::GetLoadedLevels() const
+	{
+		return m_loadedLevels;
+	}
+
 	void SceneManager::IncrementIterator()
 	{
-		m_iterator++;
+		m_objectIterator++;
 	}
 
 	void SceneManager::ResetIterator()
 	{
-		m_iterator = 0;
+		m_objectIterator = 0;
 	}
 
 	unsigned int SceneManager::GetIterator() const
 	{
-		return m_iterator;
+		return m_objectIterator;
 	}
 
 	void SceneManager::AddToActiveEntities(Entity newEnt)
@@ -103,7 +117,7 @@ namespace Rogue
 		newInfo.m_Entity = newEnt;
 		std::ostringstream strstream;
 		std::string sstr;
-		strstream << "Game Object " << m_iterator++;
+		strstream << "Game Object " << m_objectIterator++;
 		sstr = strstream.str();
 		newInfo.m_objectName = sstr;
 		g_engine.m_coordinator.GetEntityManager().m_getActiveObjects().push_back(newInfo);
@@ -118,7 +132,7 @@ namespace Rogue
 		newInfo.m_Entity = newEnt;
 		std::ostringstream strstream;
 		std::string sstr;
-		strstream << "Game Object " << m_iterator++;
+		strstream << "Game Object " << m_objectIterator++;
 		sstr = strstream.str();
 		newInfo.m_objectName = sstr;
 		g_engine.m_coordinator.GetEntityManager().m_getActiveObjects().push_back(newInfo);
