@@ -19,6 +19,8 @@ namespace Rogue
 
 		Signature signature;
 		signature.set(g_engine.m_coordinator.GetComponentType<PlayerControllerComponent>());
+		signature.set(g_engine.m_coordinator.GetComponentType<TransformComponent>());
+		signature.set(g_engine.m_coordinator.GetComponentType<RigidbodyComponent>());
 
 		g_engine.m_coordinator.SetSystemSignature<PlayerControllerSystem>(signature);
 	}
@@ -40,7 +42,7 @@ namespace Rogue
 			if (keycode == KeyPress::KeyEsc)
 				g_engine.SetGameIsRunning(false);
 
-			if (keycode == KeyPress::KeyC)
+			if (keycode == KeyPress::KeyC && m_entities.size() > 0)
 				g_engine.m_coordinator.clone(*m_entities.begin());
 
 			if (keycode == KeyPress::KeyB)
@@ -147,22 +149,8 @@ namespace Rogue
 				} // Entity 2 
 			} // End of Entity for-loop
 
-			break;
-		} // case EventType::EvKeyPressed:
-
-		//case EventType::EvMouseButtonPressed:
-		//{
-		//	MousePressEvent* MousePressEv = dynamic_cast<MousePressEvent*>(ev);
-		//	KeyPress keycode = MousePressEv->GetKeyCode();
-
-		//	if (keycode == KeyPress::MB2)
-		//	{
-		//		g_engine.SetTimeScale(0.5f);
-		//	}
-
-		//	break;
-		//}
-
+			return;
+		}
 		case EventType::EvKeyReleased:
 		{
 			KeyReleaseEvent* KeyReleaseEv = dynamic_cast<KeyReleaseEvent*>(ev);
@@ -172,8 +160,7 @@ namespace Rogue
 			{
 				g_engine.SetTimeScale(1.0f);
 			}
-			
-			break;
+			return;
 		}
 		} // switch (ev->GetEventType())
 	} // Receive
