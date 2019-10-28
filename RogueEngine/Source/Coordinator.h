@@ -82,7 +82,7 @@ namespace Rogue
 		{
 			Entity count = m_entityManager->GetActiveEntityCount();
 
-			for (Entity it = 0; it < count - 1; ++it)
+			for (Entity it = 0; it < count; ++it)
 			{
 				DestroyEntity(it);
 			}
