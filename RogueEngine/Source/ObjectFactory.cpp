@@ -150,6 +150,11 @@ namespace Rogue
 							strstream << "LogicComponent{" << g_engine.m_coordinator.GetComponent<LogicComponent>(curEntity).Serialize() << "}";
 							break;
 						}
+						case static_cast<int>(ANIMATION) :
+						{
+							strstream << "Animation{" << g_engine.m_coordinator.GetComponent<AnimationComponent>(curEntity).Serialize().c_str() << "}";
+							break;
+						}
 						default:
 						{
 							RE_CORE_WARN("OUT OF BOUNDS OBJECT COMPONENT SAVING");
@@ -283,6 +288,11 @@ namespace Rogue
 						g_engine.m_coordinator.CopyComponent<LogicComponent>(clonedEntity, toClone);
 						break;
 					}
+					case static_cast<int>(ANIMATION) :
+					{
+						g_engine.m_coordinator.CopyComponent<AnimationComponent>(clonedEntity, toClone);
+						break;
+					}
 					default:
 					{
 						RE_CORE_WARN("OUT OF BOUNDS INDEX TO CLONE");
@@ -372,6 +382,11 @@ namespace Rogue
 					case static_cast<int>(STATS) :
 					{
 						g_engine.m_coordinator.LoadComponent<StatsComponent>(curEnt, readstr);
+						break;
+					}
+					case static_cast<int>(ANIMATION) :
+					{
+						g_engine.m_coordinator.LoadComponent<AnimationComponent>(curEnt, readstr);
 						break;
 					}
 					default:

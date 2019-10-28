@@ -95,6 +95,9 @@
     <Filter Include="RogueEngine\Systems\Input">
       <UniqueIdentifier>{3a918ea4-3468-4a85-9107-f225a7c6b8cf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="RogueEngine\Systems\Graphics\Animation">
+      <UniqueIdentifier>{b833da32-ffc6-42fb-95de-532a655454ed}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Resource.h">
@@ -385,6 +388,12 @@
     <ClInclude Include="Source\EditorHierarchyInfo.h">
       <Filter>RogueEditor\EditorFiles</Filter>
     </ClInclude>
+    <ClInclude Include="Source\AnimationComponent.h">
+      <Filter>RogueEngine\Systems\Graphics\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AnimationSystem.h">
+      <Filter>RogueEngine\Systems\Graphics\Animation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -578,6 +587,15 @@
     </ClCompile>
     <ClCompile Include="Source\Vector2D.cpp">
       <Filter>RogueEngine\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TextureManager.cpp">
+      <Filter>RogueEngine\Systems\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AnimationComponent.cpp">
+      <Filter>RogueEngine\Systems\Graphics\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AnimationSystem.cpp">
+      <Filter>RogueEngine\Systems\Graphics\Animation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

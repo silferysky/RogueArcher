@@ -15,6 +15,7 @@
 #include "FontSystem.h"
 #include "CollisionSystem.h"
 #include "PlayerControllerSystem.h"
+#include "AnimationSystem.h"
 #include "VSync.h"
 
 namespace Rogue
@@ -47,6 +48,7 @@ namespace Rogue
 		m_coordinator.RegisterComponent<PlayerControllerComponent>();
 		m_coordinator.RegisterComponent<LogicComponent>();
 		m_coordinator.RegisterComponent<StatsComponent>();
+		m_coordinator.RegisterComponent<AnimationComponent>();
 	}
 
 	void REEngine::Init()

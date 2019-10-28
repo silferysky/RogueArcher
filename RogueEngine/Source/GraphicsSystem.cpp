@@ -98,14 +98,19 @@ namespace Rogue
 		glBindVertexArray(m_VAO);
 
 		auto transformMat = glm::mat4(1.0f);
+		auto texture = sprite->getTexture();
 
 		transformMat = glm::translate(transformMat, { transform->getPosition().x, transform->getPosition().y, 1.0f });
 		transformMat = glm::rotate(transformMat, transform->getRotation(), glm::vec3(0.0f, 0.0f, 1.0f));
 		transformMat = glm::scale(transformMat, glm::vec3(transform->getScale().x, transform->getScale().y, 1.0f));
 
-		glBindTexture(GL_TEXTURE_2D, sprite->getTexture());
+		glBindTexture(GL_TEXTURE_2D, texture.m_texture);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture.m_width, texture.m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, texture.m_data);
 
 		// model to world, world to view, view to projection
 
