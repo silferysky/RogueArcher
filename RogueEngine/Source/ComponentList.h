@@ -23,6 +23,7 @@ namespace Rogue
 		PLAYERCONTROLLER,
 		LOGIC,
 		STATS,
+		ANIMATION,
 		LASTCOMP
 	};
 }

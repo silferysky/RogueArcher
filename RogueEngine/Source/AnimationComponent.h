@@ -9,7 +9,7 @@ namespace Rogue
 		: public BaseComponent
 	{
 		int m_frames;
-		float m_offSet;
+		float m_offSet; // each frame in pixels
 		float m_secondsPerFrame = 0.1f;
 		bool m_isAnimating = false;
 		bool m_isLooping = false;
