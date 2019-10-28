@@ -4,6 +4,10 @@
 
 namespace Rogue
 {
+	TransformComponent::TransformComponent(const Vec2& pos, const Vec2& scale, float rot) :
+		m_position{ pos }, m_scale{ scale }, m_rotation{ rot }
+	{}
+
 	void TransformComponent::setPosition(const Vec2& pos)
 	{
 		m_position = pos;
@@ -24,12 +28,12 @@ namespace Rogue
 		m_scale += scale;
 	}
 
-	void TransformComponent::setRotation(const float rot)
+	void TransformComponent::setRotation(float rot)
 	{
 		m_rotation = rot;
 	}
 
-	void TransformComponent::offSetRotation(const float rot)
+	void TransformComponent::offSetRotation(float rot)
 	{
 		m_rotation += rot;
 	}

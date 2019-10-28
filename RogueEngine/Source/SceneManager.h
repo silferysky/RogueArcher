@@ -47,7 +47,7 @@ namespace Rogue
 		//For other systems to add entites here
 		void AddToActiveEntities(Entity ent);
 
-		Entity CreateDefaultEntity();
+		Entity Create2DSprite();
 	};
 
 /*#define MOVE_OBJECTFACTORY_TO_SCENEMANAGER	auto& entityManager = g_engine.m_coordinator.GetEntityManager(); \

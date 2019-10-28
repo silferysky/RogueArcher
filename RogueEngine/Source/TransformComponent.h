@@ -12,12 +12,15 @@ namespace Rogue
 		float m_rotation = 0.0f;
 
 	public:
+		TransformComponent() = default;
+		TransformComponent(const Vec2& pos, const Vec2& scale, float rot);
+
 		void setPosition(const Vec2& pos);
 		void offSetPosition(const Vec2& pos);
 		void setScale(const Vec2& scale);
 		void offSetScale(const Vec2& scale);
-		void setRotation(const float rot);
-		void offSetRotation(const float rot);
+		void setRotation(float rot);
+		void offSetRotation(float rot);
 
 		Vec2 getPosition() const;
 		Vec2 getScale() const;
