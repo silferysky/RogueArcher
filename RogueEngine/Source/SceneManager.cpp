@@ -8,8 +8,13 @@ namespace Rogue
 {
 	SceneManager::SceneManager()
 	:	m_objectFactory {std::make_unique<ObjectFactory>()},
-		m_currentFileName { "Resources/Level 1.json"}
-	{}
+		m_loadedLevels {std::vector<std::string>()},
+		m_currentFileName { "Level 1.json"},
+		m_sceneIterator{ 2 }
+	{
+		m_loadedLevels.push_back("Level 1.json");
+		m_loadedLevels.push_back("Level 2.json");
+	}
 
 	SceneManager::~SceneManager()
 	{
@@ -28,6 +33,7 @@ namespace Rogue
 
 	void SceneManager::ClearActiveEntities()
 	{
+		m_objectFactory->ResetMaxEntity();
 		g_engine.m_coordinator.GetEntityManager().m_getActiveObjects().clear();
 	}
 
@@ -39,14 +45,24 @@ namespace Rogue
 
 	void SceneManager::LoadLevel(const char* fileName)
 	{
-		m_objectFactory->LoadLevel(fileName); 
+		std::ostringstream ostrstream;
+		ostrstream << "Resources/" << fileName;
+		m_objectFactory->LoadLevel(ostrstream.str().c_str()); 
+		std::vector<std::string>::iterator it = std::find(m_loadedLevels.begin(), m_loadedLevels.end(), std::string(fileName));
+		if (it == m_loadedLevels.end())
+			m_loadedLevels.push_back(std::string(fileName));
 	}
 
 	void SceneManager::SaveLevel(const char* fileName)
 	{
+		std::ostringstream ostrstream;
+		ostrstream << "Resources/" << fileName;
 		if (m_objectFactory->CheckFileTooSmall(FILETYPE_LEVEL, g_engine.m_coordinator.GetActiveObjects().size()))
-			BasicIO::WriteLevelJsonFile(fileName, g_engine.m_coordinator.GetActiveObjects().size() - 1);
-		m_objectFactory->SaveLevel(fileName);
+			if (g_engine.m_coordinator.GetActiveObjects().size() != 0)
+				BasicIO::WriteLevelJsonFile(ostrstream.str().c_str(), g_engine.m_coordinator.GetActiveObjects().size() - 1);
+			else
+				BasicIO::WriteLevelJsonFile(ostrstream.str().c_str(), 0);
+		m_objectFactory->SaveLevel(ostrstream.str().c_str());
 	}
 
 	void SceneManager::LoadArchetypes(const char* fileName)
@@ -73,19 +89,44 @@ namespace Rogue
 		//MOVE_OBJECTFACTORY_TO_SCENEMANAGER;
 	}
 
-	void SceneManager::IncrementIterator()
+	std::vector<std::string> SceneManager::GetLoadedLevels() const
 	{
-		m_iterator++;
+		return m_loadedLevels;
 	}
 
-	void SceneManager::ResetIterator()
+	void SceneManager::AddToLoadedLevels(std::string name)
 	{
-		m_iterator = 0;
+		m_loadedLevels.push_back(name);
 	}
 
-	unsigned int SceneManager::GetIterator() const
+	void SceneManager::IncrementObjectIterator()
 	{
-		return m_iterator;
+		++m_objectIterator;
+	}
+
+	void SceneManager::ResetObjectIterator()
+	{
+		m_objectIterator = 0;
+	}
+
+	unsigned int SceneManager::GetObjectIterator() const
+	{
+		return m_objectIterator;
+	}
+
+	void SceneManager::IncrementSceneIterator()
+	{
+		++m_sceneIterator;
+	}
+
+	void SceneManager::ResetSceneIterator()
+	{
+		m_sceneIterator = 0;
+	}
+
+	unsigned int SceneManager::GetSceneIterator() const
+	{
+		return m_sceneIterator;
 	}
 
 	void SceneManager::AddToActiveEntities(Entity newEnt)
@@ -102,7 +143,7 @@ namespace Rogue
 		newInfo.m_Entity = newEnt;
 		std::ostringstream strstream;
 		std::string sstr;
-		strstream << "Game Object " << m_iterator++;
+		strstream << "Game Object " << m_objectIterator++;
 		sstr = strstream.str();
 		newInfo.m_objectName = sstr;
 		g_engine.m_coordinator.GetEntityManager().m_getActiveObjects().push_back(newInfo);
@@ -122,7 +163,7 @@ namespace Rogue
 		newInfo.m_Entity = newEnt;
 		std::ostringstream strstream;
 		std::string sstr;
-		strstream << "Game Object " << m_iterator++;
+		strstream << "Game Object " << m_objectIterator++;
 		sstr = strstream.str();
 		newInfo.m_objectName = sstr;
 		g_engine.m_coordinator.GetEntityManager().m_getActiveObjects().push_back(newInfo);

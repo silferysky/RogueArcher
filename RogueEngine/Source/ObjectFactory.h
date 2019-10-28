@@ -21,6 +21,7 @@ namespace Rogue
 		void Clone(const char* archetype);
 
 		bool CheckFileTooSmall(size_t type, size_t size);
+		void ResetMaxEntity();
 
 	private:
 
@@ -29,7 +30,7 @@ namespace Rogue
 		void SetArchetype(std::string archetypeName, std::string archetypeValue, Signature archetypeSignature);
 
 		size_t m_maxEntityCount;
-		size_t m_maxArcheTypeCount;
+		size_t m_maxArchetypeCount;
 		std::map<std::string, std::string> m_archetypes;
 		std::map<std::string, Signature> m_archetypeSignature;
 
@@ -45,11 +46,11 @@ namespace Rogue
 
 	//MACROS (HIERARCHY)
 #define CREATE_HIERARCHY_OBJ(entityValue, ss)	CLEARSTR(ss);\
-												ss << "Game Object " << g_engine.m_coordinator.GetSceneManager().GetIterator(); \
+												ss << "Game Object " << g_engine.m_coordinator.GetSceneManager().GetObjectIterator(); \
 												stdstr = ss.str(); \
 												HierarchyInfo newInfo(entityValue, stdstr); \
 												g_engine.m_coordinator.GetEntityManager().m_getActiveObjects().push_back(newInfo); \
-												g_engine.m_coordinator.GetSceneManager().IncrementIterator();
+												g_engine.m_coordinator.GetSceneManager().IncrementObjectIterator();
 
 //cstr will go out of scope if you choose to do strstream.str().c_str()
 //This is the proper (Non macro) way of setting the string

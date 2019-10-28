@@ -98,6 +98,9 @@
     <Filter Include="RogueEngine\Systems\Graphics\Animation">
       <UniqueIdentifier>{b833da32-ffc6-42fb-95de-532a655454ed}</UniqueIdentifier>
     </Filter>
+    <Filter Include="RogueEngine\Systems\Collision\Colliders">
+      <UniqueIdentifier>{67d71b4f-ed16-4b5d-ad47-1da141663451}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Resource.h">
@@ -124,13 +127,7 @@
     <ClInclude Include="Source\FileIO.h">
       <Filter>RogueEngine\I/O</Filter>
     </ClInclude>
-    <ClInclude Include="Source\OBB.h">
-      <Filter>RogueEngine\Systems\Collision</Filter>
-    </ClInclude>
     <ClInclude Include="Source\CollisionManager.h">
-      <Filter>RogueEngine\Systems\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\AABB.h">
       <Filter>RogueEngine\Systems\Collision</Filter>
     </ClInclude>
     <ClInclude Include="Source\Circle.h">
@@ -340,9 +337,6 @@
     <ClInclude Include="Source\imgui_internal.h">
       <Filter>RogueEditor\EditorLibrary</Filter>
     </ClInclude>
-    <ClInclude Include="Source\BaseCollider.h">
-      <Filter>RogueEngine\Systems\Collision</Filter>
-    </ClInclude>
     <ClInclude Include="Source\CircleCollider2DComponent.h">
       <Filter>RogueEngine\Systems\Collision</Filter>
     </ClInclude>
@@ -397,6 +391,15 @@
     <ClInclude Include="Source\CameraComponent.h">
       <Filter>RogueEngine\Systems\Camera</Filter>
     </ClInclude>
+    <ClInclude Include="Source\AABB.h">
+      <Filter>RogueEngine\Systems\Collision\Colliders</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BaseCollider.h">
+      <Filter>RogueEngine\Systems\Collision\Colliders</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\OBB.h">
+      <Filter>RogueEngine\Systems\Collision\Colliders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -405,13 +408,7 @@
     <ClCompile Include="Source\FileIO.cpp">
       <Filter>RogueEngine\I/O</Filter>
     </ClCompile>
-    <ClCompile Include="Source\OBB.cpp">
-      <Filter>RogueEngine\Systems\Collision</Filter>
-    </ClCompile>
     <ClCompile Include="Source\CollisionManager.cpp">
-      <Filter>RogueEngine\Systems\Collision</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\AABB.cpp">
       <Filter>RogueEngine\Systems\Collision</Filter>
     </ClCompile>
     <ClCompile Include="Source\Circle.cpp">
@@ -602,6 +599,12 @@
     </ClCompile>
     <ClCompile Include="Source\CameraComponent.cpp">
       <Filter>RogueEngine\Systems\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AABB.cpp">
+      <Filter>RogueEngine\Systems\Collision\Colliders</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\OBB.cpp">
+      <Filter>RogueEngine\Systems\Collision\Colliders</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
