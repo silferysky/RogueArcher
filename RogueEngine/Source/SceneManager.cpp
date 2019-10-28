@@ -78,17 +78,17 @@ namespace Rogue
 
 	void SceneManager::IncrementIterator()
 	{
-		iterator++;
+		m_iterator++;
 	}
 
 	void SceneManager::ResetIterator()
 	{
-		iterator = 0;
+		m_iterator = 0;
 	}
 
 	unsigned int SceneManager::GetIterator() const
 	{
-		return iterator;
+		return m_iterator;
 	}
 
 	void SceneManager::AddToActiveEntities(Entity newEnt)
@@ -105,7 +105,7 @@ namespace Rogue
 		newInfo.m_Entity = newEnt;
 		std::ostringstream strstream;
 		std::string sstr;
-		strstream << "Game Object " << iterator++;
+		strstream << "Game Object " << m_iterator++;
 		sstr = strstream.str();
 		newInfo.m_objectName = sstr;
 		g_engine.m_coordinator.GetEntityManager().m_getActiveObjects().push_back(newInfo);
@@ -120,7 +120,7 @@ namespace Rogue
 		newInfo.m_Entity = newEnt;
 		std::ostringstream strstream;
 		std::string sstr;
-		strstream << "Game Object " << iterator++;
+		strstream << "Game Object " << m_iterator++;
 		sstr = strstream.str();
 		newInfo.m_objectName = sstr;
 		g_engine.m_coordinator.GetEntityManager().m_getActiveObjects().push_back(newInfo);
