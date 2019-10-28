@@ -7,7 +7,7 @@ namespace Rogue
 {
 	TextureManager::~TextureManager()
 	{
-		for (auto itr = textureMap.begin(); itr != textureMap.begin(); ++itr)
+		for (auto itr = textureMap.begin(); itr != textureMap.end(); ++itr)
 		{
 			glDeleteTextures(1, &(itr->second.m_texture));
 			stbi_image_free(itr->second.m_data);
@@ -39,8 +39,8 @@ namespace Rogue
 				4
 			);
 
-			//if (newTexture == 0)
-				//RE_INFO("SOIL error: ", SOIL_last_result());
+			if (newTexture.m_data == NULL)
+				RE_INFO("STBI error: ", stbi_failure_reason());
 
 			textureMap.emplace(std::string(texture), newTexture);
 
