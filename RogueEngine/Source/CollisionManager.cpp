@@ -730,7 +730,8 @@ namespace Rogue
 		size_t i;
 		size_t max_sides = obb.modelVerts().size();
 
-		RE_ASSERT(max_sides, "OBB has no sides!");
+		if (max_sides == 0)
+			return;
 
 		for (i = 0; i < max_sides - 1; ++i) // Traverse to the second last vertex
 			obb.normals()[i] = Vec2NormalOf(obb.globVerts()[i + 1] - obb.globVerts()[i]); // n1 till second last normal
@@ -815,10 +816,6 @@ namespace Rogue
 		for (auto manifold : m_manifolds)
 		{
 			manifold.Resolve();
-		}
-
-		for (auto manifold : m_manifolds)
-		{
 			manifold.PositionalCorrection();
 		}
 
