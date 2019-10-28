@@ -815,6 +815,10 @@ namespace Rogue
 		for (auto manifold : m_manifolds)
 		{
 			manifold.Resolve();
+		}
+
+		for (auto manifold : m_manifolds)
+		{
 			manifold.PositionalCorrection();
 		}
 
