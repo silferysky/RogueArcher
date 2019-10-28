@@ -11,6 +11,8 @@
 
 		Rogue::Shader m_shader;
 		GLint m_transformLocation;
+
+		std::shared_ptr<Rogue::CameraSystem> m_pCamera;
 	public:
 		DebugDrawSystem();
 		~DebugDrawSystem() = default;
