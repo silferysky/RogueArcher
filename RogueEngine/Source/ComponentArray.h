@@ -73,6 +73,16 @@ namespace Rogue
 			}
 		}
 
+		/*Entity GetEntityFromIndex(size_t index) const
+		{
+			return REIndexToEntityMap[index];
+		}
+
+		size_t GetIndexFromEntity(Entity entity) const
+		{
+			return REEntityToIndexMap[entity];
+		}*/
+
 	private:
 
 		inline bool ComponentExists(Entity entity)

@@ -56,7 +56,7 @@ namespace Rogue
 			}
 
 			return;
-		}
+		} //End KeyTriggered
 		case EventType::EvKeyPressed:
 		{
 			KeyPressEvent* EvPressKey = dynamic_cast<KeyPressEvent*>(ev);
@@ -112,7 +112,6 @@ namespace Rogue
 						transform.setPosition(Vec2(-200.0f, 0.0f));
 					}
 				}
-
 				//For 2nd Entity
 				else if (*iEntity == 2)
 				{
@@ -148,7 +147,7 @@ namespace Rogue
 					}
 
 					break;
-				} // Entity 2
+				} // Entity 2 
 			} // End of Entity for-loop
 
 			break;
