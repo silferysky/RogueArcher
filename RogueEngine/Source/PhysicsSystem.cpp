@@ -61,7 +61,7 @@ namespace Rogue
 		g_engine.m_coordinator.InitTimeSystem("Physics System");
 		for (int step = 0; step < g_engine.GetStepCount(); ++step)
 		{
-			std::cout << g_engine.GetTimeScale() << std::endl;
+			//std::cout << g_engine.GetTimeScale() << std::endl;
 
 			// For all entities
 			std::set<Entity>::iterator iEntity;
