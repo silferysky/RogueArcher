@@ -9,8 +9,10 @@ namespace Rogue
 	class SceneManager
 	{
 		std::unique_ptr<ObjectFactory> m_objectFactory;
+		std::vector<std::string> m_loadedLevels;
 		std::string m_currentFileName;
-		unsigned int m_iterator = 0;
+		unsigned int m_objectIterator = 0;
+		unsigned int m_sceneIterator = 0;
 
 	public:
 		SceneManager();
@@ -31,9 +33,16 @@ namespace Rogue
 		void Clone(Entity toClone);
 		void Clone(const char* archetype);
 
-		void IncrementIterator();
-		void ResetIterator();
-		unsigned int GetIterator() const;
+		std::vector<std::string> GetLoadedLevels() const;
+		void AddToLoadedLevels(std::string name);
+
+		void IncrementObjectIterator();
+		void ResetObjectIterator();
+		unsigned int GetObjectIterator() const;
+
+		void IncrementSceneIterator();
+		void ResetSceneIterator();
+		unsigned int GetSceneIterator() const;
 
 		//For other systems to add entites here
 		void AddToActiveEntities(Entity ent);

@@ -11,7 +11,17 @@ namespace Rogue
 		m_globalVertices{ OBB::VertexList(model.size()) },
 		m_normals{ OBB::VertexList(model.size()) },
 		m_size{ model.size() }
-	{}
+	{
+		if (m_size == 0)
+		{
+			m_normals.reserve(m_size), m_globalVertices.reserve(m_size);
+
+			m_modelVertices.push_back(Vec2(0.5f, 0.5f));
+			m_modelVertices.push_back(Vec2(-0.5f, 0.5f));
+			m_modelVertices.push_back(Vec2(-0.5f, 0.5f));
+			m_modelVertices.push_back(Vec2(0.5f, -0.5f));
+		}
+	}
 
 	size_t OBB::getSize() const
 	{
