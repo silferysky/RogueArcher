@@ -7,6 +7,7 @@
 #include <vector>
 #include "REEngine.h"
 #include "Main.h"
+#include "EditorHierarchyInfo.h"
 
 
 namespace Rogue
