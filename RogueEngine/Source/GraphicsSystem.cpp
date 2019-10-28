@@ -58,16 +58,9 @@ namespace Rogue
 		// clear the buffer
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+		UpdateFrameBuffer();
 		//if (TranslateMessage(&msg) == WM_SIZE || TranslateMessage(&msg) == WM_DISPLAYCHANGE)
 		//{
-			auto handle = g_engine.GetWindowHandler();
-
-			glBindTexture(GL_TEXTURE_2D, m_texColourBuffer);
-
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, GetWindowWidth(handle), GetWindowHeight(handle), 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
-
-			glBindRenderbuffer(GL_RENDERBUFFER, m_RBO);
-			glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, GetWindowWidth(handle), GetWindowHeight(handle));
 		//}
 
 		glUseProgram(m_shader.GetShader());
@@ -164,8 +157,8 @@ namespace Rogue
 
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, GetWindowWidth(handle), GetWindowHeight(handle), 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
 
-		//glBindRenderbuffer(GL_RENDERBUFFER, m_RBO);
-		//glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, GetWindowWidth(handle), GetWindowHeight(handle));
+		glBindRenderbuffer(GL_RENDERBUFFER, m_RBO);
+		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, GetWindowWidth(handle), GetWindowHeight(handle));
 	}
 
 	GLuint& GraphicsSystem::getFBO()

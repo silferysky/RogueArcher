@@ -40,8 +40,12 @@ namespace Rogue
 		g_engine.m_coordinator.EndTimeSystem("Animation System");
 	}
 
-	void AnimationSystem::UpdateTexture(AnimationComponent* animComp)
+	void AnimationSystem::UpdateTexture(AnimationComponent* animate, SpriteComponent* sprite)
 	{
+		if (animate->getIsLooping())
+			return;
+
+		animate->setIsAnimating(false);
 	}
 
 	void AnimationSystem::Shutdown()
