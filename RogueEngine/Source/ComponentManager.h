@@ -16,10 +16,10 @@ namespace Rogue
 		void RegisterComponent()
 		{
 			const char* typeName = typeid(T).name();
-			RE_ASSERT(REComponentTypes.find(typeName) == REComponentTypes.end(), "Registering component type more than once.");
+			RE_ASSERT(m_componentTypes.find(typeName) == m_componentTypes.end(), "Registering component type more than once.");
 
 			// Add this component type to the component type map
-			REComponentTypes.insert({ typeName, RENextComponentType });
+			m_componentTypes.insert({ typeName, m_nextComponentType });
 
 			std::stringstream out;
 			out.clear();
@@ -28,7 +28,7 @@ namespace Rogue
 			RE_CORE_INFO(out.str());
 
 			// Create a ComponentArray pointer and add it to the component arrays map
-			REComponentArrays.insert({ typeName, std::make_shared<ComponentArray<T>>() });
+			m_componentArrays.insert({ typeName, std::make_shared<ComponentArray<T>>() });
 
 
 			out.clear();
@@ -37,15 +37,15 @@ namespace Rogue
 			RE_CORE_INFO(out.str());
 
 			// Increment the value so that the next component registered will be different
-			++RENextComponentType;
+			++m_nextComponentType;
 		}
 
 		template<typename T>
 		ComponentType GetComponentType()
 		{
 			const char* typeName = typeid(T).name();
-			RE_ASSERT(REComponentTypes.find(typeName) != REComponentTypes.end(), "Component not registered before use.");
-			return REComponentTypes[typeName];
+			RE_ASSERT(m_componentTypes.find(typeName) != m_componentTypes.end(), "Component not registered before use.");
+			return m_componentTypes[typeName];
 		}
 
 		template<typename T>
@@ -73,7 +73,7 @@ namespace Rogue
 		{
 			// Notify each component array that an entity has been destroyed
 			// If it has a component for that entity, it will remove it
-			for (auto const& pair : REComponentArrays)
+			for (auto const& pair : m_componentArrays)
 			{
 				auto const& component = pair.second;
 
@@ -84,13 +84,13 @@ namespace Rogue
 		
 		void clone(Entity existingEntity, Entity toClone)
 		{
-			for(auto i = REComponentArrays.begin(); i != REComponentArrays.cend(); i++)
+			for(auto i = m_componentArrays.begin(); i != m_componentArrays.cend(); i++)
 				i->second->clone(existingEntity, toClone);
 		}
 
 		size_t Size() const
 		{
-			return RENextComponentType;
+			return m_nextComponentType;
 		}
 
 	private:
@@ -100,15 +100,15 @@ namespace Rogue
 		{
 
 			const char* typeName = typeid(T).name();
-			RE_ASSERT(REComponentTypes.find(typeName) != REComponentTypes.end(), "Component not registered before use.");
-			return std::static_pointer_cast<ComponentArray<T>>(REComponentArrays[typeName]);
+			RE_ASSERT(m_componentTypes.find(typeName) != m_componentTypes.end(), "Component not registered before use.");
+			return std::static_pointer_cast<ComponentArray<T>>(m_componentArrays[typeName]);
 		}
 
-		ComponentType RENextComponentType{};
+		ComponentType m_nextComponentType{};
 
-		std::unordered_map<const char*, ComponentType> REComponentTypes{};
+		std::unordered_map<const char*, ComponentType> m_componentTypes{};
 
-		std::unordered_map<const char*, std::shared_ptr<BaseComponentArray>> REComponentArrays{};
+		std::unordered_map<const char*, std::shared_ptr<BaseComponentArray>> m_componentArrays{};
 
 	};
 }

@@ -21,31 +21,31 @@ namespace Rogue
 	public:
 		void InsertData(Entity entity, T component)
 		{
-			RE_ASSERT(REEntityToIndexMap.find(entity) == REEntityToIndexMap.end(), "Component added to same entity more than once.");
+			RE_ASSERT(m_entityToIndexMap.find(entity) == m_entityToIndexMap.end(), "Component added to same entity more than once.");
 			// Put new entry at end and update the maps
 			size_t newIndex = RESize;
-			REEntityToIndexMap[entity] = newIndex;
+			m_entityToIndexMap[entity] = newIndex;
 			REIndexToEntityMap[newIndex] = entity;
-			REComponentArray[newIndex] = component;
+			m_componentArray[newIndex] = component;
 			++RESize;
 		}
 
 		void RemoveData(Entity entity)
 		{
-			RE_ASSERT(REEntityToIndexMap.find(entity) != REEntityToIndexMap.end(), "Removing non-existent component.");
+			RE_ASSERT(m_entityToIndexMap.find(entity) != m_entityToIndexMap.end(), "Removing non-existent component.");
 			if (!RESize)
 				return;
 			// Copy element at end into deleted element's place to maintain density
-			size_t indexOfRemovedEntity = REEntityToIndexMap[entity];
+			size_t indexOfRemovedEntity = m_entityToIndexMap[entity];
 			size_t indexOfLastElement = RESize - 1;
-			REComponentArray[indexOfRemovedEntity] = REComponentArray[indexOfLastElement];
+			m_componentArray[indexOfRemovedEntity] = m_componentArray[indexOfLastElement];
 
 			// Update map to point to moved spot
 			Entity entityOfLastElement = REIndexToEntityMap[indexOfLastElement];
-			REEntityToIndexMap[entityOfLastElement] = indexOfRemovedEntity;
+			m_entityToIndexMap[entityOfLastElement] = indexOfRemovedEntity;
 			REIndexToEntityMap[indexOfRemovedEntity] = entityOfLastElement;
 
-			REEntityToIndexMap.erase(entity);
+			m_entityToIndexMap.erase(entity);
 			REIndexToEntityMap.erase(indexOfLastElement);
 
 			--RESize;
@@ -53,13 +53,13 @@ namespace Rogue
 
 		T& GetData(Entity entity)
 		{
-			RE_ASSERT(REEntityToIndexMap.find(entity) != REEntityToIndexMap.end(), "Retrieving non-existent component.");
-			return REComponentArray[REEntityToIndexMap[entity]];
+			RE_ASSERT(m_entityToIndexMap.find(entity) != m_entityToIndexMap.end(), "Retrieving non-existent component.");
+			return m_componentArray[m_entityToIndexMap[entity]];
 		}
 
 		void EntityDestroyed(Entity entity) override
 		{
-			if (REEntityToIndexMap.find(entity) != REEntityToIndexMap.end())
+			if (m_entityToIndexMap.find(entity) != m_entityToIndexMap.end())
 			{
 				RemoveData(entity);
 			}
@@ -77,12 +77,12 @@ namespace Rogue
 
 		inline bool ComponentExists(Entity entity)
 		{
-			return REEntityToIndexMap.find(entity) != REEntityToIndexMap.end();
+			return m_entityToIndexMap.find(entity) != m_entityToIndexMap.end();
 		}
 
-		std::array<T, MAX_ENTITIES> REComponentArray;
+		std::array<T, MAX_ENTITIES> m_componentArray;
 
-		std::unordered_map<Entity, size_t> REEntityToIndexMap;
+		std::unordered_map<Entity, size_t> m_entityToIndexMap;
 
 		std::unordered_map<size_t, Entity> REIndexToEntityMap;
 
