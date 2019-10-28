@@ -9,8 +9,7 @@ namespace Rogue
 	SceneManager::SceneManager()
 	:	m_objectFactory {std::make_unique<ObjectFactory>()},
 		m_currentFileName { "Resources/Level 1.json"}
-	{
-	}
+	{}
 
 	SceneManager::~SceneManager()
 	{
@@ -109,10 +108,15 @@ namespace Rogue
 		g_engine.m_coordinator.GetEntityManager().m_getActiveObjects().push_back(newInfo);
 	}
 
-	Entity SceneManager::CreateDefaultEntity()
+	Entity SceneManager::Create2DSprite()
 	{
 		Entity newEnt = g_engine.m_coordinator.CreateEntity();
-		g_engine.m_coordinator.CreateComponent<TransformComponent>(newEnt);
+		g_engine.m_coordinator.AddComponent<TransformComponent>(
+			newEnt,
+			TransformComponent(Vec2{ 0.0f, 0.0f }, Vec2{ 100.0f, 100.0f }, 0.0f));
+
+		auto& Sprite = g_engine.m_coordinator.CreateComponent<SpriteComponent>(newEnt);
+		Sprite.Deserialize("Resources/Assets/DefaultSprite.png");
 
 		HierarchyInfo newInfo{};
 		newInfo.m_Entity = newEnt;
