@@ -68,6 +68,7 @@
     <ClInclude Include="Source\CollisionManager.h" />
     <ClInclude Include="Source\MaterialComponent.h" />
     <ClInclude Include="Source\OBB.h" />
+    <ClInclude Include="Source\PhysicsTypes.hpp" />
     <ClInclude Include="Source\PlayerControllerComponent.h" />
     <ClInclude Include="Source\PlayerControllerSystem.h" />
     <ClInclude Include="Source\Polygon.h" />
