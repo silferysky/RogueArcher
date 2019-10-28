@@ -35,7 +35,7 @@ namespace Rogue
 		m_coordinator.RegisterSystem<GraphicsSystem>();
 		m_coordinator.RegisterSystem<DebugDrawSystem>();
 		m_coordinator.RegisterSystem<FontSystem>();
-		//m_coordinator.RegisterSystem<Editor>();
+		m_coordinator.RegisterSystem<Editor>();
 	}
 
 	void REEngine::RegisterComponents()
@@ -122,8 +122,6 @@ namespace Rogue
 				m_accumulatedTime -= g_fixedDeltaTime;
 				m_stepCount++;
 			}
-			glViewport(0, 0, GetWindowWidth(hWnd), GetWindowHeight(hWnd));
-
 			m_coordinator.Update();
 
 			SwapBuffers(hDC);
