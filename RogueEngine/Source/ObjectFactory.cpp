@@ -1,5 +1,4 @@
 #pragma once
-
 #include <bitset>
 #include <random>
 #include <vector>
@@ -10,6 +9,7 @@
 #include "logger.h"
 #include "EntityManager.h"
 #include "FileIO.h"
+#include "EditorHierarchyInfo.h"
 
 namespace Rogue
 {
@@ -42,7 +42,7 @@ namespace Rogue
 
 		g_engine.m_coordinator.AddComponent(backgroundEnt, backgroundSprite);
 		g_engine.m_coordinator.AddComponent(backgroundEnt, backgroundTransform);
-		m_recentEntities.push_back(backgroundEnt);
+		CREATE_HIERARCHY_OBJ(backgroundEnt, ostrstream);
 
 		for (Entity entity = 0; entity < entCount; ++entity)
 		{
@@ -62,7 +62,8 @@ namespace Rogue
 			ostrstream.str(level[cstr].GetString());
 
 			FactoryLoadComponent(curEnt, currentSignature, ostrstream.str());
-			m_recentEntities.push_back(curEnt);
+
+			CREATE_HIERARCHY_OBJ(curEnt, ostrstream);
 
 			debugStr << "Entity " << curEnt << "'s Signature: " << g_engine.m_coordinator.GetEntityManager().GetSignature(curEnt).to_ulong();
 			RE_INFO(debugStr.str());
@@ -82,15 +83,16 @@ namespace Rogue
 
 		//Minus one off due to Background being part of the list as well.
 		//Background is unique and will not be counted to the entCount
-		Entity entCount = static_cast<Entity>(m_recentEntities.size() - 1);
+		Entity entCount = 0;//static_cast<Entity>(m_recentEntities.size() - 1);
 		EntityManager* em = &g_engine.m_coordinator.GetEntityManager();
 		int intVar = (int)entCount;
 		RESerialiser::WriteToFile(fileName, "EntityCount", &intVar);
 
 		bool writingBackground = true;
 
-		for (Entity curEntity : m_recentEntities)
+		for (HierarchyInfo curHierarchy : g_engine.m_coordinator.GetActiveObjects())
 		{
+			Entity curEntity = curHierarchy.m_Entity;
 			//Skips background layer
 			if (writingBackground)
 			{
@@ -293,12 +295,17 @@ namespace Rogue
 				}
 			}
 		}
-		m_recentEntities.push_back(clonedEntity);
+		std::ostringstream ostrstream;
+		std::string stdstr;
+		CREATE_HIERARCHY_OBJ(clonedEntity, ostrstream);
 
 	}
 
 	void ObjectFactory::Clone(const char* archetype)
 	{
+		std::ostringstream ostrstream;
+		std::string stdstr;
+
 		//If the key exists
 		if (m_archetypes.count(archetype))
 		{
@@ -308,18 +315,8 @@ namespace Rogue
 			//Does the actual clone
 			std::string toDeserialise = m_archetypes[archetype];
 			FactoryLoadComponent(curEnt, curSignature, toDeserialise);
-			m_recentEntities.push_back(curEnt);
+			CREATE_HIERARCHY_OBJ(curEnt, ostrstream);
 		}
-	}
-
-	std::vector<Entity> ObjectFactory::GetRecentEntities() const
-	{
-		return m_recentEntities;
-	}
-
-	void ObjectFactory::ClearRecentEntities()
-	{
-		m_recentEntities.clear();
 	}
 
 	bool ObjectFactory::CheckFileTooSmall(size_t type, size_t size)
