@@ -381,6 +381,7 @@
     </ClInclude>
     <ClInclude Include="Source\PhysicsTypes.hpp">
       <Filter>RogueEngine\Systems\Collision</Filter>
+    </ClInclude>
     <ClInclude Include="Source\EditorHierarchyInfo.h">
       <Filter>RogueEditor\EditorFiles</Filter>
     </ClInclude>

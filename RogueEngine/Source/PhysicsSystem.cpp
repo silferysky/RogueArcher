@@ -17,7 +17,7 @@ namespace Rogue
 	void PhysicsSystem::applyForces(RigidbodyComponent& rigidbody) // F = ma
 	{
 		if (allowGravity)
-			rigidbody.setAcceleration(rigidbody.getAccForce() * rigidbody.getInvMass() + m_gravity);
+			rigidbody.setAcceleration(rigidbody.getAccForce() * rigidbody.getInvMass() + m_gravity * g_deltaTime);
 		else
 			rigidbody.setAcceleration(rigidbody.getAccForce() * rigidbody.getInvMass());
 	}
@@ -29,7 +29,7 @@ namespace Rogue
 		transform.offSetPosition(rigidbody.getVelocity() * simulationTime);
 
 		rigidbody.offSetVelocity(rigidbody.getAcceleration() * simulationTime);
-		rigidbody.setVelocity(rigidbody.getVelocity() * rigidbody.getDamping());
+		rigidbody.setVelocity(rigidbody.getVelocity() * std::pow(rigidbody.getDamping(), simulationTime));
 
 	}
 
@@ -53,7 +53,7 @@ namespace Rogue
 		
 		// Set physics system signature.
 		g_engine.m_coordinator.SetSystemSignature<PhysicsSystem>(signature);
-		m_gravity = { 0.0f, -100.0f };
+		m_gravity = { 0.0f, -50000.0f };
 	}
 
 	void PhysicsSystem::Update()
