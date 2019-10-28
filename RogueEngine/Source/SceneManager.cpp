@@ -46,7 +46,7 @@ namespace Rogue
 	void SceneManager::SaveLevel(const char* fileName)
 	{
 		if (m_objectFactory->CheckFileTooSmall(FILETYPE_LEVEL, g_engine.m_coordinator.GetActiveObjects().size()))
-			BasicIO::WriteLevelJsonFile(fileName, g_engine.m_coordinator.GetActiveObjects().size());
+			BasicIO::WriteLevelJsonFile(fileName, g_engine.m_coordinator.GetActiveObjects().size() - 1);
 		m_objectFactory->SaveLevel(fileName);
 	}
 

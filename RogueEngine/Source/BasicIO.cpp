@@ -73,7 +73,7 @@ namespace Rogue
 
 		//For EntCount
 		strstream << "{\n  \"MaxEntityCount\": " << numOfEnt;
-		strstream << "{\n  \"EntityCount\": " << 0;
+		strstream << ",\n  \"EntityCount\": " << 0;
 
 		//For Background Texture
 		if (includeBackground)
@@ -101,7 +101,7 @@ namespace Rogue
 	{
 		std::ostringstream strstream;
 
-		for (size_t i = 0; i < numOfEnt;)
+		for (size_t i = 0; i < numOfEnt; ++i)
 		{
 			//Header
 			strstream << ",\n  \"Entity" << i << "\": \"";
@@ -143,9 +143,6 @@ namespace Rogue
 
 			//End
 			strstream << "\"";
-
-			if (++i < numOfEnt)
-				strstream << ",";
 		}
 		return strstream.str();
 	}
