@@ -50,6 +50,7 @@ namespace Rogue
 
 	void GraphicsSystem::Update()
 	{
+		glDisable(GL_DEPTH_TEST);
 		g_engine.m_coordinator.InitTimeSystem("Graphics System");
 
 		glBindFramebuffer(GL_FRAMEBUFFER, m_FBO);
@@ -71,8 +72,6 @@ namespace Rogue
 		{
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(entity);
 			auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
-
-			glDisable(GL_DEPTH_TEST);
 
 			//if (!entity)
 			draw(&sprite, &transform);
@@ -99,11 +98,6 @@ namespace Rogue
 		transformMat = glm::scale(transformMat, glm::vec3(transform->getScale().x, transform->getScale().y, 1.0f));
 
 		glBindTexture(GL_TEXTURE_2D, texture.m_texture);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture.m_width, texture.m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, texture.m_data);
 
 		// model to world, world to view, view to projection
