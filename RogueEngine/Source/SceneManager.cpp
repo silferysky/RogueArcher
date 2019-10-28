@@ -1,11 +1,11 @@
 #include "SceneManager.h"
 #include "ObjectFactory.h"
+#include "EditorHierarchyInfo.h"
 
 namespace Rogue
 {
 	SceneManager::SceneManager()
 	:	m_objectFactory {std::make_unique<ObjectFactory>()},
-		m_activeEntities {std::vector<Entity>()},
 		m_currentFileName { "Resources/Level 1.json"}
 	{
 	}
@@ -27,12 +27,12 @@ namespace Rogue
 
 	void SceneManager::ClearActiveEntities()
 	{
-		m_activeEntities.clear();
+		g_engine.m_coordinator.GetEntityManager().m_getActiveObjects().clear();
 	}
 
 	void SceneManager::ClearAllEntities()
 	{
-		m_activeEntities.clear();
+		ClearActiveEntities();
 		g_engine.m_coordinator.DestroyAllEntity();
 	}
 
@@ -72,20 +72,25 @@ namespace Rogue
 	void SceneManager::AddToActiveEntities(Entity ent)
 	{
 		//Safety Check
-		for (auto iterator = m_activeEntities.begin(); iterator != m_activeEntities.end(); ++iterator)
+		auto& activeObjects = g_engine.m_coordinator.GetEntityManager().m_getActiveObjects();
+		for (auto iterator = activeObjects.begin(); iterator != activeObjects.end(); ++iterator)
 		{
-			if (*iterator == ent)
+			if (iterator->m_Entity == ent)
 				return;
 		}
 
-		m_activeEntities.push_back(ent);
+		HierarchyInfo newInfo{};
+		newInfo.m_Entity = ent;
+		g_engine.m_coordinator.GetEntityManager().m_getActiveObjects().push_back(newInfo);
 	}
 
 	Entity SceneManager::CreateDefaultEntity()
 	{
 		Entity newEnt = g_engine.m_coordinator.CreateEntity();
 		g_engine.m_coordinator.CreateComponent<TransformComponent>(newEnt);
-		m_activeEntities.push_back(newEnt);
+		HierarchyInfo newInfo{};
+		newInfo.m_Entity = newEnt;
+		g_engine.m_coordinator.GetEntityManager().m_getActiveObjects().push_back(newInfo);
 		return newEnt;
 	}
 }

@@ -9,7 +9,6 @@ namespace Rogue
 	class SceneManager
 	{
 		std::unique_ptr<ObjectFactory> m_objectFactory;
-		std::vector<Entity> m_activeEntities;
 		std::string m_currentFileName;
 
 	public:
@@ -37,7 +36,8 @@ namespace Rogue
 		Entity CreateDefaultEntity();
 	};
 
-#define MOVE_OBJECTFACTORY_TO_SCENEMANAGER	std::vector<Entity> entityVector = m_objectFactory->GetRecentEntities(); \
-											m_activeEntities.insert(m_activeEntities.begin(), entityVector.begin(), entityVector.end()); \
+#define MOVE_OBJECTFACTORY_TO_SCENEMANAGER	auto& entityManager = g_engine.m_coordinator.GetEntityManager(); \
+											std::vector<Entity> entityVector = m_objectFactory->GetRecentEntities(); \
+											entityManager.AddActiveObjects(entityVector); \
 											m_objectFactory->ClearRecentEntities()
 }

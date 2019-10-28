@@ -379,6 +379,9 @@
     <ClInclude Include="Source\Vector2D.h">
       <Filter>RogueEngine\Math</Filter>
     </ClInclude>
+    <ClInclude Include="Source\EditorHierarchyInfo.h">
+      <Filter>RogueEditor\EditorFiles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
