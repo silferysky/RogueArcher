@@ -46,17 +46,15 @@ namespace Rogue
 			// Load first scene
 			m_sceneManager->LoadLevel("Resources/Level 1.json");
 			m_sceneManager->LoadArchetypes("Resources/Archetypes.json");
-			//for(int i = 0; i < 1500; i++)
-				//m_objectFactory->Clone("Stuff");
+
 			//m_objectFactory->SaveLevel("Resources/Level 1.json");
 		}
 
 		void Update()
 		{
-			EventDispatcher::instance().Update(); // Should also be part of systems
-
 			// Update the core systems
-			m_systemManager->UpdateSystems();
+			m_systemManager->UpdateSystems(); 
+			EventDispatcher::instance().Update(); // Should also be part of systems
 		}
 
 		void Shutdown()

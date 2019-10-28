@@ -139,9 +139,6 @@
     <ClInclude Include="Source\Shape.h">
       <Filter>RogueEngine\Systems\Physics\Polygons</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Vector2D.h">
-      <Filter>RogueEngine\Math</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Matrix33.h">
       <Filter>RogueEngine\Math</Filter>
     </ClInclude>
@@ -379,6 +376,9 @@
     <ClInclude Include="Source\SceneManager.h">
       <Filter>RogueEngine\I/O</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Vector2D.h">
+      <Filter>RogueEngine\Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -404,9 +404,6 @@
     </ClCompile>
     <ClCompile Include="Source\Shape.cpp">
       <Filter>RogueEngine\Systems\Physics\Polygons</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Vector2D.cpp">
-      <Filter>RogueEngine\Math</Filter>
     </ClCompile>
     <ClCompile Include="Source\Matrix33.cpp">
       <Filter>RogueEngine\Math</Filter>
@@ -573,5 +570,24 @@
     <ClCompile Include="Source\SceneManager.cpp">
       <Filter>RogueEngine\I/O</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Vector2D.cpp">
+      <Filter>RogueEngine\Math</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Level 1.json">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\Archetypes.json">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\Config.json">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\tile.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
