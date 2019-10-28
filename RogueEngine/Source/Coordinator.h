@@ -80,13 +80,12 @@ namespace Rogue
 
 		void DestroyAllEntity()
 		{
-			size_t count = m_entityManager->GetActiveEntityCount();
-
-			for (size_t it = 0; it < count; ++it)
+			while (GetActiveObjects().size())
 			{
-				//Entity ent = m_entityManager->
-				//DestroyEntity(it);
+				DestroyEntity(GetActiveObjects().back().m_Entity);
+				GetActiveObjects().pop_back();
 			}
+			m_sceneManager->ResetIterator();
 		}
 
 		Texture loadTexture(const char* texture)

@@ -1,5 +1,4 @@
 #pragma once
-
 #include <bitset>
 #include <random>
 #include <vector>
@@ -10,6 +9,7 @@
 #include "logger.h"
 #include "EntityManager.h"
 #include "FileIO.h"
+#include "EditorHierarchyInfo.h"
 
 namespace Rogue
 {
@@ -26,6 +26,7 @@ namespace Rogue
 		const char* cstr;
 
 		//For Entity Count
+		m_maxEntityCount = level["MaxEntityCount"].GetInt();
 		Entity entCount = level["EntityCount"].GetInt();
 
 		//For Background
@@ -41,7 +42,7 @@ namespace Rogue
 
 		g_engine.m_coordinator.AddComponent(backgroundEnt, backgroundSprite);
 		g_engine.m_coordinator.AddComponent(backgroundEnt, backgroundTransform);
-		m_recentEntities.push_back(backgroundEnt);
+		CREATE_HIERARCHY_OBJ(backgroundEnt, ostrstream);
 
 		for (Entity entity = 0; entity < entCount; ++entity)
 		{
@@ -61,7 +62,8 @@ namespace Rogue
 			ostrstream.str(level[cstr].GetString());
 
 			FactoryLoadComponent(curEnt, currentSignature, ostrstream.str());
-			m_recentEntities.push_back(curEnt);
+
+			CREATE_HIERARCHY_OBJ(curEnt, ostrstream);
 
 			debugStr << "Entity " << curEnt << "'s Signature: " << g_engine.m_coordinator.GetEntityManager().GetSignature(curEnt).to_ulong();
 			RE_INFO(debugStr.str());
@@ -81,15 +83,17 @@ namespace Rogue
 
 		//Minus one off due to Background being part of the list as well.
 		//Background is unique and will not be counted to the entCount
-		Entity entCount = static_cast<Entity>(m_recentEntities.size() - 1);
+		Entity entCount = static_cast<Entity>(g_engine.m_coordinator.GetActiveObjects().size() - 1);
 		EntityManager* em = &g_engine.m_coordinator.GetEntityManager();
-		int intVar = (int)entCount;
+		int intVar = static_cast<int>(entCount);
 		RESerialiser::WriteToFile(fileName, "EntityCount", &intVar);
 
 		bool writingBackground = true;
+		Entity entityVal = 0;
 
-		for (Entity curEntity : m_recentEntities)
+		for (HierarchyInfo curHierarchy : g_engine.m_coordinator.GetActiveObjects())
 		{
+			Entity curEntity = curHierarchy.m_Entity;
 			//Skips background layer
 			if (writingBackground)
 			{
@@ -98,8 +102,7 @@ namespace Rogue
 			}
 
 			//Entity value acts as the value to store (-1 because of background)
-			Entity entityVal = curEntity - 1;
-			Signature currentSignature = em->GetSignature(curEntity);
+			Signature currentSignature = em->GetSignature(curHierarchy.m_Entity);
 
 			//cstr will go out of scope if you choose to do strstream.str().c_str()
 			//This is the proper (Non macro) way of setting the string
@@ -150,6 +153,11 @@ namespace Rogue
 							strstream << "LogicComponent{" << g_engine.m_coordinator.GetComponent<LogicComponent>(curEntity).Serialize() << "}";
 							break;
 						}
+						case static_cast<int>(STATS) :
+						{
+							strstream << "StatsComponent{" << g_engine.m_coordinator.GetComponent<StatsComponent>(curEntity).Serialize() << "}";
+							break;
+						}
 						case static_cast<int>(ANIMATION) :
 						{
 							strstream << "Animation{" << g_engine.m_coordinator.GetComponent<AnimationComponent>(curEntity).Serialize().c_str() << "}";
@@ -171,6 +179,7 @@ namespace Rogue
 			CLEARSTR(strstream);
 			strstream << "Entity" << entityVal;
 			RESerialiser::WriteToFile(fileName, strstream.str().c_str(), cstr);
+			++entityVal;
 		}
 
 		RE_INFO("LEVEL SAVED");
@@ -184,6 +193,7 @@ namespace Rogue
 		Signature curSignature;
 
 		rapidjson::Document level = RESerialiser::DeserialiseFromFile(fileName);
+		m_maxArcheTypeCount = level["EntityCount"].GetInt();
 		Entity entCount = level["EntityCount"].GetInt();
 
 		for (Entity count = 0; count < entCount; ++count)
@@ -301,12 +311,17 @@ namespace Rogue
 				}
 			}
 		}
-		m_recentEntities.push_back(clonedEntity);
+		std::ostringstream ostrstream;
+		std::string stdstr;
+		CREATE_HIERARCHY_OBJ(clonedEntity, ostrstream);
 
 	}
 
 	void ObjectFactory::Clone(const char* archetype)
 	{
+		std::ostringstream ostrstream;
+		std::string stdstr;
+
 		//If the key exists
 		if (m_archetypes.count(archetype))
 		{
@@ -316,18 +331,16 @@ namespace Rogue
 			//Does the actual clone
 			std::string toDeserialise = m_archetypes[archetype];
 			FactoryLoadComponent(curEnt, curSignature, toDeserialise);
-			m_recentEntities.push_back(curEnt);
+			CREATE_HIERARCHY_OBJ(curEnt, ostrstream);
 		}
 	}
 
-	std::vector<Entity> ObjectFactory::GetRecentEntities() const
+	bool ObjectFactory::CheckFileTooSmall(size_t type, size_t size)
 	{
-		return m_recentEntities;
-	}
-
-	void ObjectFactory::ClearRecentEntities()
-	{
-		m_recentEntities.clear();
+		if (type == FILETYPE_LEVEL)
+			return size > m_maxEntityCount + 1; // +1 for background
+		else
+			return size > m_maxArcheTypeCount; 
 	}
 
 	void ObjectFactory::FactoryLoadComponent(Entity curEnt, Signature signature, std::string value)

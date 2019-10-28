@@ -18,26 +18,26 @@ namespace Rogue
 		{
 			if (ImGui::BeginMenu("Component"))
 			{
-				if (ImGui::MenuItem("Add"))
+				if (ImGui::MenuItem("Add",nullptr,false,false))
 				{
 
 				}
 				if (ImGui::BeginMenu("Mesh"))
 				{
-					if (ImGui::MenuItem("Mesh Filter"))
+					if (ImGui::MenuItem("Mesh Filter", nullptr, false, false))
 					{
 
 					}
-					if (ImGui::MenuItem("TextMesh"))
+					if (ImGui::MenuItem("TextMesh", nullptr, false, false))
 					{
 
 					}
 					ImGui::Separator();
-					if (ImGui::MenuItem("Mesh Renderer"))
+					if (ImGui::MenuItem("Mesh Renderer", nullptr, false, false))
 					{
 
 					}
-					if (ImGui::MenuItem("Skinned Mesh Renderer"))
+					if (ImGui::MenuItem("Skinned Mesh Renderer", nullptr, false, false))
 					{
 
 					}
@@ -45,37 +45,37 @@ namespace Rogue
 				}
 				if (ImGui::BeginMenu("Physics"))
 				{
-					if (ImGui::MenuItem("Rigid Body"))
+					if (ImGui::MenuItem("Rigid Body", nullptr, false, false))
 					{
 
 					}
 					ImGui::Separator();
-					if (ImGui::MenuItem("Box Collider"))
+					if (ImGui::MenuItem("Box Collider", nullptr, false, false))
 					{
 
 					}
 
-					if (ImGui::MenuItem("Circle Collider"))
+					if (ImGui::MenuItem("Circle Collider", nullptr, false, false))
 					{
 
 					}
 
-					if (ImGui::MenuItem("Edge Collider"))
+					if (ImGui::MenuItem("Edge Collider", nullptr, false, false))
 					{
 
 					}
 
-					if (ImGui::MenuItem("Polygon Collider"))
+					if (ImGui::MenuItem("Polygon Collider", nullptr, false, false))
 					{
 
 					}
 
 					ImGui::Separator();
-					if (ImGui::MenuItem("Distant Joint"))
+					if (ImGui::MenuItem("Distant Joint", nullptr, false, false))
 					{
 
 					}
-					if (ImGui::MenuItem("Friction Joint"))
+					if (ImGui::MenuItem("Friction Joint", nullptr, false, false))
 					{
 
 					}

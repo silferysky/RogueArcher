@@ -18,28 +18,28 @@ namespace Rogue
 		{
 			if (ImGui::BeginMenu("GameObject"))
 			{
-				if (ImGui::MenuItem("Create Empty"))
+				if (ImGui::MenuItem("Create Empty",nullptr,false,false))
 				{
 		
 				}
-				if (ImGui::MenuItem("Create Empty Child"))
+				if (ImGui::MenuItem("Create Empty Child", nullptr, false, false))
 				{
 		
 				}
 				if (ImGui::BeginMenu("2D Object"))
 				{
-					if (ImGui::MenuItem("Sprite"))
+					if (ImGui::MenuItem("Sprite", nullptr, false, false))
 					{
 		
 					}
 					ImGui::Separator();
 		
-					if (ImGui::MenuItem("Sprite Mask"))
+					if (ImGui::MenuItem("Sprite Mask", nullptr, false, false))
 					{
 		
 					}
 		
-					if (ImGui::MenuItem("Tilemap"))
+					if (ImGui::MenuItem("Tilemap", nullptr, false, false))
 					{
 		
 					}
