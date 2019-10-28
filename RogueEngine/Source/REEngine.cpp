@@ -122,8 +122,6 @@ namespace Rogue
 				m_accumulatedTime -= g_fixedDeltaTime;
 				m_stepCount++;
 			}
-			glViewport(0, 0, GetWindowWidth(hWnd), GetWindowHeight(hWnd));
-
 			m_coordinator.Update();
 
 			SwapBuffers(hDC);

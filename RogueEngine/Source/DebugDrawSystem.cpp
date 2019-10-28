@@ -61,7 +61,7 @@
 			auto& circle = g_engine.m_coordinator.GetComponent<Rogue::CircleCollider2DComponent>(entity);
 			auto& rBody = g_engine.m_coordinator.GetComponent<Rogue::RigidbodyComponent>(entity);
 
-			glDisable(GL_DEPTH_TEST);
+			//glDisable(GL_DEPTH_TEST);
 
 			if (entity)
 			{
