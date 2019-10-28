@@ -54,6 +54,8 @@ namespace Rogue
 		{
 			// Update the core systems
 			m_systemManager->UpdateSystems(); 
+
+			// If placed before ^, will cause memory leak.
 			EventDispatcher::instance().Update(); // Should also be part of systems
 		}
 
