@@ -12,7 +12,7 @@ namespace Rogue
 
 	class AnimationSystem : public System, public EventListener
 	{
-		void UpdateTexture(AnimationComponent* animComp);
+		void UpdateTexture(AnimationComponent* animate, SpriteComponent* sprite);
 	public:
 		AnimationSystem();
 		~AnimationSystem() = default;
