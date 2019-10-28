@@ -20,6 +20,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\AIType.h" />
+    <ClInclude Include="Source\AnimationComponent.h" />
+    <ClInclude Include="Source\AnimationSystem.h" />
     <ClInclude Include="Source\BaseAI.h" />
     <ClInclude Include="Source\BaseCollider.h" />
     <ClInclude Include="Source\BaseComponent.h" />
@@ -117,6 +119,8 @@
     <ClInclude Include="Source\WindowHelper.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\AnimationComponent.cpp" />
+    <ClCompile Include="Source\AnimationSystem.cpp" />
     <ClCompile Include="Source\BaseAI.cpp" />
     <ClCompile Include="Source\BoxCollider2DComponent.cpp" />
     <ClCompile Include="Source\CameraSystem.cpp" />
