@@ -13,14 +13,27 @@
 
 namespace Rogue
 {
-	enum class COLLISION_TYPE
+	enum class BodyType
 	{
-		BC,
-		AABB,
-		OBB
+		STATIC,		// Does not move, collides with DYNAMIC
+		KINEMATIC,	// Moves by itself, collides with DYNAMIC
+		DYNAMIC,	// Collides with all, requires collision response
+		
+		MAX_TYPES
 	};
 
-	enum class COLLISION_MODE
+	enum class CollisionType
+	{
+		BC = 0,
+		AABB,
+		OBB,
+		POINT,
+		LINE,
+
+		MAX_TYPES
+	};
+
+	enum class CollisionMode
 	{
 		AWAKE,
 		ASLEEP

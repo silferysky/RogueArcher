@@ -379,6 +379,9 @@
     <ClInclude Include="Source\Vector2D.h">
       <Filter>RogueEngine\Math</Filter>
     </ClInclude>
+    <ClInclude Include="Source\PhysicsTypes.hpp">
+      <Filter>RogueEngine\Systems\Collision</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
