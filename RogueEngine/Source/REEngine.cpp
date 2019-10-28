@@ -48,6 +48,7 @@ namespace Rogue
 		m_coordinator.RegisterComponent<PlayerControllerComponent>();
 		m_coordinator.RegisterComponent<LogicComponent>();
 		m_coordinator.RegisterComponent<StatsComponent>();
+		m_coordinator.RegisterComponent<AnimationComponent>();
 	}
 
 	void REEngine::Init()

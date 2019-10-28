@@ -29,7 +29,7 @@ namespace Rogue
 		{
 			auto& animate = g_engine.m_coordinator.GetComponent<AnimationComponent>(entity);
 
-			if (animate->getIsAnimating() == false)
+			if (animate.getIsAnimating() == false)
 				continue;
 
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(entity);

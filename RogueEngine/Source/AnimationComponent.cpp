@@ -56,8 +56,9 @@ namespace Rogue
 	std::string AnimationComponent::Serialize()
 	{
 		std::ostringstream ss;
-		ss << m_secondsPerFrame << ";";
 		ss << m_frames << ";";
+		ss << m_offSet << ";";
+		ss << m_secondsPerFrame << ";";
 		ss << m_isAnimating << ";";
 		ss << m_isLooping << ";";
 		return ss.str();
@@ -77,12 +78,15 @@ namespace Rogue
 				setFrames(std::stof(s1));
 				break;
 			case 1:
-				setSecondsPerFrame(std::stof(s1));
+				setOffSet(std::stof(s1));
 				break;
 			case 2:
-				setIsAnimating(std::stof(s1));
+				setSecondsPerFrame(std::stof(s1));
 				break;
 			case 3:
+				setIsAnimating(std::stof(s1));
+				break;
+			case 4:
 				setIsLooping(std::stof(s1));
 				break;
 			default:
