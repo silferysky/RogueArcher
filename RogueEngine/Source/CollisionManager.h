@@ -13,6 +13,19 @@
 
 namespace Rogue
 {
+	enum class COLLISION_TYPE
+	{
+		BC,
+		AABB,
+		OBB
+	};
+
+	enum class COLLISION_MODE
+	{
+		AWAKE,
+		ASLEEP
+	};
+
 	class CollisionManager
 	{
 		std::vector<std::pair<Entity, Entity>> m_collidedPairs; // Stored during collision tests

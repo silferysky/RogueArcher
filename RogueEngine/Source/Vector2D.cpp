@@ -1,4 +1,5 @@
 #include <cmath>
+#include <algorithm>
 #include "Vector2D.h"
 
 
@@ -7,11 +8,12 @@ namespace Rogue
 	const Vector2D Vector2D::unitX = { 1.0f, 0.0f };
 	const Vector2D Vector2D::unitY = { 0.0f, 1.0f };
 
-	Vector2D::Vector2D(const int num) : x{ static_cast<float>(num) }, y{ static_cast<float>(num) }
+	Vector2D::Vector2D(int X, int Y) :
+		x{ static_cast<float>(X) }, y{ static_cast<float>(Y) }
 	{}
 
 
-	Vector2D::Vector2D(const float X, const float Y) : x{ X }, y{ Y }
+	Vector2D::Vector2D(float X, float Y) : x{ X }, y{ Y }
 	{}
 
 
@@ -19,26 +21,32 @@ namespace Rogue
 	{}
 
 
-	Vector2D::Vector2D(const Vector2D& vec)
+	Vector2D::Vector2D(const Vector2D& vec) :
+		x{ vec.x }, y{ vec.y }
+	{}
+
+	Vector2D::Vector2D(Vector2D&& rhs) noexcept :
+		x{ 0 }, y{ 0 }
 	{
-		x = vec.x;
-		y = vec.y;
+		std::swap(x, rhs.x);
+		std::swap(y, rhs.y);
 	}
 
-
-	Vector2D& Vector2D::operator = (const int num)
+	Vector2D& Vector2D::operator=(const Vector2D& rhs)
 	{
-		x = (float)num;
-		y = (float)num;
+		if (&rhs != this)
+		{
+			x = rhs.x;
+			y = rhs.y;
+		}
 
 		return *this;
 	}
 
-
-	Vector2D& Vector2D::operator=(const Vector2D& rhs)
+	Vector2D& Vector2D::operator=(Vector2D&& rhs) noexcept
 	{
-		x = rhs.x;
-		y = rhs.y;
+		std::swap(x, rhs.x);
+		std::swap(y, rhs.y);
 
 		return *this;
 	}

@@ -18,7 +18,7 @@ namespace Rogue
 		signature.set(g_engine.m_coordinator.GetComponentType<RigidbodyComponent>());
 		signature.set(g_engine.m_coordinator.GetComponentType<TransformComponent>());
 		signature.set(g_engine.m_coordinator.GetComponentType<BoxCollider2DComponent>());
-		//signature.set(g_engine.m_coordinator.GetComponentType<CircleCollider2DComponent>());
+		signature.set(g_engine.m_coordinator.GetComponentType<CircleCollider2DComponent>());
 
 		// Set Collision system signature.
 		g_engine.m_coordinator.SetSystemSignature<CollisionSystem>(signature);
@@ -35,7 +35,7 @@ namespace Rogue
 				auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
 				auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
 				auto& currBoxCollider = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iEntity);
-				//	auto& circleCollider = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(*iEntity);
+				auto& circleCollider = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(*iEntity);
 
 				// Update collidables
 				m_colliderManager.UpdateAABB(currBoxCollider.m_aabb, transform);
@@ -53,7 +53,7 @@ namespace Rogue
 
 					if (m_colliderManager.DiscreteAABBvsAABB(currBoxCollider.m_aabb, nextBoxCollider.m_aabb))
 					{
-						std::cout << "Entity " << *iEntity << " AABB collides with Entity " << *iNextEntity << " AABB" << std::endl;
+				//		std::cout << "Entity " << *iEntity << " AABB collides with Entity " << *iNextEntity << " AABB" << std::endl;
 
 						m_colliderManager.InsertColliderPair(*iEntity, *iNextEntity);
 					}
