@@ -73,7 +73,7 @@ namespace Rogue
 			}
 		}
 
-		Entity GetEntityFromIndex(size_t index) const
+		/*Entity GetEntityFromIndex(size_t index) const
 		{
 			return REIndexToEntityMap[index];
 		}
@@ -81,7 +81,7 @@ namespace Rogue
 		size_t GetIndexFromEntity(Entity entity) const
 		{
 			return REEntityToIndexMap[entity];
-		}
+		}*/
 
 	private:
 
