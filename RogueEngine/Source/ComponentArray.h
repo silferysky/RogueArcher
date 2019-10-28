@@ -25,7 +25,7 @@ namespace Rogue
 			// Put new entry at end and update the maps
 			size_t newIndex = RESize;
 			m_entityToIndexMap[entity] = newIndex;
-			REIndexToEntityMap[newIndex] = entity;
+			m_indexToEntityMap[newIndex] = entity;
 			m_componentArray[newIndex] = component;
 			++RESize;
 		}
@@ -41,12 +41,12 @@ namespace Rogue
 			m_componentArray[indexOfRemovedEntity] = m_componentArray[indexOfLastElement];
 
 			// Update map to point to moved spot
-			Entity entityOfLastElement = REIndexToEntityMap[indexOfLastElement];
+			Entity entityOfLastElement = m_indexToEntityMap[indexOfLastElement];
 			m_entityToIndexMap[entityOfLastElement] = indexOfRemovedEntity;
-			REIndexToEntityMap[indexOfRemovedEntity] = entityOfLastElement;
+			m_indexToEntityMap[indexOfRemovedEntity] = entityOfLastElement;
 
 			m_entityToIndexMap.erase(entity);
-			REIndexToEntityMap.erase(indexOfLastElement);
+			m_indexToEntityMap.erase(indexOfLastElement);
 
 			--RESize;
 		}
@@ -94,7 +94,7 @@ namespace Rogue
 
 		std::unordered_map<Entity, size_t> m_entityToIndexMap;
 
-		std::unordered_map<size_t, Entity> REIndexToEntityMap;
+		std::unordered_map<size_t, Entity> m_indexToEntityMap;
 
 		size_t RESize;
 	};
