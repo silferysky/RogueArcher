@@ -19,6 +19,5 @@ namespace Rogue
 		void Shutdown() override;
 
 	private:
-
 	};
 }
