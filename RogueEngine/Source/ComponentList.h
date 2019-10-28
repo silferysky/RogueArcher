@@ -9,6 +9,7 @@
 #include "PlayerControllerComponent.h"
 #include "LogicComponent.h"
 #include "StatsComponent.h"
+#include "AnimationComponent.h"
 
 namespace Rogue
 {
