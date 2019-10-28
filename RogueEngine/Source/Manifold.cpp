@@ -36,7 +36,7 @@ namespace Rogue
 		m_restitution = REMin(bodyA.getBounciness(), bodyB.getBounciness());
 
 		// Scalar value of impulse
-		float impulseMagnitude = -(1 + 0.4) * velOnNormal;
+		float impulseMagnitude = -(1.0f + m_restitution) * velOnNormal;
 		impulseMagnitude /= bodyA.getInvMass() + bodyB.getInvMass();
 
 		Vec2 impulse = impulseMagnitude * m_normal;
