@@ -27,14 +27,7 @@ namespace Rogue
 		{
 			if (ImGui::Selectable("2D Sprite"))
 			{
-				HierarchyInfo temp;
-				std::stringstream strstream;
-				std::string str = "Game Object ";
-				strstream << str << g_engine.m_coordinator.GetSceneManager().GetIterator();
-				temp.m_Entity = g_engine.m_coordinator.GetSceneManager().GetIterator();
-				temp.m_objectName = strstream.str();
-				vector.push_back(temp);
-				g_engine.m_coordinator.GetSceneManager().IncrementIterator();
+				g_engine.m_coordinator.GetSceneManager().CreateDefaultEntity();
 			}
 			if (ImGui::Selectable("Camera"))
 			{
@@ -48,7 +41,6 @@ namespace Rogue
 		static char bufferX[64] = "";
 		ImGui::InputText("", bufferX, 64);
 		ImGui::Separator();
-		static int j = -1;
 		for (auto& i : vector)
 		{
 			if (ImGui::Selectable(i.m_objectName.c_str(), i.m_selected, ImGuiSelectableFlags_AllowDoubleClick))

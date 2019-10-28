@@ -38,7 +38,7 @@ namespace Rogue
 
 					ImGui::Text("Rotation ");
 					ImGui::SameLine();
-					ImGui::DragFloat("   ", &Rotation);
+					ImGui::DragFloat("   ", &Rotation,0.1f,0.0f,6.28f);
 					g_engine.m_coordinator.GetComponent<TransformComponent>(i.m_Entity).setRotation(Rotation);
 					ImGui::Text("Translate");
 					ImGui::SameLine();
@@ -51,14 +51,34 @@ namespace Rogue
 				}
 			}			
 
+			ImGui::PushItemWidth(50);
+			if (ImGui::Button("Add Component"))
+			{
+				ImGui::OpenPopup("Component");
+			}
+			if (ImGui::BeginPopup("Component"))
+			{
+				if (ImGui::Selectable("Sprite Component"))
+				{
 
+				}
+				if (ImGui::Selectable("Transform Component"))
+				{
+
+				}
+				if (ImGui::Selectable("Player Controller Component"))
+				{
+
+				}
+				if (ImGui::Selectable("Logic Component"))
+				{
+
+				}
+				ImGui::EndPopup();
+			}
 
 		}
-		ImGui::PushItemWidth(50);
-		if (ImGui::Button("Add Component"))
-		{
 
-		}
 		ImGui::End();
 	}
 	void ImGuiInspector::Shutdown()
