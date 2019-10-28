@@ -1,8 +1,7 @@
 #pragma once
-#include <GL/glew.h>
+
 #include <map>
-#include "SOIL.h"
-#include <iostream>
+#include <GL/glew.h>
 #include "Logger.h"
 
 namespace Rogue
@@ -16,45 +15,23 @@ namespace Rogue
 		}
 	};*/
 
+	struct Texture
+	{
+		GLuint m_texture;
+		int m_width;
+		int m_height;
+		unsigned char* m_data;
+	};
+
 	class TextureManager
 	{
-		std::map<std::string, GLuint> textureMap;
+		std::map<std::string, Texture> textureMap;
 	public:
 		TextureManager() = default;
-		~TextureManager()
-		{
-			for (auto itr = textureMap.begin(); itr != textureMap.begin(); ++itr)
-				glDeleteTextures(1, &(itr->second));
-		}
+		~TextureManager();
 
-		std::map<std::string, GLuint> getTextureMap() const
-		{
-			return textureMap;
-		}
+		std::map<std::string, Texture> getTextureMap() const;
 
-		GLuint loadTexture(const char* texture)
-		{
-			auto itr = textureMap.find(std::string(texture));
-			if (itr != textureMap.end())
-				return itr->second;
-			else
-			{
-				GLuint newTexture = SOIL_load_OGL_texture // load an image file directly as a new OpenGL texture 
-				(
-					texture,
-					SOIL_LOAD_AUTO,
-					SOIL_CREATE_NEW_ID,
-					SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
-				);
-
-				if (newTexture == 0)
-					RE_INFO("SOIL error: ", SOIL_last_result());
-
-				textureMap.emplace(std::string(texture), newTexture);
-
-				auto itr1 = textureMap.find(texture);
-				return itr1->second;
-			}
-		}
+		Texture loadTexture(const char* texture);
 	};
 }

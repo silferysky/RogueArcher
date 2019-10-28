@@ -573,6 +573,9 @@
     <ClCompile Include="Source\Vector2D.cpp">
       <Filter>RogueEngine\Math</Filter>
     </ClCompile>
+    <ClCompile Include="Source\TextureManager.cpp">
+      <Filter>RogueEngine\Systems\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Level 1.json">
