@@ -18,7 +18,7 @@ namespace Rogue
 		signature.set(g_engine.m_coordinator.GetComponentType<RigidbodyComponent>());
 		signature.set(g_engine.m_coordinator.GetComponentType<TransformComponent>());
 		signature.set(g_engine.m_coordinator.GetComponentType<BoxCollider2DComponent>());
-		//signature.set(g_engine.m_coordinator.GetComponentType<CircleCollider2DComponent>());
+		signature.set(g_engine.m_coordinator.GetComponentType<CircleCollider2DComponent>());
 
 		// Set Collision system signature.
 		g_engine.m_coordinator.SetSystemSignature<CollisionSystem>(signature);
@@ -30,12 +30,12 @@ namespace Rogue
 		for (int step = 0; step < g_engine.GetStepCount(); ++step)
 		{
 			std::set<Entity>::iterator iEntity;
-			for (iEntity = m_entities.begin()++; iEntity != m_entities.end(); ++iEntity)
+			for (iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
 			{
 				auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
 				auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
 				auto& currBoxCollider = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iEntity);
-				//	auto& circleCollider = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(*iEntity);
+				auto& circleCollider = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(*iEntity);
 
 				// Update collidables
 				m_colliderManager.UpdateAABB(currBoxCollider.m_aabb, transform);

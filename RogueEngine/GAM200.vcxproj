@@ -35,6 +35,7 @@
     <ClInclude Include="Source\EditorFile.h" />
     <ClInclude Include="Source\EditorGameObject.h" />
     <ClInclude Include="Source\EditorHierarchy.h" />
+    <ClInclude Include="Source\EditorHierarchyInfo.h" />
     <ClInclude Include="Source\EditorInspector.h" />
     <ClInclude Include="Source\EditorProject.h" />
     <ClInclude Include="Source\EditorViewport.h" />
@@ -67,6 +68,7 @@
     <ClInclude Include="Source\CollisionManager.h" />
     <ClInclude Include="Source\MaterialComponent.h" />
     <ClInclude Include="Source\OBB.h" />
+    <ClInclude Include="Source\PhysicsTypes.hpp" />
     <ClInclude Include="Source\PlayerControllerComponent.h" />
     <ClInclude Include="Source\PlayerControllerSystem.h" />
     <ClInclude Include="Source\Polygon.h" />

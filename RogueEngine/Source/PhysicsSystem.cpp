@@ -17,17 +17,19 @@ namespace Rogue
 	void PhysicsSystem::applyForces(RigidbodyComponent& rigidbody) // F = ma
 	{
 		if (allowGravity)
-			rigidbody.setAcceleration(rigidbody.getAccForce() * rigidbody.getInvMass() + m_gravity);
+			rigidbody.setAcceleration(rigidbody.getAccForce() * rigidbody.getInvMass() + m_gravity * g_deltaTime);
 		else
 			rigidbody.setAcceleration(rigidbody.getAccForce() * rigidbody.getInvMass());
 	}
 
 	void PhysicsSystem::integrateAcceleration(RigidbodyComponent& rigidbody, TransformComponent& transform)
 	{
-		transform.offSetPosition(rigidbody.getVelocity() * g_fixedDeltaTime);
+		float simulationTime = g_fixedDeltaTime * g_engine.GetTimeScale(); // To support slow motion
 
-		rigidbody.offSetVelocity(rigidbody.getAcceleration() * g_fixedDeltaTime);
-		rigidbody.setVelocity(rigidbody.getVelocity() * rigidbody.getDamping());
+		transform.offSetPosition(rigidbody.getVelocity() * simulationTime);
+
+		rigidbody.offSetVelocity(rigidbody.getAcceleration() * simulationTime);
+		rigidbody.setVelocity(rigidbody.getVelocity() * std::pow(rigidbody.getDamping(), simulationTime));
 
 	}
 
@@ -51,7 +53,7 @@ namespace Rogue
 		
 		// Set physics system signature.
 		g_engine.m_coordinator.SetSystemSignature<PhysicsSystem>(signature);
-		m_gravity = { 0.0f, -100.0f };
+		m_gravity = { 0.0f, -50000.0f };
 	}
 
 	void PhysicsSystem::Update()
@@ -59,6 +61,8 @@ namespace Rogue
 		g_engine.m_coordinator.InitTimeSystem("Physics System");
 		for (int step = 0; step < g_engine.GetStepCount(); ++step)
 		{
+			std::cout << g_engine.GetTimeScale() << std::endl;
+
 			// For all entities
 			std::set<Entity>::iterator iEntity;
 			for (iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)

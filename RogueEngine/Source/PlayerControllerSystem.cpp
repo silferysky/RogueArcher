@@ -50,8 +50,13 @@ namespace Rogue
 			if (keycode == KeyPress::KeyN)
 				g_engine.m_coordinator.cloneArchetypes("Circle");
 
+			if (keycode == KeyPress::MB2)
+			{
+				g_engine.SetTimeScale(0.1f);
+			}
+
 			return;
-		}
+		} //End KeyTriggered
 		case EventType::EvKeyPressed:
 		{
 			KeyPressEvent* EvPressKey = dynamic_cast<KeyPressEvent*>(ev);
@@ -107,7 +112,6 @@ namespace Rogue
 						transform.setPosition(Vec2(-200.0f, 0.0f));
 					}
 				}
-
 				//For 2nd Entity
 				else if (*iEntity == 2)
 				{
@@ -143,10 +147,37 @@ namespace Rogue
 					}
 
 					break;
-				} // Entity 2
+				} // Entity 2 
 			} // End of Entity for-loop
-				return;
+
+			break;
 		} // case EventType::EvKeyPressed:
+
+		//case EventType::EvMouseButtonPressed:
+		//{
+		//	MousePressEvent* MousePressEv = dynamic_cast<MousePressEvent*>(ev);
+		//	KeyPress keycode = MousePressEv->GetKeyCode();
+
+		//	if (keycode == KeyPress::MB2)
+		//	{
+		//		g_engine.SetTimeScale(0.5f);
+		//	}
+
+		//	break;
+		//}
+
+		case EventType::EvKeyReleased:
+		{
+			KeyReleaseEvent* KeyReleaseEv = dynamic_cast<KeyReleaseEvent*>(ev);
+			KeyPress keycode = KeyReleaseEv->GetKeyCode();
+
+			if (keycode == KeyPress::MB2)
+			{
+				g_engine.SetTimeScale(1.0f);
+			}
+			
+			break;
+		}
 		} // switch (ev->GetEventType())
 	} // Receive
 
