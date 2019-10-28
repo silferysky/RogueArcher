@@ -37,15 +37,16 @@ namespace Rogue
 		Vector2D() : x{ 0.0f }, y{ 0.0f } // Default constructor
 		{}
 
-		Vector2D(const int num); // Conversion constructor
-		Vector2D(const float X, const float Y); // Conversion constructor
-		Vector2D(const Vector2D& vec); // Copy constructor
+		Vector2D(int X, int Y); // Conversion constructor
+		Vector2D(float X, float Y); // Conversion constructor
+		Vector2D(const Vector2D& rhs); // Copy constructor
+		Vector2D(Vector2D&& rhs) noexcept; // Move constructor
 
 		~Vector2D(); // Destructor
 
 		// Assignment operators
-		Vector2D& operator =  (const int num);
-		Vector2D& operator =  (const Vector2D& rhs);
+		Vector2D& operator =  (const Vector2D& rhs); // Copy assignment
+		Vector2D& operator =  (Vector2D&& rhs) noexcept; // Move assignment
 		Vector2D& operator += (const Vector2D& rhs);
 		Vector2D& operator -= (const Vector2D& rhs);
 		Vector2D& operator *= (float rhs);
