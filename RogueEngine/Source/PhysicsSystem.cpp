@@ -24,9 +24,11 @@ namespace Rogue
 
 	void PhysicsSystem::integrateAcceleration(RigidbodyComponent& rigidbody, TransformComponent& transform)
 	{
-		transform.offSetPosition(rigidbody.getVelocity() * g_fixedDeltaTime);
+		float simulationTime = g_fixedDeltaTime * g_engine.GetTimeScale(); // To support slow motion
 
-		rigidbody.offSetVelocity(rigidbody.getAcceleration() * g_fixedDeltaTime);
+		transform.offSetPosition(rigidbody.getVelocity() * simulationTime);
+
+		rigidbody.offSetVelocity(rigidbody.getAcceleration() * simulationTime);
 		rigidbody.setVelocity(rigidbody.getVelocity() * rigidbody.getDamping());
 
 	}
@@ -59,6 +61,8 @@ namespace Rogue
 		g_engine.m_coordinator.InitTimeSystem("Physics System");
 		for (int step = 0; step < g_engine.GetStepCount(); ++step)
 		{
+			std::cout << g_engine.GetTimeScale() << std::endl;
+
 			// For all entities
 			std::set<Entity>::iterator iEntity;
 			for (iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
