@@ -16,7 +16,7 @@ namespace Rogue
 		std::string m_objectName;
 		bool m_selected = false;
 		Entity m_Entity = 0;
-		float m_scaleX = 10.0f;
+		float m_scaleX = 0.0f;
 		float m_scaleY = 0.0f;
 		float m_rotateX = 0.0f;
 		float m_rotateY = 0.0f;
