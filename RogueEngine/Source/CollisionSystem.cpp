@@ -53,7 +53,7 @@ namespace Rogue
 
 					if (m_colliderManager.DiscreteAABBvsAABB(currBoxCollider.m_aabb, nextBoxCollider.m_aabb))
 					{
-				//		std::cout << "Entity " << *iEntity << " AABB collides with Entity " << *iNextEntity << " AABB" << std::endl;
+					//	std::cout << "Entity " << *iEntity << " AABB collides with Entity " << *iNextEntity << " AABB" << std::endl;
 
 						m_colliderManager.InsertColliderPair(*iEntity, *iNextEntity);
 					}

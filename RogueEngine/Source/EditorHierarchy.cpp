@@ -27,7 +27,7 @@ namespace Rogue
 		{
 			if (ImGui::Selectable("2D Sprite"))
 			{
-				g_engine.m_coordinator.GetSceneManager().CreateDefaultEntity();
+				g_engine.m_coordinator.GetSceneManager().Create2DSprite();
 			}
 			if (ImGui::Selectable("Camera"))
 			{
