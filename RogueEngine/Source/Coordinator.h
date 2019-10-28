@@ -44,7 +44,7 @@ namespace Rogue
 			m_systemManager->InitSystems();
 
 			// Load first scene
-			m_sceneManager->LoadLevel("Resources/Level 1.json");
+			m_sceneManager->LoadLevel("Level 1.json");
 			m_sceneManager->LoadArchetypes("Resources/Archetypes.json");
 
 			//m_objectFactory->SaveLevel("Resources/Level 1.json");
@@ -56,7 +56,7 @@ namespace Rogue
 			m_systemManager->UpdateSystems(); 
 
 			// If placed before ^, will cause memory leak.
-			EventDispatcher::instance().Update(); // Should also be part of systems
+			EventDispatcher::instance().Update();
 		}
 
 		void Shutdown()
