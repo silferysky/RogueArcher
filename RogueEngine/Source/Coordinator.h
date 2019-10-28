@@ -85,7 +85,7 @@ namespace Rogue
 			for (size_t it = 0; it < count; ++it)
 			{
 
-				DestroyEntity(it);
+				//DestroyEntity(it);
 			}
 		}
 
