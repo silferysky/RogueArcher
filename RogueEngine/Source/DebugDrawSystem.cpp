@@ -120,18 +120,18 @@
 		glBindVertexArray(m_VAO);
 		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 
-		const float k_segments = 16.0f;
-		const float k_increment = 2.0f * 3.1415f / k_segments;
+		const float segments = 16.0f;
+		const float increment = 2.0f * 3.1415f / segments;
 
 		float radius = circle->m_collider.getRadius();
 		Rogue::Vec2 center = transform->getPosition();
 
-		float sinInc = sinf(k_increment);
-		float cosInc = cosf(k_increment);
+		float sinInc = sinf(increment);
+		float cosInc = cosf(increment);
 		Rogue::Vec2 r1(1.0f, 0.0f);
 		Rogue::Vec2 v1 = { center.x + radius * r1.x, center.y + radius * r1.y};
 
-		for (int i = 0; i < k_segments; ++i)
+		for (int i = 0; i < segments; ++i)
 		{
 			// Perform rotation to avoid additional trigonometry.
 			Rogue::Vec2 r2;

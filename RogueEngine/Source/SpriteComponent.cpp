@@ -1,21 +1,15 @@
 #include "SpriteComponent.h"
-#include "TextureManager.h"
 #include "REEngine.h"
 #include "Main.h"
 
 namespace Rogue
 {
-	SpriteComponent::SpriteComponent()
-	{
-		//m_texture = g_engine.m_coordinator.loadTexture("CharaTest.bmp");
-	}
-
 	void SpriteComponent::setTexture(const char* texture)
 	{
 		m_texture = g_engine.m_coordinator.loadTexture(texture);
 	}
 
-	GLuint SpriteComponent::getTexture() const
+	Texture SpriteComponent::getTexture() const
 	{
 		return m_texture;
 	}
@@ -32,12 +26,12 @@ namespace Rogue
 
 	std::string SpriteComponent::Serialize()
 	{
-		std::map<std::string, GLuint> textureMap = g_engine.m_coordinator.GetTextureManager().getTextureMap();
+		std::map<std::string, Texture> textureMap = g_engine.m_coordinator.GetTextureManager().getTextureMap();
 		
 		//Cannot use find because need use value to find key
-		for (std::map<std::string, GLuint>::iterator it = textureMap.begin(); it != textureMap.end(); ++it)
+		for (std::map<std::string, Texture>::iterator it = textureMap.begin(); it != textureMap.end(); ++it)
 		{
-			if (it->second == m_texture)
+			if (it->second.m_texture == m_texture.m_texture)
 			{
 				return it->first;
 			}
