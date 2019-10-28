@@ -25,7 +25,6 @@ namespace Rogue
 				if (i.m_selected == true)
 				{
 					ImGui::Text("%s", i.m_objectName.c_str());
-					currentEnt = i.m_Entity;
 					ImGui::Text("Scale    ");
 					ImGui::SameLine();
 					ImGui::PushItemWidth(75);
