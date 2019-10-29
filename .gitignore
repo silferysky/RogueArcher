@@ -45,6 +45,10 @@ RogueEngine/.vs/*
 #include everything within#
 !/Dep/**/*
 !/RogueEditor/Dep/**/*
+!/Debug/*.dll
+!/Release/*.dll
+!x64/Debug/*.dll
+!x64/Release/*.dll
 
 #include dll files#
 !.dll
