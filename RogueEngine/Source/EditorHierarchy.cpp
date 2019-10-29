@@ -31,7 +31,7 @@ namespace Rogue
 			}
 			if (ImGui::Selectable("Camera"))
 			{
-
+				g_engine.m_coordinator.GetSceneManager().CreateCamera();
 			}
 			ImGui::EndPopup();
 		}
@@ -41,7 +41,7 @@ namespace Rogue
 		static char bufferX[64] = "";
 		ImGui::InputText("", bufferX, 64);
 		ImGui::Separator();
-		for (auto& i : vector)
+		for (auto& i : m_currentVector)
 		{
 			if (ImGui::Selectable(i.m_objectName.c_str(), i.m_selected, ImGuiSelectableFlags_AllowDoubleClick))
 			{
@@ -49,7 +49,7 @@ namespace Rogue
 				{
 					i.m_selected = !i.m_selected;
 					int temp = i.m_Entity;
-					for (auto& i : vector)
+					for (auto& i : m_currentVector)
 					{
 						if (i.m_Entity == temp)
 							continue;

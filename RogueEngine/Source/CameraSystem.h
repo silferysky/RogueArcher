@@ -2,6 +2,7 @@
 #include "SystemManager.h"
 #include "EventListener.h"
 #include "Vector2D.h"
+#include "CameraShake.h"
 
 #include <glm.hpp>
 
@@ -11,18 +12,21 @@ namespace Rogue
 
 	class CameraSystem : public System, public EventListener
 	{
-		glm::vec3 cameraPos;
-		glm::vec3 cameraTarget;
-		glm::vec3 cameraDirection;
+		glm::vec3 m_cameraPos;
 
-		glm::vec3 cameraRight;
+		glm::vec3 m_cameraFront;
+		glm::vec3 m_cameraUp;
+		glm::vec3 m_cameraRight;
+		glm::vec3 m_worldUp;
 
-		glm::vec3 cameraUp = glm::cross(cameraDirection, cameraRight);
+		float m_cameraVelocity = 1.0f;
 
-		glm::mat4 view;
+		CameraShake m_cameraShake;
 	public:
 		CameraSystem();
 		~CameraSystem() = default;
+
+		glm::mat4 GetViewMatrix();
 
 		void Init() override;
 		void Update() override;

@@ -96,11 +96,6 @@ namespace Rogue
 						}
 						if (ImGui::BeginMenu("Colliders"))
 						{
-							if (ImGui::MenuItem("RigidBody",nullptr,false,!g_engine.m_coordinator.CheckIfComponentExists<RigidbodyComponent>(i.m_Entity)))
-							{
-								g_engine.m_coordinator.AddComponent(i.m_Entity, RigidbodyComponent());
-							}
-
 							if (ImGui::MenuItem("Circle Collider", nullptr, false, !g_engine.m_coordinator.CheckIfComponentExists<CircleCollider2DComponent>(i.m_Entity)))
 							{
 								g_engine.m_coordinator.AddComponent(i.m_Entity, CircleCollider2DComponent());
@@ -112,6 +107,16 @@ namespace Rogue
 							}
 
 							ImGui::EndMenu();
+						}
+
+						if (ImGui::MenuItem("RigidBody", nullptr, false, !g_engine.m_coordinator.CheckIfComponentExists<RigidbodyComponent>(i.m_Entity)))
+						{
+							g_engine.m_coordinator.AddComponent(i.m_Entity, RigidbodyComponent());
+						}
+
+						if (ImGui::MenuItem("Camera", nullptr, false, !g_engine.m_coordinator.CheckIfComponentExists<CameraComponent>(i.m_Entity)))
+						{
+							g_engine.m_coordinator.AddComponent(i.m_Entity, CameraComponent());
 						}
 						ImGui::EndPopup();
 					}
@@ -142,11 +147,6 @@ namespace Rogue
 						}
 						if (ImGui::BeginMenu("Colliders"))
 						{
-							if (ImGui::MenuItem("RigidBody", nullptr, false, g_engine.m_coordinator.CheckIfComponentExists<RigidbodyComponent>(i.m_Entity)))
-							{
-								g_engine.m_coordinator.RemoveComponent<RigidbodyComponent>(i.m_Entity);
-							}
-
 							if (ImGui::MenuItem("Circle Collider", nullptr, false, g_engine.m_coordinator.CheckIfComponentExists<CircleCollider2DComponent>(i.m_Entity)))
 							{
 								g_engine.m_coordinator.RemoveComponent<CircleCollider2DComponent>(i.m_Entity);
@@ -158,6 +158,16 @@ namespace Rogue
 							}
 
 							ImGui::EndMenu();
+						}
+
+						if (ImGui::MenuItem("RigidBody", nullptr, false, g_engine.m_coordinator.CheckIfComponentExists<RigidbodyComponent>(i.m_Entity)))
+						{
+							g_engine.m_coordinator.RemoveComponent<RigidbodyComponent>(i.m_Entity);
+						}
+
+						if (ImGui::MenuItem("Camera"))
+						{
+							g_engine.m_coordinator.RemoveComponent<CameraComponent>(i.m_Entity);
 						}
 						ImGui::EndPopup();
 					}
