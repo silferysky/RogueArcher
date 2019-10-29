@@ -45,6 +45,13 @@ namespace Rogue
 		oStream.close();
 	}
 
+	void BasicIO::WriteLevelFilesJsonFile(std::string FileName)
+	{
+		std::ostringstream strstream;
+		strstream << "{\n  \"Files\": \"Level 1.json;Level 2.json\"";
+		strstream << "\n}";
+	}
+
 	void BasicIO::WriteLevelJsonFile(std::string FileName, size_t numOfEnt)
 	{
 		std::ostringstream strstream;

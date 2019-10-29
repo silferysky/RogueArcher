@@ -29,11 +29,14 @@ namespace Rogue
 					sceneManager.ClearAllEntities();
 					sceneManager.IncrementSceneIterator();
 					sceneManager.Create2DSprite();
+					g_engine.m_coordinator.GetComponent<TransformComponent>(g_engine.m_coordinator.GetActiveObjects().begin()->m_Entity).
+						setScale(Vec2(GetWindowWidth(g_engine.GetWindowHandler()), GetWindowHeight(g_engine.GetWindowHandler())));
 					std::ostringstream ostrstream;
 					ostrstream << "Level " << sceneManager.GetSceneIterator() << ".json";
 					sceneManager.setCurrentFileName(ostrstream.str().c_str());
 					sceneManager.SaveLevel(ostrstream.str().c_str());
 					sceneManager.AddToLoadedLevels(ostrstream.str());
+					sceneManager.SaveLevelFiles("Levels.json");
 				}
 				if (ImGui::BeginMenu("Open Scene"))
 				{
