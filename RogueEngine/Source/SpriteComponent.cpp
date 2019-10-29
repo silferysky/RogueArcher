@@ -24,6 +24,16 @@ namespace Rogue
 		return m_texturePath;
 	}
 
+	void SpriteComponent::setDrawPriority(const int& drawPriority)
+	{
+		m_drawPriority = drawPriority;
+	}
+
+	int SpriteComponent::getDrawPriority() const
+	{
+		return m_drawPriority;
+	}
+
 	std::string SpriteComponent::Serialize()
 	{
 		std::map<std::string, Texture> textureMap = g_engine.m_coordinator.GetTextureManager().getTextureMap();

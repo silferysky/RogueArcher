@@ -28,6 +28,7 @@ namespace Rogue
 
 		glm::mat4 GetViewMatrix();
 		void ToggleWorldCamera();
+		void ResetCamera();
 
 		void Init() override;
 		void Update() override;

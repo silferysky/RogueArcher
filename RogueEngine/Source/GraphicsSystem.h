@@ -32,6 +32,8 @@ namespace Rogue
 
 		std::shared_ptr<CameraSystem> m_pCamera;
 
+		std::multimap<int, Entity> m_drawQueue;
+
 		bool InitializeOpenGL();
 	public:
 		GraphicsSystem();

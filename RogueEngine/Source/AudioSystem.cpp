@@ -5,13 +5,14 @@
 #include "KeyEvent.h"
 #include <cmath>
 
+
+// fast log2 function
 float log2_fast(double d) 
 {
 	int result;
-	std::frexp(d, &result);
+	void(std::frexp(d, &result));
 	return result - 1.0f;
 }
-
 
 namespace Rogue
 {
