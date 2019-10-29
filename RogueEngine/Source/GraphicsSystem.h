@@ -26,6 +26,8 @@ namespace Rogue
 
 		Shader m_screenShader;
 		Shader m_shader;
+		GLint m_projLocation;
+		GLint m_viewLocation;
 		GLint m_transformLocation;
 
 		std::shared_ptr<CameraSystem> m_pCamera;
