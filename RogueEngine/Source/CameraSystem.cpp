@@ -61,18 +61,16 @@ namespace Rogue
 	{
 		switch (ev->GetEventType())
 		{
-
-		case EventType::EvKeyPressed:
+		case EventType::EvKeyTriggered:
 		{
-			KeyPressEvent* keypressevent = dynamic_cast<KeyPressEvent*>(ev);
-			KeyPress keycode = keypressevent->GetKeyCode();
+			KeyTriggeredEvent* keytriggeredevent = dynamic_cast<KeyTriggeredEvent*>(ev);
+			KeyPress keycode = keytriggeredevent->GetKeyCode();
 
 			if (keycode == KeyPress::KeyP)
-			{
-
 				m_cameraShake.SetShake(13.0f);
-			}
-		}
+
+			return;
+		} //End KeyTriggered
 		}
 	}
 

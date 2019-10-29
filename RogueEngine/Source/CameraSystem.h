@@ -1,10 +1,8 @@
 #pragma once
 #include "SystemManager.h"
 #include "EventListener.h"
-#include "Vector2D.h"
-#include "CameraShake.h"
-
 #include <glm.hpp>
+#include "CameraShake.h"
 
 namespace Rogue
 {

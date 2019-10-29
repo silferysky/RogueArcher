@@ -1,42 +1,56 @@
 #pragma once
+#include "Stream.h"
 
-#include "fmod.h"
-
-class Sound
+namespace Rogue
 {
-private:
-	 bool _soundon;//check if sound is on
-	 bool _possible;//check if possible to play sound
-	 char* _currentsound;//check for current played sound
+	class Sound
+	{
+		FMOD_BOOL m_soundOn;		/* is sound on? */
+		FMOD_BOOL m_canPlaySound;	/* is it possible to play sound? */
+		char* currentSound;	/* currently played sound */
 
-	 FMOD_RESULT _result;
-	 FMOD_SYSTEM *_system;
-	 FMOD_SOUND *_sound;
-	 FMOD_CHANNEL *_channel;
+		/* FMOD-specific */
+		FMOD_SYSTEM* m_system;	/* the system where the sound will be using */
+		FMOD_RESULT	m_result;		/* allows error checking for FMOD functions */
+		FMOD_SOUND* m_fmodSound;	/* holding the actual sound */
+		FMOD_CHANNEL* m_channel;	/* the channel where the sound will be playing from */
+	public:
+		/* Sound Statistics */
+		float m_f_Timer = 0.0f;
+		char m_c_PlayCounter = 0;
+		float m_f_PlayTimer = 0.0f;
+		char m_c_PlayCap = 0;
+		bool m_b_IsPlaying = false;
 
-public:
-	 Sound();
-	 Sound(Sound&);
-	 Sound& operator = (Sound&);
-	 ~Sound();
-	 float Timer = 0.0f;
-	 char PlayCounter = 0;
-	 float PlayTimer = 0.0f;
-	 char PlayCap = 0;
-	 void CreateOneShot(const char * filename, FMOD_SOUND **sound);
-	 void Create(const char* filename, char counterCap, float playTimer);
-	 void init(); //initialises sound
-	 void setvolume(float volume); //sets volume
-	 void load(const char* tFile); //loads the file
-	 void unload(void);//unloads the file
-	 void playsound(bool pause = false);//plays the sound
-	 void soundupdate();//updates the sound
-	 bool getsound();//gets the current sound
-	 void playsoundloop(bool pause = false);//plays sounds in the loop
-	 void togglesound();//toggles the current sound
-	 void togglepause();//toggle pause for the current sound
+		/* Constructor */
+		Sound();
+		/* Error-checking*/
+		void FmodErrorCheck(FMOD_RESULT result);
 
-	 void setpause(bool pause);//pauses current sound
-	 void setsound(bool sound);//set current sound
+		/* FMOD sound/channel/system creation */
+		void CreateBGM(const char* filename, char counterCap, float playTimer, Stream* audioPtr);
+		void Create(const char* filename, char counterCap, float playTimer, Stream* audioPtr);
 
-};
+		/* General Audio Functions */
+		/* Play the sound */
+		void Play(float volume = 0.33f);
+		/* Update functions */
+		void Update();
+		/* Pauses the sound */
+		void Pause(FMOD_BOOL pause);
+		/* Unload sound */
+		void Unload();
+		/* Unload from memory */
+		void Release();
+
+		/* Getter/Setter */
+		FMOD_SYSTEM* GetSystem();
+		FMOD_SOUND* GetFmodSound();
+		FMOD_CHANNEL* GetChannel();
+
+		float GetVolume();
+		void SetVolume(float volume);
+		void ResetSoundCounter();
+		bool CheckPlaying();
+	};
+}
