@@ -3,7 +3,14 @@
 #include "Main.h"
 #include "EventDispatcher.h"
 #include "KeyEvent.h"
+#include <cmath>
 
+float log2_fast(double d) 
+{
+	int result;
+	std::frexp(d, &result);
+	return result - 1.0f;
+}
 
 
 namespace Rogue
@@ -22,6 +29,8 @@ namespace Rogue
 
 		// Add components to signature.
 		Signature signature;
+		signature.set(g_engine.m_coordinator.GetComponentType<TransformComponent>());
+		signature.set(g_engine.m_coordinator.GetComponentType<AudioEmitterComponent>());
 
 		// Set system signature.
 		g_engine.m_coordinator.SetSystemSignature<AudioSystem>(signature);
@@ -30,14 +39,25 @@ namespace Rogue
 
 		/* Load up BGMs */
 		m_music.CreateBGM("Resources/Sounds/hey ya.wav", 1, 112.0f, &m_BGMstream);
-		//m_music.Play(0.3f);
+		m_music.Play(0.3f);
 	}
 
 	void AudioSystem::Update()
 	{
 		g_engine.m_coordinator.InitTimeSystem("Audio System");
 
+		m_trackingTarget = &(g_engine.m_coordinator.GetComponent<TransformComponent>(1).getPosition());
+
 		m_music.Update();
+
+		for (auto entity : m_entities)
+		{
+			auto transformPos = g_engine.m_coordinator.GetComponent<TransformComponent>(entity).getPosition();
+
+			float distance = log2_fast(Vec2SqDistance(transformPos, *m_trackingTarget));
+
+			FMOD_Channel_SetVolume(m_music.GetChannel(), 1.0f - distance * 0.05f);
+		}
 
 		g_engine.m_coordinator.EndTimeSystem("Audio System");
 	}

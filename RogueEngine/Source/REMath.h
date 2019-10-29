@@ -21,8 +21,8 @@ namespace Rogue
 		Vec2 m_dir;
 	};
 
-	double DegreesToRadians(double degrees);
-	double RadiansToDegrees(double radians);
+	float DegreesToRadians(float degrees);
+	float RadiansToDegrees(float radians);
 
 	//building line segment
 	void BuildLineSegment(LineSegment& lineSegment, const Vec2& pos, float scale, float dir);

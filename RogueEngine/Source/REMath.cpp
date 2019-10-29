@@ -30,14 +30,14 @@ namespace Rogue
 
 	}
 
-	double DegreesToRadians(double degrees)
+	float DegreesToRadians(float degrees)
 	{
-		return (degrees * RE_PI / 180.0);
+		return (degrees * RE_PI / 180.0f);
 	}
 
-	double RadiansToDegrees(double radians)
+	float RadiansToDegrees(float radians)
 	{
-		return (radians * 180.0 / RE_PI);
+		return (radians * 180.0f / RE_PI);
 	}
 
 	float REAbs(float x)
@@ -164,8 +164,6 @@ namespace Rogue
 	{
 		return REMax(REAbs(pRect1.x - pRect0.x) - (SizeX0 + SizeX1) / 2, REAbs(pRect1.y - pRect0.y) - (SizeY1 + SizeY0) / 2);
 	}
-
-
 
 	//bool TestPointToCircle(Vec2& pPos, Vec2& pCenter, float radius)
 	//{
