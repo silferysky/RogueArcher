@@ -10,6 +10,7 @@
 #include "LogicComponent.h"
 #include "StatsComponent.h"
 #include "AnimationComponent.h"
+#include "CameraComponent.h"
 
 namespace Rogue
 {
@@ -24,6 +25,7 @@ namespace Rogue
 		LOGIC,
 		STATS,
 		ANIMATION,
+		CAMERA,
 		LASTCOMP
 	};
 }

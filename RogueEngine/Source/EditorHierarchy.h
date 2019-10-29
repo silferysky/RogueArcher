@@ -15,7 +15,7 @@ namespace Rogue
 	class ImGuiEditorHierarchy : public IEditable
 	{
 	private:
-		std::vector<HierarchyInfo>& vector = g_engine.m_coordinator.GetActiveObjects();
+		std::vector<HierarchyInfo>& m_currentVector = g_engine.m_coordinator.GetActiveObjects();
 	public:
 		ImGuiEditorHierarchy();
 		~ImGuiEditorHierarchy();

@@ -36,9 +36,12 @@
 
 		glUseProgram(m_shader.GetShader());
 
-		m_transformLocation = glGetUniformLocation(m_shader.GetShader(), "transform");
+		m_projLocation = glGetUniformLocation(m_shader.GetShader(), "projection");
+		m_viewLocation = glGetUniformLocation(m_shader.GetShader(), "view");
 
 		Rogue::GenerateLinePrimitive(m_VBO, m_VAO);
+
+		m_pCamera = g_engine.m_coordinator.GetSystem<Rogue::CameraSystem>();
 	}
 
 	void DebugDrawSystem::Update()
@@ -51,7 +54,9 @@
 	void DebugDrawSystem::TrueUpdate()
 	{
 		glUseProgram(m_shader.GetShader());
-		glUniformMatrix4fv(m_transformLocation, 1, GL_FALSE, glm::value_ptr(g_engine.GetProjMat()));
+
+		glUniformMatrix4fv(m_viewLocation, 1, GL_FALSE, glm::value_ptr(m_pCamera->GetViewMatrix()));
+		glUniformMatrix4fv(m_projLocation, 1, GL_FALSE, glm::value_ptr(g_engine.GetProjMat()));
 
 		// For all entities
 		for (auto entity : m_entities)

@@ -16,6 +16,7 @@
 #include "CollisionSystem.h"
 #include "PlayerControllerSystem.h"
 #include "AnimationSystem.h"
+#include "CameraSystem.h"
 #include "VSync.h"
 
 namespace Rogue
@@ -35,6 +36,7 @@ namespace Rogue
 		m_coordinator.RegisterSystem<GraphicsSystem>();
 		m_coordinator.RegisterSystem<DebugDrawSystem>();
 		m_coordinator.RegisterSystem<FontSystem>();
+		m_coordinator.RegisterSystem<CameraSystem>();
 		m_coordinator.RegisterSystem<Editor>();
 	}
 
@@ -49,6 +51,7 @@ namespace Rogue
 		m_coordinator.RegisterComponent<LogicComponent>();
 		m_coordinator.RegisterComponent<StatsComponent>();
 		m_coordinator.RegisterComponent<AnimationComponent>();
+		m_coordinator.RegisterComponent<CameraComponent>();
 	}
 
 	void REEngine::Init()
