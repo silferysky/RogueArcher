@@ -17,7 +17,12 @@ namespace Rogue
 	void ImGuiInspector::Update()
 	{
 		ImGui::Begin("Inspector");
-
+		if (ImGui::IsItemHovered())
+		{
+			ImGui::BeginTooltip();
+			ImGui::Text("will not show anything until Game Object is double clicked");
+			ImGui::EndTooltip();
+		}
 			ImGui::TextDisabled("Name");
 			for (auto& i : activeObjects)
 			{
