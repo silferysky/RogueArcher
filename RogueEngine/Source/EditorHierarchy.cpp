@@ -29,9 +29,21 @@ namespace Rogue
 			{
 				g_engine.m_coordinator.GetSceneManager().Create2DSprite();
 			}
+			if (ImGui::IsItemHovered())
+			{
+				ImGui::BeginTooltip();
+				ImGui::Text("Creates a default sprite with sprite and transform component");
+				ImGui::EndTooltip();
+			}
 			if (ImGui::Selectable("Camera"))
 			{
 				g_engine.m_coordinator.GetSceneManager().CreateCamera();
+			}
+			if (ImGui::IsItemHovered())
+			{
+				ImGui::BeginTooltip();
+				ImGui::Text("Creates a Camera Object");
+				ImGui::EndTooltip();
 			}
 			ImGui::EndPopup();
 		}

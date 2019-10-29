@@ -30,7 +30,7 @@ namespace Rogue
 
 		/* Load up BGMs */
 		m_music.CreateBGM("Resources/Sounds/hey ya.wav", 1, 112.0f, &m_BGMstream);
-		m_music.Play(0.3f);
+		//m_music.Play(0.3f);
 	}
 
 	void AudioSystem::Update()
