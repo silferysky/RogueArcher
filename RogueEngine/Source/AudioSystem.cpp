@@ -39,7 +39,7 @@ namespace Rogue
 		m_BGMstream.Initialize(); // create BGM channel
 
 		/* Load up BGMs */
-		m_music.CreateBGM("Resources/Sounds/hey ya.wav", 1, 112.0f, &m_BGMstream);
+		m_music.CreateBGM("Resources/Sounds/HEYYEYAAEYAAAEYAEYAA.wav", 1, 112.0f, &m_BGMstream);
 		m_music.Play(0.3f);
 	}
 
