@@ -13,6 +13,7 @@ namespace Rogue
 		std::string m_currentFileName;
 		unsigned int m_objectIterator = 0;
 		unsigned int m_sceneIterator = 0;
+		unsigned int m_cameraIterator = 0;
 
 	public:
 		SceneManager();
@@ -48,6 +49,7 @@ namespace Rogue
 		void AddToActiveEntities(Entity ent);
 
 		Entity Create2DSprite();
+		Entity CreateCamera();
 	};
 
 /*#define MOVE_OBJECTFACTORY_TO_SCENEMANAGER	auto& entityManager = g_engine.m_coordinator.GetEntityManager(); \
