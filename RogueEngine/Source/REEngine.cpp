@@ -54,6 +54,7 @@ namespace Rogue
 		m_coordinator.RegisterComponent<StatsComponent>();
 		m_coordinator.RegisterComponent<AnimationComponent>();
 		m_coordinator.RegisterComponent<CameraComponent>();
+		m_coordinator.RegisterComponent<AudioEmitterComponent>();
 	}
 
 	void REEngine::Init()
