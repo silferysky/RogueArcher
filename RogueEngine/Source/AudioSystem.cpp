@@ -73,13 +73,9 @@ namespace Rogue
 
 		/* Mute currently playing BGM */
 		if (m_muted)
-		{
 			FMOD_Channel_SetVolume(m_music.GetChannel(), 0.0f);
-		}
 		/* Unmute currently playing BGM */
 		else
-		{
 			FMOD_Channel_SetVolume(m_music.GetChannel(), 0.3f);
-		}
 	}
 }

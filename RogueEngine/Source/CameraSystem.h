@@ -20,11 +20,14 @@ namespace Rogue
 		float m_cameraVelocity = 1.0f;
 
 		CameraShake m_cameraShake;
+
+		bool m_worldCamera;
 	public:
 		CameraSystem();
 		~CameraSystem() = default;
 
 		glm::mat4 GetViewMatrix();
+		void ToggleWorldCamera();
 
 		void Init() override;
 		void Update() override;
