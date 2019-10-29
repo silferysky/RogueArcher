@@ -170,4 +170,20 @@ namespace Rogue
 
 		return newEnt;
 	}
+	Entity SceneManager::CreateCamera()
+	{
+		Entity m_newentity = g_engine.m_coordinator.CreateEntity();
+		g_engine.m_coordinator.AddComponent<CameraComponent>(m_newentity,CameraComponent());
+
+		HierarchyInfo newInfo{};
+		newInfo.m_Entity = m_newentity;
+		std::ostringstream strstream;
+		std::string sstr;
+		strstream << "Camera " << m_cameraIterator++;
+		sstr = strstream.str();
+		newInfo.m_objectName = sstr;
+		g_engine.m_coordinator.GetEntityManager().m_getActiveObjects().push_back(newInfo);
+
+		return m_newentity;
+	}
 }
