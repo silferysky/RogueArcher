@@ -117,6 +117,8 @@ namespace Rogue
 
 		if(set == true)
 			m_invMass = 0.0f;
+		else
+			m_invMass = 1.0f;
 	}
 
 	void RigidbodyComponent::setBounciness(float bounce)
