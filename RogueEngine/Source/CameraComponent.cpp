@@ -23,11 +23,22 @@ namespace Rogue
 		return m_position;
 	}
 
+	void CameraComponent::setIsActive(const bool& isActive)
+	{
+		m_isActive = isActive;
+	}
+
+	bool CameraComponent::getIsActive() const
+	{
+		return m_isActive;
+	}
+
 	std::string CameraComponent::Serialize()
 	{
 		//Position
 		std::ostringstream ss;
 		ss << m_position.x << ";" << m_position.y << ";";
+		ss << m_isActive << ";";
 		return ss.str();
 	}
 
@@ -48,6 +59,9 @@ namespace Rogue
 			{
 			case 0:
 				setPosition(Vec2(std::stof(s1), std::stof(s2)));
+				break;
+			case 1:
+				setIsActive(std::stof(s1));
 				break;
 			default:
 				break;

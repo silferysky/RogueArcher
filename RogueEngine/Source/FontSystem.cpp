@@ -13,8 +13,7 @@ namespace Rogue
 
 	void FontSystem::Init()
 	{
-		LISTENER_HANDLER hand = std::bind(&FontSystem::Receive, this, std::placeholders::_1);
-		EventDispatcher::instance().AddListener(SystemID::id_FONTSYSTEM, hand);
+		REGISTER_LISTENER(SystemID::id_FONTSYSTEM, FontSystem::Receive);
 
 		Signature signature;
 		g_engine.m_coordinator.SetSystemSignature<FontSystem>(signature);
@@ -97,7 +96,7 @@ namespace Rogue
 		Timer TimeSystem;
 		TimeSystem.TimerInit("Font System");
 
-		RenderText("This is sample text", -4.0f, 0.0f, 1.0f, glm::vec3(0.5, 0.8f, 0.2f));
+		RenderText("This is sample text", -4.0f, 0.0f, 1.0f, glm::vec3(1.0f, 0.0f, 0.0f));
 
 		TimeSystem.TimerEnd("Font System");
 	}

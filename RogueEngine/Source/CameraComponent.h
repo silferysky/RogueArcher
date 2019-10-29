@@ -8,12 +8,16 @@ namespace Rogue
 		: public BaseComponent
 	{
 		Vec2 m_position = Vec2(0.0f, 0.0f);
+		bool m_isActive = true;
 	public:
 		CameraComponent() = default;
 		CameraComponent(const Vec2& pos);
 
 		void setPosition(const Vec2& pos);
 		void offSetPosition(const Vec2& pos);
+
+		void setIsActive(const bool& isActive);
+		bool getIsActive() const;
 
 		Vec2 getPosition() const;
 

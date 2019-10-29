@@ -56,9 +56,13 @@ namespace Rogue
 			// For all entities
 			for (auto entity : m_entities)
 			{
-				auto transformPos = g_engine.m_coordinator.GetComponent<TransformComponent>(entity).getPosition();
+				if (g_engine.m_coordinator.GetComponent<CameraComponent>(entity).getIsActive())
+				{
+					auto transformPos = g_engine.m_coordinator.GetComponent<TransformComponent>(entity).getPosition();
 
-				m_cameraPos = glm::vec3(transformPos.x + shakeOffset.x, transformPos.y + shakeOffset.y, 0.0f);
+					m_cameraPos = glm::vec3(transformPos.x + shakeOffset.x, transformPos.y + shakeOffset.y, 0.0f);
+					break;
+				}
 			}
 		}
 
