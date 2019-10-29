@@ -278,6 +278,8 @@ namespace Rogue
 		KeyTriggeredEvent* event = new KeyTriggeredEvent(key);
 		event->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
 		event->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
+		event->SetSystemReceivers((int)SystemID::id_CAMERASYSTEM);
+		event->SetSystemReceivers((int)SystemID::id_AUDIOSYSTEM);
 		EventDispatcher::instance().AddEvent(event);
 	}
 

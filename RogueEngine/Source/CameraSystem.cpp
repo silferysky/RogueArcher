@@ -19,7 +19,6 @@ namespace Rogue
 		// Add components to signature.
 		Signature signature;
 		signature.set(g_engine.m_coordinator.GetComponentType<CameraComponent>());
-		signature.set(g_engine.m_coordinator.GetComponentType<TransformComponent>());
 
 		// Set system signature.
 		g_engine.m_coordinator.SetSystemSignature<CameraSystem>(signature);
@@ -59,6 +58,7 @@ namespace Rogue
 
 	void CameraSystem::Receive(Event* ev)
 	{
+
 		switch (ev->GetEventType())
 		{
 		case EventType::EvKeyTriggered:

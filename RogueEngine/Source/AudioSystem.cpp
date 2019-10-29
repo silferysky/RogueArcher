@@ -26,7 +26,7 @@ namespace Rogue
 		// Set system signature.
 		g_engine.m_coordinator.SetSystemSignature<AudioSystem>(signature);
 
-		m_BGMstream.Initialize(); // create SFX channel
+		m_BGMstream.Initialize(); // create BGM channel
 
 		/* Load up BGMs */
 		m_music.CreateBGM("Resources/Sounds/hey ya.wav", 1, 112.0f, &m_BGMstream);
@@ -51,7 +51,7 @@ namespace Rogue
 			KeyTriggeredEvent* keytriggeredevent = dynamic_cast<KeyTriggeredEvent*>(ev);
 			KeyPress keycode = keytriggeredevent->GetKeyCode();
 
-			if (keycode == KeyPress::KeyP)
+			if (keycode == KeyPress::KeyM)
 				ToggleMute();
 
 			return;
@@ -63,6 +63,8 @@ namespace Rogue
 	{
 		if (m_music.GetSystem() != NULL)
 			m_music.Release();
+
+		m_BGMstream.Release();
 	}
 
 	void AudioSystem::ToggleMute()
