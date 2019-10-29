@@ -27,7 +27,8 @@ namespace Rogue
 	std::string SpriteComponent::Serialize()
 	{
 		std::map<std::string, Texture> textureMap = g_engine.m_coordinator.GetTextureManager().getTextureMap();
-		
+
+		return getTexturePath();
 		//Cannot use find because need use value to find key
 		for (std::map<std::string, Texture>::iterator it = textureMap.begin(); it != textureMap.end(); ++it)
 		{
@@ -36,7 +37,6 @@ namespace Rogue
 				return it->first;
 			}
 		}
-		return getTexturePath();
 	}
 
 	void SpriteComponent::Deserialize(std::string toDeserialize)

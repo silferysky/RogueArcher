@@ -77,7 +77,7 @@ namespace Rogue
 
 		//For Background Texture
 		if (includeBackground)
-			strstream << ",\n  \"BackgroundTexture\": \"test.bmp\"";
+			strstream << ",\n  \"BackgroundTexture\": \"Resources/Assets/test.bmp\"";
 
 		//For Signature
 		strstream << InitializeSignatureJsonFile(numOfEnt);
