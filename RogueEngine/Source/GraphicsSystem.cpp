@@ -57,9 +57,19 @@ namespace Rogue
 		glDisable(GL_DEPTH_TEST);
 		g_engine.m_coordinator.InitTimeSystem("Graphics System");
 
+		m_drawQueue.clear();
+
+		// For all entities
+		for (auto entity : m_entities)
+		{
+			auto priority = g_engine.m_coordinator.GetComponent<SpriteComponent>(entity).getDrawPriority();
+
+			m_drawQueue.insert(std::make_pair(priority, entity));
+		}
+
 		glBindFramebuffer(GL_FRAMEBUFFER, m_FBO);
 
-		auto msg = g_engine.GetWindowMessage();
+		//auto msg = g_engine.GetWindowMessage();
 
 		// clear the buffer
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -72,8 +82,10 @@ namespace Rogue
 		glUseProgram(m_shader.GetShader());
 
 		// For all entities
-		for (auto entity : m_entities)
+		for (auto pair : m_drawQueue)
 		{
+			auto& entity = pair.second;
+
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(entity);
 			auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
 
