@@ -34,6 +34,7 @@ namespace Rogue
 		std::string backgroundStr = level["BackgroundTexture"].GetString();
 		SpriteComponent backgroundSprite = SpriteComponent();
 		backgroundSprite.setTexture(backgroundStr.c_str());
+		backgroundSprite.setTexturePath(backgroundStr.c_str());
 
 		TransformComponent backgroundTransform = TransformComponent();
 		backgroundTransform.setPosition(Vec2(0.0f, 0.0f));
