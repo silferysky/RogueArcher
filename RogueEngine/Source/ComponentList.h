@@ -11,6 +11,7 @@
 #include "StatsComponent.h"
 #include "AnimationComponent.h"
 #include "CameraComponent.h"
+#include "AudioEmitterComponent.h"
 
 namespace Rogue
 {
@@ -26,6 +27,7 @@ namespace Rogue
 		STATS,
 		ANIMATION,
 		CAMERA,
+		AUDIOEMITTER,
 		LASTCOMP
 	};
 }
