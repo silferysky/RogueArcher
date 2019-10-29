@@ -35,6 +35,8 @@ namespace Rogue
 		m_shader = g_engine.m_coordinator.loadShader("Object Shader");
 		m_screenShader = g_engine.m_coordinator.loadShader("Screen Shader");
 
+		m_projLocation = glGetUniformLocation(m_shader.GetShader(), "projection");
+		m_viewLocation = glGetUniformLocation(m_shader.GetShader(), "view");
 		m_transformLocation = glGetUniformLocation(m_shader.GetShader(), "transform");
 
 		GenerateQuadPrimitive(m_VBO, m_VAO, m_EBO);
@@ -106,8 +108,8 @@ namespace Rogue
 
 		//offset by translation of camera, inverse of rotation
 
-		transformMat = g_engine.GetProjMat() * m_pCamera->GetViewMatrix() * transformMat;
-
+		glUniformMatrix4fv(m_projLocation, 1, GL_FALSE, glm::value_ptr(g_engine.GetProjMat()));
+		glUniformMatrix4fv(m_viewLocation, 1, GL_FALSE, glm::value_ptr(m_pCamera->GetViewMatrix()));
 		glUniformMatrix4fv(m_transformLocation, 1, GL_FALSE, glm::value_ptr(transformMat));
 
 		// Draw the Mesh

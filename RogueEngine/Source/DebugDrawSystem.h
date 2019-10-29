@@ -10,7 +10,8 @@
 		GLuint m_EBO;
 
 		Rogue::Shader m_shader;
-		GLint m_transformLocation;
+		GLint m_viewLocation;
+		GLint m_projLocation;
 
 		std::shared_ptr<Rogue::CameraSystem> m_pCamera;
 	public:
