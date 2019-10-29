@@ -46,8 +46,15 @@ namespace Rogue
 	void AudioSystem::Update()
 	{
 		g_engine.m_coordinator.InitTimeSystem("Audio System");
-
-		m_trackingTarget = &(g_engine.m_coordinator.GetComponent<TransformComponent>(1).getPosition());
+		
+		for (auto& objectIterator : g_engine.m_coordinator.GetActiveObjects())
+		{
+			if (g_engine.m_coordinator.CheckIfComponentExists<PlayerControllerComponent>(objectIterator.m_Entity))
+			{
+				m_trackingTarget = &(g_engine.m_coordinator.GetComponent<TransformComponent>(objectIterator.m_Entity).getPosition());
+				break;
+			}
+		}
 
 		m_music.Update();
 
