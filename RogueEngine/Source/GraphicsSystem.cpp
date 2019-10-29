@@ -57,14 +57,14 @@ namespace Rogue
 		glDisable(GL_DEPTH_TEST);
 		g_engine.m_coordinator.InitTimeSystem("Graphics System");
 
+		m_drawQueue.clear();
+
 		// For all entities
 		for (auto entity : m_entities)
 		{
 			auto priority = g_engine.m_coordinator.GetComponent<SpriteComponent>(entity).getDrawPriority();
-			auto pair = std::make_pair(priority, entity);
 
-			m_drawQueue.insert(pair);
-
+			m_drawQueue.insert(std::make_pair(priority, entity));
 		}
 
 		glBindFramebuffer(GL_FRAMEBUFFER, m_FBO);
