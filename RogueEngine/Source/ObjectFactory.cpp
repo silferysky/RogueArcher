@@ -34,6 +34,7 @@ namespace Rogue
 		std::string backgroundStr = level["BackgroundTexture"].GetString();
 		SpriteComponent backgroundSprite = SpriteComponent();
 		backgroundSprite.setTexture(backgroundStr.c_str());
+		backgroundSprite.setTexturePath(backgroundStr.c_str());
 
 		TransformComponent backgroundTransform = TransformComponent();
 		backgroundTransform.setPosition(Vec2(0.0f, 0.0f));
@@ -99,6 +100,12 @@ namespace Rogue
 			//Skips background layer
 			if (writingBackground)
 			{
+				if (g_engine.m_coordinator.CheckIfComponentExists<SpriteComponent>(curHierarchy.m_Entity))
+				{
+					std::string backgroundStr(g_engine.m_coordinator.GetComponent<SpriteComponent>(curHierarchy.m_Entity).Serialize().c_str());
+					RESerialiser::WriteToFile(fileName, "BackgroundTexture", backgroundStr.c_str());
+				}
+
 				writingBackground = false;
 				continue;
 			}
