@@ -272,6 +272,31 @@ namespace Rogue
 		}
 	}
 
+	void ObjectFactory::LoadLevelFiles(const char* fileName)
+	{
+		std::stringstream strstream;
+		std::string stdstr;
+		rapidjson::Document level = RESerialiser::DeserialiseFromFile(fileName);
+		strstream << level["Files"].GetString();
+
+		while(std::getline(strstream, stdstr, ';'))
+			g_engine.m_coordinator.GetSceneManager().AddToLoadedLevels(stdstr);
+
+		m_maxFileCount = g_engine.m_coordinator.GetSceneManager().GetLoadedLevels().size();
+	}
+
+	void ObjectFactory::SaveLevelFiles(const char* fileName)
+	{
+		std::stringstream strstream;
+		
+		for (auto& fileObjects : g_engine.m_coordinator.GetSceneManager().GetLoadedLevels())
+		{
+			strstream << fileObjects << ";";
+		}
+
+		RESerialiser::WriteToFile(fileName, "Files", strstream.str().c_str());
+	}
+
 	void ObjectFactory::Clone(Entity toClone)
 	{
 		Signature toCloneSignature = g_engine.m_coordinator.GetEntityManager().GetSignature(toClone);
@@ -372,8 +397,10 @@ namespace Rogue
 				return true;
 			else
 				return size > m_maxEntityCount + 1; // +1 for background
+		else if (type == FILETYPE_ARCHETYPE)
+			return size > m_maxArchetypeCount;
 		else
-			return size > m_maxArchetypeCount; 
+			return size > m_maxFileCount;
 	}
 
 	void ObjectFactory::ResetMaxEntity()
