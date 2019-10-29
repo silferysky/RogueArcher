@@ -24,7 +24,7 @@ namespace Rogue
 
 	void PhysicsSystem::integrateAcceleration(RigidbodyComponent& rigidbody, TransformComponent& transform)
 	{
-		float simulationTime = g_fixedDeltaTime * g_engine.GetTimeScale(); // To support slow motion
+		float simulationTime = g_fixedDeltaTime;// *g_engine.GetTimeScale(); // To support slow motion
 
 		transform.offSetPosition(rigidbody.getVelocity() * simulationTime);
 

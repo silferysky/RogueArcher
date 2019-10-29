@@ -30,14 +30,14 @@ namespace Rogue
 
 	}
 
-	double DegreesToRadians(double degrees)
+	float DegreesToRadians(float degrees)
 	{
-		return (degrees * RE_PI / 180.0);
+		return (degrees * RE_PI / 180.0f);
 	}
 
-	double RadiansToDegrees(double radians)
+	float RadiansToDegrees(float radians)
 	{
-		return (radians * 180.0 / RE_PI);
+		return (radians * 180.0f / RE_PI);
 	}
 
 	float REAbs(float x)
