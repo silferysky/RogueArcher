@@ -17,6 +17,7 @@
 #include "PlayerControllerSystem.h"
 #include "AnimationSystem.h"
 #include "CameraSystem.h"
+#include "AudioSystem.h"
 #include "VSync.h"
 
 namespace Rogue
@@ -32,6 +33,7 @@ namespace Rogue
 		m_coordinator.RegisterSystem<LogicSystem>();
 		m_coordinator.RegisterSystem<PlayerControllerSystem>();
 		m_coordinator.RegisterSystem<PhysicsSystem>();
+		m_coordinator.RegisterSystem<AudioSystem>();
 		m_coordinator.RegisterSystem<CollisionSystem>();
 		m_coordinator.RegisterSystem<GraphicsSystem>();
 		m_coordinator.RegisterSystem<DebugDrawSystem>();

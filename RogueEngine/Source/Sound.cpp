@@ -1,164 +1,143 @@
 #pragma once
 #include "Sound.h"
+#include "Logger.h"
+#include "Main.h"
 
-//constructor
-Sound::Sound()
+namespace Rogue
 {
-	_soundon = false;
-	_possible = false;
-	_currentsound = false;
-}
-//copy constructor
-Sound::Sound(Sound& copy)
-{
-	_soundon = copy._soundon;
-	_possible = copy._possible;
-	_currentsound = copy._currentsound;
-}
-//operator =
-Sound& Sound::operator = (Sound& copy)
-{
-	_soundon = copy._soundon;
-	_possible = copy._possible;
-	_currentsound = copy._currentsound;
-	return *this;
-}
-//destructor
-Sound::~Sound()
-{
-	_soundon = false;
-	_possible = false;
-	_currentsound = false;
-}
+	/* Constructor */
+	Sound::Sound() : m_soundOn{ false }, m_canPlaySound{ true }, currentSound{ 0 }, m_result{ FMOD_OK },
+		m_system{ 0 }, m_fmodSound{ 0 }, m_channel{ 0 }
+	{
+	}
 
-void Sound::Create(const char * filename, char counterCap, float playTimer)
-{
-	PlayCap = counterCap;
-	PlayTimer = playTimer;
-	FMOD_System_CreateSound(_system, filename, FMOD_LOOP_OFF | FMOD_CREATESTREAM, 0, &_sound);
-	//FmodErrorCheck(_result);
-	FMOD_System_PlaySound(_system, _sound, 0, true, &_channel);
-}
+	/* Error check */
+	void Sound::FmodErrorCheck(FMOD_RESULT resultCheck)
+	{
+		/* Throw an error if FMOD finds something wrong */
+		if (resultCheck != FMOD_OK)
+			RE_INFO("FMOD error!", resultCheck, FMOD_ErrorString(resultCheck));
+	}
 
-void Sound::init()
-{
-	_possible = true;
-	//create the sound system. If fails, sound is set to impossible
-	_result = FMOD_System_Create(&_system);
-	if (_result != FMOD_OK) 
-	{
-		_possible = false;
-	}
-	//if initialise the sound system. If fails, sound is set to impossible
-	if (_possible)
-	{
-		_result = FMOD_System_Init(_system, 1000, FMOD_INIT_NORMAL, 0);
-	}
-	if (_result != FMOD_OK)
-	{
-		_possible = false;
-	}
-	//sets initial sound volume (mute)
-	if (_possible)
-	{
-		FMOD_Channel_SetVolume(_channel, 0.0f);
-	}
-}
-//sets the volume of the sound
-void Sound::setvolume(float volume)
-{
-	if (_possible && _soundon && volume >= 0.0f && volume <= 1.0f) {
-		FMOD_Channel_SetVolume(_channel, volume);
-	}
-}
-//loads the sound
-void Sound::load(const char * tFile)
-{
-	_currentsound = (char *)tFile;
-	_soundon = true;
-	_possible = true;
-	_result = FMOD_Sound_Release(_sound);
-	_result = FMOD_System_CreateStream(_system, _currentsound, FMOD_LOOP_OFF | FMOD_2D , 0, &_sound);
-		//if failed to load, set sound to not possible
-		if (_result != FMOD_OK) _possible = false;
-}
-//unloads the sound
-void Sound::unload(void)
-{
-	if (_possible)
-	{
-		_result = FMOD_Sound_Release(_sound);
-		FMOD_System_Release(_system);
-	}
-}
-//plays the current sound 
-void Sound::playsound(bool pause)
-{
-	if (_possible && _soundon) {
-		_result = FMOD_System_PlaySound(_system, _sound,nullptr , pause, &_channel);
-	}
-}
-//plays the current sound in a infinite loop
-void Sound::playsoundloop(bool pause)
-{
-	if (_possible && _soundon) {
-		_result = FMOD_System_PlaySound(_system, _sound, nullptr, pause, &_channel);
-		FMOD_Channel_SetMode(_channel, FMOD_LOOP_NORMAL);
-	}
-}
-//updates the sound
-void Sound::soundupdate()
-{
-	FMOD_System_Update(_system);
-}
+	/* Sound Creation */
 
-//get current sound
-bool Sound::getsound()
-{
-	return _soundon;
-}
-//pause the current sound
-void Sound::setpause(bool pause)
-{
-	FMOD_Channel_SetPaused(_channel, pause);
-}
-//sets the current sound
-void Sound::setsound(bool sound)
-{
-	_soundon = sound;
-}
-//toggles sound on or off
-void Sound::togglesound()
-{
-	_soundon = !_soundon;
-	if (_soundon == true) 
-	{ 
-		load(_currentsound); 
-		playsound(); 
-	}
-	if (_soundon == false) 
+	/* For SFX */
+	void Sound::Create(const char* filename, char counterCap, float playTimer, Stream* audioPtr)
 	{
-		unload(); 
+		m_system = audioPtr->m_system;
+		m_c_PlayCap = counterCap;
+		m_f_PlayTimer = playTimer;
+		FMOD_System_CreateSound(m_system, filename, FMOD_LOOP_OFF | FMOD_CREATESTREAM, 0, &m_fmodSound);
+		FmodErrorCheck(m_result);
+		FMOD_System_PlaySound(m_system, m_fmodSound, 0, true, &m_channel);
+		FmodErrorCheck(m_result);
 	}
-}
-//pause the current sound
-void Sound::togglepause()
-{
-	FMOD_BOOL p;
-	FMOD_Channel_GetPaused(_channel, &p);
-	FMOD_Channel_SetPaused(_channel, !p);
-}
 
-void Sound::CreateOneShot(const char * filename, FMOD_SOUND **sound)
-{
-	char * currentSound; //currently played sound
-	currentSound = (char *)filename;
-	if (_possible && _soundon) {
-		if (*sound != nullptr)
+	/* For BGM */
+	void Sound::CreateBGM(const char* filename, char counterCap, float playTimer, Stream* audioPtr)
+	{
+		m_system = audioPtr->m_system;
+		m_c_PlayCap = counterCap;
+		m_f_PlayTimer = playTimer;
+		FMOD_System_CreateStream(m_system, filename, FMOD_LOOP_NORMAL | FMOD_CREATESTREAM, 0, &m_fmodSound);
+		FmodErrorCheck(m_result);
+		FMOD_Sound_SetMusicChannelVolume(m_fmodSound, 0, 0);
+		FmodErrorCheck(m_result);
+		FMOD_System_PlaySound(m_system, m_fmodSound, 0, true, &m_channel);
+		FmodErrorCheck(m_result);
+	}
+
+	/* General Audio Functions */
+
+	void Sound::Play(float volume)
+	{
+		if (m_c_PlayCounter < m_c_PlayCap)
 		{
-			_result = FMOD_Sound_Release(*sound);
+			m_soundOn = true;
+			FMOD_System_PlaySound(m_system, m_fmodSound, 0, false, &m_channel);
+			m_b_IsPlaying = true;
+			FmodErrorCheck(m_result);
+			FMOD_Channel_SetVolume(m_channel, volume);
+			++m_c_PlayCounter;
+			m_f_Timer = 0;
 		}
-		_result = FMOD_System_CreateSound(_system, currentSound, FMOD_LOOP_OFF | FMOD_2D, nullptr, sound);
-		if (_result != FMOD_OK) _possible = false;
+	}
+
+	void Sound::Update()
+	{
+		FMOD_System_Update(m_system);
+		FmodErrorCheck(m_result);
+
+		if (m_f_Timer > m_f_PlayTimer)
+		{
+			m_f_Timer = 0.0f;
+			m_c_PlayCounter = 0;
+		}
+		if (m_b_IsPlaying)
+		{
+			m_f_Timer += g_deltaTime;
+		}
+	}
+
+	void Sound::Pause(FMOD_BOOL pause)
+	{
+		FMOD_Channel_SetPaused(m_channel, pause);
+		m_b_IsPlaying = false;
+		FmodErrorCheck(m_result);
+	}
+
+	void Sound::Unload()
+	{
+		currentSound = 0;
+		m_soundOn = false;
+		FMOD_Sound_Release(m_fmodSound);
+		FmodErrorCheck(m_result);
+	}
+
+	void Sound::Release()
+	{
+		FMOD_Sound_Release(m_fmodSound);
+		FmodErrorCheck(m_result);
+	}
+
+	/* Getters/Setters */
+	FMOD_SYSTEM* Sound::GetSystem()
+	{
+		return m_system;
+	}
+
+	FMOD_SOUND* Sound::GetFmodSound()
+	{
+		return m_fmodSound;
+	}
+
+	FMOD_CHANNEL* Sound::GetChannel()
+	{
+		return m_channel;
+	}
+
+	float Sound::GetVolume()
+	{
+		float volume;
+		FMOD_Channel_GetVolume(m_channel, &volume);
+		return volume;
+	}
+
+	void Sound::SetVolume(float volume)
+	{
+		FMOD_Channel_SetVolume(m_channel, volume);
+	}
+
+	void Sound::ResetSoundCounter()
+	{
+		m_f_Timer = 0;
+		m_c_PlayCounter = 0;
+	}
+
+	bool Sound::CheckPlaying()
+	{
+		FMOD_Channel_IsPlaying(m_channel, &m_soundOn);
+		FmodErrorCheck(m_result);
+		return m_soundOn;
 	}
 }
