@@ -400,6 +400,9 @@
     <ClInclude Include="Source\OBB.h">
       <Filter>RogueEngine\Systems\Collision\Colliders</Filter>
     </ClInclude>
+    <ClInclude Include="Source\CameraShake.h">
+      <Filter>RogueEngine\Systems\Camera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -605,6 +608,9 @@
     </ClCompile>
     <ClCompile Include="Source\OBB.cpp">
       <Filter>RogueEngine\Systems\Collision\Colliders</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CameraShake.cpp">
+      <Filter>RogueEngine\Systems\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

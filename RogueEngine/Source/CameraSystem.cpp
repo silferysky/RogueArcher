@@ -1,6 +1,7 @@
 #include "CameraSystem.h"
 #include "Main.h"
 #include "EventDispatcher.h"
+#include "KeyEvent.h"
 
 namespace Rogue
 {
@@ -27,7 +28,10 @@ namespace Rogue
 		m_worldUp = glm::vec3(0.0f, 1.0f, 0.0f);
 		m_cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 
-		UpdateVectors();
+		m_cameraRight = glm::normalize(glm::cross(m_cameraFront, m_worldUp));
+		m_cameraUp = glm::normalize(glm::cross(m_cameraRight, m_cameraFront));
+
+		m_cameraShake = CameraShake();
 	}
 
 	glm::mat4 CameraSystem::GetViewMatrix()
@@ -38,27 +42,39 @@ namespace Rogue
 	void CameraSystem::Update()
 	{
 		g_engine.m_coordinator.InitTimeSystem("Camera System");
+
+		m_cameraShake.Update(g_deltaTime);
+		auto shakeOffset = m_cameraShake.getOffset();
 		
 		// For all entities
 		for (auto entity : m_entities)
 		{
-			auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
+			auto transformPos = g_engine.m_coordinator.GetComponent<TransformComponent>(entity).getPosition();
 
-			m_cameraPos = glm::vec3(transform.getPosition().x, transform.getPosition().y, 0.0f);
+			m_cameraPos = glm::vec3(transformPos.x + shakeOffset.x, transformPos.y + shakeOffset.y, 0.0f);
 		}
 
 		g_engine.m_coordinator.EndTimeSystem("Camera System");
 	}
 
-	void CameraSystem::UpdateVectors()
-	{
-		// Re-calculate the Right and Up vector
-		m_cameraRight = glm::normalize(glm::cross(m_cameraFront, m_worldUp));
-		m_cameraUp = glm::normalize(glm::cross(m_cameraRight, m_cameraFront));
-	}
-
 	void CameraSystem::Receive(Event* ev)
-	{}
+	{
+		switch (ev->GetEventType())
+		{
+
+		case EventType::EvKeyPressed:
+		{
+			KeyPressEvent* keypressevent = dynamic_cast<KeyPressEvent*>(ev);
+			KeyPress keycode = keypressevent->GetKeyCode();
+
+			if (keycode == KeyPress::KeyP)
+			{
+
+				m_cameraShake.SetShake(13.0f);
+			}
+		}
+		}
+	}
 
 	void CameraSystem::Shutdown()
 	{}

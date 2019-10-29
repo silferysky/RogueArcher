@@ -2,6 +2,7 @@
 #include "SystemManager.h"
 #include "EventListener.h"
 #include "Vector2D.h"
+#include "CameraShake.h"
 
 #include <glm.hpp>
 
@@ -20,7 +21,7 @@ namespace Rogue
 
 		float m_cameraVelocity = 1.0f;
 
-		void UpdateVectors();
+		CameraShake m_cameraShake;
 	public:
 		CameraSystem();
 		~CameraSystem() = default;

@@ -28,6 +28,7 @@
     <ClInclude Include="Source\BaseSystem.h" />
     <ClInclude Include="Source\BoxCollider2DComponent.h" />
     <ClInclude Include="Source\CameraComponent.h" />
+    <ClInclude Include="Source\CameraShake.h" />
     <ClInclude Include="Source\CameraSystem.h" />
     <ClInclude Include="Source\CollisionSystem.h" />
     <ClInclude Include="Source\DebugDrawSystem.h" />
@@ -125,6 +126,7 @@
     <ClCompile Include="Source\BaseAI.cpp" />
     <ClCompile Include="Source\BoxCollider2DComponent.cpp" />
     <ClCompile Include="Source\CameraComponent.cpp" />
+    <ClCompile Include="Source\CameraShake.cpp" />
     <ClCompile Include="Source\CameraSystem.cpp" />
     <ClCompile Include="Source\CollisionSystem.cpp" />
     <ClCompile Include="Source\DebugDrawSystem.cpp" />
