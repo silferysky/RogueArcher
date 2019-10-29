@@ -36,13 +36,18 @@ namespace Rogue
 		return glm::lookAt(m_cameraPos, m_cameraPos + m_cameraFront, m_cameraUp);
 	}
 
+	void CameraSystem::ResetCamera()
+	{
+		m_cameraPos = { 0.0f, 0.0f, 0.0f };
+	}
+
 	void CameraSystem::ToggleWorldCamera()
 	{
 		m_worldCamera = !m_worldCamera;
 
 		// Reset camera position to center
 		if (m_worldCamera)
-			m_cameraPos = { 0.0f, 0.0f, 0.0f };
+			ResetCamera();
 	}
 
 	void CameraSystem::Update()
