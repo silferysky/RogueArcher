@@ -31,8 +31,8 @@ namespace Rogue
 
 		}
 
-		ImVec2 imageSize{ ImGui::GetWindowSize() };
-		ImGui::Image((void*)(intptr_t)(g_engine.m_coordinator.GetSystem<GraphicsSystem>()->getFBO()), ImVec2(imageSize.x,imageSize.y - 60), ImVec2(0, 1), ImVec2(1, 0));
+		ImVec2 imageSize{ ImGui::GetContentRegionAvail() };
+		ImGui::Image((void*)(intptr_t)(g_engine.m_coordinator.GetSystem<GraphicsSystem>()->getFBO()), ImVec2(imageSize.x,imageSize.y ), ImVec2(0, 1), ImVec2(1, 0));
 		ImGui::End();
 	}
 	void ImGuiEditorViewport::Shutdown()
