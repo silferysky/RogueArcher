@@ -37,5 +37,6 @@ namespace Rogue
 	}
 	void ImGuiEditorViewport::Shutdown()
 	{
+
 	}
 }
