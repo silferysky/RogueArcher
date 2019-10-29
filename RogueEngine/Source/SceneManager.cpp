@@ -10,10 +10,10 @@ namespace Rogue
 	:	m_objectFactory {std::make_unique<ObjectFactory>()},
 		m_loadedLevels {std::vector<std::string>()},
 		m_currentFileName { "Level 1.json"},
-		m_sceneIterator{ 2 }
+		m_sceneIterator{ 0 }
 	{
-		m_loadedLevels.push_back("Level 1.json");
-		m_loadedLevels.push_back("Level 2.json");
+		//LoadLevelFiles("Levels.json");
+		//m_sceneIterator = m_loadedLevels.size();
 	}
 
 	SceneManager::~SceneManager()
@@ -41,6 +41,21 @@ namespace Rogue
 	{
 		g_engine.m_coordinator.DestroyAllEntity();
 		ClearActiveEntities();
+	}
+
+	void SceneManager::LoadLevelFiles(const char* fileName)
+	{
+		std::ostringstream ostrstream;
+		ostrstream << "Resources/" << fileName;
+		m_objectFactory->LoadLevelFiles(ostrstream.str().c_str());
+		m_sceneIterator = m_loadedLevels.size();
+	}
+
+	void SceneManager::SaveLevelFiles(const char* fileName)
+	{
+		std::ostringstream ostrstream;
+		ostrstream << "Resources/" << fileName;
+		m_objectFactory->SaveLevelFiles(ostrstream.str().c_str());
 	}
 
 	void SceneManager::LoadLevel(const char* fileName)

@@ -25,6 +25,9 @@ namespace Rogue
 		void ClearActiveEntities();
 		void ClearAllEntities();
 
+		void LoadLevelFiles(const char* fileName);
+		void SaveLevelFiles(const char* fileName);
+
 		void LoadLevel(const char* fileName);
 		void SaveLevel(const char* fileName);
 

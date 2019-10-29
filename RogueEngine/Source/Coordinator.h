@@ -44,6 +44,7 @@ namespace Rogue
 			m_systemManager->InitSystems();
 
 			// Load first scene
+			m_sceneManager->LoadLevelFiles("Levels.json");
 			m_sceneManager->LoadLevel("Level 1.json");
 			m_sceneManager->LoadArchetypes("Resources/Archetypes.json");
 

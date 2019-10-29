@@ -3,6 +3,7 @@
 
 #define FILETYPE_LEVEL 0
 #define FILETYPE_ARCHETYPE 1
+#define FILETYPE_LEVELFILE 2
 
 namespace Rogue
 {
@@ -11,11 +12,15 @@ namespace Rogue
 	{
 
 	public:
+
 		void LoadLevel(const char* fileName);
 		void SaveLevel(const char* fileName);
 
 		void LoadArchetypes(const char* fileName);
 		void SaveArchetypes(const char* fileName);
+
+		void LoadLevelFiles(const char* fileName);
+		void SaveLevelFiles(const char* fileName);
 
 		void Clone(Entity toClone);
 		void Clone(const char* archetype);
@@ -31,6 +36,7 @@ namespace Rogue
 
 		size_t m_maxEntityCount;
 		size_t m_maxArchetypeCount;
+		size_t m_maxFileCount;
 		std::map<std::string, std::string> m_archetypes;
 		std::map<std::string, Signature> m_archetypeSignature;
 
