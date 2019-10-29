@@ -1,5 +1,6 @@
 #pragma once
 #include "Vector2D.h"
+//#include "PerlinNoise.h"
 
 namespace Rogue
 {
@@ -11,6 +12,8 @@ namespace Rogue
 		float m_shakeInterval; //If dt > m_i_ShakeInterval, then update screenshake magnitude
 		float m_currentShakeMagnitude;
 		float m_duration;
+
+		//PerlinNoise m_pn;
 
 		Vec2 m_shakeOffset;
 	public:
