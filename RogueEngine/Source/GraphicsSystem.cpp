@@ -81,6 +81,7 @@ namespace Rogue
 		//}
 
 		glUseProgram(m_shader.GetShader());
+		glBindVertexArray(m_VAO);
 
 		// For all entities
 		for (auto pair : m_drawQueue)
@@ -95,6 +96,8 @@ namespace Rogue
 		}
 
 		glUseProgram(0);
+		glBindBuffer(GL_ARRAY_BUFFER, 0); //Reset
+		glBindVertexArray(0); //Reset
 
 		g_engine.m_coordinator.GetSystem<DebugDrawSystem>()->TrueUpdate();
 
@@ -105,8 +108,6 @@ namespace Rogue
 
 	void GraphicsSystem::draw(SpriteComponent* sprite, TransformComponent* transform)
 	{
-		glBindVertexArray(m_VAO);
-
 		auto transformMat = glm::mat4(1.0f);
 		auto texture = sprite->getTexture();
 
@@ -115,7 +116,6 @@ namespace Rogue
 		transformMat = glm::scale(transformMat, glm::vec3(transform->getScale().x, transform->getScale().y, 1.0f));
 
 		glBindTexture(GL_TEXTURE_2D, texture.m_texture);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture.m_width, texture.m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, texture.m_data);
 
 		// model to world, world to view, view to projection
 
@@ -125,15 +125,10 @@ namespace Rogue
 		glUniformMatrix4fv(m_viewLocation, 1, GL_FALSE, glm::value_ptr(m_pCamera->GetViewMatrix()));
 		glUniformMatrix4fv(m_transformLocation, 1, GL_FALSE, glm::value_ptr(transformMat));
 
-		sprite->getFilter();
-
-		glUniform4fv(m_filterLocation, 1, glm::value_ptr(sprite->getFilter()));
+		//glUniform4fv(m_filterLocation, 1, glm::value_ptr(sprite->getFilter()));
 
 		// Draw the Mesh
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-
-		glBindBuffer(GL_ARRAY_BUFFER, 0); //Reset
-		glBindVertexArray(0); //Reset
 	}
 
 	void GraphicsSystem::Receive(Event* ev)
