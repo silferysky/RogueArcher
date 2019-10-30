@@ -31,6 +31,7 @@ namespace Rogue
 				g_engine.m_coordinator.GetSceneManager().ClearAllEntities();
 				g_engine.m_coordinator.GetSceneManager().LoadLevel(g_engine.m_coordinator.GetSceneManager().getCurrentFileName().c_str());
 				g_engine.m_coordinator.SetGameState(false);
+				g_engine.m_coordinator.SetPauseState(false);
 			}
 		}
 		if (ImGui::IsItemHovered())
