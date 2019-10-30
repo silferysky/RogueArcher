@@ -33,11 +33,23 @@ namespace Rogue
 				g_engine.m_coordinator.SetPauseState(true);
 			}
 		}
+		if (ImGui::IsItemHovered())
+		{
+			ImGui::BeginTooltip();
+			ImGui::Text("If game is paused, will save level");
+			ImGui::EndTooltip();
+		}
 		ImGui::SameLine();
 		if (ImGui::Button("Pause"))
 		{
 			//Pause/Unpause
 			g_engine.m_coordinator.TogglePauseState();
+		}
+		if (ImGui::IsItemHovered())
+		{
+			ImGui::BeginTooltip();
+			ImGui::Text("Toggles Pause");
+			ImGui::EndTooltip();
 		}
 		ImGui::SameLine();
 		if (ImGui::Button("Stop"))
@@ -49,6 +61,12 @@ namespace Rogue
 				g_engine.m_coordinator.GetSceneManager().LoadLevel(g_engine.m_coordinator.GetSceneManager().getCurrentFileName().c_str());
 				g_engine.m_coordinator.SetPauseState(true);
 			}
+		}
+		if (ImGui::IsItemHovered())
+		{
+			ImGui::BeginTooltip();
+			ImGui::Text("Stops game and loads last saved state");
+			ImGui::EndTooltip();
 		}
 
 		ImVec2 imageSize{ ImGui::GetContentRegionAvail() };
