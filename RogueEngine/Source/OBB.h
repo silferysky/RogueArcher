@@ -7,8 +7,9 @@ namespace Rogue
 {
 	class OBB : public BaseCollider
 	{
+	public:
 		using VertexList = std::vector<Vec2>;
-
+	private:
 		size_t m_size;
 
 		// The minimum and maximum values crushed onto each axis

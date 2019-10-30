@@ -6,6 +6,41 @@
 
 namespace Rogue
 {
+	BoxCollider2DComponent::BoxCollider2DComponent() :
+		m_rotatable{ false }, m_aabb{}, m_obb{}, m_shape{std::make_unique<BoxShape>()}
+	{}
+
+	BoxCollider2DComponent::BoxCollider2DComponent(const BoxCollider2DComponent& rhs) :
+		m_rotatable{ rhs.m_rotatable }, m_aabb{ rhs.m_aabb }, m_obb{ rhs.m_obb },
+		m_shape{ }
+	{
+		if (m_rotatable)
+			m_shape = std::make_unique<PolygonShape>(m_obb);
+		else
+			m_shape = std::make_unique<BoxShape>(m_aabb);
+	}
+
+	BoxCollider2DComponent& BoxCollider2DComponent::operator=(const BoxCollider2DComponent& rhs)
+	{
+		if (this != &rhs)
+		{
+			m_rotatable = rhs.m_rotatable;
+
+			m_obb.setSize(rhs.m_obb.getSize());
+			std::vector<Vec2> vertexList{};
+
+			vertexList.reserve(m_obb.getSize());
+
+			m_obb.setModelVerts(vertexList);
+
+			if (m_rotatable)
+				m_shape = std::make_unique<PolygonShape>(m_obb);
+			else
+				m_shape = std::make_unique<BoxShape>(m_aabb);
+		}
+		return *this;
+	}
+
 	std::string BoxCollider2DComponent::Serialize()
 	{
 		//Size, modelVertexList
@@ -34,39 +69,32 @@ namespace Rogue
 
 		for (size_t counter = 0; counter < size; counter++)
 		{
-			//In this case, 1st value is only non double value read
-			//if (counter > 0)
-			//	std::getline(ss, s2, ';');
-
-			//switch (counter)
-			//{
-			//case 0:
-			//	size = static_cast<size_t>(stoi(s1));
-			//	break;
-			//default:
-			//	vertexList.push_back(Vec2(stof(s1), stof(s2)));
-			//	//vertexList.push_back(Vec2());
-			//	break;
-			//}
-
 			std::getline(ss, s1, ';');
 			std::getline(ss, s2, ';');
-			vertexList.push_back(Vec2(stof(s1), stof(s2)));
+			vertexList.emplace_back(Vec2(stof(s1), stof(s2)));
 		}
 
 		m_obb.setModelVerts(vertexList);
 		m_obb.setSize(size);
 	}
 
-	void BoxCollider2DComponent::operator=(const BoxCollider2DComponent& rhs)
-	{
-		m_obb.setSize(rhs.m_obb.getSize());
-		std::vector<Vec2> vertexList{};
 
-		for (size_t sz = 0; sz < m_obb.getSize(); ++sz)
+	bool BoxCollider2DComponent::Rotatable() const
+	{
+		return m_rotatable;
+	}
+
+	void BoxCollider2DComponent::setRotatable(bool set)
+	{
+		if (set)
 		{
-			vertexList.push_back(Vec2());
+			m_shape = std::make_unique<PolygonShape>(m_obb);
 		}
-		m_obb.setModelVerts(vertexList);
+		else
+		{
+			m_shape = std::make_unique<BoxShape>(m_aabb);
+		}
+
+		m_rotatable = set;
 	}
 }

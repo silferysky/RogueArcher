@@ -26,8 +26,9 @@ namespace Rogue
 		inline Vec2 GetColliderPosition(const BaseCollider& collider, const TransformComponent& trans) const;
 		inline float GetColliderRotation(const BaseCollider& collider, const TransformComponent& trans) const;
 
-		void GenerateManifoldAABBvsAABB(Manifold& manifold);
-		void GenerateManifoldOBBvsOBB(Manifold& manifold);
+		void GenerateManifoldCirclevsCircle(Entity A, Entity B);
+		void GenerateManifoldAABBvsAABB(Entity A, Entity B);
+		void GenerateManifoldOBBvsOBB(Entity A, Entity B);
 
 	public:
 
@@ -75,7 +76,7 @@ namespace Rogue
 
 		// Manifold
 		void InsertColliderPair(Entity a, Entity b);
-		void GenerateManifolds();
+		void GenerateManifolds(Entity A, Entity B);
 		void ResolveManifolds();
 
 		static float GetCorrectionFactor();

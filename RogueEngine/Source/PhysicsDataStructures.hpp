@@ -1,5 +1,7 @@
 #pragma once
 #include "REMath.h"
+#include "AABB.h"
+#include "OBB.h"
 
 namespace Rogue
 {
@@ -58,7 +60,7 @@ namespace Rogue
 	public:
 		float m_radius;
 	
-		CircleShape(float radius) :
+		CircleShape(float radius = 1.0f) :
 			m_radius{ radius }
 		{}
 
@@ -79,25 +81,86 @@ namespace Rogue
 	class BoxShape : public Shape
 	{
 	public:
-		float m_width;
-		float m_height;
+		const AABB& m_aabb;
 
-		BoxShape(float width, float height) :
-			m_width{ width }, m_height{ height }
+		BoxShape(const AABB& aabb = AABB()) :
+			m_aabb{ aabb }
 		{}
 
 		const MassData& ComputeMass(float density = 1.0f) const override
 		{
-			float mass = m_width * m_height * density;
+			float width = m_aabb.getMax().x - m_aabb.getMin().x;
+			float height = m_aabb.getMax().y - m_aabb.getMax().y;
+			float mass = width * height * density;
 
 			return MassData{
 				mass,
-				mass * (m_width * m_width + m_height * m_height) / 12 }; // Formula for inertia of box.
+				mass * (width * width + height * height) / 12 }; // Formula for inertia of box.
 		}
 
 		Type GetType() const override
 		{
 			return Type::e_box;
+		}
+	};
+
+	class PolygonShape : public Shape
+	{
+		const OBB::VertexList& m_vertices;
+	public:
+		PolygonShape() = default;
+
+		PolygonShape(OBB& obb) :
+			m_vertices{ obb.modelVerts() }
+		{}
+
+		const MassData& ComputeMass(float density) const override
+		{
+			unsigned int m_vertexCount = m_vertices.size();
+
+			// Calculate centroid and moment of interia
+			Vec2 c(0.0f, 0.0f); // centroid
+			float area = 0.0f;
+			float I = 0.0f;
+			const float k_inv3 = 1.0f / 3.0f;
+			float D = 1.0f;
+
+			for (unsigned int i1 = 0; i1 < m_vertexCount; ++i1)
+			{
+				// Triangle vertices, third vertex implied as (0, 0)
+				Vec2 p1(m_vertices[i1]);
+				unsigned int i2 = i1 + 1 < m_vertexCount ? i1 + 1 : 0;
+				Vec2 p2(m_vertices[i2]);
+
+				//	float D = Cross(p1, p2); // Cross product
+				float triangleArea = 0.5f * D;
+
+				area += triangleArea;
+
+				// Use area to weight the centroid average, not just vertex position
+				c += triangleArea * k_inv3 * (p1 + p2);
+
+				float intx2 = p1.x * p1.x + p2.x * p1.x + p2.x * p2.x;
+				float inty2 = p1.y * p1.y + p2.y * p1.y + p2.y * p2.y;
+				I += (0.25f * k_inv3 * D) * (intx2 + inty2);
+			}
+
+			c *= 1.0f / area;
+
+			// Translate vertices to centroid (make the centroid (0, 0)
+			// for the polygon in model space)
+			//for (unsigned int i = 0; i < m_vertexCount; ++i)
+			//	m_vertices[i] = m_vertices[i] - c;
+
+			float mass = density * area;
+			float inertia = I * density;
+
+			return MassData{ mass, inertia };
+		}
+
+		Type GetType() const override
+		{
+			return Type::e_polygon;
 		}
 	};
 
