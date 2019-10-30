@@ -28,7 +28,7 @@ namespace Rogue
 			{
 				if (i.m_selected == true)
 				{
-					ImGui::Text("%s", i.m_objectName.c_str());
+					ImGui::TextWrapped("%s", i.m_objectName.c_str());
 					static char buffer[64] = "";
 					ImGui::TextDisabled("New Name");
 					ImGui::SameLine();
@@ -82,9 +82,9 @@ namespace Rogue
 
 
 							ImGui::PushItemWidth(75);
-							ImGui::Text("Current File Path");
-							ImGui::Text("%s", m_spritePath.c_str());
-							ImGui::Text("New Texture Path");
+							ImGui::TextWrapped("Current File Path");
+							ImGui::TextWrapped("%s", m_spritePath.c_str());
+							ImGui::TextWrapped("New Texture Path");
 							ImGui::SameLine();
 							ImGui::PushItemWidth(200);
 							ImGui::InputText("                      ", m_newSpritePath, 128);
@@ -182,6 +182,7 @@ namespace Rogue
 							
 							ImGui::PushItemWidth(75);
 							ImGui::Checkbox("Active?", &m_isMain);
+							ImGui::TextWrapped("There can only be 1 active non-world camera at a time, set others to non-active if you want this to be the main camera.");
 							g_engine.m_coordinator.GetComponent<CameraComponent>(i.m_Entity).setIsActive(m_isMain);
 							ImGui::PushItemWidth(75);
 						}
@@ -222,8 +223,8 @@ namespace Rogue
 							static char m_newaudioPath[128];
 							const std::string m_constAudioPath = "Resources/Sounds/";
 							ImGui::PushItemWidth(75);
-							ImGui::Text("Current Sound Path : ");
-							ImGui::Text("%s", m_audioPath.c_str());
+							ImGui::TextWrapped("Current Sound Path : ");
+							ImGui::TextWrapped("%s", m_audioPath.c_str());
 							ImGui::TextDisabled("New Sound Path");
 							ImGui::SameLine();
 							ImGui::PushItemWidth(250);
