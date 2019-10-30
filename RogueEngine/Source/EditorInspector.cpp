@@ -153,15 +153,11 @@ namespace Rogue
 						if (ImGui::CollapsingHeader("Camera"))
 						{
 							bool m_isMain = g_engine.m_coordinator.GetComponent<CameraComponent>(i.m_Entity).getIsActive();
-
+							
 							ImGui::PushItemWidth(75);
 							ImGui::Checkbox("Active?", &m_isMain);
 							g_engine.m_coordinator.GetComponent<CameraComponent>(i.m_Entity).setIsActive(m_isMain);
-
 							ImGui::PushItemWidth(75);
-							//ImGui::DragFloat("Camera X", &m_position.x, 0.5f, -10000.0f, 10000.0f);
-							//ImGui::DragFloat("Camera Y", &m_position.y, 0.5f, -10000.0f, 10000.0f);
-							//g_engine.m_coordinator.GetSystem<CameraSystem>()->SetCameraPos(m_position.x, m_position.y);
 						}
 					}
 
@@ -180,7 +176,6 @@ namespace Rogue
 							ImGui::DragFloat("Offset X ", &m_centerOffset.x, 0.5f, -100000.0f, 100000.0f);
 							ImGui::DragFloat("Offset Y ", &m_centerOffset.y, 0.5f, -100000.0f, 100000.0f);
 							g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i.m_Entity).m_collider.setCenterOffSet(m_centerOffset);
-
 
 						}
 					}
@@ -330,6 +325,14 @@ namespace Rogue
 					}
 				}					
 		}
+
+		bool m_worldCamera = g_engine.m_coordinator.GetSystem<CameraSystem>()->GetWorldCamera();
+		ImGui::Checkbox("Toggle World Camera?", &m_worldCamera);
+		g_engine.m_coordinator.GetSystem<CameraSystem>()->SetWorldCamera(m_worldCamera);
+		glm::vec3 m_cameraPos = g_engine.m_coordinator.GetSystem<CameraSystem>()->GetCameraPos();
+		ImGui::DragFloat("Camera X", &m_cameraPos.x, 1.0f, -10000.0f, 10000.0f);
+		ImGui::DragFloat("Camera Y", &m_cameraPos.y, 1.0f, -10000.0f, 10000.0f);
+		g_engine.m_coordinator.GetSystem<CameraSystem>()->SetCameraPos(m_cameraPos);
 
 		ImGui::End();
 	}
