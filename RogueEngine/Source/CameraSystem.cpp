@@ -55,6 +55,16 @@ namespace Rogue
 		return m_cameraShake;
 	}
 
+	Vec2 CameraSystem::GetCameraMin() const
+	{
+		return m_cameraMin;
+	}
+
+	Vec2 CameraSystem::GetCameraMax() const
+	{
+		return m_cameraMax;
+	}
+
 	void CameraSystem::SetCameraMin(const float& x, const float& y)
 	{
 		m_cameraMin = { x, y };
