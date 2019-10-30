@@ -49,6 +49,10 @@ namespace Rogue
 					sceneManager.SaveLevel(ostrstream.str().c_str());
 					sceneManager.AddToLoadedLevels(ostrstream.str());
 					sceneManager.SaveLevelFiles("Levels.json");
+
+					//Reset game running state and game save state
+					g_engine.m_coordinator.SetGameState(false);
+					g_engine.m_coordinator.SetPauseState(false);
 				}
 				if (ImGui::BeginMenu("Open Scene"))
 				{
@@ -61,17 +65,20 @@ namespace Rogue
 							sceneManager.ClearAllEntities();
 							sceneManager.LoadLevel(sceneManager.getCurrentFileName().c_str());
 
+							g_engine.m_coordinator.SetGameState(false);
+							g_engine.m_coordinator.SetPauseState(false);
+
 							g_engine.m_coordinator.GetSystem<AudioSystem>()->InitSounds();
 						}
 					}
 					ImGui::EndMenu();
 				}
-				if (ImGui::MenuItem("Save Scene"))
+				if (ImGui::MenuItem("Save Scene", nullptr, false, !g_engine.m_coordinator.GetGameState()))
 				{
 					SceneManager& sceneManager = g_engine.m_coordinator.GetSceneManager();
 					g_engine.m_coordinator.GetSceneManager().SaveLevel(sceneManager.getCurrentFileName().c_str());
 				}
-				if (ImGui::BeginMenu("Save Scene As"))
+				if (ImGui::BeginMenu("Save Scene As", !g_engine.m_coordinator.GetGameState()))
 				{
 					for (auto& levelStrIterator : g_engine.m_coordinator.GetSceneManager().GetLoadedLevels())
 					{
