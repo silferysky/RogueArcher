@@ -143,8 +143,8 @@ namespace Rogue
 			KeyTriggeredEvent* keytriggeredevent = dynamic_cast<KeyTriggeredEvent*>(ev);
 			KeyPress keycode = keytriggeredevent->GetKeyCode();
 
-			if (keycode == KeyPress::KeyP)
-				m_cameraShake.SetShake(13.0f);
+			//if (keycode == KeyPress::Numpad9)
+			//	m_cameraShake.SetShake(13.0f);
 
 			if (keycode == KeyPress::KeyShift)
 				ToggleWorldCamera();

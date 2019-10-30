@@ -75,7 +75,33 @@ namespace Rogue
 					{
 						if (ImGui::CollapsingHeader("Sprite"))
 						{
+							std::string m_spritePath = g_engine.m_coordinator.GetComponent<SpriteComponent>(i.m_Entity).getTexturePath();
 							glm::vec4 m_color = g_engine.m_coordinator.GetComponent<SpriteComponent>(i.m_Entity).getFilter();
+							const std::string m_constSpritePath = "Resources/Assets/";
+							static char m_newSpritePath[128];
+
+
+							ImGui::PushItemWidth(75);
+							ImGui::Text("Current File Path");
+							ImGui::Text("%s", m_spritePath.c_str());
+							ImGui::Text("New Texture Path");
+							ImGui::SameLine();
+							ImGui::PushItemWidth(200);
+							ImGui::InputText("                      ", m_newSpritePath, 128);
+
+							if (ImGui::Button("Set New Sprite"))
+							{
+								m_spritePath = m_constSpritePath + m_newSpritePath;
+								g_engine.m_coordinator.GetComponent<SpriteComponent>(i.m_Entity).setTexturePath(m_spritePath);
+							}
+
+							if (ImGui::IsItemHovered())
+							{
+								ImGui::BeginTooltip();
+								ImGui::Text("Enter name of file and click on Set New Path to update sprite. Note that new sprite will only be loaded when scene is saved and restarted");
+								ImGui::EndTooltip();
+							}
+
 							ImGui::PushItemWidth(250);
 							ImGui::ColorEdit4("Color", (float*)& m_color);
 							g_engine.m_coordinator.GetComponent<SpriteComponent>(i.m_Entity).setFilter(m_color);
@@ -168,14 +194,22 @@ namespace Rogue
 							float m_radius = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i.m_Entity).m_collider.getRadius();
 							Vec2 m_centerOffset = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i.m_Entity).m_collider.getCenterOffSet();
 							float m_rotationOffset = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i.m_Entity).m_collider.getRotationOffSet();
+							Vec2 m_scaleOffset = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i.m_Entity).m_collider.getScaleOffSet();
 
 							ImGui::PushItemWidth(75);
 							ImGui::DragFloat("Radius", &m_radius, 0.5f, -100000.0f, 100000.0f);
 							g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i.m_Entity).m_collider.setRadius(m_radius);
 
-							ImGui::DragFloat("Offset X ", &m_centerOffset.x, 0.5f, -100000.0f, 100000.0f);
-							ImGui::DragFloat("Offset Y ", &m_centerOffset.y, 0.5f, -100000.0f, 100000.0f);
+							ImGui::DragFloat("Center Offset X ", &m_centerOffset.x, 0.5f, -100000.0f, 100000.0f);
+							ImGui::DragFloat("Center Offset Y ", &m_centerOffset.y, 0.5f, -100000.0f, 100000.0f);
 							g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i.m_Entity).m_collider.setCenterOffSet(m_centerOffset);
+
+							ImGui::DragFloat("Offset X ", &m_rotationOffset, 0.5f, -100000.0f, 100000.0f);
+							g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i.m_Entity).m_collider.setRotationOffSet(m_rotationOffset);
+				
+							ImGui::DragFloat("Center Offset X ", &m_scaleOffset.x, 0.5f, -100000.0f, 100000.0f);
+							ImGui::DragFloat("Center Offset Y ", &m_scaleOffset.y, 0.5f, -100000.0f, 100000.0f);
+							g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i.m_Entity).m_collider.setScaleOffSet(m_scaleOffset);
 
 						}
 					}
@@ -186,6 +220,7 @@ namespace Rogue
 						{
 							std::string m_audioPath = g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(i.m_Entity).getID();
 							static char m_newaudioPath[128];
+							const std::string m_constAudioPath = "Resources/Sounds/";
 							ImGui::PushItemWidth(75);
 							ImGui::Text("Current Sound Path : ");
 							ImGui::Text("%s", m_audioPath.c_str());
@@ -195,8 +230,14 @@ namespace Rogue
 							ImGui::InputText("                    ", m_newaudioPath,128);
 							if (ImGui::Button("Set new path"))
 							{
-								m_audioPath = m_newaudioPath;
+								m_audioPath = m_constAudioPath + m_newaudioPath;
 								g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(i.m_Entity).setID(m_audioPath);
+							}
+							if (ImGui::IsItemHovered())
+							{
+								ImGui::BeginTooltip();
+								ImGui::Text("Enter name of file and click on Set New Path to update sound. Note that new sound will only be loaded when scene is saved and restarted");
+								ImGui::EndTooltip();
 							}
 						}
 					}

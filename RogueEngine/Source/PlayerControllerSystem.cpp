@@ -42,16 +42,16 @@ namespace Rogue
 			if (keycode == KeyPress::KeyEsc)
 				g_engine.SetGameIsRunning(false);
 
-			if (keycode == KeyPress::KeyC && m_entities.size() > 0)
+			if (keycode == KeyPress::Numpad0 && m_entities.size() > 0)
 				g_engine.m_coordinator.clone(*m_entities.begin());
 
-			if (keycode == KeyPress::KeyB)
+			if (keycode == KeyPress::Numpad1)
 				g_engine.m_coordinator.cloneArchetypes("Box");
 
-			if (keycode == KeyPress::KeyN)
+			if (keycode == KeyPress::Numpad2)
 				g_engine.m_coordinator.cloneArchetypes("Circle");
 
-			if (keycode == KeyPress::MB2)
+			if (keycode == KeyPress::Numpad3)
 			{
 				g_engine.SetTimeScale(0.1f);
 			}
@@ -105,22 +105,22 @@ namespace Rogue
 					}
 
 					auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
-					if (keycode == KeyPress::KeyE)
+					if (keycode == KeyPress::Numpad4)
 					{
 						transform.offSetScale(Vec2(100.0f, 100.0f) * g_deltaTime * 60.0f);
 						//RE_INFO("Scaled Up!");
 					}
-					else if (keycode == KeyPress::KeyQ)
+					else if (keycode == KeyPress::Numpad5)
 					{
 						transform.offSetScale(Vec2(-100.0f, -100.0f) * g_deltaTime * 60.0f);
 						//RE_INFO("Scaled Down!");
 					}
-					else if (keycode == KeyPress::KeyR)
+					else if (keycode == KeyPress::Numpad6)
 					{
 						transform.offSetRotation(100.0f * g_deltaTime * 60.0f);
 						//RE_INFO("Rotated!");
 					}
-					else if (keycode == KeyPress::KeyK)
+					else if (keycode == KeyPress::Numpad7)
 					{
 						transform.setPosition(Vec2(-200.0f, 0.0f));
 					}
@@ -155,7 +155,7 @@ namespace Rogue
 
 
 					auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
-					if (keycode == KeyPress::KeyL)
+					if (keycode == KeyPress::Numpad8)
 					{
 						transform.setPosition(Vec2(200.0f, 0.0f));
 					}

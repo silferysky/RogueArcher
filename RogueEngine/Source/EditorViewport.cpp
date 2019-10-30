@@ -16,6 +16,7 @@ namespace Rogue
 	void ImGuiEditorViewport::Update()
 	{
 		ImGui::Begin("Viewport");
+		ImGuiStyle& style = ImGui::GetStyle();
 		if (ImGui::Button("Play"))
 		{
 			//If game is not running, save level, and set it to running
@@ -41,6 +42,18 @@ namespace Rogue
 			ImGui::EndTooltip();
 		}
 		ImGui::SameLine();
+		if (g_engine.m_coordinator.GetPauseState() || !g_engine.m_coordinator.GetGameState())
+		{
+			ImGui::PushStyleColor(ImGuiCol_Button, { 0.8f,0.0f,0.0f,0.4f });
+			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, { 0.8f,0.0f,0.0f,1.0f });
+			ImGui::PushStyleColor(ImGuiCol_ButtonActive, { 0.9f,0.0f,0.0f,1.0f });
+		}
+		else
+		{
+			ImGui::PushStyleColor(ImGuiCol_Button, style.Colors[ImGuiCol_Button]);
+			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, style.Colors[ImGuiCol_ButtonHovered]);
+			ImGui::PushStyleColor(ImGuiCol_ButtonActive, style.Colors[ImGuiCol_ButtonActive]);
+		}
 		if (ImGui::Button("Pause"))
 		{
 			//Pause/Unpause only if game is running
@@ -53,6 +66,7 @@ namespace Rogue
 			ImGui::Text("Toggles Pause");
 			ImGui::EndTooltip();
 		}
+		ImGui::PopStyleColor(3);
 		ImGui::SameLine();
 		if (ImGui::Button("Stop"))
 		{
