@@ -44,7 +44,7 @@ namespace Rogue
 
 		g_engine.m_coordinator.AddComponent(backgroundEnt, backgroundSprite);
 		g_engine.m_coordinator.AddComponent(backgroundEnt, backgroundTransform);
-		CREATE_HIERARCHY_OBJ(backgroundEnt, ostrstream);
+		CREATE_HIERARCHY_OBJ(backgroundEnt, std::string("Background"));
 		newInfo.m_objectName = std::string("Background");
 
 		for (Entity entity = 0; entity < entCount; ++entity)
@@ -74,8 +74,7 @@ namespace Rogue
 
 			FactoryLoadComponent(curEnt, currentSignature, stdstr);
 
-			CREATE_HIERARCHY_OBJ(curEnt, ostrstream);
-			newInfo.m_objectName = readstr;
+			CREATE_HIERARCHY_OBJ(curEnt, readstr);
 
 			debugStr << "Entity " << curEnt << "'s Signature: " << g_engine.m_coordinator.GetEntityManager().GetSignature(curEnt).to_ulong();
 			RE_INFO(debugStr.str());
@@ -380,26 +379,26 @@ namespace Rogue
 			}
 		}
 		std::ostringstream ostrstream;
-		std::string stdstr;
-		CREATE_HIERARCHY_OBJ(clonedEntity, ostrstream);
+		ostrstream << "Game Object " << g_engine.m_coordinator.GetSceneManager().GetObjectIterator();
+		CREATE_HIERARCHY_OBJ(clonedEntity, ostrstream.str());
 
 	}
 
 	void ObjectFactory::Clone(const char* archetype)
 	{
-		std::ostringstream ostrstream;
-		std::string stdstr;
-
 		//If the key exists
 		if (m_archetypes.count(archetype))
 		{
+			std::ostringstream ostrstream;
 			Entity curEnt = g_engine.m_coordinator.CreateEntity();
 			Signature curSignature = m_archetypeSignature[archetype];
 
 			//Does the actual clone
 			std::string toDeserialise = m_archetypes[archetype];
 			FactoryLoadComponent(curEnt, curSignature, toDeserialise);
-			CREATE_HIERARCHY_OBJ(curEnt, ostrstream);
+
+			ostrstream << "Game Object " << g_engine.m_coordinator.GetSceneManager().GetObjectIterator();
+			CREATE_HIERARCHY_OBJ(curEnt, ostrstream.str());
 		}
 	}
 
