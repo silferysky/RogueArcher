@@ -5,19 +5,24 @@ namespace Rogue
 {
 	void AudioEmitterComponent::setID(const std::string& id)
 	{
-		m_id = id;
+		m_soundPath = id;
 	}
 
 	std::string AudioEmitterComponent::getID() const
 	{
-		return m_id;
+		return m_soundPath;
 	}
 
 	std::string AudioEmitterComponent::Serialize()
 	{
 		std::ostringstream ss;
-		ss << m_id << ";";
+		ss << m_soundPath;
 		return ss.str();
+	}
+
+	Sound* AudioEmitterComponent::getSound()
+	{
+		return &m_sound;
 	}
 
 	void AudioEmitterComponent::Deserialize(std::string toDeserialize)
