@@ -11,12 +11,12 @@ namespace Rogue
 		Sound m_sound;
 	public:
 		AudioEmitterComponent() = default;
-		~AudioEmitterComponent();
 
 		void setID(const std::string& id);
 		std::string getID() const;
 
 		Sound* getSound();
+		void Destroy();
 
 		std::string Serialize();
 		void Deserialize(std::string toDeserialize);
