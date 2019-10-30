@@ -18,19 +18,19 @@ namespace Rogue
 		ImGui::Begin("Viewport");
 		if (ImGui::Button("Play"))
 		{
-			//If game is paused, save level, and unpause it
-			if (g_engine.m_coordinator.GetPauseState())
+			//If game is not running, save level, and set it to running
+			if (!g_engine.m_coordinator.GetGameState())
 			{
 				g_engine.m_coordinator.GetSceneManager().SaveLevel(g_engine.m_coordinator.GetSceneManager().getCurrentFileName().c_str());
 				//g_engine.m_coordinator.GetSceneManager().SaveAndLoadLevel();
-				g_engine.m_coordinator.SetPauseState(false);
+				g_engine.m_coordinator.SetGameState(true);
 			}
-			else //If game is running, just stop
+			else //If game is running, just stop and reload old data
 			{
 				//Loads last iteration and pauses game
 				g_engine.m_coordinator.GetSceneManager().ClearAllEntities();
 				g_engine.m_coordinator.GetSceneManager().LoadLevel(g_engine.m_coordinator.GetSceneManager().getCurrentFileName().c_str());
-				g_engine.m_coordinator.SetPauseState(true);
+				g_engine.m_coordinator.SetGameState(false);
 			}
 		}
 		if (ImGui::IsItemHovered())
@@ -42,8 +42,9 @@ namespace Rogue
 		ImGui::SameLine();
 		if (ImGui::Button("Pause"))
 		{
-			//Pause/Unpause
-			g_engine.m_coordinator.TogglePauseState();
+			//Pause/Unpause only if game is running
+			if (g_engine.m_coordinator.GetGameState())
+				g_engine.m_coordinator.TogglePauseState();
 		}
 		if (ImGui::IsItemHovered())
 		{
@@ -54,12 +55,13 @@ namespace Rogue
 		ImGui::SameLine();
 		if (ImGui::Button("Stop"))
 		{
-			if (!g_engine.m_coordinator.GetPauseState())
+			if (g_engine.m_coordinator.GetGameState())
 			{
 				//Loads last iteration and pauses game
 				g_engine.m_coordinator.GetSceneManager().ClearAllEntities();
 				g_engine.m_coordinator.GetSceneManager().LoadLevel(g_engine.m_coordinator.GetSceneManager().getCurrentFileName().c_str());
-				g_engine.m_coordinator.SetPauseState(true);
+				g_engine.m_coordinator.SetGameState(false);
+				g_engine.m_coordinator.SetPauseState(false);
 			}
 		}
 		if (ImGui::IsItemHovered())
