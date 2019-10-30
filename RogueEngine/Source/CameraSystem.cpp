@@ -12,7 +12,7 @@ namespace Rogue
 	CameraSystem::CameraSystem()
 		: System(SystemID::id_CAMERASYSTEM), m_worldCamera{ false },
 		m_cameraPos{ 0.0f, 0.0f, 0.0f }, m_worldUp{ 0.0f, 1.0f, 0.0f },
-		m_cameraFront{ 0.0f, 0.0f, -1.0f }, m_cameraShake{}, m_cameraMin{ -1600, -1600 }, m_cameraMax{ 1600, 1600 }
+		m_cameraFront{ 0.0f, 0.0f, -1.0f }, m_cameraShake{}, m_cameraMin{ -160, -160 }, m_cameraMax{ 1600, 1600 }
 	{}
 
 	void CameraSystem::Init()
