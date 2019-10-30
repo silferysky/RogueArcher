@@ -3,6 +3,12 @@
 
 namespace Rogue
 {
+	AudioEmitterComponent::~AudioEmitterComponent()
+	{
+		if (m_sound.GetSystem() != NULL)
+			m_sound.Release();
+	}
+
 	void AudioEmitterComponent::setID(const std::string& id)
 	{
 		m_soundPath = id;
