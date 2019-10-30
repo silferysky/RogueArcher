@@ -55,6 +55,9 @@ namespace Rogue
 		// Unary operators
 		Vector2D operator -() const; // Inverse
 
+		// Comparison operators
+		bool operator == (const Vector2D& rhs) const;
+
 	} Vec2, Point2D, Pt2;
 
 #ifdef _MSC_VER

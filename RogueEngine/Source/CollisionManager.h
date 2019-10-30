@@ -29,13 +29,21 @@ namespace Rogue
 
 	public:
 		void GenerateManifoldCirclevsCircle(Entity A, Entity B);
+		void GenerateManifoldCirclevsAABB(Entity A, Entity B);
+		void GenerateManifoldAABBvsCircle(Entity A, Entity B);
 		void GenerateManifoldAABBvsAABB(Entity A, Entity B);
+		void GenerateManifoldAABBvsOBB(Entity A, Entity B);
 		void GenerateManifoldOBBvsOBB(Entity A, Entity B);
 
 		CollisionManager() = default;
 		~CollisionManager() = default;
 
+		bool DiscreteAABBVsCircle(const AABB& aabb, const CircleCollider& circle, const TransformComponent& transB);
+		bool DiscreteCircleVsAABB(const CircleCollider& circle, const AABB& aabb, const TransformComponent& transA);
+
 		// BOUNDING CIRCLE
+		void UpdateCircleCollider(CircleCollider& circle, const TransformComponent& trans) const;
+
 		bool DiscreteCircleVsCircle(const CircleCollider& circleA, const CircleCollider& circleB,
 			const TransformComponent& transA, const TransformComponent& transB);
 
