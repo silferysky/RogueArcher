@@ -66,7 +66,7 @@ namespace Rogue
 				// Note: Debug draw system currently doesn't update here.
 				
 				//If either game is not paused or is editor system, run the update
-				if (!m_gameIsPaused || 
+				if ((!m_gameIsPaused && m_gameIsRunning) || 
 					(system.second->m_systemID != SystemID::id_PHYSICSSYSTEM &&
 					 system.second->m_systemID != SystemID::id_AUDIOSYSTEM))
 					system.second->Update();
