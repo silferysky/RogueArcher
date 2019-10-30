@@ -117,6 +117,14 @@ namespace Rogue
 		return result;
 	}
 
+	bool Vector2D::operator == (const Vector2D& rhs) const
+	{
+		if (x == rhs.x && y == rhs.y)
+			return true;
+		
+		return false;
+	}
+
 	/**************************************************************************/
 	/*!
 		Outputs the values of x and y in the vector.

@@ -76,6 +76,69 @@ namespace Rogue
 		m_manifolds.emplace_back(manifold);
 	}
 
+	void CollisionManager::GenerateManifoldCirclevsAABB(Entity A, Entity B)
+	{
+		GenerateManifoldAABBvsCircle(B, A);
+	}
+
+	void CollisionManager::GenerateManifoldAABBvsCircle(Entity A, Entity B)
+	{
+		auto& transA = g_engine.m_coordinator.GetComponent<TransformComponent>(A);
+		auto& transB = g_engine.m_coordinator.GetComponent<TransformComponent>(B);
+		auto& boxA = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(A);
+		auto& circleB = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(B);
+
+		Vec2 centerA = transA.getPosition() + boxA.m_aabb.getCenterOffSet();
+		Vec2 centerB = transB.getPosition() + circleB.m_collider.getCenterOffSet();
+		Vec2 vAB = centerB - centerA;
+
+		// Find the closest point from the AABB's vertex to the center of circle.
+		Vec2 closestPt = vAB;
+
+		float AextentX = (boxA.m_aabb.getMax().x - boxA.m_aabb.getMin().x) / 2.0f;
+		float AextentY = (boxA.m_aabb.getMax().y - boxA.m_aabb.getMin().y) / 2.0f;
+
+		// Clamp the closest point to the edges of the AABB
+		closestPt.x = REClamp(closestPt.x, -AextentX, AextentX);
+		closestPt.y = REClamp(closestPt.y, -AextentY, AextentY);
+
+		bool circleIsInside = false;
+
+		// After finding the closestPt, if vAB == closestPt, the center of the circle is inside the AABB.
+		if (vAB == closestPt)
+		{
+			circleIsInside = true;
+
+			// Find closest axis
+			if (REAbs(vAB.x) > REAbs(vAB.y)) // x axis is shorter than y axis
+			{
+				// Clamp the closest point to the closest extent
+				closestPt.x = closestPt.x > 0 ?
+					AextentX :
+					-AextentX;
+			}
+			else // y axis is shorter than x axis
+			{
+				// Clamp to the closest extent
+				closestPt.y = closestPt.y > 0 ?
+					AextentY :
+					-AextentY;
+			}
+		}
+
+		Vec2 normal = vAB - closestPt;
+		float normalLength = Vec2Length(normal);
+
+		Manifold manifold(A, B);
+
+		if (circleIsInside)
+			manifold.m_normal = -vAB;
+		else
+			manifold.m_normal = vAB;
+
+		manifold.m_penetration = circleB.m_collider.getRadius() - normalLength;
+	}
+
 	void CollisionManager::GenerateManifoldAABBvsAABB(Entity A, Entity B)
 	{
 		Manifold manifold(A, B);
@@ -127,9 +190,34 @@ namespace Rogue
 		m_manifolds.emplace_back(manifold);
 	}
 
+	void CollisionManager::GenerateManifoldAABBvsOBB(Entity A, Entity B)
+	{
+	}
+
 	void CollisionManager::GenerateManifoldOBBvsOBB(Entity A, Entity B)
 	{
 
+	}
+
+	bool CollisionManager::DiscreteAABBVsCircle(const AABB& aabb, const CircleCollider& circle, const TransformComponent& transB)
+	{
+		AABB aabb2;
+		aabb2.setMin(Vec2{ transB.getPosition().x - circle.getRadius(), transB.getPosition().y - circle.getRadius() });
+		aabb2.setMax(Vec2{ transB.getPosition().x + circle.getRadius(), transB.getPosition().y + circle.getRadius() });
+
+		return DiscreteAABBvsAABB(aabb, aabb2);
+	}
+
+	bool CollisionManager::DiscreteCircleVsAABB(const CircleCollider& circle, const AABB& aabb, const TransformComponent& transA)
+	{
+		return DiscreteAABBVsCircle(aabb, circle, transA);
+	}
+
+	
+
+	void CollisionManager::UpdateCircleCollider(CircleCollider& circle, const TransformComponent& trans) const
+	{
+		//circle.SetCenter(circle.getCenterOffSet() + trans.getPosition());
 	}
 
 	//_________________________________________________________________________
@@ -529,6 +617,7 @@ namespace Rogue
 		ptEndA = interPtA + (1 - interTime) * reflectedVectorA;
 		ptEndB = interPtB + (1 - interTime) * reflectedVectorB;
 	}
+	
 	//_________________________________________________________________________
 	//_________________________________________________________________________|
 	//_____________________Axis-Aligned Bounding Box___________________________|
