@@ -157,6 +157,11 @@ namespace Rogue
 							ImGui::PushItemWidth(75);
 							ImGui::Checkbox("Active?", &m_isMain);
 							g_engine.m_coordinator.GetComponent<CameraComponent>(i.m_Entity).setIsActive(m_isMain);
+
+							ImGui::PushItemWidth(75);
+							//ImGui::DragFloat("Camera X", &m_position.x, 0.5f, -10000.0f, 10000.0f);
+							//ImGui::DragFloat("Camera Y", &m_position.y, 0.5f, -10000.0f, 10000.0f);
+							//g_engine.m_coordinator.GetSystem<CameraSystem>()->SetCameraPos(m_position.x, m_position.y);
 						}
 					}
 

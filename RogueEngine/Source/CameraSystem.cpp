@@ -65,6 +65,11 @@ namespace Rogue
 		return m_cameraMax;
 	}
 
+	glm::vec3 CameraSystem::GetCameraPos() const
+	{
+		return m_cameraPos;
+	}
+
 	void CameraSystem::SetCameraMin(const float& x, const float& y)
 	{
 		m_cameraMin = { x, y };
@@ -73,6 +78,11 @@ namespace Rogue
 	void CameraSystem::SetCameraMax(const float& x, const float& y)
 	{
 		m_cameraMin = { x, y };
+	}
+
+	void CameraSystem::SetCameraPos(const float& x, const float& y)
+	{
+		m_cameraPos = { x, y, 0.0f };
 	}
 
 	void CameraSystem::Update()
