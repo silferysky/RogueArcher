@@ -21,6 +21,7 @@ namespace Rogue
 		void Update(float dt);
 
 		void SetShake(float magnitude);
+		float GetShake() const;
 
 		Vec2 getOffset() const;
 	};

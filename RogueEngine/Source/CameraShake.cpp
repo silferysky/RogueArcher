@@ -34,6 +34,11 @@ namespace Rogue
 		m_currentShakeMagnitude = magnitude;
 	}
 
+	float CameraShake::GetShake() const
+	{
+		return m_currentShakeMagnitude;
+	}
+
 	Vec2 CameraShake::getOffset() const
 	{
 		return m_shakeOffset;
