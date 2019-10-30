@@ -83,6 +83,7 @@ namespace Rogue
 	void SceneManager::SaveAndLoadLevel()
 	{
 		SaveLevel(m_currentFileName.c_str());
+		ClearAllEntities();
 		LoadLevel(m_currentFileName.c_str());
 	}
 
