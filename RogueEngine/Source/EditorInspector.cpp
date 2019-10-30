@@ -134,14 +134,27 @@ namespace Rogue
 							ImGui::PushItemWidth(75);
 							ImGui::SliderFloat("Restitution", &m_restitution, -10000.0f, 10000.0f);
 							g_engine.m_coordinator.GetComponent<RigidbodyComponent>(i.m_Entity).setBounciness(m_restitution);
-
-							if (ImGui::Button("Add Force"))
-							{
-								g_engine.m_coordinator.GetComponent<RigidbodyComponent>(i.m_Entity).addForce(m_force);	
-							}
-							ImGui::Text("Current force x %f , y %f", m_force.x, m_force.y);
 						}
 					}
+
+					if (g_engine.m_coordinator.CheckIfComponentExists<CameraComponent>(i.m_Entity))
+					{
+						if (ImGui::CollapsingHeader("Camera"))
+						{
+							bool m_isMain = g_engine.m_coordinator.GetComponent<CameraComponent>(i.m_Entity).getIsActive();
+							Vec2 m_position = g_engine.m_coordinator.GetComponent<CameraComponent>(i.m_Entity).getPosition();
+
+							ImGui::PushItemWidth(75);
+							ImGui::Checkbox("Active?", &m_isMain);
+							g_engine.m_coordinator.GetComponent<CameraComponent>(i.m_Entity).setIsActive(m_isMain);
+
+							ImGui::PushItemWidth(75);
+							ImGui::DragFloat("Camera X", &m_position.x, 0.5f, -10000.0f, 10000.0f);
+							ImGui::DragFloat("Camera Y", &m_position.y, 0.5f, -10000.0f, 10000.0f);
+							g_engine.m_coordinator.GetComponent<CameraComponent>(i.m_Entity).setPosition(m_position);
+						}
+					}
+
 					if (ImGui::Button("Add Component"))
 					{
 						ImGui::OpenPopup("Add Component");
