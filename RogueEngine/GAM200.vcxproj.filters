@@ -26,9 +26,6 @@
     <Filter Include="RogueEngine\Systems\Events\Events">
       <UniqueIdentifier>{874017b0-c223-4a1e-9f81-5e68b60e39c5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="RogueEngine\Systems\Physics\Polygons">
-      <UniqueIdentifier>{bd0e46e0-5af7-4458-b9da-3f6a931851a0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="RogueEngine\Math">
       <UniqueIdentifier>{22b537b5-886e-4043-b876-1c95ad7a8bc1}</UniqueIdentifier>
     </Filter>
@@ -104,6 +101,9 @@
     <Filter Include="RogueEngine\Systems\Audio">
       <UniqueIdentifier>{34201bcf-7e12-429e-8512-5d15958226b5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="RogueEngine\Systems\Collision\Shapes">
+      <UniqueIdentifier>{bd0e46e0-5af7-4458-b9da-3f6a931851a0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Resource.h">
@@ -134,13 +134,10 @@
       <Filter>RogueEngine\Systems\Collision</Filter>
     </ClInclude>
     <ClInclude Include="Source\Circle.h">
-      <Filter>RogueEngine\Systems\Physics\Polygons</Filter>
+      <Filter>RogueEngine\Systems\Collision\Shapes</Filter>
     </ClInclude>
     <ClInclude Include="Source\Polygon.h">
-      <Filter>RogueEngine\Systems\Physics\Polygons</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Shape.h">
-      <Filter>RogueEngine\Systems\Physics\Polygons</Filter>
+      <Filter>RogueEngine\Systems\Collision\Shapes</Filter>
     </ClInclude>
     <ClInclude Include="Source\Matrix33.h">
       <Filter>RogueEngine\Math</Filter>
@@ -343,9 +340,6 @@
     <ClInclude Include="Source\CircleCollider2DComponent.h">
       <Filter>RogueEngine\Systems\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="Source\BoxCollider2DComponent.h">
-      <Filter>RogueEngine\Systems\Collision</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Manifold.h">
       <Filter>RogueEngine\Systems\Collision</Filter>
     </ClInclude>
@@ -378,9 +372,6 @@
     </ClInclude>
     <ClInclude Include="Source\Vector2D.h">
       <Filter>RogueEngine\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\PhysicsTypes.hpp">
-      <Filter>RogueEngine\Systems\Collision</Filter>
     </ClInclude>
     <ClInclude Include="Source\EditorHierarchyInfo.h">
       <Filter>RogueEditor\EditorFiles</Filter>
@@ -418,6 +409,15 @@
     <ClInclude Include="Source\AudioEmitterComponent.h">
       <Filter>RogueEngine\Systems\Audio</Filter>
     </ClInclude>
+    <ClInclude Include="Source\CircleCollider.h">
+      <Filter>RogueEngine\Systems\Collision\Colliders</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BoxCollider2DComponent.h">
+      <Filter>RogueEngine\Systems\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PhysicsDataStructures.hpp">
+      <Filter>RogueEngine\Systems\Collision</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -430,13 +430,10 @@
       <Filter>RogueEngine\Systems\Collision</Filter>
     </ClCompile>
     <ClCompile Include="Source\Circle.cpp">
-      <Filter>RogueEngine\Systems\Physics\Polygons</Filter>
+      <Filter>RogueEngine\Systems\Collision\Shapes</Filter>
     </ClCompile>
     <ClCompile Include="Source\Polygon.cpp">
-      <Filter>RogueEngine\Systems\Physics\Polygons</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Shape.cpp">
-      <Filter>RogueEngine\Systems\Physics\Polygons</Filter>
+      <Filter>RogueEngine\Systems\Collision\Shapes</Filter>
     </ClCompile>
     <ClCompile Include="Source\Matrix33.cpp">
       <Filter>RogueEngine\Math</Filter>
@@ -570,9 +567,6 @@
     <ClCompile Include="Source\CircleCollider2DComponent.cpp">
       <Filter>RogueEngine\Systems\Collision</Filter>
     </ClCompile>
-    <ClCompile Include="Source\BoxCollider2DComponent.cpp">
-      <Filter>RogueEngine\Systems\Collision</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Manifold.cpp">
       <Filter>RogueEngine\Systems\Collision</Filter>
     </ClCompile>
@@ -638,6 +632,12 @@
     </ClCompile>
     <ClCompile Include="Source\AudioEmitterComponent.cpp">
       <Filter>RogueEngine\Systems\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CircleCollider.cpp">
+      <Filter>RogueEngine\Systems\Collision\Colliders</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BoxCollider2DComponent.cpp">
+      <Filter>RogueEngine\Systems\Collision</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

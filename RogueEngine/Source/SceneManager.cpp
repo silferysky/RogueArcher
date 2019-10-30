@@ -48,7 +48,7 @@ namespace Rogue
 		std::ostringstream ostrstream;
 		ostrstream << "Resources/" << fileName;
 		m_objectFactory->LoadLevelFiles(ostrstream.str().c_str());
-		m_sceneIterator = m_loadedLevels.size();
+		m_sceneIterator = static_cast<unsigned int>(m_loadedLevels.size());
 	}
 
 	void SceneManager::SaveLevelFiles(const char* fileName)

@@ -261,7 +261,7 @@ namespace Rogue
 		}
 
 		template <typename T>
-		bool CheckIfComponentExists(Entity entity)
+		bool ComponentExists(Entity entity)
 		{
 			return m_entityManager->GetSignature(entity).test(GetComponentType<T>());
 		}

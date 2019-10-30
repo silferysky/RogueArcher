@@ -29,7 +29,15 @@ namespace Rogue
 				if (i.m_selected == true)
 				{
 					ImGui::Text("%s", i.m_objectName.c_str());
-					if (g_engine.m_coordinator.CheckIfComponentExists<TransformComponent>(i.m_Entity))
+					static char buffer[64] = "";
+					ImGui::TextDisabled("New Name");
+					ImGui::SameLine();
+					ImGui::InputText("                  ", buffer, 64);
+					if (ImGui::Button("Edit"))
+					{
+						i.m_objectName = buffer;
+					}
+					if (g_engine.m_coordinator.ComponentExists<TransformComponent>(i.m_Entity))
 					{
 						if (ImGui::CollapsingHeader("Transform"))
 						{
@@ -63,17 +71,18 @@ namespace Rogue
 						}
 					}
 					
-					if (g_engine.m_coordinator.CheckIfComponentExists<SpriteComponent>(i.m_Entity))
+					if (g_engine.m_coordinator.ComponentExists<SpriteComponent>(i.m_Entity))
 					{
 						if (ImGui::CollapsingHeader("Sprite"))
 						{
-							Texture m_Texture = g_engine.m_coordinator.GetComponent<SpriteComponent>(i.m_Entity).getTexture();
+							glm::vec4 m_color = g_engine.m_coordinator.GetComponent<SpriteComponent>(i.m_Entity).getFilter();
 							ImGui::PushItemWidth(250);
-							ImGui::ColorEdit3("Color", (float*)& m_color);
+							ImGui::ColorEdit4("Color", (float*)& m_color);
+							g_engine.m_coordinator.GetComponent<SpriteComponent>(i.m_Entity).setFilter(m_color);
 						}
 					}
 
-					if (g_engine.m_coordinator.CheckIfComponentExists<BoxCollider2DComponent>(i.m_Entity))
+					if (g_engine.m_coordinator.ComponentExists<BoxCollider2DComponent>(i.m_Entity))
 					{
 						if (ImGui::CollapsingHeader("Box2D Collider"))
 						{
@@ -95,7 +104,7 @@ namespace Rogue
 						}
 					}
 
-					if (g_engine.m_coordinator.CheckIfComponentExists<RigidbodyComponent>(i.m_Entity))
+					if (g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(i.m_Entity))
 					{
 						if (ImGui::CollapsingHeader("RigidBody"))
 						{
@@ -139,7 +148,7 @@ namespace Rogue
 						}
 					}
 
-					if (g_engine.m_coordinator.CheckIfComponentExists<CameraComponent>(i.m_Entity))
+					if (g_engine.m_coordinator.ComponentExists<CameraComponent>(i.m_Entity))
 					{
 						if (ImGui::CollapsingHeader("Camera"))
 						{
@@ -157,7 +166,7 @@ namespace Rogue
 						}
 					}
 
-					if (g_engine.m_coordinator.CheckIfComponentExists<CircleCollider2DComponent>(i.m_Entity))
+					if (g_engine.m_coordinator.ComponentExists<CircleCollider2DComponent>(i.m_Entity))
 					{
 						if (ImGui::CollapsingHeader("Circle 2D Collider"))
 						{
@@ -183,23 +192,23 @@ namespace Rogue
 					{
 						if (ImGui::BeginMenu("Component"))
 						{
-							if (ImGui::MenuItem("Sprite Component", nullptr, false, !g_engine.m_coordinator.CheckIfComponentExists<SpriteComponent>(i.m_Entity)))
+							if (ImGui::MenuItem("Sprite Component", nullptr, false, !g_engine.m_coordinator.ComponentExists<SpriteComponent>(i.m_Entity)))
 							{
 								auto& Sprite = g_engine.m_coordinator.CreateComponent<SpriteComponent>(i.m_Entity);
 								Sprite.Deserialize("Resources/Assets/DefaultSprite.png");
 							}
 							
-							if (ImGui::MenuItem("Transform Component",nullptr,false, !g_engine.m_coordinator.CheckIfComponentExists<TransformComponent>(i.m_Entity)))
+							if (ImGui::MenuItem("Transform Component",nullptr,false, !g_engine.m_coordinator.ComponentExists<TransformComponent>(i.m_Entity)))
 							{
 								g_engine.m_coordinator.AddComponent<TransformComponent>(i.m_Entity,TransformComponent(Vec2{ 0.0f, 0.0f }, Vec2{ 100.0f, 100.0f }, 0.0f));
 							}
 
-							if (ImGui::MenuItem("Player Controller Component", nullptr, false, !g_engine.m_coordinator.CheckIfComponentExists<PlayerControllerComponent>(i.m_Entity)))
+							if (ImGui::MenuItem("Player Controller Component", nullptr, false, !g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(i.m_Entity)))
 							{
 								g_engine.m_coordinator.AddComponent(i.m_Entity, PlayerControllerComponent());
 							}
 
-							if (ImGui::MenuItem("Logic Component", nullptr, false, !g_engine.m_coordinator.CheckIfComponentExists<LogicComponent>(i.m_Entity)))
+							if (ImGui::MenuItem("Logic Component", nullptr, false, !g_engine.m_coordinator.ComponentExists<LogicComponent>(i.m_Entity)))
 							{
 								g_engine.m_coordinator.AddComponent(i.m_Entity, LogicComponent());
 							}
@@ -207,12 +216,12 @@ namespace Rogue
 						}
 						if (ImGui::BeginMenu("Colliders"))
 						{
-							if (ImGui::MenuItem("Circle Collider", nullptr, false, !g_engine.m_coordinator.CheckIfComponentExists<CircleCollider2DComponent>(i.m_Entity)))
+							if (ImGui::MenuItem("Circle Collider", nullptr, false, !g_engine.m_coordinator.ComponentExists<CircleCollider2DComponent>(i.m_Entity)))
 							{
 								g_engine.m_coordinator.AddComponent(i.m_Entity, CircleCollider2DComponent());
 							}
 
-							if (ImGui::MenuItem("Box Collider 2D", nullptr, false, !g_engine.m_coordinator.CheckIfComponentExists<BoxCollider2DComponent>(i.m_Entity)))
+							if (ImGui::MenuItem("Box Collider 2D", nullptr, false, !g_engine.m_coordinator.ComponentExists<BoxCollider2DComponent>(i.m_Entity)))
 							{
 								g_engine.m_coordinator.AddComponent(i.m_Entity, BoxCollider2DComponent());
 							}
@@ -220,12 +229,12 @@ namespace Rogue
 							ImGui::EndMenu();
 						}
 
-						if (ImGui::MenuItem("RigidBody", nullptr, false, !g_engine.m_coordinator.CheckIfComponentExists<RigidbodyComponent>(i.m_Entity)))
+						if (ImGui::MenuItem("RigidBody", nullptr, false, !g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(i.m_Entity)))
 						{
 							g_engine.m_coordinator.AddComponent(i.m_Entity, RigidbodyComponent());
 						}
 
-						if (ImGui::MenuItem("Camera", nullptr, false, !g_engine.m_coordinator.CheckIfComponentExists<CameraComponent>(i.m_Entity)))
+						if (ImGui::MenuItem("Camera", nullptr, false, !g_engine.m_coordinator.ComponentExists<CameraComponent>(i.m_Entity)))
 						{
 							g_engine.m_coordinator.AddComponent(i.m_Entity, CameraComponent());
 						}
@@ -235,22 +244,22 @@ namespace Rogue
 					{
 						if (ImGui::BeginMenu("Component"))
 						{
-							if (ImGui::MenuItem("Sprite Component", nullptr, false, g_engine.m_coordinator.CheckIfComponentExists<SpriteComponent>(i.m_Entity)))
+							if (ImGui::MenuItem("Sprite Component", nullptr, false, g_engine.m_coordinator.ComponentExists<SpriteComponent>(i.m_Entity)))
 							{
 								g_engine.m_coordinator.RemoveComponent<SpriteComponent>(i.m_Entity);
 							}
 
-							if (ImGui::MenuItem("Transform Component", nullptr, false, g_engine.m_coordinator.CheckIfComponentExists<TransformComponent>(i.m_Entity)))
+							if (ImGui::MenuItem("Transform Component", nullptr, false, g_engine.m_coordinator.ComponentExists<TransformComponent>(i.m_Entity)))
 							{
 								g_engine.m_coordinator.RemoveComponent<TransformComponent>(i.m_Entity);
 							}
 
-							if (ImGui::MenuItem("Player Controller Component", nullptr, false, g_engine.m_coordinator.CheckIfComponentExists<PlayerControllerComponent>(i.m_Entity)))
+							if (ImGui::MenuItem("Player Controller Component", nullptr, false, g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(i.m_Entity)))
 							{
 								g_engine.m_coordinator.RemoveComponent<PlayerControllerComponent>(i.m_Entity);
 							}
 
-							if (ImGui::MenuItem("Logic Component", nullptr, false, g_engine.m_coordinator.CheckIfComponentExists<LogicComponent>(i.m_Entity)))
+							if (ImGui::MenuItem("Logic Component", nullptr, false, g_engine.m_coordinator.ComponentExists<LogicComponent>(i.m_Entity)))
 							{
 								g_engine.m_coordinator.RemoveComponent<LogicComponent>(i.m_Entity);
 							}
@@ -258,12 +267,12 @@ namespace Rogue
 						}
 						if (ImGui::BeginMenu("Colliders"))
 						{
-							if (ImGui::MenuItem("Circle Collider", nullptr, false, g_engine.m_coordinator.CheckIfComponentExists<CircleCollider2DComponent>(i.m_Entity)))
+							if (ImGui::MenuItem("Circle Collider", nullptr, false, g_engine.m_coordinator.ComponentExists<CircleCollider2DComponent>(i.m_Entity)))
 							{
 								g_engine.m_coordinator.RemoveComponent<CircleCollider2DComponent>(i.m_Entity);
 							}
 
-							if (ImGui::MenuItem("Box Collider 2D", nullptr, false, g_engine.m_coordinator.CheckIfComponentExists<BoxCollider2DComponent>(i.m_Entity)))
+							if (ImGui::MenuItem("Box Collider 2D", nullptr, false, g_engine.m_coordinator.ComponentExists<BoxCollider2DComponent>(i.m_Entity)))
 							{
 								g_engine.m_coordinator.RemoveComponent<BoxCollider2DComponent>(i.m_Entity);
 							}
@@ -271,7 +280,7 @@ namespace Rogue
 							ImGui::EndMenu();
 						}
 
-						if (ImGui::MenuItem("RigidBody", nullptr, false, g_engine.m_coordinator.CheckIfComponentExists<RigidbodyComponent>(i.m_Entity)))
+						if (ImGui::MenuItem("RigidBody", nullptr, false, g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(i.m_Entity)))
 						{
 							g_engine.m_coordinator.RemoveComponent<RigidbodyComponent>(i.m_Entity);
 						}

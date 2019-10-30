@@ -32,6 +32,7 @@
     <ClInclude Include="Source\CameraComponent.h" />
     <ClInclude Include="Source\CameraShake.h" />
     <ClInclude Include="Source\CameraSystem.h" />
+    <ClInclude Include="Source\CircleCollider.h" />
     <ClInclude Include="Source\CollisionSystem.h" />
     <ClInclude Include="Source\DebugDrawSystem.h" />
     <ClInclude Include="Source\Editor.h" />
@@ -74,7 +75,7 @@
     <ClInclude Include="Source\CollisionManager.h" />
     <ClInclude Include="Source\MaterialComponent.h" />
     <ClInclude Include="Source\OBB.h" />
-    <ClInclude Include="Source\PhysicsTypes.hpp" />
+    <ClInclude Include="Source\PhysicsDataStructures.hpp" />
     <ClInclude Include="Source\PlayerControllerComponent.h" />
     <ClInclude Include="Source\PlayerControllerSystem.h" />
     <ClInclude Include="Source\Polygon.h" />
@@ -83,7 +84,6 @@
     <ClInclude Include="Source\SceneManager.h" />
     <ClInclude Include="Source\Shader.h" />
     <ClInclude Include="Source\ShaderManager.h" />
-    <ClInclude Include="Source\Shape.h" />
     <ClInclude Include="Source\Sound.h" />
     <ClInclude Include="Source\StatsComponent.h" />
     <ClInclude Include="Source\Stream.h" />
@@ -134,6 +134,7 @@
     <ClCompile Include="Source\CameraComponent.cpp" />
     <ClCompile Include="Source\CameraShake.cpp" />
     <ClCompile Include="Source\CameraSystem.cpp" />
+    <ClCompile Include="Source\CircleCollider.cpp" />
     <ClCompile Include="Source\CollisionSystem.cpp" />
     <ClCompile Include="Source\DebugDrawSystem.cpp" />
     <ClCompile Include="Source\Editor.cpp" />
@@ -174,7 +175,6 @@
     <ClCompile Include="Source\RotatableComponent.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
     <ClCompile Include="Source\Shader.cpp" />
-    <ClCompile Include="Source\Shape.cpp" />
     <ClCompile Include="Source\FontSystem.cpp" />
     <ClCompile Include="Source\Sound.cpp" />
     <ClCompile Include="Source\StatsComponent.cpp" />

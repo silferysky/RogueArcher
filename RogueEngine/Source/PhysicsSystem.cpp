@@ -24,7 +24,7 @@ namespace Rogue
 
 	void PhysicsSystem::integrateAcceleration(RigidbodyComponent& rigidbody, TransformComponent& transform)
 	{
-		float simulationTime = g_fixedDeltaTime;// *g_engine.GetTimeScale(); // To support slow motion
+		float simulationTime = g_fixedDeltaTime * g_engine.GetTimeScale(); // To support slow motion
 
 		transform.offSetPosition(rigidbody.getVelocity() * simulationTime);
 
@@ -101,7 +101,7 @@ namespace Rogue
 		{
 			EntMoveEvent* EvEntMove = dynamic_cast<EntMoveEvent*>(ev);
 			
-			if (g_engine.m_coordinator.CheckIfComponentExists<TransformComponent>(EvEntMove->GetEntityID()))
+			if (g_engine.m_coordinator.ComponentExists<TransformComponent>(EvEntMove->GetEntityID()))
 			{
 
 			}

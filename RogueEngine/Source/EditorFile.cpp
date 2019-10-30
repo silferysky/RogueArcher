@@ -26,18 +26,29 @@ namespace Rogue
 				if (ImGui::MenuItem("New Scene"))
 				{
 					SceneManager& sceneManager = g_engine.m_coordinator.GetSceneManager();
+
+					//Cleaning up old scene
 					sceneManager.ClearAllEntities();
+
+					//Creating new scene
 					sceneManager.IncrementSceneIterator();
 					sceneManager.Create2DSprite();
+
+					//Setting values
+					g_engine.m_coordinator.GetActiveObjects().begin()->m_objectName = "Background";
 					g_engine.m_coordinator.GetComponent<TransformComponent>(g_engine.m_coordinator.GetActiveObjects().begin()->m_Entity).
 						setScale(Vec2(GetWindowWidth(g_engine.GetWindowHandler()), GetWindowHeight(g_engine.GetWindowHandler())));
+					
+					//Resetting camera
+					g_engine.m_coordinator.GetSystem<CameraSystem>()->ResetCamera();
+
+					//Saving new scene so it exists (Won't crash when load non-existent scene)
 					std::ostringstream ostrstream;
 					ostrstream << "Level " << sceneManager.GetSceneIterator() << ".json";
 					sceneManager.setCurrentFileName(ostrstream.str().c_str());
 					sceneManager.SaveLevel(ostrstream.str().c_str());
 					sceneManager.AddToLoadedLevels(ostrstream.str());
 					sceneManager.SaveLevelFiles("Levels.json");
-					g_engine.m_coordinator.GetSystem<CameraSystem>()->ResetCamera();
 				}
 				if (ImGui::BeginMenu("Open Scene"))
 				{

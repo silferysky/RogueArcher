@@ -22,6 +22,7 @@ namespace Rogue
 
 		Signature currentSignature;
 		std::ostringstream debugStr, ostrstream;
+		std::istringstream istrstream;
 		std::string stdstr, readstr;
 		const char* cstr;
 
@@ -43,7 +44,8 @@ namespace Rogue
 
 		g_engine.m_coordinator.AddComponent(backgroundEnt, backgroundSprite);
 		g_engine.m_coordinator.AddComponent(backgroundEnt, backgroundTransform);
-		CREATE_HIERARCHY_OBJ(backgroundEnt, ostrstream);
+		CREATE_HIERARCHY_OBJ(backgroundEnt, std::string("Background"));
+		newInfo.m_objectName = std::string("Background");
 
 		for (Entity entity = 0; entity < entCount; ++entity)
 		{
@@ -60,11 +62,19 @@ namespace Rogue
 			stdstr = "Entity";
 			ostrstream << stdstr << static_cast<int>(entity);
 			SETSSTOSTR(ostrstream);
-			ostrstream.str(level[cstr].GetString());
+			istrstream.str(level[cstr].GetString());
 
-			FactoryLoadComponent(curEnt, currentSignature, ostrstream.str());
+			//For entity name
+			//Does this twice to skip the name line
+			istrstream.clear();
+			stdstr = "";
+			std::getline(istrstream, readstr, '{');
+			std::getline(istrstream, readstr, '}');
+			std::getline(istrstream, stdstr);
 
-			CREATE_HIERARCHY_OBJ(curEnt, ostrstream);
+			FactoryLoadComponent(curEnt, currentSignature, stdstr);
+
+			CREATE_HIERARCHY_OBJ(curEnt, readstr);
 
 			debugStr << "Entity " << curEnt << "'s Signature: " << g_engine.m_coordinator.GetEntityManager().GetSignature(curEnt).to_ulong();
 			RE_INFO(debugStr.str());
@@ -97,10 +107,10 @@ namespace Rogue
 		for (HierarchyInfo curHierarchy : g_engine.m_coordinator.GetActiveObjects())
 		{
 			Entity curEntity = curHierarchy.m_Entity;
-			//Skips background layer
+			//Background layer is unique
 			if (writingBackground)
 			{
-				if (g_engine.m_coordinator.CheckIfComponentExists<SpriteComponent>(curHierarchy.m_Entity))
+				if (g_engine.m_coordinator.ComponentExists<SpriteComponent>(curHierarchy.m_Entity))
 				{
 					std::string backgroundStr(g_engine.m_coordinator.GetComponent<SpriteComponent>(curHierarchy.m_Entity).Serialize().c_str());
 					RESerialiser::WriteToFile(fileName, "BackgroundTexture", backgroundStr.c_str());
@@ -121,6 +131,9 @@ namespace Rogue
 			intVar = static_cast<int>(currentSignature.to_ulong());
 			RESerialiser::WriteToFile(fileName, cstr, &intVar);
 			CLEARSTR(strstream);
+
+			//For object name
+			strstream << "Name{" << curHierarchy.m_objectName << "}|";
 
 			for (int index = 0; index != LASTCOMP;)
 			{
@@ -366,26 +379,26 @@ namespace Rogue
 			}
 		}
 		std::ostringstream ostrstream;
-		std::string stdstr;
-		CREATE_HIERARCHY_OBJ(clonedEntity, ostrstream);
+		ostrstream << "Game Object " << g_engine.m_coordinator.GetSceneManager().GetObjectIterator();
+		CREATE_HIERARCHY_OBJ(clonedEntity, ostrstream.str());
 
 	}
 
 	void ObjectFactory::Clone(const char* archetype)
 	{
-		std::ostringstream ostrstream;
-		std::string stdstr;
-
 		//If the key exists
 		if (m_archetypes.count(archetype))
 		{
+			std::ostringstream ostrstream;
 			Entity curEnt = g_engine.m_coordinator.CreateEntity();
 			Signature curSignature = m_archetypeSignature[archetype];
 
 			//Does the actual clone
 			std::string toDeserialise = m_archetypes[archetype];
 			FactoryLoadComponent(curEnt, curSignature, toDeserialise);
-			CREATE_HIERARCHY_OBJ(curEnt, ostrstream);
+
+			ostrstream << "Game Object " << g_engine.m_coordinator.GetSceneManager().GetObjectIterator();
+			CREATE_HIERARCHY_OBJ(curEnt, ostrstream.str());
 		}
 	}
 
@@ -412,6 +425,7 @@ namespace Rogue
 	{
 		std::istringstream istrstream(value);
 		std::string readstr;
+
 		for (int index = 0; index < (int)LASTCOMP; ++index)
 		{
 			if (signature.test(index))

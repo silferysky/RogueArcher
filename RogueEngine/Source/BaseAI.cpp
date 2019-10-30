@@ -64,7 +64,7 @@ namespace Rogue
 		/*auto gameFactory = g_engine.m_coordinator.GetSystem<ObjectFactory>();
 		for (auto it = gameFactory->GetActiveEntity().begin(); it != gameFactory->GetActiveEntity().end(); ++it)
 		{
-			if (g_engine.m_coordinator.CheckIfComponentExists<PlayerControllerComponent>(*it))
+			if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(*it))
 			{
 				//if(g_engine.m_coordinator.get)
 				RE_INFO("SPOTTED THROUGH WALLS");
