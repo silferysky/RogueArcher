@@ -37,6 +37,7 @@ namespace Rogue
 					sceneManager.SaveLevel(ostrstream.str().c_str());
 					sceneManager.AddToLoadedLevels(ostrstream.str());
 					sceneManager.SaveLevelFiles("Levels.json");
+					g_engine.m_coordinator.GetSystem<CameraSystem>()->ResetCamera();
 				}
 				if (ImGui::BeginMenu("Open Scene"))
 				{
