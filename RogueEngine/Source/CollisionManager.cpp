@@ -3,6 +3,7 @@
 #include "CollisionManager.h"
 #include "Main.h"
 #include "Logger.h"
+#include "PhysicsDataStructures.hpp"
 
 namespace Rogue
 {
@@ -41,15 +42,21 @@ namespace Rogue
 		return collider.getRotationOffSet() + trans.getRotation();
 	}
 
-	void CollisionManager::GenerateManifoldAABBvsAABB(Manifold& manifold)
+	void CollisionManager::GenerateManifoldCirclevsCircle(Entity A, Entity B)
 	{
-		Entity a = manifold.m_entityA;
-		Entity b = manifold.m_entityB;
+		Manifold manifold(A, B);
 
-		auto& BoxCompA = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(a);
-		auto& BoxCompB = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(b);
-		auto& TransA = g_engine.m_coordinator.GetComponent<TransformComponent>(a);
-		auto& TransB = g_engine.m_coordinator.GetComponent<TransformComponent>(b);
+		m_manifolds.emplace_back(manifold);
+	}
+
+	void CollisionManager::GenerateManifoldAABBvsAABB(Entity A, Entity B)
+	{
+		Manifold manifold(A, B);
+
+		auto& BoxCompA = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(A);
+		auto& BoxCompB = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(B);
+		auto& TransA = g_engine.m_coordinator.GetComponent<TransformComponent>(A);
+		auto& TransB = g_engine.m_coordinator.GetComponent<TransformComponent>(B);
 
 		Vec2 scaleA = TransA.getScale();
 		Vec2 scaleB = TransB.getScale();
@@ -89,9 +96,11 @@ namespace Rogue
 			manifold.m_normal = vAB.y > 0 ? Vec2::unitY : -Vec2::unitY;
 			manifold.m_penetration = y_overlap;
 		}
+
+		m_manifolds.emplace_back(manifold);
 	}
 
-	void CollisionManager::GenerateManifoldOBBvsOBB(Manifold& manifold)
+	void CollisionManager::GenerateManifoldOBBvsOBB(Entity A, Entity B)
 	{
 
 	}
@@ -470,7 +479,7 @@ namespace Rogue
 
 	/******************************************************************************/
 	/*!
-		Extra credits: Reflection computation for moving circle and moving circle.
+		Reflection computation for moving circle and moving circle.
 	 */
 	 /******************************************************************************/
 	void CollisionManager::ReflectCircleOnCircle(Vec2& normal,
@@ -799,16 +808,9 @@ namespace Rogue
 		m_collidedPairs.push_back({ a, b });
 	}
 
-	void CollisionManager::GenerateManifolds()
+	void CollisionManager::GenerateManifolds(Entity A, Entity B)
 	{
-		for (auto const& pair : m_collidedPairs)
-		{
-			Manifold manifold(pair.first, pair.second);
-			GenerateManifoldAABBvsAABB(manifold);
-			m_manifolds.push_back(manifold);
-		}
-
-		m_collidedPairs.clear();
+		GenerateManifoldAABBvsAABB(A, B);
 	}
 
 	void CollisionManager::ResolveManifolds()
@@ -830,3 +832,29 @@ namespace Rogue
 		return s_correction_slop;
 	}
 }
+
+/*
+
+Broad phase:
+------------
+
+Sort and sweep/Spatial partitioning (Most likely don't need)
+
+Iterate through 2 entities
+
+Skip if both are static
+
+Apply filter tests. If can't collide, then skip.
+
+Narrow phase:
+-------------
+
+In the same loop:
+Solve: Dispatch jump table[CirclevsCircle, CirclevsAABB, AABBvsAABB, AABBvsCircle]
+
+Each function will do discrete tests, and if they collide, generate manifold and emplace_back manifolds.
+
+Iterate through manifolds, and apply impulse and positional correction.
+
+If stacking issue occurs, play around with iterations.
+*/

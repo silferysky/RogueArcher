@@ -58,7 +58,7 @@ namespace Rogue
 
 				for (iNextEntity++; iNextEntity != m_entities.end(); ++iNextEntity)
 				{
-					if(g_engine.m_coordinator.ComponentExists<BoxCollider2DComponent>(*iNextEntity))
+					if (g_engine.m_coordinator.ComponentExists<BoxCollider2DComponent>(*iNextEntity))
 						nextBoxCollider = &g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iNextEntity);
 
 					if (g_engine.m_coordinator.ComponentExists<CircleCollider2DComponent>(*iNextEntity))
@@ -66,7 +66,7 @@ namespace Rogue
 
 					auto& nextTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iNextEntity);
 
-				/*	if (currCircleCollider && nextCircleCollider)
+					/*if (currCircleCollider && nextCircleCollider)
 					{
 						if (m_colliderManager.DiscreteCircleVsCircle(currCircleCollider->m_collider, nextCircleCollider->m_collider,
 							currTransform, nextTransform));
@@ -79,17 +79,15 @@ namespace Rogue
 						if (m_colliderManager.DiscreteAABBvsAABB(currBoxCollider->m_aabb, nextBoxCollider->m_aabb))
 						{
 							//	std::cout << "Entity " << *iEntity << " AABB collides with Entity " << *iNextEntity << " AABB" << std::endl;
-							m_colliderManager.InsertColliderPair(*iEntity, *iNextEntity);
+							m_colliderManager.GenerateManifolds(*iEntity, *iNextEntity);
 						}
-					
+
 						if (m_colliderManager.DiscreteOBBvsOBB(currBoxCollider->m_obb, nextBoxCollider->m_obb))
 						{
 							//	std::cout << "Entity " << *iEntity << " OBB collides with Entity " << *iNextEntity << " OBB" << std::endl;
 						}
 					}
 				}
-
-				m_colliderManager.GenerateManifolds();
 
 				// Collision Response (Contact, forces, etc)
 				m_colliderManager.ResolveManifolds();
