@@ -5,8 +5,8 @@
 
 namespace Rogue
 {
-	const double RE_EPSILON = 0.000001;
-	const double RE_PI = 3.1415926535897;
+	const float RE_EPSILON = 0.0001f;
+	const float RE_PI = 3.14159f;
 	
 	struct LineSegment
 	{

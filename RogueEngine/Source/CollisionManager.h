@@ -13,32 +13,6 @@
 
 namespace Rogue
 {
-	enum class BodyType
-	{
-		STATIC,		// Does not move, collides with DYNAMIC
-		KINEMATIC,	// Moves by itself, collides with DYNAMIC
-		DYNAMIC,	// Collides with all, requires collision response
-		
-		MAX_TYPES
-	};
-
-	enum class CollisionType
-	{
-		BC = 0,
-		AABB,
-		OBB,
-		POINT,
-		LINE,
-
-		MAX_TYPES
-	};
-
-	enum class CollisionMode
-	{
-		AWAKE,
-		ASLEEP
-	};
-
 	class CollisionManager
 	{
 		std::vector<std::pair<Entity, Entity>> m_collidedPairs; // Stored during collision tests
@@ -52,16 +26,17 @@ namespace Rogue
 		inline Vec2 GetColliderPosition(const BaseCollider& collider, const TransformComponent& trans) const;
 		inline float GetColliderRotation(const BaseCollider& collider, const TransformComponent& trans) const;
 
-		void GenerateManifoldAABBvsAABB(Manifold& manifold);
-		void GenerateManifoldOBBvsOBB(Manifold& manifold);
 
 	public:
+		void GenerateManifoldCirclevsCircle(Entity A, Entity B);
+		void GenerateManifoldAABBvsAABB(Entity A, Entity B);
+		void GenerateManifoldOBBvsOBB(Entity A, Entity B);
 
 		CollisionManager() = default;
 		~CollisionManager() = default;
 
 		// BOUNDING CIRCLE
-		bool DiscreteCircleVsCircle(const CircleCollider2DComponent& circleA, const CircleCollider2DComponent& circleB,
+		bool DiscreteCircleVsCircle(const CircleCollider& circleA, const CircleCollider& circleB,
 			const TransformComponent& transA, const TransformComponent& transB);
 
 		int ContinuousCircleVsLineSegment(const CircleCollider2DComponent& circle, const Vec2& ptEnd, const LineSegment& lineSeg,	
@@ -101,10 +76,36 @@ namespace Rogue
 
 		// Manifold
 		void InsertColliderPair(Entity a, Entity b);
-		void GenerateManifolds();
+		void GenerateManifolds(Entity A, Entity B);
 		void ResolveManifolds();
 
 		static float GetCorrectionFactor();
 		static float GetCorrectionSlop();
 	};
 }
+
+/*
+
+Broad phase:
+------------
+
+Sort and sweep/Spatial partitioning (Most likely don't need)
+
+Iterate through 2 entities
+
+Skip if both are static
+
+Apply filter tests. If can't collide, then skip.
+
+Narrow phase:
+-------------
+
+In the same loop:
+Solve: Dispatch jump table[CirclevsCircle, CirclevsAABB, AABBvsAABB, AABBvsCircle]
+
+Each function will do discrete tests, and if they collide, generate manifold and emplace_back manifolds.
+
+Iterate through manifolds, and apply impulse and positional correction.
+
+If stacking issue occurs, play around with iterations.
+*/

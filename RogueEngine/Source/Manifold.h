@@ -1,21 +1,19 @@
 #pragma once
 #include "Vector2D.h"
-#include <vector>
+#include <array>
 #include "Types.h"
 
 namespace Rogue
 {
 	struct Manifold
 	{
-		using VertexList = std::vector<Vec2>;
-
 		Vec2 m_point;
 		Vec2 m_normal;
 		Vec2 m_normal2; // Used for OBB
 		float m_penetration;
 		float m_restitution;
 
-		VertexList m_contactPoints;
+		std::array<Vec2, 2> m_contactPoints;
 
 		Entity m_entityA;
 		Entity m_entityB;

@@ -3,6 +3,7 @@
 #include "CollisionManager.h"
 #include "Main.h"
 #include "Logger.h"
+#include "PhysicsDataStructures.hpp"
 
 namespace Rogue
 {
@@ -41,20 +42,53 @@ namespace Rogue
 		return collider.getRotationOffSet() + trans.getRotation();
 	}
 
-	void CollisionManager::GenerateManifoldAABBvsAABB(Manifold& manifold)
+	void CollisionManager::GenerateManifoldCirclevsCircle(Entity A, Entity B)
 	{
-		Entity a = manifold.m_entityA;
-		Entity b = manifold.m_entityB;
+		Manifold manifold(A, B);
 
-		auto& BoxCompA = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(a);
-		auto& BoxCompB = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(b);
-		auto& TransA = g_engine.m_coordinator.GetComponent<TransformComponent>(a);
-		auto& TransB = g_engine.m_coordinator.GetComponent<TransformComponent>(b);
+		auto& transA = g_engine.m_coordinator.GetComponent<TransformComponent>(A);
+		auto& transB = g_engine.m_coordinator.GetComponent<TransformComponent>(B);
+		auto& circleA = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(A);
+		auto& circleB = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(B);
+		
+		float radiusA = circleA.m_collider.getRadius();
+		float radiusB = circleB.m_collider.getRadius();
+		Vec2 centerA = transA.getPosition() + circleA.m_collider.getCenterOffSet();
+		Vec2 centerB = transB.getPosition() + circleB.m_collider.getCenterOffSet();
 
-		Vec2 scaleA = TransA.getScale();
-		Vec2 scaleB = TransB.getScale();
-		Vec2 centerA = TransA.getPosition();
-		Vec2 centerB = TransB.getPosition();
+		Vec2 vAB = centerB - centerA;
+		float distAB = Vec2Distance(centerA, centerB); // For colliding circles, actual distance is required.
+		float totalRadius = radiusA + radiusB;
+
+		if (distAB == 0.0f)
+		{
+			manifold.m_penetration = radiusA;
+			manifold.m_normal = Vec2::unitX; // Can be any direction, but must be consistent
+			manifold.m_contactPoints[0] = centerA;
+		}
+		else
+		{
+			manifold.m_penetration = totalRadius - distAB;
+			manifold.m_normal = vAB / distAB; // Normalized normal.
+			manifold.m_contactPoints[0] = manifold.m_normal * radiusA + centerA;
+		}
+
+		m_manifolds.emplace_back(manifold);
+	}
+
+	void CollisionManager::GenerateManifoldAABBvsAABB(Entity A, Entity B)
+	{
+		Manifold manifold(A, B);
+
+		auto& BoxCompA = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(A);
+		auto& BoxCompB = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(B);
+		auto& TransA = g_engine.m_coordinator.GetComponent<TransformComponent>(A);
+		auto& TransB = g_engine.m_coordinator.GetComponent<TransformComponent>(B);
+
+		Vec2 scaleA = TransA.getScale() + BoxCompA.m_aabb.getScaleOffSet();
+		Vec2 scaleB = TransB.getScale() + BoxCompB.m_aabb.getScaleOffSet();
+		Vec2 centerA = TransA.getPosition() + BoxCompA.m_aabb.getCenterOffSet();
+		Vec2 centerB = TransB.getPosition() + BoxCompB.m_aabb.getCenterOffSet();
 		Vec2 vAB = centerB - centerA;
 
 		float AextentX = (BoxCompA.m_aabb.getMax().x - BoxCompA.m_aabb.getMin().x) / 2;
@@ -74,8 +108,8 @@ namespace Rogue
 		CP2.x = REMin(BoxCompA.m_aabb.getMax().x, BoxCompB.m_aabb.getMax().x);
 		CP2.y = REMin(BoxCompA.m_aabb.getMax().y, BoxCompB.m_aabb.getMax().y);
 
-		manifold.m_contactPoints.push_back(CP1);
-		manifold.m_contactPoints.push_back(CP2);
+		manifold.m_contactPoints[0] = CP1;
+		manifold.m_contactPoints[1] = CP2;
 
 		if (x_overlap < y_overlap)
 		{
@@ -89,9 +123,11 @@ namespace Rogue
 			manifold.m_normal = vAB.y > 0 ? Vec2::unitY : -Vec2::unitY;
 			manifold.m_penetration = y_overlap;
 		}
+
+		m_manifolds.emplace_back(manifold);
 	}
 
-	void CollisionManager::GenerateManifoldOBBvsOBB(Manifold& manifold)
+	void CollisionManager::GenerateManifoldOBBvsOBB(Entity A, Entity B)
 	{
 
 	}
@@ -101,12 +137,12 @@ namespace Rogue
 	//__________________________BOUNDING CIRCLE________________________________|
 	//_________________________________________________________________________|
 	//_________________________________________________________________________|
-	bool CollisionManager::DiscreteCircleVsCircle(const CircleCollider2DComponent& circleA, const CircleCollider2DComponent& circleB,
+	bool CollisionManager::DiscreteCircleVsCircle(const CircleCollider& circleA, const CircleCollider& circleB,
 		const TransformComponent& transA, const TransformComponent& transB)
 	{
-		float totalRadius = circleA.m_collider.getRadius() + circleB.m_collider.getRadius();
+		float totalRadius = circleA.getRadius() + circleB.getRadius();
 
-		return Vec2SqDistance(transA.getPosition() + circleA.m_collider.getCenterOffSet(), transB.getPosition() + circleB.m_collider.getCenterOffSet()) <
+		return Vec2SqDistance(transA.getPosition() + circleA.getCenterOffSet(), transB.getPosition() + circleB.getCenterOffSet()) <
 			totalRadius * totalRadius;
 	}
 
@@ -470,7 +506,7 @@ namespace Rogue
 
 	/******************************************************************************/
 	/*!
-		Extra credits: Reflection computation for moving circle and moving circle.
+		Reflection computation for moving circle and moving circle.
 	 */
 	 /******************************************************************************/
 	void CollisionManager::ReflectCircleOnCircle(Vec2& normal,
@@ -799,16 +835,9 @@ namespace Rogue
 		m_collidedPairs.push_back({ a, b });
 	}
 
-	void CollisionManager::GenerateManifolds()
+	void CollisionManager::GenerateManifolds(Entity A, Entity B)
 	{
-		for (auto const& pair : m_collidedPairs)
-		{
-			Manifold manifold(pair.first, pair.second);
-			GenerateManifoldAABBvsAABB(manifold);
-			m_manifolds.push_back(manifold);
-		}
-
-		m_collidedPairs.clear();
+		GenerateManifoldAABBvsAABB(A, B);
 	}
 
 	void CollisionManager::ResolveManifolds()
