@@ -227,6 +227,21 @@ namespace Rogue
 			return m_entityManager->m_getActiveObjects();
 		}
 
+		bool GetPauseState() const
+		{
+			return m_systemManager->GetPauseState();
+		}
+
+		void SetPauseState(bool newPauseState)
+		{
+			m_systemManager->SetPauseState(newPauseState);
+		}
+
+		void TogglePauseState()
+		{
+			m_systemManager->TogglePauseState();
+		}
+
 		template <typename T>
 		bool CheckIfComponentExists(Entity entity)
 		{
