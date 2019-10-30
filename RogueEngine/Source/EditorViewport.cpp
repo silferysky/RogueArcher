@@ -41,10 +41,13 @@ namespace Rogue
 		ImGui::SameLine();
 		if (ImGui::Button("Stop"))
 		{
-			//Loads last iteration and pauses game
-			g_engine.m_coordinator.GetSceneManager().ClearAllEntities();
-			g_engine.m_coordinator.GetSceneManager().LoadLevel(g_engine.m_coordinator.GetSceneManager().getCurrentFileName().c_str());
-			g_engine.m_coordinator.SetPauseState(true);
+			if (!g_engine.m_coordinator.GetPauseState())
+			{
+				//Loads last iteration and pauses game
+				g_engine.m_coordinator.GetSceneManager().ClearAllEntities();
+				g_engine.m_coordinator.GetSceneManager().LoadLevel(g_engine.m_coordinator.GetSceneManager().getCurrentFileName().c_str());
+				g_engine.m_coordinator.SetPauseState(true);
+			}
 		}
 
 		ImVec2 imageSize{ ImGui::GetContentRegionAvail() };

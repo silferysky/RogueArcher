@@ -66,7 +66,7 @@ namespace Rogue
 				// Note: Debug draw system currently doesn't update here.
 				
 				//If either game is not paused or is editor system, run the update
-				if (!m_gameIsPaused || system.first.name() == "Editor")
+				if (!m_gameIsPaused || system.second == (m_systems.end() - 1)->second)
 					system.second->Update();
 			}
 		}
