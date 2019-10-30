@@ -135,7 +135,7 @@ namespace Rogue
 							g_engine.m_coordinator.GetComponent<RigidbodyComponent>(i.m_Entity).setAcceleration(m_acceleration);
 
 							ImGui::PushItemWidth(75);
-							ImGui::SliderFloat("Friction", &m_friction, -10000.0f, 10000.0f);
+							ImGui::SliderFloat("Friction", &m_friction, 0.0f, 1.0f);
 							g_engine.m_coordinator.GetComponent<RigidbodyComponent>(i.m_Entity).setFriction(m_friction);
 
 							ImGui::PushItemWidth(75);
@@ -143,7 +143,7 @@ namespace Rogue
 							g_engine.m_coordinator.GetComponent<RigidbodyComponent>(i.m_Entity).setDamping(m_damping);
 
 							ImGui::PushItemWidth(75);
-							ImGui::SliderFloat("Restitution", &m_restitution, -10000.0f, 10000.0f);
+							ImGui::SliderFloat("Restitution", &m_restitution, 0.0f, 1.0f);
 							g_engine.m_coordinator.GetComponent<RigidbodyComponent>(i.m_Entity).setBounciness(m_restitution);
 						}
 					}
