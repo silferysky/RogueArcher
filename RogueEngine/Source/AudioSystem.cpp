@@ -130,7 +130,8 @@ namespace Rogue
 
 			/* Load up BGMs */
 			sound->CreateBGM(aEmitter.getID().c_str(), 1, 112.0f, &m_BGMstream);
-			sound->Play(0.3f);
+			if (!(sound->m_b_IsPlaying))
+				sound->Play(0.3f);
 		}
 	}
 }
