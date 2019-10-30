@@ -319,6 +319,7 @@ namespace Rogue
 
 						if (ImGui::MenuItem("Sound", nullptr, false, g_engine.m_coordinator.ComponentExists<AudioEmitterComponent>(i.m_Entity)))
 						{
+							g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(i.m_Entity).Destroy();
 							g_engine.m_coordinator.RemoveComponent<AudioEmitterComponent>(i.m_Entity);
 						}
 						ImGui::EndPopup();
