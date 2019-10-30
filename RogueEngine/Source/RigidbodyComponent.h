@@ -1,6 +1,7 @@
 #pragma once
 #include "BaseComponent.h"
 #include "Vector2D.h"
+#include "PhysicsDataStructures.hpp"
 
 namespace Rogue
 {
@@ -11,7 +12,6 @@ namespace Rogue
 		Vec2 m_velocity;
 		Vec2 m_accForce;
 
-		float m_invMass;
 		float m_volume;
 		float m_damping;
 
@@ -19,6 +19,8 @@ namespace Rogue
 		float m_friction;
 
 		bool m_isStatic;
+
+		MassData m_massData;
 
 	public:
 		RigidbodyComponent();

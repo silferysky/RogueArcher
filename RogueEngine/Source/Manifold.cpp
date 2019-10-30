@@ -31,10 +31,8 @@ namespace Rogue
 
 		// If velocities are already separating, don't resolve anything.
 		if (velOnNormal > 0)
-		{
-			std::cout << m_entityA << " and " << m_entityB << " separating" << std::endl;
 			return;
-		}
+
 		// Mixed restitution of both bodies
 		m_restitution = REMin(bodyA.getBounciness(), bodyB.getBounciness());
 

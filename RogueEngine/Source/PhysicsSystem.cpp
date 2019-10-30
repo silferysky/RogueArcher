@@ -101,7 +101,7 @@ namespace Rogue
 		{
 			EntMoveEvent* EvEntMove = dynamic_cast<EntMoveEvent*>(ev);
 			
-			if (g_engine.m_coordinator.CheckIfComponentExists<TransformComponent>(EvEntMove->GetEntityID()))
+			if (g_engine.m_coordinator.ComponentExists<TransformComponent>(EvEntMove->GetEntityID()))
 			{
 
 			}
