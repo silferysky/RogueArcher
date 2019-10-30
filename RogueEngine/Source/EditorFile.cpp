@@ -60,6 +60,8 @@ namespace Rogue
 							sceneManager.setCurrentFileName(levelStrIterator.c_str());
 							sceneManager.ClearAllEntities();
 							sceneManager.LoadLevel(sceneManager.getCurrentFileName().c_str());
+
+							g_engine.m_coordinator.GetSystem<AudioSystem>()->InitSounds();
 						}
 					}
 					ImGui::EndMenu();
