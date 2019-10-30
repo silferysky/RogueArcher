@@ -37,34 +37,22 @@ namespace Rogue
 		g_engine.m_coordinator.SetSystemSignature<AudioSystem>(signature);
 
 		m_BGMstream.Initialize(); // create BGM channel
-
-		/* Load up BGMs */
-		m_music.CreateBGM("Resources/Sounds/HEYYEYAAEYAAAEYAEYAA.wav", 1, 112.0f, &m_BGMstream);
-		m_music.Play(0.3f);
 	}
 
 	void AudioSystem::Update()
 	{
 		g_engine.m_coordinator.InitTimeSystem("Audio System");
-		
-		for (auto& objectIterator : g_engine.m_coordinator.GetActiveObjects())
-		{
-			if (g_engine.m_coordinator.CheckIfComponentExists<PlayerControllerComponent>(objectIterator.m_Entity))
-			{
-				m_trackingTarget = &(g_engine.m_coordinator.GetComponent<TransformComponent>(objectIterator.m_Entity).getPosition());
-				break;
-			}
-		}
-
-		m_music.Update();
 
 		for (auto entity : m_entities)
 		{
+			auto sound = g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(entity).getSound();
 			auto transformPos = g_engine.m_coordinator.GetComponent<TransformComponent>(entity).getPosition();
 
 			float distance = log2_fast(Vec2SqDistance(transformPos, *m_trackingTarget));
 
-			FMOD_Channel_SetVolume(m_music.GetChannel(), 1.0f - distance * 0.05f);
+			sound->Update();
+
+			FMOD_Channel_SetVolume(sound->GetChannel(), 1.0f - distance * 0.05f);
 		}
 
 		g_engine.m_coordinator.EndTimeSystem("Audio System");
@@ -89,8 +77,12 @@ namespace Rogue
 
 	void AudioSystem::Shutdown()
 	{
-		if (m_music.GetSystem() != NULL)
-			m_music.Release();
+		for (auto entity : m_entities)
+		{
+			auto sound = g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(entity).getSound();
+			if (sound->GetSystem() != NULL)
+				sound->Release();
+		}
 
 		m_BGMstream.Release();
 	}
@@ -101,9 +93,44 @@ namespace Rogue
 
 		/* Mute currently playing BGM */
 		if (m_muted)
-			FMOD_Channel_SetVolume(m_music.GetChannel(), 0.0f);
+		{
+			for (auto entity : m_entities)
+			{
+				auto sound = g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(entity).getSound();
+				FMOD_Channel_SetVolume(sound->GetChannel(), 0.0f);
+			}
+		}
 		/* Unmute currently playing BGM */
 		else
-			FMOD_Channel_SetVolume(m_music.GetChannel(), 0.3f);
+		{
+			for (auto entity : m_entities)
+			{
+				auto sound = g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(entity).getSound();
+				FMOD_Channel_SetVolume(sound->GetChannel(), 3.0f);
+			}
+		}
+	}
+
+	void AudioSystem::InitSounds()
+	{
+		for (auto& objectIterator : g_engine.m_coordinator.GetActiveObjects())
+		{
+			if (g_engine.m_coordinator.CheckIfComponentExists<PlayerControllerComponent>(objectIterator.m_Entity))
+			{
+				m_trackingTarget = &(g_engine.m_coordinator.GetComponent<TransformComponent>(objectIterator.m_Entity).getPosition());
+
+				break;
+			}
+		}
+
+		for (auto entity : m_entities)
+		{
+			auto aEmitter = g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(entity);
+			auto sound = aEmitter.getSound();
+
+			/* Load up BGMs */
+			sound->CreateBGM(aEmitter.getID().c_str(), 1, 112.0f, &m_BGMstream);
+			sound->Play(0.3f);
+		}
 	}
 }

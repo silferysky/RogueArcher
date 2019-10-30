@@ -12,6 +12,7 @@
 #include "Coordinator.h"
 #include "Types.h"
 #include "Timer.h"
+#include "AudioSystem.h"
 
 namespace Rogue
 {
@@ -47,6 +48,8 @@ namespace Rogue
 			m_sceneManager->LoadLevelFiles("Levels.json");
 			m_sceneManager->LoadLevel("Level 1.json");
 			m_sceneManager->LoadArchetypes("Resources/Archetypes.json");
+
+			GetSystem<AudioSystem>()->InitSounds();
 
 			//m_objectFactory->SaveLevel("Resources/Level 1.json");
 		}

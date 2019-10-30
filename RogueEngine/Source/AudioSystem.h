@@ -20,6 +20,7 @@ namespace Rogue
 		~AudioSystem() = default;
 
 		void ToggleMute();
+		void InitSounds();
 
 		void Init() override;
 		void Update() override;
