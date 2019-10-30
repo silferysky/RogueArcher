@@ -66,7 +66,9 @@ namespace Rogue
 				// Note: Debug draw system currently doesn't update here.
 				
 				//If either game is not paused or is editor system, run the update
-				if (!m_gameIsPaused || system.second == (m_systems.end() - 1)->second)
+				if (!m_gameIsPaused || 
+					(system.second->m_systemID != SystemID::id_PHYSICSSYSTEM &&
+					 system.second->m_systemID != SystemID::id_AUDIOSYSTEM))
 					system.second->Update();
 			}
 		}
@@ -171,6 +173,6 @@ namespace Rogue
 	private:
 		std::unordered_map<std::type_index, Signature> m_signatures;
 		std::vector<std::pair<std::type_index, std::shared_ptr<System>>> m_systems;
-		bool m_gameIsPaused;
+		bool m_gameIsPaused = false;
 	};
 }
