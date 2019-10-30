@@ -29,6 +29,7 @@ namespace Rogue
 		GLint m_projLocation;
 		GLint m_viewLocation;
 		GLint m_transformLocation;
+		GLint m_filterLocation;
 
 		std::shared_ptr<CameraSystem> m_pCamera;
 
@@ -51,6 +52,5 @@ namespace Rogue
 		void UpdateFrameBuffer();
 
 		GLuint& getFBO();
-		Shader* getShader();
 	};
 }
