@@ -29,6 +29,14 @@ namespace Rogue
 				if (i.m_selected == true)
 				{
 					ImGui::Text("%s", i.m_objectName.c_str());
+					static char buffer[64] = "";
+					ImGui::TextDisabled("New Name");
+					ImGui::SameLine();
+					ImGui::InputText("                  ", buffer, 64);
+					if (ImGui::Button("Edit"))
+					{
+						i.m_objectName = buffer;
+					}
 					if (g_engine.m_coordinator.ComponentExists<TransformComponent>(i.m_Entity))
 					{
 						if (ImGui::CollapsingHeader("Transform"))
