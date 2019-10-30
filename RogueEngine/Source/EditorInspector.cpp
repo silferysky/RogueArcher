@@ -122,16 +122,16 @@ namespace Rogue
 							g_engine.m_coordinator.GetComponent<RigidbodyComponent>(i.m_Entity).setIsStatic(m_isStatic);
 
 							ImGui::PushItemWidth(75);
-							ImGui::SliderFloat("Velocity X", &m_velocity.x, -2000.0f, 2000.0f);
+							ImGui::DragFloat("Velocity X", &m_velocity.x, 1.0f, -2000.0f, 2000.0f);
 							ImGui::PushItemWidth(75);
-							ImGui::SliderFloat("Velocity Y", &m_velocity.y, -2000.0f, 2000.0f);
+							ImGui::DragFloat("Velocity Y", &m_velocity.y, 1.0f, -2000.0f, 2000.0f);
 							g_engine.m_coordinator.GetComponent<RigidbodyComponent>(i.m_Entity).setVelocity(m_velocity);
 
 
 							ImGui::PushItemWidth(75);
-							ImGui::SliderFloat("Acceleration X", &m_acceleration.x, -10000.0f, 10000.0f);
+							ImGui::DragFloat("Acceleration X", &m_acceleration.x, 1.0f, -10000.0f, 10000.0f);
 							ImGui::PushItemWidth(75);
-							ImGui::SliderFloat("Acceleration Y", &m_acceleration.y, -10000.0f, 10000.0f);
+							ImGui::DragFloat("Acceleration Y", &m_acceleration.y, 1.0f, -10000.0f, 10000.0f);
 							g_engine.m_coordinator.GetComponent<RigidbodyComponent>(i.m_Entity).setAcceleration(m_acceleration);
 
 							ImGui::PushItemWidth(75);
@@ -153,16 +153,10 @@ namespace Rogue
 						if (ImGui::CollapsingHeader("Camera"))
 						{
 							bool m_isMain = g_engine.m_coordinator.GetComponent<CameraComponent>(i.m_Entity).getIsActive();
-							Vec2 m_position = g_engine.m_coordinator.GetComponent<CameraComponent>(i.m_Entity).getPosition();
 
 							ImGui::PushItemWidth(75);
 							ImGui::Checkbox("Active?", &m_isMain);
 							g_engine.m_coordinator.GetComponent<CameraComponent>(i.m_Entity).setIsActive(m_isMain);
-
-							ImGui::PushItemWidth(75);
-							ImGui::DragFloat("Camera X", &m_position.x, 0.5f, -10000.0f, 10000.0f);
-							ImGui::DragFloat("Camera Y", &m_position.y, 0.5f, -10000.0f, 10000.0f);
-							g_engine.m_coordinator.GetComponent<CameraComponent>(i.m_Entity).setPosition(m_position);
 						}
 					}
 
@@ -171,13 +165,41 @@ namespace Rogue
 						if (ImGui::CollapsingHeader("Circle 2D Collider"))
 						{
 							float m_radius = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i.m_Entity).m_collider.getRadius();
+							Vec2 m_centerOffset = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i.m_Entity).m_collider.getCenterOffSet();
+							float m_rotationOffset = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i.m_Entity).m_collider.getRotationOffSet();
 
 							ImGui::PushItemWidth(75);
 							ImGui::DragFloat("Radius", &m_radius, 0.5f, -100000.0f, 100000.0f);
 							g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i.m_Entity).m_collider.setRadius(m_radius);
+
+							ImGui::DragFloat("Offset X ", &m_centerOffset.x, 0.5f, -100000.0f, 100000.0f);
+							ImGui::DragFloat("Offset Y ", &m_centerOffset.y, 0.5f, -100000.0f, 100000.0f);
+							g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i.m_Entity).m_collider.setCenterOffSet(m_centerOffset);
+
+
 						}
 					}
 
+					if (g_engine.m_coordinator.ComponentExists<AudioEmitterComponent>(i.m_Entity))
+					{
+						if (ImGui::CollapsingHeader("Sound"))
+						{
+							std::string m_audioPath = g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(i.m_Entity).getID();
+							static char m_newaudioPath[128];
+							ImGui::PushItemWidth(75);
+							ImGui::Text("Current Sound Path : ");
+							ImGui::Text("%s", m_audioPath.c_str());
+							ImGui::TextDisabled("New Sound Path");
+							ImGui::SameLine();
+							ImGui::PushItemWidth(250);
+							ImGui::InputText("                    ", m_newaudioPath,128);
+							if (ImGui::Button("Set new path"))
+							{
+								m_audioPath = m_newaudioPath;
+								g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(i.m_Entity).setID(m_audioPath);
+							}
+						}
+					}
 					if (ImGui::Button("Add Component"))
 					{
 						ImGui::OpenPopup("Add Component");
@@ -238,6 +260,11 @@ namespace Rogue
 						{
 							g_engine.m_coordinator.AddComponent(i.m_Entity, CameraComponent());
 						}
+
+						if (ImGui::MenuItem("Sound", nullptr, false, !g_engine.m_coordinator.ComponentExists<AudioEmitterComponent>(i.m_Entity)))
+						{
+							g_engine.m_coordinator.AddComponent(i.m_Entity, AudioEmitterComponent());
+						}
 						ImGui::EndPopup();
 					}
 					if (ImGui::BeginPopup("Delete Component"))
@@ -285,16 +312,18 @@ namespace Rogue
 							g_engine.m_coordinator.RemoveComponent<RigidbodyComponent>(i.m_Entity);
 						}
 
-						if (ImGui::MenuItem("Camera"))
+						if (ImGui::MenuItem("Camera", nullptr, false, g_engine.m_coordinator.ComponentExists<CameraComponent>(i.m_Entity)))
 						{
 							g_engine.m_coordinator.RemoveComponent<CameraComponent>(i.m_Entity);
 						}
+
+						if (ImGui::MenuItem("Sound", nullptr, false, g_engine.m_coordinator.ComponentExists<AudioEmitterComponent>(i.m_Entity)))
+						{
+							g_engine.m_coordinator.RemoveComponent<AudioEmitterComponent>(i.m_Entity);
+						}
 						ImGui::EndPopup();
 					}
-				}
-		
-
-			
+				}					
 		}
 
 		ImGui::End();
