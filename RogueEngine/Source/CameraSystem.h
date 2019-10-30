@@ -30,6 +30,8 @@ namespace Rogue
 		void ToggleWorldCamera();
 		void ResetCamera();
 
+		CameraShake getShake() const;
+
 		void Init() override;
 		void Update() override;
 		void Shutdown() override;

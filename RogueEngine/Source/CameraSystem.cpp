@@ -50,6 +50,11 @@ namespace Rogue
 			ResetCamera();
 	}
 
+	CameraShake CameraSystem::getShake() const
+	{
+		return m_cameraShake;
+	}
+
 	void CameraSystem::Update()
 	{
 		g_engine.m_coordinator.InitTimeSystem("Camera System");
@@ -67,6 +72,9 @@ namespace Rogue
 					auto transformPos = g_engine.m_coordinator.GetComponent<TransformComponent>(entity).getPosition();
 
 					m_cameraPos = glm::vec3(transformPos.x + shakeOffset.x, transformPos.y + shakeOffset.y, 0.0f);
+
+					if ()
+
 					break;
 				}
 			}
