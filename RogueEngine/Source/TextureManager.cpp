@@ -29,6 +29,8 @@ namespace Rogue
 			Texture newTexture;
 			int comp;
 
+			glGenTextures(1, &newTexture.m_texture);
+
 			stbi_set_flip_vertically_on_load(true);
 			newTexture.m_data = stbi_load // load an image file directly as a new OpenGL texture 
 			(
@@ -39,7 +41,11 @@ namespace Rogue
 				4
 			);
 
+			if (newTexture.m_data == NULL)
+				RE_INFO("STBI error: ", stbi_failure_reason());
+			
 			glBindTexture(GL_TEXTURE_2D, newTexture.m_texture);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, newTexture.m_width, newTexture.m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, newTexture.m_data);
 			
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
@@ -48,8 +54,7 @@ namespace Rogue
 
 			glGenerateMipmap(GL_TEXTURE_2D);
 
-			if (newTexture.m_data == NULL)
-				RE_INFO("STBI error: ", stbi_failure_reason());
+			glBindTexture(GL_TEXTURE_2D, 0);
 
 			textureMap.emplace(std::string(texture), newTexture);
 

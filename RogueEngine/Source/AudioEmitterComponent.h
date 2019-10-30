@@ -11,6 +11,7 @@ namespace Rogue
 		Sound m_sound;
 	public:
 		AudioEmitterComponent() = default;
+		~AudioEmitterComponent();
 
 		void setID(const std::string& id);
 		std::string getID() const;

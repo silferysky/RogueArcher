@@ -52,7 +52,7 @@ namespace Rogue
 
 			sound->Update();
 
-			FMOD_Channel_SetVolume(sound->GetChannel(), 1.0f - distance * 0.05f);
+			sound->SetVolume(1.0f - distance * 0.05f);
 		}
 
 		g_engine.m_coordinator.EndTimeSystem("Audio System");
@@ -97,7 +97,7 @@ namespace Rogue
 			for (auto entity : m_entities)
 			{
 				auto sound = g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(entity).getSound();
-				FMOD_Channel_SetVolume(sound->GetChannel(), 0.0f);
+				sound->SetVolume(0.0f);
 			}
 		}
 		/* Unmute currently playing BGM */
@@ -106,7 +106,7 @@ namespace Rogue
 			for (auto entity : m_entities)
 			{
 				auto sound = g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(entity).getSound();
-				FMOD_Channel_SetVolume(sound->GetChannel(), 3.0f);
+				sound->SetVolume(3.0f);
 			}
 		}
 	}
