@@ -37,13 +37,15 @@ namespace Rogue
 
 		Vec2 GetCameraMin() const;
 		Vec2 GetCameraMax() const;
+		bool GetWorldCamera() const;
+		void SetWorldCamera(const bool& camera);
 
 		glm::vec3 GetCameraPos() const;
 
 		void SetCameraMin(const float& x, const float& y);
 		void SetCameraMax(const float& x, const float& y);
 
-		void SetCameraPos(const float& x, const float& y);
+		void SetCameraPos(const glm::vec3& position);
 
 		void Init() override;
 		void Update() override;
