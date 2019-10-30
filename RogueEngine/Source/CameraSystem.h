@@ -35,6 +35,9 @@ namespace Rogue
 
 		CameraShake GetShake() const;
 
+		Vec2 GetCameraMin() const;
+		Vec2 GetCameraMax() const;
+
 		void SetCameraMin(const float& x, const float& y);
 		void SetCameraMax(const float& x, const float& y);
 
