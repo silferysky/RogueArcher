@@ -116,7 +116,7 @@ namespace Rogue
 
 		const MassData& ComputeMass(float density) const override
 		{
-			unsigned int m_vertexCount = m_vertices.size();
+			size_t m_vertexCount = m_vertices.size();
 
 			// Calculate centroid and moment of interia
 			Vec2 c(0.0f, 0.0f); // centroid
