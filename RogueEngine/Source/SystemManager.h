@@ -155,6 +155,21 @@ namespace Rogue
 			}
 		}
 
+		bool GetGameState() const
+		{
+			return m_gameIsRunning;
+		}
+
+		void SetGameState(bool newGameState)
+		{
+			m_gameIsRunning = newGameState;
+		}
+
+		void ToggleGameState()
+		{
+			m_gameIsRunning = !m_gameIsRunning;
+		}
+
 		bool GetPauseState() const
 		{
 			return m_gameIsPaused;
@@ -173,6 +188,7 @@ namespace Rogue
 	private:
 		std::unordered_map<std::type_index, Signature> m_signatures;
 		std::vector<std::pair<std::type_index, std::shared_ptr<System>>> m_systems;
+		bool m_gameIsRunning = false;
 		bool m_gameIsPaused = false;
 	};
 }

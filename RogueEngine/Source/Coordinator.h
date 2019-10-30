@@ -227,6 +227,21 @@ namespace Rogue
 			return m_entityManager->m_getActiveObjects();
 		}
 
+		bool GetGameState() const
+		{
+			return m_systemManager->GetGameState();
+		}
+
+		void SetGameState(bool newGameState)
+		{
+			m_systemManager->SetGameState(newGameState);
+		}
+
+		void ToggleGameState()
+		{
+			m_systemManager->ToggleGameState();
+		}
+
 		bool GetPauseState() const
 		{
 			return m_systemManager->GetPauseState();
