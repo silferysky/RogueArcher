@@ -19,6 +19,9 @@ namespace Rogue
 
 		float m_cameraVelocity = 1.0f;
 
+		Vec2 m_cameraMin;
+		Vec2 m_cameraMax;
+
 		CameraShake m_cameraShake;
 
 		bool m_worldCamera;
@@ -30,7 +33,10 @@ namespace Rogue
 		void ToggleWorldCamera();
 		void ResetCamera();
 
-		CameraShake getShake() const;
+		CameraShake GetShake() const;
+
+		void SetCameraMin(const float& x, const float& y);
+		void SetCameraMax(const float& x, const float& y);
 
 		void Init() override;
 		void Update() override;
