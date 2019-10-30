@@ -12,7 +12,7 @@ namespace Rogue
 	CameraSystem::CameraSystem()
 		: System(SystemID::id_CAMERASYSTEM), m_worldCamera{ false },
 		m_cameraPos{ 0.0f, 0.0f, 0.0f }, m_worldUp{ 0.0f, 1.0f, 0.0f },
-		m_cameraFront{ 0.0f, 0.0f, -1.0f }, m_cameraShake{}
+		m_cameraFront{ 0.0f, 0.0f, -1.0f }, m_cameraShake{}, m_cameraMin{ -1600, -1600 }, m_cameraMax{ 1600, 1600 }
 	{}
 
 	void CameraSystem::Init()
@@ -50,6 +50,31 @@ namespace Rogue
 			ResetCamera();
 	}
 
+	CameraShake CameraSystem::GetShake() const
+	{
+		return m_cameraShake;
+	}
+
+	Vec2 CameraSystem::GetCameraMin() const
+	{
+		return m_cameraMin;
+	}
+
+	Vec2 CameraSystem::GetCameraMax() const
+	{
+		return m_cameraMax;
+	}
+
+	void CameraSystem::SetCameraMin(const float& x, const float& y)
+	{
+		m_cameraMin = { x, y };
+	}
+
+	void CameraSystem::SetCameraMax(const float& x, const float& y)
+	{
+		m_cameraMin = { x, y };
+	}
+
 	void CameraSystem::Update()
 	{
 		g_engine.m_coordinator.InitTimeSystem("Camera System");
@@ -66,7 +91,20 @@ namespace Rogue
 				{
 					auto transformPos = g_engine.m_coordinator.GetComponent<TransformComponent>(entity).getPosition();
 
+					if (transformPos.x > m_cameraMax.x)
+						transformPos.x = m_cameraMax.x;
+
+					if (transformPos.x < m_cameraMin.x)
+						transformPos.x = m_cameraMin.x;
+
+					if (transformPos.y > m_cameraMax.y)
+						transformPos.y = m_cameraMax.y;
+
+					if (transformPos.y < m_cameraMin.y)
+						transformPos.y = m_cameraMin.y;
+
 					m_cameraPos = glm::vec3(transformPos.x + shakeOffset.x, transformPos.y + shakeOffset.y, 0.0f);
+
 					break;
 				}
 			}

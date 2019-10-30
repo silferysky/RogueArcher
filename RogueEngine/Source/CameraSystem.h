@@ -19,6 +19,9 @@ namespace Rogue
 
 		float m_cameraVelocity = 1.0f;
 
+		Vec2 m_cameraMin;
+		Vec2 m_cameraMax;
+
 		CameraShake m_cameraShake;
 
 		bool m_worldCamera;
@@ -29,6 +32,14 @@ namespace Rogue
 		glm::mat4 GetViewMatrix();
 		void ToggleWorldCamera();
 		void ResetCamera();
+
+		CameraShake GetShake() const;
+
+		Vec2 GetCameraMin() const;
+		Vec2 GetCameraMax() const;
+
+		void SetCameraMin(const float& x, const float& y);
+		void SetCameraMax(const float& x, const float& y);
 
 		void Init() override;
 		void Update() override;
