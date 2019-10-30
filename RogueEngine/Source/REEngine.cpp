@@ -83,11 +83,13 @@ namespace Rogue
 
 		setVSync(0);
 
-		// Register all systems.
-		RegisterSystems();
+
 
 		// Register all components
 		RegisterComponents();
+
+		// Register all systems.
+		RegisterSystems();
 
 		// Init systems and system signatures will be set in their respective inits.
 		// Other systems and managers will also be initialized here.

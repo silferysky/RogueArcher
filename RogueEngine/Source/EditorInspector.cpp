@@ -67,7 +67,9 @@ namespace Rogue
 					{
 						if (ImGui::CollapsingHeader("Sprite"))
 						{
-
+							Texture m_Texture = g_engine.m_coordinator.GetComponent<SpriteComponent>(i.m_Entity).getTexture();
+							ImGui::PushItemWidth(250);
+							ImGui::ColorEdit3("Color", (float*)& m_color);
 						}
 					}
 
@@ -152,6 +154,18 @@ namespace Rogue
 							ImGui::DragFloat("Camera X", &m_position.x, 0.5f, -10000.0f, 10000.0f);
 							ImGui::DragFloat("Camera Y", &m_position.y, 0.5f, -10000.0f, 10000.0f);
 							g_engine.m_coordinator.GetComponent<CameraComponent>(i.m_Entity).setPosition(m_position);
+						}
+					}
+
+					if (g_engine.m_coordinator.CheckIfComponentExists<CircleCollider2DComponent>(i.m_Entity))
+					{
+						if (ImGui::CollapsingHeader("Circle 2D Collider"))
+						{
+							float m_radius = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i.m_Entity).m_collider.getRadius();
+
+							ImGui::PushItemWidth(75);
+							ImGui::DragFloat("Radius", &m_radius, 0.5f, -100000.0f, 100000.0f);
+							g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i.m_Entity).m_collider.setRadius(m_radius);
 						}
 					}
 
