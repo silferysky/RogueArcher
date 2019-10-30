@@ -38,6 +38,7 @@ namespace Rogue
 		m_projLocation = glGetUniformLocation(m_shader.GetShader(), "projection");
 		m_viewLocation = glGetUniformLocation(m_shader.GetShader(), "view");
 		m_transformLocation = glGetUniformLocation(m_shader.GetShader(), "transform");
+		m_filterLocation = glGetUniformLocation(m_shader.GetShader(), "colourFilter");
 
 		GenerateQuadPrimitive(m_VBO, m_VAO, m_EBO);
 		GenerateFrameQuad(m_frameVAO, m_frameVBO);
@@ -124,6 +125,10 @@ namespace Rogue
 		glUniformMatrix4fv(m_viewLocation, 1, GL_FALSE, glm::value_ptr(m_pCamera->GetViewMatrix()));
 		glUniformMatrix4fv(m_transformLocation, 1, GL_FALSE, glm::value_ptr(transformMat));
 
+		sprite->getFilter();
+
+		glUniform4fv(m_filterLocation, 1, glm::value_ptr(sprite->getFilter()));
+
 		// Draw the Mesh
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
@@ -175,11 +180,6 @@ namespace Rogue
 	GLuint& GraphicsSystem::getFBO()
 	{
 		return m_FBO;
-	}
-
-	Shader* GraphicsSystem::getShader()
-	{
-		return &m_shader;
 	}
 
 	bool GraphicsSystem::InitializeOpenGL()

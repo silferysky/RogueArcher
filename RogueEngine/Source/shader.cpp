@@ -1,7 +1,7 @@
 #include "Shader.h"
 #include <iostream>
 #include "BasicIO.h"
-
+#include <vector>
 
 namespace Rogue
 {
@@ -39,7 +39,20 @@ namespace Rogue
 		glGetShaderiv(id, GL_COMPILE_STATUS, &result);
 		if (result == GL_FALSE)
 		{
+			GLint maxLength = 0;
+			glGetShaderiv(id, GL_INFO_LOG_LENGTH, &maxLength);
+
+			// The maxLength includes the NULL character
+			std::vector<GLchar> errorLog(maxLength);
+			glGetShaderInfoLog(id, maxLength, &maxLength, &errorLog[0]);
+
 			std::cout << "Error: Failed to compile shader:" << source << std::endl;
+
+			for (auto character : errorLog)
+			{
+				std::cout << character;
+			}
+			std::cout << std::endl;
 			glDeleteShader(id);
 
 			return 0;

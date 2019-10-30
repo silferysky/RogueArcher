@@ -34,6 +34,16 @@ namespace Rogue
 		return m_drawPriority;
 	}
 
+	glm::vec4& SpriteComponent::getFilter()
+	{
+		return m_filter;
+	}
+
+	void SpriteComponent::setFilter(const glm::vec4& filter)
+	{
+		m_filter = filter;
+	}
+
 	std::string SpriteComponent::Serialize()
 	{
 		std::map<std::string, Texture> textureMap = g_engine.m_coordinator.GetTextureManager().getTextureMap();
