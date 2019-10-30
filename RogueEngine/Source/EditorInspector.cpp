@@ -67,9 +67,10 @@ namespace Rogue
 					{
 						if (ImGui::CollapsingHeader("Sprite"))
 						{
-							Texture m_Texture = g_engine.m_coordinator.GetComponent<SpriteComponent>(i.m_Entity).getTexture();
+							glm::vec4 m_color = g_engine.m_coordinator.GetComponent<SpriteComponent>(i.m_Entity).getFilter();
 							ImGui::PushItemWidth(250);
-							ImGui::ColorEdit3("Color", (float*)& m_color);
+							ImGui::ColorEdit4("Color", (float*)& m_color);
+							g_engine.m_coordinator.GetComponent<SpriteComponent>(i.m_Entity).setFilter(m_color);
 						}
 					}
 
