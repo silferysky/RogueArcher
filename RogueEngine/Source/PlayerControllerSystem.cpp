@@ -61,7 +61,7 @@ namespace Rogue
 				for (std::set<Entity>::iterator iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
 				{
 					//For 1st entity
-					if (iEntity == m_entities.begin() && g_engine.m_coordinator.CheckIfComponentExists<RigidbodyComponent>(*iEntity))
+					if (iEntity == m_entities.begin() && g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(*iEntity))
 					{
 						auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
 						rigidbody.addForce(Vec2(0.0f, 50000.0f));

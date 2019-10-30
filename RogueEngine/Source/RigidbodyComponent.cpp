@@ -10,12 +10,12 @@ namespace Rogue
 		: m_acceleration{ Vec2() },
 		m_velocity{ Vec2() },
 		m_accForce{ Vec2() },
-		m_invMass{ 1.0f },
 		m_volume{ 1.0f },
 		m_damping{ 0.50f },
 		m_isStatic{ false },
 		m_restitution{ 0.1f },
-		m_friction{ 0.01f }
+		m_friction{ 0.01f },
+		m_massData{}
 	{}
 
 	Vec2 RigidbodyComponent::getVelocity() const
@@ -25,7 +25,7 @@ namespace Rogue
 
 	float RigidbodyComponent::getInvMass() const
 	{
-		return m_invMass;
+		return m_massData.m_invMass;
 	}
 
 	float RigidbodyComponent::getVolume() const
@@ -63,7 +63,7 @@ namespace Rogue
 		if (mass < RE_EPSILON && mass > -RE_EPSILON)
 			throw("Mass is 0!");
 
-		m_invMass = 1 / mass;
+		m_massData.m_invMass = 1 / mass;
 	}
 
 	void RigidbodyComponent::setVolume(float volume)
@@ -116,9 +116,9 @@ namespace Rogue
 		m_isStatic = set;
 
 		if(set == true)
-			m_invMass = 0.0f;
+			m_massData.m_invMass = 0.0f;
 		else
-			m_invMass = 1.0f;
+			m_massData.m_invMass = 1.0f;
 	}
 
 	void RigidbodyComponent::setBounciness(float bounce)
@@ -137,8 +137,8 @@ namespace Rogue
 		std::ostringstream ss;
 		ss << m_acceleration.x << ";" << m_acceleration.y << ";";
 		ss << m_velocity.x << ";" << m_velocity.y << ";";
-		if (m_invMass != 0.0f)
-			ss << m_invMass << ";";
+		if (m_massData.m_invMass != 0.0f)
+			ss << m_massData.m_invMass << ";";
 		else
 			ss << 1 << ";";
 		ss << m_volume << ";";

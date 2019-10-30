@@ -13,32 +13,6 @@
 
 namespace Rogue
 {
-	enum class BodyType
-	{
-		STATIC,		// Does not move, collides with DYNAMIC
-		KINEMATIC,	// Moves by itself, collides with DYNAMIC
-		DYNAMIC,	// Collides with all, requires collision response
-		
-		MAX_TYPES
-	};
-
-	enum class CollisionType
-	{
-		BC = 0,
-		AABB,
-		OBB,
-		POINT,
-		LINE,
-
-		MAX_TYPES
-	};
-
-	enum class CollisionMode
-	{
-		AWAKE,
-		ASLEEP
-	};
-
 	class CollisionManager
 	{
 		std::vector<std::pair<Entity, Entity>> m_collidedPairs; // Stored during collision tests
@@ -61,7 +35,7 @@ namespace Rogue
 		~CollisionManager() = default;
 
 		// BOUNDING CIRCLE
-		bool DiscreteCircleVsCircle(const CircleCollider2DComponent& circleA, const CircleCollider2DComponent& circleB,
+		bool DiscreteCircleVsCircle(const CircleCollider& circleA, const CircleCollider& circleB,
 			const TransformComponent& transA, const TransformComponent& transB);
 
 		int ContinuousCircleVsLineSegment(const CircleCollider2DComponent& circle, const Vec2& ptEnd, const LineSegment& lineSeg,	

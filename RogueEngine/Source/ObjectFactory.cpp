@@ -100,7 +100,7 @@ namespace Rogue
 			//Skips background layer
 			if (writingBackground)
 			{
-				if (g_engine.m_coordinator.CheckIfComponentExists<SpriteComponent>(curHierarchy.m_Entity))
+				if (g_engine.m_coordinator.ComponentExists<SpriteComponent>(curHierarchy.m_Entity))
 				{
 					std::string backgroundStr(g_engine.m_coordinator.GetComponent<SpriteComponent>(curHierarchy.m_Entity).Serialize().c_str());
 					RESerialiser::WriteToFile(fileName, "BackgroundTexture", backgroundStr.c_str());
