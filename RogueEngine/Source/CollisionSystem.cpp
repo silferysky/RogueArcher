@@ -48,6 +48,10 @@ namespace Rogue
 					m_colliderManager.UpdateAABB(currBoxCollider->m_aabb, currTransform);
 					m_colliderManager.UpdateOBB(currBoxCollider->m_obb, currTransform);
 				}
+				if (currCircleCollider)
+				{
+					m_colliderManager.UpdateCircleCollider(currCircleCollider->m_collider, currTransform);
+				}
 				// Conduct spatial partitioning
 
 				// Test AABB/OBB Collision
@@ -78,6 +82,18 @@ namespace Rogue
 						{
 							m_colliderManager.GenerateManifoldCirclevsCircle(*iEntity, *iNextEntity);
 						}
+					}
+
+					if (currBoxCollider && nextCircleCollider)
+					{
+						if (m_colliderManager.DiscreteAABBVsCircle(currBoxCollider->m_aabb, nextCircleCollider->m_collider, nextTransform))// To check for AABB vs Circle
+							m_colliderManager.GenerateManifoldAABBvsCircle(*iEntity, *iNextEntity);
+					}
+
+					if (currCircleCollider && nextBoxCollider)
+					{
+						if (m_colliderManager.DiscreteCircleVsAABB(currCircleCollider->m_collider, currBoxCollider->m_aabb, currTransform))
+							m_colliderManager.GenerateManifoldCirclevsAABB(*iNextEntity, *iEntity);
 					}
 
 					if (currBoxCollider && nextBoxCollider) // If boxcollider exists for both entities
