@@ -177,6 +177,11 @@ namespace Rogue
 		return m_FBO;
 	}
 
+	Shader* GraphicsSystem::getShader()
+	{
+		return &m_shader;
+	}
+
 	bool GraphicsSystem::InitializeOpenGL()
 	{
 		// Init OpenGL

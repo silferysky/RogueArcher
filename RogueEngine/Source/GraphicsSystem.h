@@ -51,5 +51,6 @@ namespace Rogue
 		void UpdateFrameBuffer();
 
 		GLuint& getFBO();
+		Shader* getShader();
 	};
 }
