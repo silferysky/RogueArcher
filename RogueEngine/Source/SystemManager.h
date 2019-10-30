@@ -68,7 +68,8 @@ namespace Rogue
 				//If either game is not paused or is editor system, run the update
 				if ((!m_gameIsPaused && m_gameIsRunning) || 
 					(system.second->m_systemID != SystemID::id_PHYSICSSYSTEM &&
-					 system.second->m_systemID != SystemID::id_AUDIOSYSTEM))
+					 system.second->m_systemID != SystemID::id_AUDIOSYSTEM &&
+					 system.second->m_systemID != SystemID::id_INPUTMANAGER))
 					system.second->Update();
 			}
 		}
