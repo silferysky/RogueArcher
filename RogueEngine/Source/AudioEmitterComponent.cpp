@@ -3,7 +3,7 @@
 
 namespace Rogue
 {
-	AudioEmitterComponent::~AudioEmitterComponent()
+	void AudioEmitterComponent::Destroy()
 	{
 		if (m_sound.GetSystem() != NULL)
 			m_sound.Release();
