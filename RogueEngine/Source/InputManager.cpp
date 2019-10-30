@@ -126,6 +126,13 @@ namespace Rogue
 				++CurKeyboardState.Key[i];
 		}
 
+		//Handles Numpad 0 to 9
+		for (int i = (int)KeyPress::Numpad0; i < (int)KeyPress::Numpad9 + 1; ++i)
+		{
+			if (GetAsyncKeyState(VK_NUMPAD0 + i - (int)KeyPress::Numpad0))
+				++CurKeyboardState.Key[i];
+		}
+
 		//For Mouse Buttons (Scrollwheel skips one)
 		if (GetAsyncKeyState(VK_LBUTTON))
 			++CurKeyboardState.Key[(int)KeyPress::MB1];
