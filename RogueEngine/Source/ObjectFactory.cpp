@@ -22,6 +22,7 @@ namespace Rogue
 
 		Signature currentSignature;
 		std::ostringstream debugStr, ostrstream;
+		std::istringstream istrstream;
 		std::string stdstr, readstr;
 		const char* cstr;
 
@@ -44,6 +45,7 @@ namespace Rogue
 		g_engine.m_coordinator.AddComponent(backgroundEnt, backgroundSprite);
 		g_engine.m_coordinator.AddComponent(backgroundEnt, backgroundTransform);
 		CREATE_HIERARCHY_OBJ(backgroundEnt, ostrstream);
+		newInfo.m_objectName = std::string("Background");
 
 		for (Entity entity = 0; entity < entCount; ++entity)
 		{
@@ -60,11 +62,20 @@ namespace Rogue
 			stdstr = "Entity";
 			ostrstream << stdstr << static_cast<int>(entity);
 			SETSSTOSTR(ostrstream);
-			ostrstream.str(level[cstr].GetString());
+			istrstream.str(level[cstr].GetString());
 
-			FactoryLoadComponent(curEnt, currentSignature, ostrstream.str());
+			//For entity name
+			//Does this twice to skip the name line
+			istrstream.clear();
+			stdstr = "";
+			std::getline(istrstream, readstr, '{');
+			std::getline(istrstream, readstr, '}');
+			std::getline(istrstream, stdstr);
+
+			FactoryLoadComponent(curEnt, currentSignature, stdstr);
 
 			CREATE_HIERARCHY_OBJ(curEnt, ostrstream);
+			newInfo.m_objectName = readstr;
 
 			debugStr << "Entity " << curEnt << "'s Signature: " << g_engine.m_coordinator.GetEntityManager().GetSignature(curEnt).to_ulong();
 			RE_INFO(debugStr.str());
@@ -97,7 +108,7 @@ namespace Rogue
 		for (HierarchyInfo curHierarchy : g_engine.m_coordinator.GetActiveObjects())
 		{
 			Entity curEntity = curHierarchy.m_Entity;
-			//Skips background layer
+			//Background layer is unique
 			if (writingBackground)
 			{
 				if (g_engine.m_coordinator.ComponentExists<SpriteComponent>(curHierarchy.m_Entity))
@@ -121,6 +132,9 @@ namespace Rogue
 			intVar = static_cast<int>(currentSignature.to_ulong());
 			RESerialiser::WriteToFile(fileName, cstr, &intVar);
 			CLEARSTR(strstream);
+
+			//For object name
+			strstream << "Name{" << curHierarchy.m_objectName << "}|";
 
 			for (int index = 0; index != LASTCOMP;)
 			{
@@ -412,6 +426,7 @@ namespace Rogue
 	{
 		std::istringstream istrstream(value);
 		std::string readstr;
+
 		for (int index = 0; index < (int)LASTCOMP; ++index)
 		{
 			if (signature.test(index))
