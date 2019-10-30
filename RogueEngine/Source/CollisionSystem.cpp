@@ -58,28 +58,34 @@ namespace Rogue
 
 				for (iNextEntity++; iNextEntity != m_entities.end(); ++iNextEntity)
 				{
+					auto& nextRigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iNextEntity);
+					
+					if (currRigidbody.getIsStatic() && nextRigidbody.getIsStatic())
+						continue;
+
+					auto& nextTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iNextEntity);
 					if (g_engine.m_coordinator.ComponentExists<BoxCollider2DComponent>(*iNextEntity))
 						nextBoxCollider = &g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iNextEntity);
 
 					if (g_engine.m_coordinator.ComponentExists<CircleCollider2DComponent>(*iNextEntity))
 						nextCircleCollider = &g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(*iNextEntity);
 
-					auto& nextTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iNextEntity);
 
-					/*if (currCircleCollider && nextCircleCollider)
+					if (currCircleCollider && nextCircleCollider)
 					{
 						if (m_colliderManager.DiscreteCircleVsCircle(currCircleCollider->m_collider, nextCircleCollider->m_collider,
-							currTransform, nextTransform));
-
-							m_colliderManager.InsertColliderPair(*iEntity, *iNextEntity);
-					}*/
+							currTransform, nextTransform))
+						{
+							m_colliderManager.GenerateManifoldCirclevsCircle(*iEntity, *iNextEntity);
+						}
+					}
 
 					if (currBoxCollider && nextBoxCollider) // If boxcollider exists for both entities
 					{
 						if (m_colliderManager.DiscreteAABBvsAABB(currBoxCollider->m_aabb, nextBoxCollider->m_aabb))
 						{
 							//	std::cout << "Entity " << *iEntity << " AABB collides with Entity " << *iNextEntity << " AABB" << std::endl;
-							m_colliderManager.GenerateManifolds(*iEntity, *iNextEntity);
+							m_colliderManager.GenerateManifoldAABBvsAABB(*iEntity, *iNextEntity);
 						}
 
 						if (m_colliderManager.DiscreteOBBvsOBB(currBoxCollider->m_obb, nextBoxCollider->m_obb))

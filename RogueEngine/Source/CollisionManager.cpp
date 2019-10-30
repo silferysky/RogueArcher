@@ -46,6 +46,33 @@ namespace Rogue
 	{
 		Manifold manifold(A, B);
 
+		auto& transA = g_engine.m_coordinator.GetComponent<TransformComponent>(A);
+		auto& transB = g_engine.m_coordinator.GetComponent<TransformComponent>(B);
+		auto& circleA = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(A);
+		auto& circleB = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(B);
+		
+		float radiusA = circleA.m_collider.getRadius();
+		float radiusB = circleB.m_collider.getRadius();
+		Vec2 centerA = transA.getPosition() + circleA.m_collider.getCenterOffSet();
+		Vec2 centerB = transB.getPosition() + circleB.m_collider.getCenterOffSet();
+
+		Vec2 vAB = centerB - centerA;
+		float distAB = Vec2Distance(centerA, centerB); // For colliding circles, actual distance is required.
+		float totalRadius = radiusA + radiusB;
+
+		if (distAB == 0.0f)
+		{
+			manifold.m_penetration = radiusA;
+			manifold.m_normal = Vec2::unitX; // Can be any direction, but must be consistent
+			manifold.m_contactPoints[0] = centerA;
+		}
+		else
+		{
+			manifold.m_penetration = totalRadius - distAB;
+			manifold.m_normal = vAB / distAB; // Normalized normal.
+			manifold.m_contactPoints[0] = manifold.m_normal * radiusA + centerA;
+		}
+
 		m_manifolds.emplace_back(manifold);
 	}
 
@@ -58,10 +85,10 @@ namespace Rogue
 		auto& TransA = g_engine.m_coordinator.GetComponent<TransformComponent>(A);
 		auto& TransB = g_engine.m_coordinator.GetComponent<TransformComponent>(B);
 
-		Vec2 scaleA = TransA.getScale();
-		Vec2 scaleB = TransB.getScale();
-		Vec2 centerA = TransA.getPosition();
-		Vec2 centerB = TransB.getPosition();
+		Vec2 scaleA = TransA.getScale() + BoxCompA.m_aabb.getScaleOffSet();
+		Vec2 scaleB = TransB.getScale() + BoxCompB.m_aabb.getScaleOffSet();
+		Vec2 centerA = TransA.getPosition() + BoxCompA.m_aabb.getCenterOffSet();
+		Vec2 centerB = TransB.getPosition() + BoxCompB.m_aabb.getCenterOffSet();
 		Vec2 vAB = centerB - centerA;
 
 		float AextentX = (BoxCompA.m_aabb.getMax().x - BoxCompA.m_aabb.getMin().x) / 2;
@@ -81,8 +108,8 @@ namespace Rogue
 		CP2.x = REMin(BoxCompA.m_aabb.getMax().x, BoxCompB.m_aabb.getMax().x);
 		CP2.y = REMin(BoxCompA.m_aabb.getMax().y, BoxCompB.m_aabb.getMax().y);
 
-		manifold.m_contactPoints.push_back(CP1);
-		manifold.m_contactPoints.push_back(CP2);
+		manifold.m_contactPoints[0] = CP1;
+		manifold.m_contactPoints[1] = CP2;
 
 		if (x_overlap < y_overlap)
 		{
@@ -832,29 +859,3 @@ namespace Rogue
 		return s_correction_slop;
 	}
 }
-
-/*
-
-Broad phase:
-------------
-
-Sort and sweep/Spatial partitioning (Most likely don't need)
-
-Iterate through 2 entities
-
-Skip if both are static
-
-Apply filter tests. If can't collide, then skip.
-
-Narrow phase:
--------------
-
-In the same loop:
-Solve: Dispatch jump table[CirclevsCircle, CirclevsAABB, AABBvsAABB, AABBvsCircle]
-
-Each function will do discrete tests, and if they collide, generate manifold and emplace_back manifolds.
-
-Iterate through manifolds, and apply impulse and positional correction.
-
-If stacking issue occurs, play around with iterations.
-*/

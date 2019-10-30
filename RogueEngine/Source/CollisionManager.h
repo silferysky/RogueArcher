@@ -26,11 +26,11 @@ namespace Rogue
 		inline Vec2 GetColliderPosition(const BaseCollider& collider, const TransformComponent& trans) const;
 		inline float GetColliderRotation(const BaseCollider& collider, const TransformComponent& trans) const;
 
+
+	public:
 		void GenerateManifoldCirclevsCircle(Entity A, Entity B);
 		void GenerateManifoldAABBvsAABB(Entity A, Entity B);
 		void GenerateManifoldOBBvsOBB(Entity A, Entity B);
-
-	public:
 
 		CollisionManager() = default;
 		~CollisionManager() = default;
@@ -83,3 +83,29 @@ namespace Rogue
 		static float GetCorrectionSlop();
 	};
 }
+
+/*
+
+Broad phase:
+------------
+
+Sort and sweep/Spatial partitioning (Most likely don't need)
+
+Iterate through 2 entities
+
+Skip if both are static
+
+Apply filter tests. If can't collide, then skip.
+
+Narrow phase:
+-------------
+
+In the same loop:
+Solve: Dispatch jump table[CirclevsCircle, CirclevsAABB, AABBvsAABB, AABBvsCircle]
+
+Each function will do discrete tests, and if they collide, generate manifold and emplace_back manifolds.
+
+Iterate through manifolds, and apply impulse and positional correction.
+
+If stacking issue occurs, play around with iterations.
+*/
