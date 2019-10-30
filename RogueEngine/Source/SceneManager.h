@@ -30,6 +30,7 @@ namespace Rogue
 
 		void LoadLevel(const char* fileName);
 		void SaveLevel(const char* fileName);
+		void SaveAndLoadLevel();
 
 		void LoadArchetypes(const char* fileName);
 		void SaveArchetypes(const char* fileName);

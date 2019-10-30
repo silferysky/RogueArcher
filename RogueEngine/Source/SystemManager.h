@@ -64,8 +64,10 @@ namespace Rogue
 			for (auto system : m_systems)
 			{
 				// Note: Debug draw system currently doesn't update here.
-
-				system.second->Update();
+				
+				//If either game is not paused or is editor system, run the update
+				if (!m_gameIsPaused || system.first.name() == "Editor")
+					system.second->Update();
 			}
 		}
 
@@ -151,8 +153,24 @@ namespace Rogue
 			}
 		}
 
+		bool GetPauseState() const
+		{
+			return m_gameIsPaused;
+		}
+
+		void SetPauseState(bool newPauseState)
+		{
+			m_gameIsPaused = newPauseState;
+		}
+
+		void TogglePauseState()
+		{
+			m_gameIsPaused = !m_gameIsPaused;
+		}
+
 	private:
 		std::unordered_map<std::type_index, Signature> m_signatures;
 		std::vector<std::pair<std::type_index, std::shared_ptr<System>>> m_systems;
+		bool m_gameIsPaused;
 	};
 }

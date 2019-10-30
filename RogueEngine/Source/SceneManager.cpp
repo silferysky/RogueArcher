@@ -80,6 +80,12 @@ namespace Rogue
 		m_objectFactory->SaveLevel(ostrstream.str().c_str());
 	}
 
+	void SceneManager::SaveAndLoadLevel()
+	{
+		SaveLevel(m_currentFileName.c_str());
+		LoadLevel(m_currentFileName.c_str());
+	}
+
 	void SceneManager::LoadArchetypes(const char* fileName)
 	{
 		m_objectFactory->LoadArchetypes(fileName);
