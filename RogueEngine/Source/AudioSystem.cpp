@@ -129,9 +129,11 @@ namespace Rogue
 			auto sound = aEmitter.getSound();
 
 			/* Load up BGMs */
-			sound->CreateBGM(aEmitter.getID().c_str(), 1, 112.0f, &m_BGMstream);
 			if (!(sound->m_b_IsPlaying))
+			{
+				sound->CreateBGM(aEmitter.getID().c_str(), 1, 112.0f, &m_BGMstream);
 				sound->Play(0.3f);
+			}
 		}
 	}
 }
