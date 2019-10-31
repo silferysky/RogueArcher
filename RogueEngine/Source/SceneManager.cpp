@@ -94,8 +94,8 @@ namespace Rogue
 
 	void SceneManager::SaveArchetypes(const char* fileName)
 	{
-		//if (m_objectFactory->CheckFileTooSmall(FILETYPE_ARCHETYPE, g_engine.m_coordinator.GetActiveObjects().size()))
-			//BasicIO::WriteLevelJsonFile(fileName, g_engine.m_coordinator.GetActiveObjects().size());
+		if (m_objectFactory->CheckFileTooSmall(FILETYPE_ARCHETYPE, m_objectFactory->GetArchetypeMap().size()))
+			BasicIO::WriteLevelJsonFile(fileName, m_objectFactory->GetArchetypeMap().size());
 		m_objectFactory->SaveArchetypes(fileName);
 	}
 
