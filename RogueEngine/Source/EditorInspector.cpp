@@ -278,7 +278,7 @@ namespace Rogue
 					{
 						ImGui::OpenPopup("Add Component");
 					}
-
+					ImGui::SameLine();
 					if (ImGui::Button("Delete Component"))
 					{
 						ImGui::OpenPopup("Delete Component");
@@ -399,11 +399,11 @@ namespace Rogue
 						ImGui::EndPopup();
 					}
 
-					if (ImGui::Button("Clone"))
+					if (ImGui::Button("Clone Object"))
 					{
 						g_engine.m_coordinator.clone(i.m_Entity);
 					}
-
+					ImGui::SameLine();
 					if (ImGui::Button("Delete Object"))
 					{
 						
