@@ -30,7 +30,23 @@ namespace Rogue
 
 	void Editor::Receive(Event* ev)
 	{
+		KeyTriggeredEvent* keytriggeredevent = dynamic_cast<KeyTriggeredEvent*>(ev);
+		KeyPress keycode = keytriggeredevent->GetKeyCode();
+		if (keytriggeredevent->GetKeyCode() == KeyPress::Numpad9)
+		{
+			Entity selected;
+			for (auto& i : m_currentVector)
+			{
+				if (i.m_selected == true)
+					selected = i.m_Entity;
+			}
 
+			for (int i = 0; i < 1500; ++i)
+			{
+				//RE_INFO(i);
+				g_engine.m_coordinator.clone(selected);
+			}
+		}
 	}
 
 	void Editor::Shutdown()

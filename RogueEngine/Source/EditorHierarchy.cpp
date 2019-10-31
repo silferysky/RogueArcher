@@ -13,7 +13,7 @@ namespace Rogue
 
 	void ImGuiEditorHierarchy::Init()
 	{
-		
+
 	}
 
 	void ImGuiEditorHierarchy::Update()
@@ -83,5 +83,6 @@ namespace Rogue
 	void ImGuiEditorHierarchy::Shutdown()
 	{
 	}
+
 }
 
