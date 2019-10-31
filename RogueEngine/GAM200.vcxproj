@@ -33,6 +33,8 @@
     <ClInclude Include="Source\CameraShake.h" />
     <ClInclude Include="Source\CameraSystem.h" />
     <ClInclude Include="Source\CircleCollider.h" />
+    <ClInclude Include="Source\BoxCollisionSystem.h" />
+    <ClInclude Include="Source\CircleCollisionSystem.h" />
     <ClInclude Include="Source\CollisionSystem.h" />
     <ClInclude Include="Source\DebugDrawSystem.h" />
     <ClInclude Include="Source\Editor.h" />
@@ -135,6 +137,8 @@
     <ClCompile Include="Source\CameraShake.cpp" />
     <ClCompile Include="Source\CameraSystem.cpp" />
     <ClCompile Include="Source\CircleCollider.cpp" />
+    <ClCompile Include="Source\BoxCollisionSystem.cpp" />
+    <ClCompile Include="Source\CircleCollisionSystem.cpp" />
     <ClCompile Include="Source\CollisionSystem.cpp" />
     <ClCompile Include="Source\DebugDrawSystem.cpp" />
     <ClCompile Include="Source\Editor.cpp" />
