@@ -42,7 +42,7 @@ namespace Rogue
 			ImGui::EndTooltip();
 		}
 		ImGui::SameLine();
-		if (g_engine.m_coordinator.GetPauseState() || !g_engine.m_coordinator.GetGameState())
+		if (!g_engine.m_coordinator.GetGameState())
 		{
 			ImGui::PushStyleColor(ImGuiCol_Button, { 0.8f,0.0f,0.0f,0.4f });
 			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, { 0.8f,0.0f,0.0f,1.0f });
@@ -68,6 +68,18 @@ namespace Rogue
 		}
 		ImGui::PopStyleColor(3);
 		ImGui::SameLine();
+		if (!g_engine.m_coordinator.GetGameState())
+		{
+			ImGui::PushStyleColor(ImGuiCol_Button, { 0.8f,0.0f,0.0f,0.4f });
+			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, { 0.8f,0.0f,0.0f,1.0f });
+			ImGui::PushStyleColor(ImGuiCol_ButtonActive, { 0.9f,0.0f,0.0f,1.0f });
+		}
+		else
+		{
+			ImGui::PushStyleColor(ImGuiCol_Button, style.Colors[ImGuiCol_Button]);
+			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, style.Colors[ImGuiCol_ButtonHovered]);
+			ImGui::PushStyleColor(ImGuiCol_ButtonActive, style.Colors[ImGuiCol_ButtonActive]);
+		}
 		if (ImGui::Button("Stop"))
 		{
 			if (g_engine.m_coordinator.GetGameState())
@@ -79,6 +91,7 @@ namespace Rogue
 				g_engine.m_coordinator.SetPauseState(false);
 			}
 		}
+		ImGui::PopStyleColor(3);
 		if (ImGui::IsItemHovered())
 		{
 			ImGui::BeginTooltip();
