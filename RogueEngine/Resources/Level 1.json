@@ -1,7 +1,7 @@
 {
     "MaxEntityCount": 40,
     "EntityCount": 40,
-    "BackgroundTexture": "Resources/Assets/DefaultSprite.png",
+    "BackgroundTexture": "Resources/Assets/DefaultSprite.png;0",
     "Signature0": 0,
     "Signature1": 5,
     "Signature2": 5,

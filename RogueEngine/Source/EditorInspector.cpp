@@ -109,6 +109,7 @@ namespace Rogue
 							{
 								m_spritePath = m_constSpritePath + m_newSpritePath;
 								g_engine.m_coordinator.GetComponent<SpriteComponent>(i.m_Entity).setTexturePath(m_spritePath);
+								g_engine.m_coordinator.GetComponent<SpriteComponent>(i.m_Entity).setTexture(m_spritePath.c_str());
 							}
 
 							if (ImGui::IsItemHovered())

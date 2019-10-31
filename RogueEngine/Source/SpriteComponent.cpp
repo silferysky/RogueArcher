@@ -46,23 +46,34 @@ namespace Rogue
 
 	std::string SpriteComponent::Serialize()
 	{
-		std::map<std::string, Texture> textureMap = g_engine.m_coordinator.GetTextureManager().getTextureMap();
+		//std::map<std::string, Texture> textureMap = g_engine.m_coordinator.GetTextureManager().getTextureMap();
+		std::ostringstream strstream;
+		
+		strstream << getTexturePath() << ";" << m_drawPriority;
 
-		return getTexturePath();
+		return strstream.str();
 		//Cannot use find because need use value to find key
-		for (std::map<std::string, Texture>::iterator it = textureMap.begin(); it != textureMap.end(); ++it)
+		/*for (std::map<std::string, Texture>::iterator it = textureMap.begin(); it != textureMap.end(); ++it)
 		{
 			if (it->second.m_texture == m_texture.m_texture)
 			{
 				return it->first;
 			}
-		}
+		}*/
 	}
 
 	void SpriteComponent::Deserialize(std::string toDeserialize)
 	{
-		setTexturePath(toDeserialize);
+		std::istringstream strstream(toDeserialize);
+		std::string stdstr;
+
+		std::getline(strstream, stdstr, ';');
+
+		setTexturePath(stdstr);
 		setTexture(m_texturePath.c_str());
+
+		std::getline(strstream, stdstr, ';');
+		m_drawPriority = std::stoi(stdstr);
 	}
 
 	/*void SpriteComponent::operator=(SpriteComponent sprite)
