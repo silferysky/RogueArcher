@@ -1,42 +1,15 @@
 #define _CRT_SECURE_NO_WARNINGS
 
-#include <cstdio>
-#include <cstdlib>
-#include <ctime>
-#include <fstream>
-#include <sstream>
-#include <chrono>
-#include <Windows.h>
 
 #include "Main.h"
-#include "Logger.h"
-#include "VSync.h"	
-#include "SOIL.h"
-#include "Config.h"
-#include "WindowHelper.h"
-#include "MemoryManager.h"
-#include "GameStateList.h"
-#include "Resource.h"
-#include "ComponentList.h"
-#include "BasicIO.h"
-#include "GLHelper.hpp"
 
 #if _DEBUG
 #include <iostream>
 #endif
-#include "REMath.h"
-#include "REEditor.h"
-#include "Editor.h"
 
 Rogue::REEngine g_engine;
 float g_deltaTime;
 float g_fixedDeltaTime;
-bool EditorMode = false;
-
-//const char* FileName = "/Resources/test.json";
-static const int SCREEN_FULLSCREEN = 0;
-static const int SCREEN_WIDTH = 960;
-static const int SCREEN_HEIGHT = 540;
 
 //Use for console
 int APIENTRY
@@ -55,11 +28,6 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
 
 	g_engine.Init();
 	
-	//BasicIO::WriteLevelJsonFile("Resources/TestJsonFileCreator.json", 1);
-	//BasicIO::WriteArchetypeJsonFile("Resources/TestArchetypeJsonFile.json", 3);
-	//BasicIO::WriteLevelJsonFile("Resources/Level 1.json", 8);
-
-	// Update engine.
 	g_engine.Update();
 
 	g_engine.Shutdown();
