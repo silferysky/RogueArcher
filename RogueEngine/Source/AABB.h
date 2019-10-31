@@ -11,7 +11,7 @@ namespace Rogue
 
 	public:
 		AABB() = default;
-		~AABB()= default;
+		~AABB() = default;
 
 		Vec2 getMin() const;
 		Vec2 getMax() const;

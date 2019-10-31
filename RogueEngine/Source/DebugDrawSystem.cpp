@@ -87,7 +87,7 @@
 
 	void DebugDrawSystem::drawAABB(Rogue::BoxCollider2DComponent* box, Rogue::TransformComponent* transform)
 	{
-		std::cout << "Drawing AABB" << std::endl;
+		//std::cout << "Drawing AABB" << std::endl;
 
 		glBindVertexArray(m_VAO);
 		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
@@ -112,7 +112,7 @@
 		if (body->getIsStatic())
 			return;
 
-		std::cout << "Drawing OBB" << std::endl;
+		//std::cout << "Drawing OBB" << std::endl;
 
 		glBindVertexArray(m_VAO);
 		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
@@ -135,7 +135,7 @@
 
 	void DebugDrawSystem::drawCircle(Rogue::CircleCollider2DComponent* circle, Rogue::TransformComponent* transform)
 	{
-		std::cout << "Drawing Circle" << std::endl;
+		//std::cout << "Drawing Circle" << std::endl;
 
 		glBindVertexArray(m_VAO);
 		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
@@ -173,7 +173,7 @@
 		if (rBody->getIsStatic())
 			return;
 
-		std::cout << "Drawing Velocity" << std::endl;
+		//std::cout << "Drawing Velocity" << std::endl;
 		
 		glBindVertexArray(m_VAO);
 		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
@@ -189,16 +189,7 @@
 	}
 
 	void DebugDrawSystem::Receive(Rogue::Event* ev)
-	{
-		/*switch (ev->GetEventType())
-		{
-		case EventType::EvKeyPressed:
-		{
-		}
-		default:
-			return;
-		}*/
-	}
+	{}
 
 	void DebugDrawSystem::Shutdown()
 	{}
