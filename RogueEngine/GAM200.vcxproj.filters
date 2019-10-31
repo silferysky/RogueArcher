@@ -104,6 +104,9 @@
     <Filter Include="RogueEngine\Systems\Collision\Shapes">
       <UniqueIdentifier>{bd0e46e0-5af7-4458-b9da-3f6a931851a0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="RogueEngine\Systems\Collision\Collision Systems">
+      <UniqueIdentifier>{236931ee-5a69-46cd-9f7d-98a8fc8a38ac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Resource.h">
@@ -313,9 +316,6 @@
     <ClInclude Include="Source\ILogic.h">
       <Filter>RogueEngine\Systems\AI\Interface</Filter>
     </ClInclude>
-    <ClInclude Include="Source\CollisionSystem.h">
-      <Filter>RogueEngine\Systems\Collision</Filter>
-    </ClInclude>
     <ClInclude Include="Source\BaseSystem.h">
       <Filter>RogueEngine\Core\ECS</Filter>
     </ClInclude>
@@ -417,6 +417,15 @@
     </ClInclude>
     <ClInclude Include="Source\PhysicsDataStructures.hpp">
       <Filter>RogueEngine\Systems\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BoxCollisionSystem.h">
+      <Filter>RogueEngine\Systems\Collision\Collision Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CircleCollisionSystem.h">
+      <Filter>RogueEngine\Systems\Collision\Collision Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CollisionSystem.h">
+      <Filter>RogueEngine\Systems\Collision\Collision Systems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -540,9 +549,6 @@
     <ClCompile Include="Source\LogicComponent.cpp">
       <Filter>RogueEngine\Systems\AI\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Source\CollisionSystem.cpp">
-      <Filter>RogueEngine\Systems\Collision</Filter>
-    </ClCompile>
     <ClCompile Include="Source\FontSystem.cpp">
       <Filter>RogueEngine\Systems\Font</Filter>
     </ClCompile>
@@ -638,6 +644,15 @@
     </ClCompile>
     <ClCompile Include="Source\BoxCollider2DComponent.cpp">
       <Filter>RogueEngine\Systems\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BoxCollisionSystem.cpp">
+      <Filter>RogueEngine\Systems\Collision\Collision Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CircleCollisionSystem.cpp">
+      <Filter>RogueEngine\Systems\Collision\Collision Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CollisionSystem.cpp">
+      <Filter>RogueEngine\Systems\Collision\Collision Systems</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -24,8 +24,6 @@
 
 		// Add components to signature
 		Rogue::Signature signature;
-		signature.set(g_engine.m_coordinator.GetComponentType<Rogue::BoxCollider2DComponent>());
-		signature.set(g_engine.m_coordinator.GetComponentType<Rogue::CircleCollider2DComponent>());
 		signature.set(g_engine.m_coordinator.GetComponentType<Rogue::TransformComponent>());
 		signature.set(g_engine.m_coordinator.GetComponentType<Rogue::RigidbodyComponent>());
 
@@ -62,17 +60,24 @@
 		for (auto entity : m_entities)
 		{
 			auto& transform = g_engine.m_coordinator.GetComponent<Rogue::TransformComponent>(entity);
-			auto& collider = g_engine.m_coordinator.GetComponent<Rogue::BoxCollider2DComponent>(entity);
-			auto& circle = g_engine.m_coordinator.GetComponent<Rogue::CircleCollider2DComponent>(entity);
 			auto& rBody = g_engine.m_coordinator.GetComponent<Rogue::RigidbodyComponent>(entity);
 
 			//glDisable(GL_DEPTH_TEST);
 
-			if (entity)
+			if (entity) // If not background
 			{
-				drawAABB(&collider, &transform);
-				drawOBB(&collider, &rBody);
-				drawCircle(&circle, &transform);
+				if (g_engine.m_coordinator.ComponentExists<Rogue::BoxCollider2DComponent>(entity))
+				{
+					auto& collider = g_engine.m_coordinator.GetComponent<Rogue::BoxCollider2DComponent>(entity);
+					drawAABB(&collider, &transform);
+					//drawOBB(&collider, &rBody);
+				}
+				if (g_engine.m_coordinator.ComponentExists<Rogue::CircleCollider2DComponent>(entity))
+				{
+					auto& circle = g_engine.m_coordinator.GetComponent<Rogue::CircleCollider2DComponent>(entity);
+					drawCircle(&circle, &transform);
+				}
+				
 				drawVelocity(&rBody, &transform);
 			}
 		}
@@ -82,6 +87,8 @@
 
 	void DebugDrawSystem::drawAABB(Rogue::BoxCollider2DComponent* box, Rogue::TransformComponent* transform)
 	{
+		std::cout << "Drawing AABB" << std::endl;
+
 		glBindVertexArray(m_VAO);
 		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 
@@ -105,10 +112,16 @@
 		if (body->getIsStatic())
 			return;
 
+		std::cout << "Drawing OBB" << std::endl;
+
 		glBindVertexArray(m_VAO);
 		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 
-		auto obb = box->m_obb;
+		auto& obb = box->m_obb;
+
+		if (obb.getSize() == 0)
+			return;
+
 		for (size_t i = 0; i < obb.getSize() - 1; ++i)
 		{
 			drawLine(obb.globVerts()[i], obb.globVerts()[i + 1]);
@@ -122,6 +135,8 @@
 
 	void DebugDrawSystem::drawCircle(Rogue::CircleCollider2DComponent* circle, Rogue::TransformComponent* transform)
 	{
+		std::cout << "Drawing Circle" << std::endl;
+
 		glBindVertexArray(m_VAO);
 		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 
@@ -158,6 +173,8 @@
 		if (rBody->getIsStatic())
 			return;
 
+		std::cout << "Drawing Velocity" << std::endl;
+		
 		glBindVertexArray(m_VAO);
 		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 

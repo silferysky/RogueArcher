@@ -1,6 +1,6 @@
 {
-    "MaxEntityCount": 7,
-    "EntityCount": 7,
+    "MaxEntityCount": 8,
+    "EntityCount": 8,
     "BackgroundTexture": "Resources/Assets/test.bmp",
     "Signature0": 1023,
     "Signature1": 63,
@@ -16,5 +16,6 @@
     "Entity3": "Name{Wat}|Sprite{Resources/Assets/tile.png}|Rigidbody{0;0;0;0;1;1;1}|Transform{0;400;1200;100;0}|CircleCollider{0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;}||||||",
     "Entity4": "Name{Potato}|Sprite{Resources/Assets/test.png}|Rigidbody{0;0;0;0;1;1;1}|Transform{-600;0;100;600;0}|CircleCollider{0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;}||||||",
     "Entity5": "Name{Pepperoni}|Sprite{Resources/Assets/SpriteSheet.png}|Rigidbody{0;0;0;0;1;1;1}|Transform{600;0;151;600;1.7}|CircleCollider{0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;}||||||Audio{Resources/Sounds/1.wav}",
-    "Entity6": "Name{Pi}|Sprite{Resources/Assets/test.bmp}|Rigidbody{0;0;0;0;1;1;0}|Transform{0;0;100;100;0}|CircleCollider{0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;}||||||"
+    "Entity6": "Name{Pi}|Sprite{Resources/Assets/test.bmp}|Rigidbody{0;0;0;0;1;1;0}|Transform{0;69.995;100;100;0}|CircleCollider{0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;}||||||",
+    "Entity7": "Name{Game Object 8}|Sprite{Resources/Assets/DefaultSprite.png}|Rigidbody{0;0;0;0;1;1;0}|Transform{0;-69.995;100;100;0}|CircleCollider{88}|BoxCollider{0;}||||||"
 }

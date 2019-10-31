@@ -1,16 +1,13 @@
 #pragma once
 #include "REEngine.h"
-#include "CollisionManager.h"
 
 namespace Rogue
 {
-	class CollisionSystem :
+	class BoxCollisionSystem :
 		public System, public EventListener
 	{
 	public:
-		static CollisionManager s_collisionManager;
-
-		CollisionSystem();
+		BoxCollisionSystem();
 
 		void Init() override;
 		void Update() override;
@@ -18,4 +15,3 @@ namespace Rogue
 		void Receive(Event* ev) override;
 	};
 }
-#pragma once
