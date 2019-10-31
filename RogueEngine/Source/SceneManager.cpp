@@ -171,6 +171,20 @@ namespace Rogue
 		g_engine.m_coordinator.GetEntityManager().m_getActiveObjects().push_back(newInfo);
 	}
 
+	void SceneManager::DeleteActiveEntity(Entity ent)
+	{
+		for (auto& object : g_engine.m_coordinator.GetActiveObjects())
+		{
+			if (object.m_Entity == ent)
+			{
+				g_engine.m_coordinator.DestroyEntity(ent);
+				return;
+			}
+		}
+
+		RE_CORE_INFO("Object to delete not found");
+	}
+
 	Entity SceneManager::Create2DSprite()
 	{
 		Entity newEnt = g_engine.m_coordinator.CreateEntity();

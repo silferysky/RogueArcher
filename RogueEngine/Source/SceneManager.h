@@ -51,6 +51,7 @@ namespace Rogue
 
 		//For other systems to add entites here
 		void AddToActiveEntities(Entity ent);
+		void DeleteActiveEntity(Entity ent);
 
 		Entity Create2DSprite();
 		Entity CreateCamera();
