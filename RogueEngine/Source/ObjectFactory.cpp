@@ -132,80 +132,7 @@ namespace Rogue
 			RESerialiser::WriteToFile(fileName, cstr, &intVar);
 			CLEARSTR(strstream);
 
-			//For object name
-			strstream << "Name{" << curHierarchy.m_objectName << "}|";
-
-			for (int index = 0; index != LASTCOMP;)
-			{
-				if (currentSignature.test(index))
-					switch (index)
-					{
-						case static_cast<int>(SPRITE) :
-						{
-							strstream << "Sprite{" << g_engine.m_coordinator.GetComponent<SpriteComponent>(curEntity).Serialize().c_str() << "}";
-							break;
-						}
-						case static_cast<int>(RIGIDBODY) :
-						{
-							strstream << "Rigidbody{" << g_engine.m_coordinator.GetComponent<RigidbodyComponent>(curEntity).Serialize().c_str() << "}";
-							break;
-						}
-						case static_cast<int>(TRANSFORM) :
-						{
-							strstream << "Transform{" << g_engine.m_coordinator.GetComponent<TransformComponent>(curEntity).Serialize() << "}";
-							break;
-						}
-						case static_cast<int>(CIRCLECOLLIDER2D) :
-						{
-							strstream << "CircleCollider{" << g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(curEntity).Serialize() << "}";
-							break;
-						}
-						case static_cast<int>(BOXCOLLIDER2D) :
-						{
-							strstream << "BoxCollider{" << g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(curEntity).Serialize() << "}";
-							break;
-						}
-						case static_cast<int>(PLAYERCONTROLLER) :
-						{
-							strstream << "PlayerController{" << g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(curEntity).Serialize() << "}";
-							break;
-						}
-						case static_cast<int>(LOGIC) :
-						{
-							strstream << "LogicComponent{" << g_engine.m_coordinator.GetComponent<LogicComponent>(curEntity).Serialize() << "}";
-							break;
-						}
-						case static_cast<int>(STATS) :
-						{
-							strstream << "StatsComponent{" << g_engine.m_coordinator.GetComponent<StatsComponent>(curEntity).Serialize() << "}";
-							break;
-						}
-						case static_cast<int>(ANIMATION) :
-						{
-							strstream << "Animation{" << g_engine.m_coordinator.GetComponent<AnimationComponent>(curEntity).Serialize().c_str() << "}";
-							break;
-						}
-						case static_cast<int>(CAMERA) :
-						{
-							strstream << "Camera{" << g_engine.m_coordinator.GetComponent<CameraComponent>(curEntity).Serialize().c_str() << "}";
-							break;
-						}
-						case static_cast<int>(AUDIOEMITTER) :
-						{
-							strstream << "Audio{" << g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(curEntity).Serialize().c_str() << "}";
-							break;
-						}
-						default:
-						{
-							RE_CORE_WARN("OUT OF BOUNDS OBJECT COMPONENT SAVING");
-							break;
-						}
-					}
-
-				//Does checker and incrementing here
-				if (++index != (COMPONENTID)LASTCOMP)
-					strstream << "|";
-			} //End of for loop strstream adding
+			strstream << SerializeComponents(curHierarchy);
 
 			SETSSTOSTR(strstream);
 			CLEARSTR(strstream);
@@ -421,6 +348,99 @@ namespace Rogue
 		m_maxEntityCount = 0;
 	}
 
+	void ObjectFactory::SetArchetype(std::string archetypeName, std::string archetypeValue, Signature archetypeSignature)
+	{
+		m_archetypes.insert({ archetypeName, archetypeValue });
+		m_archetypeSignature.insert({ archetypeName, archetypeSignature });
+	}
+
+	std::string ObjectFactory::SerializeComponents(HierarchyInfo& hierarchyToSerialize)
+	{
+		std::ostringstream strstream;
+		//For object name
+		strstream << "Name{" << hierarchyToSerialize.m_objectName << "}|";
+
+		Signature currentSignature = g_engine.m_coordinator.GetEntityManager().GetSignature(hierarchyToSerialize.m_Entity);
+		Entity& entityToSerialize = hierarchyToSerialize.m_Entity;
+		for (int index = 0; index != LASTCOMP;)
+		{
+			if (currentSignature.test(index))
+				switch (index)
+				{
+					case static_cast<int>(SPRITE) :
+					{
+						strstream << "Sprite{" << g_engine.m_coordinator.GetComponent<SpriteComponent>(entityToSerialize).Serialize().c_str() << "}";
+						break;
+					}
+					case static_cast<int>(RIGIDBODY) :
+					{
+						strstream << "Rigidbody{" << g_engine.m_coordinator.GetComponent<RigidbodyComponent>(entityToSerialize).Serialize().c_str() << "}";
+						break;
+					}
+					case static_cast<int>(TRANSFORM) :
+					{
+						strstream << "Transform{" << g_engine.m_coordinator.GetComponent<TransformComponent>(entityToSerialize).Serialize() << "}";
+						break;
+					}
+					case static_cast<int>(CIRCLECOLLIDER2D) :
+					{
+						strstream << "CircleCollider{" << g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(entityToSerialize).Serialize() << "}";
+						break;
+					}
+					case static_cast<int>(BOXCOLLIDER2D) :
+					{
+						strstream << "BoxCollider{" << g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(entityToSerialize).Serialize() << "}";
+						break;
+					}
+					case static_cast<int>(PLAYERCONTROLLER) :
+					{
+						strstream << "PlayerController{" << g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entityToSerialize).Serialize() << "}";
+						break;
+					}
+					case static_cast<int>(LOGIC) :
+					{
+						strstream << "LogicComponent{" << g_engine.m_coordinator.GetComponent<LogicComponent>(entityToSerialize).Serialize() << "}";
+						break;
+					}
+					case static_cast<int>(STATS) :
+					{
+						strstream << "StatsComponent{" << g_engine.m_coordinator.GetComponent<StatsComponent>(entityToSerialize).Serialize() << "}";
+						break;
+					}
+					case static_cast<int>(ANIMATION) :
+					{
+						strstream << "Animation{" << g_engine.m_coordinator.GetComponent<AnimationComponent>(entityToSerialize).Serialize().c_str() << "}";
+						break;
+					}
+					case static_cast<int>(CAMERA) :
+					{
+						strstream << "Camera{" << g_engine.m_coordinator.GetComponent<CameraComponent>(entityToSerialize).Serialize().c_str() << "}";
+						break;
+					}
+					case static_cast<int>(AUDIOEMITTER) :
+					{
+						strstream << "Audio{" << g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(entityToSerialize).Serialize().c_str() << "}";
+						break;
+					}
+					default:
+					{
+						RE_CORE_WARN("OUT OF BOUNDS OBJECT COMPONENT SAVING");
+						break;
+					}
+				}
+
+			//Does checker and incrementing here
+			if (++index != (COMPONENTID)LASTCOMP)
+				strstream << "|";
+		} //End of for loop strstream adding
+		return strstream.str();
+	}
+
+	std::map<std::string, std::string> ObjectFactory::GetArchetypeMap() const
+	{
+		return m_archetypes;
+	}
+
 	void ObjectFactory::FactoryLoadComponent(Entity curEnt, Signature signature, std::string value)
 	{
 		std::istringstream istrstream(value);
@@ -499,12 +519,6 @@ namespace Rogue
 				}
 			}
 		}
-	}
-
-	void ObjectFactory::SetArchetype(std::string archetypeName, std::string archetypeValue, Signature archetypeSignature)
-	{
-		m_archetypes.insert({ archetypeName, archetypeValue });
-		m_archetypeSignature.insert({ archetypeName, archetypeSignature });
 	}
 
 	/* test for joel in case he forget/ put in main.cpp
