@@ -92,8 +92,8 @@ namespace Rogue
 		{
 			KeyTriggeredEvent* EvTriggeredKey = dynamic_cast<KeyTriggeredEvent*>(ev);
 
-			if (EvTriggeredKey->GetKeyCode() == KeyPress::Numpad9)
-				allowGravity = allowGravity ? false : true;
+			//if (EvTriggeredKey->GetKeyCode() == KeyPress::Numpad9)
+			//	allowGravity = allowGravity ? false : true;
 
 			return;
 		}

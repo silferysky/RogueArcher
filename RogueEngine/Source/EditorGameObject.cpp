@@ -28,9 +28,13 @@ namespace Rogue
 				}
 				if (ImGui::BeginMenu("2D Object"))
 				{
-					if (ImGui::MenuItem("Sprite", nullptr, false, false))
+					if (ImGui::MenuItem("Sprite", nullptr, false, true))
 					{
-		
+						for (auto& i : m_currentVector)
+						{
+							i.m_selected = false;
+						}
+						g_engine.m_coordinator.GetSceneManager().Create2DSprite();
 					}
 					ImGui::Separator();
 		
