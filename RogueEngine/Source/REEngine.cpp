@@ -26,7 +26,7 @@ namespace Rogue
 {
 	REEngine::REEngine() :
 		m_coordinator{}, m_accumulatedTime{ 0.0f }, m_timeScale{ 1.0f }, m_stepCount{ 0 },
-		m_gameIsRunning{ true }, m_projMat{ 1.0f }
+		m_gameIsRunning{ true }, m_verticalSync{ false }, m_projMat{ 1.0f }
 	{}
 
 	void REEngine::RegisterSystems()
@@ -85,7 +85,7 @@ namespace Rogue
 		//Ensures program closes properly 
 		SetConsoleCtrlHandler(CtrlHandler, true);
 
-		setVSync(0);
+		setVSync(false);
 
 		// Register all components
 		RegisterComponents();
@@ -192,6 +192,20 @@ namespace Rogue
 	void REEngine::SetTimeScale(float timeScale)
 	{
 		m_timeScale = timeScale;
+	}
+
+	void REEngine::ToggleVSync()
+	{
+		if (m_verticalSync)
+		{
+			m_verticalSync = false;
+			setVSync(false);
+		}
+		else // Vsync is off
+		{
+			m_verticalSync = true;
+			setVSync(true);
+		}
 	}
 
 	HWND REEngine::CreateOpenGLWindow(char* title, int x, int y, int width, int height,

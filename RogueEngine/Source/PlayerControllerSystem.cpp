@@ -42,6 +42,12 @@ namespace Rogue
 			if (keycode == KeyPress::KeyEsc)
 				g_engine.SetGameIsRunning(false);
 
+			if (keycode == KeyPress::Key5)
+				g_engine.m_coordinator.ToggleEditorIsRunning();
+
+			if (keycode == KeyPress::Key6)
+				g_engine.ToggleVSync();
+
 			if (keycode == KeyPress::Numpad0 && m_entities.size() > 0)
 				g_engine.m_coordinator.clone(*m_entities.begin());
 
@@ -51,7 +57,7 @@ namespace Rogue
 			if (keycode == KeyPress::Numpad2)
 				g_engine.m_coordinator.cloneArchetypes("Circle");
 
-			if (keycode == KeyPress::Numpad3)
+			if (keycode == KeyPress::MB2)
 			{
 				g_engine.SetTimeScale(0.1f);
 			}
@@ -152,7 +158,6 @@ namespace Rogue
 						rigidbody.addForce(Vec2(0.0f, -100.0f) * g_deltaTime * 1000.0f);
 						//RE_INFO("Move B Down!");
 					}
-
 
 					auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
 					if (keycode == KeyPress::Numpad8)

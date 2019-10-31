@@ -12,6 +12,7 @@ namespace Rogue
 		int	m_stepCount;
 		bool m_gameIsRunning;
 		float m_timeScale;
+		bool m_verticalSync;
 
 		Timer::ChronoTime m_loopStart;
 		Timer::ChronoTime m_loopEnd;
@@ -56,5 +57,6 @@ namespace Rogue
 
 		void SetGameIsRunning(bool set);
 		void SetTimeScale(float timeScale);
+		void ToggleVSync();
 	};
 }
