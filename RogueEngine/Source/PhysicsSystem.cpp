@@ -115,6 +115,16 @@ namespace Rogue
 		}
 	}
 
+	bool PhysicsSystem::getToggleGravity()
+	{
+		return allowGravity;
+	}
+
+	void PhysicsSystem::setToggleGravity(bool gravity)
+	{
+		allowGravity = gravity;
+	}
+
 	// Setters
 	void PhysicsSystem::setGravity(const Vec2& gravity)
 	{

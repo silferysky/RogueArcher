@@ -182,6 +182,7 @@ namespace Rogue
 		Sprite.Deserialize("Resources/Assets/DefaultSprite.png");
 
 		HierarchyInfo newInfo{};
+		newInfo.m_selected = true;
 		newInfo.m_Entity = newEnt;
 		std::ostringstream strstream;
 		std::string sstr;

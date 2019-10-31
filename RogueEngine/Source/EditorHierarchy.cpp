@@ -27,6 +27,10 @@ namespace Rogue
 		{
 			if (ImGui::Selectable("2D Sprite"))
 			{
+				for (auto&i : m_currentVector)
+				{
+					i.m_selected = false;
+				}
 				g_engine.m_coordinator.GetSceneManager().Create2DSprite();
 			}
 			if (ImGui::IsItemHovered())
