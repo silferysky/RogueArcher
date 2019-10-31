@@ -44,7 +44,10 @@ namespace Rogue
 		EvEntityTeleport,
 		EvEntityAttacking,
 		EvEntityDamaged,
-		EvEntityDestroy
+		EvEntityDestroy,
+
+		EvOnCollision,
+		EvOnTrigger
 	};
 
 	enum EventCategory
@@ -62,7 +65,9 @@ namespace Rogue
 		EventCatEntChangeState = EvCatFlag(7),			//For entity behavior changing state
 		EventCatEntMove = EvCatFlag(7),			//For entity movement/teleportation
 		EventCatEntAttack = EvCatFlag(8),			//For entity attacking/taking damage
-		EventCatEntDestroy = EvCatFlag(10)			//For completely removing entities
+		EventCatEntDestroy = EvCatFlag(9),			//For completely removing entities
+
+		EventCatCollision = EvCatFlag(10)
 	};
 
 	/*enum EventMessageType
