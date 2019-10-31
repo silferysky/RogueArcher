@@ -68,6 +68,21 @@ namespace Rogue
 							ImGui::DragFloat("      ", &Position.y);
 							g_engine.m_coordinator.GetComponent<TransformComponent>(i.m_Entity).setPosition(Position);
 							ImGui::PushItemWidth(50);
+
+							if (ImGui::Button("Reset Position"))
+							{
+								g_engine.m_coordinator.GetComponent<TransformComponent>(i.m_Entity).setPosition(Vec2{ 0,0 });
+							}
+
+							if (ImGui::Button("Reset Rotation"))
+							{
+								g_engine.m_coordinator.GetComponent<TransformComponent>(i.m_Entity).setRotation(0.0f);
+							}
+
+							if (ImGui::Button("Reset Scale"))
+							{
+								g_engine.m_coordinator.GetComponent<TransformComponent>(i.m_Entity).setScale(Vec2{ 100.0f,100.0f });
+							}
 						}
 					}
 					
@@ -376,6 +391,10 @@ namespace Rogue
 		ImGui::DragFloat("Camera X", &m_cameraPos.x, 1.0f, -10000.0f, 10000.0f);
 		ImGui::DragFloat("Camera Y", &m_cameraPos.y, 1.0f, -10000.0f, 10000.0f);
 		g_engine.m_coordinator.GetSystem<CameraSystem>()->SetCameraPos(m_cameraPos);
+
+		bool m_gravity = g_engine.m_coordinator.GetSystem<PhysicsSystem>()->getToggleGravity();
+		ImGui::Checkbox("Gravity?", &m_gravity);
+		g_engine.m_coordinator.GetSystem<PhysicsSystem>()->setToggleGravity(m_gravity);
 
 		ImGui::End();
 	}

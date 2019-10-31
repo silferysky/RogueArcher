@@ -28,6 +28,8 @@ namespace Rogue
 		void Shutdown() override;
 		void Receive(Event* ev) override;
 
+		bool getToggleGravity();
+		void setToggleGravity(bool gravity);
 		void setGravity(const Vec2& gravity);
 		const Vec2& getGravity() const;
 	};
