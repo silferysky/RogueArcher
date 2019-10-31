@@ -238,6 +238,11 @@ namespace Rogue
 			m_systemManager->SetGameState(newGameState);
 		}
 
+		void ToggleEditorIsRunning()
+		{
+			m_systemManager->ToggleEditorIsRunning();
+		}
+
 		void ToggleGameState()
 		{
 			m_systemManager->ToggleGameState();
