@@ -28,11 +28,16 @@ namespace Rogue
 		bool CheckFileTooSmall(size_t type, size_t size);
 		void ResetMaxEntity();
 
+		void SetArchetype(std::string archetypeName, std::string archetypeValue, Signature archetypeSignature);
+
+		std::string SerializeComponents(HierarchyInfo& entityHierarchy);
+
+		std::map<std::string, std::string> GetArchetypeMap() const;
+
 	private:
 
 		//Helper function
 		void FactoryLoadComponent(Entity curEnt, Signature signature, std::string value);
-		void SetArchetype(std::string archetypeName, std::string archetypeValue, Signature archetypeSignature);
 
 		size_t m_maxEntityCount;
 		size_t m_maxArchetypeCount;

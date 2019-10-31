@@ -49,6 +49,9 @@ namespace Rogue
 		void ResetSceneIterator();
 		unsigned int GetSceneIterator() const;
 
+		std::map<std::string, std::string> GetArchetypeMap() const;
+		void AddToArchetypes(Entity entToConvert);
+
 		//For other systems to add entites here
 		void AddToActiveEntities(Entity ent);
 		void DeleteActiveEntity(Entity ent);

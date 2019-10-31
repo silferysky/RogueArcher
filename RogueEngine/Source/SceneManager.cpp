@@ -151,6 +151,37 @@ namespace Rogue
 		return m_sceneIterator;
 	}
 
+	std::map<std::string, std::string> SceneManager::GetArchetypeMap() const
+	{
+		return m_objectFactory->GetArchetypeMap();
+	}
+
+	void SceneManager::AddToArchetypes(Entity entityToConvert)
+	{
+		//Search for entity name
+		auto& activeObjects = g_engine.m_coordinator.GetEntityManager().m_getActiveObjects();
+		auto iterator = activeObjects.begin();
+		for (; iterator != activeObjects.end(); ++iterator)
+		{
+			if (iterator->m_Entity == entityToConvert)
+			{
+				break;
+			}
+		}
+
+		//Safety checker
+		if (iterator == activeObjects.end())
+		{
+			RE_CORE_WARN("Attempt to make non-existent entity prefab");
+			return;
+		}
+
+		m_objectFactory->SetArchetype(
+			iterator->m_objectName, 
+			m_objectFactory->SerializeComponents(*iterator),
+			g_engine.m_coordinator.GetEntityManager().GetSignature(iterator->m_Entity));
+	}
+
 	void SceneManager::AddToActiveEntities(Entity newEnt)
 	{
 		//Safety Check
@@ -173,11 +204,13 @@ namespace Rogue
 
 	void SceneManager::DeleteActiveEntity(Entity ent)
 	{
-		for (auto& object : g_engine.m_coordinator.GetActiveObjects())
+		auto& ActiveObjects = g_engine.m_coordinator.GetActiveObjects();
+		for (auto object = ActiveObjects.begin(); object != ActiveObjects.end(); ++object)
 		{
-			if (object.m_Entity == ent)
+			if (object->m_Entity == ent)
 			{
 				g_engine.m_coordinator.DestroyEntity(ent);
+				ActiveObjects.erase(object);
 				return;
 			}
 		}
