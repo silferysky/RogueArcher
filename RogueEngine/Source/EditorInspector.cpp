@@ -92,9 +92,10 @@ namespace Rogue
 						{
 							std::string m_spritePath = g_engine.m_coordinator.GetComponent<SpriteComponent>(i.m_Entity).getTexturePath();
 							glm::vec4 m_color = g_engine.m_coordinator.GetComponent<SpriteComponent>(i.m_Entity).getFilter();
+							int m_priority = g_engine.m_coordinator.GetComponent<SpriteComponent>(i.m_Entity).getDrawPriority();
 							const std::string m_constSpritePath = "Resources/Assets/";
 							static char m_newSpritePath[128];
-
+							static char m_priorityDraw[128];
 
 							ImGui::PushItemWidth(75);
 							ImGui::TextWrapped("Current File Path");
@@ -120,6 +121,22 @@ namespace Rogue
 							ImGui::PushItemWidth(250);
 							ImGui::ColorEdit4("Color", (float*)& m_color);
 							g_engine.m_coordinator.GetComponent<SpriteComponent>(i.m_Entity).setFilter(m_color);
+
+
+							ImGui::TextWrapped("Current Draw Priority : %d", m_priority);
+							ImGui::TextWrapped("Set Draw Priority");
+							ImGui::InputText("                       ", m_priorityDraw, 128);
+							if (ImGui::Button("Set Priority"))
+							{
+								m_priority = atoi(m_priorityDraw);
+								g_engine.m_coordinator.GetComponent<SpriteComponent>(i.m_Entity).setDrawPriority(m_priority);
+							}
+							if (ImGui::IsItemHovered())
+							{
+								ImGui::BeginTooltip();
+								ImGui::Text("Higher number means the object will be drawn infront");
+								ImGui::EndTooltip();
+							}
 						}
 					}
 
@@ -381,7 +398,17 @@ namespace Rogue
 						}
 						ImGui::EndPopup();
 					}
-				}					
+
+					if (ImGui::Button("Clone"))
+					{
+						g_engine.m_coordinator.clone(i.m_Entity);
+					}
+
+					if (ImGui::Button("Delete Object"))
+					{
+						
+					}
+				}		
 		}
 
 		bool m_worldCamera = g_engine.m_coordinator.GetSystem<CameraSystem>()->GetWorldCamera();

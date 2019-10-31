@@ -54,7 +54,7 @@ namespace Rogue
 		ImGui::SameLine();
 		ImGui::TextDisabled("Name");
 		ImGui::SameLine();
-		static char bufferX[64] = "";
+		static char bufferX[64];
 		ImGui::InputText("", bufferX, 64);
 		ImGui::Separator();
 		for (auto& i : m_currentVector)
