@@ -133,6 +133,13 @@ namespace Rogue
 				++CurKeyboardState.Key[i];
 		}
 
+		//Handles F1 to F12
+		for (int i = (int)KeyPress::KeyF1; i < (int)KeyPress::KeyF12; ++i)
+		{
+			if (GetAsyncKeyState(VK_F1 + i - (int)KeyPress::KeyF1))
+				++CurKeyboardState.Key[i];
+		}
+
 		//For Mouse Buttons (Scrollwheel skips one)
 		if (GetAsyncKeyState(VK_LBUTTON))
 			++CurKeyboardState.Key[(int)KeyPress::MB1];

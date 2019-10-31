@@ -9,7 +9,7 @@ namespace Rogue
 	public:
 		WinCloseEvent() {}
 		SET_EVENT_CATEGORY(EventCatApp)
-			SET_EVENT_TYPE(EvWindowClose)
+		SET_EVENT_TYPE(EvWindowClose)
 	};
 
 	class WinResizeEvent : public Event
