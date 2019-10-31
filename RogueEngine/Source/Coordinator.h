@@ -50,8 +50,6 @@ namespace Rogue
 			m_sceneManager->LoadArchetypes("Resources/Archetypes.json");
 
 			GetSystem<AudioSystem>()->InitSounds();
-
-			//m_objectFactory->SaveLevel("Resources/Level 1.json");
 		}
 
 		void Update()
