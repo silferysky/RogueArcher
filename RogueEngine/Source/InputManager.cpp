@@ -287,6 +287,7 @@ namespace Rogue
 		event->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
 		event->SetSystemReceivers((int)SystemID::id_CAMERASYSTEM);
 		event->SetSystemReceivers((int)SystemID::id_AUDIOSYSTEM);
+		event->SetSystemReceivers((int)SystemID::id_EDITOR);
 		EventDispatcher::instance().AddEvent(event);
 	}
 
