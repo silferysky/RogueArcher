@@ -55,7 +55,7 @@ namespace Rogue
 
 				if (CollisionSystem::s_collisionManager.DiscreteAABBvsAABB(currBoxCollider.m_aabb, nextBoxCollider.m_aabb))
 				{
-					//	std::cout << "Entity " << *iEntity << " AABB collides with Entity " << *iNextEntity << " AABB" << std::endl;
+						std::cout << "Entity " << *iEntity << " AABB collides with Entity " << *iNextEntity << " AABB" << std::endl;
 					CollisionSystem::s_collisionManager.GenerateManifoldAABBvsAABB(*iEntity, *iNextEntity);
 				}
 
@@ -66,7 +66,8 @@ namespace Rogue
 
 			}
 
-			// Collision Response (Contact, forces, rest, Impulse, Torque) conduced in Main collision system
+			// Collision Response (Contact, forces, rest, Impulse, Torque)
+			CollisionSystem::s_collisionManager.ResolveManifolds();
 		}
 
 		g_engine.m_coordinator.EndTimeSystem("Box Collision System");

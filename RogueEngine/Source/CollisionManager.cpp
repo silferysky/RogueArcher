@@ -76,20 +76,20 @@ namespace Rogue
 		m_manifolds.emplace_back(manifold);
 	}
 
-	void CollisionManager::GenerateManifoldCirclevsAABB(Entity A, Entity B)
+	bool CollisionManager::GenerateManifoldCirclevsAABB(Entity A, Entity B)
 	{
-		GenerateManifoldAABBvsCircle(B, A);
+		return GenerateManifoldAABBvsCircle(B, A);
 	}
 
-	void CollisionManager::GenerateManifoldAABBvsCircle(Entity A, Entity B)
+	bool CollisionManager::GenerateManifoldAABBvsCircle(Entity A, Entity B)
 	{
 		auto& transA = g_engine.m_coordinator.GetComponent<TransformComponent>(A);
 		auto& transB = g_engine.m_coordinator.GetComponent<TransformComponent>(B);
 		auto& boxA = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(A);
 		auto& circleB = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(B);
 
-		Vec2 centerA = transA.getPosition() + boxA.m_aabb.getCenterOffSet();
-		Vec2 centerB = transB.getPosition() + circleB.m_collider.getCenterOffSet();
+		Vec2 centerA = GetColliderPosition(boxA.m_aabb, transA);
+		Vec2 centerB = GetColliderPosition(circleB.m_collider, transB);
 		Vec2 vAB = centerB - centerA;
 
 		// Find the closest point from the AABB's vertex to the center of circle.
@@ -105,11 +105,12 @@ namespace Rogue
 		bool circleIsInside = false;
 
 		// After finding the closestPt, if vAB == closestPt, the center of the circle is inside the AABB.
-		if (vAB == closestPt)
+		if (closestPt == vAB)
 		{
 			circleIsInside = true;
+			std::cout << "circle is inside!" << std::endl;
 
-			// Find closest axis
+			// Find closest penetration axis
 			if (REAbs(vAB.x) > REAbs(vAB.y)) // x axis is shorter than y axis
 			{
 				// Clamp the closest point to the closest extent
@@ -117,7 +118,7 @@ namespace Rogue
 					AextentX :
 					-AextentX;
 			}
-			else // y axis is shorter than x axis
+			else // y penetration is less than x penetration 
 			{
 				// Clamp to the closest extent
 				closestPt.y = closestPt.y > 0 ?
@@ -127,7 +128,13 @@ namespace Rogue
 		}
 
 		Vec2 normal = vAB - closestPt;
-		float normalLength = Vec2Length(normal);
+		float lengthSq = Vec2SqLength(normal);
+		float radius = circleB.m_collider.getRadius();
+
+		if (lengthSq > radius * radius && !circleIsInside)
+			return false;
+
+		float normalLength = std::sqrtf(lengthSq);
 
 		Manifold manifold(A, B);
 
@@ -136,7 +143,11 @@ namespace Rogue
 		else
 			manifold.m_normal = vAB;
 
-		manifold.m_penetration = circleB.m_collider.getRadius() - normalLength;
+		manifold.m_penetration = radius - normalLength;
+
+		m_manifolds.emplace_back(manifold);
+
+		return true;
 	}
 
 	void CollisionManager::GenerateManifoldAABBvsAABB(Entity A, Entity B)
@@ -199,25 +210,27 @@ namespace Rogue
 
 	}
 
-	bool CollisionManager::DiscreteAABBVsCircle(const AABB& aabb, const CircleCollider& circle, const TransformComponent& transB)
+	bool CollisionManager::DiscreteAABBVsCircle(const AABB& aabb, const CircleCollider& circle)
 	{
 		AABB aabb2;
-		aabb2.setMin(Vec2{ transB.getPosition().x - circle.getRadius(), transB.getPosition().y - circle.getRadius() });
-		aabb2.setMax(Vec2{ transB.getPosition().x + circle.getRadius(), transB.getPosition().y + circle.getRadius() });
+		Vec2 circleCenter = circle.GetCenter();
+
+		aabb2.setMin(Vec2{ circleCenter.x - circle.getRadius(), circleCenter.y - circle.getRadius() });
+		aabb2.setMax(Vec2{ circleCenter.x + circle.getRadius(), circleCenter.y + circle.getRadius() });
 
 		return DiscreteAABBvsAABB(aabb, aabb2);
 	}
 
-	bool CollisionManager::DiscreteCircleVsAABB(const CircleCollider& circle, const AABB& aabb, const TransformComponent& transA)
+	bool CollisionManager::DiscreteCircleVsAABB(const CircleCollider& circle, const AABB& aabb)
 	{
-		return DiscreteAABBVsCircle(aabb, circle, transA);
+		return DiscreteAABBVsCircle(aabb, circle);
 	}
 
 	
 
 	void CollisionManager::UpdateCircleCollider(CircleCollider& circle, const TransformComponent& trans) const
 	{
-		//circle.SetCenter(circle.getCenterOffSet() + trans.getPosition());
+		circle.SetCenter(circle.getCenterOffSet() + trans.getPosition());
 	}
 
 	//_________________________________________________________________________
@@ -630,6 +643,8 @@ namespace Rogue
 		Vec2 size = GetColliderScale(collider, transform);
 		Mtx33 trans, scale;
 		
+		std::cout << "UPDATE AABB" << std::endl;
+
 		Mtx33Translate(trans, pos.x, pos.y);
 		Mtx33Scale(scale, size.x, size.y);
 

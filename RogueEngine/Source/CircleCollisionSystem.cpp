@@ -35,7 +35,8 @@ namespace Rogue
 			auto& currTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
 			auto& currCircleCollider = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(*iEntity);
 
-			// Colliders updated in main collision system.
+			// Colliders updated.
+			CollisionSystem::s_collisionManager.UpdateCircleCollider(currCircleCollider.m_collider, currTransform);
 
 			// Spatial partitioning conducted in main collision system.
 
@@ -59,7 +60,8 @@ namespace Rogue
 				}
 			}
 
-			// Collision Response (Contact, forces, rest, Impulse, Torque) is conducted in main collision system
+			// Collision Response (Contact, forces, rest, Impulse, Torque)
+			CollisionSystem::s_collisionManager.ResolveManifolds();
 		}
 
 		g_engine.m_coordinator.EndTimeSystem("Circle Collision System");
