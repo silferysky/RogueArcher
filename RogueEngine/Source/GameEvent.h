@@ -21,11 +21,12 @@ namespace Rogue
 	class EntChangeStateEvent : EntityEvent
 	{
 	public:
-		EntChangeStateEvent(int id, int newState)
-			: EntityEvent(id), EnemyState(newState) {}
 
 		SET_EVENT_CATEGORY(EventCatEntChangeState)
-		SET_EVENT_TYPE(EvEntityChangeState)
+			SET_EVENT_TYPE(EvEntityChangeState)
+
+		EntChangeStateEvent(int id, int newState)
+			: EntityEvent(id), EnemyState(newState) {}
 
 		inline int GetState() { return EnemyState; }
 
@@ -36,13 +37,13 @@ namespace Rogue
 	class EntTeleportEvent : public EntityEvent
 	{
 	public:
-		EntTeleportEvent(int id, bool forceAffected)
-			:EntityEvent(id), AffectedByForce(forceAffected) {}
-
-		virtual ~EntTeleportEvent() = default;
 
 		SET_EVENT_CATEGORY(EventCatEntMove)
 		SET_EVENT_TYPE(EvEntityTeleport)
+
+		EntTeleportEvent(int id, bool forceAffected)
+			:EntityEvent(id), AffectedByForce(forceAffected) {}
+		virtual ~EntTeleportEvent() = default;
 
 		inline bool isAffectedByForce() { return AffectedByForce; }
 
@@ -53,13 +54,14 @@ namespace Rogue
 	class EntMoveEvent : public EntTeleportEvent
 	{
 	public:
+
+		SET_EVENT_CATEGORY(EventCatEntMove)
+		SET_EVENT_TYPE(EvEntityMove)
+
 		EntMoveEvent(int id, bool forceAffected, float x, float y)
 			: EntTeleportEvent(id, forceAffected), moveVector{Vec2(x,y)} {}
 		EntMoveEvent(int id, bool forceAffected, Vec2 vec)
 			: EntTeleportEvent(id, forceAffected), moveVector{ vec } {}
-
-		SET_EVENT_CATEGORY(EventCatEntMove)
-		SET_EVENT_TYPE(EvEntityMove)
 
 		inline float GetXMovement() { return moveVector.x; }
 		inline float GetYMovement() { return moveVector.y; }
@@ -71,6 +73,7 @@ namespace Rogue
 	class EntAttackEvent : public EntityEvent
 	{
 	public:
+
 		SET_EVENT_CATEGORY(EventCatEntAttack)
 
 		inline int GetDamage() { return Damage; }
@@ -85,28 +88,63 @@ namespace Rogue
 	class EntAttackingEvent : public EntAttackEvent
 	{
 	public:
+
+		SET_EVENT_TYPE(EvEntityAttacking)
+
 		EntAttackingEvent(int id, int damage)
 			: EntAttackEvent(id, damage) {}
 
-		SET_EVENT_TYPE(EvEntityAttacking)
 	};
 
 	class EntDamagedEvent : public EntAttackEvent
 	{
 	public:
+
+		SET_EVENT_TYPE(EvEntityDamaged)
+
 		EntDamagedEvent(int id, int damage)
 			: EntAttackEvent(id, damage) {}
 
-		SET_EVENT_TYPE(EvEntityDamaged)
 	};
 
 	class EntDestroyEvent : public EntityEvent
 	{
 	public:
+		SET_EVENT_CATEGORY(EventCatEntDestroy)
+		SET_EVENT_TYPE(EvEntityDestroy)
+
 		EntDestroyEvent(int id)
 			: EntityEvent(id) {}
 
-		SET_EVENT_CATEGORY(EventCatEntDestroy)
-		SET_EVENT_TYPE(EvEntityDestroy)
+	};
+
+	class EntCollisionEvent : public EntityEvent
+	{
+	public:
+		SET_EVENT_CATEGORY(EventCatCollision)
+		SET_EVENT_TYPE(EvOnCollision)
+
+		EntCollisionEvent(int id_1, int id_2)
+			:EntityEvent(id_1), collidedEntity{id_2}{}
+
+		inline int GetOtherEntity() { return collidedEntity; }
+
+	private:
+		int collidedEntity;
+	};
+
+	class EntTriggeredEvent : public EntityEvent
+	{
+	public:
+		SET_EVENT_CATEGORY(EventCatCollision)
+		SET_EVENT_TYPE(EvOnTrigger)
+
+		EntTriggeredEvent(int id_1, int id_2)
+			:EntityEvent(id_1), collidedEntity{ id_2 }{}
+
+		inline int GetOtherEntity() { return collidedEntity; }
+
+	private:
+		int collidedEntity;
 	};
 }
