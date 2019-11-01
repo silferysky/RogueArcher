@@ -52,12 +52,11 @@ namespace Rogue
 			}
 		}
 
-
 	}
 
 	void FinderAI::AIChaseUpdate()
 	{
-		if (m_nextPoint.empty)
+		if (m_nextPoint.empty())
 			return;
 
 		auto& aiTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(m_entity);

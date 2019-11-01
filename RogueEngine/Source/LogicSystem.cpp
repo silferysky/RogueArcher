@@ -11,6 +11,9 @@
 #include "LogicComponent.h"
 #include "Timer.h"
 
+//AI Types
+#include "FinderAI.h"
+
 namespace Rogue
 {
 	LogicSystem::LogicSystem()
@@ -33,6 +36,43 @@ namespace Rogue
 
 	void LogicSystem::Update()
 	{
+		//Check if any new AI needs to be added
+		if (m_entities.size() > m_entityLogicMap.size())
+		{
+			for (auto& entities : m_entities)
+			{
+				if (m_entityLogicMap[entities] == nullptr)
+				{
+					//Logic component will exist if it is in m_entities
+					auto& logicComponent = g_engine.m_coordinator.GetComponent<LogicComponent>(entities);
+					
+					switch (logicComponent.LogicType())
+					{
+					case AIType::AI_Finder:
+					{
+						BaseAI* newAI = &FinderAI(entities, logicComponent);
+						m_entityLogicMap.emplace(entities, newAI);
+						break;
+					}
+					case AIType::AI_Patrol:
+					{
+						BaseAI* newAI = &BaseAI(entities, logicComponent);
+						m_entityLogicMap.emplace(entities, newAI);
+						break;
+					}
+					case AIType::AI_Static:
+					default:
+					{
+						BaseAI* newAI = &BaseAI(entities, logicComponent);
+						m_entityLogicMap.emplace(entities, newAI);
+						break;
+					}
+					}
+				}
+			}
+		}
+
+
 		g_engine.m_coordinator.InitTimeSystem("Logic System");
 		for (auto it = m_entityLogicMap.begin(); it != m_entityLogicMap.end(); ++it)
 		{
@@ -42,7 +82,7 @@ namespace Rogue
 
 
 			//Updates the current logic. The individual AI types will handle the state on their own
-			it->second->logicUpdate();
+			it->second->LogicUpdate();
 		}
 		g_engine.m_coordinator.EndTimeSystem("Logic System");
 	}
