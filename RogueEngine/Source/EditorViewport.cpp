@@ -48,11 +48,17 @@ namespace Rogue
 			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, { 0.8f,0.0f,0.0f,1.0f });
 			ImGui::PushStyleColor(ImGuiCol_ButtonActive, { 0.9f,0.0f,0.0f,1.0f });
 		}
-		else
+		else if(!g_engine.m_coordinator.GetPauseState())
 		{
 			ImGui::PushStyleColor(ImGuiCol_Button, style.Colors[ImGuiCol_Button]);
 			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, style.Colors[ImGuiCol_ButtonHovered]);
 			ImGui::PushStyleColor(ImGuiCol_ButtonActive, style.Colors[ImGuiCol_ButtonActive]);
+		}
+		else
+		{
+			ImGui::PushStyleColor(ImGuiCol_Button, {0.3f, 0.3f, 0.3f, 0.3f});
+			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, { 0.8f, 0.8f, 0.8f, 0.8f });
+			ImGui::PushStyleColor(ImGuiCol_ButtonActive, { 0.8f, 0.8f, 0.8f, 0.8f });
 		}
 		if (ImGui::Button("Pause"))
 		{
