@@ -9,7 +9,7 @@ namespace Rogue
 		m_texture = g_engine.m_coordinator.loadTexture(texture);
 	}
 
-	Texture SpriteComponent::getTexture() const
+	Texture& SpriteComponent::getTexture()
 	{
 		return m_texture;
 	}
@@ -32,6 +32,26 @@ namespace Rogue
 	int SpriteComponent::getDrawPriority() const
 	{
 		return m_drawPriority;
+	}
+
+	void SpriteComponent::setTexCoordMin(const float& TexCoordMin)
+	{
+		m_texCoordMin = TexCoordMin;
+	}
+
+	void SpriteComponent::setTexCoordMax(const float& TexCoordMax)
+	{
+		m_texCoordMax = TexCoordMax;
+	}
+
+	float SpriteComponent::getTexCoordMin() const
+	{
+		return m_texCoordMin;
+	}
+
+	float SpriteComponent::getTexCoordMax() const
+	{
+		return m_texCoordMax;
 	}
 
 	glm::vec4& SpriteComponent::getFilter()

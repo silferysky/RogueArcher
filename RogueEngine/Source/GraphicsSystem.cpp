@@ -82,6 +82,7 @@ namespace Rogue
 
 		glUseProgram(m_shader.GetShader());
 		glBindVertexArray(m_VAO);
+		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 
 		// For all entities
 		for (auto pair : m_drawQueue)
@@ -96,8 +97,8 @@ namespace Rogue
 		}
 
 		glUseProgram(0);
-		glBindBuffer(GL_ARRAY_BUFFER, 0); //Reset
 		glBindVertexArray(0); //Reset
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 		g_engine.m_coordinator.GetSystem<DebugDrawSystem>()->TrueUpdate();
 
@@ -116,7 +117,7 @@ namespace Rogue
 		transformMat = glm::scale(transformMat, glm::vec3(transform->getScale().x, transform->getScale().y, 1.0f));
 
 		glBindTexture(GL_TEXTURE_2D, texture.m_texture);
-
+		UpdateTextureCoords(sprite->getTexCoordMin(), sprite->getTexCoordMax());
 		// model to world, world to view, view to projection
 
 		//offset by translation of camera, inverse of rotation

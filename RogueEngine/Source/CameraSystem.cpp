@@ -99,7 +99,7 @@ namespace Rogue
 	{
 		g_engine.m_coordinator.InitTimeSystem("Camera System");
 
-		m_cameraShake.Update(g_deltaTime);
+		m_cameraShake.Update();
 		auto shakeOffset = m_cameraShake.getOffset();
 		
 		if (!m_worldCamera)

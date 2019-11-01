@@ -12,6 +12,7 @@ namespace Rogue
 		int m_currentFrame;
 		float m_offSet; // each frame in pixels
 		float m_secondsPerFrame = 0.1f;
+		float m_timer = 0.0f;
 		bool m_isAnimating = false;
 		bool m_isLooping = false;
 	public:
@@ -29,6 +30,10 @@ namespace Rogue
 
 		void setSecondsPerFrame(const float& secondsPerFrame);
 		float getSecondsPerFrame() const;
+
+		void updateTimer();
+		void setTimer(const float& timer);
+		float getTimer() const;
 
 		void setIsAnimating(const bool& isAnimating);
 		bool getIsAnimating() const;
