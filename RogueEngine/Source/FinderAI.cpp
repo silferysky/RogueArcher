@@ -14,7 +14,7 @@ namespace Rogue
 		m_logicComponent->AddAIState(AIState::AIState_Idle);
 
 		//Sets initial state of AI
-		m_logicComponent->CurState(AIState::AIState_Idle);
+		m_logicComponent->SetCurState(AIState::AIState_Idle);
 	}
 
 	void FinderAI::AIActiveStateUpdate()

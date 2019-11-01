@@ -46,7 +46,7 @@ namespace Rogue
 					//Logic component will exist if it is in m_entities
 					auto& logicComponent = g_engine.m_coordinator.GetComponent<LogicComponent>(entities);
 					
-					switch (logicComponent.LogicType())
+					switch (logicComponent.GetLogicType())
 					{
 					case AIType::AI_Finder:
 					{
