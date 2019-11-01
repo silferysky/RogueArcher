@@ -1,6 +1,7 @@
 #pragma once
 #include "BaseAI.h"
 #include "EventListener.h"
+#include <memory>
 
 namespace Rogue
 {
@@ -19,7 +20,7 @@ namespace Rogue
 		void Receive(Event* ev) override;
 
 		//For entity logic
-		void AddLogicInterface(Entity entity, BaseAI* logicInterface);
+		void AddLogicInterface(Entity entity, std::shared_ptr<BaseAI> logicInterface);
 		void RemoveLogicInterface(Entity);
 
 		void SeekNearestWaypoint(Entity ent);
@@ -27,7 +28,7 @@ namespace Rogue
 		void CreateMoveEvent(Entity ent, Vec2 vec);
 
 	private:
-		std::map<Entity, BaseAI*> m_entityLogicMap;
+		std::map<Entity, std::shared_ptr<BaseAI>> m_entityLogicMap;
 	};
 
 }

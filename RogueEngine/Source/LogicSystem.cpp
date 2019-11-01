@@ -19,7 +19,7 @@ namespace Rogue
 	LogicSystem::LogicSystem()
 		: System(SystemID::id_LOGICSYSTEM)
 	{
-		m_entityLogicMap = std::map<Entity, BaseAI*>();
+		m_entityLogicMap = std::map<Entity, std::shared_ptr<BaseAI>>();
 	}
 
 
@@ -36,6 +36,8 @@ namespace Rogue
 
 	void LogicSystem::Update()
 	{
+		g_engine.m_coordinator.InitTimeSystem("Logic System");
+
 		//Check if any new AI needs to be added
 		if (m_entities.size() > m_entityLogicMap.size())
 		{
@@ -50,21 +52,21 @@ namespace Rogue
 					{
 					case AIType::AI_Finder:
 					{
-						BaseAI* newAI = &FinderAI(entities, logicComponent);
-						m_entityLogicMap.emplace(entities, newAI);
+						FinderAI newAI(entities, logicComponent);
+						AddLogicInterface(entities, std::make_shared<BaseAI>(newAI));
 						break;
 					}
 					case AIType::AI_Patrol:
 					{
-						BaseAI* newAI = &BaseAI(entities, logicComponent);
-						m_entityLogicMap.emplace(entities, newAI);
+						BaseAI newAI(entities, logicComponent);
+						AddLogicInterface(entities, std::make_shared<BaseAI>(newAI));
 						break;
 					}
 					case AIType::AI_Static:
 					default:
 					{
-						BaseAI* newAI = &BaseAI(entities, logicComponent);
-						m_entityLogicMap.emplace(entities, newAI);
+						BaseAI newAI(entities, logicComponent);
+						AddLogicInterface(entities, std::make_shared<BaseAI>(newAI));
 						break;
 					}
 					}
@@ -73,7 +75,6 @@ namespace Rogue
 		}
 
 
-		g_engine.m_coordinator.InitTimeSystem("Logic System");
 		for (auto it = m_entityLogicMap.begin(); it != m_entityLogicMap.end(); ++it)
 		{
 			//Null checker
@@ -91,9 +92,11 @@ namespace Rogue
 	{
 	}
 
-	void LogicSystem::AddLogicInterface(Entity entity, BaseAI* logicInterface)
+	void LogicSystem::AddLogicInterface(Entity entity, std::shared_ptr<BaseAI> logicInterface)
 	{
-		m_entityLogicMap.insert({ entity, logicInterface });
+		m_entityLogicMap[entity] = logicInterface;
+		//m_entityLogicMap.emplace(std::pair < Entity, std::shared_ptr<BaseAI>>(entity, logicInterface));
+		//m_entityLogicMap.insert({ entity, logicInterface });
 	}
 
 	void LogicSystem::RemoveLogicInterface(Entity entity)

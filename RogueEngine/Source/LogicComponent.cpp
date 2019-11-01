@@ -86,7 +86,7 @@ namespace Rogue
 		std::istringstream ss(toDeserialize);
 		std::string s1;
 		int counter = 0;		//Needed to take in for multiple values
-		std::vector<AIState> allStates{};
+		//std::vector<AIState> allStates{};
 
 		while (std::getline(ss, s1, ';'))
 		{
@@ -103,13 +103,13 @@ namespace Rogue
 				break;
 			}
 			default:
-				allStates.push_back(static_cast<AIState>(stoi(s1)));
+				m_allStates.push_back(static_cast<AIState>(stoi(s1)));
 				break;
 			}
 			++counter;
 		}
 
-		m_allStates = allStates;
+		//std::swap(m_allStates,allStates);
 	}
 
 }

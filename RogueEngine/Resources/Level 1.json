@@ -81,5 +81,5 @@
     "Entity36": "Name{collider16}||Rigidbody{0;0;0;0;1;1;1}|Transform{-955;871;100;100;0}||BoxCollider{0;0;0;0;0}||||||",
     "Entity37": "Name{collider17}||Rigidbody{0;0;0;0;1;1;1}|Transform{-1261;763;100;100;0}||BoxCollider{0;0;0;0;0}||||||",
     "Entity38": "Name{collider18}||Rigidbody{0;0;0;0;1;1;1}|Transform{-1630;459;100;100;0}||BoxCollider{0;0;0;0;0}||||||",
-    "Entity39": "Name{Game Object 40}|Sprite{Resources/Assets/CharaTest.png;1}|Rigidbody{0;0;0;0;1;1;0}|Transform{-1446;310.49;80;120;0}||BoxCollider{0;0;0;0;0}|PlayerController{0}|LogicComponent{0;0;}|||Camera{0;0;1;}|"
+    "Entity39": "Name{Game Object 40}|Sprite{Resources/Assets/CharaTest.png;1}|Rigidbody{0;0;0;0;1;1;0}|Transform{-1446;310.49;80;120;0}||BoxCollider{0;0;0;0;0}|PlayerController{0}|LogicComponent{0;0;0;1}|||Camera{0;0;1;}|"
 }
