@@ -16,11 +16,11 @@ namespace Rogue
 	{
 		//Put in order of importance
 		//Use AddAIState for active states, AddAIStateInactive for inactive states that might turn active
-		m_logicComponent->AddAIState(AIState::AIState_Patrol);
-		m_logicComponent->AddAIState(AIState::AIState_Idle);
+		//m_logicComponent->AddAIState(AIState::AIState_Patrol);
+		//m_logicComponent->AddAIState(AIState::AIState_Idle);
 
 		//Sets initial state of AI
-		m_logicComponent->SetCurState(AIState::AIState_Idle);
+		//m_logicComponent->SetCurState(AIState::AIState_Idle);
 	}
 
 	void BaseAI::LogicUpdate()
@@ -32,7 +32,8 @@ namespace Rogue
 
 		//For all possible states BaseAI has
 		//This for loop handles the order of importance of each state.
-		for (auto it = m_logicComponent->GetAllAIStates().begin(); it != m_logicComponent->GetAllAIStates().end(); ++it)
+		auto allStatesVector = m_logicComponent->GetAllAIStates();
+		for (auto it = allStatesVector.begin(); it != allStatesVector.end(); ++it)
 		{
 			//If its ActiveStateBit matches, run that update
 			if (m_logicComponent->GetActiveStateBit(static_cast<size_t>(*it)))
