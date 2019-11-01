@@ -6,7 +6,7 @@
 
 namespace Rogue
 {
-	std::vector<AIState> LogicComponent::AllAIStates() const
+	std::vector<AIState> LogicComponent::GetAllAIStates() const
 	{
 		return m_allStates;
 	}
@@ -24,22 +24,27 @@ namespace Rogue
 		m_allStates.push_back(newState);
 	}
 
-	AIState LogicComponent::CurState() const
+	void LogicComponent::SetAllAIStates(std::vector<AIState> states)
+	{
+		std::swap(states, m_allStates);
+	}
+
+	AIState LogicComponent::GetCurState() const
 	{
 		return m_currentState;
 	}
 
-	void LogicComponent::CurState(AIState newState)
+	void LogicComponent::SetCurState(AIState newState)
 	{
 		m_currentState = newState;
 	}
 
-	AIType LogicComponent::LogicType() const
+	AIType LogicComponent::GetLogicType() const
 	{
 		return m_AIType;
 	}
 
-	void LogicComponent::LogicType(AIType newType)
+	void LogicComponent::SetLogicType(AIType newType)
 	{
 		m_AIType = newType;
 	}
