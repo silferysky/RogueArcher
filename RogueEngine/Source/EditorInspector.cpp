@@ -97,8 +97,8 @@ namespace Rogue
 							static char m_newSpritePath[128];
 							static char m_priorityDraw[128];
 
-							//ImVec2 imageSize{ ImGui::GetContentRegionAvail() };
-							//ImGui::Image((void*)(intptr_t)(g_engine.m_coordinator.GetSystem<GraphicsSystem>()->getFBO()), ImVec2(imageSize.x, imageSize.y), ImVec2(0, 1), ImVec2(1, 0));
+							ImVec2 imageSize{ ImGui::GetContentRegionAvail() };
+							ImGui::Image((void*)(intptr_t)(g_engine.m_coordinator.GetSystem<GraphicsSystem>()->getFBO()), ImVec2(imageSize.x, imageSize.y), ImVec2(0, 1), ImVec2(1, 0));
 							ImGui::PushItemWidth(75);
 							ImGui::TextWrapped("Current File Path");
 							ImGui::TextWrapped("%s", m_spritePath.c_str());
@@ -240,11 +240,11 @@ namespace Rogue
 							ImGui::DragFloat("Center Offset Y ", &m_centerOffset.y, 0.5f, -100000.0f, 100000.0f);
 							g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i.m_Entity).m_collider.setCenterOffSet(m_centerOffset);
 
-							ImGui::DragFloat("Offset X ", &m_rotationOffset, 0.5f, -100000.0f, 100000.0f);
+							ImGui::DragFloat("Rotation Offset ", &m_rotationOffset, 0.5f, -100000.0f, 100000.0f);
 							g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i.m_Entity).m_collider.setRotationOffSet(m_rotationOffset);
 				
-							ImGui::DragFloat("Center Offset X ", &m_scaleOffset.x, 0.5f, -100000.0f, 100000.0f);
-							ImGui::DragFloat("Center Offset Y ", &m_scaleOffset.y, 0.5f, -100000.0f, 100000.0f);
+							ImGui::DragFloat("Scale Offset X ", &m_scaleOffset.x, 0.5f, -100000.0f, 100000.0f);
+							ImGui::DragFloat("Scale Offset Y ", &m_scaleOffset.y, 0.5f, -100000.0f, 100000.0f);
 							g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i.m_Entity).m_collider.setScaleOffSet(m_scaleOffset);
 
 						}
