@@ -33,7 +33,6 @@ namespace Rogue
 		glBufferSubData(GL_ARRAY_BUFFER, 16 * sizeof(float), sizeof(float), max);
 		glBufferSubData(GL_ARRAY_BUFFER, 25 * sizeof(float), sizeof(float), min);
 		glBufferSubData(GL_ARRAY_BUFFER, 34 * sizeof(float), sizeof(float), min);
-
 	}
 
 	static const float frameVertices[] = 
