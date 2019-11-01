@@ -13,15 +13,16 @@ namespace Rogue
 		LogicComponent() = default;
 		~LogicComponent() = default;
 
-		std::vector<AIState> AllAIStates() const;
+		std::vector<AIState> GetAllAIStates() const;
+		void	SetAllAIStates(std::vector<AIState> states);
 		void	AddAIState(AIState newState);
 		void	AddAIStateInactive(AIState newState);
 
-		AIState CurState() const;
-		void	CurState(AIState newState);
+		AIState GetCurState() const;
+		void	SetCurState(AIState newState);
 
-		AIType	LogicType() const;
-		void	LogicType(AIType newType);
+		AIType	GetLogicType() const;
+		void	SetLogicType(AIType newType);
 
 		void	SetActiveStateBit(size_t pos);
 		void	ResetActiveStateBit();
