@@ -430,6 +430,9 @@
     <ClInclude Include="Source\BoxCollider2DComponent.h">
       <Filter>RogueEngine\Systems\Collision\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Source\FinderAI.h">
+      <Filter>RogueEngine\Systems\AI\AI Types</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -656,6 +659,9 @@
     </ClCompile>
     <ClCompile Include="Source\BoxCollider2DComponent.cpp">
       <Filter>RogueEngine\Systems\Collision\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\FinderAI.cpp">
+      <Filter>RogueEngine\Systems\AI\AI Types</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
