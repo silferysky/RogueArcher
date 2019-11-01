@@ -226,7 +226,7 @@ namespace Rogue
 			TransformComponent(Vec2{ 0.0f, 0.0f }, Vec2{ 100.0f, 100.0f }, 0.0f));
 
 		auto& Sprite = g_engine.m_coordinator.CreateComponent<SpriteComponent>(newEnt);
-		Sprite.Deserialize("Resources/Assets/DefaultSprite.png");
+		Sprite.Deserialize("Resources/Assets/DefaultSprite.png;1");
 
 		HierarchyInfo newInfo{};
 		newInfo.m_selected = true;
