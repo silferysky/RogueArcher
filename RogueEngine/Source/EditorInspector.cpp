@@ -96,9 +96,7 @@ namespace Rogue
 							const std::string m_constSpritePath = "Resources/Assets/";
 							static char m_newSpritePath[128];
 							static char m_priorityDraw[128];
-
-							ImVec2 imageSize{ ImGui::GetContentRegionAvail() };
-							ImGui::Image((void*)(intptr_t)(g_engine.m_coordinator.GetSystem<GraphicsSystem>()->getFBO()), ImVec2(imageSize.x, imageSize.y), ImVec2(0, 1), ImVec2(1, 0));
+							
 							ImGui::PushItemWidth(75);
 							ImGui::TextWrapped("Current File Path");
 							ImGui::TextWrapped("%s", m_spritePath.c_str());
@@ -140,6 +138,32 @@ namespace Rogue
 								ImGui::Text("Higher number means the object will be drawn infront");
 								ImGui::EndTooltip();
 							}
+						}
+					}
+
+					if (g_engine.m_coordinator.ComponentExists<AnimationComponent>(i.m_Entity))
+					{
+						if (ImGui::CollapsingHeader("Animation"))
+						{
+							int m_frames = g_engine.m_coordinator.GetComponent<AnimationComponent>(i.m_Entity).getFrames();
+							float m_secondsPerFrame = g_engine.m_coordinator.GetComponent<AnimationComponent>(i.m_Entity).getSecondsPerFrame();
+							bool m_isAnimating = g_engine.m_coordinator.GetComponent<AnimationComponent>(i.m_Entity).getIsAnimating();
+							bool m_looping = g_engine.m_coordinator.GetComponent<AnimationComponent>(i.m_Entity).getIsLooping();
+							
+							ImVec2 imageSize{ ImGui::GetWindowWidth()/2, ImGui::GetWindowHeight() / 8 };
+							ImGui::Image((void*)(intptr_t)(g_engine.m_coordinator.GetSystem<GraphicsSystem>()->getFBO()), ImVec2(imageSize.x, imageSize.y), ImVec2(0, 1), ImVec2(1, 0));
+							ImGui::PushItemWidth(75);
+							ImGui::DragInt("Frames", &m_frames, 1.0f, 0, 60);
+							g_engine.m_coordinator.GetComponent<AnimationComponent>(i.m_Entity).setFrames(m_frames);
+				
+							ImGui::DragFloat("Seconds Per Frame", &m_secondsPerFrame, 0.1f, 0.0f, 1.0f);
+							g_engine.m_coordinator.GetComponent<AnimationComponent>(i.m_Entity).setSecondsPerFrame(m_secondsPerFrame);
+				
+							ImGui::Checkbox("Animating?", &m_isAnimating);
+							g_engine.m_coordinator.GetComponent<AnimationComponent>(i.m_Entity).setIsAnimating(m_isAnimating);
+				
+							ImGui::Checkbox("Looping?", &m_looping);
+							g_engine.m_coordinator.GetComponent<AnimationComponent>(i.m_Entity).setIsLooping(m_looping);
 						}
 					}
 
@@ -202,7 +226,7 @@ namespace Rogue
 							ImGui::PushItemWidth(75);
 							ImGui::SliderFloat("Damping", &m_damping, 0.0f, 1.0f);
 							g_engine.m_coordinator.GetComponent<RigidbodyComponent>(i.m_Entity).setDamping(m_damping);
-
+							
 							ImGui::PushItemWidth(75);
 							ImGui::SliderFloat("Restitution", &m_restitution, 0.0f, 1.0f);
 							g_engine.m_coordinator.GetComponent<RigidbodyComponent>(i.m_Entity).setBounciness(m_restitution);
@@ -214,7 +238,7 @@ namespace Rogue
 						if (ImGui::CollapsingHeader("Camera"))
 						{
 							bool m_isMain = g_engine.m_coordinator.GetComponent<CameraComponent>(i.m_Entity).getIsActive();
-							
+
 							ImGui::PushItemWidth(75);
 							ImGui::Checkbox("Active?", &m_isMain);
 							ImGui::TextWrapped("There can only be 1 active non-world camera at a time, set others to non-active if you want this to be the main camera.");
@@ -242,7 +266,7 @@ namespace Rogue
 
 							ImGui::DragFloat("Rotation Offset ", &m_rotationOffset, 0.5f, -100000.0f, 100000.0f);
 							g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i.m_Entity).m_collider.setRotationOffSet(m_rotationOffset);
-				
+
 							ImGui::DragFloat("Scale Offset X ", &m_scaleOffset.x, 0.5f, -100000.0f, 100000.0f);
 							ImGui::DragFloat("Scale Offset Y ", &m_scaleOffset.y, 0.5f, -100000.0f, 100000.0f);
 							g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i.m_Entity).m_collider.setScaleOffSet(m_scaleOffset);
@@ -263,7 +287,7 @@ namespace Rogue
 							ImGui::TextDisabled("New Sound Path");
 							ImGui::SameLine();
 							ImGui::PushItemWidth(250);
-							ImGui::InputText("                    ", m_newaudioPath,128);
+							ImGui::InputText("                    ", m_newaudioPath, 128);
 							if (ImGui::Button("Set new path"))
 							{
 								m_audioPath = m_constAudioPath + m_newaudioPath;
@@ -296,7 +320,12 @@ namespace Rogue
 								auto& Sprite = g_engine.m_coordinator.CreateComponent<SpriteComponent>(i.m_Entity);
 								Sprite.Deserialize("Resources/Assets/DefaultSprite.png");
 							}
-							
+
+							if (ImGui::MenuItem("Animation Component", nullptr, false, !g_engine.m_coordinator.ComponentExists<AnimationComponent>(i.m_Entity)))
+							{
+								g_engine.m_coordinator.AddComponent(i.m_Entity,AnimationComponent());
+							}
+
 							if (ImGui::MenuItem("Transform Component",nullptr,false, !g_engine.m_coordinator.ComponentExists<TransformComponent>(i.m_Entity)))
 							{
 								g_engine.m_coordinator.AddComponent<TransformComponent>(i.m_Entity,TransformComponent(Vec2{ 0.0f, 0.0f }, Vec2{ 100.0f, 100.0f }, 0.0f));
@@ -351,6 +380,11 @@ namespace Rogue
 							if (ImGui::MenuItem("Sprite Component", nullptr, false, g_engine.m_coordinator.ComponentExists<SpriteComponent>(i.m_Entity)))
 							{
 								g_engine.m_coordinator.RemoveComponent<SpriteComponent>(i.m_Entity);
+							}
+
+							if (ImGui::MenuItem("Animation Component", nullptr, false, g_engine.m_coordinator.ComponentExists<AnimationComponent>(i.m_Entity)))
+							{
+								g_engine.m_coordinator.RemoveComponent<AnimationComponent>(i.m_Entity);
 							}
 
 							if (ImGui::MenuItem("Transform Component", nullptr, false, g_engine.m_coordinator.ComponentExists<TransformComponent>(i.m_Entity)))
@@ -420,6 +454,11 @@ namespace Rogue
 		glm::vec3 m_cameraPos = g_engine.m_coordinator.GetSystem<CameraSystem>()->GetCameraPos();
 		ImGui::DragFloat("Camera X", &m_cameraPos.x, 1.0f, -10000.0f, 10000.0f);
 		ImGui::DragFloat("Camera Y", &m_cameraPos.y, 1.0f, -10000.0f, 10000.0f);
+		if (ImGui::Button("Reset Camera"))
+		{
+			m_cameraPos.x = 0.0f;
+			m_cameraPos.y = 0.0f;
+		}
 		g_engine.m_coordinator.GetSystem<CameraSystem>()->SetCameraPos(m_cameraPos);
 
 		bool m_toggleGravity = g_engine.m_coordinator.GetSystem<PhysicsSystem>()->getToggleGravity();
@@ -427,6 +466,7 @@ namespace Rogue
 
 		ImGui::Checkbox("Gravity?", &m_toggleGravity);
 		g_engine.m_coordinator.GetSystem<PhysicsSystem>()->setToggleGravity(m_toggleGravity);
+
 		ImGui::DragFloat("Set Gravity", &m_gravity.y, 1.0f, -10000.0f, 10000.0f);
 		g_engine.m_coordinator.GetSystem<PhysicsSystem>()->setGravity(m_gravity);
 		ImGui::End();

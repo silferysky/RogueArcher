@@ -34,7 +34,7 @@ namespace Rogue
 		KeyPress keycode = keytriggeredevent->GetKeyCode();
 		if (keytriggeredevent->GetKeyCode() == KeyPress::Numpad9)
 		{
-			Entity selected;
+			Entity selected = 0;
 			for (auto& i : m_currentVector)
 			{
 				if (i.m_selected == true)
@@ -43,7 +43,10 @@ namespace Rogue
 
 			for (int i = 0; i < 1500; ++i)
 			{
-				//RE_INFO(i);
+				Vec2 Position = g_engine.m_coordinator.GetComponent<TransformComponent>(selected).getPosition();
+				Position.x = rand() % 1500;
+				Position.y = rand() % 1500;
+				g_engine.m_coordinator.GetComponent<TransformComponent>(selected).setPosition(Position);
 				g_engine.m_coordinator.clone(selected);
 			}
 		}
