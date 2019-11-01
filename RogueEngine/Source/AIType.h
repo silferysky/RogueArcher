@@ -6,6 +6,7 @@ namespace Rogue
 	enum class AIType
 	{
 		AI_Patrol,
+		AI_Finder,
 		AI_Static,
 		AI_Last
 	};
