@@ -97,6 +97,8 @@ namespace Rogue
 							static char m_newSpritePath[128];
 							static char m_priorityDraw[128];
 
+							//ImVec2 imageSize{ ImGui::GetContentRegionAvail() };
+							//ImGui::Image((void*)(intptr_t)(g_engine.m_coordinator.GetSystem<GraphicsSystem>()->getFBO()), ImVec2(imageSize.x, imageSize.y), ImVec2(0, 1), ImVec2(1, 0));
 							ImGui::PushItemWidth(75);
 							ImGui::TextWrapped("Current File Path");
 							ImGui::TextWrapped("%s", m_spritePath.c_str());
@@ -407,7 +409,7 @@ namespace Rogue
 					ImGui::SameLine();
 					if (ImGui::Button("Delete Object"))
 					{
-						
+						g_engine.m_coordinator.GetSceneManager().DeleteActiveEntity(i.m_Entity);
 					}
 				}		
 		}
@@ -420,10 +422,13 @@ namespace Rogue
 		ImGui::DragFloat("Camera Y", &m_cameraPos.y, 1.0f, -10000.0f, 10000.0f);
 		g_engine.m_coordinator.GetSystem<CameraSystem>()->SetCameraPos(m_cameraPos);
 
-		bool m_gravity = g_engine.m_coordinator.GetSystem<PhysicsSystem>()->getToggleGravity();
-		ImGui::Checkbox("Gravity?", &m_gravity);
-		g_engine.m_coordinator.GetSystem<PhysicsSystem>()->setToggleGravity(m_gravity);
+		bool m_toggleGravity = g_engine.m_coordinator.GetSystem<PhysicsSystem>()->getToggleGravity();
+		Vec2 m_gravity = g_engine.m_coordinator.GetSystem<PhysicsSystem>()->getGravity();
 
+		ImGui::Checkbox("Gravity?", &m_toggleGravity);
+		g_engine.m_coordinator.GetSystem<PhysicsSystem>()->setToggleGravity(m_toggleGravity);
+		ImGui::DragFloat("Set Gravity", &m_gravity.y, 1.0f, -10000.0f, 10000.0f);
+		g_engine.m_coordinator.GetSystem<PhysicsSystem>()->setGravity(m_gravity);
 		ImGui::End();
 	}
 	void ImGuiInspector::Shutdown()
