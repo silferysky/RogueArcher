@@ -18,7 +18,7 @@ namespace Rogue
 		Vec2 m_shakeOffset;
 	public:
 		CameraShake();
-		void Update(float dt);
+		void Update();
 
 		void SetShake(float magnitude);
 		float GetShake() const;

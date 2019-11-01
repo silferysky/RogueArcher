@@ -13,6 +13,8 @@ namespace Rogue
 		std::string m_texturePath;
 		Texture m_texture;
 		int m_drawPriority = 0;
+		float m_texCoordMin = 0.0f;
+		float m_texCoordMax = 1.0f;
 
 		glm::vec4 m_filter = { 1.0f, 1.0f, 1.0f, 1.0f };
 	public:
@@ -20,11 +22,17 @@ namespace Rogue
 		~SpriteComponent() = default;
 
 		void setTexture(const char* texture);
-		Texture getTexture() const;
+		Texture& getTexture();
 
 		void setDrawPriority(const int& drawPriority);
 		int getDrawPriority() const;
 
+		void setTexCoordMin(const float& TexCoordMin);
+		float getTexCoordMin() const;
+
+		void setTexCoordMax(const float& texCoordMax);
+		float getTexCoordMax() const;
+		
 		void setTexturePath(std::string texturePath);
 		std::string getTexturePath() const;
 

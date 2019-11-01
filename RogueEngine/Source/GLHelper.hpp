@@ -17,6 +17,25 @@ namespace Rogue
 		-0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f, 1.0f,   0.0f, 1.0f   // top left 
 	};
 
+	static void UpdateTextureCoords(const float& xMin, const float& xMax)
+	{
+		float min[] =
+		{
+			xMin
+		};
+
+		float max[] =
+		{
+			xMax
+		};
+
+		glBufferSubData(GL_ARRAY_BUFFER, 7 * sizeof(float), sizeof(float), max);
+		glBufferSubData(GL_ARRAY_BUFFER, 16 * sizeof(float), sizeof(float), max);
+		glBufferSubData(GL_ARRAY_BUFFER, 25 * sizeof(float), sizeof(float), min);
+		glBufferSubData(GL_ARRAY_BUFFER, 34 * sizeof(float), sizeof(float), min);
+
+	}
+
 	static const float frameVertices[] = 
 	{
 		// positions   // texCoords
@@ -50,7 +69,7 @@ namespace Rogue
 
 		glGenBuffers(1, &VBO);
 		glBindBuffer(GL_ARRAY_BUFFER, VBO);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), quadVertices, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), quadVertices, GL_DYNAMIC_DRAW);
 
 		glGenBuffers(1, &EBO);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);

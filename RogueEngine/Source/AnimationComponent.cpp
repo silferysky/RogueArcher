@@ -1,5 +1,6 @@
 #include <sstream>
 #include "AnimationComponent.h"
+#include "Main.h"
 
 namespace Rogue
 {
@@ -41,6 +42,21 @@ namespace Rogue
 	float AnimationComponent::getSecondsPerFrame() const
 	{
 		return m_secondsPerFrame;
+	}
+
+	void AnimationComponent::updateTimer()
+	{
+		m_timer += g_deltaTime;
+	}
+
+	void AnimationComponent::setTimer(const float& timer)
+	{
+		m_timer = timer;
+	}
+
+	float AnimationComponent::getTimer() const
+	{
+		return m_timer;
 	}
 
 	void AnimationComponent::setIsAnimating(const bool& isAnimating)
@@ -88,8 +104,6 @@ namespace Rogue
 			case 0:
 				setFrames(std::stof(s1));
 				break;
-			case 1:
-				setCurrentFrame(std::stof(s1));
 			case 2:
 				setOffSet(std::stof(s1));
 				break;
