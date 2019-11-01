@@ -83,8 +83,6 @@ namespace Rogue
 	{
 		std::ostringstream ss;
 		ss << m_frames << ";";
-		ss << m_currentFrame << ";";
-		ss << m_offSet << ";";
 		ss << m_secondsPerFrame << ";";
 		ss << m_isAnimating << ";";
 		ss << m_isLooping << ";";
@@ -104,16 +102,13 @@ namespace Rogue
 			case 0:
 				setFrames(std::stof(s1));
 				break;
-			case 2:
-				setOffSet(std::stof(s1));
-				break;
-			case 3:
+			case 1:
 				setSecondsPerFrame(std::stof(s1));
 				break;
-			case 4:
+			case 2:
 				setIsAnimating(std::stof(s1));
 				break;
-			case 5:
+			case 3:
 				setIsLooping(std::stof(s1));
 				break;
 			default:

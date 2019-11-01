@@ -52,7 +52,6 @@ namespace Rogue
 
 		double currentFrame = animate->getCurrentFrame();
 		int totalFrames = animate->getFrames();
-		//int frameWidth = texture->m_width / totalFrames;
 
 		double min = currentFrame / totalFrames;
 		double max = ++currentFrame / totalFrames;
