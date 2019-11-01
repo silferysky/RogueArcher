@@ -5,17 +5,17 @@
 
 namespace Rogue
 {
-	BaseAI::BaseAI(LogicComponent& logicComp)
+	BaseAI::BaseAI(Entity entity, LogicComponent& logicComp)
 	{
+		m_entity = entity;
 		m_logicComponent = std::make_shared<LogicComponent>(logicComp);
-		logicInit();
+		LogicInit();
 	}
 
-	void BaseAI::logicInit()
+	void BaseAI::LogicInit()
 	{
 		//Put in order of importance
 		//Use AddAIState for active states, AddAIStateInactive for inactive states that might turn active
-		m_logicComponent->AddAIStateInactive(AIState::AIState_Chase);
 		m_logicComponent->AddAIState(AIState::AIState_Patrol);
 		m_logicComponent->AddAIState(AIState::AIState_Idle);
 
@@ -23,7 +23,7 @@ namespace Rogue
 		m_logicComponent->CurState(AIState::AIState_Idle);
 	}
 
-	void BaseAI::logicUpdate()
+	void BaseAI::LogicUpdate()
 	{
 		//To set all flags of potential behavior
 		m_logicComponent->ResetActiveStateBit();
@@ -93,12 +93,12 @@ namespace Rogue
 		RE_INFO("AI IDLE");
 	}
 
-	std::shared_ptr<LogicComponent> BaseAI::getLogicComponent()
+	std::shared_ptr<LogicComponent> BaseAI::GetLogicComponent()
 	{
 		return m_logicComponent;
 	}
 
-	void BaseAI::setLogicComponent(LogicComponent& logicComp)
+	void BaseAI::SetLogicComponent(LogicComponent& logicComp)
 	{
 		m_logicComponent = std::make_shared<LogicComponent>(logicComp);
 	}

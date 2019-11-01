@@ -5,6 +5,7 @@
 #include <vector>
 #include <queue>
 #include "Vector2D.h"
+#include "Types.h"
 
 namespace Rogue
 {
@@ -13,12 +14,12 @@ namespace Rogue
 	{
 	public:
 
-		BaseAI(LogicComponent& logicComp);
+		BaseAI(Entity entValue, LogicComponent& logicComp);
 		virtual ~BaseAI() = default;
 
 		//From ILogic (Component Related)
-		virtual void logicInit() override;
-		virtual void logicUpdate() override;
+		virtual void LogicInit() override;
+		virtual void LogicUpdate() override;
 
 		//AI behavior checker to update
 		virtual void AIDetect();
@@ -30,8 +31,8 @@ namespace Rogue
 		virtual void AIIdleUpdate();
 
 		//Getter/Setter
-		std::shared_ptr<LogicComponent> getLogicComponent();
-		void setLogicComponent(LogicComponent& logicComp);
+		std::shared_ptr<LogicComponent> GetLogicComponent();
+		void SetLogicComponent(LogicComponent& logicComp);
 
 		void AddWaypoint(Vec2 newPoint);
 		void ClearWaypoints();
@@ -42,8 +43,9 @@ namespace Rogue
 		void PopNextPoint();
 		bool NextPointEmpty();
 
-	private:
+	protected:
 
+		Entity m_entity;
 		std::shared_ptr<LogicComponent> m_logicComponent;
 		std::vector<Vec2> m_waypoints;
 		std::queue<Vec2> m_nextPoint;
