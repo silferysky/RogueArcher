@@ -5,8 +5,8 @@
 
 namespace Rogue
 {
-	const Vector2D Vector2D::unitX = { 1.0f, 0.0f };
-	const Vector2D Vector2D::unitY = { 0.0f, 1.0f };
+	const Vector2D Vector2D::s_unitX = { 1.0f, 0.0f };
+	const Vector2D Vector2D::s_unitY = { 0.0f, 1.0f };
 
 	Vector2D::Vector2D(int X, int Y) :
 		x{ static_cast<float>(X) }, y{ static_cast<float>(Y) }
@@ -218,6 +218,14 @@ namespace Rogue
 	Vector2D Vec2NormalOf(const Vector2D& pVec)
 	{
 		return Vector2D(-pVec.y, pVec.x);
+	}
+
+	float Vec2Rotation(const Vector2D& ptLast, const Vector2D& ptFirst)
+	{
+		float x = ptLast.x - ptFirst.x;
+		float y = ptLast.y - ptFirst.y;
+
+		return std::atan2(y, x);
 	}
 
 	/**************************************************************************/
