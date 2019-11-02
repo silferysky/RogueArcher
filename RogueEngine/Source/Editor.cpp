@@ -41,6 +41,9 @@ namespace Rogue
 					selected = i.m_Entity;
 			}
 
+			if (!g_engine.m_coordinator.ComponentExists<TransformComponent>(selected))
+				return;
+
 			for (int i = 0; i < 1500; ++i)
 			{
 				Vec2 Position = g_engine.m_coordinator.GetComponent<TransformComponent>(selected).getPosition();
