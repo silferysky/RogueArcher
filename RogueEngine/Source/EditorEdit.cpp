@@ -60,13 +60,15 @@ namespace Rogue
 				{
 
 				}
-				if (ImGui::MenuItem("Delete", "", false, false))
+				if (ImGui::MenuItem("Delete", "", false, true))
 				{
-
-				}
-				if (ImGui::MenuItem("Rename", "", false, false))
-				{
-
+					for (auto& i : m_currentVector)
+					{
+						if (i.m_selected == true)
+						{
+							g_engine.m_coordinator.GetSceneManager().DeleteActiveEntity(i.m_Entity);
+						}
+					}
 				}
 				ImGui::EndMenu();
 			}
