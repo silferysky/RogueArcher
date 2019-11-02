@@ -40,11 +40,13 @@ namespace Rogue
 
 					float distance = Vec2SqDistance(aiTransform.getPosition(), playerTransform.getPosition());
 
+					//Empty this queue
+					std::queue<Vec2> empty;
+					std::swap(empty, m_nextPoint);
+
 					if (distance < RANGE * RANGE)
 					{
-						RE_CORE_INFO("IN RANGE");
-						std::queue<Vec2> empty;
-						std::swap(empty, m_nextPoint);
+						//RE_CORE_INFO("IN RANGE");
 						m_nextPoint.push(playerTransform.getPosition());
 					}
 				}
@@ -66,8 +68,10 @@ namespace Rogue
 			aiTransform.setPosition(m_nextPoint.front());
 		else
 		{
-			Vec2 travelDistance = m_nextPoint.front() - aiTransform.getPosition();
-			aiTransform.setPosition(aiTransform.getPosition() + travelDistance * 0.1f);
+			Vec2 travelDistance;
+			Vec2Normalize(travelDistance, m_nextPoint.front() - aiTransform.getPosition());
+			//aiTransform.setPosition(aiTransform.getPosition() + travelDistance * SPEED);
+			g_engine.m_coordinator.GetComponent<RigidbodyComponent>(m_entity).addForce(travelDistance * SPEED);
 		}
 	}
 }
