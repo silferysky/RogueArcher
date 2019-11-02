@@ -1,6 +1,7 @@
 #pragma once
 #include "PlayerControllerSystem.h"
 #include "Main.h"
+#include "ForceManager.h"
 #include "EventDispatcher.h"
 #include "ComponentList.h"
 #include "KeyEvent.h"
@@ -43,7 +44,7 @@ namespace Rogue
 		//std::cout << RadiansToDegrees(direction) << " degrees" << std::endl;
 
 		//For PlayerControllerSystem Timer
-		m_timer -= g_deltaTime;
+		m_timer -= g_deltaTime * g_engine.GetTimeScale();
 
 		//To update all timed entities
 		if (!g_engine.m_coordinator.GameIsActive())
@@ -53,7 +54,7 @@ namespace Rogue
 
 		for (auto timedEntityIt = m_timedEntities.begin(); timedEntityIt != m_timedEntities.end(); ++timedEntityIt)
 		{
-			timedEntityIt->m_durationLeft -= g_deltaTime;
+			timedEntityIt->m_durationLeft -= g_deltaTime * g_engine.GetTimeScale();
 			if (timedEntityIt->m_durationLeft < 0.0f)
 			{
 				g_engine.m_coordinator.DestroyEntity(timedEntityIt->m_entity);
@@ -103,9 +104,8 @@ namespace Rogue
 			if (!g_engine.m_coordinator.GameIsActive())
 				return;
 
-			if (keycode == KeyPress::MB2)
+			if (keycode == KeyPress::MB1)
 			{
-				g_engine.SetTimeScale(0.1f);
 				if (m_entities.size() && m_timedEntities.size())
 				{
 					//By right correct way of doing this
@@ -115,6 +115,11 @@ namespace Rogue
 
 					ClearTimedEntities();
 				}
+			}
+
+			if (keycode == KeyPress::MB2)
+			{
+				g_engine.SetTimeScale(0.1f);
 			}
 
 			if (keycode == KeyPress::KeySpace)
@@ -235,14 +240,18 @@ namespace Rogue
 			if (!g_engine.m_coordinator.GameIsActive())
 				return;
 
-			if (keycode == KeyPress::MB2)
+			if (keycode == KeyPress::MB1)
 			{
-				g_engine.SetTimeScale(1.0f);
 				if (!m_timedEntities.size() && m_timer < 0.0f)
 				{
 					CreateBallAttack();
 					m_timer = 1.0f;
 				}
+			}
+
+			if (keycode == KeyPress::MB2)
+			{
+				g_engine.SetTimeScale(1.0f);
 			}
 			return;
 		}
@@ -275,6 +284,7 @@ namespace Rogue
 		{
 			g_engine.m_coordinator.DestroyEntity(entity.m_entity);
 		}
+
 
 		m_timedEntities.clear();
 	}
@@ -316,6 +326,7 @@ namespace Rogue
 
 		RigidbodyComponent& rigidbody = g_engine.m_coordinator.CreateComponent<RigidbodyComponent>(ball);
 		rigidbody.Deserialize("0;0;0;0;1;1;0");
+		//ForceManager::instance().RegisterForce(ball, Vec2(cursorPos.x * FORCE_FACTOR, cursorPos.y * FORCE_FACTOR), 1.0f);
 		rigidbody.addForce(Vec2(cursorPos.x * FORCE_FACTOR, cursorPos.y * FORCE_FACTOR));
 
 		BoxCollider2DComponent& boxCollider = g_engine.m_coordinator.CreateComponent<BoxCollider2DComponent>(ball);
