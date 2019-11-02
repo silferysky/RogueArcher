@@ -60,6 +60,7 @@ namespace Rogue
 		m_coordinator.RegisterComponent<AnimationComponent>();
 		m_coordinator.RegisterComponent<CameraComponent>();
 		m_coordinator.RegisterComponent<AudioEmitterComponent>();
+		m_coordinator.RegisterComponent<UIComponent>();
 	}
 
 	void REEngine::Init()

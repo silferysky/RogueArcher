@@ -59,6 +59,9 @@
 		// For all entities
 		for (auto entity : m_entities)
 		{
+			if (g_engine.m_coordinator.ComponentExists<Rogue::UIComponent>(entity))
+				continue;
+
 			auto& transform = g_engine.m_coordinator.GetComponent<Rogue::TransformComponent>(entity);
 			auto& rBody = g_engine.m_coordinator.GetComponent<Rogue::RigidbodyComponent>(entity);
 

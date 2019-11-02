@@ -89,11 +89,10 @@ namespace Rogue
 		{
 			auto& entity = pair.second;
 
-			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(entity);
-			auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
-
-			//if (!entity)
-			draw(&sprite, &transform);
+			if (g_engine.m_coordinator.ComponentExists<UIComponent>(entity))
+				drawUI(entity);
+			else
+				draw(entity);
 		}
 
 		glUseProgram(0);
@@ -107,23 +106,58 @@ namespace Rogue
 		g_engine.m_coordinator.EndTimeSystem("Graphics System");
 	}
 
-	void GraphicsSystem::draw(SpriteComponent* sprite, TransformComponent* transform)
+	void GraphicsSystem::draw(Entity& entity)
 	{
-		auto transformMat = glm::mat4(1.0f);
-		auto texture = sprite->getTexture();
+		auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(entity);
+		auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
 
-		transformMat = glm::translate(transformMat, { transform->getPosition().x, transform->getPosition().y, 1.0f });
-		transformMat = glm::rotate(transformMat, transform->getRotation(), glm::vec3(0.0f, 0.0f, 1.0f));
-		transformMat = glm::scale(transformMat, glm::vec3(transform->getScale().x, transform->getScale().y, 1.0f));
+		auto transformMat = glm::mat4(1.0f);
+		auto texture = sprite.getTexture();
+
+		transformMat = glm::translate(transformMat, { transform.getPosition().x, transform.getPosition().y, 1.0f });
+		transformMat = glm::rotate(transformMat, transform.getRotation(), glm::vec3(0.0f, 0.0f, 1.0f));
+		transformMat = glm::scale(transformMat, glm::vec3(transform.getScale().x, transform.getScale().y, 1.0f));
 
 		glBindTexture(GL_TEXTURE_2D, texture.m_texture);
-		UpdateTextureCoords(sprite->getTexCoordMin(), sprite->getTexCoordMax());
+		UpdateTextureCoords(sprite.getTexCoordMin(), sprite.getTexCoordMax());
 		// model to world, world to view, view to projection
 
 		//offset by translation of camera, inverse of rotation
 
 		glUniformMatrix4fv(m_projLocation, 1, GL_FALSE, glm::value_ptr(g_engine.GetProjMat()));
 		glUniformMatrix4fv(m_viewLocation, 1, GL_FALSE, glm::value_ptr(m_pCamera->GetViewMatrix()));
+		glUniformMatrix4fv(m_transformLocation, 1, GL_FALSE, glm::value_ptr(transformMat));
+
+		//glUniform4fv(m_filterLocation, 1, glm::value_ptr(sprite->getFilter()));
+
+		// Draw the Mesh
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+	}
+
+	void GraphicsSystem::drawUI(Entity& entity)
+	{
+		// don't draw inactive UI
+		if (!g_engine.m_coordinator.GetComponent<UIComponent>(entity).getIsActive())
+			return;
+
+		auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(entity);
+		auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
+
+		auto transformMat = glm::mat4(1.0f);
+		auto texture = sprite.getTexture();
+
+		transformMat = glm::translate(transformMat, { transform.getPosition().x, transform.getPosition().y, 1.0f });
+		transformMat = glm::rotate(transformMat, transform.getRotation(), glm::vec3(0.0f, 0.0f, 1.0f));
+		transformMat = glm::scale(transformMat, glm::vec3(transform.getScale().x, transform.getScale().y, 1.0f));
+
+		glBindTexture(GL_TEXTURE_2D, texture.m_texture);
+		UpdateTextureCoords(sprite.getTexCoordMin(), sprite.getTexCoordMax());
+		// model to world, world to view, view to projection
+
+		//offset by translation of camera, inverse of rotation
+
+		glUniformMatrix4fv(m_projLocation, 1, GL_FALSE, glm::value_ptr(g_engine.GetProjMat()));
+		glUniformMatrix4fv(m_viewLocation, 1, GL_FALSE, glm::value_ptr(glm::mat4(1.0f)));
 		glUniformMatrix4fv(m_transformLocation, 1, GL_FALSE, glm::value_ptr(transformMat));
 
 		//glUniform4fv(m_filterLocation, 1, glm::value_ptr(sprite->getFilter()));

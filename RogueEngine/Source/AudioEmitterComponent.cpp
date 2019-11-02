@@ -4,10 +4,12 @@
 
 namespace Rogue
 {
-	AudioEmitterComponent::~AudioEmitterComponent()
+	void AudioEmitterComponent::Destroy()
 	{
-		//if (m_sound.GetSystem() != NULL)
-			//m_sound.Release();
+		m_sound.Pause(true);
+
+		if (m_sound.GetSystem() != NULL)
+			m_sound.Release();
 	}
 
 	void AudioEmitterComponent::setSoundPath(const std::string& soundPath)
