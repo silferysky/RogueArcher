@@ -28,12 +28,33 @@ namespace Rogue
 	void PlayerControllerSystem::Update()
 	{
 		//PlayerControllerSystem does not update, since it only handles player events (aka button pushes that affect player)
+		POINT cursor;
+		Vec2 cursorPos;
+
+		if (GetCursorPos(&cursor))
+		{
+			cursorPos.x = cursor.x - GetWindowWidth(g_engine.GetWindowHandler()) / 2.0f;
+			cursorPos.y = -(cursor.y - GetWindowHeight(g_engine.GetWindowHandler()) / 2.0f);
+		}
+
+		auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin());
+
+		float direction = Vec2Rotation(cursorPos, Vec2{ 0,0 }); // Player must be center of screen for this to work
+
+		std::cout << RadiansToDegrees(direction) << " degrees" << std::endl;
 	}
 
 	void PlayerControllerSystem::Receive(Event* ev)
 	{
 		switch (ev->GetEventType())
 		{
+		case EventType::EvMouseMoved:
+		{
+			MouseMoveEvent* mouseMove = dynamic_cast<MouseMoveEvent*>(ev);
+			KeyPress keycode = mouseMove->GetKeyCode();
+
+		}
+
 		case EventType::EvKeyTriggered:
 		{
 			KeyTriggeredEvent* keytriggeredevent = dynamic_cast<KeyTriggeredEvent*>(ev);
