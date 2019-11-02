@@ -45,14 +45,15 @@ namespace Rogue
 
 		for (auto entity : m_entities)
 		{
-			auto sound = g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(entity).getSound();
+			auto& sound = g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(entity).getSound();
 			auto transformPos = g_engine.m_coordinator.GetComponent<TransformComponent>(entity).getPosition();
 
-			float distance = log2_fast(Vec2SqDistance(transformPos, *m_trackingTarget));
+			float distance = log2_fast(Vec2SqDistance(transformPos, g_engine.m_coordinator.GetComponent<TransformComponent>(m_trackingTarget).getPosition()));
+			
+			sound.Update();
 
-			sound->Update();
+			sound.SetVolume(1.0f - distance * 0.05f);
 
-			sound->SetVolume(1.0f - distance * 0.05f);
 		}
 
 		g_engine.m_coordinator.EndTimeSystem("Audio System");
@@ -80,8 +81,8 @@ namespace Rogue
 		for (auto entity : m_entities)
 		{
 			auto sound = g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(entity).getSound();
-			if (sound->GetSystem() != NULL)
-				sound->Release();
+			if (sound.GetSystem() != NULL)
+				sound.Release();
 		}
 
 		m_BGMstream.Release();
@@ -97,7 +98,7 @@ namespace Rogue
 			for (auto entity : m_entities)
 			{
 				auto sound = g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(entity).getSound();
-				sound->SetVolume(0.0f);
+				sound.SetVolume(0.0f);
 			}
 		}
 		/* Unmute currently playing BGM */
@@ -106,34 +107,43 @@ namespace Rogue
 			for (auto entity : m_entities)
 			{
 				auto sound = g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(entity).getSound();
-				sound->SetVolume(3.0f);
+				sound.SetVolume(0.3f);
 			}
 		}
 	}
 
-	void AudioSystem::InitSounds()
+	void AudioSystem::TrueInit()
 	{
 		for (auto& objectIterator : g_engine.m_coordinator.GetActiveObjects())
 		{
 			if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(objectIterator.m_Entity))
 			{
-				m_trackingTarget = &(g_engine.m_coordinator.GetComponent<TransformComponent>(objectIterator.m_Entity).getPosition());
+				m_trackingTarget = objectIterator.m_Entity;
 
-				break;
+				return;
 			}
 		}
 
+		InitSounds();
+	}
+
+	void AudioSystem::InitSounds()
+	{
 		for (auto entity : m_entities)
 		{
-			auto aEmitter = g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(entity);
-			auto sound = aEmitter.getSound();
+			auto& aEmitter = g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(entity);
+			auto& sound = aEmitter.getSound();
 
 			/* Load up BGMs */
-			if (!(sound->m_b_IsPlaying))
+			if (!(sound.m_b_IsPlaying))
 			{
-				sound->CreateBGM(aEmitter.getID().c_str(), 1, 112.0f, &m_BGMstream);
-				sound->Play(0.3f);
+				sound.CreateBGM(aEmitter.getSoundPath().c_str(), 1, 112.0f, &m_BGMstream);
+
+				sound.Play(0.3f);
 			}
+
 		}
 	}
+
+
 }

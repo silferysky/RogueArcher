@@ -66,6 +66,8 @@ namespace Rogue
 		std::vector<std::string>::iterator it = std::find(m_loadedLevels.begin(), m_loadedLevels.end(), std::string(fileName));
 		if (it == m_loadedLevels.end())
 			m_loadedLevels.push_back(std::string(fileName));
+
+		g_engine.m_coordinator.GetSystem<AudioSystem>()->TrueInit();
 	}
 
 	void SceneManager::SaveLevel(const char* fileName)

@@ -11,15 +11,15 @@ namespace Rogue
 	class AudioSystem : public System, public EventListener
 	{
 		Stream m_BGMstream;
-		Sound m_music;
 		bool m_muted;
 
-		Vec2* m_trackingTarget;
+		Entity m_trackingTarget;
 	public:
 		AudioSystem();
 		~AudioSystem() = default;
 
 		void ToggleMute();
+		void TrueInit();
 		void InitSounds();
 
 		void Init() override;

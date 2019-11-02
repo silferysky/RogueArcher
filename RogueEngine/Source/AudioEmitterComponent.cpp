@@ -1,20 +1,24 @@
 #include "AudioEmitterComponent.h"
 #include <sstream>
+#include "Main.h"
 
 namespace Rogue
 {
-	void AudioEmitterComponent::Destroy()
+	AudioEmitterComponent::~AudioEmitterComponent()
 	{
+		m_sound.Pause(true);
+		m_sound.Unload();
+
 		if (m_sound.GetSystem() != NULL)
 			m_sound.Release();
 	}
 
-	void AudioEmitterComponent::setID(const std::string& id)
+	void AudioEmitterComponent::setSoundPath(const std::string& soundPath)
 	{
-		m_soundPath = id;
+		m_soundPath = soundPath;
 	}
 
-	std::string AudioEmitterComponent::getID() const
+	std::string AudioEmitterComponent::getSoundPath() const
 	{
 		return m_soundPath;
 	}
@@ -26,9 +30,14 @@ namespace Rogue
 		return ss.str();
 	}
 
-	Sound* AudioEmitterComponent::getSound()
+	void AudioEmitterComponent::setSound(const std::string& sound)
 	{
-		return &m_sound;
+		//m_sound = g_engine.m_coordinator.loadSound(sound);
+	}
+
+	Sound& AudioEmitterComponent::getSound()
+	{
+		return m_sound;
 	}
 
 	void AudioEmitterComponent::Deserialize(std::string toDeserialize)
@@ -40,7 +49,7 @@ namespace Rogue
 
 		while (std::getline(ss, s1, ';'))
 		{
-			setID(s1);
+			setSoundPath(s1);
 		}
 	}
 }
