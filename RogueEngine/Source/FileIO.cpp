@@ -6,6 +6,8 @@
 #include "FileIO.h"
 #include "Logger.h"
 
+#define MAX_FILE_BUFFER_SIZE 1048575
+
 namespace Rogue
 {
 	bool RESerialiser::ReadFromFile(const char* FileName)
@@ -16,8 +18,8 @@ namespace Rogue
 		{
 			return EXIT_FAILURE;
 		}
-		char buffer[65536];
-		rapidjson::FileReadStream is(pFile, buffer, sizeof(buffer));
+		std::vector<char> buffer(MAX_FILE_BUFFER_SIZE);
+		rapidjson::FileReadStream is(pFile, buffer.data(), MAX_FILE_BUFFER_SIZE);
 		rapidjson::Document document;
 		document.ParseStream<0, rapidjson::UTF8<>, rapidjson::FileReadStream>(is);
 		fclose(pFile);
@@ -26,11 +28,12 @@ namespace Rogue
 
 	rapidjson::Document RESerialiser::DeserialiseFromFile(const char* FileName)
 	{
-		FILE* pFile = nullptr;
+		std::FILE* pFile = nullptr;
 		fopen_s(&pFile, FileName, "r");
 		RE_ASSERT(pFile, "Error opening file for deserialization");
-		char buffer[65536];
-		rapidjson::FileReadStream is(pFile, buffer, sizeof(buffer));
+
+		std::vector<char> buffer(MAX_FILE_BUFFER_SIZE);
+		rapidjson::FileReadStream is(pFile, buffer.data(), MAX_FILE_BUFFER_SIZE);
 		fclose(pFile);
 		rapidjson::Document document;
 		document.ParseStream<0, rapidjson::UTF8<>, rapidjson::FileReadStream>(is);

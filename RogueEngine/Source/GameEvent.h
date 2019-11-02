@@ -58,7 +58,6 @@ namespace Rogue
 	class EntMoveEvent : public EntityEvent
 	{
 	public:
-
 		SET_EVENT_CATEGORY(EventCatEntMove)
 		SET_EVENT_TYPE(EvEntityMove)
 

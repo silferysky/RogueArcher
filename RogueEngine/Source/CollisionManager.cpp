@@ -643,7 +643,7 @@ namespace Rogue
 		Vec2 size = GetColliderScale(collider, transform);
 		Mtx33 trans, scale;
 		
-		std::cout << "UPDATE AABB" << std::endl;
+	//	std::cout << "UPDATE AABB" << std::endl;
 
 		Mtx33Translate(trans, pos.x, pos.y);
 		Mtx33Scale(scale, size.x, size.y);

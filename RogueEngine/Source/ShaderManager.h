@@ -22,12 +22,12 @@ namespace Rogue
 			ShaderMap.emplace("Font Shader", Shader("vertexFontShader.txt", "fragmentFontShader.txt"));
 		}
 
-		std::map<std::string, Shader> getShaderMap() const
+		const std::map<std::string, Shader>& getShaderMap() const
 		{
 			return ShaderMap;
 		}
 
-		Shader loadShader(std::string shader)
+		Shader loadShader(const std::string& shader)
 		{
 			auto itr = ShaderMap.find(shader);
 
