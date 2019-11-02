@@ -367,9 +367,6 @@
     <ClInclude Include="Source\Main.h">
       <Filter>RogueEngine\Entry Point</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SceneManager.h">
-      <Filter>RogueEngine\I/O</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Vector2D.h">
       <Filter>RogueEngine\Math</Filter>
     </ClInclude>
@@ -438,6 +435,9 @@
     </ClInclude>
     <ClInclude Include="Source\EditorSettings.h">
       <Filter>RogueEditor\EditorFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneManager.h">
+      <Filter>RogueEngine\Core\ECS</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -609,9 +609,6 @@
     <ClCompile Include="Source\Main.cpp">
       <Filter>RogueEngine\Entry Point</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SceneManager.cpp">
-      <Filter>RogueEngine\I/O</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Vector2D.cpp">
       <Filter>RogueEngine\Math</Filter>
     </ClCompile>
@@ -674,6 +671,9 @@
     </ClCompile>
     <ClCompile Include="Source\EditorSettings.cpp">
       <Filter>RogueEditor\EditorFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneManager.cpp">
+      <Filter>RogueEngine\Core\ECS</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

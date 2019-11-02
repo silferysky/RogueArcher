@@ -78,6 +78,10 @@ namespace Rogue
 			if (keycode == KeyPress::Numpad2)
 				g_engine.m_coordinator.cloneArchetypes("Circle");
 
+			//Statement here to make sure all of the other commands only apply if game is not running
+			if (!g_engine.m_coordinator.GameIsActive())
+				return;
+
 			if (keycode == KeyPress::MB2)
 			{
 				g_engine.SetTimeScale(0.1f);
@@ -198,9 +202,13 @@ namespace Rogue
 			KeyReleaseEvent* KeyReleaseEv = dynamic_cast<KeyReleaseEvent*>(ev);
 			KeyPress keycode = KeyReleaseEv->GetKeyCode();
 
+			if (!g_engine.m_coordinator.GameIsActive())
+				return;
+
 			if (keycode == KeyPress::MB2)
 			{
 				g_engine.SetTimeScale(1.0f);
+				CreateBallAttack();
 			}
 			return;
 		}
@@ -209,6 +217,35 @@ namespace Rogue
 
 	void PlayerControllerSystem::Shutdown()
 	{
+	}
+
+	void PlayerControllerSystem::CreateBallAttack()
+	{
+		std::ostringstream strstream;
+		Entity ball = g_engine.m_coordinator.CreateEntity();
+
+		//Creating Components
+		//Transform
+		TransformComponent& transform = g_engine.m_coordinator.CreateComponent<TransformComponent>(ball);
+		strstream	<< g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin()).getPosition().x << ";"
+					<< g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin()).getPosition().y << ";"
+					<< "50;50;0";
+		transform.Deserialize(strstream.str());
+
+		SpriteComponent& sprite = g_engine.m_coordinator.CreateComponent<SpriteComponent>(ball);
+		sprite.Deserialize("Resources/Assets/Arrow.png;1");
+
+		RigidbodyComponent& rigidbody = g_engine.m_coordinator.CreateComponent<RigidbodyComponent>(ball);
+		rigidbody.Deserialize("0;0;0;0;1;1;0");
+		//rigidbody.addForce()
+
+		BoxCollider2DComponent& boxCollider = g_engine.m_coordinator.CreateComponent<BoxCollider2DComponent>(ball);
+		boxCollider.Deserialize("0;0;0;0;0");
+
+		HierarchyInfo newInfo{};
+		newInfo.m_Entity = ball;
+		newInfo.m_objectName = "Ball";
+		g_engine.m_coordinator.GetEntityManager().m_getActiveObjects().push_back(newInfo);
 	}
 
 
