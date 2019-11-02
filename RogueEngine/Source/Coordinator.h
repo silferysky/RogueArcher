@@ -9,10 +9,10 @@
 #include "EventDispatcher.h"
 #include "ShaderManager.h"
 #include "TextureManager.h"
-#include "Coordinator.h"
 #include "Types.h"
 #include "Timer.h"
 #include "AudioSystem.h"
+#include "LogicSystem.h"
 
 namespace Rogue
 {
@@ -87,6 +87,8 @@ namespace Rogue
 				DestroyEntity(GetActiveObjects().back().m_Entity);
 				GetActiveObjects().pop_back();
 			}
+
+			m_systemManager->GetSystem<LogicSystem>()->ClearLogicInterface();
 			m_sceneManager->ResetObjectIterator();
 		}
 
