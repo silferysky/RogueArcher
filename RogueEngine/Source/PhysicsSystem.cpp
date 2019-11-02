@@ -110,6 +110,12 @@ namespace Rogue
 
 			return;
 		}
+		case EventType::EvEntityTeleport:
+		{
+			EntTeleportEvent* EvEntTeleport = dynamic_cast<EntTeleportEvent*>(ev);
+			g_engine.m_coordinator.GetComponent<TransformComponent>(EvEntTeleport->GetEntityID()).
+				setPosition(EvEntTeleport->GetVecMovement());
+		}
 		default:
 		{
 			return;

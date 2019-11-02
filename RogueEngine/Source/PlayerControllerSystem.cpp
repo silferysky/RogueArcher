@@ -9,7 +9,7 @@
 namespace Rogue
 {
 	PlayerControllerSystem::PlayerControllerSystem()
-		:System(SystemID::id_PLAYERCONTROLLERSYSTEM)
+		:System(SystemID::id_PLAYERCONTROLLERSYSTEM), m_timer{0.0f}
 	{
 	}
 
@@ -27,7 +27,6 @@ namespace Rogue
 
 	void PlayerControllerSystem::Update()
 	{
-		//PlayerControllerSystem does not update, since it only handles player events (aka button pushes that affect player)
 		POINT cursor;
 		Vec2 cursorPos;
 
@@ -41,7 +40,29 @@ namespace Rogue
 
 		float direction = Vec2Rotation(cursorPos, Vec2{ 0,0 }); // Player must be center of screen for this to work
 
-		std::cout << RadiansToDegrees(direction) << " degrees" << std::endl;
+		//std::cout << RadiansToDegrees(direction) << " degrees" << std::endl;
+
+		//For PlayerControllerSystem Timer
+		m_timer -= g_deltaTime;
+
+		//To update all timed entities
+		if (!g_engine.m_coordinator.GameIsActive())
+		{
+			ClearTimedEntities();
+		}
+
+		for (auto timedEntityIt = m_timedEntities.begin(); timedEntityIt != m_timedEntities.end(); ++timedEntityIt)
+		{
+			timedEntityIt->m_durationLeft -= g_deltaTime;
+			if (timedEntityIt->m_durationLeft < 0.0f)
+			{
+				g_engine.m_coordinator.DestroyEntity(timedEntityIt->m_entity);
+				timedEntityIt = m_timedEntities.erase(timedEntityIt);
+
+				if (m_timedEntities.size() == 0)
+					break;
+			}
+		}
 	}
 
 	void PlayerControllerSystem::Receive(Event* ev)
@@ -85,6 +106,15 @@ namespace Rogue
 			if (keycode == KeyPress::MB2)
 			{
 				g_engine.SetTimeScale(0.1f);
+				if (m_entities.size() && m_timedEntities.size())
+				{
+					//By right correct way of doing this
+					//CreateTeleportEvent(g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).getPosition());
+					g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin()).setPosition(
+						g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).getPosition());
+
+					ClearTimedEntities();
+				}
 			}
 
 			if (keycode == KeyPress::KeySpace)
@@ -208,7 +238,11 @@ namespace Rogue
 			if (keycode == KeyPress::MB2)
 			{
 				g_engine.SetTimeScale(1.0f);
-				CreateBallAttack();
+				if (!m_timedEntities.size() && m_timer < 0.0f)
+				{
+					CreateBallAttack();
+					m_timer = 1.0f;
+				}
 			}
 			return;
 		}
@@ -219,16 +253,61 @@ namespace Rogue
 	{
 	}
 
+	std::vector<TimedEntity> PlayerControllerSystem::GetTimedEntities() const
+	{
+		return m_timedEntities;
+	}
+
+	void PlayerControllerSystem::AddToTimedEntities(TimedEntity newEnt)
+	{
+		m_timedEntities.push_back(newEnt);
+	}
+
+	void PlayerControllerSystem::AddToTimedEntities(Entity entity, float duration)
+	{
+		TimedEntity newEntity(entity, duration);
+		m_timedEntities.push_back(newEntity);
+	}
+
+	void PlayerControllerSystem::ClearTimedEntities()
+	{
+		for (TimedEntity entity : m_timedEntities)
+		{
+			g_engine.m_coordinator.DestroyEntity(entity.m_entity);
+		}
+
+		m_timedEntities.clear();
+	}
+
+	void PlayerControllerSystem::CreateTeleportEvent(Vec2 newPosition)
+	{
+		EntTeleportEvent* event = new EntTeleportEvent(*m_entities.begin(), newPosition);
+		event->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
+		EventDispatcher::instance().AddEvent(event);
+	}
+
 	void PlayerControllerSystem::CreateBallAttack()
 	{
 		std::ostringstream strstream;
 		Entity ball = g_engine.m_coordinator.CreateEntity();
 
+		//For Cursor position
+		POINT cursor;
+		Vec2 cursorPos;
+
+		if (GetCursorPos(&cursor))
+		{
+			cursorPos.x = cursor.x - GetWindowWidth(g_engine.GetWindowHandler()) / 2.0f;
+			cursorPos.y = -(cursor.y - GetWindowHeight(g_engine.GetWindowHandler()) / 2.0f);
+		}
+
+		Vec2Normalize(cursorPos, cursorPos);
+
 		//Creating Components
 		//Transform
 		TransformComponent& transform = g_engine.m_coordinator.CreateComponent<TransformComponent>(ball);
-		strstream	<< g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin()).getPosition().x << ";"
-					<< g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin()).getPosition().y << ";"
+		strstream	<< g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin()).getPosition().x + cursorPos.x * POSITION_RELATIVITY << ";"
+					<< g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin()).getPosition().y + cursorPos.y * POSITION_RELATIVITY << ";"
 					<< "50;50;0";
 		transform.Deserialize(strstream.str());
 
@@ -237,7 +316,7 @@ namespace Rogue
 
 		RigidbodyComponent& rigidbody = g_engine.m_coordinator.CreateComponent<RigidbodyComponent>(ball);
 		rigidbody.Deserialize("0;0;0;0;1;1;0");
-		//rigidbody.addForce()
+		rigidbody.addForce(Vec2(cursorPos.x * FORCE_FACTOR, cursorPos.y * FORCE_FACTOR));
 
 		BoxCollider2DComponent& boxCollider = g_engine.m_coordinator.CreateComponent<BoxCollider2DComponent>(ball);
 		boxCollider.Deserialize("0;0;0;0;0");
@@ -246,6 +325,8 @@ namespace Rogue
 		newInfo.m_Entity = ball;
 		newInfo.m_objectName = "Ball";
 		g_engine.m_coordinator.GetEntityManager().m_getActiveObjects().push_back(newInfo);
+
+		AddToTimedEntities(ball, 1.0f);
 	}
 
 
