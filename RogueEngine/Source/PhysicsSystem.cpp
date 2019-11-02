@@ -105,7 +105,7 @@ namespace Rogue
 		{
 			EntMoveEvent* EvEntMove = dynamic_cast<EntMoveEvent*>(ev);
 			ForceManager::instance().RegisterForce(EvEntMove->GetEntityID(),
-				Vec2{ EvEntMove->GetXMovement(), EvEntMove->GetYMovement() },
+				EvEntMove->GetVecMovement(),
 				g_fixedDeltaTime);
 
 			return;
