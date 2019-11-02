@@ -48,6 +48,13 @@ namespace Rogue
 			RemoveExcessAI();
 		}
 
+		//Logic system specifically only wants to update AddExcessAI and RemoveExcessAI even while game is not running or game is paused
+		if (!g_engine.m_coordinator.GetGameState() || g_engine.m_coordinator.GetPauseState)
+		{
+			g_engine.m_coordinator.EndTimeSystem("Logic System");
+			return;
+		}
+
 		for (auto it = m_entityLogicMap.begin(); it != m_entityLogicMap.end(); ++it)
 		{
 			//Null checker
