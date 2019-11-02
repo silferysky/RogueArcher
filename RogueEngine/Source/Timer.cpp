@@ -31,4 +31,9 @@ namespace Rogue
 	{
 		return m_timeMap;
 	}
+
+	Timer::ChronoTime Timer::GetCurrTime() const
+	{
+		return m_timer.now();
+	}
 }
