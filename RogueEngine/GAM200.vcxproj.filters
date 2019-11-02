@@ -59,9 +59,6 @@
     <Filter Include="RogueEngine\Systems\AI\Interface">
       <UniqueIdentifier>{847c7d63-e621-4015-ba7e-024dcbef5d5e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="RogueEngine\Systems\Font">
-      <UniqueIdentifier>{0b09499a-b5ad-41dc-946a-16db0a0a9183}</UniqueIdentifier>
-    </Filter>
     <Filter Include="RogueEngine\Systems\DebugDraw">
       <UniqueIdentifier>{72496074-30f5-465a-abd5-300a936ce5a7}</UniqueIdentifier>
     </Filter>
@@ -109,6 +106,9 @@
     </Filter>
     <Filter Include="RogueEngine\Systems\Collision\Components">
       <UniqueIdentifier>{9fd1136a-abdd-4f1e-ba8c-4d3e5264e59b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RogueEngine\Systems\UI">
+      <UniqueIdentifier>{0b09499a-b5ad-41dc-946a-16db0a0a9183}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -326,7 +326,7 @@
       <Filter>RogueEngine\Core\ECS</Filter>
     </ClInclude>
     <ClInclude Include="Source\FontSystem.h">
-      <Filter>RogueEngine\Systems\Font</Filter>
+      <Filter>RogueEngine\Systems\UI</Filter>
     </ClInclude>
     <ClInclude Include="Source\DebugDrawSystem.h">
       <Filter>RogueEngine\Systems\DebugDraw</Filter>
@@ -441,6 +441,9 @@
     </ClInclude>
     <ClInclude Include="Source\SpecialEntity.h">
       <Filter>RogueEngine\Systems\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\UIComponent.h">
+      <Filter>RogueEngine\Systems\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -565,7 +568,7 @@
       <Filter>RogueEngine\Systems\AI\Components</Filter>
     </ClCompile>
     <ClCompile Include="Source\FontSystem.cpp">
-      <Filter>RogueEngine\Systems\Font</Filter>
+      <Filter>RogueEngine\Systems\UI</Filter>
     </ClCompile>
     <ClCompile Include="Source\DebugDrawSystem.cpp">
       <Filter>RogueEngine\Systems\DebugDraw</Filter>
@@ -677,6 +680,9 @@
     </ClCompile>
     <ClCompile Include="Source\SceneManager.cpp">
       <Filter>RogueEngine\Core\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UIComponent.cpp">
+      <Filter>RogueEngine\Systems\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

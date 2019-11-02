@@ -44,7 +44,8 @@ namespace Rogue
 		void Update() override;
 		void Shutdown() override;
 
-		void draw(SpriteComponent* sprite, TransformComponent* transform);
+		void draw(Entity& entity);
+		void drawUI(Entity& entity);
 
 		void Receive(Event* ev);
 

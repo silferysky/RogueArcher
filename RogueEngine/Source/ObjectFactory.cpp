@@ -296,6 +296,11 @@ namespace Rogue
 						g_engine.m_coordinator.CopyComponent<AudioEmitterComponent>(clonedEntity, toClone);
 						break;
 					}
+					case static_cast<int>(UI) :
+					{
+						g_engine.m_coordinator.CopyComponent<UIComponent>(clonedEntity, toClone);
+						break;
+					}
 					default:
 					{
 						RE_CORE_WARN("OUT OF BOUNDS INDEX TO CLONE");
@@ -421,6 +426,11 @@ namespace Rogue
 						strstream << "Audio{" << g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(entityToSerialize).Serialize().c_str() << "}";
 						break;
 					}
+					case static_cast<int>(UI) :
+					{
+						strstream << "UI{" << g_engine.m_coordinator.GetComponent<UIComponent>(entityToSerialize).Serialize().c_str() << "}";
+						break;
+					}
 					default:
 					{
 						RE_CORE_WARN("OUT OF BOUNDS OBJECT COMPONENT SAVING");
@@ -508,6 +518,11 @@ namespace Rogue
 					case static_cast<int>(AUDIOEMITTER) :
 					{
 						g_engine.m_coordinator.LoadComponent<AudioEmitterComponent>(curEnt, readstr);
+						break;
+					}
+					case static_cast<int>(UI) :
+					{
+						g_engine.m_coordinator.LoadComponent<UIComponent>(curEnt, readstr);
 						break;
 					}
 					default:

@@ -11,7 +11,7 @@ namespace Rogue
 		Sound m_sound;
 	public:
 		AudioEmitterComponent() = default;
-		~AudioEmitterComponent();
+		~AudioEmitterComponent() = default;
 
 		void setSoundPath(const std::string& soundPath);
 		std::string getSoundPath() const;
@@ -21,5 +21,7 @@ namespace Rogue
 
 		std::string Serialize();
 		void Deserialize(std::string toDeserialize);
+
+		void Destroy();
 	};
 }

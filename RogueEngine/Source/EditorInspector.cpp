@@ -20,7 +20,7 @@ namespace Rogue
 		if (ImGui::IsItemHovered())
 		{
 			ImGui::BeginTooltip();
-			ImGui::Text("will not show anything until Game Object is double clicked");
+			ImGui::Text("Will not show anything until Game Object is double clicked");
 			ImGui::EndTooltip();
 		}
 			ImGui::TextDisabled("Name");
@@ -260,6 +260,20 @@ namespace Rogue
 						}
 					}
 
+					if (g_engine.m_coordinator.ComponentExists<UIComponent>(i.m_Entity))
+					{
+						if (ImGui::CollapsingHeader("UI"))
+						{
+							bool m_isActive = g_engine.m_coordinator.GetComponent<UIComponent>(i.m_Entity).getIsActive();
+
+							ImGui::PushItemWidth(75);
+							ImGui::Checkbox("Active?", &m_isActive);
+							ImGui::TextWrapped("Check this box to show the UI element.");
+							g_engine.m_coordinator.GetComponent<CameraComponent>(i.m_Entity).setIsActive(m_isActive);
+							ImGui::PushItemWidth(75);
+						}
+					}
+
 					if (g_engine.m_coordinator.ComponentExists<CircleCollider2DComponent>(i.m_Entity))
 					{
 						if (ImGui::CollapsingHeader("Circle 2D Collider"))
@@ -384,6 +398,11 @@ namespace Rogue
 						{
 							g_engine.m_coordinator.AddComponent(i.m_Entity, AudioEmitterComponent());
 						}
+
+						if (ImGui::MenuItem("UI", nullptr, false, !g_engine.m_coordinator.ComponentExists<UIComponent>(i.m_Entity)))
+						{
+							g_engine.m_coordinator.AddComponent(i.m_Entity, UIComponent());
+						}
 						ImGui::EndPopup();
 					}
 					if (ImGui::BeginPopup("Delete Component"))
@@ -443,8 +462,15 @@ namespace Rogue
 
 						if (ImGui::MenuItem("Sound", nullptr, false, g_engine.m_coordinator.ComponentExists<AudioEmitterComponent>(i.m_Entity)))
 						{
+							g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(i.m_Entity).Destroy();
 							g_engine.m_coordinator.RemoveComponent<AudioEmitterComponent>(i.m_Entity);
 						}
+
+						if (ImGui::MenuItem("UI", nullptr, false, g_engine.m_coordinator.ComponentExists<UIComponent>(i.m_Entity)))
+						{
+							g_engine.m_coordinator.RemoveComponent<UIComponent>(i.m_Entity);
+						}
+
 						ImGui::EndPopup();
 					}
 
@@ -455,6 +481,9 @@ namespace Rogue
 					ImGui::SameLine();
 					if (ImGui::Button("Delete Object"))
 					{
+						if (g_engine.m_coordinator.ComponentExists<AudioEmitterComponent>(i.m_Entity))
+							g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(i.m_Entity).Destroy();
+
 						g_engine.m_coordinator.GetSceneManager().DeleteActiveEntity(i.m_Entity);
 					}
 

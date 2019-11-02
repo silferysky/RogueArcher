@@ -126,6 +126,7 @@
     <ClInclude Include="Source\SystemManager.h" />
     <ClInclude Include="Source\Timer.h" />
     <ClInclude Include="Source\Types.h" />
+    <ClInclude Include="Source\UIComponent.h" />
     <ClInclude Include="Source\Vector2D.h" />
     <ClInclude Include="Source\VSync.h" />
     <ClInclude Include="Source\WindowHelper.h" />
@@ -206,6 +207,7 @@
     <ClCompile Include="Source\REMath.cpp" />
     <ClCompile Include="Source\SpriteComponent.cpp" />
     <ClCompile Include="Source\Timer.cpp" />
+    <ClCompile Include="Source\UIComponent.cpp" />
     <ClCompile Include="Source\Vector2D.cpp" />
     <ClCompile Include="Source\VSync.cpp" />
     <ClCompile Include="Source\WindowHelper.cpp" />
