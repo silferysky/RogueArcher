@@ -142,7 +142,7 @@ namespace Rogue
 		SET_EVENT_CATEGORY(EventCatMouse)
 			SET_EVENT_TYPE(EvMouseMoved)
 
-			inline float GetX() { return x; }
+		inline float GetX() { return x; }
 		inline float GetY() { return y; }
 
 		MouseMoveEvent(float xPos, float yPos, KeyPress key = KeyPress::UNDEF)

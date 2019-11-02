@@ -31,8 +31,8 @@ namespace Rogue
 
 		float m[2];
 
-		static const Vector2D unitX;
-		static const Vector2D unitY;
+		static const Vector2D s_unitX;
+		static const Vector2D s_unitY;
 
 		Vector2D() : x{ 0.0f }, y{ 0.0f } // Default constructor
 		{}
@@ -80,6 +80,8 @@ namespace Rogue
 
 	Vector2D	Vec2NormalOf(const Vector2D& pVec);
 
+	float	Vec2Rotation(const Vector2D& ptLast, const Vector2D& ptFirst = Vector2D::s_unitX);
+
 	void	Vec2Normalize(Vector2D& pResult, const Vector2D& pVec0);
 
 	float	Vec2Length(const Vector2D& pVec0);
@@ -93,4 +95,5 @@ namespace Rogue
 	float	Vec2DotProd(const Vector2D& pVec0, const Vector2D& pVec1);
 
 	float	Vec2CrossProd(const Vector2D& pVec0, const Vector2D& pVec1);
+
 }
