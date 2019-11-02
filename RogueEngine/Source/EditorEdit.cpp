@@ -72,6 +72,7 @@ namespace Rogue
 				}
 				ImGui::EndMenu();
 			}
+			
 			ImGui::EndMainMenuBar();
 		}
 

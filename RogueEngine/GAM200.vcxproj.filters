@@ -433,6 +433,9 @@
     <ClInclude Include="Source\ForceManager.h">
       <Filter>RogueEngine\Systems\Physics</Filter>
     </ClInclude>
+    <ClInclude Include="Source\EditorSettings.h">
+      <Filter>RogueEditor\EditorFiles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -662,6 +665,9 @@
     </ClCompile>
     <ClCompile Include="Source\ForceManager.cpp">
       <Filter>RogueEngine\Systems\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EditorSettings.cpp">
+      <Filter>RogueEditor\EditorFiles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

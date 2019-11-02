@@ -233,6 +233,11 @@ namespace Rogue
 						}
 					}
 
+					if (g_engine.m_coordinator.ComponentExists<LogicComponent>(i.m_Entity))
+					{
+
+					}
+
 					if (g_engine.m_coordinator.ComponentExists<CameraComponent>(i.m_Entity))
 					{
 						if (ImGui::CollapsingHeader("Camera"))
@@ -445,6 +450,7 @@ namespace Rogue
 					{
 						g_engine.m_coordinator.GetSceneManager().DeleteActiveEntity(i.m_Entity);
 					}
+
 				}		
 		}
 
@@ -469,7 +475,11 @@ namespace Rogue
 
 		ImGui::DragFloat("Set Gravity", &m_gravity.y, 1.0f, -10000.0f, 10000.0f);
 		g_engine.m_coordinator.GetSystem<PhysicsSystem>()->setGravity(m_gravity);
+
+
 		ImGui::End();
+
+
 	}
 	void ImGuiInspector::Shutdown()
 	{
