@@ -19,7 +19,7 @@ namespace Rogue
 		m_EditorManager->AddEditorWindow<ImGuiInspector>("Inspector");
 		m_EditorManager->AddEditorWindow<ImGuiProject>("Project");
 		m_EditorManager->AddEditorWindow<ImGuiEditorViewport>("Viewport");
-
+		m_EditorManager->AddEditorWindow<ImGuiEditorSettings>("Settings");
 		m_EditorManager->Init();
 	}
 

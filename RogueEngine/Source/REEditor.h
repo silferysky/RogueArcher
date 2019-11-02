@@ -1,6 +1,6 @@
 #pragma once
 #include "EditorManager.h"
-
+#include "EditorSettings.h"
 #include "EditorInspector.h"
 #include "EditorFile.h"
 #include "EditorEdit.h"
