@@ -1,7 +1,7 @@
 #pragma once
 #include "BaseAI.h"
 
-#define RANGE 5000
+#define RANGE 200
 #define SPEED 100
 
 namespace Rogue
