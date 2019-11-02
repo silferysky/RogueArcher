@@ -291,7 +291,7 @@ namespace Rogue
 					{
 						if (ImGui::CollapsingHeader("Sound"))
 						{
-							std::string m_audioPath = g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(i.m_Entity).getID();
+							std::string m_audioPath = g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(i.m_Entity).getSoundPath();
 							static char m_newaudioPath[128];
 							const std::string m_constAudioPath = "Resources/Sounds/";
 							ImGui::PushItemWidth(75);
@@ -304,7 +304,7 @@ namespace Rogue
 							if (ImGui::Button("Set new path"))
 							{
 								m_audioPath = m_constAudioPath + m_newaudioPath;
-								g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(i.m_Entity).setID(m_audioPath);
+								g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(i.m_Entity).setSoundPath(m_audioPath);
 							}
 							if (ImGui::IsItemHovered())
 							{
@@ -443,7 +443,6 @@ namespace Rogue
 
 						if (ImGui::MenuItem("Sound", nullptr, false, g_engine.m_coordinator.ComponentExists<AudioEmitterComponent>(i.m_Entity)))
 						{
-							g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(i.m_Entity).Destroy();
 							g_engine.m_coordinator.RemoveComponent<AudioEmitterComponent>(i.m_Entity);
 						}
 						ImGui::EndPopup();
