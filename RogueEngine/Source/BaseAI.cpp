@@ -83,17 +83,17 @@ namespace Rogue
 
 	void BaseAI::AIChaseUpdate()
 	{
-		RE_INFO("CHASING PLAYER");
+		//RE_INFO("CHASING PLAYER");
 	}
 
 	void BaseAI::AIPatrolUpdate()
 	{
-		RE_INFO("AI PATROLLING");
+		//RE_INFO("AI PATROLLING");
 	}
 
 	void BaseAI::AIIdleUpdate()
 	{
-		RE_INFO("AI IDLE");
+		//RE_INFO("AI IDLE");
 	}
 
 	std::shared_ptr<LogicComponent> BaseAI::GetLogicComponent()
