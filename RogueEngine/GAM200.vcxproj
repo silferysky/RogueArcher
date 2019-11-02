@@ -90,6 +90,7 @@
     <ClInclude Include="Source\Shader.h" />
     <ClInclude Include="Source\ShaderManager.h" />
     <ClInclude Include="Source\Sound.h" />
+    <ClInclude Include="Source\SpecialEntity.h" />
     <ClInclude Include="Source\StatsComponent.h" />
     <ClInclude Include="Source\Stream.h" />
     <ClInclude Include="Source\TextureManager.h" />

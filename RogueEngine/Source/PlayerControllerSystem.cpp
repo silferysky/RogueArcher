@@ -47,18 +47,12 @@ namespace Rogue
 		m_timer -= g_deltaTime * g_engine.GetTimeScale();
 
 		//To update all timed entities
-		if (!g_engine.m_coordinator.GameIsActive())
-		{
-			ClearTimedEntities();
-		}
-
 		for (auto timedEntityIt = m_timedEntities.begin(); timedEntityIt != m_timedEntities.end(); ++timedEntityIt)
 		{
 			timedEntityIt->m_durationLeft -= g_deltaTime * g_engine.GetTimeScale();
 			if (timedEntityIt->m_durationLeft < 0.0f)
 			{
-				g_engine.m_coordinator.DestroyEntity(timedEntityIt->m_entity);
-				timedEntityIt = m_timedEntities.erase(timedEntityIt);
+				ClearTimedEntities();
 
 				if (m_timedEntities.size() == 0)
 					break;
@@ -245,7 +239,7 @@ namespace Rogue
 				if (!m_timedEntities.size() && m_timer < 0.0f)
 				{
 					CreateBallAttack();
-					m_timer = 1.0f;
+					m_timer = 1.5f;
 				}
 			}
 
@@ -285,6 +279,15 @@ namespace Rogue
 			g_engine.m_coordinator.DestroyEntity(entity.m_entity);
 		}
 
+		auto& activeObjects = g_engine.m_coordinator.GetActiveObjects();
+		for (auto iterator = activeObjects.begin(); iterator != activeObjects.end(); ++iterator)
+		{
+			if (m_timedEntities.size() && iterator->m_Entity == m_timedEntities.begin()->m_entity)
+			{
+				iterator = activeObjects.erase(iterator);
+				break;
+			}
+		}
 
 		m_timedEntities.clear();
 	}
