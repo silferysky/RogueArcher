@@ -63,7 +63,7 @@ namespace Rogue
 		if (distAB == 0.0f)
 		{
 			manifold.m_penetration = radiusA;
-			manifold.m_normal = Vec2::unitX; // Can be any direction, but must be consistent
+			manifold.m_normal = Vec2::s_unitX; // Can be any direction, but must be consistent
 			manifold.m_contactPoints[0] = centerA;
 		}
 		else
@@ -188,13 +188,13 @@ namespace Rogue
 		if (x_overlap < y_overlap)
 		{
 			// Point towards B
-			manifold.m_normal = vAB.x > 0 ? Vec2::unitX : -Vec2::unitX;
+			manifold.m_normal = vAB.x > 0 ? Vec2::s_unitX : -Vec2::s_unitX;
 			manifold.m_penetration = x_overlap;
 		}
 		else
 		{
 			// Point towards A
-			manifold.m_normal = vAB.y > 0 ? Vec2::unitY : -Vec2::unitY;
+			manifold.m_normal = vAB.y > 0 ? Vec2::s_unitY : -Vec2::s_unitY;
 			manifold.m_penetration = y_overlap;
 		}
 
