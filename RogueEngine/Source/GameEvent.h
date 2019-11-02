@@ -49,7 +49,7 @@ namespace Rogue
 
 		virtual ~EntTeleportEvent() = default;
 
-		inline Vec2 GetVecmovement() { return moveVector; }
+		inline Vec2 GetVecMovement() { return moveVector; }
 
 	protected:
 		Vec2 moveVector;
@@ -67,7 +67,7 @@ namespace Rogue
 			: EntityEvent(id), AffectedByForce{ forceAffected }, moveVector{ vec } {}
 		virtual ~EntMoveEvent() = default;
 
-		inline Vec2 GetVecmovement() { return moveVector; }
+		inline Vec2 GetVecMovement() { return moveVector; }
 		inline bool isAffectedByForce() { return AffectedByForce; }
 
 	private:
