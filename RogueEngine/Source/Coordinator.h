@@ -284,6 +284,11 @@ namespace Rogue
 			m_systemManager->TogglePauseState();
 		}
 
+		bool GameIsActive()
+		{
+			return GetGameState() && !GetPauseState();
+		}
+
 		Timer::ChronoTime GetCurrTime() const
 		{
 			return m_timer->GetCurrTime();

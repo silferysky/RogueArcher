@@ -19,5 +19,6 @@ namespace Rogue
 		void Shutdown() override;
 
 	private:
+		void CreateBallAttack();
 	};
 }
