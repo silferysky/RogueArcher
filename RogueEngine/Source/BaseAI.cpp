@@ -62,6 +62,7 @@ namespace Rogue
 
 	void BaseAI::AIDetect()
 	{
+		
 		/*auto gameFactory = g_engine.m_coordinator.GetSystem<ObjectFactory>();
 		for (auto it = gameFactory->GetActiveEntity().begin(); it != gameFactory->GetActiveEntity().end(); ++it)
 		{
@@ -77,6 +78,7 @@ namespace Rogue
 	void BaseAI::AIActiveStateUpdate()
 	{
 		m_logicComponent->SetActiveStateBit((size_t)AIState::AIState_Idle);
+		m_logicComponent->SetActiveStateBit((size_t)AIState::AIState_Chase);
 	}
 
 	void BaseAI::AIChaseUpdate()

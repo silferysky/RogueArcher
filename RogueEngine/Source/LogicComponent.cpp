@@ -103,7 +103,7 @@ namespace Rogue
 				break;
 			}
 			default:
-				m_allStates.push_back(static_cast<AIState>(stoi(s1)));
+				m_allStates.emplace(m_allStates.begin(),static_cast<AIState>(stoi(s1)));
 				break;
 			}
 			++counter;

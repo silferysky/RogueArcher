@@ -53,7 +53,7 @@ namespace Rogue
 					case AIType::AI_Finder:
 					{
 						FinderAI newAI(entities, logicComponent);
-						AddLogicInterface(entities, std::make_shared<BaseAI>(newAI));
+						AddLogicInterface(entities, std::make_shared<FinderAI>(newAI));
 						break;
 					}
 					case AIType::AI_Patrol:
@@ -74,16 +74,29 @@ namespace Rogue
 			}
 		}
 
-
 		for (auto it = m_entityLogicMap.begin(); it != m_entityLogicMap.end(); ++it)
 		{
 			//Null checker
 			if (!it->second)
 				continue;
 
+			//Converts the shared_ptr into correct type based on ID
+			switch (g_engine.m_coordinator.GetComponent<LogicComponent>(it->first).GetLogicType())
+			{
+			case AIType::AI_Finder:
+			{
+				std::dynamic_pointer_cast<FinderAI>(it->second)->LogicUpdate();
+				break;
+			}
+			case AIType::AI_Static:
+			default:
+			{
+				it->second->LogicUpdate();
+			}
+			}
 
 			//Updates the current logic. The individual AI types will handle the state on their own
-			it->second->LogicUpdate();
+			//it->second->LogicUpdate();
 		}
 		g_engine.m_coordinator.EndTimeSystem("Logic System");
 	}
@@ -102,6 +115,11 @@ namespace Rogue
 	void LogicSystem::RemoveLogicInterface(Entity entity)
 	{
 		m_entityLogicMap.erase(entity);
+	}
+
+	void LogicSystem::ClearLogicInterface()
+	{
+		m_entityLogicMap.clear();
 	}
 
 	void LogicSystem::SeekNearestWaypoint(Entity ent)

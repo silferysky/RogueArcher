@@ -22,6 +22,7 @@ namespace Rogue
 		//For entity logic
 		void AddLogicInterface(Entity entity, std::shared_ptr<BaseAI> logicInterface);
 		void RemoveLogicInterface(Entity);
+		void ClearLogicInterface();
 
 		void SeekNearestWaypoint(Entity ent);
 
