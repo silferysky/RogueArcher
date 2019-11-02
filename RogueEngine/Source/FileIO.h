@@ -80,19 +80,4 @@ namespace Rogue
 		static bool ReadFromFile(const char* FileName);
 		static bool IfFileExists(const char* FileName);
 	};
-	/* test for joel in case he forget/ put in main.cpp
-		RESerialiser Serialiser;
-		rapidjson::Document haha = Serialiser.DeserialiseFromFile("Resources/PhysicsData.json");
-		int i;
-		i = haha["Id"].GetInt();
-		if(i == 1)
-		{
-			std::cout << i << std::endl;
-		}
-		Serialiser.WriteToFile("Resources/test.json", "angle z", 643.54f);
-		rapidjson::Document testing = Serialiser.DeserialiseFromFile("Resources/test.json");
-		float z;
-		z = testing["angle z"].GetFloat();
-
-		std::cout << z << std::endl;*/
 }

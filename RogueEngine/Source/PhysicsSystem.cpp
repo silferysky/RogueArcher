@@ -12,19 +12,17 @@
 namespace Rogue
 {
 	//-------------------------------------------------------//
-	//              PRIVATE MEMBER FUNCTIONS								 //
+	//              PRIVATE MEMBER FUNCTIONS				 //
 	//-------------------------------------------------------//
-	void PhysicsSystem::applyForces(RigidbodyComponent& rigidbody) // F = ma
+
+	void PhysicsSystem::Integrate(RigidbodyComponent& rigidbody, TransformComponent& transform) const
 	{
+		float simulationTime = g_fixedDeltaTime * g_engine.GetTimeScale(); // To support slow motion
+
 		if (allowGravity)
 			rigidbody.setAcceleration(rigidbody.getAccForce() * rigidbody.getInvMass() + m_gravity);
 		else
 			rigidbody.setAcceleration(rigidbody.getAccForce() * rigidbody.getInvMass());
-	}
-
-	void PhysicsSystem::integrateAcceleration(RigidbodyComponent& rigidbody, TransformComponent& transform)
-	{
-		float simulationTime = g_fixedDeltaTime * g_engine.GetTimeScale(); // To support slow motion
 
 		transform.offSetPosition(rigidbody.getVelocity() * simulationTime);
 
@@ -53,7 +51,10 @@ namespace Rogue
 		
 		// Set physics system signature.
 		g_engine.m_coordinator.SetSystemSignature<PhysicsSystem>(signature);
-		m_gravity = { 0.0f, -500.0f };
+		m_gravity = Vec2{ 0.0f, -500.0f };
+
+		// Initialize Force Manager.
+		ForceManager::instance().Init();
 	}
 
 	void PhysicsSystem::Update()
@@ -61,6 +62,8 @@ namespace Rogue
 		g_engine.m_coordinator.InitTimeSystem("Physics System");
 		for (int step = 0; step < g_engine.GetStepCount(); ++step)
 		{
+			ForceManager::instance().UpdateAges();
+
 			// For all entities
 			std::set<Entity>::iterator iEntity;
 			for (iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
@@ -71,13 +74,14 @@ namespace Rogue
 				if (rigidbody.getIsStatic())
 					continue;
 
-				applyForces(rigidbody);
+				// Add relevant forces to each rigidbody
+				ForceManager::instance().AddForce(*iEntity, rigidbody);
+
+				// Update positions
+				Integrate(rigidbody, transform);
 
 				// Reset accForce
 				rigidbody.setAccForce(Vec2());
-
-				// Update positions
-				integrateAcceleration(rigidbody, transform);
 			}
 		}
 
@@ -100,12 +104,10 @@ namespace Rogue
 		case EventType::EvEntityMove:
 		{
 			EntMoveEvent* EvEntMove = dynamic_cast<EntMoveEvent*>(ev);
-			
-			if (g_engine.m_coordinator.ComponentExists<TransformComponent>(EvEntMove->GetEntityID()))
-			{
+			ForceManager::instance().RegisterForce(EvEntMove->GetEntityID(),
+				Vec2{ EvEntMove->GetXMovement(), EvEntMove->GetYMovement() },
+				g_fixedDeltaTime);
 
-			}
-			
 			return;
 		}
 		default:
