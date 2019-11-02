@@ -49,6 +49,7 @@ namespace Rogue
 			m_sceneManager->LoadLevel("Level 1.json");
 			m_sceneManager->LoadArchetypes("Resources/Archetypes.json");
 
+			GetSystem<AudioSystem>()->TrueInit();
 			GetSystem<AudioSystem>()->InitSounds();
 		}
 

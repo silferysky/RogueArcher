@@ -61,6 +61,9 @@ namespace Rogue
 						if (ImGui::MenuItem(levelStrIterator.c_str()))
 						{
 							SceneManager& sceneManager = g_engine.m_coordinator.GetSceneManager();
+
+							g_engine.m_coordinator.GetSystem<AudioSystem>()->ShutdownSounds();
+
 							sceneManager.setCurrentFileName(levelStrIterator.c_str());
 							sceneManager.ClearAllEntities();
 							sceneManager.LoadLevel(sceneManager.getCurrentFileName().c_str());
@@ -68,6 +71,7 @@ namespace Rogue
 							g_engine.m_coordinator.SetGameState(false);
 							g_engine.m_coordinator.SetPauseState(false);
 
+							g_engine.m_coordinator.GetSystem<AudioSystem>()->TrueInit();
 							g_engine.m_coordinator.GetSystem<AudioSystem>()->InitSounds();
 						}
 					}

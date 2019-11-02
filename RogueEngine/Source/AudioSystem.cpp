@@ -138,12 +138,20 @@ namespace Rogue
 			if (!(sound.m_b_IsPlaying))
 			{
 				sound.CreateBGM(aEmitter.getSoundPath().c_str(), 1, 112.0f, &m_BGMstream);
-
 				sound.Play(0.3f);
 			}
-
 		}
 	}
 
+	void AudioSystem::ShutdownSounds()
+	{
+		for (auto entity : m_entities)
+		{
+			auto sound = g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(entity).getSound();
 
+			sound.Pause(true);
+			if (sound.GetSystem() != NULL)
+				sound.Release();
+		}
+	}
 }
