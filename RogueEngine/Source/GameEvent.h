@@ -1,6 +1,7 @@
 #pragma once
 #include "Event.h"
 #include "Vector2D.h"
+#include "Types.h"
 
 namespace Rogue
 {
@@ -12,10 +13,10 @@ namespace Rogue
 		inline int GetEntityID() { return ID; }
 
 	protected:
-		EntityEvent(int id)
+		EntityEvent(Entity id)
 			: ID(id) {}
 
-		int ID;
+		Entity ID;
 	};
 
 	class EntChangeStateEvent : EntityEvent
@@ -25,7 +26,7 @@ namespace Rogue
 		SET_EVENT_CATEGORY(EventCatEntChangeState)
 			SET_EVENT_TYPE(EvEntityChangeState)
 
-		EntChangeStateEvent(int id, int newState)
+		EntChangeStateEvent(Entity id, int newState)
 			: EntityEvent(id), EnemyState(newState) {}
 
 		inline int GetState() { return EnemyState; }
@@ -41,32 +42,37 @@ namespace Rogue
 		SET_EVENT_CATEGORY(EventCatEntMove)
 		SET_EVENT_TYPE(EvEntityTeleport)
 
-		EntTeleportEvent(int id, bool forceAffected)
-			:EntityEvent(id), AffectedByForce(forceAffected) {}
+		EntTeleportEvent(Entity id, float x, float y)
+			:EntityEvent(id) {}
+		EntTeleportEvent(Entity id, Vec2 vec)
+			:EntityEvent(id) {}
+
 		virtual ~EntTeleportEvent() = default;
 
-		inline bool isAffectedByForce() { return AffectedByForce; }
+		inline Vec2 GetVecmovement() { return moveVector; }
 
 	protected:
-		bool AffectedByForce;
+		Vec2 moveVector;
 	};
 
-	class EntMoveEvent : public EntTeleportEvent
+	class EntMoveEvent : public EntityEvent
 	{
 	public:
 
 		SET_EVENT_CATEGORY(EventCatEntMove)
 		SET_EVENT_TYPE(EvEntityMove)
 
-		EntMoveEvent(int id, bool forceAffected, float x, float y)
-			: EntTeleportEvent(id, forceAffected), moveVector{Vec2(x,y)} {}
-		EntMoveEvent(int id, bool forceAffected, Vec2 vec)
-			: EntTeleportEvent(id, forceAffected), moveVector{ vec } {}
+		EntMoveEvent(Entity id, bool forceAffected, float x, float y)
+			: EntityEvent(id), AffectedByForce{ forceAffected }, moveVector{ Vec2(x,y) } {}
+		EntMoveEvent(Entity id, bool forceAffected, Vec2 vec)
+			: EntityEvent(id), AffectedByForce{ forceAffected }, moveVector{ vec } {}
+		virtual ~EntMoveEvent() = default;
 
-		inline float GetXMovement() { return moveVector.x; }
-		inline float GetYMovement() { return moveVector.y; }
+		inline Vec2 GetVecmovement() { return moveVector; }
+		inline bool isAffectedByForce() { return AffectedByForce; }
 
 	private:
+		bool AffectedByForce;
 		Vec2 moveVector;
 	};
 
@@ -79,7 +85,7 @@ namespace Rogue
 		inline int GetDamage() { return Damage; }
 
 	protected:
-		EntAttackEvent(int id, int damage)
+		EntAttackEvent(Entity id, int damage)
 			: EntityEvent(id), Damage(damage) {}
 
 		int Damage;
@@ -91,7 +97,7 @@ namespace Rogue
 
 		SET_EVENT_TYPE(EvEntityAttacking)
 
-		EntAttackingEvent(int id, int damage)
+		EntAttackingEvent(Entity id, int damage)
 			: EntAttackEvent(id, damage) {}
 
 	};
@@ -102,7 +108,7 @@ namespace Rogue
 
 		SET_EVENT_TYPE(EvEntityDamaged)
 
-		EntDamagedEvent(int id, int damage)
+		EntDamagedEvent(Entity id, int damage)
 			: EntAttackEvent(id, damage) {}
 
 	};
@@ -113,7 +119,7 @@ namespace Rogue
 		SET_EVENT_CATEGORY(EventCatEntDestroy)
 		SET_EVENT_TYPE(EvEntityDestroy)
 
-		EntDestroyEvent(int id)
+		EntDestroyEvent(Entity id)
 			: EntityEvent(id) {}
 
 	};
@@ -124,13 +130,13 @@ namespace Rogue
 		SET_EVENT_CATEGORY(EventCatCollision)
 		SET_EVENT_TYPE(EvOnCollision)
 
-		EntCollisionEvent(int id_1, int id_2)
+		EntCollisionEvent(Entity id_1, Entity id_2)
 			:EntityEvent(id_1), collidedEntity{id_2}{}
 
-		inline int GetOtherEntity() { return collidedEntity; }
+		inline Entity GetOtherEntity() { return collidedEntity; }
 
 	private:
-		int collidedEntity;
+		Entity collidedEntity;
 	};
 
 	class EntTriggeredEvent : public EntityEvent
@@ -139,12 +145,12 @@ namespace Rogue
 		SET_EVENT_CATEGORY(EventCatCollision)
 		SET_EVENT_TYPE(EvOnTrigger)
 
-		EntTriggeredEvent(int id_1, int id_2)
+		EntTriggeredEvent(Entity id_1, Entity id_2)
 			:EntityEvent(id_1), collidedEntity{ id_2 }{}
 
-		inline int GetOtherEntity() { return collidedEntity; }
+		inline Entity GetOtherEntity() { return collidedEntity; }
 
 	private:
-		int collidedEntity;
+		Entity collidedEntity;
 	};
 }
