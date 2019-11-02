@@ -235,6 +235,14 @@ namespace Rogue
 
 					if (g_engine.m_coordinator.ComponentExists<LogicComponent>(i.m_Entity))
 					{
+						if (ImGui::CollapsingHeader("Logic"))
+						{
+							const char* items[] = { "AAAA", "BBBB", "CCCC", "DDDD", "EEEE", "FFFF", "GGGG", "HHHH", "IIII", "JJJJ", "KKKK", "LLLLLLL", "MMMM", "OOOOOOO" };
+							static int m_ai = 0;
+							ImGui::Combo("AI Type", &m_ai, items, IM_ARRAYSIZE(items));
+							ImGui::Combo("Current State", &m_ai, items, IM_ARRAYSIZE(items));
+							ImGui::Combo("Active State", &m_ai, items, IM_ARRAYSIZE(items));
+						}
 
 					}
 
