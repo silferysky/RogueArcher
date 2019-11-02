@@ -55,7 +55,7 @@ namespace Rogue
 
 				if (CollisionSystem::s_collisionManager.DiscreteAABBvsAABB(currBoxCollider.m_aabb, nextBoxCollider.m_aabb))
 				{
-						std::cout << "Entity " << *iEntity << " AABB collides with Entity " << *iNextEntity << " AABB" << std::endl;
+					//std::cout << "Entity " << *iEntity << " AABB collides with Entity " << *iNextEntity << " AABB" << std::endl;
 					CollisionSystem::s_collisionManager.GenerateManifoldAABBvsAABB(*iEntity, *iNextEntity);
 				}
 

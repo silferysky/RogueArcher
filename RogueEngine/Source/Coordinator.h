@@ -25,7 +25,7 @@ namespace Rogue
 		std::unique_ptr<ShaderManager> m_shaderManager;
 		std::unique_ptr<SceneManager> m_sceneManager;
 		std::unique_ptr<EventDispatcher> m_eventDispatcher;
-		std::unique_ptr<Timer> m_Timer;
+		std::unique_ptr<Timer> m_timer;
 
 	public:
 		Coordinator() :
@@ -35,8 +35,8 @@ namespace Rogue
 			m_textureManager{ std::make_unique<TextureManager>() },
 			m_shaderManager{ std::make_unique<ShaderManager>() },
 			m_sceneManager{ std::make_unique<SceneManager>() },
-			m_eventDispatcher{std::make_unique<EventDispatcher>()},
-			m_Timer{ std::make_unique<Timer>() }
+			m_eventDispatcher{ std::make_unique<EventDispatcher>() },
+			m_timer{ std::make_unique<Timer>() }
 		{}
 
 		void Init()
@@ -55,7 +55,7 @@ namespace Rogue
 		void Update()
 		{
 			// Update the core systems
-			m_systemManager->UpdateSystems(); 
+			m_systemManager->UpdateSystems();
 
 			// If placed before ^, will cause memory leak.
 			EventDispatcher::instance().Update();
@@ -97,7 +97,7 @@ namespace Rogue
 			return m_textureManager->loadTexture(texture);
 		}
 
-		Shader loadShader(std::string shader)
+		Shader loadShader(const std::string& shader)
 		{
 			return m_shaderManager->loadShader(shader);
 		}
@@ -114,7 +114,7 @@ namespace Rogue
 		}
 
 		template<typename T>
-		void AddComponent(Entity entity, T component)
+		void AddComponent(Entity entity, const T& component)
 		{
 			m_componentManager->AddComponent<T>(entity, component);
 
@@ -123,24 +123,6 @@ namespace Rogue
 			m_entityManager->SetSignature(entity, signature);
 
 			m_systemManager->EntitySignatureChanged(entity, signature);
-		}
-
-		void clone(Entity existingEntity)
-		{
-			Entity clonedEntity = CreateEntity();
-			m_componentManager->clone(existingEntity, clonedEntity);
-
-			Signature newEntitySignature = m_entityManager->GetSignature(existingEntity);
-			m_entityManager->SetSignature(clonedEntity, newEntitySignature);
-			m_systemManager->EntitySignatureChanged(clonedEntity, newEntitySignature);
-			m_sceneManager->AddToActiveEntities(clonedEntity);
-
-			//m_sceneManager->Clone(existingEntity);
-		}
-
-		void cloneArchetypes(const char* archetype)
-		{
-			m_sceneManager->Clone(archetype);
 		}
 
 		template<typename T>
@@ -182,7 +164,7 @@ namespace Rogue
 		}
 
 		template<typename T>
-		void LoadComponent(Entity owner, std::string strToLoad)
+		void LoadComponent(Entity owner, const std::string& strToLoad)
 		{
 			CreateComponent<T>(owner).Deserialize(strToLoad);
 		}
@@ -200,9 +182,46 @@ namespace Rogue
 		}
 
 		template<typename T>
-		void SetSystemSignature(Signature signature)
+		void SetSystemSignature(const Signature& signature)
 		{
 			m_systemManager->SetSignature<T>(signature);
+		}
+
+		template <typename T>
+		bool ComponentExists(Entity entity)
+		{
+			return m_entityManager->GetSignature(entity).test(GetComponentType<T>());
+		}
+		void InitTimeSystem(const char* system)
+		{
+			m_timer->TimerInit(system);
+		}
+		void EndTimeSystem(const char* system)
+		{
+			m_timer->TimerEnd(system);
+		}
+
+		const std::map<const char*, float>& GetSystemTimes()
+		{
+			return m_timer->GetSystemTimes();
+		}
+
+		void cloneArchetypes(const char* archetype)
+		{
+			m_sceneManager->Clone(archetype);
+		}
+
+		void clone(Entity existingEntity)
+		{
+			Entity clonedEntity = CreateEntity();
+			m_componentManager->clone(existingEntity, clonedEntity);
+
+			Signature newEntitySignature = m_entityManager->GetSignature(existingEntity);
+			m_entityManager->SetSignature(clonedEntity, newEntitySignature);
+			m_systemManager->EntitySignatureChanged(clonedEntity, newEntitySignature);
+			m_sceneManager->AddToActiveEntities(clonedEntity);
+
+			//m_sceneManager->Clone(existingEntity);
 		}
 
 		EntityManager& GetEntityManager() const
@@ -265,22 +284,9 @@ namespace Rogue
 			m_systemManager->TogglePauseState();
 		}
 
-		template <typename T>
-		bool ComponentExists(Entity entity)
+		Timer::ChronoTime GetCurrTime() const
 		{
-			return m_entityManager->GetSignature(entity).test(GetComponentType<T>());
-		}
-		void InitTimeSystem(const char* system)
-		{
-			m_Timer->TimerInit(system);
-		}
-		void EndTimeSystem(const char* system)
-		{
-			m_Timer->TimerEnd(system);
-		}
-		const std::map<const char*, float>& GetSystemTimes()
-		{
-			return m_Timer->GetSystemTimes();
+			return m_timer->GetCurrTime();
 		}
 	};
 }

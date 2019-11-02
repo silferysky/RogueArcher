@@ -1,19 +1,20 @@
 #pragma once
-#include "CollisionManager.h"
-#include "SystemManager.h"
+#include "BaseSystem.h"
 #include "EventListener.h"
 #include "Vector2D.h"
+#include "ForceManager.h"
 
 namespace Rogue
 {
 	class Timer;
+	class RigidbodyComponent;
+	class TransformComponent;
 
 	class PhysicsSystem : public System, public EventListener
 	{
 		Vec2 m_gravity;
 
-		void integrateAcceleration(RigidbodyComponent& rigidbody, TransformComponent& transform);
-		void applyForces(RigidbodyComponent& rigidbody);
+		void Integrate(RigidbodyComponent& rigidbody, TransformComponent& transform) const;
 
 		// For debugging.
 		bool checkAABB;

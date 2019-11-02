@@ -19,6 +19,8 @@ namespace Rogue
 		void TimerInit(const char* System);
 		void TimerEnd(const char* System);
 		const std::map<const char*, float>& GetSystemTimes() const;
+
+		ChronoTime GetCurrTime() const;
 	private:
 		ChronoClock m_timer;
 		ChronoTime m_startTimer;

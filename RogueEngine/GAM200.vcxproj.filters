@@ -433,6 +433,9 @@
     <ClInclude Include="Source\FinderAI.h">
       <Filter>RogueEngine\Systems\AI\AI Types</Filter>
     </ClInclude>
+    <ClInclude Include="Source\ForceManager.h">
+      <Filter>RogueEngine\Systems\Physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -662,6 +665,9 @@
     </ClCompile>
     <ClCompile Include="Source\FinderAI.cpp">
       <Filter>RogueEngine\Systems\AI\AI Types</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ForceManager.cpp">
+      <Filter>RogueEngine\Systems\Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
