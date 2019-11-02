@@ -439,6 +439,9 @@
     <ClInclude Include="Source\SceneManager.h">
       <Filter>RogueEngine\Core\ECS</Filter>
     </ClInclude>
+    <ClInclude Include="Source\SpecialEntity.h">
+      <Filter>RogueEngine\Systems\AI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">

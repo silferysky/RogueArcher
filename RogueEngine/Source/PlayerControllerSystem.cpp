@@ -239,7 +239,7 @@ namespace Rogue
 				if (!m_timedEntities.size() && m_timer < 0.0f)
 				{
 					CreateBallAttack();
-					m_timer = 1.0f;
+					m_timer = 1.5f;
 				}
 			}
 
