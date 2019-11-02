@@ -41,37 +41,11 @@ namespace Rogue
 		//Check if any new AI needs to be added
 		if (m_entities.size() > m_entityLogicMap.size())
 		{
-			for (auto& entities : m_entities)
-			{
-				if (m_entityLogicMap[entities] == nullptr)
-				{
-					//Logic component will exist if it is in m_entities
-					auto& logicComponent = g_engine.m_coordinator.GetComponent<LogicComponent>(entities);
-					
-					switch (logicComponent.GetLogicType())
-					{
-					case AIType::AI_Finder:
-					{
-						FinderAI newAI(entities, logicComponent);
-						AddLogicInterface(entities, std::make_shared<FinderAI>(newAI));
-						break;
-					}
-					case AIType::AI_Patrol:
-					{
-						BaseAI newAI(entities, logicComponent);
-						AddLogicInterface(entities, std::make_shared<BaseAI>(newAI));
-						break;
-					}
-					case AIType::AI_Static:
-					default:
-					{
-						BaseAI newAI(entities, logicComponent);
-						AddLogicInterface(entities, std::make_shared<BaseAI>(newAI));
-						break;
-					}
-					}
-				}
-			}
+			AddExcessAI();
+		}
+		else if (m_entities.size() < m_entityLogicMap.size()) //Check if any AI needs to be deleted
+		{
+			RemoveExcessAI();
 		}
 
 		for (auto it = m_entityLogicMap.begin(); it != m_entityLogicMap.end(); ++it)
@@ -120,6 +94,56 @@ namespace Rogue
 	void LogicSystem::ClearLogicInterface()
 	{
 		m_entityLogicMap.clear();
+	}
+
+	void LogicSystem::RemoveExcessAI()
+	{
+		for (auto entityLogicIt = m_entityLogicMap.begin(); entityLogicIt != m_entityLogicMap.end(); ++entityLogicIt)
+		{
+			auto it = m_entities.find(entityLogicIt->first);
+			if (it == m_entities.end())
+			{
+				m_entityLogicMap.erase(entityLogicIt);
+			}
+
+			if (!m_entityLogicMap.size())
+				break;
+		}
+	}
+
+	void LogicSystem::AddExcessAI()
+	{
+		for (auto& entities : m_entities)
+		{
+			if (m_entityLogicMap[entities] == nullptr)
+			{
+				//Logic component will exist if it is in m_entities
+				auto& logicComponent = g_engine.m_coordinator.GetComponent<LogicComponent>(entities);
+
+				switch (logicComponent.GetLogicType())
+				{
+				case AIType::AI_Finder:
+				{
+					FinderAI newAI(entities, logicComponent);
+					AddLogicInterface(entities, std::make_shared<FinderAI>(newAI));
+					break;
+				}
+				case AIType::AI_Patrol:
+				{
+					BaseAI newAI(entities, logicComponent);
+					AddLogicInterface(entities, std::make_shared<BaseAI>(newAI));
+					break;
+				}
+				case AIType::AI_Static:
+				default:
+				{
+					BaseAI newAI(entities, logicComponent);
+					AddLogicInterface(entities, std::make_shared<BaseAI>(newAI));
+					break;
+				}
+				}
+			}
+		}
 	}
 
 	void LogicSystem::SeekNearestWaypoint(Entity ent)

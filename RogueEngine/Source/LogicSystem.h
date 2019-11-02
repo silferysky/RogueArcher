@@ -24,6 +24,9 @@ namespace Rogue
 		void RemoveLogicInterface(Entity);
 		void ClearLogicInterface();
 
+		void RemoveExcessAI();
+		void AddExcessAI();
+
 		void SeekNearestWaypoint(Entity ent);
 
 		void CreateMoveEvent(Entity ent, Vec2 vec);
