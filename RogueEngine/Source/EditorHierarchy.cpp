@@ -62,7 +62,7 @@ namespace Rogue
 			std::string objectName = i.m_objectName.substr(0, search.size());
 			if (objectName == search)
 			{
-				std::cout << "hi" << std::endl;
+				//std::cout << "hi" << std::endl;
 				if (ImGui::Selectable(i.m_objectName.c_str(), i.m_selected, ImGuiSelectableFlags_AllowDoubleClick))
 				{
 					if (ImGui::IsMouseClicked(0))
