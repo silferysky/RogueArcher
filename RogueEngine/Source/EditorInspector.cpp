@@ -495,7 +495,18 @@ namespace Rogue
 		ImGui::Checkbox("Toggle World Camera?", &m_worldCamera);
 		g_engine.m_coordinator.GetSystem<CameraSystem>()->SetWorldCamera(m_worldCamera);
 
+		float m_cameraZoom = g_engine.GetCameraZoom();
 		glm::vec3 m_cameraPos = g_engine.m_coordinator.GetSystem<CameraSystem>()->GetCameraPos();
+
+		if (!m_worldCamera)
+			m_cameraZoom = 1.0f;
+		else
+		{
+			m_cameraPos.x = 0.0f;
+			m_cameraPos.y = 0.0f;
+			m_cameraZoom = 1.630f;
+		}
+
 		ImGui::DragFloat("Camera X", &m_cameraPos.x, 1.0f, -10000.0f, 10000.0f);
 		ImGui::DragFloat("Camera Y", &m_cameraPos.y, 1.0f, -10000.0f, 10000.0f);
 
@@ -507,14 +518,13 @@ namespace Rogue
 		ImGui::DragFloat("Camera Max X", &m_cameraMax.x, 1.0f, -10000.0f, 10000.0f);
 		ImGui::DragFloat("Camera Max Y", &m_cameraMax.y, 1.0f, -10000.0f, 10000.0f);
 
-		float m_cameraZoom = g_engine.GetCameraZoom();
-
 		ImGui::DragFloat("Camera Zoom", &m_cameraZoom, 0.01f, 0.0f, 10.0f);
 
 		if (ImGui::Button("Reset Camera"))
 		{
 			m_cameraPos.x = 0.0f;
 			m_cameraPos.y = 0.0f;
+			m_cameraZoom = 1.630f;
 		}
 
 		g_engine.m_coordinator.GetSystem<CameraSystem>()->SetCameraPos(m_cameraPos);
