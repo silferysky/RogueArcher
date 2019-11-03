@@ -22,13 +22,6 @@ namespace Rogue
 		return m_soundPath;
 	}
 
-	std::string AudioEmitterComponent::Serialize()
-	{
-		std::ostringstream ss;
-		ss << m_soundPath;
-		return ss.str();
-	}
-
 	void AudioEmitterComponent::setSound(const std::string& sound)
 	{
 		//m_sound = g_engine.m_coordinator.loadSound(sound);
@@ -39,16 +32,45 @@ namespace Rogue
 		return m_sound;
 	}
 
+	void AudioEmitterComponent::setAudioScale(const float& audioScale)
+	{
+		m_audioScale = audioScale;
+	}
+
+	float& AudioEmitterComponent::getAudioScale()
+	{
+		return m_audioScale;
+	}
+
+	std::string AudioEmitterComponent::Serialize()
+	{
+		std::ostringstream ss;
+		ss << m_soundPath;
+		ss << m_audioScale;
+		return ss.str();
+	}
+
 	void AudioEmitterComponent::Deserialize(std::string toDeserialize)
 	{
 		std::istringstream ss(toDeserialize);
 		std::string s1;			//s2 is used if two are needed
-		//int counter = 0;		//Needed to take in for multiple values
-		//int sets = 2;			//Sets represents the number of "sets" that must be taken in simultaneously. Aka vec2 or more than 1	parameter to set
+		int counter = 0;		//Needed to take in for multiple values
 
 		while (std::getline(ss, s1, ';'))
 		{
-			setSoundPath(s1);
+			switch (counter)
+			{
+			case 0:
+				setSoundPath(s1);
+				break;
+			case 1:
+				setAudioScale(std::stof(s1));
+				break;
+			default:
+				break;
+			}
+
+			++counter;
 		}
 	}
 }

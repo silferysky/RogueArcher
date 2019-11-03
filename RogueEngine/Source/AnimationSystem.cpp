@@ -53,21 +53,23 @@ namespace Rogue
 		double currentFrame = animate->getCurrentFrame();
 		int totalFrames = animate->getFrames();
 
+		// reset the frame number
+		if (currentFrame >= animate->getFrames())
+		{
+			currentFrame = 0;
+			animate->setCurrentFrame(currentFrame);
+			if (!animate->getIsLooping())
+				animate->setIsAnimating(false);
+		}
+
 		double min = currentFrame / totalFrames;
 		double max = ++currentFrame / totalFrames;
 
 		sprite->setTexCoordMin(min);
 		sprite->setTexCoordMax(max);
 
-		animate->setCurrentFrame(currentFrame);
-
-		// reset the frame number
-		if (currentFrame == animate->getFrames())
-		{
-			animate->setCurrentFrame(0);
-			if (!animate->getIsLooping())
-				animate->setIsAnimating(false);
-		}
+		if (animate->getIsAnimating())
+			animate->setCurrentFrame(currentFrame);
 	}
 
 	void AnimationSystem::Shutdown()
