@@ -80,14 +80,14 @@ namespace Rogue
 		return m_cameraPos;
 	}
 
-	void CameraSystem::SetCameraMin(const float& x, const float& y)
+	void CameraSystem::SetCameraMin(const Vec2& cameraMin)
 	{
-		m_cameraMin = { x, y };
+		m_cameraMin = cameraMin;
 	}
 
-	void CameraSystem::SetCameraMax(const float& x, const float& y)
+	void CameraSystem::SetCameraMax(const Vec2& cameraMax)
 	{
-		m_cameraMin = { x, y };
+		m_cameraMax = cameraMax;
 	}
 
 	void CameraSystem::SetCameraPos(const glm::vec3& position)

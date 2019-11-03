@@ -496,12 +496,25 @@ namespace Rogue
 		glm::vec3 m_cameraPos = g_engine.m_coordinator.GetSystem<CameraSystem>()->GetCameraPos();
 		ImGui::DragFloat("Camera X", &m_cameraPos.x, 1.0f, -10000.0f, 10000.0f);
 		ImGui::DragFloat("Camera Y", &m_cameraPos.y, 1.0f, -10000.0f, 10000.0f);
+
+		Vec2 m_cameraMin = g_engine.m_coordinator.GetSystem<CameraSystem>()->GetCameraMin();
+		Vec2 m_cameraMax = g_engine.m_coordinator.GetSystem<CameraSystem>()->GetCameraMax();
+
+		ImGui::DragFloat("Camera Min X", &m_cameraMin.x, 1.0f, -10000.0f, 10000.0f);
+		ImGui::DragFloat("Camera Min Y", &m_cameraMin.y, 1.0f, -10000.0f, 10000.0f);
+		ImGui::DragFloat("Camera Max X", &m_cameraMax.x, 1.0f, -10000.0f, 10000.0f);
+		ImGui::DragFloat("Camera Max Y", &m_cameraMax.y, 1.0f, -10000.0f, 10000.0f);
+
 		if (ImGui::Button("Reset Camera"))
 		{
 			m_cameraPos.x = 0.0f;
 			m_cameraPos.y = 0.0f;
 		}
+
 		g_engine.m_coordinator.GetSystem<CameraSystem>()->SetCameraPos(m_cameraPos);
+
+		g_engine.m_coordinator.GetSystem<CameraSystem>()->SetCameraMin(m_cameraMin);
+		g_engine.m_coordinator.GetSystem<CameraSystem>()->SetCameraMax(m_cameraMax);
 
 		bool m_toggleGravity = g_engine.m_coordinator.GetSystem<PhysicsSystem>()->getToggleGravity();
 		Vec2 m_gravity = g_engine.m_coordinator.GetSystem<PhysicsSystem>()->getGravity();
