@@ -49,7 +49,11 @@ namespace Rogue
 
 		for (auto entity : m_entities)
 		{
-			auto& sound = g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(entity).getSound();
+			if (m_muted)
+				break;
+
+			auto& aEmitter = g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(entity);
+			auto& sound = aEmitter.getSound();
 			Vec2 transformPos{};
 			
 			if (g_engine.m_coordinator.ComponentExists<TransformComponent>(entity))
@@ -61,7 +65,7 @@ namespace Rogue
 			
 			sound.Update();
 
-			sound.SetVolume(1.0f - distance * 0.0015f * 0.0015f);
+			sound.SetVolume(1.0f * aEmitter.getAudioScale() - distance * 0.0015f * 0.0015f);
 		}
 
 		g_engine.m_coordinator.EndTimeSystem("Audio System");
@@ -77,7 +81,7 @@ namespace Rogue
 			KeyPress keycode = keytriggeredevent->GetKeyCode();
 
 			if (keycode == KeyPress::KeyM)
-				ToggleMute();
+				m_muted = !m_muted;
 
 			return;
 		} //End KeyTriggered
@@ -99,25 +103,6 @@ namespace Rogue
 	void AudioSystem::ToggleMute()
 	{
 		m_muted = !m_muted;
-
-		/* Mute currently playing BGM */
-		if (m_muted)
-		{
-			for (auto entity : m_entities)
-			{
-				auto sound = g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(entity).getSound();
-				sound.SetVolume(0.0f);
-			}
-		}
-		/* Unmute currently playing BGM */
-		else
-		{
-			for (auto entity : m_entities)
-			{
-				auto sound = g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(entity).getSound();
-				sound.SetVolume(0.3f);
-			}
-		}
 	}
 
 	void AudioSystem::TrueInit()
