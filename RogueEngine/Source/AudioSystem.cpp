@@ -49,6 +49,9 @@ namespace Rogue
 
 		for (auto entity : m_entities)
 		{
+			if (m_muted)
+				break;
+
 			auto& aEmitter = g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(entity);
 			auto& sound = aEmitter.getSound();
 			Vec2 transformPos{};
@@ -78,7 +81,7 @@ namespace Rogue
 			KeyPress keycode = keytriggeredevent->GetKeyCode();
 
 			if (keycode == KeyPress::KeyM)
-				ToggleMute();
+				m_muted = !m_muted;
 
 			return;
 		} //End KeyTriggered
@@ -100,25 +103,6 @@ namespace Rogue
 	void AudioSystem::ToggleMute()
 	{
 		m_muted = !m_muted;
-
-		/* Mute currently playing BGM */
-		if (m_muted)
-		{
-			for (auto entity : m_entities)
-			{
-				auto sound = g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(entity).getSound();
-				sound.SetVolume(0.0f);
-			}
-		}
-		/* Unmute currently playing BGM */
-		else
-		{
-			for (auto entity : m_entities)
-			{
-				auto sound = g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(entity).getSound();
-				sound.SetVolume(0.3f);
-			}
-		}
 	}
 
 	void AudioSystem::TrueInit()

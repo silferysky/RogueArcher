@@ -15,7 +15,7 @@
     "Entity2": "Name{Floor}|Sprite{Resources/Assets/tile.png;1}|Rigidbody{0;0;0;0;1;1;1}|Transform{0;-400;1209;100;0}|CircleCollider{0;0;0;0;0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;0;0;0;0}|||||||",
     "Entity3": "Name{Ceiling}|Sprite{Resources/Assets/tile.png;1}|Rigidbody{0;0;0;0;1;1;1}|Transform{0;400;1211;100;0}|CircleCollider{0;0;0;0;0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;0;0;0;0}|||||||",
     "Entity4": "Name{Left Wall}|Sprite{Resources/Assets/tile.png;1}|Rigidbody{0;0;0;0;1;1;1}|Transform{-600;0;102;600;0}|CircleCollider{0;0;0;0;0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;0;0;0;0}|||||||",
-    "Entity5": "Name{Right Wall}|Sprite{Resources/Assets/SpriteSheet.png;1}|Rigidbody{0;0;0;0;1;1;1}|Transform{600;0;156;600;1.7}|CircleCollider{0;0;0;0;0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;0;0;0;0}||||||Audio{Resources/Sounds/1.wav}|",
+    "Entity5": "Name{Right Wall}|Sprite{Resources/Assets/SpriteSheet.png;1}|Rigidbody{0;0;0;0;1;1;1}|Transform{600;0;156;600;1.7}|CircleCollider{0;0;0;0;0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;0;0;0;0}||||||Audio{Resources/Sounds/1.wav;1.0}|",
     "Entity6": "Name{Experience Matters2}|Sprite{Resources/Assets/test.bmp;1}|Rigidbody{0;0;0;0;1;1;0}|Transform{0;69.995;108;100;0}|CircleCollider{0;0;0;0;0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;0;0;0;0}||LogicComponent{2;0;0;1}|||||",
     "Entity7": "Name{Floaty}|Sprite{Resources/Assets/DefaultSprite.png;1}|Rigidbody{0;0;0;0;1;1;0}|Transform{0;-69.995;95;100;0}|CircleCollider{88;0;0;0;0}|BoxCollider{0;0;0;0;0}|||||||"
 }

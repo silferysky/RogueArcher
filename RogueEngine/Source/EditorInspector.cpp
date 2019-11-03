@@ -321,6 +321,12 @@ namespace Rogue
 								m_audioPath = m_constAudioPath + m_newaudioPath;
 								g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(i.m_Entity).setSoundPath(m_audioPath);
 							}
+
+							float m_audioScale = g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(i.m_Entity).getAudioScale();
+							ImGui::DragFloat("Audio Scale", &m_audioScale, 0.01f, 0.0f, 10.0f);
+
+							g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(i.m_Entity).setAudioScale(m_audioScale);
+
 							if (ImGui::IsItemHovered())
 							{
 								ImGui::BeginTooltip();
