@@ -13,6 +13,7 @@
 #include "Timer.h"
 #include "AudioSystem.h"
 #include "LogicSystem.h"
+#include "AudioManager.h"
 
 namespace Rogue
 {
@@ -24,6 +25,7 @@ namespace Rogue
 		std::unique_ptr<TextureManager> m_textureManager;
 		std::unique_ptr<ShaderManager> m_shaderManager;
 		std::unique_ptr<SceneManager> m_sceneManager;
+		std::unique_ptr<AudioManager> m_audioManager;
 		std::unique_ptr<EventDispatcher> m_eventDispatcher;
 		std::unique_ptr<Timer> m_timer;
 
@@ -35,6 +37,7 @@ namespace Rogue
 			m_textureManager{ std::make_unique<TextureManager>() },
 			m_shaderManager{ std::make_unique<ShaderManager>() },
 			m_sceneManager{ std::make_unique<SceneManager>() },
+			m_audioManager{ std::make_unique<AudioManager>()},
 			m_eventDispatcher{ std::make_unique<EventDispatcher>() },
 			m_timer{ std::make_unique<Timer>() }
 		{}
@@ -246,6 +249,11 @@ namespace Rogue
 		SceneManager& GetSceneManager() const
 		{
 			return *m_sceneManager;
+		}
+
+		AudioManager& GetAudioManager() const
+		{
+			return *m_audioManager;
 		}
 
 		std::vector <HierarchyInfo>& GetActiveObjects()
