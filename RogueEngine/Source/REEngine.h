@@ -36,6 +36,7 @@ namespace Rogue
 		REConfig config;
 
 		glm::mat4 m_projMat;
+		float m_cameraZoom = 1.0f;
 
 		HWND CreateOpenGLWindow(char* title, int x, int y, int width, int height,
 			BYTE type, DWORD flags);
@@ -54,6 +55,9 @@ namespace Rogue
 		float GetAccumulatedTime() const;
 		float GetTimeScale() const;
 		int GetStepCount() const;
+
+		void ZoomIn();
+		void ZoomOut();
 
 		void SetGameIsRunning(bool set);
 		void SetTimeScale(float timeScale);
