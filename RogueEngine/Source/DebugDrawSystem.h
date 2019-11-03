@@ -14,6 +14,8 @@
 		GLint m_projLocation;
 
 		std::shared_ptr<Rogue::CameraSystem> m_pCamera;
+
+		bool m_isActive = true;
 	public:
 		DebugDrawSystem();
 		~DebugDrawSystem() = default;

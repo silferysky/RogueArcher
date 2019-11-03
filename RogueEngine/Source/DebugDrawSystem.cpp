@@ -8,6 +8,7 @@
 #include "DebugDrawSystem.h"	
 #include "SystemManager.h"
 #include "EventListener.h"
+#include "KeyEvent.h"
 
 //namespace Rogue
 //{
@@ -18,9 +19,8 @@
 	// Public member functions
 	void DebugDrawSystem::Init()
 	{
-		//Rogue::LISTENER_HANDLER hand = std::bind(&receive, this, std::placeholders::_1);
-		//Rogue::EventDispatcher::instance().AddListener(Rogue::SystemID::id_DEBUGDRAWSYSTEM, hand);
-		//REGISTER_LISTENER(SystemID::id_DEBUGDRAWSYSTEM, DebugDrawSystem::Receive);
+		Rogue::LISTENER_HANDLER hand = std::bind(&DebugDrawSystem::Receive, this, std::placeholders::_1);
+		Rogue::EventDispatcher::instance().AddListener(Rogue::SystemID::id_DEBUGDRAWSYSTEM, hand);
 
 		// Add components to signature
 		Rogue::Signature signature;
@@ -59,6 +59,9 @@
 		// For all entities
 		for (auto entity : m_entities)
 		{
+			if (!m_isActive)
+				break;
+
 			if (g_engine.m_coordinator.ComponentExists<Rogue::UIComponent>(entity))
 				continue;
 
@@ -192,7 +195,21 @@
 	}
 
 	void DebugDrawSystem::Receive(Rogue::Event* ev)
-	{}
+	{
+		switch (ev->GetEventType())
+		{
+		case Rogue::EventType::EvKeyTriggered:
+		{
+			Rogue::KeyTriggeredEvent* keytriggeredevent = dynamic_cast<Rogue::KeyTriggeredEvent*>(ev);
+			Rogue::KeyPress keycode = keytriggeredevent->GetKeyCode();
+		    
+			if (keycode == Rogue::KeyPress::KeyF3)
+				m_isActive = !m_isActive;
+
+			return;
+		} //End KeyTriggered
+		}
+	}
 
 	void DebugDrawSystem::Shutdown()
 	{}
