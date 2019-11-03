@@ -45,25 +45,19 @@ namespace Rogue
 						i.m_objectName = buffer;
 						memset(buffer, 0, 64);
 					}
-					
+					std::vector<std::string>& m_currentTags = g_engine.m_coordinator.GetSystem<CollisionTagSystem>()->GetTagList();
 					ImGui::TextDisabled("Current Tag");
-					//ImGui::TextDisabled("%s");
+					ImGui::SameLine();
+					ImGui::TextDisabled("%s",i.m_tag.c_str());
 					ImGui::TextDisabled("New Tag Name");
 					ImGui::SameLine();
 					ImGui::InputText("               ", tagging, 64);
 					if (ImGui::Button("Add New Tag"))
 					{
-						g_engine.m_coordinator.GetSystem<CollisionTagSystem>()->AddTag(tagging);
+						i.m_tag = tagging;
 						memset(tagging, 0, 64);
 					}
-					static int count = 0;
-					std::vector<std::string>& m_currentTags = g_engine.m_coordinator.GetSystem<CollisionTagSystem>()->GetTagList();
 
-					//ImGui::Combo("List of Tags")
-					//ImGui::BeginCombo("List of Tags", m_currentTags)
-					if (ImGui::Button("Set Tag"))
-					{
-					}
 					if (g_engine.m_coordinator.ComponentExists<TransformComponent>(i.m_Entity))
 					{
 						if (ImGui::CollapsingHeader("Transform"))
