@@ -150,11 +150,11 @@ namespace Rogue
 					}
 					else if (keycode == KeyPress::KeyD)
 					{
-						//rigidbody.addForce(Vec2(100.0f, 0.0f) * g_deltaTime * 1000.0f);
+						rigidbody.addForce(Vec2(100.0f, 0.0f) * g_deltaTime * 1000.0f);
 						//RE_INFO("Move A Right!");
-						Event* ev = new EntMoveEvent{ *iEntity, true, 100.0f, 0.0f };
-						ev->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
-						EventDispatcher::instance().AddEvent(ev);
+						//Event* ev = new EntMoveEvent{ *iEntity, true, 100.0f, 0.0f };
+						//ev->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
+						//EventDispatcher::instance().AddEvent(ev);
 					}
 					else if (keycode == KeyPress::KeyW)
 					{
