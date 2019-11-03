@@ -136,6 +136,10 @@ namespace Rogue
 		} //End KeyTriggered
 		case EventType::EvKeyPressed:
 		{
+			//Statement here to make sure all of the other commands only apply if game is not running
+			if (!g_engine.m_coordinator.GameIsActive())
+				return;
+
 			KeyPressEvent* EvPressKey = dynamic_cast<KeyPressEvent*>(ev);
 			KeyPress keycode = EvPressKey->GetKeyCode();
 
