@@ -2,6 +2,7 @@
 #include "Main.h"
 #include "EventDispatcher.h"
 #include "KeyEvent.h"
+#include "GraphicsEvent.h"
 
 namespace Rogue
 {
@@ -138,6 +139,12 @@ namespace Rogue
 
 		switch (ev->GetEventType())
 		{
+		case EventType::EvCameraShake:
+		{
+			CameraShakeEvent* cameraShakeEvent = dynamic_cast<CameraShakeEvent*>(ev);
+			m_cameraShake.SetShake(cameraShakeEvent->getMagnitude());
+			return;
+		}
 		case EventType::EvKeyTriggered:
 		{
 			KeyTriggeredEvent* keytriggeredevent = dynamic_cast<KeyTriggeredEvent*>(ev);

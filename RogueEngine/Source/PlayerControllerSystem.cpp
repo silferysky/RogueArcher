@@ -6,6 +6,7 @@
 #include "ComponentList.h"
 #include "KeyEvent.h"
 #include "GameEvent.h"
+#include "GraphicsEvent.h"
 
 namespace Rogue
 {
@@ -108,6 +109,8 @@ namespace Rogue
 						g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).getPosition());
 
 					ClearTimedEntities();
+					CameraShakeEvent* cameraShakeEvent = new CameraShakeEvent(15.0f);
+					EventDispatcher::instance().AddEvent(cameraShakeEvent);
 				}
 			}
 
