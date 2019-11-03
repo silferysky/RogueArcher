@@ -56,11 +56,7 @@ namespace Rogue
 		static char bufferX[64];
 		ImGui::InputText(" ", bufferX, 64);
 		std::string search;
-		if (ImGui::Button("Search"))
-		{	
-			search = bufferX;
-			//memset(bufferX, 0, 64);
-		}
+		search = bufferX;
 		ImGui::Separator();
 		for (auto& i : m_currentVector)
 		{
