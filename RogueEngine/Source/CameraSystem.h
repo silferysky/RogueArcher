@@ -42,8 +42,8 @@ namespace Rogue
 
 		glm::vec3 GetCameraPos() const;
 
-		void SetCameraMin(const float& x, const float& y);
-		void SetCameraMax(const float& x, const float& y);
+		void SetCameraMin(const Vec2& cameraMin);
+		void SetCameraMax(const Vec2& cameraMax);
 
 		void SetCameraPos(const glm::vec3& position);
 
