@@ -222,6 +222,12 @@ namespace Rogue
 			g_engine.m_coordinator.GetSceneManager().AddToLoadedLevels(stdstr);
 
 		m_maxFileCount = g_engine.m_coordinator.GetSceneManager().GetLoadedLevels().size();
+
+		g_engine.m_coordinator.GetSystem<CameraSystem>()->SetCameraMin(Vec2(level["CameraMinX"].GetFloat(), level["CameraMinY"].GetFloat()));
+		g_engine.m_coordinator.GetSystem<CameraSystem>()->SetCameraMax(Vec2(level["CameraMaxX"].GetFloat(), level["CameraMaxY"].GetFloat()));
+
+		//strstream.clear();
+		//strstream.str("");
 	}
 
 	void ObjectFactory::SaveLevelFiles(const char* fileName)
