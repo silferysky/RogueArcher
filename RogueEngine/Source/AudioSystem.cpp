@@ -61,7 +61,7 @@ namespace Rogue
 			
 			sound.Update();
 
-			sound.SetVolume(1.0f - distance * 0.0015f);
+			sound.SetVolume(1.0f - distance * 0.0015f * 0.0015f);
 		}
 
 		g_engine.m_coordinator.EndTimeSystem("Audio System");
