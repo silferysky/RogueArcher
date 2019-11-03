@@ -10,9 +10,11 @@ namespace Rogue
 
 	class AudioSystem : public System, public EventListener
 	{
+		Stream m_BGFXstream;
 		Stream m_BGMstream;
 		bool m_muted;
 
+		Sound m_BGM;
 		Entity m_trackingTarget;
 	public:
 		AudioSystem();

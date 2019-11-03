@@ -36,7 +36,11 @@ namespace Rogue
 		// Set system signature.
 		g_engine.m_coordinator.SetSystemSignature<AudioSystem>(signature);
 
+		m_BGFXstream.Initialize(); // create BGFX channel
 		m_BGMstream.Initialize(); // create BGM channel
+
+		m_BGM.CreateBGM("Resources/Sounds/[Water Ambience]WATER-CAVE_GEN-HDF-25449.ogg", 1, 112.0f, &m_BGMstream);
+		m_BGM.Play(0.5f);
 	}
 
 	void AudioSystem::Update()
@@ -84,7 +88,7 @@ namespace Rogue
 				sound.Release();
 		}
 
-		m_BGMstream.Release();
+		m_BGFXstream.Release();
 	}
 
 	void AudioSystem::ToggleMute()
@@ -136,7 +140,7 @@ namespace Rogue
 			/* Load up BGMs */
 			if (!(sound.m_b_IsPlaying))
 			{
-				sound.CreateBGM(aEmitter.getSoundPath().c_str(), 1, 112.0f, &m_BGMstream);
+				sound.CreateBGM(aEmitter.getSoundPath().c_str(), 1, 112.0f, &m_BGFXstream);
 				sound.Play(0.3f);
 			}
 		}

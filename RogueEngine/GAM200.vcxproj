@@ -23,6 +23,7 @@
     <ClInclude Include="Source\AnimationComponent.h" />
     <ClInclude Include="Source\AnimationSystem.h" />
     <ClInclude Include="Source\AudioEmitterComponent.h" />
+    <ClInclude Include="Source\AudioManager.h" />
     <ClInclude Include="Source\AudioSystem.h" />
     <ClInclude Include="Source\BaseAI.h" />
     <ClInclude Include="Source\BaseCollider.h" />
