@@ -103,11 +103,10 @@ namespace Rogue
 		}
 		case EventType::EvEntityMove:
 		{
-			EntMoveEvent* EvEntMove = dynamic_cast<EntMoveEvent*>(ev);
-			ForceManager::instance().RegisterForce(EvEntMove->GetEntityID(),
-				EvEntMove->GetVecMovement(),
-				g_fixedDeltaTime);
-
+			//EntMoveEvent* EvEntMove = dynamic_cast<EntMoveEvent*>(ev);
+			//ForceManager::instance().RegisterForce(EvEntMove->GetEntityID(),
+				//EvEntMove->GetVecMovement(),
+				//g_fixedDeltaTime);
 			return;
 		}
 		case EventType::EvEntityTeleport:

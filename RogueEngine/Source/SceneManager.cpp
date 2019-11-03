@@ -62,10 +62,15 @@ namespace Rogue
 	{
 		std::ostringstream ostrstream;
 		ostrstream << "Resources/" << fileName;
+
+		g_engine.m_coordinator.GetSystem<AudioSystem>()->ShutdownSounds();
+
 		m_objectFactory->LoadLevel(ostrstream.str().c_str()); 
 		std::vector<std::string>::iterator it = std::find(m_loadedLevels.begin(), m_loadedLevels.end(), std::string(fileName));
 		if (it == m_loadedLevels.end())
 			m_loadedLevels.push_back(std::string(fileName));
+
+		g_engine.m_coordinator.SystemInits();
 	}
 
 	void SceneManager::SaveLevel(const char* fileName)
