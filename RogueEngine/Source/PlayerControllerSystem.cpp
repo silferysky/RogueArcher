@@ -59,6 +59,8 @@ namespace Rogue
 
 		glm::vec3 rayWorld3D{ rayWorld4D.x, rayWorld4D.y, rayWorld4D.z };
 
+		//rayWorld3D = glm::normalize(rayWorld3D);
+
 		//std::cout << "Gimme ray coordinates thanks! " << rayWorld3D.x << ", " << rayWorld3D.y << ", " << rayWorld3D.z << std::endl;
 
 		//auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin());

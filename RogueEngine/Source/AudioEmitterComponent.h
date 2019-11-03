@@ -21,6 +21,9 @@ namespace Rogue
 		void setSound(const std::string& soundPath);
 		Sound& getSound();
 
+		void setAudioScale(const float& audioScale);
+		float& getAudioScale();
+
 		std::string Serialize();
 		void Deserialize(std::string toDeserialize);
 
