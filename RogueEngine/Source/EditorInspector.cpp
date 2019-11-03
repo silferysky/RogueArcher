@@ -525,15 +525,6 @@ namespace Rogue
 		float m_cameraZoom = g_engine.GetCameraZoom();
 		glm::vec3 m_cameraPos = g_engine.m_coordinator.GetSystem<CameraSystem>()->GetCameraPos();
 
-		if (!m_worldCamera)
-			m_cameraZoom = 1.0f;
-		else
-		{
-			m_cameraPos.x = 0.0f;
-			m_cameraPos.y = 0.0f;
-			m_cameraZoom = 1.630f;
-		}
-
 		ImGui::DragFloat("Camera X", &m_cameraPos.x, 1.0f, -10000.0f, 10000.0f);
 		ImGui::DragFloat("Camera Y", &m_cameraPos.y, 1.0f, -10000.0f, 10000.0f);
 
@@ -548,6 +539,13 @@ namespace Rogue
 		ImGui::DragFloat("Camera Zoom", &m_cameraZoom, 0.01f, 0.0f, 10.0f);
 
 		if (ImGui::Button("Reset Camera"))
+		{
+			m_cameraPos.x = 0.0f;
+			m_cameraPos.y = 0.0f;
+			m_cameraZoom = 1.630f;
+		}
+
+		if (m_worldCamera)
 		{
 			m_cameraPos.x = 0.0f;
 			m_cameraPos.y = 0.0f;
