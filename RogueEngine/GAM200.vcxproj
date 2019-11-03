@@ -38,6 +38,8 @@
     <ClInclude Include="Source\CircleCollisionSystem.h" />
     <ClInclude Include="Source\CollisionSystem.h" />
     <ClInclude Include="Source\CollisionTagSystem.h" />
+    <ClInclude Include="Source\CursorComponent.h" />
+    <ClInclude Include="Source\CursorSystem.h" />
     <ClInclude Include="Source\DebugDrawSystem.h" />
     <ClInclude Include="Source\Editor.h" />
     <ClInclude Include="Source\EditorComponent.h" />
@@ -149,6 +151,8 @@
     <ClCompile Include="Source\CircleCollisionSystem.cpp" />
     <ClCompile Include="Source\CollisionSystem.cpp" />
     <ClCompile Include="Source\CollisionTagSystem.cpp" />
+    <ClCompile Include="Source\CursorComponent.cpp" />
+    <ClCompile Include="Source\CursorSystem.cpp" />
     <ClCompile Include="Source\DebugDrawSystem.cpp" />
     <ClCompile Include="Source\Editor.cpp" />
     <ClCompile Include="Source\EditorComponent.cpp" />

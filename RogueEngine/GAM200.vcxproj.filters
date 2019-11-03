@@ -110,6 +110,9 @@
     <Filter Include="RogueEngine\Systems\UI">
       <UniqueIdentifier>{0b09499a-b5ad-41dc-946a-16db0a0a9183}</UniqueIdentifier>
     </Filter>
+    <Filter Include="RogueEngine\Systems\Cursor">
+      <UniqueIdentifier>{9231369d-d291-484d-86b5-06cc6c94dddc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Resource.h">
@@ -454,6 +457,12 @@
     <ClInclude Include="Source\AudioManager.h">
       <Filter>RogueEngine\Systems\Audio</Filter>
     </ClInclude>
+    <ClInclude Include="Source\CursorComponent.h">
+      <Filter>RogueEngine\Systems\Cursor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CursorSystem.h">
+      <Filter>RogueEngine\Systems\Cursor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -695,6 +704,12 @@
     </ClCompile>
     <ClCompile Include="Source\CollisionTagSystem.cpp">
       <Filter>RogueEngine\Systems\Collision\Collision Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CursorComponent.cpp">
+      <Filter>RogueEngine\Systems\Cursor</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CursorSystem.cpp">
+      <Filter>RogueEngine\Systems\Cursor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

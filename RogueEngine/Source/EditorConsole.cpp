@@ -44,7 +44,6 @@ namespace Rogue
 			ImGui::EndMenu();
 		}*/
 		ImGui::TextWrapped("%.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-		ImGui::TextWrapped("%.3f ms/frame (%.1f FPS)", static_cast<double>(g_deltaTime * Timer::s_millisecondsPerSecond), 1 / g_deltaTime);
 
 
 		// Time is in microseconds

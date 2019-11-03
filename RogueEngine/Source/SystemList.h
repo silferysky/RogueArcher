@@ -24,6 +24,8 @@ namespace Rogue
 		id_PLAYERCONTROLLERSYSTEM,
 		id_TESTSYSTEM,
 		id_EDITOR,
+		id_CURSORSYSTEM,
+
 		id_LASTSYS
 	};
 }
