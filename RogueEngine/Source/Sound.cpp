@@ -22,10 +22,9 @@ namespace Rogue
 	/* Sound Creation */
 
 	/* For SFX */
-	void Sound::Create(const char* filename, char counterCap, float playTimer, Stream* audioPtr)
+	void Sound::Create(const char* filename, float playTimer, Stream* audioPtr)
 	{
 		m_system = audioPtr->m_system;
-		m_c_PlayCap = counterCap;
 		m_f_PlayTimer = playTimer;
 		FMOD_System_CreateSound(m_system, filename, FMOD_LOOP_OFF | FMOD_CREATESTREAM, 0, &m_fmodSound);
 		FmodErrorCheck(m_result);
@@ -34,7 +33,7 @@ namespace Rogue
 	}
 
 	/* For BGM */
-	void Sound::CreateBGM(const char* filename, char counterCap, float playTimer, Stream* audioPtr)
+	void Sound::CreateBGM(const char* filename, float playTimer, Stream* audioPtr, int counterCap)
 	{
 		m_system = audioPtr->m_system;
 		m_c_PlayCap = counterCap;

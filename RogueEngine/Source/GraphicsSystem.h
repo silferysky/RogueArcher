@@ -32,7 +32,7 @@ namespace Rogue
 		GLint m_filterLocation;
 
 		std::shared_ptr<CameraSystem> m_pCamera;
-		float m_playerX = -1.0f;
+		float m_playerX = 1.0f;
 
 		std::multimap<int, Entity> m_drawQueue;
 

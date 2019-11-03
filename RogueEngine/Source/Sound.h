@@ -14,13 +14,14 @@ namespace Rogue
 		FMOD_RESULT	m_result;		/* allows error checking for FMOD functions */
 		FMOD_SOUND* m_fmodSound;	/* holding the actual sound */
 		FMOD_CHANNEL* m_channel;	/* the channel where the sound will be playing from */
-	public:
+
 		/* Sound Statistics */
 		float m_f_Timer = 0.0f;
-		char m_c_PlayCounter = 0;
 		float m_f_PlayTimer = 0.0f;
-		char m_c_PlayCap = 0;
 		bool m_b_IsPlaying = false;
+		int m_c_PlayCounter = 0;
+		int m_c_PlayCap = 10000;
+	public:
 
 		/* Constructor */
 		Sound();
@@ -28,8 +29,8 @@ namespace Rogue
 		void FmodErrorCheck(FMOD_RESULT result);
 
 		/* FMOD sound/channel/system creation */
-		void CreateBGM(const char* filename, char counterCap, float playTimer, Stream* audioPtr);
-		void Create(const char* filename, char counterCap, float playTimer, Stream* audioPtr);
+		void CreateBGM(const char* filename, float playTimer, Stream* audioPtr, int counterCap = 1);
+		void Create(const char* filename, float playTimer, Stream* audioPtr);
 
 		/* General Audio Functions */
 		/* Play the sound */
