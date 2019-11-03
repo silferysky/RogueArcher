@@ -9,6 +9,7 @@
 #include "Main.h"
 #include "Editor.h"
 #include "PhysicsSystem.h"
+#include "CollisionTagSystem.h"
 #include "CircleCollisionSystem.h"
 #include "BoxCollisionSystem.h"
 #include "CollisionSystem.h"
@@ -35,6 +36,7 @@ namespace Rogue
 		m_coordinator.RegisterSystem<LogicSystem>();
 		m_coordinator.RegisterSystem<PlayerControllerSystem>();
 		m_coordinator.RegisterSystem<PhysicsSystem>();
+		m_coordinator.RegisterSystem<CollisionTagSystem>();
 		m_coordinator.RegisterSystem<CircleCollisionSystem>();
 		m_coordinator.RegisterSystem<BoxCollisionSystem>();
 		m_coordinator.RegisterSystem<CollisionSystem>();
