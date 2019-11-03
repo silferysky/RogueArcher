@@ -30,12 +30,39 @@ namespace Rogue
 				{
 					ImGui::TextWrapped("%s", i.m_objectName.c_str());
 					static char buffer[64] = "";
+					static char tagging[64] = "";
+
 					ImGui::TextDisabled("New Name");
 					ImGui::SameLine();
-					ImGui::InputText("                  ", buffer, 64);
+					ImGui::PushItemWidth(75);
+					ImGui::InputText("                  ", buffer, 32);
 					if (ImGui::Button("Edit"))
 					{
+						if (!buffer)
+						{
+							return;
+						}
 						i.m_objectName = buffer;
+						memset(buffer, 0, 64);
+					}
+					
+					ImGui::TextDisabled("Current Tag");
+					//ImGui::TextDisabled("%s");
+					ImGui::TextDisabled("New Tag Name");
+					ImGui::SameLine();
+					ImGui::InputText("               ", tagging, 64);
+					if (ImGui::Button("Add New Tag"))
+					{
+						g_engine.m_coordinator.GetSystem<CollisionTagSystem>()->AddTag(tagging);
+						memset(tagging, 0, 64);
+					}
+					static int count = 0;
+					std::vector<std::string>& m_currentTags = g_engine.m_coordinator.GetSystem<CollisionTagSystem>()->GetTagList();
+
+					//ImGui::Combo("List of Tags")
+					//ImGui::BeginCombo("List of Tags", m_currentTags)
+					if (ImGui::Button("Set Tag"))
+					{
 					}
 					if (g_engine.m_coordinator.ComponentExists<TransformComponent>(i.m_Entity))
 					{
@@ -110,6 +137,7 @@ namespace Rogue
 								m_spritePath = m_constSpritePath + m_newSpritePath;
 								g_engine.m_coordinator.GetComponent<SpriteComponent>(i.m_Entity).setTexturePath(m_spritePath);
 								g_engine.m_coordinator.GetComponent<SpriteComponent>(i.m_Entity).setTexture(m_spritePath.c_str());
+								memset(m_newSpritePath, 0, 128);
 							}
 
 							if (ImGui::IsItemHovered())
@@ -131,6 +159,7 @@ namespace Rogue
 							{
 								m_priority = atoi(m_priorityDraw);
 								g_engine.m_coordinator.GetComponent<SpriteComponent>(i.m_Entity).setDrawPriority(m_priority);
+								memset(m_priorityDraw, 0, 128);
 							}
 							if (ImGui::IsItemHovered())
 							{
@@ -151,7 +180,7 @@ namespace Rogue
 							bool m_looping = g_engine.m_coordinator.GetComponent<AnimationComponent>(i.m_Entity).getIsLooping();
 							
 							ImVec2 imageSize{ ImGui::GetWindowWidth()/2, ImGui::GetWindowHeight() / 8 };
-							ImGui::Image((void*)(intptr_t)(g_engine.m_coordinator.GetSystem<GraphicsSystem>()->getFBO()), ImVec2(imageSize.x, imageSize.y), ImVec2(0, 1), ImVec2(1, 0));
+							//ImGui::Image((void*)(intptr_t)(g_engine.m_coordinator.GetSystem<GraphicsSystem>()->getFBO()), ImVec2(imageSize.x, imageSize.y), ImVec2(0, 1), ImVec2(1, 0));
 							ImGui::PushItemWidth(75);
 							ImGui::DragInt("Frames", &m_frames, 1.0f, 0, 60);
 							g_engine.m_coordinator.GetComponent<AnimationComponent>(i.m_Entity).setFrames(m_frames);
@@ -237,11 +266,11 @@ namespace Rogue
 					{
 						if (ImGui::CollapsingHeader("Logic"))
 						{
-							const char* items[] = { "AAAA", "BBBB", "CCCC", "DDDD", "EEEE", "FFFF", "GGGG", "HHHH", "IIII", "JJJJ", "KKKK", "LLLLLLL", "MMMM", "OOOOOOO" };
-							static int m_ai = 0;
-							ImGui::Combo("AI Type", &m_ai, items, IM_ARRAYSIZE(items));
-							ImGui::Combo("Current State", &m_ai, items, IM_ARRAYSIZE(items));
-							ImGui::Combo("Active State", &m_ai, items, IM_ARRAYSIZE(items));
+							//const char* items[] = { "AAAA", "BBBB", "CCCC", "DDDD", "EEEE", "FFFF", "GGGG", "HHHH", "IIII", "JJJJ", "KKKK", "LLLLLLL", "MMMM", "OOOOOOO" };
+							//static int m_ai = 0;
+							//ImGui::Combo("AI Type", &m_ai, items, IM_ARRAYSIZE(items));
+							//ImGui::Combo("Current State", &m_ai, items, IM_ARRAYSIZE(items));
+							//ImGui::Combo("Active State", &m_ai, items, IM_ARRAYSIZE(items));
 						}
 
 					}
@@ -320,6 +349,7 @@ namespace Rogue
 							{
 								m_audioPath = m_constAudioPath + m_newaudioPath;
 								g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(i.m_Entity).setSoundPath(m_audioPath);
+								memset(m_newaudioPath, 0, 128);
 							}
 							if (ImGui::IsItemHovered())
 							{

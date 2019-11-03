@@ -57,8 +57,7 @@ namespace Rogue
 
 	void CollisionTagSystem::AddTag(std::string name)
 	{
-		CollisionTag collisionTag(name, m_tagsList.size());
-		m_tagsList.push_back(collisionTag);
+		m_tagsList.emplace_back(name);
 	}
 
 	void CollisionTagSystem::RemoveTag(std::string name)
@@ -70,38 +69,10 @@ namespace Rogue
 		bool deleted = false;
 		for (auto iterator = m_tagsList.begin(); iterator != m_tagsList.end(); ++iterator)
 		{
-			//If deleted tag, make sure all other tags decrement by 1 to match properly
-			if (deleted)
-			{
-				iterator->m_tag--;
-			}
-			else if (iterator->m_name == name)
+			if (*iterator == name)
 			{
 				iterator = m_tagsList.erase(iterator);
 				--iterator;
-				deleted = true;
-			}
-		}
-	}
-
-	void CollisionTagSystem::RemoveTag(int tag)
-	{
-		//Do not ever removed the tag for unassigned
-		if (!tag)
-			return;
-
-		bool deleted = false;
-		for (auto iterator = m_tagsList.begin(); iterator != m_tagsList.end(); ++iterator)
-		{
-			//If deleted tag, make sure all other tags decrement by 1 to match properly
-			if (deleted)
-			{
-				iterator->m_tag--;
-			}
-			else if (iterator->m_tag == tag)
-			{
-				iterator = m_tagsList.erase(iterator);
-				deleted = true;
 			}
 		}
 	}
@@ -111,7 +82,7 @@ namespace Rogue
 		//Find the tag based on name
 		for (auto iterator = m_tagsList.begin(); iterator != m_tagsList.end(); ++iterator)
 		{
-			if (iterator->m_name == tagName)
+			if (*iterator == tagName)
 			{
 				m_entityTagsMap[entityToAssign] = *iterator;
 				break;
@@ -131,12 +102,13 @@ namespace Rogue
 		}
 	}
 
-	std::vector<CollisionTag> CollisionTagSystem::GetTagList()
+
+	std::vector<std::string>& CollisionTagSystem::GetTagList()
 	{
 		return m_tagsList;
 	}
 
-	std::map<Entity, CollisionTag> CollisionTagSystem::GetEntityTagMap()
+	std::map<Entity, std::string> CollisionTagSystem::GetEntityTagMap()
 	{
 		return m_entityTagsMap;
 	}
