@@ -48,11 +48,11 @@ namespace Rogue
 			auto& sound = g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(entity).getSound();
 			auto transformPos = g_engine.m_coordinator.GetComponent<TransformComponent>(entity).getPosition();
 
-			float distance = log2_fast(Vec2SqDistance(transformPos, g_engine.m_coordinator.GetComponent<TransformComponent>(m_trackingTarget).getPosition()));
+			float distance = Vec2Distance(transformPos, g_engine.m_coordinator.GetComponent<TransformComponent>(m_trackingTarget).getPosition());
 			
 			sound.Update();
 
-			sound.SetVolume(1.0f - distance * 0.05f);
+			sound.SetVolume(1.0f - distance * 0.0015f);
 		}
 
 		g_engine.m_coordinator.EndTimeSystem("Audio System");

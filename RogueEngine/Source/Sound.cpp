@@ -125,7 +125,10 @@ namespace Rogue
 
 	void Sound::SetVolume(float volume)
 	{
-		FMOD_Channel_SetVolume(m_channel, volume);
+		if (volume < 0)
+			FMOD_Channel_SetVolume(m_channel, 0.0f);
+		else
+			FMOD_Channel_SetVolume(m_channel, volume);
 	}
 
 	void Sound::ResetSoundCounter()
