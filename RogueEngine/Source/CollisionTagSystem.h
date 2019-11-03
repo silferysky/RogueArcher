@@ -3,6 +3,7 @@
 #include "EventListener.h"
 #include <vector>
 #include <map>
+#include "CollisionTags.h"
 
 namespace Rogue
 {
@@ -17,7 +18,15 @@ namespace Rogue
 		void Shutdown() override;
 		void Receive(Event* ev) override;
 
-		std::vector<int> m_tagsList;
-		std::map<Entity, int> m_EntityTagsList;
+		void AddTag(std::string name);
+		void RemoveTag(std::string name);
+		void RemoveTag(int tag);
+
+		void AssignTag(Entity entityToAssign, std::string tagName);
+		void DeassignTag(Entity entityToAssign);
+
+		//List of tags as integers
+		std::vector<CollisionTag> m_tagsList;
+		std::map<Entity, CollisionTag> m_entityTagsMap;
 	};
 }
