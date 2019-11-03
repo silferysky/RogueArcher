@@ -34,9 +34,32 @@ namespace Rogue
 
 		if (GetCursorPos(&cursor))
 		{
-			cursorPos.x = cursor.x - GetWindowWidth(g_engine.GetWindowHandler()) / 2.0f;
-			cursorPos.y = -(cursor.y - GetWindowHeight(g_engine.GetWindowHandler()) / 2.0f);
+		//	cursorPos.x = cursor.x - GetWindowWidth(g_engine.GetWindowHandler()) / 2.0f;
+		//	cursorPos.y = -(cursor.y - GetWindowHeight(g_engine.GetWindowHandler()) / 2.0f);
 		}
+
+		cursorPos.x = cursor.x;
+		cursorPos.y = cursor.y;
+
+		float x = (2.0f * cursorPos.x) / GetWindowWidth(g_engine.GetWindowHandler()) - 1.0f;
+		float y = 1.0f - (2.0f * cursorPos.y) / GetWindowHeight(g_engine.GetWindowHandler());
+		float z = 1.0f;
+
+		glm::vec3 rayNDC = glm::vec3(x, y, z);
+
+		glm::vec4 rayClip = glm::vec4(rayNDC.x, rayNDC.y, -1.0f, 1.0f);
+
+		glm::vec4 rayEye = glm::inverse(g_engine.GetProjMat()) * rayClip;
+
+		rayEye = glm::vec4(rayEye.x, rayEye.y, -1.0f, 0.0f);
+
+		glm::mat4 viewMat = g_engine.m_coordinator.GetSystem<CameraSystem>()->GetViewMatrix();
+
+		glm::vec4 rayWorld4D = glm::inverse(viewMat) * rayEye;
+
+		glm::vec3 rayWorld3D{ rayWorld4D.x, rayWorld4D.y, rayWorld4D.z };
+
+		std::cout << "Gimme ray coordinates thanks! " << rayWorld3D.x << ", " << rayWorld3D.y << ", " << rayWorld3D.z << std::endl;
 
 		//auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin());
 
