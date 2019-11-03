@@ -451,6 +451,9 @@
     <ClInclude Include="Source\CollisionTagSystem.h">
       <Filter>RogueEngine\Systems\Collision\Collision Systems</Filter>
     </ClInclude>
+    <ClInclude Include="Source\CollisionTags.h">
+      <Filter>RogueEngine\Systems\Collision</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">

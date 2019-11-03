@@ -36,6 +36,7 @@
     <ClInclude Include="Source\BoxCollisionSystem.h" />
     <ClInclude Include="Source\CircleCollisionSystem.h" />
     <ClInclude Include="Source\CollisionSystem.h" />
+    <ClInclude Include="Source\CollisionTags.h" />
     <ClInclude Include="Source\CollisionTagSystem.h" />
     <ClInclude Include="Source\DebugDrawSystem.h" />
     <ClInclude Include="Source\Editor.h" />
