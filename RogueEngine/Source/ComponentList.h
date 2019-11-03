@@ -13,6 +13,7 @@
 #include "CameraComponent.h"
 #include "AudioEmitterComponent.h"
 #include "UIComponent.h"
+#include "CursorComponent.h"
 
 namespace Rogue
 {

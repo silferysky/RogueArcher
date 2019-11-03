@@ -187,6 +187,33 @@ namespace Rogue
 						}
 					}
 
+					if (g_engine.m_coordinator.ComponentExists<CircleCollider2DComponent>(i.m_Entity))
+					{
+						if (ImGui::CollapsingHeader("Circle 2D Collider"))
+						{
+							float m_radius = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i.m_Entity).m_collider.getRadius();
+							Vec2 m_centerOffset = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i.m_Entity).m_collider.getCenterOffSet();
+							float m_rotationOffset = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i.m_Entity).m_collider.getRotationOffSet();
+							Vec2 m_scaleOffset = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i.m_Entity).m_collider.getScaleOffSet();
+
+							ImGui::PushItemWidth(75);
+							ImGui::DragFloat("Radius", &m_radius, 0.5f, -100000.0f, 100000.0f);
+							g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i.m_Entity).m_collider.setRadius(m_radius);
+
+							ImGui::DragFloat("Center Offset X ", &m_centerOffset.x, 0.5f, -100000.0f, 100000.0f);
+							ImGui::DragFloat("Center Offset Y ", &m_centerOffset.y, 0.5f, -100000.0f, 100000.0f);
+							g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i.m_Entity).m_collider.setCenterOffSet(m_centerOffset);
+
+							ImGui::DragFloat("Rotation Offset ", &m_rotationOffset, 0.5f, -100000.0f, 100000.0f);
+							g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i.m_Entity).m_collider.setRotationOffSet(m_rotationOffset);
+
+							ImGui::DragFloat("Scale Offset X ", &m_scaleOffset.x, 0.5f, -100000.0f, 100000.0f);
+							ImGui::DragFloat("Scale Offset Y ", &m_scaleOffset.y, 0.5f, -100000.0f, 100000.0f);
+							g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i.m_Entity).m_collider.setScaleOffSet(m_scaleOffset);
+
+						}
+					}
+
 					if (g_engine.m_coordinator.ComponentExists<BoxCollider2DComponent>(i.m_Entity))
 					{
 						if (ImGui::CollapsingHeader("Box2D Collider"))
@@ -295,32 +322,6 @@ namespace Rogue
 						}
 					}
 
-					if (g_engine.m_coordinator.ComponentExists<CircleCollider2DComponent>(i.m_Entity))
-					{
-						if (ImGui::CollapsingHeader("Circle 2D Collider"))
-						{
-							float m_radius = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i.m_Entity).m_collider.getRadius();
-							Vec2 m_centerOffset = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i.m_Entity).m_collider.getCenterOffSet();
-							float m_rotationOffset = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i.m_Entity).m_collider.getRotationOffSet();
-							Vec2 m_scaleOffset = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i.m_Entity).m_collider.getScaleOffSet();
-
-							ImGui::PushItemWidth(75);
-							ImGui::DragFloat("Radius", &m_radius, 0.5f, -100000.0f, 100000.0f);
-							g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i.m_Entity).m_collider.setRadius(m_radius);
-
-							ImGui::DragFloat("Center Offset X ", &m_centerOffset.x, 0.5f, -100000.0f, 100000.0f);
-							ImGui::DragFloat("Center Offset Y ", &m_centerOffset.y, 0.5f, -100000.0f, 100000.0f);
-							g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i.m_Entity).m_collider.setCenterOffSet(m_centerOffset);
-
-							ImGui::DragFloat("Rotation Offset ", &m_rotationOffset, 0.5f, -100000.0f, 100000.0f);
-							g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i.m_Entity).m_collider.setRotationOffSet(m_rotationOffset);
-
-							ImGui::DragFloat("Scale Offset X ", &m_scaleOffset.x, 0.5f, -100000.0f, 100000.0f);
-							ImGui::DragFloat("Scale Offset Y ", &m_scaleOffset.y, 0.5f, -100000.0f, 100000.0f);
-							g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i.m_Entity).m_collider.setScaleOffSet(m_scaleOffset);
-
-						}
-					}
 
 					if (g_engine.m_coordinator.ComponentExists<AudioEmitterComponent>(i.m_Entity))
 					{
@@ -354,6 +355,11 @@ namespace Rogue
 								ImGui::Text("Enter name of file and click on Set New Path to update sound. Note that new sound will only be loaded when scene is saved and restarted");
 								ImGui::EndTooltip();
 							}
+						}
+
+						if (g_engine.m_coordinator.ComponentExists<CursorComponent>(i.m_Entity))
+						{
+							// If we need to edit anything about the cursor e.g offset from the actual cursor
 						}
 					}
 					if (ImGui::Button("Add Component"))
@@ -395,6 +401,12 @@ namespace Rogue
 							{
 								g_engine.m_coordinator.AddComponent(i.m_Entity, LogicComponent());
 							}
+							
+							if (ImGui::MenuItem("Cursor Component", nullptr, false, !g_engine.m_coordinator.ComponentExists<CursorComponent>(i.m_Entity)))
+							{
+								g_engine.m_coordinator.AddComponent(i.m_Entity, CursorComponent());
+							}
+
 							ImGui::EndMenu();
 						}
 						if (ImGui::BeginMenu("Colliders"))
@@ -461,6 +473,12 @@ namespace Rogue
 							{
 								g_engine.m_coordinator.RemoveComponent<LogicComponent>(i.m_Entity);
 							}
+
+							if (ImGui::MenuItem("Cursor Component", nullptr, false, g_engine.m_coordinator.ComponentExists<CursorComponent>(i.m_Entity)))
+							{
+								g_engine.m_coordinator.RemoveComponent<LogicComponent>(i.m_Entity);
+							}
+
 							ImGui::EndMenu();
 						}
 						if (ImGui::BeginMenu("Colliders"))
@@ -525,6 +543,15 @@ namespace Rogue
 		float m_cameraZoom = g_engine.GetCameraZoom();
 		glm::vec3 m_cameraPos = g_engine.m_coordinator.GetSystem<CameraSystem>()->GetCameraPos();
 
+		if (!m_worldCamera)
+			m_cameraZoom = 1.0f;
+		else
+		{
+			m_cameraPos.x = 0.0f;
+			m_cameraPos.y = 0.0f;
+			m_cameraZoom = 1.630f;
+		}
+
 		ImGui::DragFloat("Camera X", &m_cameraPos.x, 1.0f, -10000.0f, 10000.0f);
 		ImGui::DragFloat("Camera Y", &m_cameraPos.y, 1.0f, -10000.0f, 10000.0f);
 
@@ -539,13 +566,6 @@ namespace Rogue
 		ImGui::DragFloat("Camera Zoom", &m_cameraZoom, 0.01f, 0.0f, 10.0f);
 
 		if (ImGui::Button("Reset Camera"))
-		{
-			m_cameraPos.x = 0.0f;
-			m_cameraPos.y = 0.0f;
-			m_cameraZoom = 1.630f;
-		}
-
-		if (m_worldCamera)
 		{
 			m_cameraPos.x = 0.0f;
 			m_cameraPos.y = 0.0f;
