@@ -168,16 +168,6 @@ namespace Rogue
 
 	void GraphicsSystem::Receive(Event* ev)
 	{
-		/*switch (ev->GetEventType())
-		{
-		case EventType::EvKeyPressed:
-		{
-			KeyPressEvent* EvPressKey = dynamic_cast<KeyPressEvent*>(ev);
-			return;
-		}
-		default:
-			return;
-		}*/
 	}
 
 	void GraphicsSystem::UseFrameBuffer()

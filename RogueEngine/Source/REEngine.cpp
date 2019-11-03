@@ -139,7 +139,7 @@ namespace Rogue
 			SwapBuffers(hDC);
 
 			//m_projMat = glm::ortho(-16.0f * 0.5f, 16.0f * 0.5f, -9.0f * 0.5f, 9.0f * 0.5f, -1024.0f, 1024.0f);
-			m_projMat = glm::ortho(-GetWindowWidth(hWnd) * 0.5f, GetWindowWidth(hWnd) * 0.5f, -GetWindowHeight(hWnd) * 0.5f, GetWindowHeight(hWnd) * 0.5f, -1024.0f, 1024.0f);
+			m_projMat = glm::ortho(-GetWindowWidth(hWnd) * 0.5f * m_cameraZoom, GetWindowWidth(hWnd) * 0.5f * m_cameraZoom, -GetWindowHeight(hWnd) * 0.5f * m_cameraZoom, GetWindowHeight(hWnd) * 0.5f * m_cameraZoom, -1024.0f, 1024.0f);
 
 			m_loopEnd = mainLoopTimer.now();
 		}
@@ -194,6 +194,17 @@ namespace Rogue
 	void REEngine::SetTimeScale(float timeScale)
 	{
 		m_timeScale = timeScale;
+	}
+
+	void REEngine::ZoomIn()
+	{
+		if (m_cameraZoom > 0.0f)
+			m_cameraZoom -= 0.01f;
+	}
+
+	void REEngine::ZoomOut()
+	{
+		m_cameraZoom += 0.01f;
 	}
 
 	void REEngine::ToggleVSync()

@@ -151,6 +151,19 @@ namespace Rogue
 
 			return;
 		} //End KeyTriggered
+		case EventType::EvKeyPressed:
+		{
+			KeyPressEvent* EvPressKey = dynamic_cast<KeyPressEvent*>(ev);
+			KeyPress keycode = EvPressKey->GetKeyCode();
+
+			if (keycode == KeyPress::KeyF1)
+				g_engine.ZoomIn();
+
+			if (keycode == KeyPress::KeyF2)
+				g_engine.ZoomOut();
+
+			return;
+		} //End KeyPressed
 		}
 	}
 
