@@ -38,9 +38,9 @@ namespace Rogue
 			cursorPos.y = -(cursor.y - GetWindowHeight(g_engine.GetWindowHandler()) / 2.0f);
 		}
 
-		auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin());
+		//auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin());
 
-		float direction = Vec2Rotation(cursorPos, Vec2{ 0,0 }); // Player must be center of screen for this to work
+		//float direction = Vec2Rotation(cursorPos, Vec2{ 0,0 }); // Player must be center of screen for this to work
 
 		//std::cout << RadiansToDegrees(direction) << " degrees" << std::endl;
 
@@ -321,9 +321,12 @@ namespace Rogue
 
 		//Creating Components
 		//Transform
+		Vec2 tempVec{};
+		if (m_entities.size() && g_engine.m_coordinator.ComponentExists<TransformComponent>(*m_entities.begin()))
+			tempVec = g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin()).getPosition();
 		TransformComponent& transform = g_engine.m_coordinator.CreateComponent<TransformComponent>(ball);
-		strstream	<< g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin()).getPosition().x + cursorPos.x * POSITION_RELATIVITY << ";"
-					<< g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin()).getPosition().y + cursorPos.y * POSITION_RELATIVITY << ";"
+		strstream	<< tempVec.x + cursorPos.x * POSITION_RELATIVITY << ";"
+					<< tempVec.y + cursorPos.y * POSITION_RELATIVITY << ";"
 					<< "50;50;0";
 		transform.Deserialize(strstream.str());
 
