@@ -207,6 +207,16 @@ namespace Rogue
 		m_cameraZoom += 0.01f;
 	}
 
+	float& REEngine::GetCameraZoom()
+	{
+		return m_cameraZoom;
+	}
+
+	void REEngine::SetCameraZoom(const float& cameraZoom)
+	{
+		m_cameraZoom = cameraZoom;
+	}
+
 	void REEngine::ToggleVSync()
 	{
 		if (m_verticalSync)

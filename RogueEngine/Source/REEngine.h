@@ -56,6 +56,8 @@ namespace Rogue
 		float GetTimeScale() const;
 		int GetStepCount() const;
 
+		float& GetCameraZoom();
+		void SetCameraZoom(const float& cameraZoom);
 		void ZoomIn();
 		void ZoomOut();
 
