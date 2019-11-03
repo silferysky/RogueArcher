@@ -59,10 +59,9 @@ namespace Rogue
 		search = bufferX;
 		for (auto& i : m_currentVector)
 		{
-			std::string objectName = i.m_objectName.substr(0, search.size());
-			if (objectName == search)
+			std::string tagName = i.m_tag.substr(0, search.size());
+			if (tagName == search)
 			{
-				//std::cout << "hi" << std::endl;
 				if (ImGui::Selectable(i.m_objectName.c_str(), i.m_selected, ImGuiSelectableFlags_AllowDoubleClick))
 				{
 					if (ImGui::IsMouseClicked(0))
