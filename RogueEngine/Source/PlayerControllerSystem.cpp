@@ -247,6 +247,9 @@ namespace Rogue
 				{
 					CreateBallAttack();
 					m_timer = 1.5f;
+
+					if (g_engine.m_coordinator.ComponentExists<AnimationComponent>(*m_entities.begin()))
+						g_engine.m_coordinator.GetComponent<AnimationComponent>(*m_entities.begin()).setIsAnimating(true);
 				}
 			}
 
