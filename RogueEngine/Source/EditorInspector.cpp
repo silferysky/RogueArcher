@@ -269,7 +269,8 @@ namespace Rogue
 							ImGui::PushItemWidth(75);
 							ImGui::Checkbox("Active?", &m_isActive);
 							ImGui::TextWrapped("Check this box to show the UI element.");
-							g_engine.m_coordinator.GetComponent<CameraComponent>(i.m_Entity).setIsActive(m_isActive);
+							if (g_engine.m_coordinator.ComponentExists<CameraComponent>(i.m_Entity))
+								g_engine.m_coordinator.GetComponent<CameraComponent>(i.m_Entity).setIsActive(m_isActive);
 							ImGui::PushItemWidth(75);
 						}
 					}
@@ -345,7 +346,7 @@ namespace Rogue
 							if (ImGui::MenuItem("Sprite Component", nullptr, false, !g_engine.m_coordinator.ComponentExists<SpriteComponent>(i.m_Entity)))
 							{
 								auto& Sprite = g_engine.m_coordinator.CreateComponent<SpriteComponent>(i.m_Entity);
-								Sprite.Deserialize("Resources/Assets/DefaultSprite.png");
+								Sprite.Deserialize("Resources/Assets/DefaultSprite.png;1");
 							}
 
 							if (ImGui::MenuItem("Animation Component", nullptr, false, !g_engine.m_coordinator.ComponentExists<AnimationComponent>(i.m_Entity)))
