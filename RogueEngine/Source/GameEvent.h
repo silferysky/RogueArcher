@@ -19,7 +19,7 @@ namespace Rogue
 		Entity ID;
 	};
 
-	class EntChangeStateEvent : EntityEvent
+	class EntChangeStateEvent : public EntityEvent
 	{
 	public:
 

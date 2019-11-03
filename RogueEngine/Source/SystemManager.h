@@ -12,6 +12,9 @@
 #include "BaseSystem.h"
 #include <vector>
 #include <utility>
+#include "CollisionTagSystem.h"
+#include "EventDispatcher.h"
+#include "GameEvent.h"
 
 namespace Rogue
 {
@@ -201,6 +204,18 @@ namespace Rogue
 			m_editorIsRunning = m_editorIsRunning ?
 				false :
 				true;
+		}
+
+		void CreateAssignTagEvent(Entity entity)
+		{
+			EntChangeStateEvent* changeStateEvent = new EntChangeStateEvent(entity, 0);
+			changeStateEvent->SetSystemReceivers((int)SystemID::id_COLLISIONTAGSYSTEM);
+			EventDispatcher::instance().AddEvent(changeStateEvent);
+		}
+
+		void DeassignTag(Entity entity)
+		{
+			GetSystem<CollisionTagSystem>()->DeassignTag(entity);
 		}
 
 	private:

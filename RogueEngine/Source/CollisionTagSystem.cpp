@@ -1,5 +1,6 @@
 #include "CollisionTagSystem.h"
 #include "Main.h"
+#include "GameEvent.h"
 
 namespace Rogue
 {
@@ -21,6 +22,8 @@ namespace Rogue
 
 		//Default tag
 		AddTag("Unassigned");
+		AddTag("Circle");
+		AddTag("Box");
 	}
 
 	void CollisionTagSystem::Update()
@@ -33,6 +36,23 @@ namespace Rogue
 
 	void CollisionTagSystem::Receive(Event* ev)
 	{
+		switch (ev->GetEventType())
+		{
+		case EventType::EvEntityChangeState:
+		{
+			EntChangeStateEvent* EvChangeState = dynamic_cast<EntChangeStateEvent*>(ev);
+
+			if (g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(EvChangeState->GetEntityID()) &&
+				g_engine.m_coordinator.ComponentExists<TransformComponent>(EvChangeState->GetEntityID()))
+			{
+				if (g_engine.m_coordinator.ComponentExists<BoxCollider2DComponent>(EvChangeState->GetEntityID()))
+					AssignTag(EvChangeState->GetEntityID(), "Box");
+				else if (g_engine.m_coordinator.ComponentExists<CircleCollider2DComponent>(EvChangeState->GetEntityID()))
+					AssignTag(EvChangeState->GetEntityID(), "Circle");
+			}
+			return;
+		}
+		}
 	}
 
 	void CollisionTagSystem::AddTag(std::string name)

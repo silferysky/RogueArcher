@@ -79,6 +79,8 @@ namespace Rogue
 			m_componentManager->EntityDestroyed(entity);
 
 			m_systemManager->EntityDestroyed(entity);
+
+			m_systemManager->DeassignTag(entity);
 		}
 
 		void DestroyAllEntity()
@@ -124,6 +126,7 @@ namespace Rogue
 			m_entityManager->SetSignature(entity, signature);
 
 			m_systemManager->EntitySignatureChanged(entity, signature);
+			m_systemManager->CreateAssignTagEvent(entity);
 		}
 
 		template<typename T>
