@@ -9,6 +9,8 @@ namespace Rogue
 	{
 		std::string m_soundPath;
 		Sound m_sound;
+
+		float m_audioScale = 1.0f;
 	public:
 		AudioEmitterComponent() = default;
 		~AudioEmitterComponent() = default;
