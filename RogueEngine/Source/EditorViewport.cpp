@@ -22,7 +22,7 @@ namespace Rogue
 			//If game is not running, save level, and set it to running
 			if (!g_engine.m_coordinator.GetGameState())
 			{
-				g_engine.m_coordinator.GetSceneManager().SaveLevel(g_engine.m_coordinator.GetSceneManager().getCurrentFileName().c_str());
+				//g_engine.m_coordinator.GetSceneManager().SaveLevel(g_engine.m_coordinator.GetSceneManager().getCurrentFileName().c_str());
 				//g_engine.m_coordinator.GetSceneManager().SaveAndLoadLevel();
 				g_engine.m_coordinator.SetGameState(true);
 			}

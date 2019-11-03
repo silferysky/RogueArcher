@@ -1,3 +1,8 @@
 {
-    "Files": "Level 1.json;Level 2.json;Level 3.json"
+  "Files": "Level 1.json;Level 2.json;Level 3.json",
+  "CameraMinX": -634,
+  "CameraMinY": 373,
+  "CameraMaxX": 633,
+  "CameraMaxY": -676,
+  "BGM": 0
 }

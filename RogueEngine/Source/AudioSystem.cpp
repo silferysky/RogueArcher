@@ -50,9 +50,14 @@ namespace Rogue
 		for (auto entity : m_entities)
 		{
 			auto& sound = g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(entity).getSound();
-			auto transformPos = g_engine.m_coordinator.GetComponent<TransformComponent>(entity).getPosition();
+			Vec2 transformPos{};
+			
+			if (g_engine.m_coordinator.ComponentExists<TransformComponent>(entity))
+				transformPos = g_engine.m_coordinator.GetComponent<TransformComponent>(entity).getPosition();
 
-			float distance = Vec2Distance(transformPos, g_engine.m_coordinator.GetComponent<TransformComponent>(m_trackingTarget).getPosition());
+			float distance = 0.0f;
+			if (g_engine.m_coordinator.ComponentExists<TransformComponent>(m_trackingTarget))
+				distance = Vec2SqDistance(transformPos, g_engine.m_coordinator.GetComponent<TransformComponent>(m_trackingTarget).getPosition());
 			
 			sound.Update();
 
