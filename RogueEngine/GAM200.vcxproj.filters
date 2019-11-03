@@ -445,6 +445,9 @@
     <ClInclude Include="Source\UIComponent.h">
       <Filter>RogueEngine\Systems\UI</Filter>
     </ClInclude>
+    <ClInclude Include="Source\GraphicsEvent.h">
+      <Filter>RogueEngine\Systems\Events\Events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">

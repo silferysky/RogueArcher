@@ -56,6 +56,7 @@
     <ClInclude Include="Source\glfw3.h" />
     <ClInclude Include="Source\glfw3native.h" />
     <ClInclude Include="Source\GLHelper.hpp" />
+    <ClInclude Include="Source\GraphicsEvent.h" />
     <ClInclude Include="Source\IEditable.h" />
     <ClInclude Include="Source\ILogic.h" />
     <ClInclude Include="Source\imconfig.h" />

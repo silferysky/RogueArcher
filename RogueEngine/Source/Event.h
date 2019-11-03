@@ -47,7 +47,9 @@ namespace Rogue
 		EvEntityDestroy,
 
 		EvOnCollision,
-		EvOnTrigger
+		EvOnTrigger,
+
+		EvCameraShake
 	};
 
 	enum EventCategory
@@ -67,7 +69,9 @@ namespace Rogue
 		EventCatEntAttack = EvCatFlag(8),			//For entity attacking/taking damage
 		EventCatEntDestroy = EvCatFlag(9),			//For completely removing entities
 
-		EventCatCollision = EvCatFlag(10)
+		EventCatCollision = EvCatFlag(10),
+
+		EventCatGraphics = EvCatFlag(11)
 	};
 
 	/*enum EventMessageType
