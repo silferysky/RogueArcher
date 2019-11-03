@@ -11,7 +11,7 @@
 namespace Rogue
 {
 	PlayerControllerSystem::PlayerControllerSystem()
-		:System(SystemID::id_PLAYERCONTROLLERSYSTEM), m_timer{0.0f}
+		:System(SystemID::id_PLAYERCONTROLLERSYSTEM), m_ballTimer{-0.1f}, m_ballCooldown{0.0f}
 	{
 	}
 
@@ -29,7 +29,6 @@ namespace Rogue
 
 	void PlayerControllerSystem::Update()
 	{
-
 		//auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin());
 
 		//float direction = Vec2Rotation(cursorPos, Vec2{ 0,0 }); // Player must be center of screen for this to work
@@ -37,7 +36,18 @@ namespace Rogue
 		//std::cout << RadiansToDegrees(direction) << " degrees" << std::endl;
 
 		//For PlayerControllerSystem Timer
-		m_timer -= g_deltaTime * g_engine.GetTimeScale();
+		if (m_ballTimer > 0.0f)
+		{
+			m_ballTimer -= g_deltaTime * g_engine.GetTimeScale();
+			if (m_ballTimer < 0.0f)
+				CreateBallAttack();
+			//RE_INFO("BALL TIMER UPDATE");
+		}
+		else
+		{
+			m_ballCooldown -= g_deltaTime * g_engine.GetTimeScale();
+			//RE_INFO("BALL COOLDOWN UPDATE");
+		}
 
 		//To update all timed entities
 		for (auto timedEntityIt = m_timedEntities.begin(); timedEntityIt != m_timedEntities.end(); ++timedEntityIt)
@@ -235,10 +245,11 @@ namespace Rogue
 
 			if (keycode == KeyPress::MB1)
 			{
-				if (!m_timedEntities.size() && m_timer < 0.0f)
+				if (!m_timedEntities.size() && m_ballTimer < 0.0f && m_ballCooldown < 0.0f)
 				{
-					CreateBallAttack();
-					m_timer = 1.5f;
+					m_ballTimer = 1.0f;
+					m_ballCooldown = 1.0f;
+					RE_INFO("CLICKCLICK");
 
 					if (g_engine.m_coordinator.ComponentExists<AnimationComponent>(*m_entities.begin()))
 						g_engine.m_coordinator.GetComponent<AnimationComponent>(*m_entities.begin()).setIsAnimating(true);
