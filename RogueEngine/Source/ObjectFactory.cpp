@@ -213,9 +213,10 @@ namespace Rogue
 
 	void ObjectFactory::LoadLevelFiles(const char* fileName)
 	{
-		std::stringstream strstream;
-		std::string stdstr;
 		rapidjson::Document level = RESerialiser::DeserialiseFromFile(fileName);
+		std::stringstream strstream;
+		std::istringstream istrstream(level["Sounds"].GetString());
+		std::string stdstr;
 		strstream << level["Files"].GetString();
 
 		while(std::getline(strstream, stdstr, ';'))
@@ -226,8 +227,19 @@ namespace Rogue
 		g_engine.m_coordinator.GetSystem<CameraSystem>()->SetCameraMin(Vec2(level["CameraMinX"].GetFloat(), level["CameraMinY"].GetFloat()));
 		g_engine.m_coordinator.GetSystem<CameraSystem>()->SetCameraMax(Vec2(level["CameraMaxX"].GetFloat(), level["CameraMaxY"].GetFloat()));
 
-		//strstream.clear();
-		//strstream.str("");
+		stdstr = std::string();
+
+		auto& audioManager = g_engine.m_coordinator.GetAudioManager();
+
+		while (std::getline(istrstream, stdstr, ';'))
+		{
+			strstream.clear();
+			strstream.str("");
+			strstream << "Resources/Sounds/" << stdstr;
+
+			audioManager.loadSound(strstream.str());
+		}
+		
 	}
 
 	void ObjectFactory::SaveLevelFiles(const char* fileName)
