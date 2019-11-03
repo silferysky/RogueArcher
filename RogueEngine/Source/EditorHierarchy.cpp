@@ -19,7 +19,7 @@ namespace Rogue
 	void ImGuiEditorHierarchy::Update()
 	{
 		ImGui::Begin("Hierarchy");
-		if (ImGui::Button("Create"))
+		if (ImGui::Button("Create New Object"))
 		{
 			ImGui::OpenPopup("Create");
 		}
@@ -51,27 +51,56 @@ namespace Rogue
 			}
 			ImGui::EndPopup();
 		}
-		ImGui::SameLine();
 		ImGui::TextDisabled("Name");
 		ImGui::SameLine();
 		static char bufferX[64];
-		ImGui::InputText("", bufferX, 64);
+		ImGui::InputText(" ", bufferX, 64);
+		std::string search;
+		if (ImGui::Button("Search"))
+		{	
+			search = bufferX;
+			//memset(bufferX, 0, 64);
+		}
 		ImGui::Separator();
 		for (auto& i : m_currentVector)
 		{
-			if (ImGui::Selectable(i.m_objectName.c_str(), i.m_selected, ImGuiSelectableFlags_AllowDoubleClick))
+			if (i.m_objectName == search)
 			{
-				if (ImGui::IsMouseClicked(0))
+				std::cout << "hi" << std::endl;
+				if (ImGui::Selectable(i.m_objectName.c_str(), i.m_selected, ImGuiSelectableFlags_AllowDoubleClick))
 				{
-					i.m_selected = !i.m_selected;
-					int temp = i.m_Entity;
-					for (auto& i : m_currentVector)
+					if (ImGui::IsMouseClicked(0))
 					{
-						if (i.m_Entity == temp)
-							continue;
-						else
+						i.m_selected = !i.m_selected;
+						int temp = i.m_Entity;
+						for (auto& i : m_currentVector)
 						{
-							i.m_selected = false;
+							if (i.m_Entity == temp)
+								continue;
+							else
+							{
+								i.m_selected = false;
+							}
+						}
+					}
+				}
+			}
+			else
+			{
+				if (ImGui::Selectable(i.m_objectName.c_str(), i.m_selected, ImGuiSelectableFlags_AllowDoubleClick))
+				{
+					if (ImGui::IsMouseClicked(0))
+					{
+						i.m_selected = !i.m_selected;
+						int temp = i.m_Entity;
+						for (auto& i : m_currentVector)
+						{
+							if (i.m_Entity == temp)
+								continue;
+							else
+							{
+								i.m_selected = false;
+							}
 						}
 					}
 				}

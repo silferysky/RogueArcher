@@ -8,6 +8,7 @@ namespace Rogue
 	{
 	public:
 		std::string m_objectName;
+		std::string m_tag;
 		bool m_selected = false;
 		Entity m_Entity = 0;
 
