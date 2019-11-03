@@ -188,9 +188,6 @@ namespace Rogue
 							ImGui::DragFloat("Seconds Per Frame", &m_secondsPerFrame, 0.1f, 0.0f, 1.0f);
 							g_engine.m_coordinator.GetComponent<AnimationComponent>(i.m_Entity).setSecondsPerFrame(m_secondsPerFrame);
 				
-							ImGui::Checkbox("Animating?", &m_isAnimating);
-							g_engine.m_coordinator.GetComponent<AnimationComponent>(i.m_Entity).setIsAnimating(m_isAnimating);
-				
 							ImGui::Checkbox("Looping?", &m_looping);
 							g_engine.m_coordinator.GetComponent<AnimationComponent>(i.m_Entity).setIsLooping(m_looping);
 						}
