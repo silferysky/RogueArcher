@@ -25,6 +25,9 @@ namespace Rogue
 		void AssignTag(Entity entityToAssign, std::string tagName);
 		void DeassignTag(Entity entityToAssign);
 
+		std::vector<CollisionTag> GetTagList();
+		std::map<Entity, CollisionTag> GetEntityTagMap();
+
 		//List of tags as integers
 		std::vector<CollisionTag> m_tagsList;
 		std::map<Entity, CollisionTag> m_entityTagsMap;

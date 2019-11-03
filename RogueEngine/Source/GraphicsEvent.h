@@ -17,4 +17,13 @@ namespace Rogue
 
 		float magnitude;
 	};
+
+	class ChangeAnimationEvent : public Event
+	{
+	public:
+		SET_EVENT_CATEGORY(EventCatGraphics)
+		SET_EVENT_TYPE(EvChangeAnimation)
+
+		ChangeAnimationEvent() = default;
+	};
 }

@@ -49,7 +49,8 @@ namespace Rogue
 		EvOnCollision,
 		EvOnTrigger,
 
-		EvCameraShake
+		EvCameraShake,
+		EvChangeAnimation
 	};
 
 	enum EventCategory

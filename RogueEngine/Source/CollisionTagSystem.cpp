@@ -110,4 +110,14 @@ namespace Rogue
 			}
 		}
 	}
+
+	std::vector<CollisionTag> CollisionTagSystem::GetTagList()
+	{
+		return m_tagsList;
+	}
+
+	std::map<Entity, CollisionTag> CollisionTagSystem::GetEntityTagMap()
+	{
+		return m_entityTagsMap;
+	}
 }
