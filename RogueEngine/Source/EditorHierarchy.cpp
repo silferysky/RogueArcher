@@ -57,7 +57,6 @@ namespace Rogue
 		ImGui::InputText(" ", bufferX, 64);
 		std::string search;
 		search = bufferX;
-		ImGui::Separator();
 		for (auto& i : m_currentVector)
 		{
 			if (i.m_objectName == search)
@@ -81,7 +80,7 @@ namespace Rogue
 					}
 				}
 			}
-			else
+			else if (search == "")
 			{
 				if (ImGui::Selectable(i.m_objectName.c_str(), i.m_selected, ImGuiSelectableFlags_AllowDoubleClick))
 				{
