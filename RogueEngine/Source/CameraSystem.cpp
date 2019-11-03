@@ -110,7 +110,7 @@ namespace Rogue
 			{
 				if (g_engine.m_coordinator.GetComponent<CameraComponent>(entity).getIsActive())
 				{
-					auto transformPos = g_engine.m_coordinator.GetComponent<TransformComponent>(entity).getPosition();
+					Vec2 transformPos = g_engine.m_coordinator.GetComponent<TransformComponent>(entity).getPosition();
 
 					if (transformPos.x > m_cameraMax.x)
 						transformPos.x = m_cameraMax.x;
