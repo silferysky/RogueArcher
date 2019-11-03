@@ -3,13 +3,13 @@
 #include "EventListener.h"
 #include <vector>
 #include <map>
-#include "CollisionTags.h"
 
 namespace Rogue
 {
 	class CollisionTagSystem
 		: public System, public EventListener
 	{
+		std::string m_name;
 	public:
 		CollisionTagSystem();
 
@@ -20,16 +20,15 @@ namespace Rogue
 
 		void AddTag(std::string name);
 		void RemoveTag(std::string name);
-		void RemoveTag(int tag);
 
 		void AssignTag(Entity entityToAssign, std::string tagName);
 		void DeassignTag(Entity entityToAssign);
-
-		std::vector<CollisionTag> GetTagList();
-		std::map<Entity, CollisionTag> GetEntityTagMap();
+		std::string GetTag();
+		std::vector<std::string>& GetTagList();
+		std::map<Entity, std::string> GetEntityTagMap();
 
 		//List of tags as integers
-		std::vector<CollisionTag> m_tagsList;
-		std::map<Entity, CollisionTag> m_entityTagsMap;
+		std::vector<std::string> m_tagsList;
+		std::map<Entity, std::string> m_entityTagsMap;
 	};
 }
