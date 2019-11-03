@@ -56,17 +56,13 @@ namespace Rogue
 		static char bufferX[64];
 		ImGui::InputText(" ", bufferX, 64);
 		std::string search;
-		if (ImGui::Button("Search"))
-		{	
-			search = bufferX;
-			//memset(bufferX, 0, 64);
-		}
-		ImGui::Separator();
+		search = bufferX;
 		for (auto& i : m_currentVector)
 		{
-			if (i.m_objectName == search)
+			std::string objectName = i.m_objectName.substr(0, search.size());
+			if (objectName == search)
 			{
-				std::cout << "hi" << std::endl;
+				//std::cout << "hi" << std::endl;
 				if (ImGui::Selectable(i.m_objectName.c_str(), i.m_selected, ImGuiSelectableFlags_AllowDoubleClick))
 				{
 					if (ImGui::IsMouseClicked(0))
@@ -85,7 +81,7 @@ namespace Rogue
 					}
 				}
 			}
-			else
+			else if (search == "")
 			{
 				if (ImGui::Selectable(i.m_objectName.c_str(), i.m_selected, ImGuiSelectableFlags_AllowDoubleClick))
 				{
