@@ -51,6 +51,7 @@ namespace Rogue
 		void DestroyEntity(Entity entity)
 		{
 			RE_ASSERT(entity < MAX_ENTITIES, "Entity out of range.");
+
 			// Invalidate the destroyed entity's signature
 			RESignatures[entity].reset();
 
