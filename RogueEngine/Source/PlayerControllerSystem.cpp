@@ -29,39 +29,6 @@ namespace Rogue
 
 	void PlayerControllerSystem::Update()
 	{
-		POINT cursor;
-		Vec2 cursorPos;
-
-		if (GetCursorPos(&cursor))
-		{
-		//	cursorPos.x = cursor.x - GetWindowWidth(g_engine.GetWindowHandler()) / 2.0f;
-		//	cursorPos.y = -(cursor.y - GetWindowHeight(g_engine.GetWindowHandler()) / 2.0f);
-		}
-
-		cursorPos.x = cursor.x;
-		cursorPos.y = cursor.y;
-
-		float x = (2.0f * cursorPos.x) / GetWindowWidth(g_engine.GetWindowHandler()) - 1.0f;
-		float y = 1.0f - (2.0f * cursorPos.y) / GetWindowHeight(g_engine.GetWindowHandler());
-		float z = 1.0f;
-
-		glm::vec3 rayNDC = glm::vec3(x, y, z);
-
-		glm::vec4 rayClip = glm::vec4(rayNDC.x, rayNDC.y, -1.0f, 1.0f);
-
-		glm::vec4 rayEye = glm::inverse(g_engine.GetProjMat()) * rayClip;
-
-		rayEye = glm::vec4(rayEye.x, rayEye.y, -1.0f, 0.0f);
-
-		glm::mat4 viewMat = g_engine.m_coordinator.GetSystem<CameraSystem>()->GetViewMatrix();
-
-		glm::vec4 rayWorld4D = glm::inverse(viewMat) * rayEye;
-
-		glm::vec3 rayWorld3D{ rayWorld4D.x, rayWorld4D.y, rayWorld4D.z };
-
-		//rayWorld3D = glm::normalize(rayWorld3D);
-
-		std::cout << "Gimme ray coordinates thanks! " << rayWorld3D.x << ", " << rayWorld3D.y << ", " << rayWorld3D.z << std::endl;
 
 		//auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin());
 
@@ -345,11 +312,36 @@ namespace Rogue
 
 		if (GetCursorPos(&cursor))
 		{
-			cursorPos.x = cursor.x - GetWindowWidth(g_engine.GetWindowHandler()) / 2.0f;
-			cursorPos.y = -(cursor.y - GetWindowHeight(g_engine.GetWindowHandler()) / 2.0f);
+			cursorPos.x = cursor.x;
+			cursorPos.y = cursor.y;
 		}
 
-		Vec2Normalize(cursorPos, cursorPos);
+		float x = (2.0f * cursorPos.x) / GetWindowWidth(g_engine.GetWindowHandler()) - 1.0f;
+		float y = 1.0f - (2.0f * cursorPos.y) / GetWindowHeight(g_engine.GetWindowHandler());
+		float z = 1.0f;
+
+		glm::vec3 rayNDC = glm::vec3(x, y, z);
+
+		glm::vec4 rayClip = glm::vec4(rayNDC.x, rayNDC.y, -1.0f, 1.0f);
+
+		glm::vec4 rayEye = glm::inverse(g_engine.GetProjMat()) * rayClip;
+
+		//rayEye = glm::vec4(rayEye.x, rayEye.y, -1.0f, 0.0f);
+
+		glm::mat4 viewMat = g_engine.m_coordinator.GetSystem<CameraSystem>()->GetViewMatrix();
+
+		glm::vec4 rayWorld4D = glm::inverse(viewMat) * rayEye;
+
+		glm::vec3 rayWorld3D{ rayWorld4D.x, rayWorld4D.y, rayWorld4D.z };
+
+		//rayWorld3D = glm::normalize(rayWorld3D);
+
+		auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.cbegin());
+
+		Vec2 ballDir = Vec2{ rayWorld3D.x - trans.getPosition().x, rayWorld3D.y - trans.getPosition().y };
+
+		std::cout << "Gimme ray coordinates thanks! " << rayWorld3D.x << ", " << rayWorld3D.y << ", " << rayWorld3D.z << std::endl;
+		Vec2Normalize(ballDir, ballDir);
 
 		//Creating Components
 		//Transform
@@ -357,8 +349,8 @@ namespace Rogue
 		if (m_entities.size() && g_engine.m_coordinator.ComponentExists<TransformComponent>(*m_entities.begin()))
 			tempVec = g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin()).getPosition();
 		TransformComponent& transform = g_engine.m_coordinator.CreateComponent<TransformComponent>(ball);
-		strstream	<< tempVec.x + cursorPos.x * POSITION_RELATIVITY << ";"
-					<< tempVec.y + cursorPos.y * POSITION_RELATIVITY << ";"
+		strstream	<< tempVec.x + ballDir.x * POSITION_RELATIVITY << ";"
+					<< tempVec.y + ballDir.y * POSITION_RELATIVITY << ";"
 					<< "50;50;0";
 		transform.Deserialize(strstream.str());
 
@@ -368,7 +360,7 @@ namespace Rogue
 		RigidbodyComponent& rigidbody = g_engine.m_coordinator.CreateComponent<RigidbodyComponent>(ball);
 		rigidbody.Deserialize("0;0;0;0;1;1;0");
 		//ForceManager::instance().RegisterForce(ball, Vec2(cursorPos.x * FORCE_FACTOR, cursorPos.y * FORCE_FACTOR), 1.0f);
-		rigidbody.addForce(Vec2(cursorPos.x * FORCE_FACTOR, cursorPos.y * FORCE_FACTOR));
+		rigidbody.addForce(Vec2(ballDir.x * FORCE_FACTOR, ballDir.y * FORCE_FACTOR));
 
 		BoxCollider2DComponent& boxCollider = g_engine.m_coordinator.CreateComponent<BoxCollider2DComponent>(ball);
 		boxCollider.Deserialize("0;0;0;0;0");
