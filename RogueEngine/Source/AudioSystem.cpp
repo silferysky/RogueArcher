@@ -53,11 +53,11 @@ namespace Rogue
 
 			float distance = 0.0f;
 			if (g_engine.m_coordinator.ComponentExists<TransformComponent>(m_trackingTarget))
-				distance = log2_fast(Vec2SqDistance(transformPos, g_engine.m_coordinator.GetComponent<TransformComponent>(m_trackingTarget).getPosition()));
+				distance = Vec2SqDistance(transformPos, g_engine.m_coordinator.GetComponent<TransformComponent>(m_trackingTarget).getPosition());
 			
 			sound.Update();
 
-			sound.SetVolume(1.0f - distance * 0.05f);
+			sound.SetVolume(1.0f - distance * 0.0015f);
 		}
 
 		g_engine.m_coordinator.EndTimeSystem("Audio System");
