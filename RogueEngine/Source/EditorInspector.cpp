@@ -182,9 +182,6 @@ namespace Rogue
 							ImGui::DragFloat("Seconds Per Frame", &m_secondsPerFrame, 0.1f, 0.0f, 1.0f);
 							g_engine.m_coordinator.GetComponent<AnimationComponent>(i.m_Entity).setSecondsPerFrame(m_secondsPerFrame);
 				
-							ImGui::Checkbox("Animating?", &m_isAnimating);
-							g_engine.m_coordinator.GetComponent<AnimationComponent>(i.m_Entity).setIsAnimating(m_isAnimating);
-				
 							ImGui::Checkbox("Looping?", &m_looping);
 							g_engine.m_coordinator.GetComponent<AnimationComponent>(i.m_Entity).setIsLooping(m_looping);
 						}
@@ -345,6 +342,12 @@ namespace Rogue
 								g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(i.m_Entity).setSoundPath(m_audioPath);
 								memset(m_newaudioPath, 0, 128);
 							}
+
+							float m_audioScale = g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(i.m_Entity).getAudioScale();
+							ImGui::DragFloat("Audio Scale", &m_audioScale, 0.01f, 0.0f, 10.0f);
+
+							g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(i.m_Entity).setAudioScale(m_audioScale);
+
 							if (ImGui::IsItemHovered())
 							{
 								ImGui::BeginTooltip();
