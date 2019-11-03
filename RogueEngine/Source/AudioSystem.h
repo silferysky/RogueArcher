@@ -12,9 +12,11 @@ namespace Rogue
 	{
 		Stream m_BGFXstream;
 		Stream m_BGMstream;
+		Stream m_BGM2stream;
+		Stream m_SFXstream;
+
 		bool m_muted;
 
-		Sound m_BGM;
 		Entity m_trackingTarget;
 	public:
 		AudioSystem();

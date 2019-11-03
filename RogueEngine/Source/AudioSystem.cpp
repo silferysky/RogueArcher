@@ -36,11 +36,10 @@ namespace Rogue
 		// Set system signature.
 		g_engine.m_coordinator.SetSystemSignature<AudioSystem>(signature);
 
+		m_SFXstream.Initialize(); // create SFX channel
 		m_BGFXstream.Initialize(); // create BGFX channel
 		m_BGMstream.Initialize(); // create BGM channel
-
-		m_BGM.CreateBGM("Resources/Sounds/[Water Ambience]WATER-CAVE_GEN-HDF-25449.ogg", 1, 112.0f, &m_BGMstream);
-		m_BGM.Play(0.5f);
+		m_BGM2stream.Initialize(); // create BGM channel
 	}
 
 	void AudioSystem::Update()
@@ -66,6 +65,11 @@ namespace Rogue
 			sound.Update();
 
 			sound.SetVolume(1.0f * aEmitter.getAudioScale() - distance * 0.0015f * 0.0015f);
+		}
+
+		for (auto& pair : g_engine.m_coordinator.GetAudioManager().getAudioMap())
+		{
+			pair.second.Update();
 		}
 
 		g_engine.m_coordinator.EndTimeSystem("Audio System");
@@ -127,13 +131,35 @@ namespace Rogue
 			auto& aEmitter = g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(entity);
 			auto& sound = aEmitter.getSound();
 
-			/* Load up BGMs */
-			if (!(sound.m_b_IsPlaying))
+			if (!(sound.CheckPlaying()))
 			{
-				sound.CreateBGM(aEmitter.getSoundPath().c_str(), 1, 112.0f, &m_BGFXstream);
+				sound.CreateBGM(aEmitter.getSoundPath().c_str(), 120.0f, &m_BGFXstream);
 				sound.Play(0.3f);
 			}
 		}
+
+		auto& audioManager = g_engine.m_coordinator.GetAudioManager();
+
+		std::string BGM1path = "Resources/Sounds/[Water Ambience]WATER-CAVE_GEN-HDF-25449.ogg";
+		std::string BGM2path = "Resources/Sounds/[Cave Ambience]WIND-HOWL_GEN-HDF-25929.ogg";
+
+		std::string shootSFXpath = "Resources/Sounds/[Shoot Projectile]SCI-FI-WHOOSH_GEN-HDF-20864.ogg";
+		std::string elaSFXpath = "Resources/Sounds/[Ela Appear]SCI-FI-WHOOSH_GEN-HDF-20870.ogg";
+
+		auto& BGM1 = audioManager.loadSound(BGM1path);
+		auto& BGM2 = audioManager.loadSound(BGM2path);
+
+		auto& shootSFX = audioManager.loadSound(shootSFXpath);
+		auto& elaSFX = audioManager.loadSound(elaSFXpath);
+
+		BGM1.CreateBGM(BGM1path.c_str(), 120.0f, &m_BGMstream);
+		BGM1.Play(0.5f);
+
+		BGM2.CreateBGM(BGM2path.c_str(), 120.0f, &m_BGM2stream);
+		BGM2.Play(0.05f);
+
+		shootSFX.Create(shootSFXpath.c_str(), 1.0f, &m_SFXstream);
+		elaSFX.Create(elaSFXpath.c_str(), 2.0f, &m_SFXstream);
 	}
 
 	void AudioSystem::ShutdownSounds()
@@ -141,6 +167,15 @@ namespace Rogue
 		for (auto entity : m_entities)
 		{
 			auto sound = g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(entity).getSound();
+
+			sound.Pause(true);
+			if (sound.GetSystem() != NULL)
+				sound.Release();
+		}
+
+		for (auto& pair : g_engine.m_coordinator.GetAudioManager().getAudioMap())
+		{
+			auto& sound = pair.second;
 
 			sound.Pause(true);
 			if (sound.GetSystem() != NULL)

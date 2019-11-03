@@ -18,12 +18,12 @@ namespace Rogue
 			}
 		}
 
-		std::map<std::string, Sound> getAudioMap() const
+		std::map<std::string, Sound>& getAudioMap()
 		{
 			return audioMap;
 		}
 
-		Sound loadSound(std::string audio)
+		Sound& loadSound(std::string audio)
 		{
 			auto itr = audioMap.find(audio);
 			if (itr != audioMap.end())
