@@ -1,6 +1,6 @@
 {
-    "MaxEntityCount": 40,
-    "EntityCount": 40,
+    "MaxEntityCount": 42,
+    "EntityCount": 42,
     "BackgroundTexture": "Resources/Assets/DefaultSprite.png;0",
     "Signature0": 5,
     "Signature1": 5,
@@ -41,7 +41,9 @@
     "Signature36": 22,
     "Signature37": 22,
     "Signature38": 631,
-    "Signature39": 1029,
+    "Signature39": 5,
+    "Signature40": 1029,
+    "Signature41": 5,
     "Entity0": "Name{Bg1}|Sprite{Resources/Assets/Bg1.png;0}||Transform{0;0;3200;1800;0}|||||||||",
     "Entity1": "Name{Bg2}|Sprite{Resources/Assets/Bg2.png;0}||Transform{0;0;3200;1800;0}|||||||||",
     "Entity2": "Name{Bg3}|Sprite{Resources/Assets/Bg3.png;0}||Transform{0;0;3200;1800;0}|||||||||",
@@ -80,6 +82,8 @@
     "Entity35": "Name{collider16}||Rigidbody{0;0;0;0;1;1;1}|Transform{-955;871;100;100;0}||BoxCollider{0;0;0;1509;0}|||||||",
     "Entity36": "Name{collider17}||Rigidbody{0;0;0;0;1;1;1}|Transform{-1261;763;100;100;0}||BoxCollider{0;0;0;676;57}|||||||",
     "Entity37": "Name{collider18}||Rigidbody{0;0;0;0;1;1;1}|Transform{-1637;459;100;100;0}||BoxCollider{0;0;0;-31;438}|||||||",
-    "Entity38": "Name{Game Object 40}|Sprite{Resources/Assets/CharaTest.png;1}|Rigidbody{0;0;0;0;1;1;0}|Transform{-1446;310.49;80;120;0}||BoxCollider{0;0;0;0;0}|PlayerController{1}|LogicComponent{0;0;0}|||Camera{0;0;1;}||",
-    "Entity39": "Name{crystal5}|Sprite{Resources/Assets/Crystal1.png;0}||Transform{-239;-690;408;305;0.9}||||||||Audio{Resources/Sounds/1.wav}|"
+    "Entity38": "Name{Game Object 40}|Sprite{Resources/Assets/CharaTest.png;5}|Rigidbody{0;0;0;0;1;1;0}|Transform{-1446;310.49;80;120;0}||BoxCollider{0;0;0;0;0}|PlayerController{1}|LogicComponent{0;0;0}|||Camera{0;0;1;}||",
+    "Entity39": "Name{crystal5}|Sprite{Resources/Assets/Crystal1.png;0}||Transform{-239;-690;408;305;0.9}|||||||||",
+    "Entity40": "Name{crystal6 :)}|Sprite{Resources/Assets/Crystal2.png;1}||Transform{1559;595;100;100;0}||||||||Audio{Resources/Sounds/1.wav}|",
+    "Entity41": "Name{crystal6 shadow}|Sprite{Resources/Assets/Crystal2_Shadow.png;1}||Transform{1558;595;100;100;0}|||||||||"
 }
