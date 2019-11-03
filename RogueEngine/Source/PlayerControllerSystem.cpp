@@ -335,7 +335,7 @@ namespace Rogue
 		transform.Deserialize(strstream.str());
 
 		SpriteComponent& sprite = g_engine.m_coordinator.CreateComponent<SpriteComponent>(ball);
-		sprite.Deserialize("Resources/Assets/Arrow.png;1");
+		sprite.Deserialize("Resources/Assets/Projectile.png;1");
 
 		RigidbodyComponent& rigidbody = g_engine.m_coordinator.CreateComponent<RigidbodyComponent>(ball);
 		rigidbody.Deserialize("0;0;0;0;1;1;0");
