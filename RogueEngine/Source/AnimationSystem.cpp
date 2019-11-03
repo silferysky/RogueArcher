@@ -72,6 +72,20 @@ namespace Rogue
 			animate->setCurrentFrame(currentFrame);
 	}
 
+	void AnimationSystem::ResetTextures()
+	{
+		for (auto entity : m_entities)
+		{
+			auto& animate = g_engine.m_coordinator.GetComponent<AnimationComponent>(entity);
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(entity);
+
+			sprite.setTexCoordMin(0.0f);
+			sprite.setTexCoordMax(1.0f/animate.getFrames());
+		}
+	}
+
+
+
 	void AnimationSystem::Shutdown()
 	{}
 

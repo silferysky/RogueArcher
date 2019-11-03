@@ -13,7 +13,7 @@ namespace Rogue
 		float m_offSet; // each frame in pixels
 		float m_secondsPerFrame = 0.1f;
 		float m_timer = 0.0f;
-		bool m_isAnimating = true;
+		bool m_isAnimating = false;
 		bool m_isLooping = false;
 	public:
 		AnimationComponent() = default;

@@ -85,7 +85,7 @@
     "Entity37": "Name{collider18}||Rigidbody{0;0;0;0;1;1;1}|Transform{-1637;459;100;100;0}||BoxCollider{0;0;0;-31;438}|||||||",
     "Entity38": "Name{Game Object 40}|Sprite{Resources/Assets/SpriteSheetCombined.png;5}|Rigidbody{0;0;0;0;1;1;0}|Transform{-1446;310.49;80;120;0}||BoxCollider{0;0;0;0;0}|PlayerController{1}|LogicComponent{0;0;0}||Animation{9;0.1;0;}|Camera{0;0;1;}||",
     "Entity39": "Name{crystal5}|Sprite{Resources/Assets/Crystal1.png;0}||Transform{-239;-690;408;305;0.9}|||||||||",
-    "Entity40": "Name{crystal6 :)}|Sprite{Resources/Assets/Crystal2.png;1}||Transform{1559;595;100;100;0}||||||||Audio{Resources/Sounds/1.wav1}|",
+    "Entity40": "Name{crystal6 :)}|Sprite{Resources/Assets/Crystal2.png;1}||Transform{1559;595;100;100;0}||||||||Audio{Resources/Sounds/1.wav;1;}|",
     "Entity41": "Name{crystal6 shadow}|Sprite{Resources/Assets/Crystal2_Shadow.png;1}||Transform{1558;595;100;100;0}|||||||||",
-    "Entity42": "Name{Game Object 43}|||Transform{-840;-941;100;100;0}||||||||Audio{Resources/Sounds/[Waterfall SFX]WATER-FALL_GEN-HDF-25489.ogg1}|"
+    "Entity42": "Name{Game Object 43}|||Transform{-840;-941;100;100;0}||||||||Audio{Resources/Sounds/[Waterfall SFX]WATER-FALL_GEN-HDF-25489.ogg;1;}|"
 }

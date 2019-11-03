@@ -21,6 +21,8 @@ namespace Rogue
 		void Update() override;
 		void Shutdown() override;
 
+		void ResetTextures();
+
 		void Receive(Event* ev);
 	};
 }

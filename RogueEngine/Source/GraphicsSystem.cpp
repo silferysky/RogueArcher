@@ -117,8 +117,7 @@ namespace Rogue
 		transformMat = glm::translate(transformMat, { transform.getPosition().x, transform.getPosition().y, 1.0f });
 		transformMat = glm::rotate(transformMat, transform.getRotation(), glm::vec3(0.0f, 0.0f, 1.0f));
 		if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(entity))
-			if (g_engine.m_coordinator.GetComponent<RigidbodyComponent>(entity).getVelocity().x < 0)
-				transformMat = glm::scale(transformMat, glm::vec3(-1.0f, 1.0f, 1.0f));
+			transformMat = glm::scale(transformMat, glm::vec3(m_playerX, 1.0f, 1.0f));
 		transformMat = glm::scale(transformMat, glm::vec3(transform.getScale().x, transform.getScale().y, 1.0f));
 
 		glBindTexture(GL_TEXTURE_2D, texture.m_texture);
@@ -171,6 +170,25 @@ namespace Rogue
 
 	void GraphicsSystem::Receive(Event* ev)
 	{
+		switch (ev->GetEventType())
+		{
+		case EventType::EvEntityMove:
+		{
+			//EntMoveEvent* EvEntMove = dynamic_cast<EntMoveEvent*>(ev);
+			//ForceManager::instance().RegisterForce(EvEntMove->GetEntityID(),
+				//EvEntMove->GetVecMovement(),
+				//g_fixedDeltaTime);
+
+			EntMoveEvent* EvEntMove = dynamic_cast<EntMoveEvent*>(ev);
+			m_playerX = EvEntMove->GetVecMovement().x;
+
+			return;
+		}
+		default:
+		{
+			return;
+		}
+		}
 	}
 
 	void GraphicsSystem::UseFrameBuffer()
