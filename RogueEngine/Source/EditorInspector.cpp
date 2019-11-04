@@ -543,9 +543,7 @@ namespace Rogue
 		float m_cameraZoom = g_engine.GetCameraZoom();
 		glm::vec3 m_cameraPos = g_engine.m_coordinator.GetSystem<CameraSystem>()->GetCameraPos();
 
-		if (!m_worldCamera)
-			m_cameraZoom = 1.0f;
-		else
+		if (m_worldCamera)
 		{
 			m_cameraPos.x = 0.0f;
 			m_cameraPos.y = 0.0f;
