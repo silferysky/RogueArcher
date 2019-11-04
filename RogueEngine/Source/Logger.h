@@ -2,10 +2,10 @@
 #include "spdlog/spdlog.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
 #include "spdlog/sinks/basic_file_sink.h"
-//#include <vector>
-//#include <string>
+#include <vector>
+#include <string>
 
-//#define CONSOLE_SIZE 100
+#define CONSOLE_SIZE 100
 
 namespace Rogue
 {
@@ -29,17 +29,17 @@ namespace Rogue
 		inline static std::shared_ptr<spdlog::logger>& GetCoreFileLogger() { return RE_CoreFileLogger; }
 		inline static std::shared_ptr<spdlog::logger>& GetClientFileLogger() { return RE_ClientFileLogger; }
 
-		//inline static std::vector<std::string> GetConsole() { return RE_Console; }
+		inline static std::vector<std::string> GetConsole() { return RE_Console; }
+		static void AddStringToConsole(std::string stringData);
 
 	private:
-		//static void AddStringToConsole(std::string stringData);
 
 		static std::shared_ptr<spdlog::logger> RE_CoreLogger;
 		static std::shared_ptr<spdlog::logger> RE_ClientLogger;
 		static std::shared_ptr<spdlog::logger> RE_CoreFileLogger;
 		static std::shared_ptr<spdlog::logger> RE_ClientFileLogger;
 
-		//static std::vector<std::string> RE_Console;
+		static std::vector<std::string> RE_Console;
 	};
 
 	//MACROs
