@@ -63,7 +63,7 @@ namespace Rogue
 		WriteFile(FileName, strstream.str().c_str());
 	}
 
-	void BasicIO::WriteArchetypeJsonFile(std::string FileName, size_t numOfEnt)
+	void BasicIO::WriteArchetypeJsonFile(std::string FileName)
 	{
 		std::ostringstream strstream;
 		

@@ -102,6 +102,11 @@ namespace Rogue
 		m_objectFactory->SaveArchetype(fileName);
 	}
 
+	void SceneManager::SaveArchetypeList(const char* fileName)
+	{
+		m_objectFactory->SaveArchetypeList(fileName);
+	}
+
 	void SceneManager::AddToArchetype(Entity archetypeEntity)
 	{
 		auto activeObjects = g_engine.m_coordinator.GetActiveObjects();
@@ -119,6 +124,11 @@ namespace Rogue
 			it->m_objectName,
 			g_engine.m_coordinator.GetEntityManager().GetSignature(it->m_Entity),
 			m_objectFactory->SerializeComponents(*it));
+
+		std::ostringstream ostrstream;
+		ostrstream << "Resources/" << it->m_objectName << ".json";
+		BasicIO::WriteArchetypeJsonFile(ostrstream.str());
+		SaveArchetypeList("Resources/Archetypes.json");
 	}
 
 	void SceneManager::Clone(Entity toClone)
