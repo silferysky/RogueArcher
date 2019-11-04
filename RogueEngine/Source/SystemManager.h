@@ -79,6 +79,10 @@ namespace Rogue
 					(system.second->m_systemID != SystemID::id_PHYSICSSYSTEM))
 					system.second->Update();
 
+				/* if (m_gameIsRunning)
+					ShowCursor(false);
+				else
+					ShowCursor(true); */
 			}
 		}
 
