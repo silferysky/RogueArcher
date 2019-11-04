@@ -10,7 +10,7 @@ namespace Rogue
 	{
 		int m_frames;
 		int m_currentFrame;
-		float m_offSet; // each frame in pixels
+		int m_offSet; // each frame in pixels
 		float m_secondsPerFrame = 0.1f;
 		float m_timer = 0.0f;
 		bool m_isAnimating = false;

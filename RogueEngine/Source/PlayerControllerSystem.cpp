@@ -339,74 +339,44 @@ namespace Rogue
 
 	void PlayerControllerSystem::CreateBallAttack()
 	{
-		std::ostringstream strstream;
-		Entity ball = g_engine.m_coordinator.CreateEntity();
 
-		//For Cursor position
-		POINT cursor;
-		Vec2 cursorPos;
-
-		if (GetCursorPos(&cursor))
+		for (Entity entity : m_entities)
 		{
-			cursorPos.x = cursor.x;
-			cursorPos.y = cursor.y;
+			std::ostringstream strstream;
+			Entity ball = g_engine.m_coordinator.CreateEntity();
+			auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
+			Vec2 playerPos = trans.getPosition();
+
+			Vec2 ballDir{ g_engine.GetWorldCursor().x - playerPos.x, g_engine.GetWorldCursor().y - playerPos.y };
+			Vec2Normalize(ballDir, ballDir);
+
+			strstream << playerPos.x + ballDir.x * POSITION_RELATIVITY << ";"
+				<< playerPos.y + ballDir.y * POSITION_RELATIVITY << ";"
+				<< "20;20;0";
+
+			TransformComponent& ballTransform = g_engine.m_coordinator.CreateComponent<TransformComponent>(ball);
+
+			ballTransform.Deserialize(strstream.str());
+
+			SpriteComponent& sprite = g_engine.m_coordinator.CreateComponent<SpriteComponent>(ball);
+			sprite.Deserialize("Resources/Assets/Projectile.png;1");
+
+			RigidbodyComponent& rigidbody = g_engine.m_coordinator.CreateComponent<RigidbodyComponent>(ball);
+			rigidbody.Deserialize("0;0;0;0;1;1;0");
+
+			//ForceManager::instance().RegisterForce(ball, Vec2(cursorPos.x * FORCE_FACTOR, cursorPos.y * FORCE_FACTOR), 1.0f);
+			rigidbody.addForce(Vec2(ballDir.x * FORCE_FACTOR, ballDir.y * FORCE_FACTOR));
+
+			BoxCollider2DComponent& boxCollider = g_engine.m_coordinator.CreateComponent<BoxCollider2DComponent>(ball);
+			boxCollider.Deserialize("0;0;0;0;0");
+
+			HierarchyInfo newInfo{};
+			newInfo.m_Entity = ball;
+			newInfo.m_objectName = "Ball";
+			g_engine.m_coordinator.GetEntityManager().m_getActiveObjects().push_back(newInfo);
+
+			AddToTimedEntities(ball, 1.0f);
 		}
-
-		float x = (2.0f * cursorPos.x) / GetWindowWidth(g_engine.GetWindowHandler()) - 1.0f;
-		float y = 1.0f - (2.0f * cursorPos.y) / GetWindowHeight(g_engine.GetWindowHandler());
-		float z = 1.0f;
-
-		glm::vec3 rayNDC = glm::vec3(x, y, z);
-
-		glm::vec4 rayClip = glm::vec4(rayNDC.x, rayNDC.y, -1.0f, 1.0f);
-
-		glm::vec4 rayEye = glm::inverse(g_engine.GetProjMat()) * rayClip;
-
-		//rayEye = glm::vec4(rayEye.x, rayEye.y, -1.0f, 0.0f);
-
-		glm::mat4 viewMat = g_engine.m_coordinator.GetSystem<CameraSystem>()->GetViewMatrix();
-
-		glm::vec4 rayWorld4D = glm::inverse(viewMat) * rayEye;
-
-		glm::vec3 rayWorld3D{ rayWorld4D.x, rayWorld4D.y, rayWorld4D.z };
-
-		//rayWorld3D = glm::normalize(rayWorld3D);
-
-		auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.cbegin());
-
-		Vec2 ballDir = Vec2{ rayWorld3D.x - trans.getPosition().x, rayWorld3D.y - trans.getPosition().y };
-
-		std::cout << "Gimme ray coordinates thanks! " << rayWorld3D.x << ", " << rayWorld3D.y << ", " << rayWorld3D.z << std::endl;
-		Vec2Normalize(ballDir, ballDir);
-
-		//Creating Components
-		//Transform
-		Vec2 tempVec{};
-		if (m_entities.size() && g_engine.m_coordinator.ComponentExists<TransformComponent>(*m_entities.begin()))
-			tempVec = g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin()).getPosition();
-		TransformComponent& transform = g_engine.m_coordinator.CreateComponent<TransformComponent>(ball);
-		strstream	<< tempVec.x + ballDir.x * POSITION_RELATIVITY << ";"
-					<< tempVec.y + ballDir.y * POSITION_RELATIVITY << ";"
-					<< "20;20;0";
-		transform.Deserialize(strstream.str());
-
-		SpriteComponent& sprite = g_engine.m_coordinator.CreateComponent<SpriteComponent>(ball);
-		sprite.Deserialize("Resources/Assets/Projectile.png;1");
-
-		RigidbodyComponent& rigidbody = g_engine.m_coordinator.CreateComponent<RigidbodyComponent>(ball);
-		rigidbody.Deserialize("0;0;0;0;1;1;0");
-		//ForceManager::instance().RegisterForce(ball, Vec2(cursorPos.x * FORCE_FACTOR, cursorPos.y * FORCE_FACTOR), 1.0f);
-		rigidbody.addForce(Vec2(ballDir.x * FORCE_FACTOR, ballDir.y * FORCE_FACTOR));
-
-		BoxCollider2DComponent& boxCollider = g_engine.m_coordinator.CreateComponent<BoxCollider2DComponent>(ball);
-		boxCollider.Deserialize("0;0;0;0;0");
-
-		HierarchyInfo newInfo{};
-		newInfo.m_Entity = ball;
-		newInfo.m_objectName = "Ball";
-		g_engine.m_coordinator.GetEntityManager().m_getActiveObjects().push_back(newInfo);
-
-		AddToTimedEntities(ball, 1.0f);
 	}
 
 

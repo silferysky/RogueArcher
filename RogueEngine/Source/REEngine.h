@@ -1,6 +1,7 @@
 #pragma once
 #include "Coordinator.h"
 #include "Config.h"
+#include "Vector2D.h"
 
 namespace Rogue
 {
@@ -13,6 +14,8 @@ namespace Rogue
 		bool m_gameIsRunning;
 		float m_timeScale;
 		bool m_verticalSync;
+
+		Vec2 m_cursorPos;
 
 		Timer::ChronoTime m_loopStart;
 		Timer::ChronoTime m_loopEnd;
@@ -55,6 +58,7 @@ namespace Rogue
 		float GetAccumulatedTime() const;
 		float GetTimeScale() const;
 		int GetStepCount() const;
+		Vec2 GetWorldCursor() const;
 
 		float& GetCameraZoom();
 		void SetCameraZoom(const float& cameraZoom);
@@ -64,5 +68,6 @@ namespace Rogue
 		void SetGameIsRunning(bool set);
 		void SetTimeScale(float timeScale);
 		void ToggleVSync();
+		void SetWorldCursor(const Vec2& pos);
 	};
 }
