@@ -45,7 +45,7 @@ namespace Rogue
 						i.m_objectName = buffer;
 						memset(buffer, 0, 64);
 					}
-					std::vector<std::string>& m_currentTags = g_engine.m_coordinator.GetSystem<CollisionTagSystem>()->GetTagList();
+					
 					ImGui::TextDisabled("Current Tag");
 					ImGui::SameLine();
 					ImGui::TextDisabled("%s",i.m_tag.c_str());
@@ -56,6 +56,10 @@ namespace Rogue
 					{
 						i.m_tag = tagging;
 						memset(tagging, 0, 64);
+					}
+					if (ImGui::Button("Save As Prefab"))
+					{
+						g_engine.m_coordinator.SaveArchetypes("Resources/Archetypes.json");
 					}
 
 					if (g_engine.m_coordinator.ComponentExists<TransformComponent>(i.m_Entity))
