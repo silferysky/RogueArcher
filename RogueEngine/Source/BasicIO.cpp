@@ -66,11 +66,18 @@ namespace Rogue
 	void BasicIO::WriteArchetypeJsonFile(std::string FileName, size_t numOfEnt)
 	{
 		std::ostringstream strstream;
-
-		strstream << InitializeHeader(numOfEnt);
-		strstream << InitializeComponentStr(numOfEnt, false);
+		
+		strstream << "{\n  \"Signature\": 0,";
+		strstream << "\n  \"Entity\": \"\"";
 		strstream << "\n}";
 
+		WriteFile(FileName, strstream.str().c_str());
+	}
+
+	void BasicIO::WriteArchetypeListJsonFile(std::string FileName)
+	{
+		std::ostringstream strstream;
+		strstream << "{\n  \"ArchetypeList\": \"\"\n}";
 		WriteFile(FileName, strstream.str().c_str());
 	}
 

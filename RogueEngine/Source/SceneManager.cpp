@@ -97,11 +97,28 @@ namespace Rogue
 		m_objectFactory->LoadArchetypes(fileName);
 	}
 
-	void SceneManager::SaveArchetypes(const char* fileName)
+	void SceneManager::SaveArchetype(const char* fileName)
 	{
-		if (m_objectFactory->CheckFileTooSmall(FILETYPE_ARCHETYPE, m_objectFactory->GetArchetypeMap().size()))
-			BasicIO::WriteLevelJsonFile(fileName, m_objectFactory->GetArchetypeMap().size());
-		m_objectFactory->SaveArchetypes(fileName);
+		m_objectFactory->SaveArchetype(fileName);
+	}
+
+	void SceneManager::AddToArchetype(Entity archetypeEntity)
+	{
+		auto activeObjects = g_engine.m_coordinator.GetActiveObjects();
+		auto it = activeObjects.begin();
+		for (; it != activeObjects.end(); ++it)
+		{
+			if (it->m_Entity == archetypeEntity)
+				break;
+		}
+
+		if (it == activeObjects.end())
+			return;
+
+		m_objectFactory->AddToArchetypes(
+			it->m_objectName,
+			g_engine.m_coordinator.GetEntityManager().GetSignature(it->m_Entity),
+			m_objectFactory->SerializeComponents(*it));
 	}
 
 	void SceneManager::Clone(Entity toClone)
@@ -156,7 +173,7 @@ namespace Rogue
 		return m_sceneIterator;
 	}
 
-	std::map<std::string, std::string> SceneManager::GetArchetypeMap() const
+	std::map<std::string, std::pair<Signature, std::string>> SceneManager::GetArchetypeMap() const
 	{
 		return m_objectFactory->GetArchetypeMap();
 	}
@@ -181,10 +198,9 @@ namespace Rogue
 			return;
 		}
 
-		m_objectFactory->SetArchetype(
-			iterator->m_objectName, 
-			m_objectFactory->SerializeComponents(*iterator),
-			g_engine.m_coordinator.GetEntityManager().GetSignature(iterator->m_Entity));
+		m_objectFactory->AddToArchetypes(iterator->m_objectName, 
+			g_engine.m_coordinator.GetEntityManager().GetSignature(iterator->m_Entity), 
+			m_objectFactory->SerializeComponents(*iterator));
 	}
 
 	void SceneManager::AddToActiveEntities(Entity newEnt)
