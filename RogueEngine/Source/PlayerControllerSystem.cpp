@@ -112,8 +112,6 @@ namespace Rogue
 						g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).getPosition());
 
 					ClearTimedEntities();
-					CameraShakeEvent* cameraShakeEvent = new CameraShakeEvent(15.0f);
-					EventDispatcher::instance().AddEvent(cameraShakeEvent);
 				}
 			}
 
@@ -257,6 +255,8 @@ namespace Rogue
 					//m_ballTimer = 1.0f;
 					//m_ballCooldown = 1.0f;
 					//RE_INFO("CLICKCLICK");
+					CameraShakeEvent* cameraShakeEvent = new CameraShakeEvent(15.0f);
+					EventDispatcher::instance().AddEvent(cameraShakeEvent);
 
 					if (g_engine.m_coordinator.ComponentExists<AnimationComponent>(*m_entities.begin()))
 						g_engine.m_coordinator.GetComponent<AnimationComponent>(*m_entities.begin()).setIsAnimating(true);
