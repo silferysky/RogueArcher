@@ -60,7 +60,8 @@ namespace Rogue
 		for (auto& i : m_currentVector)
 		{
 			std::string tagName = i.m_tag.substr(0, search.size());
-			if (tagName == search)
+			
+			if (tagName == search || i.m_objectName.substr(0, search.size()) == search)
 			{
 				if (ImGui::Selectable(i.m_objectName.c_str(), i.m_selected, ImGuiSelectableFlags_AllowDoubleClick))
 				{
