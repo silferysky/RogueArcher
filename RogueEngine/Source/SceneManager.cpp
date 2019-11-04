@@ -109,7 +109,7 @@ namespace Rogue
 
 	void SceneManager::AddToArchetype(Entity archetypeEntity)
 	{
-		auto activeObjects = g_engine.m_coordinator.GetActiveObjects();
+		auto& activeObjects = g_engine.m_coordinator.GetActiveObjects();
 		auto it = activeObjects.begin();
 		for (; it != activeObjects.end(); ++it)
 		{
@@ -129,6 +129,22 @@ namespace Rogue
 		ostrstream << "Resources/" << it->m_objectName << ".json";
 		BasicIO::WriteArchetypeJsonFile(ostrstream.str());
 		SaveArchetypeList("Resources/Archetypes.json");
+	}
+
+	void SceneManager::RemoveArchetype(std::string archetypeEntity)
+	{
+		auto it = m_objectFactory->GetArchetypeMap().begin();
+		for (; it != m_objectFactory->GetArchetypeMap().end(); ++it)
+		{
+			if (it->first == archetypeEntity)
+				break;
+		}
+
+		if (it == m_objectFactory->GetArchetypeMap().end())
+			return;
+
+		m_objectFactory->GetArchetypeMap().erase(it);
+		m_objectFactory->SaveArchetypeList("Resources/Archetypes.json");
 	}
 
 	void SceneManager::Clone(Entity toClone)

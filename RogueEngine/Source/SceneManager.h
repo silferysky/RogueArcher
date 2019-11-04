@@ -37,6 +37,7 @@ namespace Rogue
 		void SaveArchetype(const char* fileName);
 		void SaveArchetypeList(const char* fileName);
 		void AddToArchetype(Entity archetypeEntity);
+		void RemoveArchetype(std::string archetypeEntity);
 
 		void Clone(Entity toClone);
 		void Clone(const char* archetype);
