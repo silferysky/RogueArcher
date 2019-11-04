@@ -28,15 +28,16 @@ namespace Rogue
 		
 				}
 
-				if (ImGui::MenuItem("Load Prefab", nullptr, false, true))
+				if (ImGui::BeginMenu("Load Prefab"))
 				{
 					for (auto& i : g_engine.m_coordinator.GetSceneManager().GetArchetypeMap())
 					{
 						if(ImGui::MenuItem(i.first.c_str()))
 						{
-							g_engine.m_coordinator.GetSceneManager().LoadArchetypes(i.first.c_str());
+							g_engine.m_coordinator.GetSceneManager().Clone(i.first.c_str());
 						}
 					}
+					ImGui::EndMenu();
 				}
 
 				if (ImGui::BeginMenu("2D Object"))
