@@ -107,7 +107,7 @@ namespace Rogue
 		m_objectFactory->SaveArchetypeList(fileName);
 	}
 
-	void SceneManager::AddToArchetype(Entity archetypeEntity)
+	void SceneManager::AddToArchetypes(Entity archetypeEntity)
 	{
 		auto& activeObjects = g_engine.m_coordinator.GetActiveObjects();
 		auto it = activeObjects.begin();
@@ -202,31 +202,6 @@ namespace Rogue
 	std::map<std::string, std::pair<Signature, std::string>> SceneManager::GetArchetypeMap() const
 	{
 		return m_objectFactory->GetArchetypeMap();
-	}
-
-	void SceneManager::AddToArchetypes(Entity entityToConvert)
-	{
-		//Search for entity name
-		auto& activeObjects = g_engine.m_coordinator.GetEntityManager().m_getActiveObjects();
-		auto iterator = activeObjects.begin();
-		for (; iterator != activeObjects.end(); ++iterator)
-		{
-			if (iterator->m_Entity == entityToConvert)
-			{
-				break;
-			}
-		}
-
-		//Safety checker
-		if (iterator == activeObjects.end())
-		{
-			RE_CORE_WARN("Attempt to make non-existent entity prefab");
-			return;
-		}
-
-		m_objectFactory->AddToArchetypes(iterator->m_objectName, 
-			g_engine.m_coordinator.GetEntityManager().GetSignature(iterator->m_Entity), 
-			m_objectFactory->SerializeComponents(*iterator));
 	}
 
 	void SceneManager::AddToActiveEntities(Entity newEnt)
