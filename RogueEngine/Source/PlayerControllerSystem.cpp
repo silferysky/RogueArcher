@@ -109,6 +109,12 @@ namespace Rogue
 			if (keycode == KeyPress::Numpad2)
 				g_engine.m_coordinator.cloneArchetypes("Circle");
 
+			if (keycode == KeyPress::Key0)
+			{
+				CameraShakeEvent* cameraShakeEvent = new CameraShakeEvent(15.0f);
+				EventDispatcher::instance().AddEvent(cameraShakeEvent);
+			}
+
 			//Statement here to make sure all of the other commands only apply if game is not running
 			if (!g_engine.m_coordinator.GameIsActive())
 				return;
@@ -266,8 +272,6 @@ namespace Rogue
 					//m_ballTimer = 1.0f;
 					m_ballCooldown = 1.0f;
 					//RE_INFO("CLICKCLICK");
-					CameraShakeEvent* cameraShakeEvent = new CameraShakeEvent(15.0f);
-					EventDispatcher::instance().AddEvent(cameraShakeEvent);
 
 					if (g_engine.m_coordinator.ComponentExists<AnimationComponent>(*m_entities.begin()))
 						g_engine.m_coordinator.GetComponent<AnimationComponent>(*m_entities.begin()).setIsAnimating(true);
