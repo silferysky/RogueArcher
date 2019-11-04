@@ -22,10 +22,23 @@ namespace Rogue
 				{
 		
 				}
+
 				if (ImGui::MenuItem("Create Empty Child", nullptr, false, false))
 				{
 		
 				}
+
+				if (ImGui::MenuItem("Load Prefab", nullptr, false, true))
+				{
+					for (auto& i : g_engine.m_coordinator.GetSceneManager().GetArchetypeMap())
+					{
+						if(ImGui::MenuItem(i.first.c_str()))
+						{
+							g_engine.m_coordinator.GetSceneManager().LoadArchetypes(i.first.c_str());
+						}
+					}
+				}
+
 				if (ImGui::BeginMenu("2D Object"))
 				{
 					if (ImGui::MenuItem("Sprite", nullptr, false, true))
