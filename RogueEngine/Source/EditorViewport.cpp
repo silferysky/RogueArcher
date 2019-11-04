@@ -25,6 +25,7 @@ namespace Rogue
 				//g_engine.m_coordinator.GetSceneManager().SaveLevel(g_engine.m_coordinator.GetSceneManager().getCurrentFileName().c_str());
 				//g_engine.m_coordinator.GetSceneManager().SaveAndLoadLevel();
 				g_engine.m_coordinator.SetGameState(true);
+				ShowCursor(false);
 			}
 			else //If game is running, just stop and reload old data
 			{
@@ -33,6 +34,7 @@ namespace Rogue
 				g_engine.m_coordinator.GetSceneManager().LoadLevel(g_engine.m_coordinator.GetSceneManager().getCurrentFileName().c_str());
 				g_engine.m_coordinator.SetGameState(false);
 				g_engine.m_coordinator.SetPauseState(false);
+				ShowCursor(true);
 			}
 		}
 		if (ImGui::IsItemHovered())
@@ -64,7 +66,10 @@ namespace Rogue
 		{
 			//Pause/Unpause only if game is running
 			if (g_engine.m_coordinator.GetGameState())
+			{
 				g_engine.m_coordinator.TogglePauseState();
+				ShowCursor(true);
+			}
 		}
 		if (ImGui::IsItemHovered())
 		{
