@@ -48,6 +48,10 @@ namespace Rogue
 			m_ballCooldown -= g_deltaTime * g_engine.GetTimeScale();
 			//RE_INFO("BALL COOLDOWN UPDATE");
 		}*/
+
+		if (!m_timedEntities.size())
+			m_ballCooldown -= g_deltaTime * g_engine.GetTimeScale();
+
 		m_ballTimer -= g_deltaTime * g_engine.GetTimeScale();
 
 		//To update all timed entities
@@ -249,11 +253,11 @@ namespace Rogue
 
 			if (keycode == KeyPress::MB1)
 			{
-				if (!m_timedEntities.size() && m_ballTimer < 0.0f)// && m_ballCooldown < 0.0f)
+				if (!m_timedEntities.size() && m_ballTimer < 0.0f && m_ballCooldown < 0.0f)
 				{
 					CreateBallAttack();
 					//m_ballTimer = 1.0f;
-					//m_ballCooldown = 1.0f;
+					m_ballCooldown = 1.0f;
 					//RE_INFO("CLICKCLICK");
 					CameraShakeEvent* cameraShakeEvent = new CameraShakeEvent(15.0f);
 					EventDispatcher::instance().AddEvent(cameraShakeEvent);
