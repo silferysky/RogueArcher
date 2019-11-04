@@ -191,6 +191,11 @@ namespace Rogue
 		return m_stepCount;
 	}
 
+	Vec2 REEngine::GetWorldCursor() const
+	{
+		return m_cursorPos;
+	}
+
 	void REEngine::SetGameIsRunning(bool set)
 	{
 		m_gameIsRunning = set;
@@ -234,6 +239,11 @@ namespace Rogue
 			m_verticalSync = true;
 			setVSync(true);
 		}
+	}
+
+	void REEngine::SetWorldCursor(const Vec2& pos)
+	{
+		m_cursorPos = pos;
 	}
 
 	HWND REEngine::CreateOpenGLWindow(char* title, int x, int y, int width, int height,

@@ -226,6 +226,11 @@ namespace Rogue
 			m_sceneManager->Clone(archetype);
 		}
 
+		void SaveArchetypes(const char* archetype)
+		{
+			m_sceneManager->SaveArchetypes(archetype);
+		}
+
 		void clone(Entity existingEntity)
 		{
 			Entity clonedEntity = CreateEntity();
