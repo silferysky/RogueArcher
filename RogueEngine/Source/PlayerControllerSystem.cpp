@@ -11,7 +11,7 @@
 namespace Rogue
 {
 	PlayerControllerSystem::PlayerControllerSystem()
-		:System(SystemID::id_PLAYERCONTROLLERSYSTEM), m_ballTimer{-0.1f}, m_ballCooldown{0.0f}
+		:System(SystemID::id_PLAYERCONTROLLERSYSTEM), m_ballTimer{-0.1f}, m_ballCooldown{1.0f}
 	{
 	}
 
@@ -48,6 +48,17 @@ namespace Rogue
 			m_ballCooldown -= g_deltaTime * g_engine.GetTimeScale();
 			//RE_INFO("BALL COOLDOWN UPDATE");
 		}*/
+
+		if (!g_engine.m_coordinator.GameIsActive())
+		{
+			if (m_timedEntities.size())
+				ClearTimedEntities();
+			return;
+		}
+
+		if (!m_timedEntities.size())
+			m_ballCooldown -= g_deltaTime * g_engine.GetTimeScale();
+
 		m_ballTimer -= g_deltaTime * g_engine.GetTimeScale();
 
 		//To update all timed entities
@@ -98,6 +109,12 @@ namespace Rogue
 			if (keycode == KeyPress::Numpad2)
 				g_engine.m_coordinator.cloneArchetypes("Circle");
 
+			if (keycode == KeyPress::Key0)
+			{
+				CameraShakeEvent* cameraShakeEvent = new CameraShakeEvent(15.0f);
+				EventDispatcher::instance().AddEvent(cameraShakeEvent);
+			}
+
 			//Statement here to make sure all of the other commands only apply if game is not running
 			if (!g_engine.m_coordinator.GameIsActive())
 				return;
@@ -112,8 +129,6 @@ namespace Rogue
 						g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).getPosition());
 
 					ClearTimedEntities();
-					CameraShakeEvent* cameraShakeEvent = new CameraShakeEvent(15.0f);
-					EventDispatcher::instance().AddEvent(cameraShakeEvent);
 				}
 			}
 
@@ -251,11 +266,11 @@ namespace Rogue
 
 			if (keycode == KeyPress::MB1)
 			{
-				if (!m_timedEntities.size() && m_ballTimer < 0.0f)// && m_ballCooldown < 0.0f)
+				if (!m_timedEntities.size() && m_ballTimer < 0.0f && m_ballCooldown < 0.0f)
 				{
 					CreateBallAttack();
 					//m_ballTimer = 1.0f;
-					//m_ballCooldown = 1.0f;
+					m_ballCooldown = 1.0f;
 					//RE_INFO("CLICKCLICK");
 
 					if (g_engine.m_coordinator.ComponentExists<AnimationComponent>(*m_entities.begin()))
