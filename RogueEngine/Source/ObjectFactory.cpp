@@ -145,13 +145,24 @@ namespace Rogue
 
 	void ObjectFactory::LoadArchetypes(const char* fileName)
 	{
-		std::stringstream strstream;
-		std::string stdstr, readstr;	//stdstr for name, readstr for value
-		const char* cstr;
+		rapidjson::Document archetypeList = RESerialiser::DeserialiseFromFile(fileName);
+		std::istringstream istrstream(archetypeList["ArchetypeList"].GetString());
+		std::ostringstream ostrstream;
+		std::string stdstr;
 		Signature curSignature;
 
-		rapidjson::Document level = RESerialiser::DeserialiseFromFile(fileName);
-		m_maxArchetypeCount = level["EntityCount"].GetInt();
+		while (std::getline(istrstream, stdstr, ';'))
+		{
+			CLEARSTR(ostrstream);
+			ostrstream << "Resources/" << stdstr << ".json";
+
+			rapidjson::Document archetypeFile = RESerialiser::DeserialiseFromFile(ostrstream.str().c_str());
+			curSignature = archetypeFile["Signature"].GetInt();
+			AddToArchetypes(stdstr, curSignature, archetypeFile["Entity"].GetString());
+		}
+
+
+		/*m_maxArchetypeCount = level["EntityCount"].GetInt();
 		Entity entCount = level["EntityCount"].GetInt();
 
 		for (Entity count = 0; count < entCount; ++count)
@@ -175,18 +186,22 @@ namespace Rogue
 			//Leftover '|' character will be ignored based on the getlines
 			SetArchetype(stdstr, readstr, curSignature);
 		}
-		RE_CORE_INFO("Archetypes loaded");
-		//RE_CORE_INFO(m_archetypes.size());
-		//RE_CORE_INFO(m_archetypeSignature.size());
+		RE_CORE_INFO("Archetypes loaded");*/
 	}
 
-	void ObjectFactory::SaveArchetypes(const char* fileName)
+	void ObjectFactory::SaveArchetypeList(const char* fileName)
 	{
 		std::ostringstream strstream;
-		std::string stdstr;
-		const char* cstr;
 
-		//For EntCount
+		for (auto& set : m_archetypes)
+		{
+			strstream << set.first << ";";
+		}
+
+		std::string stdstr(strstream.str().substr(0, strstream.str().size() - 1));
+		RESerialiser::WriteToFile(fileName, "ArchetypeList", stdstr.c_str());
+
+		/*/For EntCount
 		Entity entCount = static_cast<Entity>(m_archetypes.size());
 		int intVar = (int)entCount;
 		RESerialiser::WriteToFile(fileName, "EntityCount", &intVar);
@@ -208,7 +223,25 @@ namespace Rogue
 			CLEARSTR(strstream);
 			strstream << "Entity" << position;
 			RESerialiser::WriteToFile(fileName, strstream.str().c_str(), cstr);
-		}
+		}*/
+	}
+
+	void ObjectFactory::SaveArchetype(std::string file)
+	{
+		auto iterator = m_archetypes.find(file);
+		if (iterator == m_archetypes.end())
+			return;
+		
+		std::ostringstream ostrstream;
+		ostrstream << "Resources/" << file;
+
+		//RESerialiser::WriteToFile(ostrstream.str().c_str(), "Signature", &iterator->second.first);
+		//RESerialiser::WriteToFile(ostrstream.str().c_str(), "Entity", &iterator->second.second);
+	}
+
+	void ObjectFactory::AddToArchetypes(std::string archetypeName, Signature signature, std::string toDeserialize)
+	{
+		m_archetypes.insert({ archetypeName, std::pair<Signature, std::string>(signature, toDeserialize) });
 	}
 
 	void ObjectFactory::LoadLevelFiles(const char* fileName)
@@ -340,10 +373,10 @@ namespace Rogue
 		{
 			std::ostringstream ostrstream;
 			Entity curEnt = g_engine.m_coordinator.CreateEntity();
-			Signature curSignature = m_archetypeSignature[archetype];
+			Signature curSignature = m_archetypes[archetype].first;
 
 			//Does the actual clone
-			std::string toDeserialise = m_archetypes[archetype];
+			std::string toDeserialise = m_archetypes[archetype].second;
 			FactoryLoadComponent(curEnt, curSignature, toDeserialise);
 
 			ostrstream << "Game Object " << g_engine.m_coordinator.GetSceneManager().GetObjectIterator();
@@ -368,12 +401,6 @@ namespace Rogue
 	void ObjectFactory::ResetMaxEntity()
 	{
 		m_maxEntityCount = 0;
-	}
-
-	void ObjectFactory::SetArchetype(std::string archetypeName, std::string archetypeValue, Signature archetypeSignature)
-	{
-		m_archetypes.insert({ archetypeName, archetypeValue });
-		m_archetypeSignature.insert({ archetypeName, archetypeSignature });
 	}
 
 	std::string ObjectFactory::SerializeComponents(HierarchyInfo& hierarchyToSerialize)
@@ -468,7 +495,7 @@ namespace Rogue
 		return strstream.str();
 	}
 
-	std::map<std::string, std::string> ObjectFactory::GetArchetypeMap() const
+	std::map<std::string, std::pair<Signature, std::string>> ObjectFactory::GetArchetypeMap() const
 	{
 		return m_archetypes;
 	}

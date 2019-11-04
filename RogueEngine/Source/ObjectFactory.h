@@ -17,7 +17,9 @@ namespace Rogue
 		void SaveLevel(const char* fileName);
 
 		void LoadArchetypes(const char* fileName);
-		void SaveArchetypes(const char* fileName);
+		void SaveArchetypeList(const char* fileName);
+		void SaveArchetype(std::string file);
+		void AddToArchetypes(std::string archetype, Signature signature, std::string toDeserialize);
 
 		void LoadLevelFiles(const char* fileName);
 		void SaveLevelFiles(const char* fileName);
@@ -28,11 +30,9 @@ namespace Rogue
 		bool CheckFileTooSmall(size_t type, size_t size);
 		void ResetMaxEntity();
 
-		void SetArchetype(std::string archetypeName, std::string archetypeValue, Signature archetypeSignature);
-
 		std::string SerializeComponents(HierarchyInfo& entityHierarchy);
 
-		std::map<std::string, std::string> GetArchetypeMap() const;
+		std::map<std::string, std::pair<Signature, std::string>> GetArchetypeMap() const;
 
 	private:
 
@@ -42,8 +42,7 @@ namespace Rogue
 		size_t m_maxEntityCount;
 		size_t m_maxArchetypeCount;
 		size_t m_maxFileCount;
-		std::map<std::string, std::string> m_archetypes;
-		std::map<std::string, Signature> m_archetypeSignature;
+		std::map<std::string, std::pair<Signature, std::string>> m_archetypes;
 
 	};
 

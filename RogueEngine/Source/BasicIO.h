@@ -15,6 +15,7 @@ namespace Rogue
 		static void WriteLevelFilesJsonFile(std::string FileName);
 		static void WriteLevelJsonFile(std::string FileName, size_t numOfEnt);
 		static void WriteArchetypeJsonFile(std::string FileName, size_t numOfEnt);
+		static void WriteArchetypeListJsonFile(std::string FileName);
 
 	private:
 		static std::string InitializeHeader(size_t numOfEnt, bool includeBackground = false);
