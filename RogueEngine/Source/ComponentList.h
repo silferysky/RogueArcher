@@ -31,6 +31,8 @@ namespace Rogue
 		CAMERA,
 		AUDIOEMITTER,
 		UI,
+		CURSOR,
+
 		LASTCOMP
 	};
 }
