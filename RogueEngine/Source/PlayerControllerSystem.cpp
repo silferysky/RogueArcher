@@ -11,7 +11,7 @@
 namespace Rogue
 {
 	PlayerControllerSystem::PlayerControllerSystem()
-		:System(SystemID::id_PLAYERCONTROLLERSYSTEM), m_ballTimer{-0.1f}, m_ballCooldown{0.0f}
+		:System(SystemID::id_PLAYERCONTROLLERSYSTEM), m_ballTimer{-0.1f}, m_ballCooldown{1.0f}
 	{
 	}
 
@@ -48,6 +48,13 @@ namespace Rogue
 			m_ballCooldown -= g_deltaTime * g_engine.GetTimeScale();
 			//RE_INFO("BALL COOLDOWN UPDATE");
 		}*/
+
+		if (!g_engine.m_coordinator.GameIsActive())
+		{
+			if (m_timedEntities.size())
+				ClearTimedEntities();
+			return;
+		}
 
 		if (!m_timedEntities.size())
 			m_ballCooldown -= g_deltaTime * g_engine.GetTimeScale();
