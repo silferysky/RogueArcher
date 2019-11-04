@@ -449,6 +449,11 @@ namespace Rogue
 						strstream << "UI{" << g_engine.m_coordinator.GetComponent<UIComponent>(entityToSerialize).Serialize().c_str() << "}";
 						break;
 					}
+					case static_cast<int>(CURSOR) :
+					{
+						strstream << "CURSOR{" << g_engine.m_coordinator.GetComponent<UIComponent>(entityToSerialize).Serialize().c_str() << "}";
+						break;
+					}
 					default:
 					{
 						RE_CORE_WARN("OUT OF BOUNDS OBJECT COMPONENT SAVING");
@@ -542,6 +547,10 @@ namespace Rogue
 					{
 						g_engine.m_coordinator.LoadComponent<UIComponent>(curEnt, readstr);
 						break;
+					}
+					case static_cast<int>(CURSOR) :
+					{
+						g_engine.m_coordinator.LoadComponent<CursorComponent>(curEnt, readstr);
 					}
 					default:
 					{
