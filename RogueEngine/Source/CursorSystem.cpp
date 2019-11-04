@@ -29,8 +29,8 @@ namespace Rogue
 
 		if (GetCursorPos(&cursor))
 		{
-			cursorPos.x = cursor.x;
-			cursorPos.y = cursor.y;
+			cursorPos.x = static_cast<float>(cursor.x);
+			cursorPos.y = static_cast<float>(cursor.y);
 		}
 
 		float x = (2.0f * cursorPos.x) / GetWindowWidth(g_engine.GetWindowHandler()) - 1.0f;
@@ -47,12 +47,12 @@ namespace Rogue
 
 		glm::vec4 rayWorld4D = glm::inverse(viewMat) * rayEye;
 
-		glm::vec3 rayWorld3D{ rayWorld4D.x, rayWorld4D.y, rayWorld4D.z };
+		g_engine.SetWorldCursor(Vec2{ rayWorld4D.x, rayWorld4D.y });
 
 		for(Entity entity : m_entities)
 		{
 			auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
-			trans.setPosition(Vec2{ rayWorld3D.x, rayWorld3D.y });
+			trans.setPosition(g_engine.GetWorldCursor());
 		}
 	}
 
@@ -62,8 +62,5 @@ namespace Rogue
 
 	void CursorSystem::Receive(Event* ev)
 	{
-		switch (ev->GetEventType())
-		{
-		}
 	}
 }

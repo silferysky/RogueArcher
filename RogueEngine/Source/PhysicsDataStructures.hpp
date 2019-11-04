@@ -51,7 +51,7 @@ namespace Rogue
 		};
 
 	public:
-		virtual const MassData& ComputeMass(float density) const = 0;
+		virtual MassData ComputeMass(float density) const = 0;
 		virtual Type GetType() const = 0;
 	};
 
@@ -64,7 +64,7 @@ namespace Rogue
 			m_radius{ radius }
 		{}
 
-		const MassData& ComputeMass(float density = 1.0f) const override
+		MassData ComputeMass(float density = 1.0f) const override
 		{
 			float mass = RE_PI * m_radius * m_radius * density;
 			float inertia = mass * m_radius * m_radius;
@@ -87,7 +87,7 @@ namespace Rogue
 			m_aabb{ aabb }
 		{}
 
-		const MassData& ComputeMass(float density = 1.0f) const override
+		MassData ComputeMass(float density = 1.0f) const override
 		{
 			float width = m_aabb.getMax().x - m_aabb.getMin().x;
 			float height = m_aabb.getMax().y - m_aabb.getMax().y;
@@ -114,7 +114,7 @@ namespace Rogue
 			m_vertices{ obb.modelVerts() }
 		{}
 
-		const MassData& ComputeMass(float density) const override
+		MassData ComputeMass(float density) const override
 		{
 			size_t m_vertexCount = m_vertices.size();
 
