@@ -59,7 +59,12 @@ namespace Rogue
 					}
 					if (ImGui::Button("Save As Prefab"))
 					{
-						g_engine.m_coordinator.SaveArchetype(i.m_objectName.c_str());
+						auto archetypeMap = g_engine.m_coordinator.GetSceneManager().GetArchetypeMap();
+						auto it = archetypeMap.find(i.m_objectName);
+						if (it != archetypeMap.end())
+							g_engine.m_coordinator.GetSceneManager().SaveArchetype(i.m_objectName.c_str());
+						else
+							g_engine.m_coordinator.GetSceneManager().AddToArchetypes(i.m_Entity);
 					}
 
 					if (g_engine.m_coordinator.ComponentExists<TransformComponent>(i.m_Entity))

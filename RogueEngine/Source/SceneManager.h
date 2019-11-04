@@ -36,7 +36,7 @@ namespace Rogue
 		void LoadArchetypes(const char* fileName);
 		void SaveArchetype(const char* fileName);
 		void SaveArchetypeList(const char* fileName);
-		void AddToArchetype(Entity archetypeEntity);
+		void AddToArchetypes(Entity archetypeEntity);
 		void RemoveArchetype(std::string archetypeEntity);
 
 		void Clone(Entity toClone);
@@ -54,7 +54,6 @@ namespace Rogue
 		unsigned int GetSceneIterator() const;
 
 		std::map<std::string, std::pair<Signature, std::string>> GetArchetypeMap() const;
-		void AddToArchetypes(Entity entToConvert);
 
 		//For other systems to add entites here
 		void AddToActiveEntities(Entity ent);

@@ -235,8 +235,10 @@ namespace Rogue
 		std::ostringstream ostrstream;
 		ostrstream << "Resources/" << file;
 
-		//RESerialiser::WriteToFile(ostrstream.str().c_str(), "Signature", &iterator->second.first);
-		//RESerialiser::WriteToFile(ostrstream.str().c_str(), "Entity", &iterator->second.second);
+		int signatureInInt = static_cast<int>(iterator->second.first.to_ulong());
+		
+		RESerialiser::WriteToFile(ostrstream.str().c_str(), "Signature", &signatureInInt);
+		RESerialiser::WriteToFile(ostrstream.str().c_str(), "Entity", iterator->second.second.c_str());
 	}
 
 	void ObjectFactory::AddToArchetypes(std::string archetypeName, Signature signature, std::string toDeserialize)
