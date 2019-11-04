@@ -35,4 +35,13 @@ namespace Rogue
 		RE_ClientFileLogger = spdlog::basic_logger_mt("ClientFileLogger", "log/ClientFileLog.txt", true);
 		RE_ClientFileLogger->set_level(spdlog::level::trace);
 	}
+
+	/*inline void Logger::AddStringToConsole(std::string stringData)
+	{
+		RE_Console.emplace(RE_Console.begin(), stringData);
+		if (RE_Console.size() > CONSOLE_SIZE)
+		{
+			RE_Console.pop_back();
+		}
+	}*/
 }
