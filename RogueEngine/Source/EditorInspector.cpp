@@ -338,11 +338,13 @@ namespace Rogue
 					{
 						if (ImGui::CollapsingHeader("Player Controllable"))
 						{
-							//float m_slowTimer = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(i.m_Entity).getslowTime();
-							//ImGui::PushItemWidth(75);
-							//ImGui::DragFloat("Time Scale", &m_slowTimer, 0.5f, 0.0f, 1.0f);
+							float m_slowTimer = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(i.m_Entity).GetSlowTime();
+							ImGui::PushItemWidth(75);
+							ImGui::DragFloat("Time Scale", &m_slowTimer, 0.01f, 0.0f, 1.0f);
+							g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(i.m_Entity).SetSlowTime(m_slowTimer);
 						}					
 					}
+
 					if (g_engine.m_coordinator.ComponentExists<AudioEmitterComponent>(i.m_Entity))
 					{
 						if (ImGui::CollapsingHeader("Sound"))

@@ -331,7 +331,7 @@ namespace Rogue
 
 		size_t GetStepFrames() const
 		{
-			m_systemManager->GetStepFrames();
+			return m_systemManager->GetStepFrames();
 		}
 	};
 }
