@@ -12,8 +12,6 @@ namespace Rogue
 	public:
 		FinderAI(Entity entity, LogicComponent& logicComponent);
 
-		virtual void LogicInit() override;
-
 		virtual void AIActiveStateUpdate() override;
 
 		virtual void AIDetect() override;

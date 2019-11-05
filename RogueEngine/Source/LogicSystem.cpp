@@ -6,13 +6,11 @@
 #include "EventDispatcher.h"
 #include "GameEvent.h"
 #include "KeyEvent.h"
-#include "TransformComponent.h"
-#include "BoxCollider2DComponent.h"
-#include "LogicComponent.h"
 #include "Timer.h"
 
 //AI Types
 #include "FinderAI.h"
+#include "PatrolAI.h"
 
 namespace Rogue
 {
@@ -75,9 +73,6 @@ namespace Rogue
 				it->second->LogicUpdate();
 			}
 			}
-
-			//Updates the current logic. The individual AI types will handle the state on their own
-			//it->second->LogicUpdate();
 		}
 		g_engine.m_coordinator.EndTimeSystem("Logic System");
 	}
@@ -137,8 +132,8 @@ namespace Rogue
 				}
 				case AIType::AI_Patrol:
 				{
-					BaseAI newAI(entities, logicComponent);
-					AddLogicInterface(entities, std::make_shared<BaseAI>(newAI));
+					PatrolAI newAI(entities, logicComponent);
+					AddLogicInterface(entities, std::make_shared<PatrolAI>(newAI));
 					break;
 				}
 				case AIType::AI_Static:
@@ -153,7 +148,7 @@ namespace Rogue
 		}
 	}
 
-	void LogicSystem::SeekNearestWaypoint(Entity ent)
+	/*void LogicSystem::SeekNearestWaypoint(Entity ent)
 	{
 		Vec2* currentLocation = &g_engine.m_coordinator.GetComponent<TransformComponent>(ent).getPosition();
 		Vec2* nearestWaypoint = nullptr;
@@ -183,7 +178,7 @@ namespace Rogue
 		
 		//Sets the best waypoint into the new location
 		m_entityLogicMap[ent]->AddNextPoint(*nearestWaypoint);
-	}
+	}*/
 
 	void LogicSystem::CreateMoveEvent(Entity ent, Vec2 vec)
 	{

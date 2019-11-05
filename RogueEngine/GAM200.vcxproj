@@ -79,6 +79,7 @@
     <ClInclude Include="Source\LogicComponent.h" />
     <ClInclude Include="Source\LogicSystem.h" />
     <ClInclude Include="Source\Manifold.h" />
+    <ClInclude Include="Source\PatrolAI.h" />
     <ClInclude Include="Source\PhysicsSystem.h" />
     <ClInclude Include="Source\AABB.h" />
     <ClInclude Include="Source\Circle.h" />
@@ -184,6 +185,7 @@
     <ClCompile Include="Source\LogicComponent.cpp" />
     <ClCompile Include="Source\LogicSystem.cpp" />
     <ClCompile Include="Source\Manifold.cpp" />
+    <ClCompile Include="Source\PatrolAI.cpp" />
     <ClCompile Include="Source\PhysicsSystem.cpp" />
     <ClCompile Include="Source\AABB.cpp" />
     <ClCompile Include="Source\Circle.cpp" />
