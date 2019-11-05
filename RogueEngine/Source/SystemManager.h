@@ -246,7 +246,9 @@ namespace Rogue
 		void StepOnce()
 		{
 			m_stepOnce = true;
-			m_stepCounter = m_stepFrames;
+		
+			if(m_stepFrames)
+				m_stepCounter = m_stepFrames;
 		}
 
 		void CreateAssignTagEvent(Entity entity)
