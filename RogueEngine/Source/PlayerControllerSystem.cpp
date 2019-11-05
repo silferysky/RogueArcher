@@ -94,10 +94,10 @@ namespace Rogue
 			if (keycode == KeyPress::KeyEsc)
 				g_engine.SetGameIsRunning(false);
 
-			if (keycode == KeyPress::Key5)
+			if (keycode == KeyPress::KeyF5)
 				g_engine.m_coordinator.ToggleEditorIsRunning();
 
-			if (keycode == KeyPress::Key6)
+			if (keycode == KeyPress::KeyF6)
 				g_engine.ToggleVSync();
 
 			if (keycode == KeyPress::Numpad0 && m_entities.size() > 0)
@@ -109,7 +109,7 @@ namespace Rogue
 			if (keycode == KeyPress::Numpad2)
 				g_engine.m_coordinator.cloneArchetypes("Circle");
 
-			if (keycode == KeyPress::Key0)
+			if (keycode == KeyPress::KeyF8)
 			{
 				CameraShakeEvent* cameraShakeEvent = new CameraShakeEvent(15.0f);
 				EventDispatcher::instance().AddEvent(cameraShakeEvent);
