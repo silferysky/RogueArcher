@@ -64,7 +64,10 @@ namespace Rogue
 						if (it != archetypeMap.end())
 							g_engine.m_coordinator.GetSceneManager().SaveArchetype(i.m_objectName.c_str());
 						else
+						{
 							g_engine.m_coordinator.GetSceneManager().AddToArchetypes(i.m_Entity);
+							g_engine.m_coordinator.GetSceneManager().SaveArchetype(i.m_objectName.c_str());
+						}
 					}
 
 					if (g_engine.m_coordinator.ComponentExists<TransformComponent>(i.m_Entity))

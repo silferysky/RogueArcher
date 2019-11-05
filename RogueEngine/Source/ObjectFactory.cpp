@@ -233,7 +233,7 @@ namespace Rogue
 			return;
 		
 		std::ostringstream ostrstream;
-		ostrstream << "Resources/" << file;
+		ostrstream << "Resources/" << file << ".json";
 
 		int signatureInInt = static_cast<int>(iterator->second.first.to_ulong());
 		
@@ -378,7 +378,10 @@ namespace Rogue
 			Signature curSignature = m_archetypes[archetype].first;
 
 			//Does the actual clone
-			std::string toDeserialise = m_archetypes[archetype].second;
+			std::istringstream istrstream(m_archetypes[archetype].second);
+			std::string toDeserialise;
+			std::getline(istrstream, toDeserialise, '|');
+			std::getline(istrstream, toDeserialise);
 			FactoryLoadComponent(curEnt, curSignature, toDeserialise);
 
 			ostrstream << "Game Object " << g_engine.m_coordinator.GetSceneManager().GetObjectIterator();
