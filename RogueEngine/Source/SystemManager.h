@@ -74,15 +74,27 @@ namespace Rogue
 						continue;
 				}
 
-				//If either game is not paused or is editor system, run the update
-				if ((!m_gameIsPaused && m_gameIsRunning) || 
-					(system.second->m_systemID != SystemID::id_PHYSICSSYSTEM))
-					system.second->Update();
+				// If game is paused, freeze physics system unless step once is called.
+				if (m_gameIsPaused && m_gameIsRunning)
+				{
+					if (system.second->m_systemID == SystemID::id_PHYSICSSYSTEM)
+					{
+						if (m_stepOnce)
+						{
+							system.second->Update();
+							m_stepOnce = false;
+						}
+						continue;
+					}
+				}
+
+				system.second->Update();
 
 				/* if (m_gameIsRunning)
 					ShowCursor(false);
 				else
 					ShowCursor(true); */
+
 			}
 		}
 
@@ -210,6 +222,11 @@ namespace Rogue
 				true;
 		}
 
+		void StepOnce()
+		{
+			m_stepOnce = true;
+		}
+
 		void CreateAssignTagEvent(Entity entity)
 		{
 			EntChangeStateEvent* changeStateEvent = new EntChangeStateEvent(entity, 0);
@@ -228,5 +245,6 @@ namespace Rogue
 		bool m_gameIsRunning = false;
 		bool m_gameIsPaused = false;
 		bool m_editorIsRunning = true;
+		bool m_stepOnce = false;
 	};
 }

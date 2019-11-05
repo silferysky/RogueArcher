@@ -60,6 +60,7 @@ namespace Rogue
 	void PhysicsSystem::Update()
 	{
 		g_engine.m_coordinator.InitTimeSystem("Physics System");
+
 		for (int step = 0; step < g_engine.GetStepCount(); ++step)
 		{
 			ForceManager::instance().UpdateAges();
@@ -69,10 +70,11 @@ namespace Rogue
 			for (iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
 			{
 				auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
-				auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
-			
+
 				if (rigidbody.getIsStatic())
 					continue;
+
+				auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
 
 				// Add relevant forces to each rigidbody
 				ForceManager::instance().AddForce(*iEntity, rigidbody);
@@ -84,7 +86,6 @@ namespace Rogue
 				rigidbody.setAccForce(Vec2());
 			}
 		}
-
 		g_engine.m_coordinator.EndTimeSystem("Physics System");
 	}
 

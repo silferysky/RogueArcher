@@ -309,9 +309,14 @@ namespace Rogue
 			m_systemManager->TogglePauseState();
 		}
 
-		bool GameIsActive()
+		bool GameIsActive() const
 		{
 			return GetGameState() && !GetPauseState();
+		}
+
+		void StepOnce() const
+		{
+			m_systemManager->StepOnce();
 		}
 
 		Timer::ChronoTime GetCurrTime() const
