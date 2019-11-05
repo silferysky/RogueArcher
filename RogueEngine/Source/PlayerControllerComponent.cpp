@@ -3,9 +3,22 @@
 
 namespace Rogue
 {
+	void PlayerControllerComponent::SetSlowTime(const float& slowTime)
+	{
+		m_slowTime = slowTime;
+	}
+
+	float PlayerControllerComponent::GetSlowTime() const
+	{
+		return m_slowTime;
+	}
+
 	std::string PlayerControllerComponent::Serialize()
 	{
-		return std::string(std::to_string(m_isActive));
+		std::ostringstream ss;
+		ss << m_isActive << ";";
+		ss << m_slowTime << ";";
+		return ss.str();
 	}
 
 	void PlayerControllerComponent::Deserialize(std::string toDeserialize)
@@ -15,5 +28,8 @@ namespace Rogue
 
 		std::getline(ss, s1, ';');
 		m_isActive = std::stoi(s1);
+		std::getline(ss, s1, ';');
+		m_slowTime = std::stof(s1);
 	}
+
 }
