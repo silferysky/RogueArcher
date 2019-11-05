@@ -27,7 +27,7 @@ namespace Rogue
 		void RemoveExcessAI();
 		void AddExcessAI();
 
-		void SeekNearestWaypoint(Entity ent);
+		//void SeekNearestWaypoint(Entity ent);
 
 		void CreateMoveEvent(Entity ent, Vec2 vec);
 

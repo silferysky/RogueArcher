@@ -6,17 +6,6 @@ namespace Rogue
 	FinderAI::FinderAI(Entity entity, LogicComponent& logicComponent)
 		: BaseAI(entity, logicComponent) {}
 
-	void FinderAI::LogicInit()
-	{
-		//Put in order of importance
-		//Use AddAIState for active states, AddAIStateInactive for inactive states that might turn active
-		m_logicComponent->AddAIState(AIState::AIState_Chase);
-		m_logicComponent->AddAIState(AIState::AIState_Idle);
-
-		//Sets initial state of AI
-		m_logicComponent->SetCurState(AIState::AIState_Idle);
-	}
-
 	void FinderAI::AIActiveStateUpdate()
 	{
 		AIDetect();
@@ -53,15 +42,19 @@ namespace Rogue
 				break;
 			}
 		}
-
 	}
 
 	void FinderAI::AIChaseUpdate()
 	{
+		//Check if next point exists
 		if (m_nextPoint.empty())
 			return;
 
-		auto& aiTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(m_entity);
+		//Check if Transform component and Rigidbody exist
+		if (!(g_engine.m_coordinator.ComponentExists<TransformComponent>(m_entity) && g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(m_entity)))
+			return;
+
+		TransformComponent& aiTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(m_entity);
 		float distance = Vec2SqDistance(aiTransform.getPosition(), m_nextPoint.front());
 
 		if (distance < SPEED)
@@ -70,7 +63,6 @@ namespace Rogue
 		{
 			Vec2 travelDistance;
 			Vec2Normalize(travelDistance, m_nextPoint.front() - aiTransform.getPosition());
-			//aiTransform.setPosition(aiTransform.getPosition() + travelDistance * SPEED);
 			g_engine.m_coordinator.GetComponent<RigidbodyComponent>(m_entity).addForce(travelDistance * SPEED);
 		}
 	}
