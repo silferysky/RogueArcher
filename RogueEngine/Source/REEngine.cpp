@@ -127,7 +127,6 @@ namespace Rogue
 				DispatchMessage(&msg);
 			}
 
-
 			// Avoid spiral of death and clamp dt, thus clamping
 			// how many times the UpdatePhysics can be called in
 			// a single game loop.
