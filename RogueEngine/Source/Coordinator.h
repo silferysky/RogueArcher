@@ -323,5 +323,15 @@ namespace Rogue
 		{
 			return m_timer->GetCurrTime();
 		}
+		
+		void SetStepFrames(size_t frames)
+		{
+			m_systemManager->SetStepFrames(frames);
+		}
+
+		size_t GetStepFrames() const
+		{
+			m_systemManager->GetStepFrames();
+		}
 	};
 }
