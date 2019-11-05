@@ -89,6 +89,14 @@ namespace Rogue
 						continue;
 				}
 
+				//Skip these systems if game is paused or not running
+				if (m_gameIsPaused || !m_gameIsRunning)
+				{
+					if (system.second->m_systemID == SystemID::id_LOGICSYSTEM ||
+						system.second->m_systemID == SystemID::id_DEBUGDRAWSYSTEM)
+						continue;
+				}
+
 				// If game is paused, freeze physics system unless step once is called.
 				if (m_gameIsPaused && m_gameIsRunning)
 				{
