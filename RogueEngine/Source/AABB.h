@@ -13,6 +13,11 @@ namespace Rogue
 		AABB() = default;
 		~AABB() = default;
 
+		AABB(const AABB& aabb);
+		AABB(AABB&& rhs) noexcept;
+		AABB& operator=(const AABB& rhs);
+		AABB& operator=(AABB&& rhs) noexcept;
+
 		Vec2 getMin() const;
 		Vec2 getMax() const;
 		void setMin(const Vec2& min);

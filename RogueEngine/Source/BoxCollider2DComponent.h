@@ -15,8 +15,10 @@ namespace Rogue
 		//std::unique_ptr<Shape> m_shape;
 
 		BoxCollider2DComponent();
-		//BoxCollider2DComponent(const BoxCollider2DComponent& rhs);
-		BoxCollider2DComponent& operator=(const BoxCollider2DComponent& rhs); // For cloning
+		BoxCollider2DComponent(const BoxCollider2DComponent& rhs); // Copy constructor
+		BoxCollider2DComponent(BoxCollider2DComponent&& rhs); // Move constructor
+		BoxCollider2DComponent& operator=(const BoxCollider2DComponent& rhs); // Copy assignment
+		BoxCollider2DComponent& operator=(BoxCollider2DComponent&& rhs); // Move assignment
 
 		bool Rotatable() const;
 		void setRotatable(bool set);

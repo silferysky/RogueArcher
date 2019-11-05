@@ -53,6 +53,7 @@ namespace Rogue
 	public:
 		virtual MassData ComputeMass(float density) const = 0;
 		virtual Type GetType() const = 0;
+		virtual ~Shape() = default;
 	};
 
 	class CircleShape : public Shape
@@ -63,6 +64,19 @@ namespace Rogue
 		CircleShape(float radius = 1.0f) :
 			m_radius{ radius }
 		{}
+
+		CircleShape(const CircleShape& rhs) :
+			m_radius{ rhs.m_radius }
+		{}
+
+		CircleShape& operator=(const CircleShape& rhs)
+		{
+			if (this != &rhs)
+			{
+				m_radius = rhs.m_radius;
+			}
+			return *this;
+		}
 
 		MassData ComputeMass(float density = 1.0f) const override
 		{
@@ -81,9 +95,9 @@ namespace Rogue
 	class BoxShape : public Shape
 	{
 	public:
-		const AABB& m_aabb;
+		AABB& m_aabb;
 
-		BoxShape(const AABB& aabb = AABB()) :
+		BoxShape(AABB& aabb) :
 			m_aabb{ aabb }
 		{}
 
@@ -106,13 +120,26 @@ namespace Rogue
 
 	class PolygonShape : public Shape
 	{
-		const OBB::VertexList& m_vertices;
+		OBB::VertexList& m_vertices;
 	public:
 		PolygonShape() = default;
 
 		PolygonShape(OBB& obb) :
 			m_vertices{ obb.modelVerts() }
 		{}
+
+		PolygonShape(const PolygonShape& rhs) :
+			m_vertices{ rhs.m_vertices }
+		{}
+
+		PolygonShape& operator=(const PolygonShape& rhs)
+		{
+			if (this != &rhs)
+			{
+				m_vertices = rhs.m_vertices;
+			}
+			return *this;
+		}
 
 		MassData ComputeMass(float density) const override
 		{

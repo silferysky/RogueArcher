@@ -21,7 +21,12 @@ namespace Rogue
 		VertexList m_normals; // The normal vectors of each side.
 	public:
 		OBB(const VertexList& model = VertexList());
-		~OBB() = default;
+		OBB(const OBB& rhs) = default;
+		OBB(OBB&& rhs) noexcept; 
+		~OBB() = default; // Destructor
+		
+		OBB& operator=(const OBB&) = default; // Copy assignment
+		OBB& operator=(OBB&&) noexcept; // Move assignment
 
 		size_t getSize() const;
 		float getMin() const;
