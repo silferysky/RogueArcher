@@ -18,8 +18,8 @@ namespace Rogue
 		virtual void Update() override;
 		virtual void Shutdown() override;
 		
-		void DisplayDirectoryTreeImp(const  std::experimental::filesystem::path& pathToShow, int level);
-		void DisplayDirectoryTree(const std::experimental::filesystem::path& pathToShow);
+		//void DisplayDirectoryTreeImp(const  std::experimental::filesystem::path& pathToShow, int level);
+		//void DisplayDirectoryTree(const std::experimental::filesystem::path& pathToShow);
 		struct Data
 		{
 			std::string m_filePath;

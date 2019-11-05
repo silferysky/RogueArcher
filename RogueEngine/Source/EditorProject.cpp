@@ -36,7 +36,7 @@ namespace Rogue
 	{
 	}
 
-	void ImGuiProject::DisplayDirectoryTreeImp(const std::experimental::filesystem::path& pathToShow, int level)
+	/*void ImGuiProject::DisplayDirectoryTreeImp(const std::experimental::filesystem::path& pathToShow, int level)
 	{
 		if (std::experimental::filesystem::exists(pathToShow) && std::experimental::filesystem::is_directory(pathToShow))
 		{
@@ -62,6 +62,6 @@ namespace Rogue
 	void ImGuiProject::DisplayDirectoryTree(const std::experimental::filesystem::path& pathToShow)
 	{
 		DisplayDirectoryTreeImp(pathToShow, 0);
-	}
+	}*/
 }
 
