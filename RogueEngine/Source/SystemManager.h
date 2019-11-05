@@ -67,6 +67,21 @@ namespace Rogue
 			{
 				// Note: Debug draw system currently doesn't update here.
 
+				if (m_gameModeChanged)
+				{
+					if (m_showCursor)
+					{
+						m_showCursor = false;
+						ShowCursor(false);
+					}
+					else
+					{
+						m_showCursor = true;
+						ShowCursor(true);
+					}
+					m_gameModeChanged = false;
+				}
+
 				// Only run editor if editor is running.
 				if (system.second->m_systemID == SystemID::id_EDITOR)
 				{
@@ -74,15 +89,31 @@ namespace Rogue
 						continue;
 				}
 
-				//If either game is not paused or is editor system, run the update
-				if ((!m_gameIsPaused && m_gameIsRunning) || 
-					(system.second->m_systemID != SystemID::id_PHYSICSSYSTEM))
-					system.second->Update();
+				// If game is paused, freeze physics system unless step once is called.
+				if (m_gameIsPaused && m_gameIsRunning)
+				{
+					if (system.second->m_systemID == SystemID::id_PHYSICSSYSTEM)
+					{
+						if (m_stepOnce)
+						{
+							--m_stepCounter;
+
+							system.second->Update();
+							
+							if(m_stepCounter == 0)
+								m_stepOnce = false;
+						}
+						continue;
+					}
+				}
+
+				system.second->Update();
 
 				/* if (m_gameIsRunning)
 					ShowCursor(false);
 				else
 					ShowCursor(true); */
+
 			}
 		}
 
@@ -205,9 +236,19 @@ namespace Rogue
 
 		void ToggleEditorIsRunning()
 		{
+			m_gameModeChanged = true;
+
 			m_editorIsRunning = m_editorIsRunning ?
 				false :
 				true;
+		}
+
+		void StepOnce()
+		{
+			m_stepOnce = true;
+		
+			if(m_stepFrames)
+				m_stepCounter = m_stepFrames;
 		}
 
 		void CreateAssignTagEvent(Entity entity)
@@ -222,11 +263,27 @@ namespace Rogue
 			GetSystem<CollisionTagSystem>()->DeassignTag(entity);
 		}
 
+		void SetStepFrames(size_t count)
+		{
+			m_stepFrames = count;
+		}
+
+		size_t GetStepFrames() const
+		{
+			return m_stepFrames;
+		}
+
 	private:
 		std::unordered_map<std::type_index, Signature> m_signatures;
 		std::vector<std::pair<std::type_index, std::shared_ptr<System>>> m_systems;
 		bool m_gameIsRunning = false;
 		bool m_gameIsPaused = false;
 		bool m_editorIsRunning = true;
+		bool m_stepOnce = false;
+		bool m_gameModeChanged = false;
+		bool m_showCursor = true;
+
+		size_t m_stepFrames = 1;
+		size_t m_stepCounter = 0;
 	};
 }

@@ -260,6 +260,7 @@ namespace Rogue
 							float m_restitution = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(i.m_Entity).getBounciness();
 							//float m_mass = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(i.m_Entity).getInvMass();
 							Vec2 m_force = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(i.m_Entity).getAccForce();
+							//float m_gravity = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(i.m_Entity).getGravity();
 
 							ImGui::PushItemWidth(75);
 							ImGui::Checkbox("Static?", &m_isStatic);
@@ -289,6 +290,10 @@ namespace Rogue
 							ImGui::PushItemWidth(75);
 							ImGui::SliderFloat("Restitution", &m_restitution, 0.0f, 1.0f);
 							g_engine.m_coordinator.GetComponent<RigidbodyComponent>(i.m_Entity).setBounciness(m_restitution);
+
+							ImGui::PushItemWidth(75);
+							//ImGui::SliderFloat("Gravity", &m_gravity, 0.0f, 2.0f);
+							//g_engine.m_coordinator.GetComponent<RigidbodyComponent>(i.m_Entity).setGravity(m_gravity);
 						}
 					}
 
@@ -334,6 +339,16 @@ namespace Rogue
 						}
 					}
 
+					if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(i.m_Entity))
+					{
+						if (ImGui::CollapsingHeader("Player Controllable"))
+						{
+							float m_slowTimer = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(i.m_Entity).GetSlowTime();
+							ImGui::PushItemWidth(75);
+							ImGui::DragFloat("Time Scale", &m_slowTimer, 0.01f, 0.0f, 1.0f);
+							g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(i.m_Entity).SetSlowTime(m_slowTimer);
+						}					
+					}
 
 					if (g_engine.m_coordinator.ComponentExists<AudioEmitterComponent>(i.m_Entity))
 					{

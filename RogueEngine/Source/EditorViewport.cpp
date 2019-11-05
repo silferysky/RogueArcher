@@ -25,7 +25,7 @@ namespace Rogue
 				//g_engine.m_coordinator.GetSceneManager().SaveLevel(g_engine.m_coordinator.GetSceneManager().getCurrentFileName().c_str());
 				//g_engine.m_coordinator.GetSceneManager().SaveAndLoadLevel();
 				g_engine.m_coordinator.SetGameState(true);
-				ShowCursor(false);
+				//ShowCursor(false);
 			}
 			else //If game is running, just stop and reload old data
 			{
@@ -34,7 +34,7 @@ namespace Rogue
 				g_engine.m_coordinator.GetSceneManager().LoadLevel(g_engine.m_coordinator.GetSceneManager().getCurrentFileName().c_str());
 				g_engine.m_coordinator.SetGameState(false);
 				g_engine.m_coordinator.SetPauseState(false);
-				ShowCursor(true);
+				//ShowCursor(true);
 			}
 		}
 		if (ImGui::IsItemHovered())
@@ -68,7 +68,7 @@ namespace Rogue
 			if (g_engine.m_coordinator.GetGameState())
 			{
 				g_engine.m_coordinator.TogglePauseState();
-				ShowCursor(true);
+				//ShowCursor(true);
 			}
 		}
 		if (ImGui::IsItemHovered())
@@ -109,10 +109,15 @@ namespace Rogue
 			ImGui::Text("Stops game and loads last saved state");
 			ImGui::EndTooltip();
 		}
-
+		ImGui::SameLine();
+		int m_Frames = g_engine.m_coordinator.GetStepFrames();
+		ImGui::PushItemWidth(75);
+		ImGui::SliderInt("Step Count", &m_Frames, 1, 60);
+		g_engine.m_coordinator.SetStepFrames(m_Frames);
+		ImGui::SameLine();
 		if (ImGui::Button("Step"))
 		{
-
+			g_engine.m_coordinator.StepOnce();
 		}
 
 		ImVec2 imageSize{ ImGui::GetContentRegionAvail() };
