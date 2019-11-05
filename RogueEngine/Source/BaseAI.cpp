@@ -6,9 +6,8 @@
 namespace Rogue
 {
 	BaseAI::BaseAI(Entity entity, LogicComponent& logicComp)
+		: m_entity{entity}, m_logicComponent{std::make_shared<LogicComponent>(logicComp)}
 	{
-		m_entity = entity;
-		m_logicComponent = std::make_shared<LogicComponent>(logicComp);
 		LogicInit();
 	}
 
@@ -28,7 +27,6 @@ namespace Rogue
 		//To set all flags of potential behavior
 		m_logicComponent->ResetActiveStateBit();
 		AIActiveStateUpdate();
-		AIDetect();
 
 		//For all possible states BaseAI has
 		//This for loop handles the order of importance of each state.
@@ -62,23 +60,11 @@ namespace Rogue
 
 	void BaseAI::AIDetect()
 	{
-		
-		/*auto gameFactory = g_engine.m_coordinator.GetSystem<ObjectFactory>();
-		for (auto it = gameFactory->GetActiveEntity().begin(); it != gameFactory->GetActiveEntity().end(); ++it)
-		{
-			if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(*it))
-			{
-				//if(g_engine.m_coordinator.get)
-				RE_INFO("SPOTTED THROUGH WALLS");
-				break;
-			}
-		}*/
 	}
 
 	void BaseAI::AIActiveStateUpdate()
 	{
 		m_logicComponent->SetActiveStateBit((size_t)AIState::AIState_Idle);
-		m_logicComponent->SetActiveStateBit((size_t)AIState::AIState_Chase);
 	}
 
 	void BaseAI::AIChaseUpdate()
@@ -104,21 +90,6 @@ namespace Rogue
 	void BaseAI::SetLogicComponent(LogicComponent& logicComp)
 	{
 		m_logicComponent = std::make_shared<LogicComponent>(logicComp);
-	}
-
-	void BaseAI::AddWaypoint(Vec2 newPoint)
-	{
-		m_waypoints.push_back(newPoint);
-	}
-
-	void BaseAI::ClearWaypoints()
-	{
-		m_waypoints.clear();
-	}
-
-	std::vector<Vec2> BaseAI::GetWaypoints()
-	{
-		return m_waypoints;
 	}
 
 	void BaseAI::AddNextPoint(Vec2 newPoint)

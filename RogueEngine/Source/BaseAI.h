@@ -34,10 +34,6 @@ namespace Rogue
 		std::shared_ptr<LogicComponent> GetLogicComponent();
 		void SetLogicComponent(LogicComponent& logicComp);
 
-		void AddWaypoint(Vec2 newPoint);
-		void ClearWaypoints();
-		std::vector<Vec2> GetWaypoints();
-
 		void AddNextPoint(Vec2 newPoint);
 		Vec2 GetNextPoint();
 		void PopNextPoint();
@@ -47,7 +43,6 @@ namespace Rogue
 
 		Entity m_entity;
 		std::shared_ptr<LogicComponent> m_logicComponent;
-		std::vector<Vec2> m_waypoints;
 		std::queue<Vec2> m_nextPoint;
 	};
 }
