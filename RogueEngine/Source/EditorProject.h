@@ -6,6 +6,7 @@
 #include "glew.h"
 #include <filesystem>
 #include <iostream>
+#include <vector>
 
 namespace Rogue
 {
