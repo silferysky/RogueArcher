@@ -334,7 +334,15 @@ namespace Rogue
 						}
 					}
 
-
+					if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(i.m_Entity))
+					{
+						if (ImGui::CollapsingHeader("Player Controllable"))
+						{
+							//float m_slowTimer = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(i.m_Entity).getslowTime();
+							//ImGui::PushItemWidth(75);
+							//ImGui::DragFloat("Time Scale", &m_slowTimer, 0.5f, 0.0f, 1.0f);
+						}					
+					}
 					if (g_engine.m_coordinator.ComponentExists<AudioEmitterComponent>(i.m_Entity))
 					{
 						if (ImGui::CollapsingHeader("Sound"))
