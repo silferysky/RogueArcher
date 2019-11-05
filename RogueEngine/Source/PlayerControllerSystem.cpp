@@ -134,10 +134,11 @@ namespace Rogue
 
 			if (keycode == KeyPress::MB2)
 			{
-				//for (Entity entity : m_entities)
-				//{
-				//
-				//}
+				for (Entity entity : m_entities)
+				{
+					auto& PlayerControllable = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity);
+					g_engine.SetTimeScale(PlayerControllable.GetSlowTime());
+				}
 			}
 
 			if (keycode == KeyPress::KeySpace)
@@ -286,10 +287,7 @@ namespace Rogue
 
 			if (keycode == KeyPress::MB2)
 			{
-				//for (Entity entity : m_entities)
-				//{
-				//  
-				//}
+				g_engine.SetTimeScale(1.0f);
 			}
 			return;
 		}

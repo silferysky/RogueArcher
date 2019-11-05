@@ -11,8 +11,8 @@ namespace Rogue
 	public:
 		PlayerControllerComponent() = default;
 		~PlayerControllerComponent() = default;
-		void setSlowTime(const float& slowTime);
-		float getslowTime() const;
+		void SetSlowTime(const float& slowTime);
+		float GetSlowTime() const;
 		//No need to serialize PlayerControllerComponent as of now
 		std::string Serialize();
 		void Deserialize(std::string);
