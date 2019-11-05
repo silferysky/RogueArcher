@@ -4,6 +4,29 @@
 
 namespace Rogue
 {
+	CircleCollider2DComponent::CircleCollider2DComponent(CircleCollider2DComponent&& rhs) noexcept :
+		m_collider{ CircleCollider{} }
+	{
+		std::swap(m_collider, rhs.m_collider);
+	}
+
+	CircleCollider2DComponent& CircleCollider2DComponent::operator=(const CircleCollider2DComponent& rhs)
+	{
+		if (this != &rhs)
+		{
+			m_collider = rhs.m_collider;
+		}
+		return *this;
+	}
+
+	CircleCollider2DComponent& CircleCollider2DComponent::operator=(CircleCollider2DComponent&& rhs) noexcept
+	{
+		if (this != &rhs)
+		{
+			std::swap(m_collider, rhs.m_collider);
+		}
+		return *this;
+	}
 	std::string CircleCollider2DComponent::Serialize()
 	{
 		//Radius

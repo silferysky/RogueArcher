@@ -11,6 +11,47 @@ namespace Rogue
 		float m_rotationOffset;
 
 	public:
+		BaseCollider() :
+			m_scaleOffset{ Vec2{} }, m_centerOffset{ Vec2{} }, m_rotationOffset{ 0.0f }
+		{}
+
+		virtual ~BaseCollider() = default;
+
+		BaseCollider(const BaseCollider& rhs) :
+			m_scaleOffset{ rhs.m_scaleOffset }, m_centerOffset{ rhs.m_centerOffset }, m_rotationOffset{ rhs.m_rotationOffset }
+		{}
+
+		BaseCollider(BaseCollider&& rhs) noexcept :
+			m_scaleOffset{ Vec2{} }, m_centerOffset{ Vec2{} }, m_rotationOffset{ 0.0f }
+		{
+			std::swap(m_scaleOffset, rhs.m_scaleOffset);
+			std::swap(m_centerOffset, rhs.m_centerOffset);
+			std::swap(m_rotationOffset, rhs.m_rotationOffset);
+		}
+
+		BaseCollider& operator=(BaseCollider& rhs)
+		{
+			if (this != &rhs)
+			{
+				m_scaleOffset = rhs.m_scaleOffset;
+				m_centerOffset = rhs.m_centerOffset;
+				m_rotationOffset = rhs.m_rotationOffset;
+			}
+			return *this;
+		}
+
+		BaseCollider& operator=(BaseCollider&& rhs) noexcept
+		{
+			if (this != &rhs)
+			{
+				std::swap(m_scaleOffset, rhs.m_scaleOffset);
+				std::swap(m_centerOffset, rhs.m_centerOffset);
+				std::swap(m_rotationOffset, rhs.m_rotationOffset);
+			}
+
+			return *this;
+		}
+
 		Vec2 getScaleOffSet() const
 		{
 			return m_scaleOffset;

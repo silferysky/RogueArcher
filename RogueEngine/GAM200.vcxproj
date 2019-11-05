@@ -142,6 +142,7 @@
     <ClCompile Include="Source\AudioEmitterComponent.cpp" />
     <ClCompile Include="Source\AudioSystem.cpp" />
     <ClCompile Include="Source\BaseAI.cpp" />
+    <ClCompile Include="Source\BaseCollider.cpp" />
     <ClCompile Include="Source\BoxCollider2DComponent.cpp" />
     <ClCompile Include="Source\CameraComponent.cpp" />
     <ClCompile Include="Source\CameraShake.cpp" />

@@ -23,6 +23,30 @@ namespace Rogue
 		}
 	}
 
+	OBB::OBB(OBB&& rhs) noexcept :
+		m_minOnAxis{ 0.0f }, m_maxOnAxis{ 0.0f },
+		m_modelVertices{ VertexList{} }, m_globalVertices{ VertexList{} }, m_normals{ VertexList{} }
+	{
+		std::swap(m_minOnAxis, rhs.m_minOnAxis);
+		std::swap(m_maxOnAxis, rhs.m_maxOnAxis);
+		std::swap(m_modelVertices, rhs.m_modelVertices);
+		std::swap(m_globalVertices, rhs.m_globalVertices);
+		std::swap(m_normals, rhs.m_normals);
+	}
+
+	OBB& OBB::operator=(OBB&& rhs) noexcept
+	{
+		if (this != &rhs)
+		{
+			std::swap(m_minOnAxis, rhs.m_minOnAxis);
+			std::swap(m_maxOnAxis, rhs.m_maxOnAxis);
+			std::swap(m_modelVertices, rhs.m_modelVertices);
+			std::swap(m_globalVertices, rhs.m_globalVertices);
+			std::swap(m_normals, rhs.m_normals);
+		}
+		return *this;
+	}
+
 	size_t OBB::getSize() const
 	{
 		return m_size;

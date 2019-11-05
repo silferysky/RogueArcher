@@ -711,6 +711,7 @@
     <ClCompile Include="Source\CursorSystem.cpp">
       <Filter>RogueEngine\Systems\Cursor</Filter>
     </ClCompile>
+    <ClCompile Include="Source\BaseCollider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Level 1.json">
