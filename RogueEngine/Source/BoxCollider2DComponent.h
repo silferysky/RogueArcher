@@ -16,9 +16,9 @@ namespace Rogue
 
 		BoxCollider2DComponent();
 		BoxCollider2DComponent(const BoxCollider2DComponent& rhs); // Copy constructor
-		BoxCollider2DComponent(BoxCollider2DComponent&& rhs); // Move constructor
+		BoxCollider2DComponent(BoxCollider2DComponent&& rhs) noexcept; // Move constructor
 		BoxCollider2DComponent& operator=(const BoxCollider2DComponent& rhs); // Copy assignment
-		BoxCollider2DComponent& operator=(BoxCollider2DComponent&& rhs); // Move assignment
+		BoxCollider2DComponent& operator=(BoxCollider2DComponent&& rhs) noexcept; // Move assignment
 
 		bool Rotatable() const;
 		void setRotatable(bool set);

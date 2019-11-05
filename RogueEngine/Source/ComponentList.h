@@ -14,6 +14,7 @@
 #include "AudioEmitterComponent.h"
 #include "UIComponent.h"
 #include "CursorComponent.h"
+#include "ColliderComponent.h"
 
 namespace Rogue
 {
@@ -32,6 +33,7 @@ namespace Rogue
 		AUDIOEMITTER,
 		UI,
 		CURSOR,
+		COLLIDER,
 
 		LASTCOMP
 	};

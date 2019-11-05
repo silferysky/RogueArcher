@@ -53,11 +53,22 @@ namespace Rogue
 				if (currRigidbody.getIsStatic() && nextRigidbody.getIsStatic())
 					continue;
 
-				if (CollisionSystem::s_collisionManager.DiscreteCircleVsCircle(currCircleCollider.m_collider, nextCircleCollider.m_collider,
-					currTransform, nextTransform))
-				{
-					CollisionSystem::s_collisionManager.GenerateManifoldCirclevsCircle(*iEntity, *iNextEntity);
-				}
+				//if (CollisionSystem::s_collisionManager.DiscreteCircleVsCircle(currCircleCollider.m_collider, nextCircleCollider.m_collider,
+				//	currTransform, nextTransform))
+				//{
+				//	CollisionSystem::s_collisionManager.GenerateManifoldCirclevsCircle(*iEntity, *iNextEntity);
+				//}
+
+				//if (CollisionSystem::s_collisionManager.DiscreteAABBVsCircle(currBoxCollider.m_aabb, nextCircleCollider.m_collider))// To check for AABB vs Circle
+				//{
+				//	std::cout << "True\n\n" << std::endl;
+				//	CollisionSystem::s_collisionManager.GenerateManifoldAABBvsCircle(*iEntity, *iNextEntity);
+				//}
+				//if (CollisionSystem::s_collisionManager.DiscreteCircleVsAABB(currCircleCollider.m_collider, currBoxCollider.m_aabb))
+				//{
+				//	std::cout << "True" << std::endl;
+				//	CollisionSystem::s_collisionManager.GenerateManifoldCirclevsAABB(*iNextEntity, *iEntity);
+				//}
 			}
 
 			// Collision Response (Contact, forces, rest, Impulse, Torque)
