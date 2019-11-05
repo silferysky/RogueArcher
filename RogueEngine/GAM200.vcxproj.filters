@@ -463,6 +463,9 @@
     <ClInclude Include="Source\CursorSystem.h">
       <Filter>RogueEngine\Systems\Cursor</Filter>
     </ClInclude>
+    <ClInclude Include="Source\ColliderComponent.h">
+      <Filter>RogueEngine\Systems\Collision\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -712,6 +715,9 @@
       <Filter>RogueEngine\Systems\Cursor</Filter>
     </ClCompile>
     <ClCompile Include="Source\BaseCollider.cpp" />
+    <ClCompile Include="Source\ColliderComponent.cpp">
+      <Filter>RogueEngine\Systems\Collision\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Level 1.json">

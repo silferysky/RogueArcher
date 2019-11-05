@@ -40,7 +40,7 @@ namespace Rogue
 	// Class to define the shape's characteristics
 	class Shape
 	{
-	protected:
+	public:
 		enum class Type
 		{
 			e_circle,
@@ -50,7 +50,6 @@ namespace Rogue
 			e_max
 		};
 
-	public:
 		virtual MassData ComputeMass(float density) const = 0;
 		virtual Type GetType() const = 0;
 		virtual ~Shape() = default;
@@ -95,21 +94,53 @@ namespace Rogue
 	class BoxShape : public Shape
 	{
 	public:
-		AABB& m_aabb;
+		float m_width;
+		float m_height;
 
-		BoxShape(AABB& aabb) :
-			m_aabb{ aabb }
+		BoxShape(float width = 1.0f, float height = 1.0f) :
+			m_width{ width }, m_height{ height }
 		{}
+
+		BoxShape(const BoxShape& rhs) :
+			m_width{ rhs.m_width }, m_height{ rhs.m_height }
+		{}
+
+		BoxShape(BoxShape&& rhs) noexcept :
+			m_width{ 0.0f }, m_height{ 0.0f }
+		{
+			std::swap(m_width, rhs.m_width);
+			std::swap(m_height, rhs.m_height);
+		}
+
+		BoxShape& operator=(const BoxShape& rhs)
+		{
+			if (this != &rhs)
+			{
+				m_width = rhs.m_width;
+				m_height = rhs.m_height;
+			}
+
+			return *this;
+		}
+
+		BoxShape& operator=(BoxShape&& rhs) noexcept
+		{
+			if (this != &rhs)
+			{
+				std::swap(m_width, rhs.m_width);
+				std::swap(m_height, rhs.m_height);
+			}
+
+			return *this;
+		}
 
 		MassData ComputeMass(float density = 1.0f) const override
 		{
-			float width = m_aabb.getMax().x - m_aabb.getMin().x;
-			float height = m_aabb.getMax().y - m_aabb.getMax().y;
-			float mass = width * height * density;
+			float mass = m_width * m_height * density;
 
 			return MassData{
 				mass,
-				mass * (width * width + height * height) / 12 }; // Formula for inertia of box.
+				mass * (m_width * m_width + m_height * m_height) / 12 }; // Formula for inertia of box.
 		}
 
 		Type GetType() const override
@@ -120,12 +151,12 @@ namespace Rogue
 
 	class PolygonShape : public Shape
 	{
-		OBB::VertexList& m_vertices;
+		OBB::VertexList m_vertices;
 	public:
 		PolygonShape() = default;
 
-		PolygonShape(OBB& obb) :
-			m_vertices{ obb.modelVerts() }
+		PolygonShape(const OBB::VertexList& model) :
+			m_vertices{ model }
 		{}
 
 		PolygonShape(const PolygonShape& rhs) :

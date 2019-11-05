@@ -20,7 +20,7 @@ namespace Rogue
 		//	m_shape = std::make_unique<BoxShape>(m_aabb);
 	}
 
-	BoxCollider2DComponent::BoxCollider2DComponent(BoxCollider2DComponent&& rhs) :
+	BoxCollider2DComponent::BoxCollider2DComponent(BoxCollider2DComponent&& rhs) noexcept :
 		m_rotatable{ false }, m_aabb{ AABB{} }, m_obb{ OBB{} }
 	{
 		std::swap(m_rotatable, rhs.m_rotatable);
@@ -49,7 +49,7 @@ namespace Rogue
 		return *this;
 	}
 
-	BoxCollider2DComponent& BoxCollider2DComponent::operator=(BoxCollider2DComponent&& rhs)
+	BoxCollider2DComponent& BoxCollider2DComponent::operator=(BoxCollider2DComponent&& rhs) noexcept
 	{
 		if (this != &rhs)
 		{

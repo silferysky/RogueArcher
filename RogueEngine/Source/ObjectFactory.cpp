@@ -324,6 +324,10 @@ namespace Rogue
 						g_engine.m_coordinator.CopyComponent<BoxCollider2DComponent>(clonedEntity, toClone);
 						break;
 					}
+					case static_cast<int>(COLLIDER) :
+					{
+						g_engine.m_coordinator.CopyComponent<ColliderComponent>(clonedEntity, toClone);
+					}
 					case static_cast<int>(PLAYERCONTROLLER) :
 					{
 						g_engine.m_coordinator.CopyComponent<PlayerControllerComponent>(clonedEntity, toClone);
@@ -446,6 +450,10 @@ namespace Rogue
 						strstream << "BoxCollider{" << g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(entityToSerialize).Serialize() << "}";
 						break;
 					}
+					case static_cast<int>(COLLIDER) :
+					{
+						strstream << "Collider{" << g_engine.m_coordinator.GetComponent<ColliderComponent>(entityToSerialize).Serialize() << "}";
+					}
 					case static_cast<int>(PLAYERCONTROLLER) :
 					{
 						strstream << "PlayerController{" << g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entityToSerialize).Serialize() << "}";
@@ -483,7 +491,7 @@ namespace Rogue
 					}
 					case static_cast<int>(CURSOR) :
 					{
-						strstream << "CURSOR{" << g_engine.m_coordinator.GetComponent<UIComponent>(entityToSerialize).Serialize().c_str() << "}";
+						strstream << "CURSOR{" << g_engine.m_coordinator.GetComponent<CursorComponent>(entityToSerialize).Serialize().c_str() << "}";
 						break;
 					}
 					default:
@@ -543,6 +551,10 @@ namespace Rogue
 					case static_cast<int>(BOXCOLLIDER2D) :
 					{
 						g_engine.m_coordinator.LoadComponent<BoxCollider2DComponent>(curEnt, readstr);
+						break;
+					}
+					case static_cast<int>(COLLIDER) :
+					{		g_engine.m_coordinator.LoadComponent<ColliderComponent>(curEnt, readstr);
 						break;
 					}
 					case static_cast<int>(PLAYERCONTROLLER) :

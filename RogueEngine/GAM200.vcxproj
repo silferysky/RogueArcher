@@ -36,6 +36,7 @@
     <ClInclude Include="Source\CircleCollider.h" />
     <ClInclude Include="Source\BoxCollisionSystem.h" />
     <ClInclude Include="Source\CircleCollisionSystem.h" />
+    <ClInclude Include="Source\ColliderComponent.h" />
     <ClInclude Include="Source\CollisionSystem.h" />
     <ClInclude Include="Source\CollisionTagSystem.h" />
     <ClInclude Include="Source\CursorComponent.h" />
@@ -150,6 +151,7 @@
     <ClCompile Include="Source\CircleCollider.cpp" />
     <ClCompile Include="Source\BoxCollisionSystem.cpp" />
     <ClCompile Include="Source\CircleCollisionSystem.cpp" />
+    <ClCompile Include="Source\ColliderComponent.cpp" />
     <ClCompile Include="Source\CollisionSystem.cpp" />
     <ClCompile Include="Source\CollisionTagSystem.cpp" />
     <ClCompile Include="Source\CursorComponent.cpp" />
