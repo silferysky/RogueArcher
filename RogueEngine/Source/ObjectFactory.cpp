@@ -483,7 +483,7 @@ namespace Rogue
 					}
 					case static_cast<int>(CURSOR) :
 					{
-						strstream << "CURSOR{" << g_engine.m_coordinator.GetComponent<UIComponent>(entityToSerialize).Serialize().c_str() << "}";
+						strstream << "CURSOR{" << g_engine.m_coordinator.GetComponent<CursorComponent>(entityToSerialize).Serialize().c_str() << "}";
 						break;
 					}
 					default:
