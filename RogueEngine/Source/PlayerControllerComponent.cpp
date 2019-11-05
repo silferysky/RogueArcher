@@ -3,14 +3,16 @@
 
 namespace Rogue
 {
-	void PlayerControllerComponent::setSlowTime(const float& slowTime)
+	void PlayerControllerComponent::SetSlowTime(const float& slowTime)
 	{
 		m_slowTime = slowTime;
 	}
-	float PlayerControllerComponent::getslowTime() const
+
+	float PlayerControllerComponent::GetSlowTime() const
 	{
 		return m_slowTime;
 	}
+
 	std::string PlayerControllerComponent::Serialize()
 	{
 		return std::string(std::to_string(m_isActive));
