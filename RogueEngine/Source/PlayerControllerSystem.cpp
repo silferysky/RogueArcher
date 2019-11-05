@@ -134,7 +134,10 @@ namespace Rogue
 
 			if (keycode == KeyPress::MB2)
 			{
-				g_engine.SetTimeScale(0.1f);
+				//for (Entity entity : m_entities)
+				//{
+				//
+				//}
 			}
 
 			if (keycode == KeyPress::KeySpace)
@@ -283,7 +286,10 @@ namespace Rogue
 
 			if (keycode == KeyPress::MB2)
 			{
-				g_engine.SetTimeScale(1.0f);
+				//for (Entity entity : m_entities)
+				//{
+				//  
+				//}
 			}
 			return;
 		}
@@ -336,6 +342,7 @@ namespace Rogue
 		event->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
 		EventDispatcher::instance().AddEvent(event);
 	}
+
 
 	void PlayerControllerSystem::CreateBallAttack()
 	{
