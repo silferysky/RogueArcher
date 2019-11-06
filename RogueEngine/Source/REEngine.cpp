@@ -68,6 +68,7 @@ namespace Rogue
 		m_coordinator.RegisterComponent<CursorComponent>();
 		m_coordinator.RegisterComponent<ColliderComponent>();
 		m_coordinator.RegisterComponent<TextComponent>();
+		m_coordinator.RegisterComponent<BackgroundComponent>();
 	}
 
 	void REEngine::Init()

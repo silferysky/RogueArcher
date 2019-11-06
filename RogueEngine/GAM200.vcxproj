@@ -25,6 +25,7 @@
     <ClInclude Include="Source\AudioEmitterComponent.h" />
     <ClInclude Include="Source\AudioManager.h" />
     <ClInclude Include="Source\AudioSystem.h" />
+    <ClInclude Include="Source\BackgroundComponent.h" />
     <ClInclude Include="Source\BaseAI.h" />
     <ClInclude Include="Source\BaseCollider.h" />
     <ClInclude Include="Source\BaseComponent.h" />
@@ -51,6 +52,7 @@
     <ClInclude Include="Source\EditorHierarchy.h" />
     <ClInclude Include="Source\EditorHierarchyInfo.h" />
     <ClInclude Include="Source\EditorInspector.h" />
+    <ClInclude Include="Source\EditorProfiler.h" />
     <ClInclude Include="Source\EditorProject.h" />
     <ClInclude Include="Source\EditorSettings.h" />
     <ClInclude Include="Source\EditorViewport.h" />
@@ -166,6 +168,7 @@
     <ClCompile Include="Source\EditorGameObject.cpp" />
     <ClCompile Include="Source\EditorHierarchy.cpp" />
     <ClCompile Include="Source\EditorInspector.cpp" />
+    <ClCompile Include="Source\EditorProfiler.cpp" />
     <ClCompile Include="Source\EditorProject.cpp" />
     <ClCompile Include="Source\EditorSettings.cpp" />
     <ClCompile Include="Source\EditorViewport.cpp" />
@@ -202,6 +205,7 @@
     <ClCompile Include="Source\Shader.cpp" />
     <ClCompile Include="Source\FontSystem.cpp" />
     <ClCompile Include="Source\Sound.cpp" />
+    <ClCompile Include="Source\BackgroundComponent.cpp" />
     <ClCompile Include="Source\StatsComponent.cpp" />
     <ClCompile Include="Source\Stream.cpp" />
     <ClCompile Include="Source\TextComponent.cpp" />

@@ -53,7 +53,7 @@
 	{
 		glUseProgram(m_shader.GetShader());
 
-		glUniformMatrix4fv(m_viewLocation, 1, GL_FALSE, glm::value_ptr(m_pCamera->GetViewMatrix()));
+		glUniformMatrix4fv(m_viewLocation, 1, GL_FALSE, glm::value_ptr(m_pCamera->GetViewMatrix(1.0f)));
 		glUniformMatrix4fv(m_projLocation, 1, GL_FALSE, glm::value_ptr(g_engine.GetProjMat()));
 
 		// For all entities

@@ -10,4 +10,5 @@
 #include "EditorProject.h"
 #include "EditorHierarchy.h"
 #include "EditorViewport.h"
+#include "EditorProfiler.h"
 

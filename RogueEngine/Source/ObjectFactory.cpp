@@ -363,6 +363,11 @@ namespace Rogue
 						g_engine.m_coordinator.CopyComponent<TextComponent>(clonedEntity, toClone);
 						break;
 					}
+					case static_cast<int>(BACKGROUND) :
+					{
+						g_engine.m_coordinator.CopyComponent<BackgroundComponent>(clonedEntity, toClone);
+						break;
+					}
 					default:
 					{
 						RE_CORE_WARN("OUT OF BOUNDS INDEX TO CLONE");
@@ -497,12 +502,17 @@ namespace Rogue
 					}
 					case static_cast<int>(CURSOR) :
 					{
-						strstream << "CURSOR{" << g_engine.m_coordinator.GetComponent<CursorComponent>(entityToSerialize).Serialize().c_str() << "}";
+						strstream << "Cursor{" << g_engine.m_coordinator.GetComponent<CursorComponent>(entityToSerialize).Serialize().c_str() << "}";
 						break;
 					}
 					case static_cast<int>(TEXT) :
 					{
-						strstream << "TEXT{" << g_engine.m_coordinator.GetComponent<TextComponent>(entityToSerialize).Serialize().c_str() << "}";
+						strstream << "Text{" << g_engine.m_coordinator.GetComponent<TextComponent>(entityToSerialize).Serialize().c_str() << "}";
+						break;
+					}
+					case static_cast<int>(BACKGROUND) :
+					{
+						strstream << "Background{" << g_engine.m_coordinator.GetComponent<BackgroundComponent>(entityToSerialize).Serialize().c_str() << "}";
 						break;
 					}
 					default:
@@ -611,6 +621,11 @@ namespace Rogue
 					case static_cast<int>(TEXT) :
 					{
 						g_engine.m_coordinator.LoadComponent<TextComponent>(curEnt, readstr);
+						break;
+					}
+					case static_cast<int>(BACKGROUND) :
+					{
+						g_engine.m_coordinator.LoadComponent<BackgroundComponent>(curEnt, readstr);
 						break;
 					}
 					default:
