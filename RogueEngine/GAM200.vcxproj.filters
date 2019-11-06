@@ -113,6 +113,9 @@
     <Filter Include="RogueEngine\Systems\Cursor">
       <UniqueIdentifier>{9231369d-d291-484d-86b5-06cc6c94dddc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="RogueEngine\Systems\Background">
+      <UniqueIdentifier>{35b776bc-69be-4171-bdd6-d15d73e24b2a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Resource.h">
@@ -472,6 +475,9 @@
     <ClInclude Include="Source\TextComponent.h">
       <Filter>RogueEngine\Systems\UI</Filter>
     </ClInclude>
+    <ClInclude Include="Source\BackgroundComponent.h">
+      <Filter>RogueEngine\Systems\Background</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -729,6 +735,9 @@
     </ClCompile>
     <ClCompile Include="Source\TextComponent.cpp">
       <Filter>RogueEngine\Systems\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BackgroundComponent.cpp">
+      <Filter>RogueEngine\Systems\Background</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
