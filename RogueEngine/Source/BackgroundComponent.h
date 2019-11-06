@@ -6,7 +6,7 @@ namespace Rogue
 	class BackgroundComponent
 		: public BaseComponent
 	{
-		float m_parallax = 2.0f;
+		float m_parallax = 1.2f;
 	public:
 		BackgroundComponent() = default;
 		~BackgroundComponent() = default;

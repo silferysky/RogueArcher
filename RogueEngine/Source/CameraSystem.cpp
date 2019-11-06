@@ -34,7 +34,7 @@ namespace Rogue
 
 	glm::mat4 CameraSystem::GetViewMatrix(const float& parallax)
 	{
-		return glm::lookAt({ m_cameraPos.x * parallax, m_cameraPos.y * parallax, m_cameraPos.z }, m_cameraPos + m_cameraFront, m_cameraUp);
+		return glm::lookAt({ m_cameraPos.x * parallax, m_cameraPos.y * parallax, m_cameraPos.z }, glm::vec3{ m_cameraPos.x * parallax, m_cameraPos.y * parallax, m_cameraPos.z } + m_cameraFront, m_cameraUp);
 	}
 
 	void CameraSystem::ResetCamera()
