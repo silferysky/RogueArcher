@@ -53,6 +53,21 @@ namespace Rogue
 		return m_sightRange;
 	}
 
+	void StatsComponent::addWaypoint(Vec2& vec)
+	{
+		m_waypoints.push_back(vec);
+	}
+
+	std::vector<Vec2> StatsComponent::getWaypoints() const
+	{
+		return m_waypoints;
+	}
+
+	void StatsComponent::clearWaypoints()
+	{
+		m_waypoints.clear();
+	}
+
 	std::string StatsComponent::Serialize()
 	{
 		//Health, speed, attack range, sight range
@@ -60,7 +75,13 @@ namespace Rogue
 		ss << m_health << ";";
 		ss << m_speed << ";";
 		ss << m_sightRange << ";";
-		ss << m_attackRange;
+		ss << m_attackRange << ";";
+		ss << m_waypoints.size() << ";";
+
+		for (Vec2 vec : m_waypoints)
+		{
+			ss << vec.x << ";" << vec.y << ";";
+		}
 
 		return ss.str();
 	}
@@ -79,5 +100,37 @@ namespace Rogue
 		std::getline(ss, s1, ';');
 		m_attackRange = std::stoi(s1);
 		
+	}
+
+	void StatsComponent::DisplayOnInspector()
+	{
+		ImGui::PushItemWidth(75);
+		ImGui::DragInt("Health", &m_health, 1.0f, 0, 10);
+		setHealth(m_health);
+
+		ImGui::PushItemWidth(75);
+		ImGui::DragFloat("Speed", &m_speed, 1.0f, 0.0f, 10.0f);
+		setSpeed(m_speed);
+
+		ImGui::PushItemWidth(75);
+		ImGui::DragInt("Attack Range", &m_attackRange, 1.0f, 0, 1000);
+		setAttackRange(m_attackRange);
+
+		ImGui::PushItemWidth(75);
+		ImGui::DragInt("Sight Range", &m_sightRange, 1, 0, 1000);
+		setSightRange(m_sightRange);
+
+		for (Vec2& waypoint : m_waypoints)
+		{
+			ImGui::PushItemWidth(75);
+			ImGui::DragFloat("Waypoint X", &waypoint.x, 1.0f, -10000.0f, 10000.0f);
+			ImGui::PushItemWidth(75);
+			ImGui::DragFloat("Waypoint Y", &waypoint.y, 1.0f, -10000.0f, 10000.0f);
+		}
+
+		if (ImGui::Button("Add Waypoint"))
+		{
+			m_waypoints.push_back(Vec2());
+		}
 	}
 }
