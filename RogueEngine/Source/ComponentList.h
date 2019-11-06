@@ -15,6 +15,7 @@
 #include "UIComponent.h"
 #include "CursorComponent.h"
 #include "ColliderComponent.h"
+#include "TextComponent.h"
 
 namespace Rogue
 {
@@ -34,7 +35,7 @@ namespace Rogue
 		UI,
 		CURSOR,
 		COLLIDER,
-
+		TEXT,
 		LASTCOMP
 	};
 }

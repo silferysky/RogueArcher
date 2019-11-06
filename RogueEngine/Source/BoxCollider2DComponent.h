@@ -22,7 +22,7 @@ namespace Rogue
 
 		bool Rotatable() const;
 		void setRotatable(bool set);
-
+		void DisplayOnInspector();
 		std::string Serialize();
 		void Deserialize(std::string toDeserialize);
 	};

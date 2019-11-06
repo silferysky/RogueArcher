@@ -13,7 +13,7 @@ namespace Rogue
 
 		bool getIsActive() const;
 		void setIsActive(const bool& isActive);
-
+		void DisplayOnInspector();
 		//Serialize
 		std::string Serialize();
 		void Deserialize(std::string toDeserialize);

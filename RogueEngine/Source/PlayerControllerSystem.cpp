@@ -99,7 +99,7 @@ namespace Rogue
 				g_engine.ToggleVSync();
 
 			if (keycode == KeyPress::Numpad0 && m_entities.size() > 0)
-				g_engine.m_coordinator.clone(*m_entities.begin());
+				g_engine.m_coordinator.clone(*m_entities.begin()); // Stahp Terence
 
 			if (keycode == KeyPress::Numpad1)
 				g_engine.m_coordinator.cloneArchetypes("Box");

@@ -469,6 +469,9 @@
     <ClInclude Include="Source\PatrolAI.h">
       <Filter>RogueEngine\Systems\AI\AI Types</Filter>
     </ClInclude>
+    <ClInclude Include="Source\TextComponent.h">
+      <Filter>RogueEngine\Systems\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -717,12 +720,14 @@
     <ClCompile Include="Source\CursorSystem.cpp">
       <Filter>RogueEngine\Systems\Cursor</Filter>
     </ClCompile>
-    <ClCompile Include="Source\BaseCollider.cpp" />
     <ClCompile Include="Source\ColliderComponent.cpp">
       <Filter>RogueEngine\Systems\Collision\Components</Filter>
     </ClCompile>
     <ClCompile Include="Source\PatrolAI.cpp">
       <Filter>RogueEngine\Systems\AI\AI Types</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TextComponent.cpp">
+      <Filter>RogueEngine\Systems\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -112,4 +112,13 @@ namespace Rogue
 		//std::swap(m_allStates,allStates);
 	}
 
+	void LogicComponent::DisplayOnInspector()
+	{
+		//const char* items[] = { "AAAA", "BBBB", "CCCC", "DDDD", "EEEE", "FFFF", "GGGG", "HHHH", "IIII", "JJJJ", "KKKK", "LLLLLLL", "MMMM", "OOOOOOO" };
+		//static int m_ai = 0;
+		//ImGui::Combo("AI Type", &m_ai, items, IM_ARRAYSIZE(items));
+		//ImGui::Combo("Current State", &m_ai, items, IM_ARRAYSIZE(items));
+		//ImGui::Combo("Active State", &m_ai, items, IM_ARRAYSIZE(items));
+	}
+
 }
