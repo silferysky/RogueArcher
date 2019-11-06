@@ -11,7 +11,9 @@ namespace Rogue
 	GraphicsSystem::GraphicsSystem()
 		: System(SystemID::id_GRAPHICSSYSTEM), m_VAO{ 0 }, m_VBO{ 0 }, m_EBO{ 0 },
 		m_FBO{ 0 }, m_texColourBuffer{ 0 }, m_RBO{ 0 },
-		m_screenShader{ }, m_shader{ }, m_transformLocation{ 0 }
+		m_screenShader{ }, m_shader{ }, 
+		m_projLocation{ 0 }, m_viewLocation{ 0 }, m_transformLocation{ 0 }, m_filterLocation{ 0 },
+		m_frameVAO{ 0 }, m_frameVBO{ 0 }
 	{}
 
 	// Public member functions 
