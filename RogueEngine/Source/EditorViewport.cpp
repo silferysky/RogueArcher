@@ -110,7 +110,7 @@ namespace Rogue
 			ImGui::EndTooltip();
 		}
 		ImGui::SameLine();
-		int m_Frames = g_engine.m_coordinator.GetStepFrames();
+		int m_Frames = (int)g_engine.m_coordinator.GetStepFrames();
 		ImGui::PushItemWidth(75);
 		ImGui::SliderInt("Step Count", &m_Frames, 1, 60);
 		g_engine.m_coordinator.SetStepFrames(m_Frames);
