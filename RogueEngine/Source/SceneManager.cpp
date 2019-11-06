@@ -33,7 +33,6 @@ namespace Rogue
 
 	void SceneManager::ClearActiveEntities()
 	{
-		m_objectFactory->ResetMaxEntity();
 		g_engine.m_coordinator.GetEntityManager().m_getActiveObjects().clear();
 	}
 
