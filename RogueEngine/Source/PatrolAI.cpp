@@ -6,9 +6,9 @@ namespace Rogue
 	PatrolAI::PatrolAI(Entity entity, LogicComponent& logicComponent)
 		: BaseAI(entity, logicComponent), m_currentPointIndex{0} 
 	{
-		AddWaypoint(g_engine.m_coordinator.GetComponent<TransformComponent>(entity).getPosition() - Vec2(100, 0));
-		AddWaypoint(g_engine.m_coordinator.GetComponent<TransformComponent>(entity).getPosition());
-		m_nextPoint.push(m_waypoints[0]);
+		//AddWaypoint(g_engine.m_coordinator.GetComponent<TransformComponent>(entity).getPosition() - Vec2(100, 0));
+		//AddWaypoint(g_engine.m_coordinator.GetComponent<TransformComponent>(entity).getPosition());
+		//m_nextPoint.push(m_waypoints[0]);
 	}
 
 	void PatrolAI::AIActiveStateUpdate()
