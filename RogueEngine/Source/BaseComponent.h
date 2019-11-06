@@ -1,5 +1,6 @@
 #pragma once
 #include "ISerializable.h"
+#include "EditorInspector.h"
 
 namespace Rogue
 {
