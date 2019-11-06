@@ -153,6 +153,11 @@ namespace Rogue
 				}
 			}
 
+			if (keycode == KeyPress::Numpad9)
+			{
+				RE_ASSERT(false, "CRASH ON PURPOSE");
+			}
+
 			return;
 		} //End KeyTriggered
 		case EventType::EvKeyPressed:
