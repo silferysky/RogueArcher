@@ -40,6 +40,8 @@ namespace Rogue
 
 		glm::vec3 rayNDC = glm::vec3(x, y, z);
 
+		// convert from ndc to viewport coordinates if editor is on
+
 		glm::vec4 rayClip = glm::vec4(rayNDC.x, rayNDC.y, -1.0f, 1.0f);
 
 		glm::vec4 rayEye = glm::inverse(g_engine.GetProjMat()) * rayClip;

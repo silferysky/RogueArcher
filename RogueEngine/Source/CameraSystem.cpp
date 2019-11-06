@@ -132,16 +132,16 @@ namespace Rogue
 					float newCameraPosY = m_cameraPos.y;
 
 					if (newCameraPosX < m_target.x)
-						newCameraPosX += m_cameraVelocity;
+						newCameraPosX += m_cameraVelocity * g_deltaTime;
 
 					if (newCameraPosY < m_target.y)
-						newCameraPosY += m_cameraVelocity;
+						newCameraPosY += m_cameraVelocity * g_deltaTime;
 
 					if (newCameraPosX > m_target.x)
-						newCameraPosX -= m_cameraVelocity;
+						newCameraPosX -= m_cameraVelocity * g_deltaTime;
 
 					if (newCameraPosY > m_target.y)
-						newCameraPosY -= m_cameraVelocity;
+						newCameraPosY -= m_cameraVelocity * g_deltaTime;
 
 					m_cameraPos = glm::vec3(newCameraPosX + shakeOffset.x, newCameraPosY + shakeOffset.y, 0.0f);
 

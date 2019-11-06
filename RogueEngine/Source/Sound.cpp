@@ -15,8 +15,7 @@ namespace Rogue
 	void Sound::FmodErrorCheck(FMOD_RESULT resultCheck)
 	{
 		/* Throw an error if FMOD finds something wrong */
-		if (resultCheck != FMOD_OK)
-			RE_INFO("FMOD error!", resultCheck, FMOD_ErrorString(resultCheck));
+		RE_ASSERT(resultCheck == FMOD_OK, FMOD_ErrorString(resultCheck));
 	}
 
 	/* Sound Creation */
