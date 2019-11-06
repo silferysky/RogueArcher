@@ -7,6 +7,7 @@ namespace Rogue
 	class AudioManager
 	{
 		std::map<std::string, Sound> audioMap;
+		std::string directory = "Resources/Sounds/";
 	public:
 		AudioManager() = default;
 		~AudioManager()
@@ -25,6 +26,7 @@ namespace Rogue
 
 		Sound& loadSound(std::string audio)
 		{
+			audio = directory + audio;
 			auto itr = audioMap.find(audio);
 			if (itr != audioMap.end())
 				return itr->second;

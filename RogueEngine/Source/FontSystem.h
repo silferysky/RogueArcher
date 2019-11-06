@@ -1,5 +1,4 @@
 #pragma once
-
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
@@ -28,9 +27,8 @@ namespace Rogue
 		GLuint m_EBO;
 
 		Shader m_shader;
-
-		FT_Library ft;
-		FT_Face face;
+		GLint m_projectionLocation;
+		GLint m_viewLocation;
 	public:
 		FontSystem();
 		~FontSystem() = default;
@@ -39,7 +37,9 @@ namespace Rogue
 		void Update() override;
 		void Shutdown() override;
 
-		void RenderText(std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color);
+		void TrueUpdate();
+
+		void RenderText(std::string text, Vec2 transform, float scale, glm::vec4 color);
 
 		void Receive(Event* ev);
 	};

@@ -46,8 +46,8 @@ namespace Rogue
 			PostQuitMessage(0);
 			return 0;
 		case WM_KEYDOWN:
-			//F12
-			if (wParam == VK_F3)
+			//F11
+			if (wParam == VK_F11)
 			{
 				if (GetWindowLongPtr(hWnd, GWL_STYLE) & WS_POPUP)
 				{

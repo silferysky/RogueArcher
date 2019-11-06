@@ -100,6 +100,7 @@
     <ClInclude Include="Source\SpecialEntity.h" />
     <ClInclude Include="Source\StatsComponent.h" />
     <ClInclude Include="Source\Stream.h" />
+    <ClInclude Include="Source\TextComponent.h" />
     <ClInclude Include="Source\TextureManager.h" />
     <ClInclude Include="Source\TransformComponent.h" />
     <ClInclude Include="Source\AppEvent.h" />
@@ -204,6 +205,7 @@
     <ClCompile Include="Source\Sound.cpp" />
     <ClCompile Include="Source\StatsComponent.cpp" />
     <ClCompile Include="Source\Stream.cpp" />
+    <ClCompile Include="Source\TextComponent.cpp" />
     <ClCompile Include="Source\TextureManager.cpp" />
     <ClCompile Include="Source\TransformComponent.cpp" />
     <ClCompile Include="Source\Config.cpp" />
