@@ -4,6 +4,7 @@
 #include "REMath.h"
 #include "EventDispatcher.h"
 #include "KeyEvent.h"
+#include "FontSystem.h"
 
 namespace Rogue
 {
@@ -55,7 +56,6 @@ namespace Rogue
 
 	void GraphicsSystem::Update()
 	{
-		glDisable(GL_DEPTH_TEST);
 		g_engine.m_coordinator.InitTimeSystem("Graphics System");
 
 		m_drawQueue.clear();
@@ -99,6 +99,7 @@ namespace Rogue
 		glBindVertexArray(0); //Reset
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
+		g_engine.m_coordinator.GetSystem<FontSystem>()->TrueUpdate();
 		g_engine.m_coordinator.GetSystem<DebugDrawSystem>()->TrueUpdate();
 
 		UseFrameBuffer();
@@ -115,21 +116,24 @@ namespace Rogue
 		auto texture = sprite.getTexture();
 
 		transformMat = glm::translate(transformMat, { transform.getPosition().x, transform.getPosition().y, 1.0f });
+
 		transformMat = glm::rotate(transformMat, transform.getRotation(), glm::vec3(0.0f, 0.0f, 1.0f));
+
+		// Flip the player depending on direction
 		if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(entity))
 			transformMat = glm::scale(transformMat, glm::vec3(m_playerX, 1.0f, 1.0f));
+
 		transformMat = glm::scale(transformMat, glm::vec3(transform.getScale().x, transform.getScale().y, 1.0f));
 
 		glBindTexture(GL_TEXTURE_2D, texture.m_texture);
 		UpdateTextureCoords(sprite.getTexCoordMin(), sprite.getTexCoordMax());
+
 		// model to world, world to view, view to projection
-
-		//offset by translation of camera, inverse of rotation
-
 		glUniformMatrix4fv(m_projLocation, 1, GL_FALSE, glm::value_ptr(g_engine.GetProjMat()));
 		glUniformMatrix4fv(m_viewLocation, 1, GL_FALSE, glm::value_ptr(m_pCamera->GetViewMatrix()));
 		glUniformMatrix4fv(m_transformLocation, 1, GL_FALSE, glm::value_ptr(transformMat));
 
+		// rgb filtering
 		glUniform4fv(m_filterLocation, 1, glm::value_ptr(sprite.getFilter()));
 
 		// Draw the Mesh
@@ -154,10 +158,8 @@ namespace Rogue
 
 		glBindTexture(GL_TEXTURE_2D, texture.m_texture);
 		UpdateTextureCoords(sprite.getTexCoordMin(), sprite.getTexCoordMax());
+
 		// model to world, world to view, view to projection
-
-		//offset by translation of camera, inverse of rotation
-
 		glUniformMatrix4fv(m_projLocation, 1, GL_FALSE, glm::value_ptr(g_engine.GetProjMat()));
 		glUniformMatrix4fv(m_viewLocation, 1, GL_FALSE, glm::value_ptr(glm::mat4(1.0f)));
 		glUniformMatrix4fv(m_transformLocation, 1, GL_FALSE, glm::value_ptr(transformMat));
@@ -227,7 +229,7 @@ namespace Rogue
 	{
 		// Init OpenGL
 		glEnable(GL_TEXTURE_2D);						   // Texture Mapping
-		glEnable(GL_DEPTH_TEST);
+		//glEnable(GL_DEPTH_TEST);
 		glShadeModel(GL_SMOOTH);						   // Smooth shading
 		glDepthFunc(GL_LEQUAL);							   // Depth testing type
 		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Perspective Calculations
