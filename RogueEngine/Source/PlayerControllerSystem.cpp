@@ -11,7 +11,7 @@
 namespace Rogue
 {
 	PlayerControllerSystem::PlayerControllerSystem()
-		:System(SystemID::id_PLAYERCONTROLLERSYSTEM), m_ballTimer{-0.1f}, m_ballCooldown{1.0f}
+		:System(SystemID::id_PLAYERCONTROLLERSYSTEM), m_ballCooldown{1.0f}
 	{
 	}
 
@@ -59,10 +59,8 @@ namespace Rogue
 		if (!m_timedEntities.size())
 			m_ballCooldown -= g_deltaTime * g_engine.GetTimeScale();
 
-		m_ballTimer -= g_deltaTime * g_engine.GetTimeScale();
-
 		//To update all timed entities
-		for (auto timedEntityIt = m_timedEntities.begin(); timedEntityIt != m_timedEntities.end(); ++timedEntityIt)
+		/*for (auto timedEntityIt = m_timedEntities.begin(); timedEntityIt != m_timedEntities.end(); ++timedEntityIt)
 		{
 			timedEntityIt->m_durationLeft -= g_deltaTime * g_engine.GetTimeScale();
 			if (timedEntityIt->m_durationLeft < 0.0f)
@@ -72,7 +70,7 @@ namespace Rogue
 				if (m_timedEntities.size() == 0)
 					break;
 			}
-		}
+		}*/
 	}
 
 	void PlayerControllerSystem::Receive(Event* ev)
@@ -121,23 +119,24 @@ namespace Rogue
 
 			if (keycode == KeyPress::MB1)
 			{
-				if (m_entities.size() && m_timedEntities.size())
-				{
-					//By right correct way of doing this
-					//CreateTeleportEvent(g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).getPosition());
-					g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin()).setPosition(
-						g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).getPosition());
-
-					ClearTimedEntities();
-				}
-			}
-
-			if (keycode == KeyPress::MB2)
-			{
 				for (Entity entity : m_entities)
 				{
 					auto& PlayerControllable = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity);
 					g_engine.SetTimeScale(PlayerControllable.GetSlowTime());
+				}
+			}
+
+			if (keycode == KeyPress::MB2 || keycode == KeyPress::MB3)
+			{
+				if (m_entities.size() && m_timedEntities.size())
+				{
+					//By right correct way of doing this
+					//CreateTeleportEvent(g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).getPosition());
+					if (keycode == KeyPress::MB2)
+						g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin()).setPosition(
+							g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).getPosition());
+
+					ClearTimedEntities();
 				}
 			}
 
@@ -270,7 +269,7 @@ namespace Rogue
 
 			if (keycode == KeyPress::MB1)
 			{
-				if (!m_timedEntities.size() && m_ballTimer < 0.0f && m_ballCooldown < 0.0f)
+				if (!m_timedEntities.size() && m_ballCooldown < 0.0f)
 				{
 					CreateBallAttack();
 					//m_ballTimer = 1.0f;
@@ -283,10 +282,6 @@ namespace Rogue
 					g_engine.m_coordinator.GetAudioManager().loadSound("Resources/Sounds/[Shoot Projectile]SCI-FI-WHOOSH_GEN-HDF-20864.ogg").Play();
 					g_engine.m_coordinator.GetAudioManager().loadSound("Resources/Sounds/[Ela Appear]SCI-FI-WHOOSH_GEN-HDF-20870.ogg").Play(0.1f);
 				}
-			}
-
-			if (keycode == KeyPress::MB2)
-			{
 				g_engine.SetTimeScale(1.0f);
 			}
 			return;
