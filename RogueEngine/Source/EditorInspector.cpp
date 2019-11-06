@@ -113,7 +113,7 @@ namespace Rogue
 						if (ImGui::CollapsingHeader("Box2D Collider"))
 						{
 							auto& box2D = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(i.m_Entity);
-							box2D.DisplayOnInspector();	
+							box2D.DisplayOnInspector();
 						}
 					}
 
@@ -240,11 +240,17 @@ namespace Rogue
 							if (ImGui::MenuItem("Circle Collider", nullptr, false, !g_engine.m_coordinator.ComponentExists<CircleCollider2DComponent>(i.m_Entity)))
 							{
 								g_engine.m_coordinator.AddComponent(i.m_Entity, CircleCollider2DComponent());
+
+								if(!g_engine.m_coordinator.ComponentExists<ColliderComponent>(i.m_Entity))
+									g_engine.m_coordinator.AddComponent(i.m_Entity, ColliderComponent(std::make_shared<CircleShape>()));
 							}
 
 							if (ImGui::MenuItem("Box Collider 2D", nullptr, false, !g_engine.m_coordinator.ComponentExists<BoxCollider2DComponent>(i.m_Entity)))
 							{
 								g_engine.m_coordinator.AddComponent(i.m_Entity, BoxCollider2DComponent());
+
+								if (!g_engine.m_coordinator.ComponentExists<ColliderComponent>(i.m_Entity))
+									g_engine.m_coordinator.AddComponent(i.m_Entity, ColliderComponent(std::make_shared<BoxShape>()));
 							}
 
 							ImGui::EndMenu();
@@ -317,11 +323,24 @@ namespace Rogue
 							if (ImGui::MenuItem("Circle Collider", nullptr, false, g_engine.m_coordinator.ComponentExists<CircleCollider2DComponent>(i.m_Entity)))
 							{
 								g_engine.m_coordinator.RemoveComponent<CircleCollider2DComponent>(i.m_Entity);
+								
+								// If no more collider components in entity, remove the general collider component.
+								if (!g_engine.m_coordinator.ComponentExists<BoxCollider2DComponent>(i.m_Entity) &&
+									g_engine.m_coordinator.ComponentExists<ColliderComponent>(i.m_Entity))
+								{
+									g_engine.m_coordinator.RemoveComponent<ColliderComponent>(i.m_Entity);
+								}
 							}
 
 							if (ImGui::MenuItem("Box Collider 2D", nullptr, false, g_engine.m_coordinator.ComponentExists<BoxCollider2DComponent>(i.m_Entity)))
 							{
 								g_engine.m_coordinator.RemoveComponent<BoxCollider2DComponent>(i.m_Entity);
+
+								if (!g_engine.m_coordinator.ComponentExists<CircleCollider2DComponent>(i.m_Entity) &&
+									g_engine.m_coordinator.ComponentExists<ColliderComponent>(i.m_Entity))
+								{
+									g_engine.m_coordinator.RemoveComponent<ColliderComponent>(i.m_Entity);
+								}
 							}
 
 							ImGui::EndMenu();
