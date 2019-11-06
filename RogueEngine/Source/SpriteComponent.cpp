@@ -69,7 +69,9 @@ namespace Rogue
 		//std::map<std::string, Texture> textureMap = g_engine.m_coordinator.GetTextureManager().getTextureMap();
 		std::ostringstream strstream;
 		
-		strstream << getTexturePath() << ";" << m_drawPriority;
+		strstream << getTexturePath() << ";";
+		strstream << m_drawPriority << ";";
+		strstream << m_filter.r << ";" << m_filter.g << ";" << m_filter.b << ";" << m_filter.a;
 
 		return strstream.str();
 		//Cannot use find because need use value to find key
