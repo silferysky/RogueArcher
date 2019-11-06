@@ -20,6 +20,9 @@ namespace Rogue
 		auto& bodyA = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(m_entityA);
 		auto& bodyB = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(m_entityB);
 
+		if (bodyA.getIsStatic() && bodyB.getIsStatic())
+			return;
+
 		// Relative velocity
 		Vec2 rv = bodyB.getVelocity() - bodyA.getVelocity();
 		
@@ -48,14 +51,17 @@ namespace Rogue
 		auto& bodyB = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(m_entityB);
 		auto& transA = g_engine.m_coordinator.GetComponent<TransformComponent>(m_entityA);
 		auto& transB = g_engine.m_coordinator.GetComponent<TransformComponent>(m_entityB);
-		
+
 		float correctionFactor = CollisionManager::GetCorrectionFactor();
 		float correctionSlop = CollisionManager::GetCorrectionSlop();
 
 		Vec2 correction = REMax(m_penetration - correctionSlop, 0.0f) /
 			(bodyA.getInvMass() + bodyB.getInvMass()) * correctionFactor * m_normal;
 
-		transA.offSetPosition(-bodyA.getInvMass() * correction);
-		transB.offSetPosition(bodyB.getInvMass() * correction);
+		if(bodyA.getIsStatic() == false)
+			transA.offSetPosition(-bodyA.getInvMass() * correction);
+	
+		if(bodyB.getIsStatic() == false)
+			transB.offSetPosition(bodyB.getInvMass() * correction);
 	}
 }
