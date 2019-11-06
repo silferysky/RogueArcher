@@ -1,9 +1,6 @@
 #pragma once
 #include "BaseAI.h"
 
-#define PATROL_RANGE 1
-#define SPEED 1
-
 namespace Rogue
 {
 	class PatrolAI
@@ -12,8 +9,8 @@ namespace Rogue
 	public:
 		PatrolAI(Entity entity, LogicComponent& logicComponent);
 
+		virtual void LogicInit() override;
 		virtual void AIActiveStateUpdate() override;
-
 		virtual void AIPatrolUpdate() override;
 
 		void AddWaypoint(Vec2 newPoint);

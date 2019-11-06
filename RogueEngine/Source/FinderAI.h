@@ -1,9 +1,6 @@
 #pragma once
 #include "BaseAI.h"
 
-#define RANGE 200
-#define SPEED 100
-
 namespace Rogue
 {
 	class FinderAI
