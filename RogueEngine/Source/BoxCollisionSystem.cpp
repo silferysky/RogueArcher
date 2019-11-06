@@ -2,6 +2,7 @@
 #include "SystemManager.h"
 #include "EventListener.h"
 #include "CollisionSystem.h"
+#include "EditorHierarchyInfo.h"
 #include "Main.h"
 
 namespace Rogue

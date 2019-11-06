@@ -76,7 +76,7 @@
 				{
 					auto& collider = g_engine.m_coordinator.GetComponent<Rogue::BoxCollider2DComponent>(entity);
 					drawAABB(&collider, &transform);
-					//drawOBB(&collider, &rBody);
+					drawOBB(&collider, &rBody);
 				}
 				if (g_engine.m_coordinator.ComponentExists<Rogue::CircleCollider2DComponent>(entity))
 				{
@@ -146,7 +146,7 @@
 		glBindVertexArray(m_VAO);
 		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 
-		const float segments = 16.0f;
+		const float segments = 32.0f;
 		const float increment = 2.0f * 3.1415f / segments;
 
 		float radius = circle->m_collider.getRadius();
