@@ -1,5 +1,7 @@
 #pragma once
 #include "BaseComponent.h"
+#include <vector>
+#include "Vector2D.h"
 
 namespace Rogue
 {
@@ -7,6 +9,9 @@ namespace Rogue
 		: public BaseComponent
 	{
 	public:
+		StatsComponent() = default;
+		~StatsComponent() = default;
+
 		void setHealth(int hp);
 		int getHealth() const;
 		bool damaged(int damageVal);
@@ -21,9 +26,15 @@ namespace Rogue
 		void setSightRange(int sightRange);
 		int getSightRange() const;
 
+		void addWaypoint(Vec2& vec);
+		std::vector<Vec2> getWaypoints() const;
+		void clearWaypoints();
+		void setWaypoint(Vec2& loc, Vec2& newPos);
+
 		//From BaseComponent
 		std::string Serialize();
 		void Deserialize(std::string toDeserialize);
+		void DisplayOnInspector();
 
 	private:
 		//Base Stats
@@ -33,6 +44,8 @@ namespace Rogue
 		//Range
 		int m_attackRange;	//Max range of attack
 		int m_sightRange;	//Max range of detection
+
+		std::vector<Vec2> m_waypoints;	//Waypoints if need to patrol
 
 	};
 }
