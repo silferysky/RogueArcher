@@ -172,12 +172,44 @@ namespace Rogue
 							auto& audio = g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(i.m_Entity);
 							audio.DisplayOnInspector();
 						}
+					}
 
-						if (g_engine.m_coordinator.ComponentExists<CursorComponent>(i.m_Entity))
+					if (g_engine.m_coordinator.ComponentExists<CursorComponent>(i.m_Entity))
+					{
+						// If we need to edit anything about the cursor e.g offset from the actual cursor
+					}
+
+					if (g_engine.m_coordinator.ComponentExists<TextComponent>(i.m_Entity))
+					{
+						if (ImGui::CollapsingHeader("Text"))
 						{
-							// If we need to edit anything about the cursor e.g offset from the actual cursor
+							std::string m_words = g_engine.m_coordinator.GetComponent<TextComponent>(i.m_Entity).GetWords();
+							static char m_newwords[128];
+							ImGui::PushItemWidth(75);
+							ImGui::TextWrapped("Current Text : ");
+							ImGui::TextWrapped("%s", m_words.c_str());
+							ImGui::TextDisabled("New Text");
+							ImGui::SameLine();
+							ImGui::PushItemWidth(250);
+							ImGui::InputText("                    ", m_newwords, 128);
+							if (ImGui::Button("Set new text"))
+							{
+								g_engine.m_coordinator.GetComponent<TextComponent>(i.m_Entity).SetWords(m_newwords);
+								memset(m_newwords, 0, 128);
+							}
+
+							glm::vec4 m_colour = g_engine.m_coordinator.GetComponent<TextComponent>(i.m_Entity).GetColour();
+							ImGui::PushItemWidth(250);
+							ImGui::ColorEdit4("Color", (float*)&m_colour);
+							g_engine.m_coordinator.GetComponent<TextComponent>(i.m_Entity).SetColour(m_colour);
+
+							float m_textScale = g_engine.m_coordinator.GetComponent<TextComponent>(i.m_Entity).GetScale();
+							ImGui::DragFloat("Text Size Scale", &m_textScale, 0.01f, 0.0f, 10.0f);
+
+							g_engine.m_coordinator.GetComponent<TextComponent>(i.m_Entity).SetScale(m_textScale);
 						}
 					}
+
 					if (ImGui::Button("Add Component"))
 					{
 						ImGui::OpenPopup("Add Component");
@@ -259,6 +291,11 @@ namespace Rogue
 						{
 							g_engine.m_coordinator.AddComponent(i.m_Entity, UIComponent());
 						}
+
+						if (ImGui::MenuItem("Text", nullptr, false, !g_engine.m_coordinator.ComponentExists<TextComponent>(i.m_Entity)))
+						{
+							g_engine.m_coordinator.AddComponent(i.m_Entity, TextComponent());
+						}
 						ImGui::EndPopup();
 					}
 					if (ImGui::BeginPopup("Delete Component"))
@@ -331,6 +368,11 @@ namespace Rogue
 						if (ImGui::MenuItem("UI", nullptr, false, g_engine.m_coordinator.ComponentExists<UIComponent>(i.m_Entity)))
 						{
 							g_engine.m_coordinator.RemoveComponent<UIComponent>(i.m_Entity);
+						}
+
+						if (ImGui::MenuItem("Text", nullptr, false, g_engine.m_coordinator.ComponentExists<TextComponent>(i.m_Entity)))
+						{
+							g_engine.m_coordinator.RemoveComponent<TextComponent>(i.m_Entity);
 						}
 
 						ImGui::EndPopup();

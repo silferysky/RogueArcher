@@ -7,8 +7,7 @@
 namespace Rogue
 {
 	FontSystem::FontSystem() :
-		System(SystemID::id_FONTSYSTEM), m_VAO{ 0 }, m_VBO{ 0 }, m_EBO{ 0 }, m_shader{ },
-		face{}, ft{}
+		System(SystemID::id_FONTSYSTEM), m_VAO{ 0 }, m_VBO{ 0 }, m_EBO{ 0 }, m_shader{ }
 	{}
 
 	void FontSystem::Init()
@@ -16,13 +15,16 @@ namespace Rogue
 		REGISTER_LISTENER(SystemID::id_FONTSYSTEM, FontSystem::Receive);
 
 		Signature signature;
+		signature.set(g_engine.m_coordinator.GetComponentType<TextComponent>());
+		signature.set(g_engine.m_coordinator.GetComponentType<TransformComponent>());
 		g_engine.m_coordinator.SetSystemSignature<FontSystem>(signature);
 
-		if (FT_Init_FreeType(&ft))
-			std::cout << "ERROR::FREETYPE: Could not init FreeType Library" << std::endl;
+		FT_Library ft;
+		FT_Face face;
 
-		if (FT_New_Face(ft, "Fonts/arial.ttf", 0, &face))
-			std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
+		RE_ASSERT(!FT_Init_FreeType(&ft), "ERROR - Could not init FreeType Library");
+
+		RE_ASSERT(!FT_New_Face(ft, "Fonts/Pokemon Solid.ttf", 0, &face), "ERROR - Failed to load font");
 
 		FT_Set_Pixel_Sizes(face, 0, 48);
 
@@ -33,24 +35,14 @@ namespace Rogue
 			// Load character glyph 
 			if (FT_Load_Char(face, c, FT_LOAD_RENDER))
 			{
-				std::cout << "ERROR::FREETYTPE: Failed to load Glyph" << std::endl;
+				std::cout << "ERROR - Failed to load Glyph" << std::endl;
 				continue;
 			}
 			// Generate texture
 			GLuint texture;
 			glGenTextures(1, &texture);
 			glBindTexture(GL_TEXTURE_2D, texture);
-			glTexImage2D(
-				GL_TEXTURE_2D,
-				0,
-				GL_RED,
-				face->glyph->bitmap.width,
-				face->glyph->bitmap.rows,
-				0,
-				GL_RED,
-				GL_UNSIGNED_BYTE,
-				face->glyph->bitmap.buffer
-			);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, face->glyph->bitmap.width, face->glyph->bitmap.rows, 0, GL_RED, GL_UNSIGNED_BYTE, face->glyph->bitmap.buffer);
 
 			// Set texture options
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -58,8 +50,9 @@ namespace Rogue
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-			// Now store character for later use
-			Character character = {
+			// Insert character into map
+			Character character = 
+			{
 				texture,
 				glm::ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
 				glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
@@ -74,10 +67,10 @@ namespace Rogue
 		m_shader = g_engine.m_coordinator.loadShader("Font Shader");
 
 		glUseProgram(m_shader.GetShader());
+		m_projectionLocation = glGetUniformLocation(m_shader.GetShader(), "projection");
+		m_viewLocation = glGetUniformLocation(m_shader.GetShader(), "view");
 
-		GLint transformLocation = glGetUniformLocation(m_shader.GetShader(), "transform");
-		glUniformMatrix4fv(transformLocation, 1, GL_FALSE, glm::value_ptr(g_engine.GetProjMat()));
-
+		// configure buffers
 		glGenVertexArrays(1, &m_VAO);
 		glGenBuffers(1, &m_VBO);
 		glBindVertexArray(m_VAO);
@@ -88,27 +81,42 @@ namespace Rogue
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindVertexArray(0);
 		glUseProgram(0);
-
 	}
 
 	void FontSystem::Update()
 	{
+	}
+
+	void FontSystem::TrueUpdate()
+	{
 		Timer TimeSystem;
 		TimeSystem.TimerInit("Font System");
 
-		RenderText("This is sample text", -4.0f, 0.0f, 1.0f, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUseProgram(m_shader.GetShader());
+		glUniformMatrix4fv(m_projectionLocation, 1, GL_FALSE, glm::value_ptr(g_engine.GetProjMat()));
+		glUniformMatrix4fv(m_viewLocation, 1, GL_FALSE, glm::value_ptr(g_engine.m_coordinator.GetSystem<CameraSystem>()->GetViewMatrix()));
+		glBindVertexArray(m_VAO);
+		glActiveTexture(GL_TEXTURE0);
+
+		for (auto& entity : m_entities)
+		{
+			auto& text = g_engine.m_coordinator.GetComponent<TextComponent>(entity);
+			auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
+
+			RenderText(text.GetWords(), transform.getPosition(), text.GetScale(), text.GetColour());
+		}
+
+		glBindVertexArray(0);
+		glBindTexture(GL_TEXTURE_2D, 0);
+		glUseProgram(0);
 
 		TimeSystem.TimerEnd("Font System");
 	}
 
 
-	void FontSystem::RenderText(std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color)
+	void FontSystem::RenderText(std::string text, Vec2 transform, float scale, glm::vec4 color)
 	{
-		// Activate corresponding render state	
-		glUseProgram(m_shader.GetShader());
-		glUniform3f(glGetUniformLocation(m_shader.GetShader(), "textColor"), color.x, color.y, color.z);
-		glActiveTexture(GL_TEXTURE0);
-		glBindVertexArray(m_VAO);
+		glUniform4f(glGetUniformLocation(m_shader.GetShader(), "textColor"), color.x, color.y, color.z, color.w);
 
 		// Iterate through all characters
 		std::string::const_iterator c;
@@ -116,11 +124,12 @@ namespace Rogue
 		{
 			Character ch = Characters[*c];
 
-			GLfloat xpos = x + ch.Bearing.x * scale;
-			GLfloat ypos = y - (ch.Size.y - ch.Bearing.y) * scale;
+			GLfloat xpos = transform.x + ch.Bearing.x * scale;
+			GLfloat ypos = transform.y - (ch.Size.y - ch.Bearing.y) * scale;
 
 			GLfloat w = ch.Size.x * scale;
 			GLfloat h = ch.Size.y * scale;
+
 			// Update VBO for each character
 			GLfloat vertices[6][4] = {
 				{ xpos,     ypos + h,   0.0, 0.0 },
@@ -131,20 +140,21 @@ namespace Rogue
 				{ xpos + w, ypos,       1.0, 1.0 },
 				{ xpos + w, ypos + h,   1.0, 0.0 }
 			};
+
 			// Render glyph texture over quad
 			glBindTexture(GL_TEXTURE_2D, ch.TextureID);
+
 			// Update content of VBO memory
 			glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 			glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
+
 			// Render quad
 			glDrawArrays(GL_TRIANGLES, 0, 6);
+
 			// Now advance cursors for next glyph (note that advance is number of 1/64 pixels)
-			x += (ch.Advance >> 6)* scale; // Bitshift by 6 to get value in pixels (2^6 = 64)
+			transform.x += (ch.Advance >> 6)* scale; // Bitshift by 6 to get value in pixels (2^6 = 64)
 		}
-		glBindVertexArray(0);
-		glBindTexture(GL_TEXTURE_2D, 0);
-		glUseProgram(0);
 	}
 
 	void FontSystem::Receive(Event* ev)

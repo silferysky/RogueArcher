@@ -124,7 +124,24 @@ namespace Rogue
 					if (transformPos.y < m_cameraMin.y)
 						transformPos.y = m_cameraMin.y;
 
-					m_cameraPos = glm::vec3(transformPos.x + shakeOffset.x, transformPos.y + shakeOffset.y, 0.0f);
+					m_target = transformPos;
+
+					float newCameraPosX = m_cameraPos.x;
+					float newCameraPosY = m_cameraPos.y;
+
+					if (newCameraPosX < m_target.x)
+						newCameraPosX += 5;
+
+					if (newCameraPosY < m_target.y)
+						newCameraPosY += 5;
+
+					if (newCameraPosX > m_target.x)
+						newCameraPosX -= 5;
+
+					if (newCameraPosY > m_target.y)
+						newCameraPosY -= 5;
+
+					m_cameraPos = glm::vec3(newCameraPosX + shakeOffset.x, newCameraPosY + shakeOffset.y, 0.0f);
 
 					break;
 				}

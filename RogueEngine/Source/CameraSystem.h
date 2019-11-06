@@ -22,6 +22,8 @@ namespace Rogue
 		Vec2 m_cameraMin;
 		Vec2 m_cameraMax;
 
+		Vec2 m_target;
+
 		CameraShake m_cameraShake;
 
 		bool m_worldCamera;
