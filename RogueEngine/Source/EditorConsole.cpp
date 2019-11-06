@@ -26,37 +26,29 @@ namespace Rogue
 			}
 		}
 		ImGui::SameLine();
-		if (ImGui::Button("Collapse"))
-		{
-		
-		}
+
+
 		ImGui::Separator();
 
-		
-		
+		ImGui::TextDisabled("Search");
+		static char bufferX[64];
+		ImGui::SameLine();
+		ImGui::InputText(" ", bufferX, 64);
+		std::string search;
+		search = bufferX;
 		for (auto& i : Logger)
 		{
-			ImGui::Text("%s", i.c_str());
+			std::string name = i.substr(0, search.size());
+			if (name == search)
+			{
+				ImGui::Text("%s", i.c_str());
+			}
+			else if (search == "")
+			{
+				ImGui::Text("%s", i.c_str());
+			}
+			
 		}
-		//if (ImGui::Button("Error Pause"))
-		//{
-		//
-		//}
-		//ImGui::SameLine();
-		//if (ImGui::BeginMenu("Editor"))
-		//{
-		//	if (ImGui::MenuItem("Player Logging"))
-		//	{
-		//
-		//	}
-		//	ImGui::Separator();
-		//	if (ImGui::MenuItem("Editor"))
-		//	{
-		//
-		//	}
-		//	ImGui::EndMenu();
-		//}
-
 		ImGui::End();
 	}
 
