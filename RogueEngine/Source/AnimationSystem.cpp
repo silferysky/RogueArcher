@@ -50,7 +50,7 @@ namespace Rogue
 
 		animate->setTimer(0);
 
-		double currentFrame = animate->getCurrentFrame();
+		double currentFrame = (double)animate->getCurrentFrame();
 		int totalFrames = animate->getFrames();
 
 		// reset the frame number
@@ -62,8 +62,8 @@ namespace Rogue
 				animate->setIsAnimating(false);
 		}
 
-		double min = (double)currentFrame / totalFrames;
-		double max = (double)++currentFrame / totalFrames;
+		double min = currentFrame / totalFrames;
+		double max = ++currentFrame / totalFrames;
 
 		sprite->setTexCoordMin(min);
 		sprite->setTexCoordMax(max);
