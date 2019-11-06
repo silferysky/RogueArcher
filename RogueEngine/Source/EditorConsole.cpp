@@ -4,6 +4,7 @@
 #include "imgui_impl_win32.h"
 #include "glew.h"
 #include "glfw3.h"
+#include "Logger.h"
 
 namespace Rogue
 {
@@ -15,15 +16,27 @@ namespace Rogue
 
 	void ImGuiConsole::Update()
 	{
+		auto& Logger = Logger::instance().GetConsole();
 		ImGui::Begin("Console");
 		if (ImGui::Button("Clear"))
 		{
-
+			for (auto& i : Logger)
+			{
+				i.clear();
+			}
 		}
 		ImGui::SameLine();
 		if (ImGui::Button("Collapse"))
 		{
+		
+		}
+		ImGui::Separator();
 
+		
+		
+		for (auto& i : Logger)
+		{
+			ImGui::Text("%s", i.c_str());
 		}
 		//if (ImGui::Button("Error Pause"))
 		//{
