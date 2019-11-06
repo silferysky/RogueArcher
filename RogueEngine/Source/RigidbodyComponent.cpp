@@ -15,6 +15,7 @@ namespace Rogue
 		m_isStatic{ false },
 		m_restitution{ 0.1f },
 		m_friction{ 0.01f },
+		m_gravityScale{ 1.0f },
 		m_massData{}
 	{}
 
@@ -188,7 +189,8 @@ namespace Rogue
 		else
 			ss << 1 << ";";
 		ss << m_volume << ";";
-		ss << m_isStatic;
+		ss << m_isStatic << ";";
+		ss << m_gravityScale;
 
 		return ss.str();
 	}
@@ -209,20 +211,22 @@ namespace Rogue
 			switch (counter)
 			{
 			case 0:
-				setAcceleration(Vec2(std::stof(s1), std::stof(s2)));
+				m_acceleration = Vec2(std::stof(s1), std::stof(s2));
 				break;
 			case 1:
-				setVelocity(Vec2(std::stof(s1), std::stof(s2)));
+				m_velocity = Vec2(std::stof(s1), std::stof(s2));
 				break;
 			case 2:
 				setMass(std::stof(s1));
 				break;
 			case 3:
-				setVolume(std::stof(s1));
+				m_volume = std::stof(s1);
 				break;
 			case 4:
 				setIsStatic(std::stoi(s1));
 				break;
+			case 5:
+				m_gravityScale = std::stof(s1);
 			default:
 				break;
 			}
