@@ -17,12 +17,13 @@ namespace Rogue
 		glm::vec3 m_cameraRight;
 		glm::vec3 m_worldUp;
 
-		float m_cameraVelocity = 1.0f;
-
+		// Min/Max
 		Vec2 m_cameraMin;
 		Vec2 m_cameraMax;
 
+		// Camera panning
 		Vec2 m_target;
+		float m_cameraVelocity = 10.0f;
 
 		CameraShake m_cameraShake;
 
@@ -31,7 +32,7 @@ namespace Rogue
 		CameraSystem();
 		~CameraSystem() = default;
 
-		glm::mat4 GetViewMatrix();
+		glm::mat4 GetViewMatrix(const float& parallax);
 		void ToggleWorldCamera();
 		void ResetCamera();
 

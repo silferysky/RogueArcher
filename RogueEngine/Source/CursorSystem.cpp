@@ -44,7 +44,7 @@ namespace Rogue
 
 		glm::vec4 rayEye = glm::inverse(g_engine.GetProjMat()) * rayClip;
 
-		glm::mat4 viewMat = g_engine.m_coordinator.GetSystem<CameraSystem>()->GetViewMatrix();
+		glm::mat4 viewMat = g_engine.m_coordinator.GetSystem<CameraSystem>()->GetViewMatrix(1.0f);
 
 		glm::vec4 rayWorld4D = glm::inverse(viewMat) * rayEye;
 

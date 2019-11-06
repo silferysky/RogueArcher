@@ -183,30 +183,8 @@ namespace Rogue
 					{
 						if (ImGui::CollapsingHeader("Text"))
 						{
-							std::string m_words = g_engine.m_coordinator.GetComponent<TextComponent>(i.m_Entity).GetWords();
-							static char m_newwords[128];
-							ImGui::PushItemWidth(75);
-							ImGui::TextWrapped("Current Text : ");
-							ImGui::TextWrapped("%s", m_words.c_str());
-							ImGui::TextDisabled("New Text");
-							ImGui::SameLine();
-							ImGui::PushItemWidth(250);
-							ImGui::InputText("                    ", m_newwords, 128);
-							if (ImGui::Button("Set new text"))
-							{
-								g_engine.m_coordinator.GetComponent<TextComponent>(i.m_Entity).SetWords(m_newwords);
-								memset(m_newwords, 0, 128);
-							}
-
-							glm::vec4 m_colour = g_engine.m_coordinator.GetComponent<TextComponent>(i.m_Entity).GetColour();
-							ImGui::PushItemWidth(250);
-							ImGui::ColorEdit4("Color", (float*)&m_colour);
-							g_engine.m_coordinator.GetComponent<TextComponent>(i.m_Entity).SetColour(m_colour);
-
-							float m_textScale = g_engine.m_coordinator.GetComponent<TextComponent>(i.m_Entity).GetScale();
-							ImGui::DragFloat("Text Size Scale", &m_textScale, 0.01f, 0.0f, 10.0f);
-
-							g_engine.m_coordinator.GetComponent<TextComponent>(i.m_Entity).SetScale(m_textScale);
+							auto& text = g_engine.m_coordinator.GetComponent<TextComponent>(i.m_Entity);
+	
 						}
 					}
 
@@ -227,7 +205,7 @@ namespace Rogue
 							if (ImGui::MenuItem("Sprite Component", nullptr, false, !g_engine.m_coordinator.ComponentExists<SpriteComponent>(i.m_Entity)))
 							{
 								auto& Sprite = g_engine.m_coordinator.CreateComponent<SpriteComponent>(i.m_Entity);
-								Sprite.Deserialize("Resources/Assets/DefaultSprite.png;1");
+								Sprite.Deserialize("Resources/Assets/DefaultSprite.png;1;1;1;1;1");
 							}
 
 							if (ImGui::MenuItem("Animation Component", nullptr, false, !g_engine.m_coordinator.ComponentExists<AnimationComponent>(i.m_Entity)))

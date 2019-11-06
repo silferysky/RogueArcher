@@ -7,18 +7,12 @@
 namespace Rogue
 {
 	BoxCollider2DComponent::BoxCollider2DComponent() :
-		m_rotatable{ false }, m_aabb{}, m_obb{}//, m_shape{std::make_unique<BoxShape>()}
+		m_rotatable{ false }, m_aabb{}, m_obb{}
 	{}
 
 	BoxCollider2DComponent::BoxCollider2DComponent(const BoxCollider2DComponent& rhs) :
-		m_rotatable{ rhs.m_rotatable }, m_aabb{ rhs.m_aabb }, m_obb{ rhs.m_obb }//,
-	//	m_shape{ }
-	{
-		//if (m_rotatable)
-		//	m_shape = std::make_unique<PolygonShape>(m_obb);
-		//else
-		//	m_shape = std::make_unique<BoxShape>(m_aabb);
-	}
+		m_rotatable{ rhs.m_rotatable }, m_aabb{ rhs.m_aabb }, m_obb{ rhs.m_obb }
+	{}
 
 	BoxCollider2DComponent::BoxCollider2DComponent(BoxCollider2DComponent&& rhs) noexcept :
 		m_rotatable{ false }, m_aabb{ AABB{} }, m_obb{ OBB{} }
@@ -32,6 +26,8 @@ namespace Rogue
 	{
 		if (this != &rhs)
 		{
+			m_aabb.operator=(rhs.m_aabb);
+
 			m_rotatable = rhs.m_rotatable;
 
 			m_obb.setSize(rhs.m_obb.getSize());
@@ -40,11 +36,6 @@ namespace Rogue
 			vertexList.reserve(m_obb.getSize());
 
 			m_obb.setModelVerts(vertexList);
-
-		//	if (m_rotatable)
-		//		m_shape = std::make_unique<PolygonShape>(m_obb);
-		//	else
-		//		m_shape = std::make_unique<BoxShape>(m_aabb);
 		}
 		return *this;
 	}
@@ -123,26 +114,6 @@ namespace Rogue
 			y = std::stof(s1);
 
 		m_aabb.setScaleOffSet(Vec2{ x, y });
-	}
-
-
-	bool BoxCollider2DComponent::Rotatable() const
-	{
-		return m_rotatable;
-	}
-
-	void BoxCollider2DComponent::setRotatable(bool set)
-	{
-		//if (set)
-		//{
-		//	m_shape = std::make_unique<PolygonShape>(m_obb);
-		//}
-		//else
-		//{
-		//	m_shape = std::make_unique<BoxShape>(m_aabb);
-		//}
-
-		m_rotatable = set;
 	}
 
 	void BoxCollider2DComponent::DisplayOnInspector()

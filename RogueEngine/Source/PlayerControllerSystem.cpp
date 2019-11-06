@@ -153,6 +153,11 @@ namespace Rogue
 				}
 			}
 
+			if (keycode == KeyPress::Numpad9)
+			{
+				RE_ASSERT(false, "CRASH ON PURPOSE");
+			}
+
 			return;
 		} //End KeyTriggered
 		case EventType::EvKeyPressed:
@@ -359,7 +364,7 @@ namespace Rogue
 			ballTransform.Deserialize(strstream.str());
 
 			SpriteComponent& sprite = g_engine.m_coordinator.CreateComponent<SpriteComponent>(ball);
-			sprite.Deserialize("Resources/Assets/Projectile.png;1");
+			sprite.Deserialize("Resources/Assets/Projectile.png;1;1;1;1;1");
 
 			RigidbodyComponent& rigidbody = g_engine.m_coordinator.CreateComponent<RigidbodyComponent>(ball);
 			rigidbody.Deserialize("0;0;0;0;1;1;0");
@@ -376,6 +381,7 @@ namespace Rogue
 			g_engine.m_coordinator.GetEntityManager().m_getActiveObjects().push_back(newInfo);
 
 			AddToTimedEntities(ball, 1.0f);
+			break;
 		}
 	}
 
