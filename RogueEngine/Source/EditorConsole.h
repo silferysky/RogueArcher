@@ -2,7 +2,6 @@
 #include "IEditable.h"
 #include "Timer.h"
 #include "Main.h"
-#include "Logger.h"
 
 namespace Rogue
 {
