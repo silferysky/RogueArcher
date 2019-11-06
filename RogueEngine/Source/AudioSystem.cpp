@@ -3,16 +3,6 @@
 #include "Main.h"
 #include "EventDispatcher.h"
 #include "KeyEvent.h"
-#include <cmath>
-
-
-// fast log2 function
-float log2_fast(double d) 
-{
-	int result;
-	void(std::frexp(d, &result));
-	return result - 1.0f;
-}
 
 namespace Rogue
 {
@@ -85,7 +75,7 @@ namespace Rogue
 			KeyPress keycode = keytriggeredevent->GetKeyCode();
 
 			if (keycode == KeyPress::KeyM)
-				m_muted = !m_muted;
+				ToggleMute();
 
 			return;
 		} //End KeyTriggered
@@ -107,6 +97,9 @@ namespace Rogue
 	void AudioSystem::ToggleMute()
 	{
 		m_muted = !m_muted;
+
+		//TODO:
+
 	}
 
 	void AudioSystem::TrueInit()
@@ -140,11 +133,11 @@ namespace Rogue
 
 		auto& audioManager = g_engine.m_coordinator.GetAudioManager();
 
-		std::string BGM1path = "Resources/Sounds/[Water Ambience]WATER-CAVE_GEN-HDF-25449.ogg";
-		std::string BGM2path = "Resources/Sounds/[Cave Ambience]WIND-HOWL_GEN-HDF-25929.ogg";
+		std::string BGM1path = "[Water Ambience]WATER-CAVE_GEN-HDF-25449.ogg";
+		std::string BGM2path = "[Cave Ambience]WIND-HOWL_GEN-HDF-25929.ogg";
 
-		std::string shootSFXpath = "Resources/Sounds/[Shoot Projectile]SCI-FI-WHOOSH_GEN-HDF-20864.ogg";
-		std::string elaSFXpath = "Resources/Sounds/[Ela Appear]SCI-FI-WHOOSH_GEN-HDF-20870.ogg";
+		std::string shootSFXpath = "[Shoot Projectile]SCI-FI-WHOOSH_GEN-HDF-20864.ogg";
+		std::string elaSFXpath = "[Ela Appear]SCI-FI-WHOOSH_GEN-HDF-20870.ogg";
 
 		auto& BGM1 = audioManager.loadSound(BGM1path);
 		auto& BGM2 = audioManager.loadSound(BGM2path);

@@ -358,6 +358,11 @@ namespace Rogue
 						g_engine.m_coordinator.CopyComponent<UIComponent>(clonedEntity, toClone);
 						break;
 					}
+					case static_cast<int>(TEXT) :
+					{
+						g_engine.m_coordinator.CopyComponent<TextComponent>(clonedEntity, toClone);
+						break;
+					}
 					default:
 					{
 						RE_CORE_WARN("OUT OF BOUNDS INDEX TO CLONE");
@@ -453,6 +458,7 @@ namespace Rogue
 					case static_cast<int>(COLLIDER) :
 					{
 						strstream << "Collider{" << g_engine.m_coordinator.GetComponent<ColliderComponent>(entityToSerialize).Serialize() << "}";
+						break;
 					}
 					case static_cast<int>(PLAYERCONTROLLER) :
 					{
@@ -492,6 +498,11 @@ namespace Rogue
 					case static_cast<int>(CURSOR) :
 					{
 						strstream << "CURSOR{" << g_engine.m_coordinator.GetComponent<CursorComponent>(entityToSerialize).Serialize().c_str() << "}";
+						break;
+					}
+					case static_cast<int>(TEXT) :
+					{
+						strstream << "TEXT{" << g_engine.m_coordinator.GetComponent<TextComponent>(entityToSerialize).Serialize().c_str() << "}";
 						break;
 					}
 					default:
@@ -595,6 +606,12 @@ namespace Rogue
 					case static_cast<int>(CURSOR) :
 					{
 						g_engine.m_coordinator.LoadComponent<CursorComponent>(curEnt, readstr);
+						break;
+					}
+					case static_cast<int>(TEXT) :
+					{
+						g_engine.m_coordinator.LoadComponent<TextComponent>(curEnt, readstr);
+						break;
 					}
 					default:
 					{
