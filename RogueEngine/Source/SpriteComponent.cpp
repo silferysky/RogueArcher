@@ -64,6 +64,55 @@ namespace Rogue
 		m_filter = filter;
 	}
 
+	void SpriteComponent::DisplayOnInspector()
+	{
+		const std::string m_constSpritePath = "Resources/Assets/";
+		static char m_newSpritePath[128];
+		static char m_priorityDraw[128];
+
+		ImGui::PushItemWidth(75);
+		ImGui::TextWrapped("Current File Path");
+		ImGui::TextWrapped("%s", m_texturePath.c_str());
+		ImGui::TextWrapped("New Texture Path");
+		ImGui::SameLine();
+		ImGui::PushItemWidth(200);
+		ImGui::InputText("                      ", m_newSpritePath, 128);
+
+		if (ImGui::Button("Set New Sprite"))
+		{
+			m_texturePath = m_constSpritePath + m_newSpritePath;
+			setTexture(m_texturePath.c_str());
+			memset(m_newSpritePath, 0, 128);
+		}
+
+		if (ImGui::IsItemHovered())
+		{
+			ImGui::BeginTooltip();
+			ImGui::Text("Enter name of file and click on Set New Path to update sprite. Note that new sprite will only be loaded when scene is saved and restarted");
+			ImGui::EndTooltip();
+		}
+
+		ImGui::PushItemWidth(250);
+		ImGui::ColorEdit4("Color", (float*)& m_filter);
+
+
+		ImGui::TextWrapped("Current Draw Priority : %d", m_drawPriority);
+		ImGui::TextWrapped("Set Draw Priority");
+		ImGui::InputText("                       ", m_priorityDraw, 128);
+		if (ImGui::Button("Set Priority"))
+		{
+			m_drawPriority = atoi(m_priorityDraw);
+			setDrawPriority(m_drawPriority);
+			memset(m_priorityDraw, 0, 128);
+		}
+		if (ImGui::IsItemHovered())
+		{
+			ImGui::BeginTooltip();
+			ImGui::Text("Higher number means the object will be drawn infront");
+			ImGui::EndTooltip();
+		}
+	}
+
 	std::string SpriteComponent::Serialize()
 	{
 		//std::map<std::string, Texture> textureMap = g_engine.m_coordinator.GetTextureManager().getTextureMap();

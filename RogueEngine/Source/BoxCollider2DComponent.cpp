@@ -144,4 +144,22 @@ namespace Rogue
 
 		m_rotatable = set;
 	}
+
+	void BoxCollider2DComponent::DisplayOnInspector()
+	{
+		Vec2 m_scale = m_aabb.getScaleOffSet();
+		Vec2 m_center = m_aabb.getCenterOffSet();
+
+		ImGui::PushItemWidth(75);
+		ImGui::DragFloat("Scale X", &m_scale.x, 1.0f, -10000.0f, 10000.0f);
+		ImGui::PushItemWidth(75);
+		ImGui::DragFloat("Scale Y", &m_scale.y, 1.0f, -10000.0f, 10000.0f);
+		m_aabb.setScaleOffSet(m_scale);
+
+		ImGui::PushItemWidth(75);
+		ImGui::DragFloat("Center X", &m_center.x, 1.0f, -10000.0f, 10000.0f);
+		ImGui::PushItemWidth(75);
+		ImGui::DragFloat("Center Y", &m_center.y, 1.0f, -10000.0f, 10000.0f);
+		m_aabb.setCenterOffSet(m_center);
+	}
 }

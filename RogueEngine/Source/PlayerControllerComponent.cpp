@@ -3,6 +3,13 @@
 
 namespace Rogue
 {
+	void PlayerControllerComponent::DisplayOnInspector()
+	{
+		ImGui::PushItemWidth(75);
+		ImGui::DragFloat("Time Scale", &m_slowTime, 0.01f, 0.0f, 1.0f);
+		SetSlowTime(m_slowTime);
+	}
+
 	void PlayerControllerComponent::SetSlowTime(const float& slowTime)
 	{
 		m_slowTime = slowTime;

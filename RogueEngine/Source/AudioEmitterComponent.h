@@ -28,5 +28,7 @@ namespace Rogue
 		void Deserialize(std::string toDeserialize);
 
 		void Destroy();
+
+		void DisplayOnInspector();
 	};
 }

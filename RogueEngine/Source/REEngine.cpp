@@ -45,7 +45,7 @@ namespace Rogue
 		m_coordinator.RegisterSystem<GraphicsSystem>();
 		m_coordinator.RegisterSystem<AnimationSystem>();
 		m_coordinator.RegisterSystem<DebugDrawSystem>();
-		//m_coordinator.RegisterSystem<FontSystem>();
+		m_coordinator.RegisterSystem<FontSystem>();
 		m_coordinator.RegisterSystem<CameraSystem>();
 		m_coordinator.RegisterSystem<AudioSystem>();
 		m_coordinator.RegisterSystem<Editor>();
@@ -67,6 +67,7 @@ namespace Rogue
 		m_coordinator.RegisterComponent<UIComponent>();
 		m_coordinator.RegisterComponent<CursorComponent>();
 		m_coordinator.RegisterComponent<ColliderComponent>();
+		m_coordinator.RegisterComponent<TextComponent>();
 	}
 
 	void REEngine::Init()

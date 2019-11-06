@@ -1,14 +1,16 @@
 #include "EditorInspector.h"
+#include "imgui.h"
+#include "imgui_impl_opengl3.h"
+#include "imgui_impl_win32.h"
+#include "glew.h"
+#include "REEngine.h"
+#include "Main.h"
 
 namespace Rogue
 {
-	ImGuiInspector::ImGuiInspector()
-	{
-	}
-
-	ImGuiInspector::~ImGuiInspector()
-	{
-	}
+	ImGuiInspector::ImGuiInspector() :
+		activeObjects{ g_engine.m_coordinator.GetEntityManager().m_getActiveObjects() }, m_color{ 0.0f,0.0f,0.0f,0.0f }
+	{}
 
 	void ImGuiInspector::Init()
 	{
@@ -74,48 +76,8 @@ namespace Rogue
 					{
 						if (ImGui::CollapsingHeader("Transform"))
 						{
-							Vec2 Scale = g_engine.m_coordinator.GetComponent<TransformComponent>(i.m_Entity).getScale();
-							Vec2 Position = g_engine.m_coordinator.GetComponent<TransformComponent>(i.m_Entity).getPosition();
-							float Rotation = g_engine.m_coordinator.GetComponent<TransformComponent>(i.m_Entity).getRotation();
-
-	
-							ImGui::Text("Scale    ");
-							ImGui::SameLine();
-							ImGui::PushItemWidth(75);
-							ImGui::DragFloat(" ", &Scale.x, 1.0f, 0.0f, 100000.0f);
-							ImGui::SameLine(0.0f, 36.0f);
-							ImGui::DragFloat("  ", &Scale.y, 1.0f, 0.0f, 100000.0f);
-							g_engine.m_coordinator.GetComponent<TransformComponent>(i.m_Entity).setScale(Scale);
-
-							ImGui::Text("Rotation ");
-							ImGui::SameLine();
-							ImGui::DragFloat("   ", &Rotation, 0.1f, 0.0f, 6.28f);
-							g_engine.m_coordinator.GetComponent<TransformComponent>(i.m_Entity).setRotation(Rotation);
-
-							ImGui::Text("Translate");
-							ImGui::SameLine();
-							ImGui::PushItemWidth(75);
-							ImGui::DragFloat("     ", &Position.x);
-							ImGui::SameLine();
-							ImGui::PushItemWidth(75);
-							ImGui::DragFloat("      ", &Position.y);
-							g_engine.m_coordinator.GetComponent<TransformComponent>(i.m_Entity).setPosition(Position);
-							ImGui::PushItemWidth(50);
-
-							if (ImGui::Button("Reset Position"))
-							{
-								g_engine.m_coordinator.GetComponent<TransformComponent>(i.m_Entity).setPosition(Vec2{ 0,0 });
-							}
-
-							if (ImGui::Button("Reset Rotation"))
-							{
-								g_engine.m_coordinator.GetComponent<TransformComponent>(i.m_Entity).setRotation(0.0f);
-							}
-
-							if (ImGui::Button("Reset Scale"))
-							{
-								g_engine.m_coordinator.GetComponent<TransformComponent>(i.m_Entity).setScale(Vec2{ 100.0f,100.0f });
-							}
+							auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(i.m_Entity);
+							trans.DisplayOnInspector();
 						}
 					}
 					
@@ -123,56 +85,8 @@ namespace Rogue
 					{
 						if (ImGui::CollapsingHeader("Sprite"))
 						{
-							std::string m_spritePath = g_engine.m_coordinator.GetComponent<SpriteComponent>(i.m_Entity).getTexturePath();
-							glm::vec4 m_color = g_engine.m_coordinator.GetComponent<SpriteComponent>(i.m_Entity).getFilter();
-							int m_priority = g_engine.m_coordinator.GetComponent<SpriteComponent>(i.m_Entity).getDrawPriority();
-							const std::string m_constSpritePath = "Resources/Assets/";
-							static char m_newSpritePath[128];
-							static char m_priorityDraw[128];
-							
-							ImGui::PushItemWidth(75);
-							ImGui::TextWrapped("Current File Path");
-							ImGui::TextWrapped("%s", m_spritePath.c_str());
-							ImGui::TextWrapped("New Texture Path");
-							ImGui::SameLine();
-							ImGui::PushItemWidth(200);
-							ImGui::InputText("                      ", m_newSpritePath, 128);
-
-							if (ImGui::Button("Set New Sprite"))
-							{
-								m_spritePath = m_constSpritePath + m_newSpritePath;
-								g_engine.m_coordinator.GetComponent<SpriteComponent>(i.m_Entity).setTexturePath(m_spritePath);
-								g_engine.m_coordinator.GetComponent<SpriteComponent>(i.m_Entity).setTexture(m_spritePath.c_str());
-								memset(m_newSpritePath, 0, 128);
-							}
-
-							if (ImGui::IsItemHovered())
-							{
-								ImGui::BeginTooltip();
-								ImGui::Text("Enter name of file and click on Set New Path to update sprite. Note that new sprite will only be loaded when scene is saved and restarted");
-								ImGui::EndTooltip();
-							}
-
-							ImGui::PushItemWidth(250);
-							ImGui::ColorEdit4("Color", (float*)& m_color);
-							g_engine.m_coordinator.GetComponent<SpriteComponent>(i.m_Entity).setFilter(m_color);
-
-
-							ImGui::TextWrapped("Current Draw Priority : %d", m_priority);
-							ImGui::TextWrapped("Set Draw Priority");
-							ImGui::InputText("                       ", m_priorityDraw, 128);
-							if (ImGui::Button("Set Priority"))
-							{
-								m_priority = atoi(m_priorityDraw);
-								g_engine.m_coordinator.GetComponent<SpriteComponent>(i.m_Entity).setDrawPriority(m_priority);
-								memset(m_priorityDraw, 0, 128);
-							}
-							if (ImGui::IsItemHovered())
-							{
-								ImGui::BeginTooltip();
-								ImGui::Text("Higher number means the object will be drawn infront");
-								ImGui::EndTooltip();
-							}
+							auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(i.m_Entity);
+							sprite.DisplayOnInspector();							
 						}
 					}
 
@@ -180,22 +94,8 @@ namespace Rogue
 					{
 						if (ImGui::CollapsingHeader("Animation"))
 						{
-							int m_frames = g_engine.m_coordinator.GetComponent<AnimationComponent>(i.m_Entity).getFrames();
-							float m_secondsPerFrame = g_engine.m_coordinator.GetComponent<AnimationComponent>(i.m_Entity).getSecondsPerFrame();
-							bool m_isAnimating = g_engine.m_coordinator.GetComponent<AnimationComponent>(i.m_Entity).getIsAnimating();
-							bool m_looping = g_engine.m_coordinator.GetComponent<AnimationComponent>(i.m_Entity).getIsLooping();
-							
-							ImVec2 imageSize{ ImGui::GetWindowWidth()/2, ImGui::GetWindowHeight() / 8 };
-							//ImGui::Image((void*)(intptr_t)(g_engine.m_coordinator.GetSystem<GraphicsSystem>()->getFBO()), ImVec2(imageSize.x, imageSize.y), ImVec2(0, 1), ImVec2(1, 0));
-							ImGui::PushItemWidth(75);
-							ImGui::DragInt("Frames", &m_frames, 1.0f, 0, 60);
-							g_engine.m_coordinator.GetComponent<AnimationComponent>(i.m_Entity).setFrames(m_frames);
-				
-							ImGui::DragFloat("Seconds Per Frame", &m_secondsPerFrame, 0.1f, 0.0f, 1.0f);
-							g_engine.m_coordinator.GetComponent<AnimationComponent>(i.m_Entity).setSecondsPerFrame(m_secondsPerFrame);
-				
-							ImGui::Checkbox("Looping?", &m_looping);
-							g_engine.m_coordinator.GetComponent<AnimationComponent>(i.m_Entity).setIsLooping(m_looping);
+							auto& animation = g_engine.m_coordinator.GetComponent<AnimationComponent>(i.m_Entity);
+							animation.DisplayOnInspector();
 						}
 					}
 
@@ -203,26 +103,8 @@ namespace Rogue
 					{
 						if (ImGui::CollapsingHeader("Circle 2D Collider"))
 						{
-							float m_radius = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i.m_Entity).m_collider.getRadius();
-							Vec2 m_centerOffset = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i.m_Entity).m_collider.getCenterOffSet();
-							float m_rotationOffset = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i.m_Entity).m_collider.getRotationOffSet();
-							Vec2 m_scaleOffset = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i.m_Entity).m_collider.getScaleOffSet();
-
-							ImGui::PushItemWidth(75);
-							ImGui::DragFloat("Radius", &m_radius, 0.5f, -100000.0f, 100000.0f);
-							g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i.m_Entity).m_collider.setRadius(m_radius);
-
-							ImGui::DragFloat("Center Offset X ", &m_centerOffset.x, 0.5f, -100000.0f, 100000.0f);
-							ImGui::DragFloat("Center Offset Y ", &m_centerOffset.y, 0.5f, -100000.0f, 100000.0f);
-							g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i.m_Entity).m_collider.setCenterOffSet(m_centerOffset);
-
-							ImGui::DragFloat("Rotation Offset ", &m_rotationOffset, 0.5f, -100000.0f, 100000.0f);
-							g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i.m_Entity).m_collider.setRotationOffSet(m_rotationOffset);
-
-							ImGui::DragFloat("Scale Offset X ", &m_scaleOffset.x, 0.5f, -100000.0f, 100000.0f);
-							ImGui::DragFloat("Scale Offset Y ", &m_scaleOffset.y, 0.5f, -100000.0f, 100000.0f);
-							g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i.m_Entity).m_collider.setScaleOffSet(m_scaleOffset);
-
+							auto& circle2D = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i.m_Entity);
+							circle2D.DisplayOnInspector();
 						}
 					}
 
@@ -230,21 +112,8 @@ namespace Rogue
 					{
 						if (ImGui::CollapsingHeader("Box2D Collider"))
 						{
-							Vec2 m_scale = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(i.m_Entity).m_aabb.getScaleOffSet();
-							Vec2 m_center = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(i.m_Entity).m_aabb.getCenterOffSet();
-
-							ImGui::PushItemWidth(75);
-							ImGui::DragFloat("Scale X", &m_scale.x, 1.0f, -10000.0f, 10000.0f);
-							ImGui::PushItemWidth(75);
-							ImGui::DragFloat("Scale Y", &m_scale.y, 1.0f, -10000.0f, 10000.0f);
-							g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(i.m_Entity).m_aabb.setScaleOffSet(m_scale);
-
-							ImGui::PushItemWidth(75);
-							ImGui::DragFloat("Center X", &m_center.x, 1.0f, -10000.0f, 10000.0f);
-							ImGui::PushItemWidth(75);
-							ImGui::DragFloat("Center Y", &m_center.y, 1.0f, -10000.0f, 10000.0f);
-							g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(i.m_Entity).m_aabb.setCenterOffSet(m_center);
-	
+							auto& box2D = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(i.m_Entity);
+							box2D.DisplayOnInspector();	
 						}
 					}
 
@@ -252,48 +121,8 @@ namespace Rogue
 					{
 						if (ImGui::CollapsingHeader("RigidBody"))
 						{
-							bool m_isStatic = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(i.m_Entity).getIsStatic();
-							Vec2 m_velocity = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(i.m_Entity).getVelocity();
-							Vec2 m_acceleration = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(i.m_Entity).getAcceleration();
-							float m_damping = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(i.m_Entity).getDamping();
-							float m_friction = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(i.m_Entity).getFriction();
-							float m_restitution = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(i.m_Entity).getBounciness();
-							//float m_mass = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(i.m_Entity).getInvMass();
-							Vec2 m_force = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(i.m_Entity).getAccForce();
-							//float m_gravity = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(i.m_Entity).getGravity();
-
-							ImGui::PushItemWidth(75);
-							ImGui::Checkbox("Static?", &m_isStatic);
-							g_engine.m_coordinator.GetComponent<RigidbodyComponent>(i.m_Entity).setIsStatic(m_isStatic);
-
-							ImGui::PushItemWidth(75);
-							ImGui::DragFloat("Velocity X", &m_velocity.x, 1.0f, -2000.0f, 2000.0f);
-							ImGui::PushItemWidth(75);
-							ImGui::DragFloat("Velocity Y", &m_velocity.y, 1.0f, -2000.0f, 2000.0f);
-							g_engine.m_coordinator.GetComponent<RigidbodyComponent>(i.m_Entity).setVelocity(m_velocity);
-
-
-							ImGui::PushItemWidth(75);
-							ImGui::DragFloat("Acceleration X", &m_acceleration.x, 1.0f, -10000.0f, 10000.0f);
-							ImGui::PushItemWidth(75);
-							ImGui::DragFloat("Acceleration Y", &m_acceleration.y, 1.0f, -10000.0f, 10000.0f);
-							g_engine.m_coordinator.GetComponent<RigidbodyComponent>(i.m_Entity).setAcceleration(m_acceleration);
-
-							ImGui::PushItemWidth(75);
-							ImGui::SliderFloat("Friction", &m_friction, 0.0f, 1.0f);
-							g_engine.m_coordinator.GetComponent<RigidbodyComponent>(i.m_Entity).setFriction(m_friction);
-
-							ImGui::PushItemWidth(75);
-							ImGui::SliderFloat("Damping", &m_damping, 0.0f, 1.0f);
-							g_engine.m_coordinator.GetComponent<RigidbodyComponent>(i.m_Entity).setDamping(m_damping);
-							
-							ImGui::PushItemWidth(75);
-							ImGui::SliderFloat("Restitution", &m_restitution, 0.0f, 1.0f);
-							g_engine.m_coordinator.GetComponent<RigidbodyComponent>(i.m_Entity).setBounciness(m_restitution);
-
-							ImGui::PushItemWidth(75);
-							//ImGui::SliderFloat("Gravity", &m_gravity, 0.0f, 2.0f);
-							//g_engine.m_coordinator.GetComponent<RigidbodyComponent>(i.m_Entity).setGravity(m_gravity);
+							auto& RigidBody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(i.m_Entity);
+							RigidBody.DisplayOnInspector();
 						}
 					}
 
@@ -301,26 +130,17 @@ namespace Rogue
 					{
 						if (ImGui::CollapsingHeader("Logic"))
 						{
-							//const char* items[] = { "AAAA", "BBBB", "CCCC", "DDDD", "EEEE", "FFFF", "GGGG", "HHHH", "IIII", "JJJJ", "KKKK", "LLLLLLL", "MMMM", "OOOOOOO" };
-							//static int m_ai = 0;
-							//ImGui::Combo("AI Type", &m_ai, items, IM_ARRAYSIZE(items));
-							//ImGui::Combo("Current State", &m_ai, items, IM_ARRAYSIZE(items));
-							//ImGui::Combo("Active State", &m_ai, items, IM_ARRAYSIZE(items));
+							auto& Logic = g_engine.m_coordinator.GetComponent<LogicComponent>(i.m_Entity);
+							Logic.DisplayOnInspector();
 						}
-
 					}
 
 					if (g_engine.m_coordinator.ComponentExists<CameraComponent>(i.m_Entity))
 					{
 						if (ImGui::CollapsingHeader("Camera"))
 						{
-							bool m_isMain = g_engine.m_coordinator.GetComponent<CameraComponent>(i.m_Entity).getIsActive();
-
-							ImGui::PushItemWidth(75);
-							ImGui::Checkbox("Active?", &m_isMain);
-							ImGui::TextWrapped("There can only be 1 active non-world camera at a time, set others to non-active if you want this to be the main camera.");
-							g_engine.m_coordinator.GetComponent<CameraComponent>(i.m_Entity).setIsActive(m_isMain);
-							ImGui::PushItemWidth(75);
+							auto& Camera = g_engine.m_coordinator.GetComponent<CameraComponent>(i.m_Entity);
+							Camera.DisplayOnInspector();
 						}
 					}
 
@@ -328,14 +148,11 @@ namespace Rogue
 					{
 						if (ImGui::CollapsingHeader("UI"))
 						{
-							bool m_isActive = g_engine.m_coordinator.GetComponent<UIComponent>(i.m_Entity).getIsActive();
-
-							ImGui::PushItemWidth(75);
-							ImGui::Checkbox("Active?", &m_isActive);
+							auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(i.m_Entity);
+							bool isActive = UI.getIsActive();
 							ImGui::TextWrapped("Check this box to show the UI element.");
 							if (g_engine.m_coordinator.ComponentExists<CameraComponent>(i.m_Entity))
-								g_engine.m_coordinator.GetComponent<CameraComponent>(i.m_Entity).setIsActive(m_isActive);
-							ImGui::PushItemWidth(75);
+								g_engine.m_coordinator.GetComponent<CameraComponent>(i.m_Entity).setIsActive(isActive);
 						}
 					}
 
@@ -343,10 +160,8 @@ namespace Rogue
 					{
 						if (ImGui::CollapsingHeader("Player Controllable"))
 						{
-							float m_slowTimer = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(i.m_Entity).GetSlowTime();
-							ImGui::PushItemWidth(75);
-							ImGui::DragFloat("Time Scale", &m_slowTimer, 0.01f, 0.0f, 1.0f);
-							g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(i.m_Entity).SetSlowTime(m_slowTimer);
+							auto& PCC = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(i.m_Entity);
+							PCC.DisplayOnInspector();
 						}					
 					}
 
@@ -354,41 +169,47 @@ namespace Rogue
 					{
 						if (ImGui::CollapsingHeader("Sound"))
 						{
-							std::string m_audioPath = g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(i.m_Entity).getSoundPath();
-							static char m_newaudioPath[128];
-							const std::string m_constAudioPath = "Resources/Sounds/";
-							ImGui::PushItemWidth(75);
-							ImGui::TextWrapped("Current Sound Path : ");
-							ImGui::TextWrapped("%s", m_audioPath.c_str());
-							ImGui::TextDisabled("New Sound Path");
-							ImGui::SameLine();
-							ImGui::PushItemWidth(250);
-							ImGui::InputText("                    ", m_newaudioPath, 128);
-							if (ImGui::Button("Set new path"))
-							{
-								m_audioPath = m_constAudioPath + m_newaudioPath;
-								g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(i.m_Entity).setSoundPath(m_audioPath);
-								memset(m_newaudioPath, 0, 128);
-							}
-
-							float m_audioScale = g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(i.m_Entity).getAudioScale();
-							ImGui::DragFloat("Audio Scale", &m_audioScale, 0.01f, 0.0f, 10.0f);
-
-							g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(i.m_Entity).setAudioScale(m_audioScale);
-
-							if (ImGui::IsItemHovered())
-							{
-								ImGui::BeginTooltip();
-								ImGui::Text("Enter name of file and click on Set New Path to update sound. Note that new sound will only be loaded when scene is saved and restarted");
-								ImGui::EndTooltip();
-							}
-						}
-
-						if (g_engine.m_coordinator.ComponentExists<CursorComponent>(i.m_Entity))
-						{
-							// If we need to edit anything about the cursor e.g offset from the actual cursor
+							auto& audio = g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(i.m_Entity);
+							audio.DisplayOnInspector();
 						}
 					}
+
+					if (g_engine.m_coordinator.ComponentExists<CursorComponent>(i.m_Entity))
+					{
+						// If we need to edit anything about the cursor e.g offset from the actual cursor
+					}
+
+					if (g_engine.m_coordinator.ComponentExists<TextComponent>(i.m_Entity))
+					{
+						if (ImGui::CollapsingHeader("Text"))
+						{
+							std::string m_words = g_engine.m_coordinator.GetComponent<TextComponent>(i.m_Entity).GetWords();
+							static char m_newwords[128];
+							ImGui::PushItemWidth(75);
+							ImGui::TextWrapped("Current Text : ");
+							ImGui::TextWrapped("%s", m_words.c_str());
+							ImGui::TextDisabled("New Text");
+							ImGui::SameLine();
+							ImGui::PushItemWidth(250);
+							ImGui::InputText("                    ", m_newwords, 128);
+							if (ImGui::Button("Set new text"))
+							{
+								g_engine.m_coordinator.GetComponent<TextComponent>(i.m_Entity).SetWords(m_newwords);
+								memset(m_newwords, 0, 128);
+							}
+
+							glm::vec4 m_colour = g_engine.m_coordinator.GetComponent<TextComponent>(i.m_Entity).GetColour();
+							ImGui::PushItemWidth(250);
+							ImGui::ColorEdit4("Color", (float*)&m_colour);
+							g_engine.m_coordinator.GetComponent<TextComponent>(i.m_Entity).SetColour(m_colour);
+
+							float m_textScale = g_engine.m_coordinator.GetComponent<TextComponent>(i.m_Entity).GetScale();
+							ImGui::DragFloat("Text Size Scale", &m_textScale, 0.01f, 0.0f, 10.0f);
+
+							g_engine.m_coordinator.GetComponent<TextComponent>(i.m_Entity).SetScale(m_textScale);
+						}
+					}
+
 					if (ImGui::Button("Add Component"))
 					{
 						ImGui::OpenPopup("Add Component");
@@ -470,6 +291,11 @@ namespace Rogue
 						{
 							g_engine.m_coordinator.AddComponent(i.m_Entity, UIComponent());
 						}
+
+						if (ImGui::MenuItem("Text", nullptr, false, !g_engine.m_coordinator.ComponentExists<TextComponent>(i.m_Entity)))
+						{
+							g_engine.m_coordinator.AddComponent(i.m_Entity, TextComponent());
+						}
 						ImGui::EndPopup();
 					}
 					if (ImGui::BeginPopup("Delete Component"))
@@ -542,6 +368,11 @@ namespace Rogue
 						if (ImGui::MenuItem("UI", nullptr, false, g_engine.m_coordinator.ComponentExists<UIComponent>(i.m_Entity)))
 						{
 							g_engine.m_coordinator.RemoveComponent<UIComponent>(i.m_Entity);
+						}
+
+						if (ImGui::MenuItem("Text", nullptr, false, g_engine.m_coordinator.ComponentExists<TextComponent>(i.m_Entity)))
+						{
+							g_engine.m_coordinator.RemoveComponent<TextComponent>(i.m_Entity);
 						}
 
 						ImGui::EndPopup();
