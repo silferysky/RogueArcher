@@ -10,6 +10,7 @@ namespace Rogue
 	std::shared_ptr<spdlog::logger> Logger::RE_ClientLogger;
 	std::shared_ptr<spdlog::logger> Logger::RE_CoreFileLogger;
 	std::shared_ptr<spdlog::logger> Logger::RE_ClientFileLogger;
+	std::vector<std::string> Logger::RE_Console;
 	///////////////////////////////////////////////////////
 
 	void Logger::InitLogger()
@@ -36,7 +37,7 @@ namespace Rogue
 		RE_ClientFileLogger->set_level(spdlog::level::trace);
 	}
 
-	inline void Logger::AddStringToConsole(std::string stringData)
+	void Logger::AddStringToConsole(const std::string& stringData)
 	{
 		RE_Console.emplace(RE_Console.begin(), stringData);
 		if (RE_Console.size() > CONSOLE_SIZE)

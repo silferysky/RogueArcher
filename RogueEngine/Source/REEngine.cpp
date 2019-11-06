@@ -92,6 +92,8 @@ namespace Rogue
 
 		ShowWindow(hWnd, SW_SHOW);
 
+		aspect_ratio = (float)config.GetHeight() / config.GetWidth();
+
 		//Ensures program closes properly 
 		SetConsoleCtrlHandler(CtrlHandler, true);
 
@@ -146,8 +148,10 @@ namespace Rogue
 			SwapBuffers(hDC);
 
 			//m_projMat = glm::ortho(-16.0f * 0.5f, 16.0f * 0.5f, -9.0f * 0.5f, 9.0f * 0.5f, -1024.0f, 1024.0f);
-			m_projMat = glm::ortho(-GetWindowWidth(hWnd) * 0.5f * m_cameraZoom, GetWindowWidth(hWnd) * 0.5f * m_cameraZoom, -GetWindowHeight(hWnd) * 0.5f * m_cameraZoom, GetWindowHeight(hWnd) * 0.5f * m_cameraZoom, -1024.0f, 1024.0f);
-
+			
+			auto m_dimensions = Vec2{ m_size, aspect_ratio * m_size } * 0.5;
+			m_projMat = glm::ortho(-m_dimensions.x, m_dimensions.x, -m_dimensions.y , m_dimensions.y, -1024.0f, 1024.0f);
+			
 			m_loopEnd = mainLoopTimer.now();
 		}
 	}

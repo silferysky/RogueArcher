@@ -41,6 +41,9 @@ namespace Rogue
 		glm::mat4 m_projMat;
 		float m_cameraZoom = 1.0f;
 
+		float aspect_ratio;
+		float m_size = 2000.0f;
+
 		HWND CreateOpenGLWindow(char* title, int x, int y, int width, int height,
 			BYTE type, DWORD flags);
 	public:
