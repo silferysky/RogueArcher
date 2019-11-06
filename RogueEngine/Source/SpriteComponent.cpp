@@ -147,16 +147,16 @@ namespace Rogue
 		m_drawPriority = std::stoi(stdstr);
 
 		std::getline(strstream, stdstr, ';');
-		m_filter.r = std::stoi(stdstr);
+		m_filter.r = std::stof(stdstr);
 
 		std::getline(strstream, stdstr, ';');
-		m_filter.g = std::stoi(stdstr);
+		m_filter.g = std::stof(stdstr);
 
 		std::getline(strstream, stdstr, ';');
-		m_filter.b = std::stoi(stdstr);
+		m_filter.b = std::stof(stdstr);
 
 		std::getline(strstream, stdstr, ';');
-		m_filter.a = std::stoi(stdstr);
+		m_filter.a = std::stof(stdstr);
 	}
 
 	/*void SpriteComponent::operator=(SpriteComponent sprite)
