@@ -118,7 +118,9 @@ namespace Rogue
 		//std::map<std::string, Texture> textureMap = g_engine.m_coordinator.GetTextureManager().getTextureMap();
 		std::ostringstream strstream;
 		
-		strstream << getTexturePath() << ";" << m_drawPriority;
+		strstream << getTexturePath() << ";";
+		strstream << m_drawPriority << ";";
+		strstream << m_filter.r << ";" << m_filter.g << ";" << m_filter.b << ";" << m_filter.a;
 
 		return strstream.str();
 		//Cannot use find because need use value to find key
@@ -143,6 +145,18 @@ namespace Rogue
 
 		std::getline(strstream, stdstr, ';');
 		m_drawPriority = std::stoi(stdstr);
+
+		std::getline(strstream, stdstr, ';');
+		m_filter.r = std::stoi(stdstr);
+
+		std::getline(strstream, stdstr, ';');
+		m_filter.g = std::stoi(stdstr);
+
+		std::getline(strstream, stdstr, ';');
+		m_filter.b = std::stoi(stdstr);
+
+		std::getline(strstream, stdstr, ';');
+		m_filter.a = std::stoi(stdstr);
 	}
 
 	/*void SpriteComponent::operator=(SpriteComponent sprite)

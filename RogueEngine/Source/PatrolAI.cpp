@@ -6,8 +6,8 @@ namespace Rogue
 	PatrolAI::PatrolAI(Entity entity, LogicComponent& logicComponent)
 		: BaseAI(entity, logicComponent), m_currentPointIndex{0} 
 	{
+		AddWaypoint(g_engine.m_coordinator.GetComponent<TransformComponent>(entity).getPosition() - Vec2(100, 0));
 		AddWaypoint(g_engine.m_coordinator.GetComponent<TransformComponent>(entity).getPosition());
-		AddWaypoint(g_engine.m_coordinator.GetComponent<TransformComponent>(entity).getPosition() - Vec2(100,0));
 		m_nextPoint.push(m_waypoints[0]);
 	}
 
@@ -30,8 +30,8 @@ namespace Rogue
 		TransformComponent& aiTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(m_entity);
 
 		//Always move
-		Vec2 travelDistance;
-		Vec2Normalize(travelDistance, m_nextPoint.front() - aiTransform.getPosition());
+		Vec2 travelDistance, haha = m_nextPoint.front() - aiTransform.getPosition();
+		Vec2Normalize(travelDistance, haha);
 		aiTransform.setPosition(aiTransform.getPosition() + travelDistance * SPEED);
 
 		//If within a certain radius, assign next point
