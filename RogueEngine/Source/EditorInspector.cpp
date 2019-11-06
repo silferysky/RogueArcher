@@ -135,6 +135,15 @@ namespace Rogue
 						}
 					}
 
+					if (g_engine.m_coordinator.ComponentExists<LogicComponent>(i.m_Entity))
+					{
+						if (ImGui::CollapsingHeader("Stats"))
+						{
+							auto& Stats = g_engine.m_coordinator.GetComponent<StatsComponent>(i.m_Entity);
+							Stats.DisplayOnInspector();
+						}
+					}
+
 					if (g_engine.m_coordinator.ComponentExists<CameraComponent>(i.m_Entity))
 					{
 						if (ImGui::CollapsingHeader("Camera"))
@@ -226,6 +235,7 @@ namespace Rogue
 							if (ImGui::MenuItem("Logic Component", nullptr, false, !g_engine.m_coordinator.ComponentExists<LogicComponent>(i.m_Entity)))
 							{
 								g_engine.m_coordinator.AddComponent(i.m_Entity, LogicComponent());
+								g_engine.m_coordinator.AddComponent(i.m_Entity, StatsComponent());
 							}
 							
 							if (ImGui::MenuItem("Cursor Component", nullptr, false, !g_engine.m_coordinator.ComponentExists<CursorComponent>(i.m_Entity)))
@@ -303,6 +313,7 @@ namespace Rogue
 							if (ImGui::MenuItem("Logic Component", nullptr, false, g_engine.m_coordinator.ComponentExists<LogicComponent>(i.m_Entity)))
 							{
 								g_engine.m_coordinator.RemoveComponent<LogicComponent>(i.m_Entity);
+								g_engine.m_coordinator.RemoveComponent<StatsComponent>(i.m_Entity);
 							}
 
 							if (ImGui::MenuItem("Cursor Component", nullptr, false, g_engine.m_coordinator.ComponentExists<CursorComponent>(i.m_Entity)))
