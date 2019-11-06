@@ -20,7 +20,7 @@ namespace Rogue
 		float simulationTime = g_fixedDeltaTime * g_engine.GetTimeScale(); // To support slow motion
 
 		if (allowGravity)
-			rigidbody.setAcceleration(rigidbody.getAccForce() * rigidbody.getInvMass() + m_gravity);
+			rigidbody.setAcceleration(rigidbody.getAccForce() * rigidbody.getInvMass() + m_gravity * rigidbody.getGravityScale());
 		else
 			rigidbody.setAcceleration(rigidbody.getAccForce() * rigidbody.getInvMass());
 
