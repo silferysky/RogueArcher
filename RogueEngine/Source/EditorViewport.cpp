@@ -110,7 +110,7 @@ namespace Rogue
 			ImGui::EndTooltip();
 		}
 		ImGui::SameLine();
-		int m_Frames = g_engine.m_coordinator.GetStepFrames();
+		int m_Frames = (int)g_engine.m_coordinator.GetStepFrames();
 		ImGui::PushItemWidth(75);
 		ImGui::SliderInt("Step Count", &m_Frames, 1, 60);
 		g_engine.m_coordinator.SetStepFrames(m_Frames);
@@ -120,9 +120,7 @@ namespace Rogue
 			g_engine.m_coordinator.StepOnce();
 		}
 
-		auto max = ImGui::GetWindowContentRegionMax();
-		auto min = ImGui::GetWindowContentRegionMin();
-		ImVec2 imageSize{ max.x - min.x, max.y - min.y };
+		ImVec2 imageSize = ImGui::GetContentRegionAvail();
 		ImGui::Image((void*)(intptr_t)(g_engine.m_coordinator.GetSystem<GraphicsSystem>()->getFBO()), ImVec2(imageSize.x,imageSize.y ), ImVec2(0, 1), ImVec2(1, 0));
 		ImGui::End();
 	}
