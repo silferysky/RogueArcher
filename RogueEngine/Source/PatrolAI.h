@@ -12,8 +12,8 @@ namespace Rogue
 	public:
 		PatrolAI(Entity entity, LogicComponent& logicComponent);
 
+		virtual void LogicInit() override;
 		virtual void AIActiveStateUpdate() override;
-
 		virtual void AIPatrolUpdate() override;
 
 		void AddWaypoint(Vec2 newPoint);

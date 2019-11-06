@@ -9,6 +9,19 @@ namespace Rogue
 		//AddWaypoint(g_engine.m_coordinator.GetComponent<TransformComponent>(entity).getPosition() - Vec2(100, 0));
 		//AddWaypoint(g_engine.m_coordinator.GetComponent<TransformComponent>(entity).getPosition());
 		//m_nextPoint.push(m_waypoints[0]);
+		LogicInit();
+	}
+
+	void PatrolAI::LogicInit()
+	{
+		if (g_engine.m_coordinator.ComponentExists<StatsComponent>(m_entity))
+		{
+			StatsComponent& stats = g_engine.m_coordinator.GetComponent<StatsComponent>(m_entity);
+			for (auto& waypoint : stats.getWaypoints())
+			{
+				m_waypoints.push_back(waypoint);
+			}
+		}
 	}
 
 	void PatrolAI::AIActiveStateUpdate()
@@ -30,8 +43,19 @@ namespace Rogue
 		TransformComponent& aiTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(m_entity);
 
 		//Always move
-		Vec2 travelDistance, haha = m_nextPoint.front() - aiTransform.getPosition();
-		Vec2Normalize(travelDistance, haha);
+		Vec2 travelDistance, travelDistValue;
+		
+		if (m_nextPoint.size())
+			travelDistValue = m_nextPoint.front() - aiTransform.getPosition();
+		else if (m_waypoints.size())
+		{
+			m_nextPoint.push(m_waypoints.front());
+			travelDistValue = m_nextPoint.front() - aiTransform.getPosition();
+		}
+		else
+			return;
+
+		Vec2Normalize(travelDistance, travelDistValue);
 		aiTransform.setPosition(aiTransform.getPosition() + travelDistance * SPEED);
 
 		//If within a certain radius, assign next point
