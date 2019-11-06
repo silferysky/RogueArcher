@@ -1,12 +1,11 @@
 #pragma once
-#include "BaseComponent.h"
 #include <glm.hpp>
 #include <string>
+#include "BaseComponent.h"
 
 namespace Rogue
 { 
-	class TextComponent
-		: public BaseComponent
+	class TextComponent: public BaseComponent
 	{
 		glm::vec4 m_colour;
 		std::string m_words;
@@ -20,6 +19,8 @@ namespace Rogue
 
 		void SetScale(const float& scale);
 		float& GetScale();
+
+		void DisplayOnInspector();
 
 		std::string Serialize();
 		void Deserialize(std::string toDeserialize);

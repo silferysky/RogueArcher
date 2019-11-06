@@ -39,6 +39,7 @@ namespace Rogue
 		glm::vec4& getFilter();
 		void setFilter(const glm::vec4& filter);
 
+		void DisplayOnInspector();
 		//Serialize
 		virtual std::string Serialize();
 		virtual void Deserialize(std::string toDeserialize);

@@ -20,6 +20,7 @@ namespace Rogue
 
 		CircleCollider m_collider;
 
+		void DisplayOnInspector();
 		std::string Serialize();
 		void Deserialize(std::string);
 	};
