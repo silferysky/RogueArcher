@@ -478,6 +478,9 @@
     <ClInclude Include="Source\BackgroundComponent.h">
       <Filter>RogueEngine\Systems\Background</Filter>
     </ClInclude>
+    <ClInclude Include="Source\EditorProfiler.h">
+      <Filter>RogueEditor\EditorFiles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -737,6 +740,9 @@
     </ClCompile>
     <ClCompile Include="Source\BackgroundComponent.cpp">
       <Filter>RogueEngine\Systems\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EditorProfiler.cpp">
+      <Filter>RogueEditor\EditorFiles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

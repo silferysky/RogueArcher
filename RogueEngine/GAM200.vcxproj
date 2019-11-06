@@ -52,6 +52,7 @@
     <ClInclude Include="Source\EditorHierarchy.h" />
     <ClInclude Include="Source\EditorHierarchyInfo.h" />
     <ClInclude Include="Source\EditorInspector.h" />
+    <ClInclude Include="Source\EditorProfiler.h" />
     <ClInclude Include="Source\EditorProject.h" />
     <ClInclude Include="Source\EditorSettings.h" />
     <ClInclude Include="Source\EditorViewport.h" />
@@ -167,6 +168,7 @@
     <ClCompile Include="Source\EditorGameObject.cpp" />
     <ClCompile Include="Source\EditorHierarchy.cpp" />
     <ClCompile Include="Source\EditorInspector.cpp" />
+    <ClCompile Include="Source\EditorProfiler.cpp" />
     <ClCompile Include="Source\EditorProject.cpp" />
     <ClCompile Include="Source\EditorSettings.cpp" />
     <ClCompile Include="Source\EditorViewport.cpp" />
