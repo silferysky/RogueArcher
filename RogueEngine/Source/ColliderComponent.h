@@ -7,7 +7,7 @@ namespace Rogue
 	{
 		std::shared_ptr<Shape> m_shape;
 	public:
-		ColliderComponent();
+		ColliderComponent(const std::shared_ptr<Shape> ptr = nullptr);
 		ColliderComponent(const ColliderComponent& rhs); // Copy constructor
 		ColliderComponent(ColliderComponent&& rhs) noexcept; // Move constructor
 		ColliderComponent& operator=(const ColliderComponent& rhs); // Copy assignment

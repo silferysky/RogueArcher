@@ -12,7 +12,6 @@ namespace Rogue
 	public:
 		AABB m_aabb;
 		OBB m_obb;
-		//std::unique_ptr<Shape> m_shape;
 
 		BoxCollider2DComponent();
 		BoxCollider2DComponent(const BoxCollider2DComponent& rhs); // Copy constructor

@@ -3,8 +3,8 @@
 
 namespace Rogue
 {
-	ColliderComponent::ColliderComponent() :
-		m_shape{ nullptr }
+	ColliderComponent::ColliderComponent(const std::shared_ptr<Shape> ptr) :
+		m_shape{ ptr }
 	{}
 
 	ColliderComponent::ColliderComponent(const ColliderComponent& rhs) :
