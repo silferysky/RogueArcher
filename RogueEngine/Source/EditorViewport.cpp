@@ -120,9 +120,7 @@ namespace Rogue
 			g_engine.m_coordinator.StepOnce();
 		}
 
-		auto max = ImGui::GetWindowContentRegionMax();
-		auto min = ImGui::GetWindowContentRegionMin();
-		ImVec2 imageSize{ max.x - min.x, max.y - min.y };
+		ImVec2 imageSize = ImGui::GetContentRegionAvail();
 		ImGui::Image((void*)(intptr_t)(g_engine.m_coordinator.GetSystem<GraphicsSystem>()->getFBO()), ImVec2(imageSize.x,imageSize.y ), ImVec2(0, 1), ImVec2(1, 0));
 		ImGui::End();
 	}
