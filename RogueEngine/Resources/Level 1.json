@@ -93,7 +93,7 @@
     "Entity41": "Name{crystal6 shadow}|Sprite{Resources/Assets/Crystal2_Shadow.png;1}||Transform{1558;595;100;100;0}||||||||||",
     "Entity42": "Name{Game Object 43}|||Transform{-840;-941;100;100;0}||||||||Audio{Resources/Sounds/[Waterfall SFX]WATER-FALL_GEN-HDF-25489.ogg;1;}||",
     "Entity43": "Name{Crosshair}|Sprite{Resources/Assets/crosshair.png;6666}||Transform{-1253.47;741.65;100;100;0}|||||||||",
-    "Entity44": "Name{Light Ant 1}|Sprite{Resources/Assets/LightAnt.png;1}|Rigidbody{0;0;0;0;1;1;0}|Transform{0;-300;108;100;0}|CircleCollider{0;0;0;0;0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;0;0;0;0}||LogicComponent{1;0;0;2}|||||",
+    "Entity44": "Name{Light Ant 1}|Sprite{Resources/Assets/LightAnt.png;1}|Rigidbody{0;0;0;0;1;1;0}|Transform{-1162.98;-740.51;108;100;0}|CircleCollider{0;0;0;0;0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;0;0;0;0}||LogicComponent{1;0;0;2}|||||||",
     "Entity45": "Name{Light Ant 2}|Sprite{Resources/Assets/LightAnt.png;1}|Rigidbody{0;0;0;0;1;1;0}|Transform{0;-300;108;100;0}|CircleCollider{0;0;0;0;0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;0;0;0;0}||LogicComponent{1;0;0;2}|||||",
     "Entity46": "Name{Light Ant 3}|Sprite{Resources/Assets/LightAnt.png;1}|Rigidbody{0;0;0;0;1;1;0}|Transform{0;-300;108;100;0}|CircleCollider{0;0;0;0;0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;0;0;0;0}||LogicComponent{1;0;0;2}|||||"
 }
