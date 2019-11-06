@@ -17,6 +17,7 @@ namespace Rogue
 	{
 		if (this != &rhs)
 		{
+			BaseCollider::operator=(rhs);
 			m_min = rhs.m_min;
 			m_max = rhs.m_max;
 		}
