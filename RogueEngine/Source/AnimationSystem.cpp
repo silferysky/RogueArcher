@@ -62,8 +62,8 @@ namespace Rogue
 				animate->setIsAnimating(false);
 		}
 
-		double min = currentFrame / totalFrames;
-		double max = ++currentFrame / totalFrames;
+		double min = (double)currentFrame / totalFrames;
+		double max = (double)++currentFrame / totalFrames;
 
 		sprite->setTexCoordMin(min);
 		sprite->setTexCoordMax(max);
