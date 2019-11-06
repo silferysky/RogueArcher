@@ -94,7 +94,7 @@ namespace Rogue
 	void StatsComponent::Deserialize(std::string toDeserialize)
 	{
 		std::istringstream ss(toDeserialize);
-		std::string s1;
+		std::string s1, s2;
 
 		std::getline(ss, s1, ';');
 		m_health = std::stoi(s1);
@@ -104,6 +104,16 @@ namespace Rogue
 		m_sightRange = std::stoi(s1);
 		std::getline(ss, s1, ';');
 		m_attackRange = std::stoi(s1);
+
+		std::getline(ss, s1, ';');
+		size_t count = std::stoi(s1);
+
+		for (size_t it = 0; it < count; ++it)
+		{
+			std::getline(ss, s1, ';');
+			std::getline(ss, s2, ';');
+			m_waypoints.push_back(Vec2(std::stof(s1), std::stof(s2)));
+		}
 		
 	}
 
@@ -127,12 +137,12 @@ namespace Rogue
 		{
 			ostrstream.clear();
 			ostrstream.str("");
-			ostrstream << "Waypoint " << count << "X";
+			ostrstream << "Waypoint " << count << " X";
 			ImGui::PushItemWidth(75);
 			ImGui::DragFloat(ostrstream.str().c_str(), &waypoint.x, 1.0f, -10000.0f, 10000.0f);
 			ostrstream.clear();
 			ostrstream.str("");
-			ostrstream << "Waypoint " << count << "Y";
+			ostrstream << "Waypoint " << count << " Y";
 			ImGui::PushItemWidth(75);
 			ImGui::DragFloat(ostrstream.str().c_str(), &waypoint.y, 1.0f, -10000.0f, 10000.0f);
 			++count;
