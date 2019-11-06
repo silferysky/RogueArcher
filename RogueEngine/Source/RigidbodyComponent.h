@@ -36,6 +36,7 @@ namespace Rogue
 		bool getIsStatic() const;
 		float getBounciness() const;
 		float getFriction() const;
+		float getGravityScale() const;
 
 		void setAccForce(const Vec2& accforce);
 		void setVelocity(const Vec2& vel);

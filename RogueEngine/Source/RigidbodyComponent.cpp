@@ -106,6 +106,11 @@ namespace Rogue
 		return m_friction;
 	}
 
+	float RigidbodyComponent::getGravityScale() const
+	{
+		return m_gravityScale;
+	}
+
 	void RigidbodyComponent::setDamping(float damping)
 	{
 		m_damping = damping;
