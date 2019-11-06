@@ -1,6 +1,6 @@
 {
-    "MaxEntityCount": 23,
-    "EntityCount": 23,
+    "MaxEntityCount": 24,
+    "EntityCount": 24,
     "BackgroundTexture": "Resources/Assets/game_Bg2.png;1;1;1;1;1",
     "Signature0": 5,
     "Signature1": 22,
@@ -25,6 +25,7 @@
     "Signature20": 5,
     "Signature21": 197,
     "Signature22": 197,
+    "Signature23": 887,
     "Entity0": "Name{Fg}|Sprite{Resources/Assets/game_Fg.png;2;1;1;1;1}||Transform{0;0;3368;880;0}|||||||||||||",
     "Entity1": "Name{collider1}||Rigidbody{0;0;0;0;1;1;1;1}|Transform{-1534;304;100;100;0}||BoxCollider{0;0;0;780;6}|||||||||||",
     "Entity2": "Name{collider2}||Rigidbody{0;0;0;0;1;1;1;1}|Transform{-802;393;100;100;0}||BoxCollider{0;0;0;516;44}|||||||||||",
@@ -47,5 +48,7 @@
     "Entity19": "Name{Background2}|Sprite{Resources/Assets/game_Bg1.png;1;1;1;1;1}||Transform{0;0;3368;880;0}|||||||||||||",
     "Entity20": "Name{ground}|Sprite{Resources/Assets/cave_Ground.png;1;1;1;1;1}||Transform{0;0;3368;880;0}|||||||||||||",
     "Entity21": "Name{crazyDoor1}|Sprite{Resources/Assets/crazy_Door.png;1;1;1;1;1}||Transform{-226;90;200;500;0}||||LogicComponent{0;0;}|StatsComponent{0;10;0;0;2;-226;14;-226;90;}||||||||",
-    "Entity22": "Name{crazyDoor2}|Sprite{Resources/Assets/crazy_Door.png;1;1;1;1;1}||Transform{805;170;200;500;0}||||LogicComponent{0;0;}|StatsComponent{0;0;0;0;2;805;82;805;170;}||||||||"
+    "Entity22": "Name{crazyDoor2}|Sprite{Resources/Assets/crazy_Door.png;1;1;1;1;1}||Transform{805;170;200;500;0}||||LogicComponent{0;0;}|StatsComponent{0;0;0;0;2;805;82;805;170;}||||||||",
+    "Entity38": "Name{Player}|Sprite{Resources/Assets/SpriteSheetCombined.png;5;1;1;1;1}|Rigidbody{0;0;0;0;1;1;0;1}|Transform{-1446;310.49;80;120;0}||BoxCollider{0;0;0;0;0}|PlayerController{1;0.1;}|LogicComponent{0;0;0}||Animation{9;0.1;0;}|Camera{0;0;1;}||||||"
+
 }
