@@ -59,20 +59,7 @@ namespace Rogue
 			if (!it->second)
 				continue;
 
-			//Converts the shared_ptr into correct type based on ID
-			switch (g_engine.m_coordinator.GetComponent<LogicComponent>(it->first).GetLogicType())
-			{
-			case AIType::AI_Finder:
-			{
-				std::dynamic_pointer_cast<FinderAI>(it->second)->LogicUpdate();
-				break;
-			}
-			case AIType::AI_Static:
-			default:
-			{
-				it->second->LogicUpdate();
-			}
-			}
+			it->second->LogicUpdate();
 		}
 		g_engine.m_coordinator.EndTimeSystem("Logic System");
 	}

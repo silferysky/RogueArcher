@@ -7,22 +7,22 @@ namespace Rogue
 {
 	class CircleCollider : public BaseCollider
 	{
-		CircleShape m_shape;
+		float m_radius;
 		Vec2 m_center;
 
 	public:
 		CircleCollider() :
-			BaseCollider(), m_shape{ 1.0f }, m_center{ Vec2{} }
+			BaseCollider(), m_radius{ 1.0f }, m_center{ Vec2{} }
 		{}
 
 		CircleCollider(const CircleCollider& rhs) :
-			m_shape{ rhs.m_shape }, m_center{ rhs.m_center }
+			m_radius{ rhs.m_radius }, m_center{ rhs.m_center }
 		{}
 		
 		CircleCollider(CircleCollider&& rhs) noexcept :
-			BaseCollider(rhs), m_shape{ CircleShape() }, m_center{ Vec2{} }
+			BaseCollider(rhs), m_radius{ 1.0f }, m_center{ Vec2{} }
 		{
-			std::swap(m_shape, rhs.m_shape);
+			std::swap(m_radius, rhs.m_radius);
 			std::swap(m_center, rhs.m_center);
 		}
 
@@ -30,7 +30,7 @@ namespace Rogue
 		{
 			if (this != &rhs)
 			{
-				m_shape = rhs.m_shape;
+				m_radius = rhs.m_radius;
 				m_center = rhs.m_center;
 			}
 			return *this;
@@ -40,7 +40,7 @@ namespace Rogue
 		{
 			if (this != &rhs)
 			{
-				std::swap(m_shape, rhs.m_shape);
+				std::swap(m_radius, rhs.m_radius);
 				std::swap(m_center, rhs.m_center);
 			}
 
@@ -50,12 +50,12 @@ namespace Rogue
 
 		float getRadius() const
 		{
-			return m_shape.m_radius;
+			return m_radius;
 		}
 
 		void setRadius(float radius)
 		{
-			m_shape.m_radius = radius;
+			m_radius = radius;
 		}
 
 		const Vec2& GetCenter() const

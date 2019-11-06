@@ -113,6 +113,7 @@ namespace Rogue
 		auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
 
 		auto transformMat = glm::mat4(1.0f);
+		auto viewMat = m_pCamera->GetViewMatrix(1.0f);
 		auto texture = sprite.getTexture();
 
 		transformMat = glm::translate(transformMat, { transform.getPosition().x, transform.getPosition().y, 1.0f });
@@ -128,9 +129,13 @@ namespace Rogue
 		glBindTexture(GL_TEXTURE_2D, texture.m_texture);
 		UpdateTextureCoords(sprite.getTexCoordMin(), sprite.getTexCoordMax());
 
+		// Parallax
+		if (g_engine.m_coordinator.ComponentExists<BackgroundComponent>(entity))
+			viewMat = m_pCamera->GetViewMatrix(g_engine.m_coordinator.GetComponent<BackgroundComponent>(entity).GetParallax());
+
 		// model to world, world to view, view to projection
 		glUniformMatrix4fv(m_projLocation, 1, GL_FALSE, glm::value_ptr(g_engine.GetProjMat()));
-		glUniformMatrix4fv(m_viewLocation, 1, GL_FALSE, glm::value_ptr(m_pCamera->GetViewMatrix()));
+		glUniformMatrix4fv(m_viewLocation, 1, GL_FALSE, glm::value_ptr(viewMat));
 		glUniformMatrix4fv(m_transformLocation, 1, GL_FALSE, glm::value_ptr(transformMat));
 
 		// rgb filtering

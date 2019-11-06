@@ -94,7 +94,7 @@ namespace Rogue
 
 		glUseProgram(m_shader.GetShader());
 		glUniformMatrix4fv(m_projectionLocation, 1, GL_FALSE, glm::value_ptr(g_engine.GetProjMat()));
-		glUniformMatrix4fv(m_viewLocation, 1, GL_FALSE, glm::value_ptr(g_engine.m_coordinator.GetSystem<CameraSystem>()->GetViewMatrix()));
+		glUniformMatrix4fv(m_viewLocation, 1, GL_FALSE, glm::value_ptr(g_engine.m_coordinator.GetSystem<CameraSystem>()->GetViewMatrix(1.0f)));
 		glBindVertexArray(m_VAO);
 		glActiveTexture(GL_TEXTURE0);
 

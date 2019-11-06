@@ -1,9 +1,9 @@
 {
-  "Files": "Level 1.json;Level 2.json;Level 3.json;Level 4.json;Level 5.json",
-  "CameraMinX": -630,
-  "CameraMinY": -350,
-  "CameraMaxX": 630,
-  "CameraMaxY": 350,
-  "BGM": 0,
-  "Sounds": "[Ambient Water SFX]WATER-SPLASH_GEN-HDF-25630.ogg;[BGM]ANCIENT RUINS - NewAge MSCNEW2_33.ogg;[Cave Ambience]WIND-HOWL_GEN-HDF-25929.ogg;[Ela Appear]SCI-FI-WHOOSH_GEN-HDF-20870.ogg;[Ela Disappear]ANIMAL-LION_GEN-HDF-01171.ogg;[Hold Projectile Hum]SCI-FI-CHAMBER_GEN-HDF-20553.ogg;[Insect Flight]SCI-FI-BUZZ_GEN-HDF-20546.ogg;[Insect Scuttle]COMEDY-MOTOR_GEN-HDF-08129.ogg;[Shoot Projectile]SCI-FI-WHOOSH_GEN-HDF-20864.ogg;[Water Ambience]WATER-CAVE_GEN-HDF-25449.ogg;[Waterfall SFX]WATER-FALL_GEN-HDF-25489.ogg;1.wav"
+    "Files": "Level 1.json;Level 2.json;Level 3.json;Level 4.json;Level 5.json;Level 6.json;",
+    "CameraMinX": -630,
+    "CameraMinY": -350,
+    "CameraMaxX": 630,
+    "CameraMaxY": 350,
+    "BGM": 0,
+    "Sounds": "[Ambient Water SFX]WATER-SPLASH_GEN-HDF-25630.ogg;[BGM]ANCIENT RUINS - NewAge MSCNEW2_33.ogg;[Cave Ambience]WIND-HOWL_GEN-HDF-25929.ogg;[Ela Appear]SCI-FI-WHOOSH_GEN-HDF-20870.ogg;[Ela Disappear]ANIMAL-LION_GEN-HDF-01171.ogg;[Hold Projectile Hum]SCI-FI-CHAMBER_GEN-HDF-20553.ogg;[Insect Flight]SCI-FI-BUZZ_GEN-HDF-20546.ogg;[Insect Scuttle]COMEDY-MOTOR_GEN-HDF-08129.ogg;[Shoot Projectile]SCI-FI-WHOOSH_GEN-HDF-20864.ogg;[Water Ambience]WATER-CAVE_GEN-HDF-25449.ogg;[Waterfall SFX]WATER-FALL_GEN-HDF-25489.ogg;1.wav"
 }
