@@ -381,6 +381,7 @@ namespace Rogue
 			g_engine.m_coordinator.GetEntityManager().m_getActiveObjects().push_back(newInfo);
 
 			AddToTimedEntities(ball, 1.0f);
+			break;
 		}
 	}
 
