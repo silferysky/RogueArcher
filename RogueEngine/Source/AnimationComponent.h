@@ -41,6 +41,7 @@ namespace Rogue
 		void setIsLooping(const bool& isLooping);
 		bool getIsLooping() const;
 
+		void DisplayOnInspector();
 		//Serialize
 		virtual std::string Serialize();
 		virtual void Deserialize(std::string toDeserialize);
