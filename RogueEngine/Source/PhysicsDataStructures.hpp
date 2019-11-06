@@ -43,6 +43,8 @@ namespace Rogue
 	public:
 		enum class Type
 		{
+			e_none = 0,
+
 			e_circle,
 			e_box,
 			e_polygon,
