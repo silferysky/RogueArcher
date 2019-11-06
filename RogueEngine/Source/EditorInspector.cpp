@@ -406,7 +406,7 @@ namespace Rogue
 							if (ImGui::MenuItem("Sprite Component", nullptr, false, !g_engine.m_coordinator.ComponentExists<SpriteComponent>(i.m_Entity)))
 							{
 								auto& Sprite = g_engine.m_coordinator.CreateComponent<SpriteComponent>(i.m_Entity);
-								Sprite.Deserialize("Resources/Assets/DefaultSprite.png;1");
+								Sprite.Deserialize("Resources/Assets/DefaultSprite.png;1;1;1;1;1");
 							}
 
 							if (ImGui::MenuItem("Animation Component", nullptr, false, !g_engine.m_coordinator.ComponentExists<AnimationComponent>(i.m_Entity)))
