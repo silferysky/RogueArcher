@@ -1,14 +1,16 @@
 #include "EditorInspector.h"
+#include "imgui.h"
+#include "imgui_impl_opengl3.h"
+#include "imgui_impl_win32.h"
+#include "glew.h"
+#include "REEngine.h"
+#include "Main.h"
 
 namespace Rogue
 {
-	ImGuiInspector::ImGuiInspector()
-	{
-	}
-
-	ImGuiInspector::~ImGuiInspector()
-	{
-	}
+	ImGuiInspector::ImGuiInspector() :
+		activeObjects{ g_engine.m_coordinator.GetEntityManager().m_getActiveObjects() }, m_color{ 0.0f,0.0f,0.0f,0.0f }
+	{}
 
 	void ImGuiInspector::Init()
 	{
@@ -74,48 +76,9 @@ namespace Rogue
 					{
 						if (ImGui::CollapsingHeader("Transform"))
 						{
-							Vec2 Scale = g_engine.m_coordinator.GetComponent<TransformComponent>(i.m_Entity).getScale();
-							Vec2 Position = g_engine.m_coordinator.GetComponent<TransformComponent>(i.m_Entity).getPosition();
-							float Rotation = g_engine.m_coordinator.GetComponent<TransformComponent>(i.m_Entity).getRotation();
+							auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(i.m_Entity);
 
-	
-							ImGui::Text("Scale    ");
-							ImGui::SameLine();
-							ImGui::PushItemWidth(75);
-							ImGui::DragFloat(" ", &Scale.x, 1.0f, 0.0f, 100000.0f);
-							ImGui::SameLine(0.0f, 36.0f);
-							ImGui::DragFloat("  ", &Scale.y, 1.0f, 0.0f, 100000.0f);
-							g_engine.m_coordinator.GetComponent<TransformComponent>(i.m_Entity).setScale(Scale);
-
-							ImGui::Text("Rotation ");
-							ImGui::SameLine();
-							ImGui::DragFloat("   ", &Rotation, 0.1f, 0.0f, 6.28f);
-							g_engine.m_coordinator.GetComponent<TransformComponent>(i.m_Entity).setRotation(Rotation);
-
-							ImGui::Text("Translate");
-							ImGui::SameLine();
-							ImGui::PushItemWidth(75);
-							ImGui::DragFloat("     ", &Position.x);
-							ImGui::SameLine();
-							ImGui::PushItemWidth(75);
-							ImGui::DragFloat("      ", &Position.y);
-							g_engine.m_coordinator.GetComponent<TransformComponent>(i.m_Entity).setPosition(Position);
-							ImGui::PushItemWidth(50);
-
-							if (ImGui::Button("Reset Position"))
-							{
-								g_engine.m_coordinator.GetComponent<TransformComponent>(i.m_Entity).setPosition(Vec2{ 0,0 });
-							}
-
-							if (ImGui::Button("Reset Rotation"))
-							{
-								g_engine.m_coordinator.GetComponent<TransformComponent>(i.m_Entity).setRotation(0.0f);
-							}
-
-							if (ImGui::Button("Reset Scale"))
-							{
-								g_engine.m_coordinator.GetComponent<TransformComponent>(i.m_Entity).setScale(Vec2{ 100.0f,100.0f });
-							}
+							trans.DisplayOnInspector();
 						}
 					}
 					

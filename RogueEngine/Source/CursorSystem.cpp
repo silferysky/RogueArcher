@@ -29,6 +29,7 @@ namespace Rogue
 
 		if (GetCursorPos(&cursor))
 		{
+			ScreenToClient(g_engine.GetWindowHandler(), &cursor);
 			cursorPos.x = static_cast<float>(cursor.x);
 			cursorPos.y = static_cast<float>(cursor.y);
 		}
