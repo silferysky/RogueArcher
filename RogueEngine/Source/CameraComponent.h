@@ -9,6 +9,9 @@ namespace Rogue
 	{
 		Vec2 m_position = Vec2(0.0f, 0.0f);
 		bool m_isActive = true;
+		// TODO: orthographic size
+		// view matrix
+		// render target 
 	public:
 		CameraComponent() = default;
 		CameraComponent(const Vec2& pos);
