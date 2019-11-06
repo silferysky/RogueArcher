@@ -1,18 +1,16 @@
 #pragma once
 #include "IEditable.h"
-#include "Timer.h"
 #include "Main.h"
-#include "Logger.h"
+#include "Timer.h"
 
 namespace Rogue
 {
-	class ImGuiConsole : public IEditable
+	class ImGuiProfiler : public IEditable
 	{
 	private:
-		float m_check = 0.0f;
 	public:
-		ImGuiConsole();
-		~ImGuiConsole() = default;
+		ImGuiProfiler() = default;
+		~ImGuiProfiler() = default;
 		virtual void Init() override;
 		virtual void Update() override;
 		virtual void Shutdown() override;
