@@ -1,6 +1,6 @@
 {
     "MaxEntityCount": 8,
-    "EntityCount": 8,
+    "EntityCount": 7,
     "BackgroundTexture": "Resources/Assets/test.bmp;1;1;1;1;1",
     "Signature0": 831,
     "Signature1": 2077,
@@ -16,6 +16,6 @@
     "Entity3": "Name{Ceiling}|Sprite{Resources/Assets/tile.png;1;1;1;1;1}|Rigidbody{0;0;0;0;1;1;1;1}|Transform{0;400;1211;100;0}|CircleCollider{0;0;0;0;0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;0;0;0;0}|||||||||||",
     "Entity4": "Name{Left Wall}|Sprite{Resources/Assets/tile.png;1;1;1;1;1}|Rigidbody{0;0;0;0;1;1;1;1}|Transform{-600;0;102;600;0}|CircleCollider{0;0;0;0;0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;0;0;0;0}|||||||||||",
     "Entity5": "Name{Right Wall}|Sprite{Resources/Assets/SpriteSheet.png;1;1;1;1;1}|Rigidbody{0;0;0;0;1;1;1;1}|Transform{600;0;156;600;1.7}|CircleCollider{0;0;0;0;0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;0;0;0;0}||||||Audio{Resources/Sounds/1.wav;1;}|||||",
-    "Entity6": "Name{Experience Matters2}|Sprite{Resources/Assets/test.bmp;1;1;1;1;1}|Rigidbody{0;0;0;0;1;1;0;1}|Transform{0;-154.01;108;100;0}|CircleCollider{0;0;0;0;0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;0;0;0;0}||LogicComponent{1;0;0;2}|StatsComponent{1;1;1;1;0;}||||||||",
-    "Entity7": "Name{Experience Matters3}|Sprite{Resources/Assets/test.bmp;1;1;1;1;1}|Rigidbody{0;0;0;0;1;1;0;1}|Transform{0;-300.01;108;100;0}|CircleCollider{0;0;0;0;0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;0;0;0;0}||LogicComponent{2;0;0;1}|StatsComponent{1;1;1;1;2;0;-300;100;300;}||||||||"
+    "Entity6": "Name{Experience Matters3}|Sprite{Resources/Assets/test.bmp;1;1;1;1;1}|Rigidbody{0;0;0;0;1;1;0;1}|Transform{0;-300.01;108;100;0}|CircleCollider{0;0;0;0;0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;0;0;0;0}||LogicComponent{2;0;0;1}|StatsComponent{1;1;1;1;2;0;-300;100;300;}||||||||",
+    "Entity7": "Name{Experience Matters2}|Sprite{Resources/Assets/test.bmp;1;1;1;1;1}|Rigidbody{0;0;0;0;1;1;0;1}|Transform{0;-154.01;108;100;0}|CircleCollider{0;0;0;0;0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;0;0;0;0}||LogicComponent{1;0;0;2}|StatsComponent{1;1;1;1;0;}||||||||"
 }
