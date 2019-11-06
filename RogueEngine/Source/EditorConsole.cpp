@@ -25,6 +25,7 @@ namespace Rogue
 		{
 
 		}
+		ImGui::Separator();
 		//if (ImGui::Button("Error Pause"))
 		//{
 		//
