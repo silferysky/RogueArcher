@@ -7,6 +7,11 @@
 #include "Vector2D.h"
 #include "Types.h"
 
+#define DEF_PATROL_RANGE 10
+#define DEF_DETECT_RANGE 200
+#define DEF_SPEED 100
+#define DEF_TRANSFORM_SPEED 1
+
 namespace Rogue
 {
 	class BaseAI

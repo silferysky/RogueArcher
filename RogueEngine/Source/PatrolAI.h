@@ -1,9 +1,6 @@
 #pragma once
 #include "BaseAI.h"
 
-#define PATROL_RANGE 1
-#define SPEED 1
-
 namespace Rogue
 {
 	class PatrolAI

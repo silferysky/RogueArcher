@@ -56,10 +56,10 @@ namespace Rogue
 			return;
 
 		Vec2Normalize(travelDistance, travelDistValue);
-		aiTransform.setPosition(aiTransform.getPosition() + travelDistance * SPEED);
+		aiTransform.setPosition(aiTransform.getPosition() + travelDistance * DEF_TRANSFORM_SPEED);
 
 		//If within a certain radius, assign next point
-		if (Vec2SqDistance(aiTransform.getPosition(), m_nextPoint.front()) < PATROL_RANGE * PATROL_RANGE)
+		if (Vec2SqDistance(aiTransform.getPosition(), m_nextPoint.front()) < DEF_PATROL_RANGE * DEF_PATROL_RANGE)
 		{
 			m_nextPoint.pop();
 			if (++m_currentPointIndex >= m_waypoints.size())
