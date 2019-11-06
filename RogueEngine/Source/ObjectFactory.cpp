@@ -458,6 +458,7 @@ namespace Rogue
 					case static_cast<int>(COLLIDER) :
 					{
 						strstream << "Collider{" << g_engine.m_coordinator.GetComponent<ColliderComponent>(entityToSerialize).Serialize() << "}";
+						break;
 					}
 					case static_cast<int>(PLAYERCONTROLLER) :
 					{

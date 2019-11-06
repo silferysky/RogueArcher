@@ -58,7 +58,6 @@ namespace Rogue
 		m_coordinator.RegisterComponent<TransformComponent>();
 		m_coordinator.RegisterComponent<CircleCollider2DComponent>();
 		m_coordinator.RegisterComponent<BoxCollider2DComponent>();
-		m_coordinator.RegisterComponent<ColliderComponent>();
 		m_coordinator.RegisterComponent<PlayerControllerComponent>();
 		m_coordinator.RegisterComponent<LogicComponent>();
 		m_coordinator.RegisterComponent<StatsComponent>();
@@ -67,6 +66,7 @@ namespace Rogue
 		m_coordinator.RegisterComponent<AudioEmitterComponent>();
 		m_coordinator.RegisterComponent<UIComponent>();
 		m_coordinator.RegisterComponent<CursorComponent>();
+		m_coordinator.RegisterComponent<ColliderComponent>();
 		m_coordinator.RegisterComponent<TextComponent>();
 	}
 
