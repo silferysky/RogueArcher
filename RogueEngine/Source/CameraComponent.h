@@ -20,7 +20,7 @@ namespace Rogue
 		bool getIsActive() const;
 
 		Vec2 getPosition() const;
-
+		void DisplayOnInspector();
 		std::string Serialize();
 		void Deserialize(std::string toDeserialize);
 	};

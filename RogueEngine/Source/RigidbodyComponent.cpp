@@ -131,6 +131,47 @@ namespace Rogue
 		m_friction = friction;
 	}
 
+	void RigidbodyComponent::setGravityScale(float gravity)
+	{
+		m_gravityScale = gravity;
+	}
+
+	void RigidbodyComponent::DisplayOnInspector()
+	{
+		ImGui::PushItemWidth(75);
+		ImGui::Checkbox("Static?", &m_isStatic);
+		setIsStatic(m_isStatic);
+
+		ImGui::PushItemWidth(75);
+		ImGui::DragFloat("Velocity X", &m_velocity.x, 1.0f, -2000.0f, 2000.0f);
+		ImGui::PushItemWidth(75);
+		ImGui::DragFloat("Velocity Y", &m_velocity.y, 1.0f, -2000.0f, 2000.0f);
+		setVelocity(m_velocity);
+
+
+		ImGui::PushItemWidth(75);
+		ImGui::DragFloat("Acceleration X", &m_acceleration.x, 1.0f, -10000.0f, 10000.0f);
+		ImGui::PushItemWidth(75);
+		ImGui::DragFloat("Acceleration Y", &m_acceleration.y, 1.0f, -10000.0f, 10000.0f);
+		setAcceleration(m_acceleration);
+
+		ImGui::PushItemWidth(75);
+		ImGui::SliderFloat("Friction", &m_friction, 0.0f, 1.0f);
+		setFriction(m_friction);
+
+		ImGui::PushItemWidth(75);
+		ImGui::SliderFloat("Damping", &m_damping, 0.0f, 1.0f);
+		setDamping(m_damping);
+
+		ImGui::PushItemWidth(75);
+		ImGui::SliderFloat("Restitution", &m_restitution, 0.0f, 1.0f);
+		setBounciness(m_restitution);
+
+		ImGui::PushItemWidth(75);
+		ImGui::SliderFloat("Gravity Scale", &m_gravityScale, 0.0f, 2.0f);
+		setGravityScale(m_gravityScale);
+	}
+
 	std::string RigidbodyComponent::Serialize()
 	{
 		//Acceleration, Velocity, Mass, Volume, isStatic

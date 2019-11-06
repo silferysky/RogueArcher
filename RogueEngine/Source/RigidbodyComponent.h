@@ -17,6 +17,7 @@ namespace Rogue
 
 		float m_restitution; // Bounciness
 		float m_friction;
+		float m_gravityScale;
 
 		bool m_isStatic;
 
@@ -48,7 +49,9 @@ namespace Rogue
 		void setIsStatic(bool set);
 		void setBounciness(float bounce);
 		void setFriction(float friction);
+		void setGravityScale(float gravity);
 
+		void DisplayOnInspector();
 		std::string Serialize();
 		void Deserialize(std::string toDeserialize);
 

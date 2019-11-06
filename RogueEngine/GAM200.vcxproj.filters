@@ -717,7 +717,6 @@
     <ClCompile Include="Source\CursorSystem.cpp">
       <Filter>RogueEngine\Systems\Cursor</Filter>
     </ClCompile>
-    <ClCompile Include="Source\BaseCollider.cpp" />
     <ClCompile Include="Source\ColliderComponent.cpp">
       <Filter>RogueEngine\Systems\Collision\Components</Filter>
     </ClCompile>

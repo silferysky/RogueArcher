@@ -27,6 +27,29 @@ namespace Rogue
 		}
 		return *this;
 	}
+	void CircleCollider2DComponent::DisplayOnInspector()
+	{
+		float m_radius = m_collider.getRadius();
+		Vec2 m_centerOffset = m_collider.getCenterOffSet();
+		float m_rotationOffset = m_collider.getRotationOffSet();
+		Vec2 m_scaleOffset = m_collider.getScaleOffSet();
+
+		ImGui::PushItemWidth(75);
+		ImGui::DragFloat("Radius", &m_radius, 0.5f, -100000.0f, 100000.0f);
+		m_collider.setRadius(m_radius);
+
+		ImGui::DragFloat("Center Offset X ", &m_centerOffset.x, 0.5f, -100000.0f, 100000.0f);
+		ImGui::DragFloat("Center Offset Y ", &m_centerOffset.y, 0.5f, -100000.0f, 100000.0f);
+		m_collider.setCenterOffSet(m_centerOffset);
+
+		ImGui::DragFloat("Rotation Offset ", &m_rotationOffset, 0.5f, -100000.0f, 100000.0f);
+		m_collider.setRotationOffSet(m_rotationOffset);
+
+		ImGui::DragFloat("Scale Offset X ", &m_scaleOffset.x, 0.5f, -100000.0f, 100000.0f);
+		ImGui::DragFloat("Scale Offset Y ", &m_scaleOffset.y, 0.5f, -100000.0f, 100000.0f);
+		m_collider.setScaleOffSet(m_scaleOffset);
+	}
+
 	std::string CircleCollider2DComponent::Serialize()
 	{
 		//Radius

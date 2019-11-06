@@ -79,6 +79,21 @@ namespace Rogue
 		return m_isLooping;
 	}
 
+	void AnimationComponent::DisplayOnInspector()
+	{
+		ImVec2 imageSize{ ImGui::GetWindowWidth() / 2, ImGui::GetWindowHeight() / 8 };
+		//ImGui::Image((void*)(intptr_t)(g_engine.m_coordinator.GetSystem<GraphicsSystem>()->getFBO()), ImVec2(imageSize.x, imageSize.y), ImVec2(0, 1), ImVec2(1, 0));
+		ImGui::PushItemWidth(75);
+		ImGui::DragInt("Frames", &m_frames, 1.0f, 0, 60);
+		setFrames(m_frames);
+
+		ImGui::DragFloat("Seconds Per Frame", &m_secondsPerFrame, 0.1f, 0.0f, 1.0f);
+		setSecondsPerFrame(m_secondsPerFrame);
+
+		ImGui::Checkbox("Looping?", &m_isLooping);
+		setIsLooping(m_isLooping);
+	}
+
 	std::string AnimationComponent::Serialize()
 	{
 		std::ostringstream ss;
