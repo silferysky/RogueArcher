@@ -17,9 +17,7 @@ namespace Rogue
 
 		virtual ~BaseCollider() = default;
 
-		BaseCollider(const BaseCollider& rhs) :
-			m_scaleOffset{ rhs.m_scaleOffset }, m_centerOffset{ rhs.m_centerOffset }, m_rotationOffset{ rhs.m_rotationOffset }
-		{}
+		BaseCollider(const BaseCollider& rhs) = default;
 
 		BaseCollider(BaseCollider&& rhs) noexcept :
 			m_scaleOffset{ Vec2{} }, m_centerOffset{ Vec2{} }, m_rotationOffset{ 0.0f }
@@ -29,7 +27,7 @@ namespace Rogue
 			std::swap(m_rotationOffset, rhs.m_rotationOffset);
 		}
 
-		BaseCollider& operator=(BaseCollider& rhs)
+		BaseCollider& operator=(const BaseCollider& rhs)
 		{
 			if (this != &rhs)
 			{

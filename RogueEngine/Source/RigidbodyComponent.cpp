@@ -227,6 +227,7 @@ namespace Rogue
 				break;
 			case 5:
 				m_gravityScale = std::stof(s1);
+				break;
 			default:
 				break;
 			}
