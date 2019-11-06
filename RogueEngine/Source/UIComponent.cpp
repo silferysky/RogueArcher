@@ -14,6 +14,12 @@ namespace Rogue
 		m_isActive = isActive;
 	}
 
+	void UIComponent::DisplayOnInspector()
+	{
+		ImGui::PushItemWidth(75);
+		ImGui::Checkbox("Active?", &m_isActive);
+	}
+
 	std::string UIComponent::Serialize()
 	{
 		std::ostringstream ss;

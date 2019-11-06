@@ -15,6 +15,7 @@ namespace Rogue
 		m_isStatic{ false },
 		m_restitution{ 0.1f },
 		m_friction{ 0.01f },
+		m_gravityScale{ 1.0f },
 		m_massData{}
 	{}
 
@@ -106,6 +107,11 @@ namespace Rogue
 		return m_friction;
 	}
 
+	float RigidbodyComponent::getGravityScale() const
+	{
+		return m_gravityScale;
+	}
+
 	void RigidbodyComponent::setDamping(float damping)
 	{
 		m_damping = damping;
@@ -131,6 +137,47 @@ namespace Rogue
 		m_friction = friction;
 	}
 
+	void RigidbodyComponent::setGravityScale(float gravity)
+	{
+		m_gravityScale = gravity;
+	}
+
+	void RigidbodyComponent::DisplayOnInspector()
+	{
+		ImGui::PushItemWidth(75);
+		ImGui::Checkbox("Static?", &m_isStatic);
+		setIsStatic(m_isStatic);
+
+		ImGui::PushItemWidth(75);
+		ImGui::DragFloat("Velocity X", &m_velocity.x, 1.0f, -2000.0f, 2000.0f);
+		ImGui::PushItemWidth(75);
+		ImGui::DragFloat("Velocity Y", &m_velocity.y, 1.0f, -2000.0f, 2000.0f);
+		setVelocity(m_velocity);
+
+
+		ImGui::PushItemWidth(75);
+		ImGui::DragFloat("Acceleration X", &m_acceleration.x, 1.0f, -10000.0f, 10000.0f);
+		ImGui::PushItemWidth(75);
+		ImGui::DragFloat("Acceleration Y", &m_acceleration.y, 1.0f, -10000.0f, 10000.0f);
+		setAcceleration(m_acceleration);
+
+		ImGui::PushItemWidth(75);
+		ImGui::SliderFloat("Friction", &m_friction, 0.0f, 1.0f);
+		setFriction(m_friction);
+
+		ImGui::PushItemWidth(75);
+		ImGui::SliderFloat("Damping", &m_damping, 0.0f, 1.0f);
+		setDamping(m_damping);
+
+		ImGui::PushItemWidth(75);
+		ImGui::SliderFloat("Restitution", &m_restitution, 0.0f, 1.0f);
+		setBounciness(m_restitution);
+
+		ImGui::PushItemWidth(75);
+		ImGui::SliderFloat("Gravity Scale", &m_gravityScale, 0.0f, 2.0f);
+		setGravityScale(m_gravityScale);
+	}
+
 	std::string RigidbodyComponent::Serialize()
 	{
 		//Acceleration, Velocity, Mass, Volume, isStatic
@@ -142,7 +189,8 @@ namespace Rogue
 		else
 			ss << 1 << ";";
 		ss << m_volume << ";";
-		ss << m_isStatic;
+		ss << m_isStatic << ";";
+		ss << m_gravityScale;
 
 		return ss.str();
 	}
@@ -163,20 +211,22 @@ namespace Rogue
 			switch (counter)
 			{
 			case 0:
-				setAcceleration(Vec2(std::stof(s1), std::stof(s2)));
+				m_acceleration = Vec2(std::stof(s1), std::stof(s2));
 				break;
 			case 1:
-				setVelocity(Vec2(std::stof(s1), std::stof(s2)));
+				m_velocity = Vec2(std::stof(s1), std::stof(s2));
 				break;
 			case 2:
 				setMass(std::stof(s1));
 				break;
 			case 3:
-				setVolume(std::stof(s1));
+				m_volume = std::stof(s1);
 				break;
 			case 4:
 				setIsStatic(std::stoi(s1));
 				break;
+			case 5:
+				m_gravityScale = std::stof(s1);
 			default:
 				break;
 			}

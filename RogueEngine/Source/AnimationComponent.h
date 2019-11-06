@@ -13,7 +13,7 @@ namespace Rogue
 		int m_offSet; // each frame in pixels
 		float m_secondsPerFrame = 0.1f;
 		float m_timer = 0.0f;
-		bool m_isAnimating = false;
+		bool m_isAnimating = true;
 		bool m_isLooping = false;
 	public:
 		AnimationComponent() = default;
@@ -41,6 +41,7 @@ namespace Rogue
 		void setIsLooping(const bool& isLooping);
 		bool getIsLooping() const;
 
+		void DisplayOnInspector();
 		//Serialize
 		virtual std::string Serialize();
 		virtual void Deserialize(std::string toDeserialize);

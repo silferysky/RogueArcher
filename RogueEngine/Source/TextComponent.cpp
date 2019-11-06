@@ -33,6 +33,31 @@ namespace Rogue
 		return m_scale;
 	}
 
+	void TextComponent::DisplayOnInspector()
+	{
+		static char m_newwords[128];
+		ImGui::PushItemWidth(75);
+		ImGui::TextWrapped("Current Text : ");
+		ImGui::TextWrapped("%s", m_words.c_str());
+		ImGui::TextDisabled("New Text");
+		ImGui::SameLine();
+		ImGui::PushItemWidth(250);
+		ImGui::InputText("                    ", m_newwords, 128);
+		if (ImGui::Button("Set new text"))
+		{
+			SetWords(m_newwords);
+			memset(m_newwords, 0, 128);
+		}
+
+		ImGui::PushItemWidth(250);
+		ImGui::ColorEdit4("Color", (float*)& m_colour);
+		SetColour(m_colour);
+
+		ImGui::DragFloat("Text Size Scale", &m_scale, 0.01f, 0.0f, 10.0f);
+
+		SetScale(m_scale);
+	}
+
 	std::string TextComponent::Serialize()
 	{
 		//Position
