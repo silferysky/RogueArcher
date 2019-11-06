@@ -29,6 +29,7 @@ namespace Rogue
 		void addWaypoint(Vec2& vec);
 		std::vector<Vec2> getWaypoints() const;
 		void clearWaypoints();
+		void setWaypoint(Vec2& loc, Vec2& newPos);
 
 		//From BaseComponent
 		std::string Serialize();

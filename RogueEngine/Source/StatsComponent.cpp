@@ -68,6 +68,11 @@ namespace Rogue
 		m_waypoints.clear();
 	}
 
+	void StatsComponent::setWaypoint(Vec2& loc, Vec2& newPos)
+	{
+		std::swap(loc, newPos);
+	}
+
 	std::string StatsComponent::Serialize()
 	{
 		//Health, speed, attack range, sight range
@@ -106,31 +111,42 @@ namespace Rogue
 	{
 		ImGui::PushItemWidth(75);
 		ImGui::DragInt("Health", &m_health, 1.0f, 0, 10);
-		setHealth(m_health);
 
 		ImGui::PushItemWidth(75);
 		ImGui::DragFloat("Speed", &m_speed, 1.0f, 0.0f, 10.0f);
-		setSpeed(m_speed);
 
 		ImGui::PushItemWidth(75);
 		ImGui::DragInt("Attack Range", &m_attackRange, 1.0f, 0, 1000);
-		setAttackRange(m_attackRange);
 
 		ImGui::PushItemWidth(75);
 		ImGui::DragInt("Sight Range", &m_sightRange, 1, 0, 1000);
-		setSightRange(m_sightRange);
 
+		std::ostringstream ostrstream;
+		size_t count = 1;
 		for (Vec2& waypoint : m_waypoints)
 		{
+			ostrstream.clear();
+			ostrstream.str("");
+			ostrstream << "Waypoint " << count << "X";
 			ImGui::PushItemWidth(75);
-			ImGui::DragFloat("Waypoint X", &waypoint.x, 1.0f, -10000.0f, 10000.0f);
+			ImGui::DragFloat(ostrstream.str().c_str(), &waypoint.x, 1.0f, -10000.0f, 10000.0f);
+			ostrstream.clear();
+			ostrstream.str("");
+			ostrstream << "Waypoint " << count << "Y";
 			ImGui::PushItemWidth(75);
-			ImGui::DragFloat("Waypoint Y", &waypoint.y, 1.0f, -10000.0f, 10000.0f);
+			ImGui::DragFloat(ostrstream.str().c_str(), &waypoint.y, 1.0f, -10000.0f, 10000.0f);
+			++count;
 		}
 
 		if (ImGui::Button("Add Waypoint"))
 		{
 			m_waypoints.push_back(Vec2());
+		}
+
+		if (ImGui::Button("Remove Waypoint"))
+		{
+			if (m_waypoints.size())
+				m_waypoints.pop_back();
 		}
 	}
 }
