@@ -64,6 +64,10 @@ namespace Rogue
 			Vec2 travelDistance;
 			Vec2Normalize(travelDistance, m_nextPoint.front() - aiTransform.getPosition());
 			g_engine.m_coordinator.GetComponent<RigidbodyComponent>(m_entity).addForce(travelDistance * DEF_SPEED);
+			if (travelDistance.x < 0 && g_engine.m_coordinator.GetComponent<TransformComponent>(m_entity).getScale().x > 0.0f)
+				g_engine.m_coordinator.GetComponent<TransformComponent>(m_entity).setScale(-1 * g_engine.m_coordinator.GetComponent<TransformComponent>(m_entity).getScale());
+			else
+				g_engine.m_coordinator.GetComponent<TransformComponent>(m_entity).setScale(1 * g_engine.m_coordinator.GetComponent<TransformComponent>(m_entity).getScale());
 		}
 	}
 }
