@@ -7,6 +7,6 @@ namespace Rogue
 	{
 	public:
 		virtual std::string Serialize() = 0;
-		virtual void Deserialize(std::string deserializeStr) = 0;
+		virtual void Deserialize(const std::string& deserializeStr) = 0;
 	};
 }

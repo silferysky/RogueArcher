@@ -32,8 +32,8 @@ namespace Rogue
 		void setWaypoint(Vec2& loc, Vec2& newPos);
 
 		//From BaseComponent
-		std::string Serialize();
-		void Deserialize(std::string toDeserialize);
+		std::string Serialize() override;
+		void Deserialize(const std::string& toDeserialize);
 		void DisplayOnInspector();
 
 	private:

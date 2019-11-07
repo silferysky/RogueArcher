@@ -103,7 +103,7 @@ namespace Rogue
 		return ss.str();
 	}
 
-	void AnimationComponent::Deserialize(std::string toDeserialize)
+	void AnimationComponent::Deserialize(const std::string& toDeserialize)
 	{
 		std::istringstream ss(toDeserialize);
 		std::string s1;		//s2 is used if two are needed
@@ -114,7 +114,7 @@ namespace Rogue
 			switch (counter)
 			{
 			case 0:
-				setFrames(std::stof(s1));
+				setFrames(std::stoi(s1));
 				break;
 			case 1:
 				setSecondsPerFrame(std::stof(s1));
