@@ -274,7 +274,7 @@ namespace Rogue
 
 		void DeassignTag(Entity entity)
 		{
-			//GetSystem<CollisionTagSystem>()->DeassignTag(entity);
+			GetSystem<CollisionTagSystem>()->DeassignTag(entity);
 		}
 
 		void SetStepFrames(size_t count)

@@ -133,7 +133,7 @@ namespace Rogue
 		}*/
 	}
 
-	void SpriteComponent::Deserialize(const std::string& toDeserialize)
+	void SpriteComponent::Deserialize(std::string toDeserialize)
 	{
 		std::istringstream strstream(toDeserialize);
 		std::string stdstr;
