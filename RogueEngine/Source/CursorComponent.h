@@ -16,7 +16,7 @@ namespace Rogue
 		const Vec2& GetPosOffset();
 		void SetPosOffset(const Vec2& offset);
 
-		std::string Serialize() override;
-		void Deserialize(const std::string& toDeserialize) override;
+		std::string Serialize();
+		void Deserialize(std::string);
 	};
 }

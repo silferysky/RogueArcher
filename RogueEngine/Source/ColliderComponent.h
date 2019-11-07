@@ -13,8 +13,8 @@ namespace Rogue
 		ColliderComponent& operator=(const ColliderComponent& rhs); // Copy assignment
 		ColliderComponent& operator=(ColliderComponent&& rhs) noexcept; // Move assignment
 
-		std::string Serialize() override;
-		void Deserialize(const std::string& toDeserialize) override;
+		std::string Serialize();
+		void Deserialize(std::string toDeserialize);
 
 		std::shared_ptr<Shape> GetShape() const;
 		void SetShape(const std::shared_ptr<Shape>& pShape);

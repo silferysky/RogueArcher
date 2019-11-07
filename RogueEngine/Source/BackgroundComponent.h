@@ -15,7 +15,7 @@ namespace Rogue
 		void SetParallax(const float& parallax);
 
 		//Serialize
-		std::string Serialize() override;
-		void Deserialize(const std::string& toDeserialize);
+		std::string Serialize();
+		void Deserialize(std::string toDeserialize);
 	};
 }

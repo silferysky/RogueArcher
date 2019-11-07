@@ -99,7 +99,7 @@ namespace Rogue
 		return ss.str();
 	}
 
-	void ColliderComponent::Deserialize(const std::string& toDeserialize)
+	void ColliderComponent::Deserialize(std::string toDeserialize)
 	{
 		std::istringstream ss(toDeserialize);
 		std::string s1;

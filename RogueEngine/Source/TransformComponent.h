@@ -26,8 +26,8 @@ namespace Rogue
 		Vec2 getScale() const;
 		float getRotation() const;
 
-		std::string Serialize() override;
-		void Deserialize(const std::string& toDeserialize) override;
+		std::string Serialize();
+		void Deserialize(std::string toDeserialize);
 		void DisplayOnInspector();
 	};
 }

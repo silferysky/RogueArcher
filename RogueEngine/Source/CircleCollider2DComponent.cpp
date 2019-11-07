@@ -64,7 +64,7 @@ namespace Rogue
 		return ss.str();
 	}
 
-	void CircleCollider2DComponent::Deserialize(const std::string& toDeserialize)
+	void CircleCollider2DComponent::Deserialize(std::string toDeserialize)
 	{
 		std::istringstream ss(toDeserialize);
 		std::string s1;			//s2 is used if two are needed

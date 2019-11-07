@@ -27,7 +27,7 @@ namespace Rogue
 		return ss.str();
 	}
 
-	void UIComponent::Deserialize(const std::string& toDeserialize)
+	void UIComponent::Deserialize(std::string toDeserialize)
 	{
 		std::istringstream ss(toDeserialize);
 		std::string s1;		//s2 is used if two are needed
