@@ -272,11 +272,6 @@ namespace Rogue
 			EventDispatcher::instance().AddEvent(changeStateEvent);
 		}
 
-		void DeassignTag(Entity entity)
-		{
-			//GetSystem<CollisionTagSystem>()->DeassignTag(entity);
-		}
-
 		void SetStepFrames(size_t count)
 		{
 			m_stepFrames = count;
