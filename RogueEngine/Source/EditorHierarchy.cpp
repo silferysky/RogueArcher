@@ -31,7 +31,7 @@ namespace Rogue
 				{
 					i.m_selected = false;
 				}
-				g_engine.m_coordinator.GetSceneManager().Create2DSprite();
+				SceneManager::instance().Create2DSprite();
 			}
 			if (ImGui::IsItemHovered())
 			{
@@ -41,7 +41,7 @@ namespace Rogue
 			}
 			if (ImGui::Selectable("Camera"))
 			{
-				g_engine.m_coordinator.GetSceneManager().CreateCamera();
+				SceneManager::instance().CreateCamera();
 			}
 			if (ImGui::IsItemHovered())
 			{

@@ -57,7 +57,7 @@ namespace Rogue
 	//MACROS (HIERARCHY)
 #define CREATE_HIERARCHY_OBJ(entityValue, sstr)	HierarchyInfo newInfo(entityValue, sstr); \
 												g_engine.m_coordinator.GetEntityManager().m_getActiveObjects().push_back(newInfo); \
-												g_engine.m_coordinator.GetSceneManager().IncrementObjectIterator();
+												SceneManager::instance().IncrementObjectIterator();
 
 //cstr will go out of scope if you choose to do strstream.str().c_str()
 //This is the proper (Non macro) way of setting the string

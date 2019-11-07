@@ -57,7 +57,7 @@ namespace Rogue
 			sound.SetVolume(1.0f * aEmitter.getAudioScale() - distance * 0.0015f * 0.0015f);
 		}
 
-		for (auto& pair : g_engine.m_coordinator.GetAudioManager().getAudioMap())
+		for (auto& pair : AudioManager::instance().getAudioMap())
 		{
 			pair.second.Update();
 		}
@@ -131,7 +131,7 @@ namespace Rogue
 			}
 		}
 
-		auto& audioManager = g_engine.m_coordinator.GetAudioManager();
+		auto& audioManager = AudioManager::instance();
 
 		std::string BGM1path = "[Water Ambience]WATER-CAVE_GEN-HDF-25449.ogg";
 		std::string BGM2path = "[Cave Ambience]WIND-HOWL_GEN-HDF-25929.ogg";
@@ -166,7 +166,7 @@ namespace Rogue
 				sound.Release();
 		}
 
-		for (auto& pair : g_engine.m_coordinator.GetAudioManager().getAudioMap())
+		for (auto& pair : AudioManager::instance().getAudioMap())
 		{
 			auto& sound = pair.second;
 
