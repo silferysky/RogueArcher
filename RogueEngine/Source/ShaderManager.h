@@ -15,6 +15,12 @@ namespace Rogue
 		ShaderManager() = default;
 		~ShaderManager() = default;
 
+		static ShaderManager& instance()
+		{
+			static ShaderManager instance;
+			return instance;
+		}
+
 		void Init()
 		{
 			ShaderMap.emplace("Object Shader", Shader(directory + "vertexShader.txt", directory + "fragmentShader.txt"));

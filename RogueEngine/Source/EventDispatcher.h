@@ -8,7 +8,6 @@ namespace Rogue
 		public System
 	{
 	public:
-
 		static EventDispatcher& instance()
 		{
 			static EventDispatcher instance;

@@ -27,11 +27,17 @@ namespace Rogue
 	{
 		std::map<std::string, Texture> textureMap;
 	public:
+		static TextureManager& instance()
+		{
+			static TextureManager instance;
+			return instance;
+		}
+
 		TextureManager() = default;
 		~TextureManager();
 
-		std::map<std::string, Texture> getTextureMap() const;
-
+		std::map<std::string, Texture>& getTextureMap();
+		
 		Texture loadTexture(const char* texture);
 	};
 }

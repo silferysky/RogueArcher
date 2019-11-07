@@ -76,7 +76,7 @@
 				{
 					auto& collider = g_engine.m_coordinator.GetComponent<Rogue::BoxCollider2DComponent>(entity);
 					drawAABB(&collider, &transform);
-					drawOBB(&collider, &rBody);
+					//drawOBB(&collider, &rBody);
 				}
 				if (g_engine.m_coordinator.ComponentExists<Rogue::CircleCollider2DComponent>(entity))
 				{

@@ -30,11 +30,11 @@ namespace Rogue
 
 				if (ImGui::BeginMenu("Load Prefab"))
 				{
-					for (auto& i : g_engine.m_coordinator.GetSceneManager().GetArchetypeMap())
+					for (auto& i : SceneManager::instance().GetArchetypeMap())
 					{
 						if(ImGui::MenuItem(i.first.c_str()))
 						{
-							g_engine.m_coordinator.GetSceneManager().Clone(i.first.c_str());
+							SceneManager::instance().Clone(i.first.c_str());
 						}
 					}
 					ImGui::EndMenu();
@@ -48,7 +48,7 @@ namespace Rogue
 						{
 							i.m_selected = false;
 						}
-						g_engine.m_coordinator.GetSceneManager().Create2DSprite();
+						SceneManager::instance().Create2DSprite();
 					}
 					ImGui::Separator();
 		

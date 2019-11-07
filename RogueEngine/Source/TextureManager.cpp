@@ -14,7 +14,7 @@ namespace Rogue
 		}
 	}
 
-	std::map<std::string, Texture> TextureManager::getTextureMap() const
+	std::map<std::string, Texture>& TextureManager::getTextureMap()
 	{
 		return textureMap;
 	}
