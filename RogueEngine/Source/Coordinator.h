@@ -23,18 +23,12 @@ namespace Rogue
 		std::unique_ptr<ComponentManager> m_componentManager;
 		std::unique_ptr<EntityManager> m_entityManager;
 		std::unique_ptr<SystemManager> m_systemManager;
-		std::unique_ptr<TextureManager> m_textureManager;
-		std::unique_ptr<ShaderManager> m_shaderManager;
-		std::unique_ptr<Timer> m_timer;
 
 	public:
 		Coordinator() :
 			m_entityManager{ std::make_unique<EntityManager>() },
 			m_componentManager{ std::make_unique<ComponentManager>() },
-			m_systemManager{ std::make_unique<SystemManager>() },
-			m_textureManager{ std::make_unique<TextureManager>() },
-			m_shaderManager{ std::make_unique<ShaderManager>() },
-			m_timer{ std::make_unique<Timer>() }
+			m_systemManager{ std::make_unique<SystemManager>() }
 		{}
 
 		void Init()
@@ -102,12 +96,12 @@ namespace Rogue
 
 		Texture loadTexture(const char* texture)
 		{
-			return m_textureManager->loadTexture(texture);
+			return TextureManager::instance().loadTexture(texture);
 		}
 
 		Shader loadShader(const std::string& shader)
 		{
-			return m_shaderManager->loadShader(shader);
+			return ShaderManager::instance().loadShader(shader);
 		}
 
 		template<typename T>
@@ -203,16 +197,16 @@ namespace Rogue
 		}
 		void InitTimeSystem(const char* system)
 		{
-			m_timer->TimerInit(system);
+			Timer::instance().TimerInit(system);
 		}
 		void EndTimeSystem(const char* system)
 		{
-			m_timer->TimerEnd(system);
+			Timer::instance().TimerEnd(system);
 		}
 
 		const std::map<const char*, float>& GetSystemTimes()
 		{
-			return m_timer->GetSystemTimes();
+			return Timer::instance().GetSystemTimes();
 		}
 
 		void cloneArchetypes(const char* archetype)
@@ -241,16 +235,6 @@ namespace Rogue
 		EntityManager& GetEntityManager() const
 		{
 			return *m_entityManager;
-		}
-
-		TextureManager& GetTextureManager() const
-		{
-			return *m_textureManager;
-		}
-
-		ShaderManager& GetShaderManager() const
-		{
-			return *m_shaderManager;
 		}
 
 		std::vector <HierarchyInfo>& GetActiveObjects()
@@ -305,7 +289,7 @@ namespace Rogue
 
 		Timer::ChronoTime GetCurrTime() const
 		{
-			return m_timer->GetCurrTime();
+			return Timer::instance().GetCurrTime();
 		}
 		
 		void SetStepFrames(size_t frames)

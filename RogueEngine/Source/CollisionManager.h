@@ -26,8 +26,13 @@ namespace Rogue
 		inline Vec2 GetColliderPosition(const BaseCollider& collider, const TransformComponent& trans) const;
 		inline float GetColliderRotation(const BaseCollider& collider, const TransformComponent& trans) const;
 
-
 	public:
+		static CollisionManager& instance()
+		{
+			static CollisionManager instance;
+			return instance;
+		}
+
 		void GenerateManifoldCirclevsCircle(Entity A, Entity B);
 		bool GenerateManifoldCirclevsAABB(Entity A, Entity B);
 		bool GenerateManifoldAABBvsCircle(Entity A, Entity B);

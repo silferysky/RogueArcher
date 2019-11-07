@@ -38,7 +38,6 @@ namespace Rogue
 		m_coordinator.RegisterSystem<LogicSystem>();
 		m_coordinator.RegisterSystem<PlayerControllerSystem>();
 		m_coordinator.RegisterSystem<PhysicsSystem>();
-		m_coordinator.RegisterSystem<CollisionTagSystem>();
 		m_coordinator.RegisterSystem<CircleCollisionSystem>();
 		m_coordinator.RegisterSystem<BoxCollisionSystem>();
 		m_coordinator.RegisterSystem<CollisionSystem>();
