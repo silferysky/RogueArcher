@@ -20,7 +20,7 @@ namespace Rogue
 		return ss.str();
 	}
 
-	void BackgroundComponent::Deserialize(std::string toDeserialize)
+	void BackgroundComponent::Deserialize(const std::string& toDeserialize)
 	{
 		std::istringstream ss(toDeserialize);
 		std::string s1;		//s2 is used if two are needed

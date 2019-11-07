@@ -24,8 +24,8 @@ namespace Rogue
 		void setAudioScale(const float& audioScale);
 		float& getAudioScale();
 
-		std::string Serialize();
-		void Deserialize(std::string toDeserialize);
+		std::string Serialize() override;
+		void Deserialize(const std::string& toDeserialize);
 
 		void Destroy();
 

@@ -22,7 +22,7 @@ namespace Rogue
 		return ss.str();
 	}
 
-	void CursorComponent::Deserialize(std::string toDeserialize)
+	void CursorComponent::Deserialize(const std::string& toDeserialize)
 	{
 		std::istringstream ss(toDeserialize);
 		std::string s1;			//s2 is used if two are needed

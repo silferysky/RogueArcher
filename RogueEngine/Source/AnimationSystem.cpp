@@ -57,7 +57,7 @@ namespace Rogue
 		if (currentFrame >= animate->getFrames())
 		{
 			currentFrame = 0;
-			animate->setCurrentFrame(currentFrame);
+			animate->setCurrentFrame(static_cast<int>(currentFrame));
 			if (!animate->getIsLooping())
 				animate->setIsAnimating(false);
 		}
@@ -65,11 +65,11 @@ namespace Rogue
 		double min = currentFrame / totalFrames;
 		double max = ++currentFrame / totalFrames;
 
-		sprite->setTexCoordMin(min);
-		sprite->setTexCoordMax(max);
+		sprite->setTexCoordMin(static_cast<float>(min));
+		sprite->setTexCoordMax(static_cast<float>(max));
 
 		if (animate->getIsAnimating())
-			animate->setCurrentFrame(currentFrame);
+			animate->setCurrentFrame(static_cast<int>(currentFrame));
 	}
 
 	void AnimationSystem::ResetTextures()
