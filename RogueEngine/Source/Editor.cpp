@@ -33,7 +33,7 @@ namespace Rogue
 	{
 		KeyTriggeredEvent* keytriggeredevent = dynamic_cast<KeyTriggeredEvent*>(ev);
 		KeyPress keycode = keytriggeredevent->GetKeyCode();
-		if (keytriggeredevent->GetKeyCode() == KeyPress::Numpad9)
+		if (keytriggeredevent->GetKeyCode() == KeyPress::Numpad8)
 		{
 			Entity selected = 0;
 			for (auto& i : m_currentVector)
