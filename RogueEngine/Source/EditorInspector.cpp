@@ -61,14 +61,14 @@ namespace Rogue
 					}
 					if (ImGui::Button("Save As Prefab"))
 					{
-						auto archetypeMap = g_engine.m_coordinator.GetSceneManager().GetArchetypeMap();
+						auto archetypeMap = SceneManager::instance().GetArchetypeMap();
 						auto it = archetypeMap.find(i.m_objectName);
 						if (it != archetypeMap.end())
-							g_engine.m_coordinator.GetSceneManager().SaveArchetype(i.m_objectName.c_str());
+							SceneManager::instance().SaveArchetype(i.m_objectName.c_str());
 						else
 						{
-							g_engine.m_coordinator.GetSceneManager().AddToArchetypes(i.m_Entity);
-							g_engine.m_coordinator.GetSceneManager().SaveArchetype(i.m_objectName.c_str());
+							SceneManager::instance().AddToArchetypes(i.m_Entity);
+							SceneManager::instance().SaveArchetype(i.m_objectName.c_str());
 						}
 					}
 
@@ -396,7 +396,7 @@ namespace Rogue
 						if (g_engine.m_coordinator.ComponentExists<AudioEmitterComponent>(i.m_Entity))
 							g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(i.m_Entity).Destroy();
 
-						g_engine.m_coordinator.GetSceneManager().DeleteActiveEntity(i.m_Entity);
+						SceneManager::instance().DeleteActiveEntity(i.m_Entity);
 					}
 
 				}		

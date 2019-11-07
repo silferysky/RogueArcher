@@ -255,16 +255,16 @@ namespace Rogue
 		strstream << level["Files"].GetString();
 
 		while(std::getline(strstream, stdstr, ';'))
-			g_engine.m_coordinator.GetSceneManager().AddToLoadedLevels(stdstr);
+			SceneManager::instance().AddToLoadedLevels(stdstr);
 
-		m_maxFileCount = g_engine.m_coordinator.GetSceneManager().GetLoadedLevels().size();
+		m_maxFileCount = SceneManager::instance().GetLoadedLevels().size();
 
 		g_engine.m_coordinator.GetSystem<CameraSystem>()->SetCameraMin(Vec2(level["CameraMinX"].GetFloat(), level["CameraMinY"].GetFloat()));
 		g_engine.m_coordinator.GetSystem<CameraSystem>()->SetCameraMax(Vec2(level["CameraMaxX"].GetFloat(), level["CameraMaxY"].GetFloat()));
 
 		stdstr = std::string();
 
-		auto& audioManager = g_engine.m_coordinator.GetAudioManager();
+		auto& audioManager = AudioManager::instance();
 
 		while (std::getline(istrstream, stdstr, ';'))
 		{
@@ -281,7 +281,7 @@ namespace Rogue
 	{
 		std::stringstream strstream;
 		
-		for (auto& fileObjects : g_engine.m_coordinator.GetSceneManager().GetLoadedLevels())
+		for (auto& fileObjects : SceneManager::instance().GetLoadedLevels())
 		{
 			strstream << fileObjects << ";";
 		}
@@ -377,7 +377,7 @@ namespace Rogue
 			}
 		}
 		std::ostringstream ostrstream;
-		ostrstream << "Game Object " << g_engine.m_coordinator.GetSceneManager().GetObjectIterator();
+		ostrstream << "Game Object " << SceneManager::instance().GetObjectIterator();
 		CREATE_HIERARCHY_OBJ(clonedEntity, ostrstream.str());
 
 	}
@@ -398,7 +398,7 @@ namespace Rogue
 			std::getline(istrstream, toDeserialise);
 			FactoryLoadComponent(curEnt, curSignature, toDeserialise);
 
-			ostrstream << "Game Object " << g_engine.m_coordinator.GetSceneManager().GetObjectIterator();
+			ostrstream << "Game Object " << SceneManager::instance().GetObjectIterator();
 			CREATE_HIERARCHY_OBJ(curEnt, ostrstream.str());
 		}
 	}

@@ -25,7 +25,7 @@ namespace Rogue
 			{
 				if (ImGui::MenuItem("New Scene"))
 				{
-					SceneManager& sceneManager = g_engine.m_coordinator.GetSceneManager();
+					SceneManager& sceneManager = SceneManager::instance();
 
 					//Cleaning up old scene
 					sceneManager.ClearAllEntities();
@@ -56,11 +56,11 @@ namespace Rogue
 				}
 				if (ImGui::BeginMenu("Open Scene"))
 				{
-					for (auto& levelStrIterator : g_engine.m_coordinator.GetSceneManager().GetLoadedLevels())
+					for (auto& levelStrIterator : SceneManager::instance().GetLoadedLevels())
 					{
 						if (ImGui::MenuItem(levelStrIterator.c_str()))
 						{
-							SceneManager& sceneManager = g_engine.m_coordinator.GetSceneManager();
+							SceneManager& sceneManager = SceneManager::instance();
 
 							sceneManager.setCurrentFileName(levelStrIterator.c_str());
 							sceneManager.ClearAllEntities();
@@ -74,18 +74,18 @@ namespace Rogue
 				}
 				if (ImGui::MenuItem("Save Scene", nullptr, false, !g_engine.m_coordinator.GetGameState()))
 				{
-					SceneManager& sceneManager = g_engine.m_coordinator.GetSceneManager();
-					g_engine.m_coordinator.GetSceneManager().SaveLevel(sceneManager.getCurrentFileName().c_str());
+					SceneManager& sceneManager = SceneManager::instance();
+					SceneManager::instance().SaveLevel(sceneManager.getCurrentFileName().c_str());
 				}
 				if (ImGui::BeginMenu("Save Scene As", !g_engine.m_coordinator.GetGameState()))
 				{
-					for (auto& levelStrIterator : g_engine.m_coordinator.GetSceneManager().GetLoadedLevels())
+					for (auto& levelStrIterator : SceneManager::instance().GetLoadedLevels())
 					{
 						if (ImGui::MenuItem(levelStrIterator.c_str()))
 						{
-							SceneManager& sceneManager = g_engine.m_coordinator.GetSceneManager();
+							SceneManager& sceneManager = SceneManager::instance();
 							sceneManager.setCurrentFileName(levelStrIterator.c_str());
-							g_engine.m_coordinator.GetSceneManager().SaveLevel(sceneManager.getCurrentFileName().c_str());
+							SceneManager::instance().SaveLevel(sceneManager.getCurrentFileName().c_str());
 						}
 					}
 					ImGui::EndMenu();

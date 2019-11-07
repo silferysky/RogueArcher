@@ -2,6 +2,7 @@
 #include <sstream>
 #include "RigidbodyComponent.h"
 #include "REMath.h"
+#include "Logger.h"
 
 namespace Rogue
 {
@@ -61,8 +62,7 @@ namespace Rogue
 
 	void RigidbodyComponent::setMass(float mass)
 	{
-		if (mass < RE_EPSILON && mass > -RE_EPSILON)
-			throw("Mass is 0!");
+		RE_ASSERT(mass > RE_EPSILON, "Mass is 0! Check serialization.");
 
 		m_massData.m_invMass = 1 / mass;
 	}
