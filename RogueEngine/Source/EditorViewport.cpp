@@ -22,16 +22,16 @@ namespace Rogue
 			//If game is not running, save level, and set it to running
 			if (!g_engine.m_coordinator.GetGameState())
 			{
-				g_engine.m_coordinator.GetSceneManager().SaveLevel(g_engine.m_coordinator.GetSceneManager().getCurrentFileName().c_str());
-				//g_engine.m_coordinator.GetSceneManager().SaveAndLoadLevel();
+				SceneManager::instance().SaveLevel(SceneManager::instance().getCurrentFileName().c_str());
+				//SceneManager::instance().SaveAndLoadLevel();
 				g_engine.m_coordinator.SetGameState(true);
 				//ShowCursor(false);
 			}
 			else //If game is running, just stop and reload old data
 			{
 				//Loads last iteration and pauses game
-				g_engine.m_coordinator.GetSceneManager().ClearAllEntities();
-				g_engine.m_coordinator.GetSceneManager().LoadLevel(g_engine.m_coordinator.GetSceneManager().getCurrentFileName().c_str());
+				SceneManager::instance().ClearAllEntities();
+				SceneManager::instance().LoadLevel(SceneManager::instance().getCurrentFileName().c_str());
 				g_engine.m_coordinator.SetGameState(false);
 				g_engine.m_coordinator.SetPauseState(false);
 				//ShowCursor(true);
@@ -96,8 +96,8 @@ namespace Rogue
 			if (g_engine.m_coordinator.GetGameState())
 			{
 				//Loads last iteration and pauses game
-				g_engine.m_coordinator.GetSceneManager().ClearAllEntities();
-				g_engine.m_coordinator.GetSceneManager().LoadLevel(g_engine.m_coordinator.GetSceneManager().getCurrentFileName().c_str());
+				SceneManager::instance().ClearAllEntities();
+				SceneManager::instance().LoadLevel(SceneManager::instance().getCurrentFileName().c_str());
 				g_engine.m_coordinator.SetGameState(false);
 				g_engine.m_coordinator.SetPauseState(false);
 			}

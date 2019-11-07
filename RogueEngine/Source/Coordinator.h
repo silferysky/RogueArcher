@@ -25,9 +25,6 @@ namespace Rogue
 		std::unique_ptr<SystemManager> m_systemManager;
 		std::unique_ptr<TextureManager> m_textureManager;
 		std::unique_ptr<ShaderManager> m_shaderManager;
-		std::unique_ptr<SceneManager> m_sceneManager;
-		std::unique_ptr<AudioManager> m_audioManager;
-		std::unique_ptr<EventDispatcher> m_eventDispatcher;
 		std::unique_ptr<Timer> m_timer;
 
 	public:
@@ -37,9 +34,6 @@ namespace Rogue
 			m_systemManager{ std::make_unique<SystemManager>() },
 			m_textureManager{ std::make_unique<TextureManager>() },
 			m_shaderManager{ std::make_unique<ShaderManager>() },
-			m_sceneManager{ std::make_unique<SceneManager>() },
-			m_audioManager{ std::make_unique<AudioManager>()},
-			m_eventDispatcher{ std::make_unique<EventDispatcher>() },
 			m_timer{ std::make_unique<Timer>() }
 		{}
 
@@ -49,9 +43,9 @@ namespace Rogue
 			m_systemManager->InitSystems();
 
 			// Load first scene
-			m_sceneManager->LoadLevelFiles("Levels.json");
-			m_sceneManager->LoadLevel("Level 1.json");
-			m_sceneManager->LoadArchetypes("Resources/Archetypes.json");
+			SceneManager::instance().LoadLevelFiles("Levels.json");
+			SceneManager::instance().LoadLevel("Level 1.json");
+			SceneManager::instance().LoadArchetypes("Resources/Archetypes.json");
 
 			SystemInits();
 		}
@@ -103,7 +97,7 @@ namespace Rogue
 			}
 
 			m_systemManager->GetSystem<LogicSystem>()->ClearLogicInterface();
-			m_sceneManager->ResetObjectIterator();
+			SceneManager::instance().ResetObjectIterator();
 		}
 
 		Texture loadTexture(const char* texture)
@@ -223,12 +217,12 @@ namespace Rogue
 
 		void cloneArchetypes(const char* archetype)
 		{
-			m_sceneManager->Clone(archetype);
+			SceneManager::instance().Clone(archetype);
 		}
 
 		void SaveArchetype(const char* archetype)
 		{
-			m_sceneManager->SaveArchetype(archetype);
+			SceneManager::instance().SaveArchetype(archetype);
 		}
 
 		void clone(Entity existingEntity)
@@ -239,7 +233,7 @@ namespace Rogue
 			Signature newEntitySignature = m_entityManager->GetSignature(existingEntity);
 			m_entityManager->SetSignature(clonedEntity, newEntitySignature);
 			m_systemManager->EntitySignatureChanged(clonedEntity, newEntitySignature);
-			m_sceneManager->AddToActiveEntities(clonedEntity);
+			SceneManager::instance().AddToActiveEntities(clonedEntity);
 
 			//m_sceneManager->Clone(existingEntity);
 		}
@@ -257,16 +251,6 @@ namespace Rogue
 		ShaderManager& GetShaderManager() const
 		{
 			return *m_shaderManager;
-		}
-
-		SceneManager& GetSceneManager() const
-		{
-			return *m_sceneManager;
-		}
-
-		AudioManager& GetAudioManager() const
-		{
-			return *m_audioManager;
 		}
 
 		std::vector <HierarchyInfo>& GetActiveObjects()

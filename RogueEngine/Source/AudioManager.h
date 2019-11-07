@@ -9,6 +9,12 @@ namespace Rogue
 		std::map<std::string, Sound> audioMap;
 		std::string directory = "Resources/Sounds/";
 	public:
+		static AudioManager& instance()
+		{
+			static AudioManager instance;
+			return instance;
+		}
+
 		AudioManager() = default;
 		~AudioManager()
 		{

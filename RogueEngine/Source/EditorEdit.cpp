@@ -66,7 +66,7 @@ namespace Rogue
 					{
 						if (i.m_selected == true)
 						{
-							g_engine.m_coordinator.GetSceneManager().DeleteActiveEntity(i.m_Entity);
+							SceneManager::instance().DeleteActiveEntity(i.m_Entity);
 						}
 					}
 				}

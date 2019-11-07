@@ -17,6 +17,12 @@ namespace Rogue
 		unsigned int m_cameraIterator = 0;
 
 	public:
+		static SceneManager& instance()
+		{
+			static SceneManager instance;
+			return instance;
+		}
+
 		SceneManager();
 		~SceneManager();
 
