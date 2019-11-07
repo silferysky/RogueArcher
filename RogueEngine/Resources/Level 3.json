@@ -19,5 +19,5 @@
     "Entity5": "Name{Right Wall}|Sprite{Resources/Assets/SpriteSheet.png;1;1;1;1;1}|Rigidbody{0;0;0;0;1;1;1;1}|Transform{600;0;156;600;1.7}|CircleCollider{0;0;0;0;0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;0;0;0;0}||||||Audio{Resources/Sounds/1.wav;1;}|||||",
     "Entity6": "Name{Experience Matters3}|Sprite{Resources/Assets/test.bmp;1;1;1;1;1}|Rigidbody{0;0;0;0;1;1;0;1}|Transform{0;-300.01;108;100;0}|CircleCollider{0;0;0;0;0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;0;0;0;0}||LogicComponent{2;0;0;1}|StatsComponent{1;1;1;1;2;0;-300;100;300;}||||||||",
     "Entity7": "Name{Experience Matters2}|Sprite{Resources/Assets/test.bmp;1;1;1;1;1}|Rigidbody{0;0;0;0;1;1;0;1}|Transform{0;-154.01;108;100;0}|CircleCollider{0;0;0;0;0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;0;0;0;0}||LogicComponent{1;0;0;2}|StatsComponent{1;1;1;1;2;0;-300;100;300;}||||||||",
-    "Entity8": "Name{Text}|{0;0;1;1;0}|{1.0;0.0;0.0;1.0;Haha;1.0}"
-    }
+    "Entity8": "Name{Text}|||Transform{0;0;1;1;0}||||||||||||Text{1;0;0;1;Haha;1;}|"
+}
