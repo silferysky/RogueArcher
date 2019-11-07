@@ -79,7 +79,7 @@ namespace Rogue
 
 			m_systemManager->EntityDestroyed(entity);
 
-			m_systemManager->DeassignTag(entity);
+			//m_systemManager->DeassignTag(entity);
 		}
 
 		void DestroyAllEntity()
