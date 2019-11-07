@@ -8,8 +8,6 @@ namespace Rogue
 		public System, public EventListener
 	{
 	public:
-		static CollisionManager s_collisionManager;
-
 		CollisionSystem();
 
 		void Init() override;

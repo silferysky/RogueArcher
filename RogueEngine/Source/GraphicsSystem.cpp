@@ -33,7 +33,7 @@ namespace Rogue
 		RE_ASSERT(InitializeOpenGL(), "OpenGL not initialized");
 
 		// Emplace shaders into the map
-		g_engine.m_coordinator.GetShaderManager().Init();
+		ShaderManager::instance().Init();
 
 		m_shader = g_engine.m_coordinator.loadShader("Object Shader");
 		m_screenShader = g_engine.m_coordinator.loadShader("Screen Shader");

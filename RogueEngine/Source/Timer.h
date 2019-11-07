@@ -7,6 +7,12 @@ namespace Rogue
 	class Timer
 	{
 	public:
+		static Timer& instance()
+		{
+			static Timer instance;
+			return instance;
+		}
+
 		using ChronoClock = std::chrono::high_resolution_clock;
 		using ChronoTime = std::chrono::time_point <std::chrono::steady_clock>;
 		using FloatSec = std::chrono::duration<float>;

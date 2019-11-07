@@ -37,8 +37,8 @@ namespace Rogue
 			auto& currBoxCollider = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iEntity);
 
 			// Update collidables
-			CollisionSystem::s_collisionManager.UpdateAABB(currBoxCollider.m_aabb, currTransform);
-			CollisionSystem::s_collisionManager.UpdateOBB(currBoxCollider.m_obb, currTransform);
+			CollisionManager::instance().UpdateAABB(currBoxCollider.m_aabb, currTransform);
+			CollisionManager::instance().UpdateOBB(currBoxCollider.m_obb, currTransform);
 
 			// Conduct spatial partitioning
 
@@ -54,13 +54,13 @@ namespace Rogue
 				if (currRigidbody.getIsStatic() && nextRigidbody.getIsStatic())
 					continue;
 
-				if (CollisionSystem::s_collisionManager.DiscreteAABBvsAABB(currBoxCollider.m_aabb, nextBoxCollider.m_aabb))
+				if (CollisionManager::instance().DiscreteAABBvsAABB(currBoxCollider.m_aabb, nextBoxCollider.m_aabb))
 				{
 					//std::cout << "Entity " << *iEntity << " AABB collides with Entity " << *iNextEntity << " AABB" << std::endl;
-					CollisionSystem::s_collisionManager.GenerateManifoldAABBvsAABB(*iEntity, *iNextEntity);
+					CollisionManager::instance().GenerateManifoldAABBvsAABB(*iEntity, *iNextEntity);
 				}
 
-				if (CollisionSystem::s_collisionManager.DiscreteOBBvsOBB(currBoxCollider.m_obb, nextBoxCollider.m_obb))
+				if (CollisionManager::instance().DiscreteOBBvsOBB(currBoxCollider.m_obb, nextBoxCollider.m_obb))
 				{
 					//	std::cout << "Entity " << *iEntity << " OBB collides with Entity " << *iNextEntity << " OBB" << std::endl;
 				}
@@ -68,7 +68,7 @@ namespace Rogue
 			}
 
 			// Collision Response (Contact, forces, rest, Impulse, Torque)
-			CollisionSystem::s_collisionManager.ResolveManifolds();
+			CollisionManager::instance().ResolveManifolds();
 		}
 
 		g_engine.m_coordinator.EndTimeSystem("Box Collision System");

@@ -36,7 +36,7 @@ namespace Rogue
 			auto& currCircleCollider = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(*iEntity);
 
 			// Colliders updated.
-			CollisionSystem::s_collisionManager.UpdateCircleCollider(currCircleCollider.m_collider, currTransform);
+			CollisionManager::instance().UpdateCircleCollider(currCircleCollider.m_collider, currTransform);
 
 			// Spatial partitioning conducted in main collision system.
 
@@ -53,15 +53,15 @@ namespace Rogue
 				if (currRigidbody.getIsStatic() && nextRigidbody.getIsStatic())
 					continue;
 
-				if (CollisionSystem::s_collisionManager.DiscreteCircleVsCircle(currCircleCollider.m_collider, nextCircleCollider.m_collider,
+				if (CollisionManager::instance().DiscreteCircleVsCircle(currCircleCollider.m_collider, nextCircleCollider.m_collider,
 					currTransform, nextTransform))
 				{
-					CollisionSystem::s_collisionManager.GenerateManifoldCirclevsCircle(*iEntity, *iNextEntity);
+					CollisionManager::instance().GenerateManifoldCirclevsCircle(*iEntity, *iNextEntity);
 				}
 			}
 
 			// Collision Response (Contact, forces, rest, Impulse, Torque)
-			CollisionSystem::s_collisionManager.ResolveManifolds();
+			CollisionManager::instance().ResolveManifolds();
 		}
 
 		g_engine.m_coordinator.EndTimeSystem("Circle Collision System");
