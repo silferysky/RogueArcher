@@ -50,6 +50,7 @@ namespace Rogue
 
 		std::vector<std::string> GetLoadedLevels() const;
 		void AddToLoadedLevels(std::string name);
+		void ResetMaxEntityInCurrentFile();
 
 		void IncrementObjectIterator();
 		void ResetObjectIterator();

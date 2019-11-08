@@ -42,8 +42,11 @@ namespace Rogue
 					//Resetting camera
 					g_engine.m_coordinator.GetSystem<CameraSystem>()->ResetCamera();
 
-					//Saving new scene so it exists (Won't crash when load non-existent scene)
+					//Resetting file's max entity (Will use this new entity instead when creating file)
+					sceneManager.ResetMaxEntityInCurrentFile();
+
 					std::ostringstream ostrstream;
+					//Saving new scene so it exists (Won't crash when load non-existent scene)
 					ostrstream << "Level " << sceneManager.GetSceneIterator() << ".json";
 					sceneManager.setCurrentFileName(ostrstream.str().c_str());
 					sceneManager.SaveLevel(ostrstream.str().c_str());
