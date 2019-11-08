@@ -168,6 +168,11 @@ namespace Rogue
 		m_loadedLevels.push_back(name);
 	}
 
+	void SceneManager::ResetMaxEntityInCurrentFile()
+	{
+		m_objectFactory->ResetMaxEntity();
+	}
+
 	void SceneManager::IncrementObjectIterator()
 	{
 		++m_objectIterator;
@@ -207,9 +212,9 @@ namespace Rogue
 	{
 		//Safety Check
 		auto& activeObjects = g_engine.m_coordinator.GetEntityManager().m_getActiveObjects();
-		for (auto iterator = activeObjects.begin(); iterator != activeObjects.end(); ++iterator)
+		for (auto& iterator : activeObjects)
 		{
-			if (iterator->m_Entity == newEnt)
+			if (iterator.m_Entity == newEnt)
 				return;
 		}
 
