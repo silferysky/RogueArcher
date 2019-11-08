@@ -316,7 +316,12 @@ namespace Rogue
 
 	void PlayerControllerSystem::ClearTimedEntities()
 	{
-		for (TimedEntity entity : m_timedEntities)
+		//Check if timed entities exist first. If it doesn't, this call is redundant
+		if (!m_timedEntities.size())
+			return;
+
+		//Deleting all local timedEntities
+		for (TimedEntity& entity : m_timedEntities)
 		{
 			g_engine.m_coordinator.DestroyEntity(entity.m_entity);
 		}
@@ -324,7 +329,7 @@ namespace Rogue
 		auto& activeObjects = g_engine.m_coordinator.GetActiveObjects();
 		for (auto iterator = activeObjects.begin(); iterator != activeObjects.end(); ++iterator)
 		{
-			if (m_timedEntities.size() && iterator->m_Entity == m_timedEntities.begin()->m_entity)
+			if (iterator->m_Entity == m_timedEntities.begin()->m_entity)
 			{
 				iterator = activeObjects.erase(iterator);
 				break;
@@ -344,7 +349,6 @@ namespace Rogue
 
 	void PlayerControllerSystem::CreateBallAttack()
 	{
-
 		for (Entity entity : m_entities)
 		{
 			std::ostringstream strstream;

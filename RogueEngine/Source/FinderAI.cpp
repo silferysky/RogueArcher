@@ -17,14 +17,14 @@ namespace Rogue
 	void FinderAI::AIDetect()
 	{
 		auto& activeObjects = g_engine.m_coordinator.GetActiveObjects(); 
-		auto iterator = activeObjects.begin();
-		for (; iterator != activeObjects.end(); ++iterator)
+		
+		for (auto& iterator : activeObjects)
 		{
-			if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(iterator->m_Entity))
+			if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(iterator.m_Entity))
 			{
-				if (g_engine.m_coordinator.ComponentExists<TransformComponent>(iterator->m_Entity) && g_engine.m_coordinator.ComponentExists<TransformComponent>(m_entity))
+				if (g_engine.m_coordinator.ComponentExists<TransformComponent>(iterator.m_Entity) && g_engine.m_coordinator.ComponentExists<TransformComponent>(m_entity))
 				{
-					auto& playerTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(iterator->m_Entity);
+					auto& playerTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(iterator.m_Entity);
 					auto& aiTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(m_entity);
 
 					float distance = Vec2SqDistance(aiTransform.getPosition(), playerTransform.getPosition());

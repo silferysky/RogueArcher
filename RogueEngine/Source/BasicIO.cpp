@@ -120,7 +120,7 @@ namespace Rogue
 			//Header
 			strstream << ",\n  \"Entity" << i << "\": \"";
 
-			if (!writingLevel)
+			/*if (!writingLevel)
 			{
 				strstream << "Name{Entity" << i << "}|";
 			}
@@ -153,7 +153,7 @@ namespace Rogue
 
 			//StatsComponent
 			//HP, Speed, Detect Range, Attack Range
-			strstream << "StatsComponent{1;1;3;3}";
+			strstream << "StatsComponent{1;1;3;3}";*/
 
 			//End
 			strstream << "\"";

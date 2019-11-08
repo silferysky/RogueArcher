@@ -83,7 +83,7 @@ namespace Rogue
 		ss << m_attackRange << ";";
 		ss << m_waypoints.size() << ";";
 
-		for (Vec2 vec : m_waypoints)
+		for (Vec2& vec : m_waypoints)
 		{
 			ss << vec.x << ";" << vec.y << ";";
 		}
