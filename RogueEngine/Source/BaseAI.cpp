@@ -31,12 +31,12 @@ namespace Rogue
 		//For all possible states BaseAI has
 		//This for loop handles the order of importance of each state.
 		auto allStatesVector = m_logicComponent->GetAllAIStates();
-		for (auto it = allStatesVector.begin(); it != allStatesVector.end(); ++it)
+		for (auto& it : allStatesVector)
 		{
 			//If its ActiveStateBit matches, run that update
-			if (m_logicComponent->GetActiveStateBit(static_cast<size_t>(*it)))
+			if (m_logicComponent->GetActiveStateBit(static_cast<size_t>(it)))
 			{
-				switch (*it)
+				switch (it)
 				{
 				case AIState::AIState_Chase:
 					AIChaseUpdate();
@@ -51,7 +51,7 @@ namespace Rogue
 				}
 
 				//Sets current state and exit state since you aren't supposed to do multiple states
-				m_logicComponent->SetCurState(*it);
+				m_logicComponent->SetCurState(it);
 				//Break when done so other states would not be performed
 				break;
 			}

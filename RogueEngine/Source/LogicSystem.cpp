@@ -53,13 +53,13 @@ namespace Rogue
 			return;
 		}
 
-		for (auto it = m_entityLogicMap.begin(); it != m_entityLogicMap.end(); ++it)
+		for (auto& it : m_entityLogicMap)
 		{
 			//Null checker
-			if (!it->second)
+			if (!it.second)
 				continue;
 
-			it->second->LogicUpdate();
+			it.second->LogicUpdate();
 		}
 		g_engine.m_coordinator.EndTimeSystem("Logic System");
 	}

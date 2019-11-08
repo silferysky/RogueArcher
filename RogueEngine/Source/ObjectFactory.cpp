@@ -103,7 +103,7 @@ namespace Rogue
 		bool writingBackground = true;
 		Entity entityVal = 0;
 
-		for (HierarchyInfo curHierarchy : g_engine.m_coordinator.GetActiveObjects())
+		for (HierarchyInfo& curHierarchy : g_engine.m_coordinator.GetActiveObjects())
 		{
 			Entity curEntity = curHierarchy.m_Entity;
 			//Background layer is unique
@@ -430,7 +430,7 @@ namespace Rogue
 
 		Signature currentSignature = g_engine.m_coordinator.GetEntityManager().GetSignature(hierarchyToSerialize.m_Entity);
 		Entity& entityToSerialize = hierarchyToSerialize.m_Entity;
-		for (int index = 0; index != LASTCOMP;)
+		for (int index = 0; index != LASTCOMP; ++index)
 		{
 			if (currentSignature.test(index))
 				switch (index)
@@ -522,10 +522,9 @@ namespace Rogue
 					}
 				}
 
-			//Does checker and incrementing here
-			if (++index != (COMPONENTID)LASTCOMP)
-				strstream << "|";
+			strstream << "|";
 		} //End of for loop strstream adding
+		strstream.str().substr(0, strstream.str().size() - 1);
 		return strstream.str();
 	}
 

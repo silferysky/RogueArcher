@@ -39,7 +39,7 @@ namespace Rogue
 		//Helper function
 		void FactoryLoadComponent(Entity curEnt, Signature signature, std::string value);
 
-		size_t m_maxEntityCount;
+		size_t m_maxEntityCount; //Represents max entity size of FILE (not level)
 		size_t m_maxArchetypeCount;
 		size_t m_maxFileCount;
 		std::map<std::string, std::pair<Signature, std::string>> m_archetypes;
