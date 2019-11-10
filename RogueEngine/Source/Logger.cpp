@@ -45,4 +45,16 @@ namespace Rogue
 			RE_Console.pop_back();
 		}
 	}
+
+	void Logger::AssertArgs(bool args, std::string errorMsg)
+	{
+		if (args)
+		{
+			RE_CORE_ERROR(errorMsg);
+#if (DEBUG)
+			assert(args && errorMsg);
+#endif
+
+		}
+	}
 }
