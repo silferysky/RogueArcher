@@ -48,7 +48,7 @@ namespace Rogue
 
 	void Logger::AssertArgs(bool args, std::string errorMsg)
 	{
-		if (args)
+		if (!args)
 		{
 			RE_CORE_ERROR(errorMsg);
 #if (DEBUG)

@@ -22,6 +22,11 @@ namespace Rogue
 				m_waypoints.push_back(waypoint);
 			}
 		}
+
+		if (g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(m_entity))
+		{
+			g_engine.m_coordinator.GetComponent<RigidbodyComponent>(m_entity).setIsStatic(true);
+		}
 	}
 
 	void PatrolAI::AIActiveStateUpdate()
