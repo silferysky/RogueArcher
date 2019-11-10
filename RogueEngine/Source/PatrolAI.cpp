@@ -70,6 +70,16 @@ namespace Rogue
 			if (++m_currentPointIndex >= m_waypoints.size())
 				m_currentPointIndex = 0;
 			m_nextPoint.push(m_waypoints[m_currentPointIndex]);
+
+			//If facing right and moving left or facing left and moving right, flip
+			if ((travelDistance.x < 0 && aiTransform.getScale().x > 0.0f) || 
+				(travelDistance.x > 0 && aiTransform.getScale().x < 0.0f))
+				aiTransform.setScale(Vec2(-1 * aiTransform.getScale().x, aiTransform.getScale().y));
+
+			//If facing up and moving down or facing down and moving up, flip
+			if ((travelDistance.y < 0 && aiTransform.getScale().y > 0.0f) ||
+				(travelDistance.y > 0 && aiTransform.getScale().y < 0.0f))
+				aiTransform.setScale(Vec2(aiTransform.getScale().x, -1 * aiTransform.getScale().y));
 		}
 
 	}
