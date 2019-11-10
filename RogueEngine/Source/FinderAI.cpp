@@ -64,10 +64,18 @@ namespace Rogue
 			Vec2 travelDistance;
 			Vec2Normalize(travelDistance, m_nextPoint.front() - aiTransform.getPosition());
 			g_engine.m_coordinator.GetComponent<RigidbodyComponent>(m_entity).addForce(travelDistance * DEF_SPEED);
-			if (travelDistance.x < 0 && g_engine.m_coordinator.GetComponent<TransformComponent>(m_entity).getScale().x > 0.0f)
-				g_engine.m_coordinator.GetComponent<TransformComponent>(m_entity).setScale(-1 * g_engine.m_coordinator.GetComponent<TransformComponent>(m_entity).getScale());
-			else
-				g_engine.m_coordinator.GetComponent<TransformComponent>(m_entity).setScale(1 * g_engine.m_coordinator.GetComponent<TransformComponent>(m_entity).getScale());
+			
+			//If facing right and moving left or facing left and moving right, flip
+			if ((travelDistance.x < 0 && aiTransform.getScale().x > 0.0f) || 
+				(travelDistance.x > 0 && aiTransform.getScale().x < 0.0f))
+				aiTransform.setScale(Vec2(-1 * aiTransform.getScale().x, aiTransform.getScale().y));
+
+			//If facing up and moving down or facing down and moving up, flip
+			if ((travelDistance.y < 0 && aiTransform.getScale().y > 0.0f) ||
+				(travelDistance.y > 0 && aiTransform.getScale().y < 0.0f))
+				aiTransform.setScale(Vec2(aiTransform.getScale().x, -1 * aiTransform.getScale().y));
+		
+				//transform.setScale(1 * g_engine.m_coordinator.GetComponent<TransformComponent>(m_entity).getScale());
 		}
 	}
 }
