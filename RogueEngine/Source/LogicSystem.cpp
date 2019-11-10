@@ -28,6 +28,7 @@ namespace Rogue
 		Signature signature;
 		signature.set(g_engine.m_coordinator.GetComponentType<TransformComponent>());
 		signature.set(g_engine.m_coordinator.GetComponentType<LogicComponent>());
+		signature.set(g_engine.m_coordinator.GetComponentType<StatsComponent>());
 
 		g_engine.m_coordinator.SetSystemSignature<LogicSystem>(signature);
 	}

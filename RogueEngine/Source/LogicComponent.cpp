@@ -114,11 +114,40 @@ namespace Rogue
 
 	void LogicComponent::DisplayOnInspector()
 	{
-		//const char* items[] = { "AAAA", "BBBB", "CCCC", "DDDD", "EEEE", "FFFF", "GGGG", "HHHH", "IIII", "JJJJ", "KKKK", "LLLLLLL", "MMMM", "OOOOOOO" };
-		//static int m_ai = 0;
-		//ImGui::Combo("AI Type", &m_ai, items, IM_ARRAYSIZE(items));
-		//ImGui::Combo("Current State", &m_ai, items, IM_ARRAYSIZE(items));
-		//ImGui::Combo("Active State", &m_ai, items, IM_ARRAYSIZE(items));
+		const char* aiType[] = { "Static", "Patrol", "Finder" };
+		const char* aiState[] = { "Idle", "Chase", "Patrol"};
+		int tempInt = 0;
+
+		//For AI Type
+		ImGui::Combo("AI Type", &tempInt, aiType, IM_ARRAYSIZE(aiType));
+		
+		//For initial state
+		ImGui::Combo("Initial State", &tempInt, aiType, IM_ARRAYSIZE(aiState));
+
+		//For all states
+		std::ostringstream ostrstream;
+		size_t count = 1;
+		for (AIState& state : m_allStates)
+		{
+			ostrstream.clear();
+			ostrstream.str("");
+			ostrstream << "State " << count;
+			ImGui::PushItemWidth(75);
+			ImGui::Combo(ostrstream.str().c_str(), &tempInt, aiState, IM_ARRAYSIZE(aiState));
+			state = (AIState)tempInt;
+			++count;
+		}
+
+		if (ImGui::Button("Add New State"))
+		{
+			m_allStates.push_back(AIState::AIState_Idle);
+		}
+
+		if (ImGui::Button("Remove State"))
+		{
+			if (m_allStates.size())
+				m_allStates.pop_back();
+		}
 	}
 
 }
