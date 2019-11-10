@@ -42,10 +42,13 @@ namespace Rogue
 			return;
 
 		//Check if Transform component and Rigidbody exist
-		if (!(g_engine.m_coordinator.ComponentExists<TransformComponent>(m_entity) && g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(m_entity)))
+		if (!(g_engine.m_coordinator.ComponentExists<TransformComponent>(m_entity) && 
+			g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(m_entity) &&
+			g_engine.m_coordinator.ComponentExists<StatsComponent>(m_entity)))
 			return;
 
 		TransformComponent& aiTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(m_entity);
+		StatsComponent& aiStats = g_engine.m_coordinator.GetComponent<StatsComponent>(m_entity);
 
 		//Always move
 		Vec2 travelDistance, travelDistValue;
@@ -61,10 +64,10 @@ namespace Rogue
 			return;
 
 		Vec2Normalize(travelDistance, travelDistValue);
-		aiTransform.setPosition(aiTransform.getPosition() + travelDistance * DEF_TRANSFORM_SPEED);
+		aiTransform.setPosition(aiTransform.getPosition() + travelDistance * aiStats.getSpeed() * DT_TRANSFORM_MODIFIER);
 
 		//If within a certain radius, assign next point
-		if (Vec2SqDistance(aiTransform.getPosition(), m_nextPoint.front()) < DEF_PATROL_RANGE * DEF_PATROL_RANGE)
+		if (Vec2SqDistance(aiTransform.getPosition(), m_nextPoint.front()) < aiStats.getSightRange() * aiStats.getSightRange())
 		{
 			m_nextPoint.pop();
 			if (++m_currentPointIndex >= m_waypoints.size())

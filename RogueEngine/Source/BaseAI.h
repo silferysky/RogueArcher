@@ -7,10 +7,12 @@
 #include "Vector2D.h"
 #include "Types.h"
 
+//Default values
 #define DEF_PATROL_RANGE 10
 #define DEF_DETECT_RANGE 200
-#define DEF_SPEED 10000 * g_deltaTime
-#define DEF_TRANSFORM_SPEED 100 * g_deltaTime
+
+#define DT_SPEED_MODIFIER 10000 * g_deltaTime
+#define DT_TRANSFORM_MODIFIER 100 * g_deltaTime
 
 namespace Rogue
 {
