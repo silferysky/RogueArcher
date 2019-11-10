@@ -116,19 +116,23 @@ namespace Rogue
 	{
 		const char* aiType[] = { "Static", "Patrol", "Finder" };
 		const char* aiState[] = { "Idle", "Chase", "Patrol"};
-		int tempInt = 0;
+		int tempInt = (int)m_AIType;
 
 		//For AI Type
 		ImGui::Combo("AI Type", &tempInt, aiType, IM_ARRAYSIZE(aiType));
+		m_AIType = (AIType)tempInt;
 		
 		//For initial state
+		tempInt = (int)m_currentState;
 		ImGui::Combo("Initial State", &tempInt, aiType, IM_ARRAYSIZE(aiState));
+		m_currentState = (AIState)tempInt;
 
 		//For all states
 		std::ostringstream ostrstream;
 		size_t count = 1;
 		for (AIState& state : m_allStates)
 		{
+			tempInt = (int)state;
 			ostrstream.clear();
 			ostrstream.str("");
 			ostrstream << "State " << count;
