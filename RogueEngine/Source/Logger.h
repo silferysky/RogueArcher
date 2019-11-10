@@ -31,6 +31,8 @@ namespace Rogue
 
 		inline static std::vector<std::string>& GetConsole() { return RE_Console; }
 		static void AddStringToConsole(const std::string& stringData);
+		static void AssertArgs(bool args, std::string errorMsg);
+
 	private:
 		static std::vector<std::string> RE_Console;
 		static std::shared_ptr<spdlog::logger> RE_CoreLogger;
@@ -56,7 +58,7 @@ namespace Rogue
 //#define RE_FATAL(TFirst, ...)			Logger::instance().GetClientLogger()->fatal(TFirst);	Logger::GetClientFileLogger()->fatal(TFirst);	Logger::AddStringToConsole(TFirst)
 
 //Assert Logging
-#define RE_ASSERT(args, msg)	if(args == false) { RE_CORE_ERROR(msg);	assert(args && msg); }
+#define RE_ASSERT(args, msg)	Logger::instance().AssertArgs(args, msg);
 
 #define CLEARSTRING(s) s.clear(); s.str("")
 
