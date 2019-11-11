@@ -11,7 +11,7 @@
 namespace Rogue
 {
 	PlayerControllerSystem::PlayerControllerSystem()
-		:System(SystemID::id_PLAYERCONTROLLERSYSTEM), m_ballCooldown{1.0f}
+		:System(SystemID::id_PLAYERCONTROLLERSYSTEM), m_ballCooldown{1.0f},m_jumpCooldown{1.0f}
 	{
 	}
 
@@ -51,7 +51,10 @@ namespace Rogue
 		}
 
 		if (!m_timedEntities.size())
+		{
 			m_ballCooldown -= g_deltaTime * g_engine.GetTimeScale();
+			//m_jumpCooldown -= g_deltaTime * g_engine.GetTimeScale();
+		}
 
 		//To update all timed entities
 		/*for (auto timedEntityIt = m_timedEntities.begin(); timedEntityIt != m_timedEntities.end(); ++timedEntityIt)
@@ -136,21 +139,25 @@ namespace Rogue
 
 			if (keycode == KeyPress::KeySpace)
 			{
-				for (std::set<Entity>::iterator iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
-				{
-					//For 1st entity
-					if (iEntity == m_entities.begin() && g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(*iEntity))
+				//if (m_jumpCooldown < 0.0f)
+				//{
+					for (std::set<Entity>::iterator iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
 					{
-						auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
-						rigidbody.addForce(Vec2(0.0f, 50000.0f));
+						//For 1st entity
+						if (iEntity == m_entities.begin() && g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(*iEntity))
+						{
+							//AddToTimedEntities(*iEntity);
+							auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
+							rigidbody.addForce(Vec2(0.0f, 50000.0f));
+						}
 					}
-				}
+				//}
 			}
 
-			if (keycode == KeyPress::Numpad9)
-			{
-				RE_ASSERT(false, "CRASH ON PURPOSE");
-			}
+			//if (keycode == KeyPress::Numpad9)
+			//{
+			//	RE_ASSERT(false, "CRASH ON PURPOSE");
+			//}
 
 			return;
 		} //End KeyTriggered
@@ -190,7 +197,7 @@ namespace Rogue
 					}
 					else if (keycode == KeyPress::KeyW)
 					{
-						rigidbody.addForce(Vec2(0.0f, 100.0f) * g_deltaTime * 1000.0f);
+						//rigidbody.addForce(Vec2(0.0f, 100.0f) * g_deltaTime * 1000.0f);
 						//RE_INFO("Move A Up!");
 					}
 					else if (keycode == KeyPress::KeyS)
@@ -369,7 +376,7 @@ namespace Rogue
 
 			//ForceManager::instance().RegisterForce(ball, Vec2(cursorPos.x * FORCE_FACTOR, cursorPos.y * FORCE_FACTOR), 1.0f);
 			rigidbody.addForce(Vec2(ballDir.x * FORCE_FACTOR, ballDir.y * FORCE_FACTOR));
-
+			std::cout << ballDir.x << std::endl;
 			BoxCollider2DComponent& boxCollider = g_engine.m_coordinator.CreateComponent<BoxCollider2DComponent>(ball);
 			boxCollider.Deserialize("0;0;0;0;0");
 
