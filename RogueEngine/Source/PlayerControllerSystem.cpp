@@ -53,7 +53,7 @@ namespace Rogue
 		if (!m_timedEntities.size())
 		{
 			m_ballCooldown -= g_deltaTime * g_engine.GetTimeScale();
-			m_jumpCooldown -= g_deltaTime * g_engine.GetTimeScale();
+			//m_jumpCooldown -= g_deltaTime * g_engine.GetTimeScale();
 		}
 
 		//To update all timed entities
@@ -139,19 +139,19 @@ namespace Rogue
 
 			if (keycode == KeyPress::KeySpace)
 			{
-				if (m_jumpCooldown < 0.0f)
-				{
+				//if (m_jumpCooldown < 0.0f)
+				//{
 					for (std::set<Entity>::iterator iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
 					{
 						//For 1st entity
 						if (iEntity == m_entities.begin() && g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(*iEntity))
 						{
-							AddToTimedEntities(*iEntity);
+							//AddToTimedEntities(*iEntity);
 							auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
 							rigidbody.addForce(Vec2(0.0f, 50000.0f));
 						}
 					}
-				}
+				//}
 			}
 
 			//if (keycode == KeyPress::Numpad9)
