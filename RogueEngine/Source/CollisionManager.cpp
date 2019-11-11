@@ -648,7 +648,8 @@ namespace Rogue
 		Mtx33Translate(trans, pos.x, pos.y);
 		Mtx33Scale(scale, size.x, size.y);
 
-		Mtx33 result = trans *= scale;
+		trans *= scale;
+		Mtx33 result = trans;
 
 		Vec2 min = { -0.5f, -0.5f };
 		Vec2 max = { 0.5f, 0.5f };
