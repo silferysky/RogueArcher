@@ -226,8 +226,6 @@ namespace Rogue
 		return DiscreteAABBVsCircle(aabb, circle);
 	}
 
-	
-
 	void CollisionManager::UpdateCircleCollider(CircleCollider& circle, const TransformComponent& trans) const
 	{
 		circle.SetCenter(circle.getCenterOffSet() + trans.getPosition());
