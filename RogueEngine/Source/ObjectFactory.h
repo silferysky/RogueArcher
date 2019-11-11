@@ -55,9 +55,13 @@ namespace Rogue
 #define MIN_SAVE_ENTITY 2
 
 	//MACROS (HIERARCHY)
-#define CREATE_HIERARCHY_OBJ(entityValue, sstr)	HierarchyInfo newInfo(entityValue, sstr); \
-												g_engine.m_coordinator.GetEntityManager().m_getActiveObjects().push_back(newInfo); \
-												SceneManager::instance().IncrementObjectIterator();
+#define CREATE_HIERARCHY_OBJ_TAG(entityValue, name, tag)	HierarchyInfo newInfo(entityValue, name, tag); \
+														g_engine.m_coordinator.GetEntityManager().m_getActiveObjects().push_back(newInfo); \
+														SceneManager::instance().IncrementObjectIterator();
+
+#define CREATE_HIERARCHY_OBJ(entityValue, name)			HierarchyInfo newInfo(entityValue, name); \
+														g_engine.m_coordinator.GetEntityManager().m_getActiveObjects().push_back(newInfo); \
+														SceneManager::instance().IncrementObjectIterator();
 
 //cstr will go out of scope if you choose to do strstream.str().c_str()
 //This is the proper (Non macro) way of setting the string

@@ -23,7 +23,7 @@ namespace Rogue
 		Signature currentSignature;
 		std::ostringstream debugStr, ostrstream;
 		std::istringstream istrstream;
-		std::string stdstr, readstr;
+		std::string stdstr, tagstr, readstr;
 		const char* cstr;
 
 		//For Entity Count
@@ -69,6 +69,8 @@ namespace Rogue
 			stdstr = "";
 			std::getline(istrstream, readstr, '{');
 			std::getline(istrstream, readstr, '}');
+			std::getline(istrstream, tagstr, '{');
+			std::getline(istrstream, tagstr, '}');
 			std::getline(istrstream, stdstr);
 
 			FactoryLoadComponent(curEnt, currentSignature, stdstr);
@@ -291,8 +293,13 @@ namespace Rogue
 
 	void ObjectFactory::Clone(Entity toClone)
 	{
-		Signature toCloneSignature = g_engine.m_coordinator.GetEntityManager().GetSignature(toClone);
+		/*Signature toCloneSignature = g_engine.m_coordinator.GetEntityManager().GetSignature(toClone);
 		Entity clonedEntity = g_engine.m_coordinator.CreateEntity();
+
+		//auto iterator = g_engine.m_coordinator.GetActiveObjects().
+		//if (iterator == m_archetypes.end())
+			//return;
+
 		for (int index = 0; index != LASTCOMP; ++index)
 		{
 			if (toCloneSignature.test(index))
@@ -378,7 +385,7 @@ namespace Rogue
 		}
 		std::ostringstream ostrstream;
 		ostrstream << "Game Object " << SceneManager::instance().GetObjectIterator();
-		CREATE_HIERARCHY_OBJ(clonedEntity, ostrstream.str());
+		CREATE_HIERARCHY_OBJ(clonedEntity, ostrstream.str(), "");*/
 
 	}
 
@@ -393,13 +400,16 @@ namespace Rogue
 
 			//Does the actual clone
 			std::istringstream istrstream(m_archetypes[archetype].second);
-			std::string toDeserialise;
+			std::string toDeserialise, tagDeserialized;
+			//To skip 2 things - name
 			std::getline(istrstream, toDeserialise, '|');
+			std::getline(istrstream, tagDeserialized, '|');
+			//And get the rest of the details
 			std::getline(istrstream, toDeserialise);
 			FactoryLoadComponent(curEnt, curSignature, toDeserialise);
 
 			ostrstream << "Game Object " << SceneManager::instance().GetObjectIterator();
-			CREATE_HIERARCHY_OBJ(curEnt, ostrstream.str());
+			CREATE_HIERARCHY_OBJ(curEnt, ostrstream.str(), tagDeserialized);
 		}
 	}
 
@@ -427,6 +437,7 @@ namespace Rogue
 		std::ostringstream strstream;
 		//For object name
 		strstream << "Name{" << hierarchyToSerialize.m_objectName << "}|";
+		strstream << "Tag{" << hierarchyToSerialize.m_tag << "}|";
 
 		Signature currentSignature = g_engine.m_coordinator.GetEntityManager().GetSignature(hierarchyToSerialize.m_Entity);
 		Entity& entityToSerialize = hierarchyToSerialize.m_Entity;
