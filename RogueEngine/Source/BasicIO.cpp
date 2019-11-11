@@ -123,6 +123,7 @@ namespace Rogue
 			/*if (!writingLevel)
 			{
 				strstream << "Name{Entity" << i << "}|";
+				strstream << "Tag{}|";
 			}
 
 			//Sprite
