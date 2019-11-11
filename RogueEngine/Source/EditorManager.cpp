@@ -45,10 +45,13 @@ namespace Rogue
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
 		ImGui::Begin("MainWindow", &i, ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoNavFocus | ImGuiWindowFlags_NoCollapse);
 		ImGui::PopStyleVar(2);
-
+		
 		ImGui::SetWindowSize(viewport->Size);
 		ImGui::SetWindowPos({ 0.f,0.f });
 		ImGuiIO& io = ImGui::GetIO();
+		unsigned char* pixels;
+		int width, height, bytes_per_pixel;
+		io.Fonts->GetTexDataAsRGBA32(&pixels, &width, &height, &bytes_per_pixel);
 		ImGuiID dockspace_id = ImGui::GetID("MainWindow");
 		ImGui::SetNextWindowBgAlpha(0.0f);
 		ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), opt_flags);
