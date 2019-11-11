@@ -38,7 +38,7 @@ namespace Rogue
 					ImGui::SameLine();
 					ImGui::PushItemWidth(75);
 					ImGui::InputText("                  ", buffer, 32);
-					if (ImGui::Button("Edit"))
+					if (ImGui::Button("Apply"))
 					{
 						if (!buffer)
 						{
@@ -193,7 +193,7 @@ namespace Rogue
 						if (ImGui::CollapsingHeader("Text"))
 						{
 							auto& text = g_engine.m_coordinator.GetComponent<TextComponent>(i.m_Entity);
-	
+							text.DisplayOnInspector();
 						}
 					}
 
