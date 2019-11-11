@@ -89,6 +89,21 @@ namespace Rogue
 		ss << m_aabb.getScaleOffSet().x << ";";
 		ss << m_aabb.getScaleOffSet().y << ";";
 
+		switch (m_collisionMode)
+		{
+		case CollisionMode::e_awake:
+			ss << "AWAKE";
+			break;
+
+		case CollisionMode::e_trigger:
+			ss << "TRIGGER";
+			break;
+			
+		case CollisionMode::e_asleep:
+			ss << "ASLEEP";
+			break;
+		}
+
 		return ss.str();
 	}
 
@@ -134,6 +149,16 @@ namespace Rogue
 			y = std::stof(s1);
 
 		m_aabb.setScaleOffSet(Vec2{ x, y });
+
+		if (std::getline(ss, s1, ';'))
+		{
+			if (s1 == "AWAKE")
+				m_collisionMode = CollisionMode::e_awake;
+			else if (s1 == "TRIGGER")
+				m_collisionMode = CollisionMode::e_trigger;
+			else if (s1 == "ASLEEP")
+				m_collisionMode = CollisionMode::e_asleep;
+		}
 	}
 
 	void BoxCollider2DComponent::DisplayOnInspector()
