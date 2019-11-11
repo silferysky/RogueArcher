@@ -7,9 +7,9 @@
     "Signature2": 5,
     "Signature3": 5,
     "Signature4": 5,
-    "Entity0": "Name{TItle}|Sprite{Resources/Assets/Title.png;1;1;1;1;1}||Transform{-718;518;1920;1080;0}|||||||||||||",
-    "Entity1": "Name{PlayBtn}|Sprite{Resources/Assets/PlayBtn.png;1;1;1;1;1}||Transform{-1223;-115;600;150;0}|||||||||||||",
-    "Entity2": "Name{HwToPlayBtn}|Sprite{Resources/Assets/HwToPlayBtn.png;1;1;1;1;1}||Transform{-1063;-244;600;150;0}|||||||||||||",
-    "Entity3": "Name{OptionBtn}|Sprite{Resources/Assets/OptionBtn.png;1;1;1;1;1}||Transform{-1178;-377;600;150;0}|||||||||||||",
-    "Entity4": "Name{QuitBtn}|Sprite{Resources/Assets/QuitBtn.png;1;1;1;1;1}||Transform{-1230;-509;600;150;0}|||||||||||||"
+    "Entity0": "Name{Title}|Tag{}|Sprite{Resources/Assets/Title.png;1;1;1;1;1}||Transform{-718;518;1920;1080;0}|||||||||||||",
+    "Entity1": "Name{PlayBtn}|Tag{}|Sprite{Resources/Assets/PlayBtn.png;1;1;1;1;1}||Transform{-1223;-115;600;150;0}|||||||||||||",
+    "Entity2": "Name{HwToPlayBtn}|Tag{}|Sprite{Resources/Assets/HwToPlayBtn.png;1;1;1;1;1}||Transform{-1063;-244;600;150;0}|||||||||||||",
+    "Entity3": "Name{OptionBtn}|Tag{}|Sprite{Resources/Assets/OptionBtn.png;1;1;1;1;1}||Transform{-1178;-377;600;150;0}|||||||||||||",
+    "Entity4": "Name{QuitBtn}|Tag{}|Sprite{Resources/Assets/QuitBtn.png;1;1;1;1;1}||Transform{-1230;-509;600;150;0}|||||||||||||"
 }
