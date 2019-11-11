@@ -52,6 +52,26 @@ namespace Rogue
 		return *this;
 	}
 
+	bool BoxCollider2DComponent::Rotatable() const
+	{
+		return m_rotatable;
+	}
+
+	void BoxCollider2DComponent::setRotatable(bool set)
+	{
+		m_rotatable = set;
+	}
+
+	CollisionMode BoxCollider2DComponent::GetCollisionMode() const
+	{
+		return m_collisionMode;
+	}
+
+	void BoxCollider2DComponent::SetCollisionMode(CollisionMode mode)
+	{
+		m_collisionMode = mode;
+	}
+
 	std::string BoxCollider2DComponent::Serialize()
 	{
 		//Size, modelVertexList
@@ -67,7 +87,7 @@ namespace Rogue
 		ss << m_aabb.getCenterOffSet().y << ";";
 
 		ss << m_aabb.getScaleOffSet().x << ";";
-		ss << m_aabb.getScaleOffSet().y;
+		ss << m_aabb.getScaleOffSet().y << ";";
 
 		return ss.str();
 	}
@@ -132,5 +152,7 @@ namespace Rogue
 		ImGui::PushItemWidth(75);
 		ImGui::DragFloat("Center Y", &m_center.y, 1.0f, -10000.0f, 10000.0f);
 		m_aabb.setCenterOffSet(m_center);
+
+		ImGui::PushItemWidth(75);
 	}
 }
