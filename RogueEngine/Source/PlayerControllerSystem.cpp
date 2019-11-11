@@ -50,11 +50,16 @@ namespace Rogue
 			return;
 		}
 
-		if (!m_timedEntities.size())
-		{
+		//if (!m_timedEntities.size())
+		//{
 			m_ballCooldown -= g_deltaTime * g_engine.GetTimeScale();
-			//m_jumpCooldown -= g_deltaTime * g_engine.GetTimeScale();
-		}
+			if (m_ballCooldown < 0.0f)
+			{
+				ClearTimedEntities();
+			}
+			m_jumpCooldown -= g_deltaTime * g_engine.GetTimeScale();
+			std::cout << m_jumpCooldown << std::endl;
+		//}
 
 		//To update all timed entities
 		/*for (auto timedEntityIt = m_timedEntities.begin(); timedEntityIt != m_timedEntities.end(); ++timedEntityIt)
@@ -139,8 +144,9 @@ namespace Rogue
 
 			if (keycode == KeyPress::KeySpace)
 			{
-				//if (m_jumpCooldown < 0.0f)
-				//{
+				if (m_jumpCooldown < 0.0f)
+				{
+					m_jumpCooldown = 2.0f;
 					for (std::set<Entity>::iterator iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
 					{
 						//For 1st entity
@@ -151,7 +157,7 @@ namespace Rogue
 							rigidbody.addForce(Vec2(0.0f, 50000.0f));
 						}
 					}
-				//}
+				}
 			}
 
 			//if (keycode == KeyPress::Numpad9)
@@ -385,7 +391,7 @@ namespace Rogue
 			newInfo.m_objectName = "Ball";
 			g_engine.m_coordinator.GetEntityManager().m_getActiveObjects().push_back(newInfo);
 
-			AddToTimedEntities(ball, 1.0f);
+			AddToTimedEntities(ball, 0.8f);
 			break;
 		}
 	}

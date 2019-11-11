@@ -154,5 +154,35 @@ namespace Rogue
 		m_aabb.setCenterOffSet(m_center);
 
 		ImGui::PushItemWidth(75);
+		bool is_asleep =  (m_collisionMode == CollisionMode::e_asleep);
+		bool is_awake = (m_collisionMode == CollisionMode::e_awake);
+		bool is_triggered = (m_collisionMode == CollisionMode::e_trigger);
+
+
+
+		ImGui::Checkbox("Asleep",&is_asleep);
+		ImGui::Checkbox("Awake", &is_awake);
+		ImGui::Checkbox("Trigger", &is_triggered);
+
+		if (is_asleep)
+		{
+			//is_awake = false;
+			//is_triggered = false;
+			SetCollisionMode(CollisionMode::e_asleep);
+		}
+
+		if (is_awake)
+		{
+			//is_asleep = false;
+			//is_triggered = false;
+			SetCollisionMode(CollisionMode::e_awake);
+		}
+
+		if (is_triggered)
+		{
+			//is_asleep = false;
+			//is_awake = false;
+			SetCollisionMode(CollisionMode::e_trigger);
+		}
 	}
 }
