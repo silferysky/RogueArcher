@@ -29,12 +29,6 @@ namespace Rogue
 
 	void PlayerControllerSystem::Update()
 	{
-		//auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin());
-
-		//float direction = Vec2Rotation(cursorPos, Vec2{ 0,0 }); // Player must be center of screen for this to work
-
-		//std::cout << RadiansToDegrees(direction) << " degrees" << std::endl;
-
 		//For PlayerControllerSystem Timer
 		/*if (m_ballTimer > 0.0f)
 		{
@@ -102,7 +96,7 @@ namespace Rogue
 				g_engine.ToggleVSync();
 
 			if (keycode == KeyPress::Numpad0 && m_entities.size() > 0)
-				g_engine.m_coordinator.clone(*m_entities.begin()); // Stahp Terence
+				g_engine.m_coordinator.clone(*m_entities.begin());
 
 			if (keycode == KeyPress::Numpad1)
 				g_engine.m_coordinator.cloneArchetypes("Box");
