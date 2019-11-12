@@ -43,7 +43,7 @@ namespace Rogue
 
 		g_engine.m_coordinator.AddComponent(backgroundEnt, backgroundSprite);
 		g_engine.m_coordinator.AddComponent(backgroundEnt, backgroundTransform);
-		CREATE_HIERARCHY_OBJ(backgroundEnt, std::string("Background"));
+		CREATE_HIERARCHY_OBJ(backgroundEnt, "Background");
 		newInfo.m_objectName = std::string("Background");
 
 		for (Entity entity = 0; entity < entCount; ++entity)
@@ -75,7 +75,7 @@ namespace Rogue
 
 			FactoryLoadComponent(curEnt, currentSignature, stdstr);
 
-			CREATE_HIERARCHY_OBJ(curEnt, readstr);
+			CREATE_HIERARCHY_OBJ_TAG(curEnt, readstr, tagstr);
 
 			debugStr << "Entity " << curEnt << "'s Signature: " << g_engine.m_coordinator.GetEntityManager().GetSignature(curEnt).to_ulong();
 			RE_INFO(debugStr.str());
