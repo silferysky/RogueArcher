@@ -1,3 +1,4 @@
+#include "pch.h"
 // imgui_stl.cpp
 // Wrappers for C++ standard library (STL) types (std::string, etc.)
 // This is also an example of how you may wrap your own similar types.

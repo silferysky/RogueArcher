@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "EditorGameObject.h"
 
 namespace Rogue

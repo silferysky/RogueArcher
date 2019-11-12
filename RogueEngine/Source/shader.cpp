@@ -1,7 +1,7 @@
+#include "pch.h"
 #include "Shader.h"
-#include <iostream>
 #include "BasicIO.h"
-#include <vector>
+
 
 namespace Rogue
 {

@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "CameraSystem.h"
 #include "Main.h"
 #include "EventDispatcher.h"
@@ -104,7 +105,7 @@ namespace Rogue
 		m_cameraShake.Update();
 		auto shakeOffset = m_cameraShake.getOffset();
 		
-		if (!m_worldCamera)
+		if (!m_worldCamera && g_engine.m_coordinator.GetPauseState())
 		{
 			// For all entities
 			for (auto entity : m_entities)
@@ -129,22 +130,14 @@ namespace Rogue
 					//m_target = transformPos;
 
 					// For camera panning
-					/* float newCameraPosX = m_cameraPos.x;
-					float newCameraPosY = m_cameraPos.y;
+					glm::vec3 position = m_cameraPos;
+					position.x += (transformPos.x - position.x + shakeOffset.x) * m_cameraLerp * g_deltaTime;
+					position.y += (transformPos.y - position.y + shakeOffset.y) * m_cameraLerp * g_deltaTime;
 
-					if (newCameraPosX < m_target.x)
-						newCameraPosX += m_cameraVelocity * g_deltaTime;
 
-					if (newCameraPosY < m_target.y)
-						newCameraPosY += m_cameraVelocity * g_deltaTime;
 
-					if (newCameraPosX > m_target.x)
-						newCameraPosX -= m_cameraVelocity * g_deltaTime;
-
-					if (newCameraPosY > m_target.y)
-						newCameraPosY -= m_cameraVelocity * g_deltaTime; */
-
-					m_cameraPos = glm::vec3(transformPos.x + shakeOffset.x, transformPos.y + shakeOffset.y, 0.0f);
+					m_cameraPos = position;
+					//glm::vec3(transformPos.x + shakeOffset.x, transformPos.y + shakeOffset.y, 0.0f);
 
 					break;
 				}

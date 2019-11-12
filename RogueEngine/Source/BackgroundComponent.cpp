@@ -1,5 +1,5 @@
+#include "pch.h"
 #include "BackgroundComponent.h"
-#include <sstream>
 
 namespace Rogue
 {

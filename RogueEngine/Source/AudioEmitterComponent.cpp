@@ -1,5 +1,5 @@
 #include "AudioEmitterComponent.h"
-#include <sstream>
+#include "pch.h"
 #include "Main.h"
 
 namespace Rogue

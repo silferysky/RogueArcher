@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "SpriteComponent.h"
 #include "REEngine.h"
 #include "Main.h"
