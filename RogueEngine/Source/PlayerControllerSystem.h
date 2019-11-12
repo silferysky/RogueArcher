@@ -3,6 +3,7 @@
 #include "BaseSystem.h"
 #include "Vector2D.h"
 #include "SpecialEntity.h"
+#include <memory>
 
 #define FORCE_FACTOR 100000
 #define POSITION_RELATIVITY 100
