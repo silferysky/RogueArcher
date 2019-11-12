@@ -67,6 +67,19 @@ namespace Rogue
 
 	void LogicSystem::Receive(Event* ev)
 	{
+		switch (ev->GetEventType())
+		{
+		case EventType::EvOnTrigger:
+			EntTriggeredEvent* triggerEvent = dynamic_cast<EntTriggeredEvent*>(ev);
+			Entity object = triggerEvent->GetEntityID();
+			Entity triggered = triggerEvent->GetOtherEntity();
+
+			std::stringstream ss;
+			ss << triggered << " triggered from " << object;
+
+			RE_INFO(ss.str());
+
+		}
 	}
 
 	void LogicSystem::AddLogicInterface(Entity entity, std::shared_ptr<BaseAI> logicInterface)
