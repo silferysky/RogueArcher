@@ -155,7 +155,7 @@ namespace Rogue
 						{
 							//AddToTimedEntities(*iEntity);
 							auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
-							rigidbody.addForce(Vec2(0.0f, 50000.0f));
+							rigidbody.addForce(Vec2(0.0f, 40000.0f));
 						}
 					}
 				}
