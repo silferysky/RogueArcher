@@ -226,8 +226,6 @@ namespace Rogue
 		return DiscreteAABBVsCircle(aabb, circle);
 	}
 
-	
-
 	void CollisionManager::UpdateCircleCollider(CircleCollider& circle, const TransformComponent& trans) const
 	{
 		circle.SetCenter(circle.getCenterOffSet() + trans.getPosition());
@@ -641,14 +639,16 @@ namespace Rogue
 	{
 		Vec2 pos = GetColliderPosition(collider, transform);
 		Vec2 size = GetColliderScale(collider, transform);
+		size.x = REAbs(size.x);
+		size.y = REAbs(size.y);
+		
 		Mtx33 trans, scale;
 		
-	//	std::cout << "UPDATE AABB" << std::endl;
-
 		Mtx33Translate(trans, pos.x, pos.y);
 		Mtx33Scale(scale, size.x, size.y);
 
-		Mtx33 result = trans *= scale;
+		trans *= scale;
+		Mtx33 result = trans;
 
 		Vec2 min = { -0.5f, -0.5f };
 		Vec2 max = { 0.5f, 0.5f };

@@ -19,9 +19,30 @@ namespace Rogue
 	{
 		auto& bodyA = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(m_entityA);
 		auto& bodyB = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(m_entityB);
+		auto& boxA = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(m_entityA);
+		auto& boxB = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(m_entityB);
+
 
 		if (bodyA.getIsStatic() && bodyB.getIsStatic())
 			return;
+
+		// If A or B is a trigger, dispatch trigger event.
+		if (boxA.GetCollisionMode() == CollisionMode::e_trigger)
+		{
+			Event* ev = new EntTriggeredEvent{ m_entityB, m_entityA };
+			ev->SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
+			EventDispatcher::instance().AddEvent(ev);
+
+			return;
+		}
+		if (boxB.GetCollisionMode() == CollisionMode::e_trigger)
+		{
+			Event* ev = new EntTriggeredEvent{ m_entityA, m_entityB };
+			ev->SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
+			EventDispatcher::instance().AddEvent(ev);
+
+			return;
+		}
 
 		// Relative velocity
 		Vec2 rv = bodyB.getVelocity() - bodyA.getVelocity();
