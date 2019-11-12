@@ -1,5 +1,4 @@
-#include <vector>
-#include <sstream>
+#include "pch.h"
 
 #include "LogicComponent.h"
 #include "Vector2D.h"

@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "Editor.h"
 #include "EventDispatcher.h"
 #include "EventListener.h"

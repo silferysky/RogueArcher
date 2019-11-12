@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "EditorFile.h"
 #include "Main.h"
 #include <sstream>

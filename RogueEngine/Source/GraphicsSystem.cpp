@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "GraphicsSystem.h"
 #include "Timer.h"
 #include "Main.h"

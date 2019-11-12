@@ -1,9 +1,11 @@
+#include "pch.h"
 #include "EditorHierarchy.h"
 
 namespace Rogue
 {
 
-	ImGuiEditorHierarchy::ImGuiEditorHierarchy()
+	ImGuiEditorHierarchy::ImGuiEditorHierarchy() :
+		m_currentVector{ g_engine.m_coordinator.GetActiveObjects() }
 	{
 	}
 
