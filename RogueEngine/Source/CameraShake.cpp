@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "CameraShake.h"
 #include "Main.h"
 
@@ -22,7 +23,7 @@ namespace Rogue
 			m_shakeOffset.y = static_cast<float>(cos(m_currentShakeAngle) * m_currentShakeMagnitude);
 
 			//Don't micro shake the screen, also returns the screen back to centre after shaking is done
-			if (m_currentShakeMagnitude < 0.2f) 
+			if (m_currentShakeMagnitude < 50.0f) 
 			{
 				m_currentShakeMagnitude = 0;
 				m_shakeOffset = { 0,0 };

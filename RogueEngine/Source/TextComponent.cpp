@@ -1,5 +1,5 @@
+#include "pch.h"
 #include "TextComponent.h"
-#include <sstream>
 
 namespace Rogue
 {

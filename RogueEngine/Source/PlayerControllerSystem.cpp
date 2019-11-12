@@ -1,4 +1,5 @@
 #pragma once
+#include "pch.h"
 #include "PlayerControllerSystem.h"
 #include "Main.h"
 #include "ForceManager.h"
@@ -111,7 +112,7 @@ namespace Rogue
 
 			if (keycode == KeyPress::KeyF8)
 			{
-				CameraShakeEvent* cameraShakeEvent = new CameraShakeEvent(15.0f);
+				CameraShakeEvent* cameraShakeEvent = new CameraShakeEvent(220.0f);
 				EventDispatcher::instance().AddEvent(cameraShakeEvent);
 			}
 

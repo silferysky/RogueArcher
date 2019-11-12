@@ -1,5 +1,5 @@
 #pragma once
-#include <sstream>
+#include "pch.h"
 #include "RigidbodyComponent.h"
 #include "REMath.h"
 #include "Logger.h"

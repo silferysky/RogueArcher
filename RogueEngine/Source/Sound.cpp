@@ -1,4 +1,5 @@
 #pragma once
+#include "pch.h"
 #include "Sound.h"
 #include "Logger.h"
 #include "Main.h"

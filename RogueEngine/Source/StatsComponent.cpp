@@ -1,5 +1,5 @@
+#include "pch.h"
 #include "StatsComponent.h"
-#include <sstream>
 
 namespace Rogue
 {
