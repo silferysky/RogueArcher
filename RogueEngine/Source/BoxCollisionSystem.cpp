@@ -49,7 +49,6 @@ namespace Rogue
 			// Test AABB/OBB Collision
 			std::set<Entity>::iterator iNextEntity = iEntity;
 
-
 			for (iNextEntity++; iNextEntity != m_entities.end(); ++iNextEntity)
 			{
 				auto& nextBoxCollider = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iNextEntity);
@@ -63,7 +62,6 @@ namespace Rogue
 
 				if (CollisionManager::instance().DiscreteAABBvsAABB(currBoxCollider.m_aabb, nextBoxCollider.m_aabb))
 				{
-
 					// If A or B is a trigger, dispatch trigger event.
 					if (currBoxCollider.GetCollisionMode() == CollisionMode::e_trigger)
 					{
@@ -71,7 +69,7 @@ namespace Rogue
 						ev->SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
 						EventDispatcher::instance().AddEvent(ev);
 
-						return;
+						continue;
 					}
 					if (nextBoxCollider.GetCollisionMode() == CollisionMode::e_trigger)
 					{
@@ -79,7 +77,7 @@ namespace Rogue
 						ev->SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
 						EventDispatcher::instance().AddEvent(ev);
 
-						return;
+						continue;
 					}
 					//std::cout << "Entity " << *iEntity << " AABB collides with Entity " << *iNextEntity << " AABB" << std::endl;
 					CollisionManager::instance().GenerateManifoldAABBvsAABB(*iEntity, *iNextEntity);

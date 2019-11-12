@@ -23,7 +23,10 @@ namespace Rogue
 
 	class ForceManager
 	{
-		std::vector<ForceInfo> m_forceInfos;
+	public:
+		using ForceVector = std::vector<ForceInfo>;
+	private:
+		ForceVector m_forceInfos;
 		Timer::ChronoTime m_prevTime;
 		Timer::ChronoTime m_currTime;
 	public:

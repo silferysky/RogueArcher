@@ -24,7 +24,7 @@ namespace Rogue
 		float duration = static_cast<float>(std::chrono::duration_cast<std::chrono::microseconds>(delta).count()) /
 			Timer::s_microsecondsPerSecond;
 		
-		std::vector<ForceInfo>::iterator i;
+		ForceVector::iterator i;
 
 		for (i = m_forceInfos.begin(); i != m_forceInfos.cend(); ++i)
 		{

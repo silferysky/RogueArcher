@@ -1,5 +1,6 @@
 #include <sstream>
 #include "ColliderComponent.h"
+#include "Logger.h"
 
 namespace Rogue
 {
@@ -11,7 +12,12 @@ namespace Rogue
 		m_shape{ nullptr }
 	{
 		if (!rhs.m_shape)
+		{
+			RE_CORE_ERROR("Copied shape is nullptr!");
+			m_shape.reset(new BoxShape);
+			*m_shape = *rhs.m_shape;
 			return;
+		}
 
 		switch (rhs.m_shape->GetType())
 		{
@@ -43,6 +49,14 @@ namespace Rogue
 
 	ColliderComponent& ColliderComponent::operator=(const ColliderComponent& rhs)
 	{
+		if (!rhs.m_shape)
+		{
+			RE_CORE_ERROR("Copied shape is nullptr!");
+			m_shape.reset(new BoxShape);
+			*m_shape = *rhs.m_shape;
+			return *this;
+		}
+
 		if (this != &rhs)
 		{
 			switch (rhs.m_shape->GetType())
