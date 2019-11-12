@@ -453,7 +453,6 @@ namespace Rogue
 		ImGui::DragFloat("Set Gravity", &m_gravity.y, 1.0f, -10000.0f, 10000.0f);
 		g_engine.m_coordinator.GetSystem<PhysicsSystem>()->setGravity(m_gravity);
 
-
 		ImGui::End();
 
 

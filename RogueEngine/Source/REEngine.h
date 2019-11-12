@@ -16,6 +16,7 @@ namespace Rogue
 		bool m_verticalSync;
 
 		Vec2 m_cursorPos;
+		ImVec2 m_viewportCursorPos;
 
 		Timer::ChronoTime m_loopStart;
 		Timer::ChronoTime m_loopEnd;
@@ -62,6 +63,9 @@ namespace Rogue
 		float GetTimeScale() const;
 		int GetStepCount() const;
 		Vec2 GetWorldCursor() const;
+		ImVec2 GetViewportCursor() const;
+		int GetEngineWindowWidth() const;
+		int GetEngineWindowHeight() const;
 
 		float& GetCameraZoom();
 		void SetCameraZoom(const float& cameraZoom);
@@ -72,5 +76,6 @@ namespace Rogue
 		void SetTimeScale(float timeScale);
 		void ToggleVSync();
 		void SetWorldCursor(const Vec2& pos);
+		void SetViewportCursor(const ImVec2& pos);
 	};
 }
