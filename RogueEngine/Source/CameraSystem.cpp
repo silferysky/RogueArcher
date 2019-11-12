@@ -131,8 +131,10 @@ namespace Rogue
 
 					// For camera panning
 					glm::vec3 position = m_cameraPos;
-					position.x += (transformPos.x - position.x) * m_cameraLerp * g_deltaTime + shakeOffset.x;
-					position.y += (transformPos.y - position.y) * m_cameraLerp * g_deltaTime + shakeOffset.y;
+					position.x += (transformPos.x - position.x + shakeOffset.x) * m_cameraLerp * g_deltaTime;
+					position.y += (transformPos.y - position.y + shakeOffset.y) * m_cameraLerp * g_deltaTime;
+
+
 
 					m_cameraPos = position;
 					//glm::vec3(transformPos.x + shakeOffset.x, transformPos.y + shakeOffset.y, 0.0f);

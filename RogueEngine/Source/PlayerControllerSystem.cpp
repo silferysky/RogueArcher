@@ -112,7 +112,7 @@ namespace Rogue
 
 			if (keycode == KeyPress::KeyF8)
 			{
-				CameraShakeEvent* cameraShakeEvent = new CameraShakeEvent(3.0f);
+				CameraShakeEvent* cameraShakeEvent = new CameraShakeEvent(220.0f);
 				EventDispatcher::instance().AddEvent(cameraShakeEvent);
 			}
 
