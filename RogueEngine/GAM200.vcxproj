@@ -82,7 +82,6 @@
     <ClInclude Include="Source\LogicSystem.h" />
     <ClInclude Include="Source\Manifold.h" />
     <ClInclude Include="Source\PatrolAI.h" />
-    <ClInclude Include="Source\pch.h" />
     <ClInclude Include="Source\PhysicsSystem.h" />
     <ClInclude Include="Source\AABB.h" />
     <ClInclude Include="Source\Circle.h" />
@@ -94,6 +93,7 @@
     <ClInclude Include="Source\PlayerControllerComponent.h" />
     <ClInclude Include="Source\PlayerControllerSystem.h" />
     <ClInclude Include="Source\Polygon.h" />
+    <ClInclude Include="Source\Precompiled.h" />
     <ClInclude Include="Source\RigidbodyComponent.h" />
     <ClInclude Include="Source\RotatableComponent.h" />
     <ClInclude Include="Source\SceneManager.h" />
@@ -190,7 +190,7 @@
     <ClCompile Include="Source\LogicSystem.cpp" />
     <ClCompile Include="Source\Manifold.cpp" />
     <ClCompile Include="Source\PatrolAI.cpp" />
-    <ClCompile Include="source\pch.cpp">
+    <ClCompile Include="source\Precompiled.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Source\PhysicsSystem.cpp" />
@@ -358,8 +358,8 @@
       <AdditionalIncludeDirectories>$(SolutionDir)Dep\STB\include;$(SolutionDir)Dep\glm;$(SolutionDir)Dep\FMOD\inc;$(SolutionDir)Dep\spdlog-1.x\include;$(SolutionDir)Dep\FreeType\include;$(SolutionDir)Dep\SOIL\include;$(SolutionDir)Dep\GLFW\include;$(SolutionDir)Dep\glew-2.1.0\include;$(SolutionDir)Dep\rapidjson-master\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch.h</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderFile>Precompiled.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).Precompiled.h</PrecompiledHeaderOutputFile>
       <PreprocessToFile>false</PreprocessToFile>
     </ClCompile>
     <Link>

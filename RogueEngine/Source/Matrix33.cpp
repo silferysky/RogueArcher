@@ -30,7 +30,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
  */
  /******************************************************************************/
 #pragma once
-#include "pch.h"
+#include "Precompiled.h"
 #include "REMath.h"
 #include "Vector2D.h"
 #include "Matrix33.h"

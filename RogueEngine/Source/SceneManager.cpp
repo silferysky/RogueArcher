@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "Precompiled.h"
 #include "SceneManager.h"
 #include "ObjectFactory.h"
 #include "EditorHierarchyInfo.h"

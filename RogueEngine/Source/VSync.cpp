@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "Precompiled.h"
 #include "VSync.h"
 #include "BasicIO.h"
 #include "GL/glew.h"
