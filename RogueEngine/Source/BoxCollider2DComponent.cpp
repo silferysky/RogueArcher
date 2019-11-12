@@ -52,6 +52,26 @@ namespace Rogue
 		return *this;
 	}
 
+	bool BoxCollider2DComponent::Rotatable() const
+	{
+		return m_rotatable;
+	}
+
+	void BoxCollider2DComponent::setRotatable(bool set)
+	{
+		m_rotatable = set;
+	}
+
+	CollisionMode BoxCollider2DComponent::GetCollisionMode() const
+	{
+		return m_collisionMode;
+	}
+
+	void BoxCollider2DComponent::SetCollisionMode(CollisionMode mode)
+	{
+		m_collisionMode = mode;
+	}
+
 	std::string BoxCollider2DComponent::Serialize()
 	{
 		//Size, modelVertexList
@@ -67,7 +87,22 @@ namespace Rogue
 		ss << m_aabb.getCenterOffSet().y << ";";
 
 		ss << m_aabb.getScaleOffSet().x << ";";
-		ss << m_aabb.getScaleOffSet().y;
+		ss << m_aabb.getScaleOffSet().y << ";";
+
+		switch (m_collisionMode)
+		{
+		case CollisionMode::e_awake:
+			ss << "AWAKE";
+			break;
+
+		case CollisionMode::e_trigger:
+			ss << "TRIGGER";
+			break;
+			
+		case CollisionMode::e_asleep:
+			ss << "ASLEEP";
+			break;
+		}
 
 		return ss.str();
 	}
@@ -114,6 +149,16 @@ namespace Rogue
 			y = std::stof(s1);
 
 		m_aabb.setScaleOffSet(Vec2{ x, y });
+
+		if (std::getline(ss, s1, ';'))
+		{
+			if (s1 == "AWAKE")
+				m_collisionMode = CollisionMode::e_awake;
+			else if (s1 == "TRIGGER")
+				m_collisionMode = CollisionMode::e_trigger;
+			else if (s1 == "ASLEEP")
+				m_collisionMode = CollisionMode::e_asleep;
+		}
 	}
 
 	void BoxCollider2DComponent::DisplayOnInspector()
@@ -132,5 +177,37 @@ namespace Rogue
 		ImGui::PushItemWidth(75);
 		ImGui::DragFloat("Center Y", &m_center.y, 1.0f, -10000.0f, 10000.0f);
 		m_aabb.setCenterOffSet(m_center);
+
+		ImGui::PushItemWidth(75);
+		bool is_asleep =  (m_collisionMode == CollisionMode::e_asleep);
+		bool is_awake = (m_collisionMode == CollisionMode::e_awake);
+		bool is_triggered = (m_collisionMode == CollisionMode::e_trigger);
+
+
+
+		ImGui::Checkbox("Asleep",&is_asleep);
+		ImGui::Checkbox("Awake", &is_awake);
+		ImGui::Checkbox("Trigger", &is_triggered);
+
+		if (is_asleep)
+		{
+			//is_awake = false;
+			//is_triggered = false;
+			SetCollisionMode(CollisionMode::e_asleep);
+		}
+
+		if (is_awake)
+		{
+			//is_asleep = false;
+			//is_triggered = false;
+			SetCollisionMode(CollisionMode::e_awake);
+		}
+
+		if (is_triggered)
+		{
+			//is_asleep = false;
+			//is_awake = false;
+			SetCollisionMode(CollisionMode::e_trigger);
+		}
 	}
 }

@@ -149,7 +149,7 @@ namespace Rogue
 			//m_projMat = glm::ortho(-16.0f * 0.5f, 16.0f * 0.5f, -9.0f * 0.5f, 9.0f * 0.5f, -1024.0f, 1024.0f);
 			
 			auto m_dimensions = Vec2{ m_size, aspect_ratio * m_size } * 0.5;
-			m_projMat = glm::ortho(-m_dimensions.x, m_dimensions.x, -m_dimensions.y , m_dimensions.y, -1024.0f, 1024.0f);
+			m_projMat = glm::ortho(-m_dimensions.x * m_cameraZoom, m_dimensions.x * m_cameraZoom, -m_dimensions.y * m_cameraZoom, m_dimensions.y * m_cameraZoom, -1024.0f, 1024.0f);
 			
 			m_loopEnd = mainLoopTimer.now();
 		}

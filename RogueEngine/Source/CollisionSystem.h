@@ -1,7 +1,7 @@
 #pragma once
 #include "REEngine.h"
 #include "CollisionManager.h"
-
+#include "EditorHierarchyInfo.h"
 namespace Rogue
 {
 	class CollisionSystem :
