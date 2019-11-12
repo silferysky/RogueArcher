@@ -126,10 +126,10 @@ namespace Rogue
 					if (transformPos.y < m_cameraMin.y)
 						transformPos.y = m_cameraMin.y;
 
-					m_target = transformPos;
+					//m_target = transformPos;
 
 					// For camera panning
-					float newCameraPosX = m_cameraPos.x;
+					/* float newCameraPosX = m_cameraPos.x;
 					float newCameraPosY = m_cameraPos.y;
 
 					if (newCameraPosX < m_target.x)
@@ -142,9 +142,9 @@ namespace Rogue
 						newCameraPosX -= m_cameraVelocity * g_deltaTime;
 
 					if (newCameraPosY > m_target.y)
-						newCameraPosY -= m_cameraVelocity * g_deltaTime;
+						newCameraPosY -= m_cameraVelocity * g_deltaTime; */
 
-					m_cameraPos = glm::vec3(newCameraPosX + shakeOffset.x, newCameraPosY + shakeOffset.y, 0.0f);
+					m_cameraPos = glm::vec3(transformPos.x + shakeOffset.x, transformPos.y + shakeOffset.y, 0.0f);
 
 					break;
 				}
