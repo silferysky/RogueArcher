@@ -1,0 +1,4 @@
+{
+    "Signature": 8207,
+    "Entity": "Name{light1}|Tag{}|Sprite{Resources/Assets/empty.png;1;0.941176;0.802768;0;0.286275}|Rigidbody{0;0;0;0;1;1;0;1}|Transform{496;501;192;157;0}|CircleCollider{109;0;0;0;0}||||||||||Collider{CIRCLE}|||"
+}
