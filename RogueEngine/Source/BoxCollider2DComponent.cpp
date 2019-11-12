@@ -190,22 +190,22 @@ namespace Rogue
 
 		if (is_asleep)
 		{
-			//is_awake = false;
-			//is_triggered = false;
+			is_awake = false;
+			is_triggered = false;
 			SetCollisionMode(CollisionMode::e_asleep);
 		}
 
-		if (is_awake)
+		else if (is_awake)
 		{
-			//is_asleep = false;
-			//is_triggered = false;
+			is_asleep = false;
+			is_triggered = false;
 			SetCollisionMode(CollisionMode::e_awake);
 		}
 
-		if (is_triggered)
+		else if (is_triggered)
 		{
-			//is_asleep = false;
-			//is_awake = false;
+			is_asleep = false;
+			is_awake = false;
 			SetCollisionMode(CollisionMode::e_trigger);
 		}
 	}

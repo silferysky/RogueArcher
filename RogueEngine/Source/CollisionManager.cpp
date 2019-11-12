@@ -28,7 +28,7 @@ namespace Rogue
 
 	inline Vec2 CollisionManager::GetColliderScale(const BaseCollider& collider, const TransformComponent& trans) const
 	{
-		return collider.getScaleOffSet() + trans.getScale();
+		return collider.getScaleOffSet() + Vec2(REAbs(trans.getScale().x), REAbs(trans.getScale().y));
 	}
 
 	inline Vec2 CollisionManager::GetColliderPosition(const BaseCollider& collider, const TransformComponent& trans) const
@@ -649,8 +649,8 @@ namespace Rogue
 		trans *= scale;
 		Mtx33 result = trans;
 
-		Vec2 min = { -0.5f, -0.5f };
-		Vec2 max = { 0.5f, 0.5f };
+		Vec2 min{ -0.5f, -0.5f };
+		Vec2 max{ 0.5f, 0.5f };
 
 		collider.setMin(result * min);
 		collider.setMax(result * max);
