@@ -130,22 +130,12 @@ namespace Rogue
 					//m_target = transformPos;
 
 					// For camera panning
-					/* float newCameraPosX = m_cameraPos.x;
-					float newCameraPosY = m_cameraPos.y;
+					glm::vec3 position = m_cameraPos;
+					position.x += (transformPos.x - position.x) * m_cameraLerp * g_deltaTime;
+					position.y += (transformPos.y - position.y) * m_cameraLerp * g_deltaTime;
 
-					if (newCameraPosX < m_target.x)
-						newCameraPosX += m_cameraVelocity * g_deltaTime;
-
-					if (newCameraPosY < m_target.y)
-						newCameraPosY += m_cameraVelocity * g_deltaTime;
-
-					if (newCameraPosX > m_target.x)
-						newCameraPosX -= m_cameraVelocity * g_deltaTime;
-
-					if (newCameraPosY > m_target.y)
-						newCameraPosY -= m_cameraVelocity * g_deltaTime; */
-
-					m_cameraPos = glm::vec3(transformPos.x + shakeOffset.x, transformPos.y + shakeOffset.y, 0.0f);
+					m_cameraPos = position;
+					//glm::vec3(transformPos.x + shakeOffset.x, transformPos.y + shakeOffset.y, 0.0f);
 
 					break;
 				}
