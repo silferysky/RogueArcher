@@ -1,3 +1,4 @@
+#include "pch.h"
 #include <Windows.h>
 #include "WindowHelper.h"
 #include "wtypes.h"

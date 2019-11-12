@@ -1,5 +1,6 @@
-#define _CRT_SECURE_NO_WARNINGS
 
+
+#include "pch.h"
 #include "Logger.h"
 #include "InputManager.h"
 #include "EventDispatcher.h"

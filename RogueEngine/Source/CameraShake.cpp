@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "CameraShake.h"
 #include "Main.h"
 

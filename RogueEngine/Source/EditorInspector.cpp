@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "EditorInspector.h"
 #include "imgui.h"
 #include "imgui_impl_opengl3.h"

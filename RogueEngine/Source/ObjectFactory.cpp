@@ -1,7 +1,5 @@
 #pragma once
-#include <bitset>
-#include <random>
-#include <vector>
+#include "pch.h"
 
 #include "Main.h"
 #include "ObjectFactory.h"
@@ -409,7 +407,7 @@ namespace Rogue
 			FactoryLoadComponent(curEnt, curSignature, toDeserialise);
 
 			ostrstream << "Game Object " << SceneManager::instance().GetObjectIterator();
-			CREATE_HIERARCHY_OBJ(curEnt, ostrstream.str(), tagDeserialized);
+			CREATE_HIERARCHY_OBJ_TAG(curEnt, ostrstream.str(), tagDeserialized);
 		}
 	}
 

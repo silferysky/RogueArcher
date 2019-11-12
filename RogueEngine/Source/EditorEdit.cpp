@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "EditorEdit.h"
 
 namespace Rogue

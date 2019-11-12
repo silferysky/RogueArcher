@@ -1,7 +1,7 @@
+#include "pch.h"
 #define STB_IMAGE_IMPLEMENTATION
 #include "TextureManager.h"
 #include "stb_image.h"
-#include <iostream>
 
 namespace Rogue
 {
