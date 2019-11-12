@@ -105,7 +105,7 @@ namespace Rogue
 		m_cameraShake.Update();
 		auto shakeOffset = m_cameraShake.getOffset();
 		
-		if (!m_worldCamera)
+		if (!m_worldCamera && g_engine.m_coordinator.GetPauseState())
 		{
 			// For all entities
 			for (auto entity : m_entities)
@@ -131,8 +131,8 @@ namespace Rogue
 
 					// For camera panning
 					glm::vec3 position = m_cameraPos;
-					position.x += (transformPos.x - position.x) * m_cameraLerp * g_deltaTime;
-					position.y += (transformPos.y - position.y) * m_cameraLerp * g_deltaTime;
+					position.x += (transformPos.x - position.x) * m_cameraLerp * g_deltaTime + shakeOffset.x;
+					position.y += (transformPos.y - position.y) * m_cameraLerp * g_deltaTime + shakeOffset.y;
 
 					m_cameraPos = position;
 					//glm::vec3(transformPos.x + shakeOffset.x, transformPos.y + shakeOffset.y, 0.0f);
