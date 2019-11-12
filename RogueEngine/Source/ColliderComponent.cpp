@@ -10,6 +10,9 @@ namespace Rogue
 	ColliderComponent::ColliderComponent(const ColliderComponent& rhs) :
 		m_shape{ nullptr }
 	{
+		if (!rhs.m_shape)
+			return;
+
 		switch (rhs.m_shape->GetType())
 		{
 		case Shape::Type::e_box:
@@ -85,15 +88,19 @@ namespace Rogue
 		{
 		case Shape::Type::e_box:
 			ss << "BOX";
+			break;
 
 		case Shape::Type::e_circle:
 			ss << "CIRCLE";
+			break;
 
 		case Shape::Type::e_polygon:
 			ss << "POLYGON";
+			break;
 
 		default:
 			ss << "NONE";
+			break;
 		}
 
 		return ss.str();
