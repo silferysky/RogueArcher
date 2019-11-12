@@ -24,6 +24,8 @@ namespace Rogue
 
 	void CursorSystem::Update()
 	{
+		g_engine.m_coordinator.InitTimeSystem("Cursor System");
+
 		// Get Cursor position
 		POINT cursor;
 		Vec2 cursorPos;
@@ -53,11 +55,23 @@ namespace Rogue
 
 		g_engine.SetWorldCursor(Vec2{ rayWorld4D.x, rayWorld4D.y });
 
-		for(Entity entity : m_entities)
+		if (g_engine.m_coordinator.GetEditorIsRunning())
 		{
-			auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
-			trans.setPosition(g_engine.GetWorldCursor());
+			for (Entity entity : m_entities)
+			{
+				auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
+				trans.setPosition(g_engine.GetViewportCursor());
+			}
 		}
+		else
+		{
+			for (Entity entity : m_entities)
+			{
+				auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
+				trans.setPosition(g_engine.GetWorldCursor());
+			}
+		}
+		g_engine.m_coordinator.EndTimeSystem("Cursor System");
 	}
 
 	void CursorSystem::Shutdown()

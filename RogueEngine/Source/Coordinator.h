@@ -257,6 +257,11 @@ namespace Rogue
 			m_systemManager->ToggleEditorIsRunning();
 		}
 
+		bool GetEditorIsRunning()
+		{
+			return m_systemManager->GetEditorIsRunning();
+		}
+
 		void ToggleGameState()
 		{
 			m_systemManager->ToggleGameState();
