@@ -481,7 +481,7 @@
     <ClInclude Include="Source\EditorProfiler.h">
       <Filter>RogueEditor\EditorFiles</Filter>
     </ClInclude>
-    <ClInclude Include="Source\pch.h">
+    <ClInclude Include="Source\Precompiled.h">
       <Filter>RogueEngine\Core</Filter>
     </ClInclude>
   </ItemGroup>
@@ -747,7 +747,7 @@
     <ClCompile Include="Source\EditorProfiler.cpp">
       <Filter>RogueEditor\EditorFiles</Filter>
     </ClCompile>
-    <ClCompile Include="source\pch.cpp">
+    <ClCompile Include="source\Precompiled.cpp">
       <Filter>RogueEngine\Core</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,5 +1,5 @@
 #pragma once
-#include "pch.h"
+#include "Precompiled.h"
 #include "PlayerControllerSystem.h"
 #include "Main.h"
 #include "ForceManager.h"
@@ -176,7 +176,6 @@ namespace Rogue
 
 			KeyPressEvent* EvPressKey = dynamic_cast<KeyPressEvent*>(ev);
 			KeyPress keycode = EvPressKey->GetKeyCode();
-
 			for (std::set<Entity>::iterator iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
 			{
 				//For 1st entity
