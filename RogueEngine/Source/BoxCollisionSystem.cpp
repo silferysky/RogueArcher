@@ -80,13 +80,13 @@ namespace Rogue
 						continue;
 					}
 					//std::cout << "Entity " << *iEntity << " AABB collides with Entity " << *iNextEntity << " AABB" << std::endl;
-					CollisionManager::instance().GenerateManifoldAABBvsAABB(*iEntity, *iNextEntity);
+					CollisionManager::instance().GenerateManifolds(*iEntity, *iNextEntity);
 				}
 
-				if (CollisionManager::instance().DiscreteOBBvsOBB(currBoxCollider.m_obb, nextBoxCollider.m_obb))
-				{
-					//	std::cout << "Entity " << *iEntity << " OBB collides with Entity " << *iNextEntity << " OBB" << std::endl;
-				}
+				//if (CollisionManager::instance().DiscreteOBBvsOBB(currBoxCollider.m_obb, nextBoxCollider.m_obb))
+				//{
+				//	std::cout << "Entity " << *iEntity << " OBB collides with Entity " << *iNextEntity << " OBB" << std::endl;
+				//}
 
 			}
 
