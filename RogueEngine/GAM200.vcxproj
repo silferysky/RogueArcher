@@ -298,7 +298,7 @@
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LinkIncremental>true</LinkIncremental>
+    <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -327,6 +327,8 @@
       <AdditionalLibraryDirectories>$(SolutionDir)Dep\FreeType\win64;$(SolutionDir)Dep\FMOD\lib\x64;$(SolutionDir)Dep\SOIL\x64;$(SolutionDir)Dep\GLFW\lib-vc2019;$(SolutionDir)Dep\glew-2.1.0\lib\Release\x64</AdditionalLibraryDirectories>
       <AdditionalDependencies>freetype.lib;fmod_vc.lib;glfw3.lib;glfw3dll.lib;opengl32.lib;SOIL.lib;glew32.lib;glew32s.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
+      <LinkTimeCodeGeneration>
+      </LinkTimeCodeGeneration>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
