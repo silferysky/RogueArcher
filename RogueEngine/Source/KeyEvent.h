@@ -85,6 +85,8 @@ namespace Rogue
 	class KeyPressCombinedEvent : public KeyPressEvent
 	{
 	public:
+		SET_EVENT_TYPE(EvKeyCombinedPressed)
+
 		KeyPressCombinedEvent(KeyPress key, KeyPress subkey, int repeatCount = 0)
 			: KeyPressEvent(key, repeatCount), SubKey{ subkey } { }
 
@@ -104,6 +106,9 @@ namespace Rogue
 	class KeyTriggeredCombinedEvent : public KeyTriggeredEvent
 	{
 	public:
+
+		SET_EVENT_TYPE(EvKeyCombinedTriggered)
+
 		KeyTriggeredCombinedEvent(KeyPress key, KeyPress subkey)
 			: KeyTriggeredEvent(key), SubKey{ subkey } { }
 
@@ -123,6 +128,9 @@ namespace Rogue
 	class KeyReleasedCombinedEvent : public KeyReleaseEvent
 	{
 	public:
+
+		SET_EVENT_TYPE(EvKeyCombinedReleased)
+
 		KeyReleasedCombinedEvent(KeyPress key, KeyPress subkey)
 			: KeyReleaseEvent(key), SubKey{ subkey } { }
 
