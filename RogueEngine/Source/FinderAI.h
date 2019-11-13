@@ -15,6 +15,8 @@ namespace Rogue
 
 		virtual void AIChaseUpdate() override;
 
+		virtual void AIIdleUpdate() override;
+
 	};
 
 }
