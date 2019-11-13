@@ -49,7 +49,9 @@ namespace Rogue
 	{
 		//Check if next point exists
 		if (m_nextPoint.empty())
+		{
 			return;
+		}
 
 		//Check if Transform component and Rigidbody exist
 		if (!(g_engine.m_coordinator.ComponentExists<TransformComponent>(m_entity) &&
@@ -59,6 +61,12 @@ namespace Rogue
 
 		TransformComponent& aiTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(m_entity);
 		StatsComponent& aiStats = g_engine.m_coordinator.GetComponent<StatsComponent>(m_entity);
+
+		if (g_engine.m_coordinator.ComponentExists<AnimationComponent>(m_entity))
+		{
+			g_engine.m_coordinator.GetComponent<AnimationComponent>(m_entity).setIsLooping(true);
+			g_engine.m_coordinator.GetComponent<AnimationComponent>(m_entity).setIsAnimating(true);
+		}
 
 		float distance = Vec2SqDistance(aiTransform.getPosition(), m_nextPoint.front());
 
@@ -81,6 +89,15 @@ namespace Rogue
 				aiTransform.setScale(Vec2(aiTransform.getScale().x, -1 * aiTransform.getScale().y));
 		
 				//transform.setScale(1 * g_engine.m_coordinator.GetComponent<TransformComponent>(m_entity).getScale());
+		}
+	}
+
+	void FinderAI::AIIdleUpdate()
+	{
+		if (g_engine.m_coordinator.ComponentExists<AnimationComponent>(m_entity))
+		{
+			g_engine.m_coordinator.GetComponent<AnimationComponent>(m_entity).setIsLooping(false);
+			g_engine.m_coordinator.GetComponent<AnimationComponent>(m_entity).setIsAnimating(false);
 		}
 	}
 }
