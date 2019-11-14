@@ -105,7 +105,7 @@ namespace Rogue
 		m_cameraShake.Update();
 		auto shakeOffset = m_cameraShake.getOffset();
 		
-		if (!m_worldCamera && g_engine.m_coordinator.GetPauseState())
+		if (!m_worldCamera && g_engine.m_coordinator.GameIsActive())
 		{
 			// For all entities
 			for (auto entity : m_entities)

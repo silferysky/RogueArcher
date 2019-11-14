@@ -1,6 +1,6 @@
 {
-    "MaxEntityCount": 53,
-    "EntityCount": 53,
+    "MaxEntityCount": 54,
+    "EntityCount": 54,
     "BackgroundTexture": "Resources/Assets/DefaultSprite.png;0;1;1;1;1",
     "Signature0": 32773,
     "Signature1": 32773,
@@ -55,6 +55,7 @@
     "Signature50": 8407,
     "Signature51": 8407,
     "Signature52": 8214,
+    "Signature53": 8214,
     "Entity0": "Name{Bg1}|Tag{}|Sprite{Resources/Assets/Bg1.png;0;1;1;1;1}||Transform{0;0;3200;1800;0}|||||||||||||Background{1.2;}|",
     "Entity1": "Name{Bg2}|Tag{}|Sprite{Resources/Assets/Bg2.png;0;1;1;1;1}||Transform{0;0;3200;1800;0}|||||||||||||Background{1.2;}|",
     "Entity2": "Name{Bg3}|Tag{}|Sprite{Resources/Assets/Bg3.png;0;1;1;1;1}||Transform{0;0;3200;1800;0}|||||||||||||Background{1.2;}|",
@@ -86,7 +87,7 @@
     "Entity28": "Name{collider9}|Tag{}||Rigidbody{0;0;0;0;1;1;1;1}|Transform{1308;-126;100;100;0}||BoxCollider{0;0;0;802;1245;AWAKE}||||||||||||",
     "Entity29": "Name{collider10}|Tag{}||Rigidbody{0;0;0;0;1;1;1;1}|Transform{-376;-52;100;100;0}||BoxCollider{0;30;0;515;182;AWAKE}||||||||||||",
     "Entity30": "Name{collider11}|Tag{}||Rigidbody{0;0;0;0;1;1;1;1}|Transform{-287;152;100;100;0}||BoxCollider{0;18;-29;319;75;AWAKE}||||||||||||",
-    "Entity31": "Name{collider12}|Tag{}||Rigidbody{0;0;0;0;1;1;1;1}|Transform{-46;23;100;100;0}||BoxCollider{0;129;-33;169;834;AWAKE}||||||||||||",
+    "Entity31": "Name{collider12}|Tag{}||Rigidbody{0;0;0;0;1;1;1;1}|Transform{-46;22;100;0;0}||BoxCollider{0;135;296;121;161;AWAKE}||||||||||||",
     "Entity32": "Name{collider13}|Tag{}||Rigidbody{0;0;0;0;1;1;1;1}|Transform{66;-491;100;100;0}||BoxCollider{0;0;0;185;22;AWAKE}||||||||||||",
     "Entity33": "Name{collider14}|Tag{}||Rigidbody{0;0;0;0;1;1;1;1}|Transform{1646;699;100;100;0}||BoxCollider{0;0;0;-1;284;AWAKE}||||||||||||",
     "Entity34": "Name{collider15}|Tag{}||Rigidbody{0;0;0;0;1;1;1;1}|Transform{810;910;100;100;0}||BoxCollider{0;0;0;1830;0;AWAKE}||||||||||||",
@@ -98,7 +99,7 @@
     "Entity40": "Name{crystal6 :)}|Tag{}|Sprite{Resources/Assets/Crystal2.png;1;1;1;1;1}||Transform{1559;595;100;100;0}||||||||Audio{Resources/Sounds/1.wav;1;}||||||",
     "Entity41": "Name{crystal6 shadow}|Tag{}|Sprite{Resources/Assets/Crystal2_Shadow.png;1;1;1;1;1}||Transform{1558;595;100;100;0}||||||||||||||",
     "Entity42": "Name{Game Object 43}|Tag{}|||Transform{-840;-941;100;100;0}||||||||Audio{Resources/Sounds/[Waterfall SFX]WATER-FALL_GEN-HDF-25489.ogg;1;}||||||",
-    "Entity43": "Name{Crosshair}|Tag{}|Sprite{Resources/Assets/crosshair.png;6666;1;1;1;1}||Transform{-928.91;594.293;100;100;0}||||||||||Cursor{0;0}||||",
+    "Entity43": "Name{Crosshair}|Tag{}|Sprite{Resources/Assets/crosshair.png;6666;1;1;1;1}||Transform{-953.97;615.159;100;100;0}||||||||||Cursor{0;0}||||",
     "Entity44": "Name{Light Ant 1}|Tag{}|Sprite{Resources/Assets/LightAnt.png;1;1;1;0.5;1}|Rigidbody{0;0;0;0;1;1;0;1}|Transform{-1292;-712;103;100;0}|CircleCollider{0;0;0;0;0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;0;0;0;0;AWAKE}||LogicComponent{2;0;0;1}|StatsComponent{0;1;1;1;2;800;500;800;-400;}|Animation{4;0.1;0;}||||||||",
     "Entity45": "Name{Light Ant 2}|Tag{}|Sprite{Resources/Assets/LightAnt.png;1;1;1;1;1}|Rigidbody{0;0;0;0;1;1;0;0}|Transform{800;-400;108;100;0}||||LogicComponent{1;0;0;2}|StatsComponent{1;10;50;1;2;785;500;785;-400;}|Animation{4;0.1;1;}||||||||",
     "Entity46": "Name{Light Ant 3}|Tag{}|Sprite{Resources/Assets/LightAnt.png;1;1;1;1;1}|Rigidbody{0;0;5.53387e-06;0;1;1;0;0}|Transform{496.24;441.755;108;100;0}|CircleCollider{0;0;0;0;0}|||LogicComponent{1;0;0;2}|StatsComponent{1;10;50;1;2;470;-400;470;500;}|Animation{4;0.1;1;}||||||||",
@@ -107,5 +108,6 @@
     "Entity49": "Name{collider21}|Tag{}||Rigidbody{0;-500;5.03079e-06;-3.84636;1;1;1;1}|Transform{18;-43.84;100;100;0}||BoxCollider{6;0.5;0.5;-0.5;0.5;-0.5;0.5;0.5;-0.5;0;0;1.46866e-20;-2.52528e-29;169;-366;130.5;63;AWAKE}||||||||||||",
     "Entity50": "Name{light1}|Tag{}|Sprite{Resources/Assets/empty.png;1;0.941176;0.802768;0;0.286275}|Rigidbody{0;0;6.63311e-09;0;1;1;0;1}|Transform{521.389;453.245;173;150;0}||BoxCollider{0;0;0;0;0;AWAKE}||LogicComponent{1;0;0;2}|StatsComponent{0;10;50;1;2;470;-400;470;500;}||||||Collider{BOX}|||",
     "Entity51": "Name{light2}|Tag{Tag{}|Sprite{Resources/Assets/empty.png;1;0.941176;0.802768;0;0.286275}|Rigidbody{0;0;8.61269e-11;0;1;1;0;1}|Transform{765.832;-400;157;155;0}||BoxCollider{0;0;0;0;0;AWAKE}||LogicComponent{1;0;0;2}|StatsComponent{0;10;50;1;2;785;500;785;-400;}||||||Collider{BOX}|||",
-    "Entity52": "Name{Game Object 53}|Tag{}||Rigidbody{0;0;0;-4.231;1;1;1;1}|Transform{-86.01;699.17;49;272;0}||BoxCollider{0;0;0;23;160;AWAKE}|||||||||Collider{BOX}|||"
+    "Entity52": "Name{Game Object 53}|Tag{}||Rigidbody{0;0;0;-4.231;1;1;1;1}|Transform{-86.01;699.17;49;272;0}||BoxCollider{0;0;0;23;160;AWAKE}|||||||||Collider{BOX}|||",
+    "Entity53": "Name{Game Object 54}|Tag{}||Rigidbody{0;0;0;0;1;1;1;1}|Transform{-35;-320;115;190;0}||BoxCollider{0;0;0;0;0;AWAKE}|||||||||Collider{BOX}|||"
 }
