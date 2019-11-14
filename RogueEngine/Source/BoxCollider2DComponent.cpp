@@ -6,19 +6,20 @@
 namespace Rogue
 {
 	BoxCollider2DComponent::BoxCollider2DComponent() :
-		m_rotatable{ false }, m_aabb{}, m_obb{}
+		m_rotatable{ false }, m_aabb{}, m_obb{}, m_collisionMode{CollisionMode::e_awake}
 	{}
 
 	BoxCollider2DComponent::BoxCollider2DComponent(const BoxCollider2DComponent& rhs) :
-		m_rotatable{ rhs.m_rotatable }, m_aabb{ rhs.m_aabb }, m_obb{ rhs.m_obb }
+		m_rotatable{ rhs.m_rotatable }, m_aabb{ rhs.m_aabb }, m_obb{ rhs.m_obb }, m_collisionMode{rhs.m_collisionMode}
 	{}
 
 	BoxCollider2DComponent::BoxCollider2DComponent(BoxCollider2DComponent&& rhs) noexcept :
-		m_rotatable{ false }, m_aabb{ AABB{} }, m_obb{ OBB{} }
+		m_rotatable{ false }, m_aabb{ AABB{} }, m_obb{ OBB{} }, m_collisionMode{}
 	{
 		std::swap(m_rotatable, rhs.m_rotatable);
 		std::swap(m_aabb, rhs.m_aabb);
 		std::swap(m_obb, rhs.m_obb);
+		std::swap(m_collisionMode, rhs.m_collisionMode);
 	}
 
 	BoxCollider2DComponent& BoxCollider2DComponent::operator=(const BoxCollider2DComponent& rhs)
@@ -35,6 +36,8 @@ namespace Rogue
 			vertexList.reserve(m_obb.getSize());
 
 			m_obb.setModelVerts(vertexList);
+
+			m_collisionMode = rhs.m_collisionMode;
 		}
 		return *this;
 	}
@@ -46,6 +49,7 @@ namespace Rogue
 			std::swap(m_rotatable, rhs.m_rotatable);
 			std::swap(m_aabb, rhs.m_aabb);
 			std::swap(m_obb, rhs.m_obb);
+			std::swap(m_collisionMode, rhs.m_collisionMode);
 		}
 
 		return *this;
@@ -178,35 +182,39 @@ namespace Rogue
 		m_aabb.setCenterOffSet(m_center);
 
 		ImGui::PushItemWidth(75);
-		bool is_asleep =  (m_collisionMode == CollisionMode::e_asleep);
-		bool is_awake = (m_collisionMode == CollisionMode::e_awake);
-		bool is_triggered = (m_collisionMode == CollisionMode::e_trigger);
 
+		bool oldAsleep =  (m_collisionMode == CollisionMode::e_asleep);
+		bool oldAwake = (m_collisionMode == CollisionMode::e_awake);
+		bool oldTrigger = (m_collisionMode == CollisionMode::e_trigger);
 
+		bool newAsleep = oldAsleep;
+		bool newAwake = oldAwake;
+		bool newTrigger = oldTrigger;
 
-		ImGui::Checkbox("Asleep",&is_asleep);
-		ImGui::Checkbox("Awake", &is_awake);
-		ImGui::Checkbox("Trigger", &is_triggered);
+		ImGui::Checkbox("Asleep",&newAsleep);
+		ImGui::Checkbox("Awake", &newAwake);
+		ImGui::Checkbox("Trigger", &newTrigger);
 
-		if (is_asleep)
+		if (oldAsleep)
 		{
-			is_awake = false;
-			is_triggered = false;
-			SetCollisionMode(CollisionMode::e_asleep);
+			if (newAwake)
+				SetCollisionMode(CollisionMode::e_awake);
+			else if (newTrigger)
+				SetCollisionMode(CollisionMode::e_trigger);
 		}
-
-		else if (is_awake)
+		else if (oldAwake)
 		{
-			is_asleep = false;
-			is_triggered = false;
-			SetCollisionMode(CollisionMode::e_awake);
+			if (newTrigger)
+				SetCollisionMode(CollisionMode::e_trigger);
+			else if (newAsleep)
+				SetCollisionMode(CollisionMode::e_asleep);
 		}
-
-		else if (is_triggered)
+		else if (oldTrigger)
 		{
-			is_asleep = false;
-			is_awake = false;
-			SetCollisionMode(CollisionMode::e_trigger);
+			if (newAwake)
+				SetCollisionMode(CollisionMode::e_awake);
+			else if (newAsleep)
+				SetCollisionMode(CollisionMode::e_asleep);
 		}
 	}
 }
