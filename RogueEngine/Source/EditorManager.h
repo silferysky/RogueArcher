@@ -1,11 +1,5 @@
 #pragma once
-#include <cstdio>
-#include <cstdlib>
-#include <string>
-#include <fstream>
 #include "Main.h"
-#include <vector>
-#include <unordered_map>
 #include "REEditor.h"
 #include "imgui.h"
 #include "imgui_impl_opengl3.h"

@@ -533,7 +533,7 @@ namespace Rogue
 
 			strstream << "|";
 		} //End of for loop strstream adding
-		strstream.str().substr(0, strstream.str().size() - 1);
+		//strstream.str().substr(0, strstream.str().size() - 1);
 		return strstream.str();
 	}
 
