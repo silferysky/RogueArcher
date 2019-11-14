@@ -8,7 +8,7 @@
 namespace Rogue
 {
 	FontSystem::FontSystem() :
-		System(SystemID::id_FONTSYSTEM), m_VAO{ 0 }, m_VBO{ 0 }, m_EBO{ 0 }, m_shader{ }
+		System(SystemID::id_FONTSYSTEM), m_VAO{ 0 }, m_VBO{ 0 }, m_EBO{ 0 }, m_shader{ }, m_projectionLocation{ 0 }, m_viewLocation{ 0 }
 	{}
 
 	void FontSystem::Init()

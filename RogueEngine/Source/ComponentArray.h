@@ -19,25 +19,29 @@ namespace Rogue
 	class ComponentArray : public BaseComponentArray
 	{
 	public:
+		ComponentArray() :
+			m_size{ 0 }
+		{}
+
 		void InsertData(Entity entity, T component)
 		{
 			RE_ASSERT(m_entityToIndexMap.find(entity) == m_entityToIndexMap.end(), "Component added to same entity more than once.");
 			// Put new entry at end and update the maps
-			size_t newIndex = RESize;
+			size_t newIndex = m_size;
 			m_entityToIndexMap[entity] = newIndex;
 			m_indexToEntityMap[newIndex] = entity;
 			m_componentArray[newIndex] = component;
-			++RESize;
+			++m_size;
 		}
 
 		void RemoveData(Entity entity)
 		{
 			RE_ASSERT(m_entityToIndexMap.find(entity) != m_entityToIndexMap.end(), "Removing non-existent component.");
-			if (!RESize)
+			if (!m_size)
 				return;
 			// Copy element at end into deleted element's place to maintain density
 			size_t indexOfRemovedEntity = m_entityToIndexMap[entity];
-			size_t indexOfLastElement = RESize - 1;
+			size_t indexOfLastElement = m_size - 1;
 			m_componentArray[indexOfRemovedEntity] = m_componentArray[indexOfLastElement];
 
 			// Update map to point to moved spot
@@ -48,7 +52,7 @@ namespace Rogue
 			m_entityToIndexMap.erase(entity);
 			m_indexToEntityMap.erase(indexOfLastElement);
 
-			--RESize;
+			--m_size;
 		}
 
 		T& GetData(Entity entity)
@@ -96,6 +100,6 @@ namespace Rogue
 
 		std::unordered_map<size_t, Entity> m_indexToEntityMap;
 
-		size_t RESize;
+		size_t m_size;
 	};
 }

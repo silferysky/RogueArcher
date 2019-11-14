@@ -30,7 +30,10 @@ namespace Rogue
 
 		std::vector<char> buffer(MAX_FILE_BUFFER_SIZE);
 		rapidjson::FileReadStream is(pFile, buffer.data(), MAX_FILE_BUFFER_SIZE);
-		fclose(pFile);
+		
+		if(pFile)
+			fclose(pFile);
+		
 		rapidjson::Document document;
 		document.ParseStream<0, rapidjson::UTF8<>, rapidjson::FileReadStream>(is);
 		return document;
