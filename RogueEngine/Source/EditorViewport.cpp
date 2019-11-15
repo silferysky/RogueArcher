@@ -1,19 +1,12 @@
-#include "pch.h"
+#include "Precompiled.h"
 #include "EditorViewport.h"
 #include "Main.h"
 
 namespace Rogue
 {
-	ImGuiEditorViewport::ImGuiEditorViewport()
-	{
-	}
-	ImGuiEditorViewport::~ImGuiEditorViewport()
-	{
-	}
 	void ImGuiEditorViewport::Init()
-	{
+	{}
 
-	}
 	void ImGuiEditorViewport::Update()
 	{
 		ImGui::Begin("Viewport");
@@ -123,6 +116,35 @@ namespace Rogue
 
 		ImVec2 imageSize = ImGui::GetContentRegionAvail();
 		ImGui::Image((void*)(intptr_t)(g_engine.m_coordinator.GetSystem<GraphicsSystem>()->getFBO()), ImVec2(imageSize.x,imageSize.y ), ImVec2(0, 1), ImVec2(1, 0));
+
+
+		ImVec2 mousePos = ImGui::GetMousePos();
+		int width = g_engine.GetEngineWindowWidth();
+		int height = g_engine.GetEngineWindowHeight();
+
+		mousePos.x = (mousePos.x - ImGui::GetCursorScreenPos().x) * width / imageSize.x;
+		mousePos.y = (mousePos.y - ImGui::GetCursorScreenPos().y) * height / -imageSize.y;
+
+		// TODO: Move to cursor system to get viewport screen pos from here
+
+		float x = (2.0f * mousePos.x) / width - 1.0f;
+		float y = 1.0f - (2.0f * mousePos.y) / height;
+		float z = 1.0f;
+
+		glm::vec3 rayNDC = glm::vec3(x, y, z);
+
+		// convert from ndc to viewport coordinates if editor is on?
+
+		glm::vec4 rayClip = glm::vec4(rayNDC.x, rayNDC.y, -1.0f, 1.0f);
+
+		glm::vec4 rayEye = glm::inverse(g_engine.GetProjMat()) * rayClip;
+
+		glm::mat4 viewMat = g_engine.m_coordinator.GetSystem<CameraSystem>()->GetViewMatrix(1.0f);
+
+		glm::vec4 rayWorld4D = glm::inverse(viewMat) * rayEye;
+
+		g_engine.SetViewportCursor(ImVec2(rayWorld4D.x, -rayWorld4D.y));
+
 		ImGui::End();
 	}
 	void ImGuiEditorViewport::Shutdown()

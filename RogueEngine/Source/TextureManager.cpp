@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "Precompiled.h"
 #define STB_IMAGE_IMPLEMENTATION
 #include "TextureManager.h"
 #include "stb_image.h"
@@ -58,7 +58,7 @@ namespace Rogue
 
 			glBindTexture(GL_TEXTURE_2D, 0);
 
-			textureMap.emplace(std::string(texture), newTexture);
+			textureMap.emplace(std::string_view(texture), newTexture);
 
 			auto itr1 = textureMap.find(texture);
 			return itr1->second;

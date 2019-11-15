@@ -1,9 +1,5 @@
-#include "pch.h"
+#include "Precompiled.h"
 #include "EditorInspector.h"
-#include "imgui.h"
-#include "imgui_impl_opengl3.h"
-#include "imgui_impl_win32.h"
-#include "glew.h"
 #include "REEngine.h"
 #include "Main.h"
 
@@ -452,7 +448,6 @@ namespace Rogue
 
 		ImGui::DragFloat("Set Gravity", &m_gravity.y, 1.0f, -10000.0f, 10000.0f);
 		g_engine.m_coordinator.GetSystem<PhysicsSystem>()->setGravity(m_gravity);
-
 
 		ImGui::End();
 

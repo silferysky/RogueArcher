@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "Precompiled.h"
 #include "Config.h"
 #include "FileIO.h"
 #include "Main.h"
@@ -7,7 +7,7 @@
 namespace Rogue
 {
 	REConfig::REConfig() :
-		m_title{ "" }, m_byte{ 0 }, m_flags{ 0 }, m_FPS{ 1 / 60 }, m_height{ 0 }, m_sound{ true }, m_x{ 0 }, m_y{ 0 }
+		m_title{ "" }, m_byte{ 0 }, m_flags{ 0 }, m_FPS{ 1 / 60 }, m_width{ 0 }, m_height{ 0 }, m_sound{ true }, m_x{ 0 }, m_y{ 0 }
 	{}
 
 	void REConfig::ConfigInit()

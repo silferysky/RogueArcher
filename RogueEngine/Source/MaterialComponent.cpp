@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "Precompiled.h"
 #include "MaterialComponent.h"
 
 namespace Rogue

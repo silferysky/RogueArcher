@@ -33,8 +33,8 @@ namespace Rogue
 		void setTexCoordMax(const float& texCoordMax);
 		float getTexCoordMax() const;
 		
-		void setTexturePath(std::string texturePath);
-		std::string getTexturePath() const;
+		void setTexturePath(std::string_view texturePath);
+		std::string_view getTexturePath() const;
 
 		glm::vec4& getFilter();
 		void setFilter(const glm::vec4& filter);
@@ -42,7 +42,7 @@ namespace Rogue
 		void DisplayOnInspector();
 		//Serialize
 		virtual std::string Serialize() override;
-		virtual void Deserialize(const std::string& toDeserialize) override;
+		virtual void Deserialize(std::string_view toDeserialize) override;
 
 		//void operator=(SpriteComponent sprite);
 	};

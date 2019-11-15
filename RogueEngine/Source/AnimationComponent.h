@@ -8,8 +8,8 @@ namespace Rogue
 	class AnimationComponent
 		: public BaseComponent
 	{
-		int m_frames;
-		int m_currentFrame;
+		int m_frames = 0;
+		int m_currentFrame = 0;
 		int m_offSet; // each frame in pixels
 		float m_secondsPerFrame = 0.1f;
 		float m_timer = 0.0f;
@@ -44,6 +44,6 @@ namespace Rogue
 		void DisplayOnInspector();
 		//Serialize
 		virtual std::string Serialize() override;
-		virtual void Deserialize(const std::string& toDeserialize) override;
+		virtual void Deserialize(std::string_view toDeserialize) override;
 	};
 }

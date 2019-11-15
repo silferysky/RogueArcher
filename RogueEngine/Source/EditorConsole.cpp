@@ -1,10 +1,5 @@
-#include "pch.h"
+#include "Precompiled.h"
 #include "EditorConsole.h"
-#include "imgui.h"
-#include "imgui_impl_opengl3.h"
-#include "imgui_impl_win32.h"
-#include "glew.h"
-#include "glfw3.h"
 #include "Logger.h"
 
 namespace Rogue
@@ -35,11 +30,10 @@ namespace Rogue
 		static char bufferX[64];
 		ImGui::SameLine();
 		ImGui::InputText(" ", bufferX, 64);
-		std::string search;
-		search = bufferX;
+		std::string_view search(bufferX);
 		for (auto& i : Logger)
 		{
-			std::string name = i.substr(0, search.size());
+			std::string_view name(i.c_str(), search.size());
 			if (name == search)
 			{
 				ImGui::Text("%s", i.c_str());

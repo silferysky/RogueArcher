@@ -1,6 +1,5 @@
 #pragma once
 #include "IEditable.h"
-#include <vector>
 #include "EditorHierarchyInfo.h"
 
 namespace Rogue

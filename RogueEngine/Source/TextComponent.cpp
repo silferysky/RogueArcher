@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "Precompiled.h"
 #include "TextComponent.h"
 
 namespace Rogue
@@ -13,12 +13,12 @@ namespace Rogue
 		return m_colour;
 	}
 
-	void TextComponent::SetWords(const std::string& words)
+	void TextComponent::SetWords(std::string_view words)
 	{
 		m_words = words;
 	}
 
-	std::string& TextComponent::GetWords()
+	std::string_view TextComponent::GetWords()
 	{
 		return m_words;
 	}
@@ -68,9 +68,9 @@ namespace Rogue
 		return ss.str();
 	}
 
-	void TextComponent::Deserialize(const std::string& toDeserialize)
+	void TextComponent::Deserialize(std::string_view toDeserialize)
 	{
-		std::istringstream ss(toDeserialize);
+		std::istringstream ss(toDeserialize.data());
 		std::string s1, s2, s3, s4;		//s2 is used if two are needed
 		int counter = 0;		//Needed to take in for multiple values
 		int sets = 1;			//Sets represents the number of "sets" that must be taken in simultaneously. Aka vec2 or more than 1 parameter to set

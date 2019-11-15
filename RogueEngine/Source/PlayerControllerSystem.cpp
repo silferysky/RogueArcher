@@ -1,5 +1,5 @@
 #pragma once
-#include "pch.h"
+#include "Precompiled.h"
 #include "PlayerControllerSystem.h"
 #include "Main.h"
 #include "ForceManager.h"
@@ -59,7 +59,6 @@ namespace Rogue
 				ClearTimedEntities();
 			}
 			m_jumpCooldown -= g_deltaTime * g_engine.GetTimeScale();
-			std::cout << m_jumpCooldown << std::endl;
 		//}
 
 		//To update all timed entities
@@ -155,7 +154,7 @@ namespace Rogue
 						{
 							//AddToTimedEntities(*iEntity);
 							auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
-							rigidbody.addForce(Vec2(0.0f, 50000.0f));
+							rigidbody.addForce(Vec2(0.0f, 40000.0f));
 						}
 					}
 				}
@@ -176,7 +175,6 @@ namespace Rogue
 
 			KeyPressEvent* EvPressKey = dynamic_cast<KeyPressEvent*>(ev);
 			KeyPress keycode = EvPressKey->GetKeyCode();
-
 			for (std::set<Entity>::iterator iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
 			{
 				//For 1st entity
@@ -383,7 +381,6 @@ namespace Rogue
 
 			//ForceManager::instance().RegisterForce(ball, Vec2(cursorPos.x * FORCE_FACTOR, cursorPos.y * FORCE_FACTOR), 1.0f);
 			rigidbody.addForce(Vec2(ballDir.x * FORCE_FACTOR, ballDir.y * FORCE_FACTOR));
-			std::cout << ballDir.x << std::endl;
 			BoxCollider2DComponent& boxCollider = g_engine.m_coordinator.CreateComponent<BoxCollider2DComponent>(ball);
 			boxCollider.Deserialize("0;0;0;0;0");
 

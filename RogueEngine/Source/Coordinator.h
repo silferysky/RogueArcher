@@ -99,9 +99,9 @@ namespace Rogue
 			return TextureManager::instance().loadTexture(texture);
 		}
 
-		Shader loadShader(const std::string& shader)
+		Shader loadShader(std::string_view shader)
 		{
-			return ShaderManager::instance().loadShader(shader);
+			return ShaderManager::instance().loadShader(shader.data());
 		}
 
 		template<typename T>
@@ -167,7 +167,7 @@ namespace Rogue
 		}
 
 		template<typename T>
-		void LoadComponent(Entity owner, const std::string& strToLoad)
+		void LoadComponent(Entity owner, std::string_view strToLoad)
 		{
 			CreateComponent<T>(owner).Deserialize(strToLoad);
 		}
@@ -255,6 +255,11 @@ namespace Rogue
 		void ToggleEditorIsRunning()
 		{
 			m_systemManager->ToggleEditorIsRunning();
+		}
+
+		bool GetEditorIsRunning()
+		{
+			return m_systemManager->GetEditorIsRunning();
 		}
 
 		void ToggleGameState()

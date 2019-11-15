@@ -31,6 +31,9 @@ namespace Rogue
 		EvKeyPressed,
 		EvKeyReleased,
 		EvKeyTriggered,
+		EvKeyCombinedPressed,
+		EvKeyCombinedReleased,
+		EvKeyCombinedTriggered,
 
 		EvMouseButtonPressed,
 		EvMouseButtonReleased,

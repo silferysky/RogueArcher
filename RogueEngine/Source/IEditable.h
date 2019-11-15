@@ -1,5 +1,5 @@
 #pragma once
-#include <string>
+#include "Precompiled.h"
 #include "imgui.h"
 
 namespace Rogue
@@ -28,7 +28,7 @@ namespace Rogue
 		{
 			return m_EditorFlags;
 		}
-		void SetName(const std::string& name)
+		void SetName(std::string_view name)
 		{
 			m_Name = name;
 		}

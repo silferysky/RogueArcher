@@ -1,5 +1,5 @@
 #include "AudioEmitterComponent.h"
-#include "pch.h"
+#include "Precompiled.h"
 #include "Main.h"
 
 namespace Rogue
@@ -41,7 +41,7 @@ namespace Rogue
 		}
 	}
 
-	void AudioEmitterComponent::setSoundPath(const std::string& soundPath)
+	void AudioEmitterComponent::setSoundPath(std::string_view soundPath)
 	{
 		m_soundPath = soundPath;
 	}
@@ -51,7 +51,7 @@ namespace Rogue
 		return m_soundPath;
 	}
 
-	void AudioEmitterComponent::setSound(const std::string& sound)
+	void AudioEmitterComponent::setSound(std::string_view sound)
 	{
 		//m_sound = g_engine.m_coordinator.loadSound(sound);
 	}
@@ -79,9 +79,9 @@ namespace Rogue
 		return ss.str();
 	}
 
-	void AudioEmitterComponent::Deserialize(const std::string& toDeserialize)
+	void AudioEmitterComponent::Deserialize(std::string_view toDeserialize)
 	{
-		std::istringstream ss(toDeserialize);
+		std::istringstream ss(toDeserialize.data());
 		std::string s1;			//s2 is used if two are needed
 		int counter = 0;		//Needed to take in for multiple values
 

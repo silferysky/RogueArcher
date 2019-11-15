@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "Precompiled.h"
 #include "REEditor.h"
 #include "EditorManager.h"
 
@@ -15,6 +15,9 @@ namespace Rogue
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
+		RECT rect;
+		::GetClientRect(g_engine.GetWindowHandler(), &rect);
+		io.DisplaySize = ImVec2((float)(rect.right - rect.left), (float)(rect.bottom - rect.top));
 		ImGui::StyleColorsClassic();
 		io.ConfigDockingWithShift = false;
 		io.ConfigFlags = ImGuiConfigFlags_DockingEnable;
@@ -48,6 +51,9 @@ namespace Rogue
 		ImGui::SetWindowSize(viewport->Size);
 		ImGui::SetWindowPos({ 0.f,0.f });
 		ImGuiIO& io = ImGui::GetIO();
+		RECT rect;
+		::GetClientRect(g_engine.GetWindowHandler(), &rect);
+		io.DisplaySize = ImVec2((float)(rect.right - rect.left), (float)(rect.bottom - rect.top));
 		unsigned char* pixels;
 		int width, height, bytes_per_pixel;
 		io.Fonts->GetTexDataAsRGBA32(&pixels, &width, &height, &bytes_per_pixel);
@@ -69,7 +75,6 @@ namespace Rogue
 
 		ImGui::EndFrame();
 		ImGui::UpdatePlatformWindows();
-		g_engine.m_coordinator.EndTimeSystem("Editor");
 	}
 
 	void EditorManager::Shutdown()

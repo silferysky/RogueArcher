@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "Precompiled.h"
 #include "FontSystem.h"
 #include "Timer.h"
 #include "Main.h"
@@ -8,7 +8,7 @@
 namespace Rogue
 {
 	FontSystem::FontSystem() :
-		System(SystemID::id_FONTSYSTEM), m_VAO{ 0 }, m_VBO{ 0 }, m_EBO{ 0 }, m_shader{ }
+		System(SystemID::id_FONTSYSTEM), m_VAO{ 0 }, m_VBO{ 0 }, m_EBO{ 0 }, m_shader{ }, m_projectionLocation{ 0 }, m_viewLocation{ 0 }
 	{}
 
 	void FontSystem::Init()
@@ -115,12 +115,12 @@ namespace Rogue
 	}
 
 
-	void FontSystem::RenderText(std::string text, Vec2 transform, float scale, glm::vec4 color)
+	void FontSystem::RenderText(std::string_view text, Vec2 transform, float scale, glm::vec4 color)
 	{
 		glUniform4f(glGetUniformLocation(m_shader.GetShader(), "textColor"), color.x, color.y, color.z, color.w);
 
 		// Iterate through all characters
-		std::string::const_iterator c;
+		std::string_view::const_iterator c;
 		for (c = text.begin(); c != text.end(); c++)
 		{
 			Character ch = Characters[*c];
