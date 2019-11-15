@@ -20,7 +20,7 @@ namespace Rogue
 		ImGui::Checkbox("Active?", &m_isActive);
 	}
 
-	std::string UIComponent::Serialize()
+	std::string_view UIComponent::Serialize()
 	{
 		std::ostringstream ss;
 		ss << m_isActive << ";";

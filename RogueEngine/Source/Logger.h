@@ -28,8 +28,8 @@ namespace Rogue
 		inline static std::shared_ptr<spdlog::logger>& GetClientFileLogger() { return RE_ClientFileLogger; }
 
 		inline static std::vector<std::string>& GetConsole() { return RE_Console; }
-		static void AddStringToConsole(const std::string& stringData);
-		static void AssertArgs(bool args, std::string errorMsg);
+		static void AddStringToConsole(std::string_view stringData);
+		static void AssertArgs(bool args, std::string_view errorMsg);
 
 	private:
 		static std::vector<std::string> RE_Console;

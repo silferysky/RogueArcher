@@ -73,7 +73,7 @@ namespace Rogue
 		std::swap(loc, newPos);
 	}
 
-	std::string StatsComponent::Serialize()
+	std::string_view StatsComponent::Serialize()
 	{
 		//Health, speed, attack range, sight range
 		std::ostringstream ss;

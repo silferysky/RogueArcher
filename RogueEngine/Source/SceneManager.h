@@ -27,7 +27,7 @@ namespace Rogue
 		~SceneManager();
 
 		std::string getCurrentFileName() const;
-		void setCurrentFileName(std::string curFileName);
+		void setCurrentFileName(std::string_view curFileName);
 
 		void ClearActiveEntities();
 		void ClearAllEntities();
@@ -43,13 +43,13 @@ namespace Rogue
 		void SaveArchetype(const char* fileName);
 		void SaveArchetypeList(const char* fileName);
 		void AddToArchetypes(Entity archetypeEntity);
-		void RemoveArchetype(std::string archetypeEntity);
+		void RemoveArchetype(std::string_view archetypeEntity);
 
 		void Clone(Entity toClone);
 		void Clone(const char* archetype);
 
 		std::vector<std::string> GetLoadedLevels() const;
-		void AddToLoadedLevels(std::string name);
+		void AddToLoadedLevels(std::string_view name);
 		void ResetMaxEntityInCurrentFile();
 
 		void IncrementObjectIterator();

@@ -13,12 +13,12 @@ namespace Rogue
 		return m_colour;
 	}
 
-	void TextComponent::SetWords(const std::string& words)
+	void TextComponent::SetWords(std::string_view words)
 	{
 		m_words = words;
 	}
 
-	std::string& TextComponent::GetWords()
+	std::string_view TextComponent::GetWords()
 	{
 		return m_words;
 	}
@@ -58,7 +58,7 @@ namespace Rogue
 		SetScale(m_scale);
 	}
 
-	std::string TextComponent::Serialize()
+	std::string_view TextComponent::Serialize()
 	{
 		//Position
 		std::ostringstream ss;

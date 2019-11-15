@@ -57,13 +57,13 @@ namespace Rogue
 		ImGui::SameLine();
 		static char bufferX[64];
 		ImGui::InputText(" ", bufferX, 64);
-		std::string search;
-		search = bufferX;
+		std::string_view search(bufferX);
 		for (auto& i : m_currentVector)
 		{
-			std::string tagName = i.m_tag.substr(0, search.size());
+			std::string_view tagName(i.m_tag.c_str(), search.size());
+			std::string_view objectName(i.m_objectName.c_str(), search.size());
 			
-			if (tagName == search || i.m_objectName.substr(0, search.size()) == search)
+			if (tagName == search || objectName == search)
 			{
 				if (ImGui::Selectable(i.m_objectName.c_str(), i.m_selected, ImGuiSelectableFlags_AllowDoubleClick))
 				{

@@ -13,7 +13,7 @@ namespace Rogue
 		m_parallax = parallax;
 	}
 
-	std::string BackgroundComponent::Serialize()
+	std::string_view BackgroundComponent::Serialize()
 	{
 		std::ostringstream ss;
 		ss << m_parallax << ";";

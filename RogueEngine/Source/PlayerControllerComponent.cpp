@@ -21,7 +21,7 @@ namespace Rogue
 		return m_slowTime;
 	}
 
-	std::string PlayerControllerComponent::Serialize()
+	std::string_view PlayerControllerComponent::Serialize()
 	{
 		std::ostringstream ss;
 		ss << m_isActive << ";";

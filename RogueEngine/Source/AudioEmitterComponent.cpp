@@ -71,7 +71,7 @@ namespace Rogue
 		return m_audioScale;
 	}
 
-	std::string AudioEmitterComponent::Serialize()
+	std::string_view AudioEmitterComponent::Serialize()
 	{
 		std::ostringstream ss;
 		ss << m_soundPath << ";";
