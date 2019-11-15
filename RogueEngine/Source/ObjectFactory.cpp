@@ -446,114 +446,82 @@ namespace Rogue
 				{
 					case static_cast<int>(SPRITE) :
 					{
-						std::string_view componentStr(g_engine.m_coordinator.GetComponent<SpriteComponent>(entityToSerialize).Serialize().data(), 
-							g_engine.m_coordinator.GetComponent<SpriteComponent>(entityToSerialize).Serialize().size() - 1);
-						strstream << "Sprite{" << componentStr << "}";
+						strstream << "Sprite{" << g_engine.m_coordinator.GetComponent<SpriteComponent>(entityToSerialize).Serialize() << "}";
 						break;
 					}
 					case static_cast<int>(RIGIDBODY) :
 					{
-						std::string_view componentStr(g_engine.m_coordinator.GetComponent<RigidbodyComponent>(entityToSerialize).Serialize().data(),
-							g_engine.m_coordinator.GetComponent<RigidbodyComponent>(entityToSerialize).Serialize().size() - 1);
-						strstream << "Rigidbody{" << componentStr << "}";
+						strstream << "Rigidbody{" << g_engine.m_coordinator.GetComponent<RigidbodyComponent>(entityToSerialize).Serialize() << "}";
 						break;
 					}
 					case static_cast<int>(TRANSFORM) :
 					{
-						std::string_view componentStr(g_engine.m_coordinator.GetComponent<TransformComponent>(entityToSerialize).Serialize().data(),
-							g_engine.m_coordinator.GetComponent<TransformComponent>(entityToSerialize).Serialize().size() - 1);
-						strstream << "Transform{" << componentStr << "}";
+						strstream << "Transform{" << g_engine.m_coordinator.GetComponent<TransformComponent>(entityToSerialize).Serialize() << "}";
 						break;
 					}
 					case static_cast<int>(CIRCLECOLLIDER2D) :
 					{
-						std::string_view componentStr(g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(entityToSerialize).Serialize().data(),
-							g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(entityToSerialize).Serialize().size() - 1);
-						strstream << "CircleCollider2D{" << componentStr << "}";
+						strstream << "CircleCollider{" << g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(entityToSerialize).Serialize() << "}";
 						break;
 					}
 					case static_cast<int>(BOXCOLLIDER2D) :
 					{
-						std::string_view componentStr(g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(entityToSerialize).Serialize().data(),
-							g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(entityToSerialize).Serialize().size() - 1);
-						strstream << "BoxCollider2D{" << componentStr << "}";
+						strstream << "BoxCollider{" << g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(entityToSerialize).Serialize() << "}";
 						break;
 					}
 					case static_cast<int>(COLLIDER) :
 					{
-						std::string_view componentStr(g_engine.m_coordinator.GetComponent<ColliderComponent>(entityToSerialize).Serialize().data(),
-							g_engine.m_coordinator.GetComponent<ColliderComponent>(entityToSerialize).Serialize().size() - 1);
-						strstream << "Collider{" << componentStr << "}";
+						strstream << "Collider{" << g_engine.m_coordinator.GetComponent<ColliderComponent>(entityToSerialize).Serialize() << "}";
 						break;
 					}
 					case static_cast<int>(PLAYERCONTROLLER) :
 					{
-						std::string_view componentStr(g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entityToSerialize).Serialize().data(),
-							g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entityToSerialize).Serialize().size() - 1);
-						strstream << "PlayerController{" << componentStr << "}";
+						strstream << "PlayerController{" << g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entityToSerialize).Serialize() << "}";
 						break;
 					}
 					case static_cast<int>(LOGIC) :
 					{
-						std::string_view componentStr(g_engine.m_coordinator.GetComponent<LogicComponent>(entityToSerialize).Serialize().data(),
-							g_engine.m_coordinator.GetComponent<LogicComponent>(entityToSerialize).Serialize().size() - 1);
-						strstream << "Logic{" << componentStr << "}";
+						strstream << "LogicComponent{" << g_engine.m_coordinator.GetComponent<LogicComponent>(entityToSerialize).Serialize() << "}";
 						break;
 					}
 					case static_cast<int>(STATS) :
 					{
-						std::string_view componentStr(g_engine.m_coordinator.GetComponent<StatsComponent>(entityToSerialize).Serialize().data(),
-							g_engine.m_coordinator.GetComponent<StatsComponent>(entityToSerialize).Serialize().size() - 1);
-						strstream << "Stats{" << componentStr << "}";
+						strstream << "StatsComponent{" << g_engine.m_coordinator.GetComponent<StatsComponent>(entityToSerialize).Serialize() << "}";
 						break;
 					}
 					case static_cast<int>(ANIMATION) :
 					{
-						std::string_view componentStr(g_engine.m_coordinator.GetComponent<AnimationComponent>(entityToSerialize).Serialize().data(),
-							g_engine.m_coordinator.GetComponent<AnimationComponent>(entityToSerialize).Serialize().size() - 1);
-						strstream << "Animation{" << componentStr << "}";
+						strstream << "Animation{" << g_engine.m_coordinator.GetComponent<AnimationComponent>(entityToSerialize).Serialize() << "}";
 						break;
 					}
 					case static_cast<int>(CAMERA) :
 					{
-						std::string_view componentStr(g_engine.m_coordinator.GetComponent<CameraComponent>(entityToSerialize).Serialize().data(),
-							g_engine.m_coordinator.GetComponent<CameraComponent>(entityToSerialize).Serialize().size() - 1);
-						strstream << "Camera{" << componentStr << "}";
+						strstream << "Camera{" << g_engine.m_coordinator.GetComponent<CameraComponent>(entityToSerialize).Serialize() << "}";
 						break;
 					}
 					case static_cast<int>(AUDIOEMITTER) :
 					{
-						std::string_view componentStr(g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(entityToSerialize).Serialize().data(),
-							g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(entityToSerialize).Serialize().size() - 1);
-						strstream << "AudioEmitter{" << componentStr << "}";
+						strstream << "Audio{" << g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(entityToSerialize).Serialize() << "}";
 						break;
 					}
 					case static_cast<int>(UI) :
 					{
-						std::string_view componentStr(g_engine.m_coordinator.GetComponent<UIComponent>(entityToSerialize).Serialize().data(),
-							g_engine.m_coordinator.GetComponent<UIComponent>(entityToSerialize).Serialize().size() - 1);
-						strstream << "UI{" << componentStr << "}";
+						strstream << "UI{" << g_engine.m_coordinator.GetComponent<UIComponent>(entityToSerialize).Serialize() << "}";
 						break;
 					}
 					case static_cast<int>(CURSOR) :
 					{
-						std::string_view componentStr(g_engine.m_coordinator.GetComponent<CursorComponent>(entityToSerialize).Serialize().data(),
-							g_engine.m_coordinator.GetComponent<CursorComponent>(entityToSerialize).Serialize().size() - 1);
-						strstream << "Cursor{" << componentStr << "}";
+						strstream << "Cursor{" << g_engine.m_coordinator.GetComponent<CursorComponent>(entityToSerialize).Serialize() << "}";
 						break;
 					}
 					case static_cast<int>(TEXT) :
 					{
-						std::string_view componentStr(g_engine.m_coordinator.GetComponent<TextComponent>(entityToSerialize).Serialize().data(),
-							g_engine.m_coordinator.GetComponent<TextComponent>(entityToSerialize).Serialize().size() - 1);
-						strstream << "Text{" << componentStr << "}";
+						strstream << "Text{" << g_engine.m_coordinator.GetComponent<TextComponent>(entityToSerialize).Serialize() << "}";
 						break;
 					}
 					case static_cast<int>(BACKGROUND) :
 					{
-						std::string_view componentStr(g_engine.m_coordinator.GetComponent<BackgroundComponent>(entityToSerialize).Serialize().data(),
-							g_engine.m_coordinator.GetComponent<BackgroundComponent>(entityToSerialize).Serialize().size() - 1);
-						strstream << "Background{" << componentStr << "}";
+						strstream << "Background{" << g_engine.m_coordinator.GetComponent<BackgroundComponent>(entityToSerialize).Serialize() << "}";
 						break;
 					}
 					default:

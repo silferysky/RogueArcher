@@ -75,7 +75,7 @@ namespace Rogue
 		m_collisionMode = mode;
 	}
 
-	std::string_view BoxCollider2DComponent::Serialize()
+	std::string BoxCollider2DComponent::Serialize()
 	{
 		//Size, modelVertexList
 		std::ostringstream ss;

@@ -24,7 +24,7 @@ namespace Rogue
 
 		Vec2 getPosition() const;
 		void DisplayOnInspector();
-		std::string_view Serialize() override;
+		std::string Serialize() override;
 		void Deserialize(std::string_view toDeserialize) override;
 	};
 }

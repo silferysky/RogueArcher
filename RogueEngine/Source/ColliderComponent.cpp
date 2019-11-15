@@ -94,7 +94,7 @@ namespace Rogue
 		return *this;
 	}
 
-	std::string_view ColliderComponent::Serialize()
+	std::string ColliderComponent::Serialize()
 	{
 		std::ostringstream ss;
 

@@ -50,7 +50,7 @@ namespace Rogue
 		m_collider.setScaleOffSet(m_scaleOffset);
 	}
 
-	std::string_view CircleCollider2DComponent::Serialize()
+	std::string CircleCollider2DComponent::Serialize()
 	{
 		//Radius
 		std::ostringstream ss;

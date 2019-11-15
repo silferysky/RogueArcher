@@ -43,7 +43,7 @@ namespace Rogue
 		return m_isActive;
 	}
 
-	std::string_view CameraComponent::Serialize()
+	std::string CameraComponent::Serialize()
 	{
 		//Position
 		std::ostringstream ss;

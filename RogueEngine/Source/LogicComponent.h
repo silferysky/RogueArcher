@@ -30,7 +30,7 @@ namespace Rogue
 
 		//From BaseComponent
 		//ISerializable
-		std::string_view Serialize() override;
+		std::string Serialize() override;
 		void Deserialize(std::string_view toDeserialize) override;
 		void DisplayOnInspector();
 

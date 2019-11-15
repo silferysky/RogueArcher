@@ -58,7 +58,7 @@ namespace Rogue
 		SetScale(m_scale);
 	}
 
-	std::string_view TextComponent::Serialize()
+	std::string TextComponent::Serialize()
 	{
 		//Position
 		std::ostringstream ss;
