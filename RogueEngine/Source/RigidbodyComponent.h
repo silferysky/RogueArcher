@@ -53,7 +53,7 @@ namespace Rogue
 		void setGravityScale(float gravity);
 
 		void DisplayOnInspector();
-		std::string_view Serialize() override;
+		std::string Serialize() override;
 		void Deserialize(std::string_view toDeserialize) override;
 
 	};

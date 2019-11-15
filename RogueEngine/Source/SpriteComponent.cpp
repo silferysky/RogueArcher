@@ -114,7 +114,7 @@ namespace Rogue
 		}
 	}
 
-	std::string_view SpriteComponent::Serialize()
+	std::string SpriteComponent::Serialize()
 	{
 		//std::map<std::string, Texture> textureMap = g_engine.m_coordinator.GetTextureManager().getTextureMap();
 		std::ostringstream strstream;

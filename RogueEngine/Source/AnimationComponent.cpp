@@ -94,7 +94,7 @@ namespace Rogue
 		setIsLooping(m_isLooping);
 	}
 
-	std::string_view AnimationComponent::Serialize()
+	std::string AnimationComponent::Serialize()
 	{
 		std::ostringstream ss;
 		ss << m_frames << ";";

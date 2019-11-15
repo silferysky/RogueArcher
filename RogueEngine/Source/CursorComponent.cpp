@@ -14,7 +14,7 @@ namespace Rogue
 		m_positionOffset = offset;
 	}
 
-	std::string_view CursorComponent::Serialize()
+	std::string CursorComponent::Serialize()
 	{
 		std::ostringstream ss;
 		ss << m_positionOffset.x << ";" << m_positionOffset.y;

@@ -15,7 +15,7 @@ namespace Rogue
 		void setIsActive(const bool& isActive);
 		void DisplayOnInspector();
 		//Serialize
-		std::string_view Serialize() override;
+		std::string Serialize() override;
 		void Deserialize(std::string_view toDeserialize) override;
 	};
 }
