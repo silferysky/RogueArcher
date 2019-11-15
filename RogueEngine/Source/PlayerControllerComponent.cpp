@@ -29,9 +29,9 @@ namespace Rogue
 		return ss.str();
 	}
 
-	void PlayerControllerComponent::Deserialize(const std::string& toDeserialize)
+	void PlayerControllerComponent::Deserialize(std::string_view toDeserialize)
 	{
-		std::istringstream ss(toDeserialize);
+		std::istringstream ss(toDeserialize.data());
 		std::string s1;
 
 		std::getline(ss, s1, ';');

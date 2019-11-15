@@ -134,9 +134,9 @@ namespace Rogue
 		}*/
 	}
 
-	void SpriteComponent::Deserialize(const std::string& toDeserialize)
+	void SpriteComponent::Deserialize(std::string_view toDeserialize)
 	{
-		std::istringstream strstream(toDeserialize);
+		std::istringstream strstream(toDeserialize.data());
 		std::string stdstr;
 
 		std::getline(strstream, stdstr, ';');

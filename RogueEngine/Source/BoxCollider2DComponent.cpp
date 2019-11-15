@@ -110,9 +110,9 @@ namespace Rogue
 		return ss.str();
 	}
 
-	void BoxCollider2DComponent::Deserialize(const std::string& toDeserialize)
+	void BoxCollider2DComponent::Deserialize(std::string_view toDeserialize)
 	{
-		std::istringstream ss(toDeserialize);
+		std::istringstream ss(toDeserialize.data());
 		std::string s1, s2;		//s2 is used if two are needed
 		std::vector<Vec2> vertexList{};
 		size_t size = 0;
