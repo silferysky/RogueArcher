@@ -46,9 +46,6 @@ namespace Rogue
 		case WM_DESTROY:
 			PostQuitMessage(0);
 			return 0;
-		case WM_CLOSE:
-			g_engine.SetGameIsRunning(false);
-			return 0;
 		case WM_KEYDOWN:
 			//F11
 			if (wParam == VK_F11)
