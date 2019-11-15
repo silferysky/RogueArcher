@@ -178,7 +178,7 @@ namespace Rogue
 		setGravityScale(m_gravityScale);
 	}
 
-	std::string RigidbodyComponent::Serialize()
+	std::string_view RigidbodyComponent::Serialize()
 	{
 		//Acceleration, Velocity, Mass, Volume, isStatic
 		std::ostringstream ss;

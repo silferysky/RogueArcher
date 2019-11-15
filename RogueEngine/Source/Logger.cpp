@@ -35,7 +35,7 @@ namespace Rogue
 		RE_ClientFileLogger->set_level(spdlog::level::trace);
 	}
 
-	void Logger::AddStringToConsole(const std::string& stringData)
+	void Logger::AddStringToConsole(std::string_view stringData)
 	{
 		RE_Console.emplace(RE_Console.begin(), stringData);
 		if (RE_Console.size() > CONSOLE_SIZE)
@@ -44,7 +44,7 @@ namespace Rogue
 		}
 	}
 
-	void Logger::AssertArgs(bool args, std::string errorMsg)
+	void Logger::AssertArgs(bool args, std::string_view errorMsg)
 	{
 		if (!args)
 		{

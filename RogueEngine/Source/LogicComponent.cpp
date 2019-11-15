@@ -63,7 +63,7 @@ namespace Rogue
 		return m_activeStates.test(pos);
 	}
 
-	std::string LogicComponent::Serialize()
+	std::string_view LogicComponent::Serialize()
 	{
 		//Acceleration, Velocity, Mass, Volume, isStatic
 		std::ostringstream ss;

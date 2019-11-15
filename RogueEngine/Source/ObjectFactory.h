@@ -18,8 +18,8 @@ namespace Rogue
 
 		void LoadArchetypes(const char* fileName);
 		void SaveArchetypeList(const char* fileName);
-		void SaveArchetype(std::string file);
-		void AddToArchetypes(std::string archetype, Signature signature, std::string toDeserialize);
+		void SaveArchetype(std::string_view file);
+		void AddToArchetypes(std::string_view archetype, Signature signature, std::string_view toDeserialize);
 
 		void LoadLevelFiles(const char* fileName);
 		void SaveLevelFiles(const char* fileName);
@@ -37,7 +37,7 @@ namespace Rogue
 	private:
 
 		//Helper function
-		void FactoryLoadComponent(Entity curEnt, Signature signature, std::string value);
+		void FactoryLoadComponent(Entity curEnt, Signature signature, std::string_view value);
 
 		size_t m_maxEntityCount; //Represents max entity size of FILE (not level)
 		size_t m_maxArchetypeCount;

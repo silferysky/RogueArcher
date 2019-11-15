@@ -454,9 +454,6 @@
     <ClInclude Include="Source\GraphicsEvent.h">
       <Filter>RogueEngine\Systems\Events\Events</Filter>
     </ClInclude>
-    <ClInclude Include="Source\CollisionTagSystem.h">
-      <Filter>RogueEngine\Systems\Collision\Collision Systems</Filter>
-    </ClInclude>
     <ClInclude Include="Source\AudioManager.h">
       <Filter>RogueEngine\Systems\Audio</Filter>
     </ClInclude>
@@ -722,9 +719,6 @@
     </ClCompile>
     <ClCompile Include="Source\UIComponent.cpp">
       <Filter>RogueEngine\Systems\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\CollisionTagSystem.cpp">
-      <Filter>RogueEngine\Systems\Collision\Collision Systems</Filter>
     </ClCompile>
     <ClCompile Include="Source\CursorComponent.cpp">
       <Filter>RogueEngine\Systems\Cursor</Filter>

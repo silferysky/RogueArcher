@@ -15,12 +15,12 @@ namespace Rogue
 		return m_texture;
 	}
 
-	void SpriteComponent::setTexturePath(std::string texturePath)
+	void SpriteComponent::setTexturePath(std::string_view texturePath)
 	{
 		m_texturePath.assign(texturePath);
 	}
 
-	std::string SpriteComponent::getTexturePath() const
+	std::string_view SpriteComponent::getTexturePath() const
 	{
 		return m_texturePath;
 	}
@@ -114,7 +114,7 @@ namespace Rogue
 		}
 	}
 
-	std::string SpriteComponent::Serialize()
+	std::string_view SpriteComponent::Serialize()
 	{
 		//std::map<std::string, Texture> textureMap = g_engine.m_coordinator.GetTextureManager().getTextureMap();
 		std::ostringstream strstream;

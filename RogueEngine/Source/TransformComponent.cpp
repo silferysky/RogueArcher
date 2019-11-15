@@ -53,7 +53,7 @@ namespace Rogue
 		return m_rotation;
 	}
 
-	std::string TransformComponent::Serialize()
+	std::string_view TransformComponent::Serialize()
 	{
 		//Position, Scale, Rotation
 		std::ostringstream ss;

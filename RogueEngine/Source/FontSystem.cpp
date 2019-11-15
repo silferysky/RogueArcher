@@ -115,12 +115,12 @@ namespace Rogue
 	}
 
 
-	void FontSystem::RenderText(std::string text, Vec2 transform, float scale, glm::vec4 color)
+	void FontSystem::RenderText(std::string_view text, Vec2 transform, float scale, glm::vec4 color)
 	{
 		glUniform4f(glGetUniformLocation(m_shader.GetShader(), "textColor"), color.x, color.y, color.z, color.w);
 
 		// Iterate through all characters
-		std::string::const_iterator c;
+		std::string_view::const_iterator c;
 		for (c = text.begin(); c != text.end(); c++)
 		{
 			Character ch = Characters[*c];

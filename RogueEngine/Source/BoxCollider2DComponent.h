@@ -27,7 +27,7 @@ namespace Rogue
 		void SetCollisionMode(CollisionMode mode);
 
 		void DisplayOnInspector();
-		std::string Serialize() override;
+		std::string_view Serialize() override;
 		void Deserialize(std::string_view toDeserialize) override;
 	};
 }
