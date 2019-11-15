@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "Precompiled.h"
 #include "SpriteComponent.h"
 #include "REEngine.h"
 #include "Main.h"
@@ -15,12 +15,12 @@ namespace Rogue
 		return m_texture;
 	}
 
-	void SpriteComponent::setTexturePath(std::string texturePath)
+	void SpriteComponent::setTexturePath(std::string_view texturePath)
 	{
 		m_texturePath.assign(texturePath);
 	}
 
-	std::string SpriteComponent::getTexturePath() const
+	std::string_view SpriteComponent::getTexturePath() const
 	{
 		return m_texturePath;
 	}
@@ -134,9 +134,9 @@ namespace Rogue
 		}*/
 	}
 
-	void SpriteComponent::Deserialize(const std::string& toDeserialize)
+	void SpriteComponent::Deserialize(std::string_view toDeserialize)
 	{
-		std::istringstream strstream(toDeserialize);
+		std::istringstream strstream(toDeserialize.data());
 		std::string stdstr;
 
 		std::getline(strstream, stdstr, ';');

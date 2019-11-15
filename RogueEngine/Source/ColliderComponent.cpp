@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "Precompiled.h"
 #include "ColliderComponent.h"
 #include "Logger.h"
 
@@ -120,9 +120,9 @@ namespace Rogue
 		return ss.str();
 	}
 
-	void ColliderComponent::Deserialize(const std::string& toDeserialize)
+	void ColliderComponent::Deserialize(std::string_view toDeserialize)
 	{
-		std::istringstream ss(toDeserialize);
+		std::istringstream ss(toDeserialize.data());
 		std::string s1;
 
 		std::getline(ss, s1, ';');

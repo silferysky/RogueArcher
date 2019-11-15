@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "Precompiled.h"
 #include "BackgroundComponent.h"
 
 namespace Rogue
@@ -20,9 +20,9 @@ namespace Rogue
 		return ss.str();
 	}
 
-	void BackgroundComponent::Deserialize(const std::string& toDeserialize)
+	void BackgroundComponent::Deserialize(std::string_view toDeserialize)
 	{
-		std::istringstream ss(toDeserialize);
+		std::istringstream ss(toDeserialize.data());
 		std::string s1;		//s2 is used if two are needed
 
 		while (std::getline(ss, s1, ';'))

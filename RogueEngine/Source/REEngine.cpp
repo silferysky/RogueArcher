@@ -1,6 +1,6 @@
 
 
-#include "pch.h"
+#include "Precompiled.h"
 #include "Logger.h"
 #include "InputManager.h"
 #include "EventDispatcher.h"
@@ -200,6 +200,21 @@ namespace Rogue
 		return m_cursorPos;
 	}
 
+	ImVec2 REEngine::GetViewportCursor() const
+	{
+		return m_viewportCursorPos;
+	}
+
+	int REEngine::GetEngineWindowWidth() const
+	{
+		return GetWindowWidth(hWnd);
+	}
+
+	int REEngine::GetEngineWindowHeight() const
+	{
+		return GetWindowHeight(hWnd);
+	}
+
 	void REEngine::SetGameIsRunning(bool set)
 	{
 		m_gameIsRunning = set;
@@ -248,6 +263,11 @@ namespace Rogue
 	void REEngine::SetWorldCursor(const Vec2& pos)
 	{
 		m_cursorPos = pos;
+	}
+
+	void REEngine::SetViewportCursor(const ImVec2& pos)
+	{
+		m_viewportCursorPos = pos;
 	}
 
 	HWND REEngine::CreateOpenGLWindow(char* title, int x, int y, int width, int height,

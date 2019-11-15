@@ -1,5 +1,5 @@
 #pragma once
-#include "pch.h"
+#include "Precompiled.h"
 #include "BasicIO.h"
 #include "logger.h"
 
@@ -45,14 +45,14 @@ namespace Rogue
 		oStream.close();
 	}
 
-	void BasicIO::WriteLevelFilesJsonFile(std::string FileName)
+	void BasicIO::WriteLevelFilesJsonFile(std::string_view FileName)
 	{
 		std::ostringstream strstream;
 		strstream << "{\n  \"Files\": \"Level 1.json;Level 2.json\"";
 		strstream << "\n}";
 	}
 
-	void BasicIO::WriteLevelJsonFile(std::string FileName, size_t numOfEnt)
+	void BasicIO::WriteLevelJsonFile(std::string_view FileName, size_t numOfEnt)
 	{
 		std::ostringstream strstream;
 
@@ -60,10 +60,10 @@ namespace Rogue
 		strstream << InitializeComponentStr(numOfEnt);
 		strstream << "\n}";
 
-		WriteFile(FileName, strstream.str().c_str());
+		WriteFile(FileName.data(), strstream.str().c_str());
 	}
 
-	void BasicIO::WriteArchetypeJsonFile(std::string FileName)
+	void BasicIO::WriteArchetypeJsonFile(std::string_view FileName)
 	{
 		std::ostringstream strstream;
 		
@@ -71,14 +71,14 @@ namespace Rogue
 		strstream << "\n  \"Entity\": \"\"";
 		strstream << "\n}";
 
-		WriteFile(FileName, strstream.str().c_str());
+		WriteFile(FileName.data(), strstream.str().c_str());
 	}
 
-	void BasicIO::WriteArchetypeListJsonFile(std::string FileName)
+	void BasicIO::WriteArchetypeListJsonFile(std::string_view FileName)
 	{
 		std::ostringstream strstream;
 		strstream << "{\n  \"ArchetypeList\": \"\"\n}";
-		WriteFile(FileName, strstream.str().c_str());
+		WriteFile(FileName.data(), strstream.str().c_str());
 	}
 
 	std::string BasicIO::InitializeHeader(size_t numOfEnt, bool includeBackground)

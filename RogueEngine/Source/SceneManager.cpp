@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "Precompiled.h"
 #include "SceneManager.h"
 #include "ObjectFactory.h"
 #include "EditorHierarchyInfo.h"
@@ -27,7 +27,7 @@ namespace Rogue
 		return m_currentFileName;
 	}
 
-	void SceneManager::setCurrentFileName(std::string curFileName)
+	void SceneManager::setCurrentFileName(std::string_view curFileName)
 	{
 		m_currentFileName = curFileName;
 	}
@@ -131,7 +131,7 @@ namespace Rogue
 		SaveArchetypeList("Resources/Archetypes.json");
 	}
 
-	void SceneManager::RemoveArchetype(std::string archetypeEntity)
+	void SceneManager::RemoveArchetype(std::string_view archetypeEntity)
 	{
 		auto it = m_objectFactory->GetArchetypeMap().begin();
 		for (; it != m_objectFactory->GetArchetypeMap().end(); ++it)
@@ -164,9 +164,9 @@ namespace Rogue
 		return m_loadedLevels;
 	}
 
-	void SceneManager::AddToLoadedLevels(std::string name)
+	void SceneManager::AddToLoadedLevels(std::string_view name)
 	{
-		m_loadedLevels.push_back(name);
+		m_loadedLevels.push_back(name.data());
 	}
 
 	void SceneManager::ResetMaxEntityInCurrentFile()

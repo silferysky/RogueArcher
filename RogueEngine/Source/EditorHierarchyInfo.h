@@ -13,7 +13,7 @@ namespace Rogue
 		Entity m_Entity = 0;
 
 		HierarchyInfo() = default;
-		HierarchyInfo(Entity entity, const std::string &name, const std::string& tag = "")
+		HierarchyInfo(Entity entity, std::string_view name,std::string_view tag = "")
 			: m_Entity{ entity }, m_objectName{ name }, m_tag{ tag }{}
 	};
 }

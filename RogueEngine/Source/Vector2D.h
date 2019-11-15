@@ -17,7 +17,8 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #pragma warning( disable : 4201 )
 #endif
 
-#include <iostream>
+#include "imgui.h"
+#include "vec2.hpp"
 
 
 namespace Rogue
@@ -39,6 +40,8 @@ namespace Rogue
 
 		Vector2D(int X, int Y); // Conversion constructor
 		Vector2D(float X, float Y); // Conversion constructor
+		Vector2D(const ImVec2& rhs); // Conversion constructor
+		Vector2D(const glm::vec2& rhs); // Conversion constructor
 		Vector2D(const Vector2D& rhs); // Copy constructor
 		Vector2D(Vector2D&& rhs) noexcept; // Move constructor
 

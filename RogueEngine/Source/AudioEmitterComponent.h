@@ -15,17 +15,17 @@ namespace Rogue
 		AudioEmitterComponent() = default;
 		~AudioEmitterComponent() = default;
 
-		void setSoundPath(const std::string& soundPath);
+		void setSoundPath(std::string_view soundPath);
 		std::string getSoundPath() const;
 
-		void setSound(const std::string& soundPath);
+		void setSound(std::string_view soundPath);
 		Sound& getSound();
 
 		void setAudioScale(const float& audioScale);
 		float& getAudioScale();
 
 		std::string Serialize() override;
-		void Deserialize(const std::string& toDeserialize);
+		void Deserialize(std::string_view toDeserialize) override;
 
 		void Destroy();
 

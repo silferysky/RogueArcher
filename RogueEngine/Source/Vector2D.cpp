@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "Precompiled.h"
 #include "Vector2D.h"
 
 
@@ -11,14 +11,20 @@ namespace Rogue
 		x{ static_cast<float>(X) }, y{ static_cast<float>(Y) }
 	{}
 
-
-	Vector2D::Vector2D(float X, float Y) : x{ X }, y{ Y }
-	{}
-
-
 	Vector2D::~Vector2D()
 	{}
 
+	Vector2D::Vector2D(float X, float Y) :
+		x{ X }, y{ Y }
+	{}
+
+	Vector2D::Vector2D(const ImVec2& rhs) :
+		x{ rhs.x }, y{ rhs.y }
+	{}
+
+	Vector2D::Vector2D(const glm::vec2& rhs) :
+		x{ rhs.x }, y{ rhs.y }
+	{}
 
 	Vector2D::Vector2D(const Vector2D& vec) :
 		x{ vec.x }, y{ vec.y }

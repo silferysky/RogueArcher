@@ -14,8 +14,8 @@ namespace Rogue
 		void SetColour(const glm::vec4& colour);
 		glm::vec4& GetColour();
 
-		void SetWords(const std::string& words);
-		std::string& GetWords();
+		void SetWords(std::string_view words);
+		std::string_view GetWords();
 
 		void SetScale(const float& scale);
 		float& GetScale();
@@ -23,6 +23,6 @@ namespace Rogue
 		void DisplayOnInspector();
 
 		std::string Serialize() override;
-		void Deserialize(const std::string& toDeserialize) override;
+		void Deserialize(std::string_view toDeserialize) override;
 	};
 };

@@ -1,5 +1,5 @@
 #pragma once
-#include "pch.h"
+#include "Precompiled.h"
 
 #include "Main.h"
 #include "ObjectFactory.h"
@@ -30,7 +30,7 @@ namespace Rogue
 
 		//For Background
 		Entity backgroundEnt = g_engine.m_coordinator.CreateEntity();
-		std::string backgroundStr = level["BackgroundTexture"].GetString();
+		std::string_view backgroundStr = level["BackgroundTexture"].GetString();
 		SpriteComponent backgroundSprite = SpriteComponent();
 		backgroundSprite.Deserialize(backgroundStr);
 
@@ -42,7 +42,7 @@ namespace Rogue
 		g_engine.m_coordinator.AddComponent(backgroundEnt, backgroundSprite);
 		g_engine.m_coordinator.AddComponent(backgroundEnt, backgroundTransform);
 		CREATE_HIERARCHY_OBJ(backgroundEnt, "Background");
-		newInfo.m_objectName = std::string("Background");
+		newInfo.m_objectName = std::string_view("Background");
 
 		for (Entity entity = 0; entity < entCount; ++entity)
 		{
@@ -111,8 +111,8 @@ namespace Rogue
 			{
 				if (g_engine.m_coordinator.ComponentExists<SpriteComponent>(curHierarchy.m_Entity))
 				{
-					std::string backgroundStr(g_engine.m_coordinator.GetComponent<SpriteComponent>(curHierarchy.m_Entity).Serialize().c_str());
-					RESerialiser::WriteToFile(fileName, "BackgroundTexture", backgroundStr.c_str());
+					std::string_view backgroundStr(g_engine.m_coordinator.GetComponent<SpriteComponent>(curHierarchy.m_Entity).Serialize());
+					RESerialiser::WriteToFile(fileName, "BackgroundTexture", backgroundStr.data());
 				}
 
 				writingBackground = false;
@@ -198,8 +198,8 @@ namespace Rogue
 			strstream << set.first << ";";
 		}
 
-		std::string stdstr(strstream.str().substr(0, strstream.str().size() - 1));
-		RESerialiser::WriteToFile(fileName, "ArchetypeList", stdstr.c_str());
+		std::string_view stdstr(strstream.str().c_str(), strstream.str().size() - 1);
+		RESerialiser::WriteToFile(fileName, "ArchetypeList", stdstr.data());
 
 		/*/For EntCount
 		Entity entCount = static_cast<Entity>(m_archetypes.size());
@@ -226,9 +226,9 @@ namespace Rogue
 		}*/
 	}
 
-	void ObjectFactory::SaveArchetype(std::string file)
+	void ObjectFactory::SaveArchetype(std::string_view file)
 	{
-		auto iterator = m_archetypes.find(file);
+		auto iterator = m_archetypes.find(file.data());
 		if (iterator == m_archetypes.end())
 			return;
 		
@@ -241,9 +241,9 @@ namespace Rogue
 		RESerialiser::WriteToFile(ostrstream.str().c_str(), "Entity", iterator->second.second.c_str());
 	}
 
-	void ObjectFactory::AddToArchetypes(std::string archetypeName, Signature signature, std::string toDeserialize)
+	void ObjectFactory::AddToArchetypes(std::string_view archetypeName, Signature signature, std::string_view toDeserialize)
 	{
-		m_archetypes.insert({ archetypeName, std::pair<Signature, std::string>(signature, toDeserialize) });
+		m_archetypes.insert({ archetypeName.data(), std::pair<Signature, std::string>(signature, toDeserialize.data()) });
 	}
 
 	void ObjectFactory::LoadLevelFiles(const char* fileName)
@@ -446,12 +446,12 @@ namespace Rogue
 				{
 					case static_cast<int>(SPRITE) :
 					{
-						strstream << "Sprite{" << g_engine.m_coordinator.GetComponent<SpriteComponent>(entityToSerialize).Serialize().c_str() << "}";
+						strstream << "Sprite{" << g_engine.m_coordinator.GetComponent<SpriteComponent>(entityToSerialize).Serialize() << "}";
 						break;
 					}
 					case static_cast<int>(RIGIDBODY) :
 					{
-						strstream << "Rigidbody{" << g_engine.m_coordinator.GetComponent<RigidbodyComponent>(entityToSerialize).Serialize().c_str() << "}";
+						strstream << "Rigidbody{" << g_engine.m_coordinator.GetComponent<RigidbodyComponent>(entityToSerialize).Serialize() << "}";
 						break;
 					}
 					case static_cast<int>(TRANSFORM) :
@@ -491,37 +491,37 @@ namespace Rogue
 					}
 					case static_cast<int>(ANIMATION) :
 					{
-						strstream << "Animation{" << g_engine.m_coordinator.GetComponent<AnimationComponent>(entityToSerialize).Serialize().c_str() << "}";
+						strstream << "Animation{" << g_engine.m_coordinator.GetComponent<AnimationComponent>(entityToSerialize).Serialize() << "}";
 						break;
 					}
 					case static_cast<int>(CAMERA) :
 					{
-						strstream << "Camera{" << g_engine.m_coordinator.GetComponent<CameraComponent>(entityToSerialize).Serialize().c_str() << "}";
+						strstream << "Camera{" << g_engine.m_coordinator.GetComponent<CameraComponent>(entityToSerialize).Serialize() << "}";
 						break;
 					}
 					case static_cast<int>(AUDIOEMITTER) :
 					{
-						strstream << "Audio{" << g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(entityToSerialize).Serialize().c_str() << "}";
+						strstream << "Audio{" << g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(entityToSerialize).Serialize() << "}";
 						break;
 					}
 					case static_cast<int>(UI) :
 					{
-						strstream << "UI{" << g_engine.m_coordinator.GetComponent<UIComponent>(entityToSerialize).Serialize().c_str() << "}";
+						strstream << "UI{" << g_engine.m_coordinator.GetComponent<UIComponent>(entityToSerialize).Serialize() << "}";
 						break;
 					}
 					case static_cast<int>(CURSOR) :
 					{
-						strstream << "Cursor{" << g_engine.m_coordinator.GetComponent<CursorComponent>(entityToSerialize).Serialize().c_str() << "}";
+						strstream << "Cursor{" << g_engine.m_coordinator.GetComponent<CursorComponent>(entityToSerialize).Serialize() << "}";
 						break;
 					}
 					case static_cast<int>(TEXT) :
 					{
-						strstream << "Text{" << g_engine.m_coordinator.GetComponent<TextComponent>(entityToSerialize).Serialize().c_str() << "}";
+						strstream << "Text{" << g_engine.m_coordinator.GetComponent<TextComponent>(entityToSerialize).Serialize() << "}";
 						break;
 					}
 					case static_cast<int>(BACKGROUND) :
 					{
-						strstream << "Background{" << g_engine.m_coordinator.GetComponent<BackgroundComponent>(entityToSerialize).Serialize().c_str() << "}";
+						strstream << "Background{" << g_engine.m_coordinator.GetComponent<BackgroundComponent>(entityToSerialize).Serialize() << "}";
 						break;
 					}
 					default:
@@ -533,7 +533,7 @@ namespace Rogue
 
 			strstream << "|";
 		} //End of for loop strstream adding
-		strstream.str().substr(0, strstream.str().size() - 1);
+		//strstream.str().substr(0, strstream.str().size() - 1);
 		return strstream.str();
 	}
 
@@ -542,9 +542,9 @@ namespace Rogue
 		return m_archetypes;
 	}
 
-	void ObjectFactory::FactoryLoadComponent(Entity curEnt, Signature signature, std::string value)
+	void ObjectFactory::FactoryLoadComponent(Entity curEnt, Signature signature, std::string_view value)
 	{
-		std::istringstream istrstream(value);
+		std::istringstream istrstream(value.data());
 		std::string readstr;
 
 		for (int index = 0; index < (int)LASTCOMP; ++index)

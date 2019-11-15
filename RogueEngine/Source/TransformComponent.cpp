@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "Precompiled.h"
 #include "TransformComponent.h"
 #include "REMath.h"
 
@@ -63,9 +63,9 @@ namespace Rogue
 		return ss.str();
 	}
 
-	void TransformComponent::Deserialize(const std::string& toDeserialize)
+	void TransformComponent::Deserialize(std::string_view toDeserialize)
 	{
-		std::istringstream ss(toDeserialize);
+		std::istringstream ss(toDeserialize.data());
 		std::string s1, s2;		//s2 is used if two are needed
 		int counter = 0;		//Needed to take in for multiple values
 		int sets = 2;			//Sets represents the number of "sets" that must be taken in simultaneously. Aka vec2 or more than 1 parameter to set

@@ -1,6 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 
-#include "pch.h"
+#include "Precompiled.h"
 #include "Main.h"
 
 #if _DEBUG
