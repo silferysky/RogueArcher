@@ -1,7 +1,6 @@
 #include "Precompiled.h"
 #include "EditorFile.h"
 #include "Main.h"
-#include <sstream>
 
 namespace Rogue
 {

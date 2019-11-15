@@ -59,7 +59,6 @@ namespace Rogue
 				ClearTimedEntities();
 			}
 			m_jumpCooldown -= g_deltaTime * g_engine.GetTimeScale();
-			std::cout << m_jumpCooldown << std::endl;
 		//}
 
 		//To update all timed entities
@@ -382,7 +381,6 @@ namespace Rogue
 
 			//ForceManager::instance().RegisterForce(ball, Vec2(cursorPos.x * FORCE_FACTOR, cursorPos.y * FORCE_FACTOR), 1.0f);
 			rigidbody.addForce(Vec2(ballDir.x * FORCE_FACTOR, ballDir.y * FORCE_FACTOR));
-			std::cout << ballDir.x << std::endl;
 			BoxCollider2DComponent& boxCollider = g_engine.m_coordinator.CreateComponent<BoxCollider2DComponent>(ball);
 			boxCollider.Deserialize("0;0;0;0;0");
 

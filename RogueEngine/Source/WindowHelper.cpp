@@ -65,6 +65,10 @@ namespace Rogue
 						GetSystemMetrics(SM_CYSCREEN), SWP_FRAMECHANGED);
 				}
 			}
+			return 0;
+		case WM_CLOSE:
+			g_engine.SetGameIsRunning(false);
+			return 0;
 		}
 		return DefWindowProc(hWnd, uMsg, wParam, lParam);
 	}
