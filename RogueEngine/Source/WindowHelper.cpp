@@ -46,6 +46,9 @@ namespace Rogue
 		case WM_DESTROY:
 			PostQuitMessage(0);
 			return 0;
+		case WM_CLOSE:
+			g_engine.SetGameIsRunning(false);
+			return 0;
 		case WM_KEYDOWN:
 			//F11
 			if (wParam == VK_F11)
@@ -147,6 +150,7 @@ namespace Rogue
 
 			// CTRL-CLOSE: confirm that the user wants to exit. 
 		case CTRL_CLOSE_EVENT:
+			g_engine.SetGameIsRunning(false);
 			printf("Ctrl-Close event\n\n");
 			return FALSE;
 
