@@ -159,8 +159,6 @@ namespace Rogue
 	void REEngine::Shutdown()
 	{
 		m_coordinator.Shutdown();
-
-		//put graphics shutdown here
 		wglMakeCurrent(NULL, NULL);
 		ReleaseDC(hWnd, hDC);
 		wglDeleteContext(hRC);
