@@ -1,10 +1,5 @@
 #include "Precompiled.h"
 #include "EditorConsole.h"
-#include "imgui.h"
-#include "imgui_impl_opengl3.h"
-#include "imgui_impl_win32.h"
-#include "glew.h"
-#include "glfw3.h"
 #include "Logger.h"
 
 namespace Rogue
