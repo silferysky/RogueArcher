@@ -42,7 +42,7 @@ namespace Rogue
 		void DisplayOnInspector();
 		//Serialize
 		virtual std::string Serialize() override;
-		virtual void Deserialize(const std::string& toDeserialize) override;
+		virtual void Deserialize(std::string_view toDeserialize) override;
 
 		//void operator=(SpriteComponent sprite);
 	};

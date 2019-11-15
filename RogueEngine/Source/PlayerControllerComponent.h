@@ -16,7 +16,7 @@ namespace Rogue
 		float GetSlowTime() const;
 		//No need to serialize PlayerControllerComponent as of now
 		std::string Serialize() override;
-		void Deserialize(const std::string& toDeserialize) override;
+		void Deserialize(std::string_view toDeserialize) override;
 	};
 
 }

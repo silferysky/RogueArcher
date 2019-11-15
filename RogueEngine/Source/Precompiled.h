@@ -15,4 +15,5 @@
 #include <fstream>
 #include <cstdlib>
 #include <string>
+#include <string_view>
 #include <Windows.h>

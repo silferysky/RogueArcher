@@ -80,9 +80,9 @@ namespace Rogue
 		return ss.str();
 	}
 
-	void LogicComponent::Deserialize(const std::string& toDeserialize)
+	void LogicComponent::Deserialize(std::string_view toDeserialize)
 	{
-		std::istringstream ss(toDeserialize);
+		std::istringstream ss(toDeserialize.data());
 		std::string s1;
 		int counter = 0;		//Needed to take in for multiple values
 		//std::vector<AIState> allStates{};

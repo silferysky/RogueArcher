@@ -16,6 +16,6 @@ namespace Rogue
 		void DisplayOnInspector();
 		//Serialize
 		std::string Serialize() override;
-		void Deserialize(const std::string& toDeserialize) override;
+		void Deserialize(std::string_view toDeserialize) override;
 	};
 }

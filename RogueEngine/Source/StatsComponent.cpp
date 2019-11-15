@@ -91,9 +91,9 @@ namespace Rogue
 		return ss.str();
 	}
 
-	void StatsComponent::Deserialize(const std::string& toDeserialize)
+	void StatsComponent::Deserialize(std::string_view toDeserialize)
 	{
-		std::istringstream ss(toDeserialize);
+		std::istringstream ss(toDeserialize.data());
 		std::string s1, s2;
 
 		std::getline(ss, s1, ';');
