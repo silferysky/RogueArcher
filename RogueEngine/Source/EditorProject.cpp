@@ -3,6 +3,7 @@
 
 namespace Rogue
 {
+	namespace fs = std::filesystem;
 	ImGuiProject::ImGuiProject()
 	{
 	}
@@ -14,7 +15,9 @@ namespace Rogue
 	void ImGuiProject::Init()
 	{
 		
-
+		const fs::path pathToShow{ fs::current_path() };
+		////fs::current_path("Resources");
+		DisplayDirectoryTree(pathToShow);
 	}
 
 	void ImGuiProject::Update()
@@ -23,6 +26,10 @@ namespace Rogue
 		if (ImGui::CollapsingHeader("Folder Hierachy"))
 		{
 
+			for (auto& i : m_Directories)
+			{
+				ImGui::Selectable(i.c_str());
+			}
 		}
 		ImGui::End();
 		ImGui::Begin("File");
@@ -37,21 +44,22 @@ namespace Rogue
 	{
 	}
 
-	/*void ImGuiProject::DisplayDirectoryTreeImp(const std::experimental::filesystem::path& pathToShow, int level)
+	void ImGuiProject::DisplayDirectoryTreeImp(const std::filesystem::path& pathToShow, int level)
 	{
-		if (std::experimental::filesystem::exists(pathToShow) && std::experimental::filesystem::is_directory(pathToShow))
+		if (std::filesystem::exists(pathToShow) && std::filesystem::is_directory(pathToShow))
 		{
 			auto lead = std::string(level * 3, ' ');
-			for (const auto& entry : std::experimental::filesystem::directory_iterator(pathToShow))
+			for (const auto& entry : std::filesystem::directory_iterator(pathToShow))
 			{
 				auto filename = entry.path().filename();
-				if (std::experimental::filesystem::is_directory(entry.status()))
+				if (std::filesystem::is_directory(entry.status()))
 				{
 					std::cout << lead << "[+] " << filename << "\n";
 					DisplayDirectoryTreeImp(entry, level + 1);
 					std::cout << "\n";
+					m_Directories.emplace_back(filename.string());
 				}
-				else if (std::experimental::filesystem::is_regular_file(entry.status()))
+				else if (std::filesystem::is_regular_file(entry.status()))
 				{
 					//DisplayFileInfo(entry, lead, filename);
 				}
@@ -60,9 +68,9 @@ namespace Rogue
 			}
 		}
 	}
-	void ImGuiProject::DisplayDirectoryTree(const std::experimental::filesystem::path& pathToShow)
+	void ImGuiProject::DisplayDirectoryTree(const std::filesystem::path& pathToShow)
 	{
 		DisplayDirectoryTreeImp(pathToShow, 0);
-	}*/
+	}
 }
 

@@ -4,6 +4,7 @@
 
 namespace Rogue
 {
+	namespace fs = std::filesystem;
 	class ImGuiProject : public IEditable
 	{
 	public:
@@ -13,14 +14,8 @@ namespace Rogue
 		virtual void Update() override;
 		virtual void Shutdown() override;
 		
-		//void DisplayDirectoryTreeImp(const  std::experimental::filesystem::path& pathToShow, int level);
-		//void DisplayDirectoryTree(const std::experimental::filesystem::path& pathToShow);
-		struct Data
-		{
-			std::string m_filePath;
-			std::string m_name;
-			std::vector<std::string> m_data;
-		};
-		std::vector<Data> m_Directories;
+		void DisplayDirectoryTreeImp(const  std::filesystem::path& pathToShow, int level);
+		void DisplayDirectoryTree(const std::filesystem::path& pathToShow);
+		std::vector<std::string> m_Directories;
 	};
 }
