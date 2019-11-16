@@ -16,6 +16,9 @@ namespace Rogue
 		
 		void DisplayDirectoryTreeImp(const  std::filesystem::path& pathToShow, int level);
 		void DisplayDirectoryTree(const std::filesystem::path& pathToShow);
-		std::vector<std::string> m_Directories;
+		std::string m_currentDirectory;
+		std::string m_currentSelectedDirectory;
+		std::vector<std::string> m_directories;
+		std::map<std::string, std::vector<std::string>> m_data;
 	};
 }

@@ -25,17 +25,24 @@ namespace Rogue
 		ImGui::Begin("Project");
 		if (ImGui::CollapsingHeader("Folder Hierachy"))
 		{
-
-			for (auto& i : m_Directories)
+			//ImGui::
+			for (auto& i : m_data)
 			{
-				ImGui::Selectable(i.c_str());
+				ImGui::Selectable(i.first.c_str());
 			}
 		}
 		ImGui::End();
 		ImGui::Begin("File");
 		if (ImGui::CollapsingHeader("File Display"))
 		{
-			//ImGui::ImageButton();
+			for (auto& i : m_data)
+			{	
+				for (auto& iterator : i.second)
+				{
+					ImGui::Text(iterator.c_str());
+				}
+			}
+			
 		}
 		ImGui::End();
 	}
@@ -48,23 +55,28 @@ namespace Rogue
 	{
 		if (std::filesystem::exists(pathToShow) && std::filesystem::is_directory(pathToShow))
 		{
-			auto lead = std::string(level * 3, ' ');
 			for (const auto& entry : std::filesystem::directory_iterator(pathToShow))
 			{
 				auto filename = entry.path().filename();
+				//std::string current = m_Data.begin();
 				if (std::filesystem::is_directory(entry.status()))
 				{
-					std::cout << lead << "[+] " << filename << "\n";
 					DisplayDirectoryTreeImp(entry, level + 1);
-					std::cout << "\n";
-					m_Directories.emplace_back(filename.string());
+					//m_Directories.emplace_back(filename.string());
+					m_currentDirectory = filename.string();
+					m_data[filename.string()].push_back("");
 				}
 				else if (std::filesystem::is_regular_file(entry.status()))
 				{
+					std::map<std::string, std::vector<std::string>>::iterator it = m_data.find(m_currentDirectory);
+					if (it != m_data.end())
+					{
+						it->second.push_back(filename.string());
+					}
 					//DisplayFileInfo(entry, lead, filename);
 				}
 				else
-					std::cout << lead << " [?]" << filename << "\n";
+					throw;
 			}
 		}
 	}
