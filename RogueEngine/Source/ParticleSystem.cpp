@@ -1,6 +1,7 @@
+#include "Precompiled.h"
 #include "ParticleSystem.h"
 #include "Main.h"
-#include "Precompiled.h"
+
 
 namespace Rogue
 {
