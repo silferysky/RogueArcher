@@ -61,6 +61,7 @@ namespace Rogue
 
 		//Key Related
 
+		//For KeyPress
 		//Checks if key is not pressed
 		bool KeyUp(KeyPress checkKey);
 		//Checks if key is down

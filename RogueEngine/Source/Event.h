@@ -31,9 +31,6 @@ namespace Rogue
 		EvKeyPressed,
 		EvKeyReleased,
 		EvKeyTriggered,
-		EvKeyCombinedPressed,
-		EvKeyCombinedReleased,
-		EvKeyCombinedTriggered,
 
 		EvMouseButtonPressed,
 		EvMouseButtonReleased,
@@ -58,24 +55,25 @@ namespace Rogue
 
 	enum EventCategory
 	{
-		EventCatNone = 0,
-		EventCatApp = EvCatFlag(0),			//Any event related to application (resize, movement etc)
-		EventCatInput = EvCatFlag(1),			//Any input (keyboard/mouse)
-		EventCatKeyboard = EvCatFlag(2),			//Only keyboard input
-		EventCatMouse = EvCatFlag(3),			//Only mouse input (Movement + click)
-		EventCatMouseButton = EvCatFlag(4),			//Only mouse input (Click)
+		EventCatNone			= 0,
+		EventCatApp				= EvCatFlag(0),			//Any event related to application (resize, movement etc)
+		EventCatInput			= EvCatFlag(1),			//Any input (keyboard/mouse)
+		EventCatKeyboard		= EvCatFlag(2),			//Only keyboard input
+		EventCatMouse			= EvCatFlag(3),			//Only mouse input (Movement + click)
+		EventCatMouseButton		= EvCatFlag(4),			//Only mouse input (Click)
+		EventCatCombinedInput	= EvCatFlag(5),			//For input events that are combined (More than 1)
 
-		EventCatEntAddCmp = EvCatFlag(5),			//Adding component to entity
+		EventCatEntAddCmp		= EvCatFlag(6),			//Adding component to entity
 
-		EventCatEntity = EvCatFlag(6),			//For entity events
-		EventCatEntChangeState = EvCatFlag(7),			//For entity behavior changing state
-		EventCatEntMove = EvCatFlag(7),			//For entity movement/teleportation
-		EventCatEntAttack = EvCatFlag(8),			//For entity attacking/taking damage
-		EventCatEntDestroy = EvCatFlag(9),			//For completely removing entities
+		EventCatEntity			= EvCatFlag(7),			//For entity events
+		EventCatEntChangeState	= EvCatFlag(8),			//For entity behavior changing state
+		EventCatEntMove			= EvCatFlag(9),			//For entity movement/teleportation
+		EventCatEntAttack		= EvCatFlag(10),			//For entity attacking/taking damage
+		EventCatEntDestroy		= EvCatFlag(11),			//For completely removing entities
 
-		EventCatCollision = EvCatFlag(10),
+		EventCatCollision		= EvCatFlag(12),
 
-		EventCatGraphics = EvCatFlag(11)
+		EventCatGraphics		= EvCatFlag(13)
 	};
 
 	/*enum EventMessageType

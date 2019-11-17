@@ -111,6 +111,9 @@ namespace Rogue
 
 				for (int j = 0; j < (int)KeyPressSpecial::KeyCount; ++j)
 				{
+					if (CurKeyboardStateSpecial.Key[j] == 0)
+						continue;
+
 					//Creating all cases of combined events
 					if (KeyTriggered(static_cast<KeyPress>(i)))
 						CreateKeyTriggeredEvent(static_cast<KeyPress>(i), static_cast<KeyPressSpecial>(j));
