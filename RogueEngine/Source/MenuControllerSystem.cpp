@@ -45,18 +45,6 @@ namespace Rogue
 
 		case EventType::EvKeyTriggered:
 		{
-			if (ev->GetEventCat() & EventCatCombinedInput)
-			{
-				KeyTriggeredCombinedEvent* keytriggeredcombinedev = dynamic_cast<KeyTriggeredCombinedEvent*>(ev);
-				KeyPress keycode = keytriggeredcombinedev->GetKeyCode();
-				KeyPressSub keycodeSpecial = keytriggeredcombinedev->GetSubKey();
-
-				//Do stuff
-				//RE_INFO(keytriggeredcombinedev->ToString());
-
-				return;
-			}
-
 			KeyTriggeredEvent* keytriggeredevent = dynamic_cast<KeyTriggeredEvent*>(ev);
 			KeyPress keycode = keytriggeredevent->GetKeyCode();
 
@@ -84,6 +72,17 @@ namespace Rogue
 				EventDispatcher::instance().AddEvent(cameraShakeEvent);
 			}
 
+			if (ev->GetEventCat() & EventCatCombinedInput)
+			{
+				KeyTriggeredCombinedEvent* keytriggeredcombinedev = dynamic_cast<KeyTriggeredCombinedEvent*>(ev);
+				KeyPress keycode = keytriggeredcombinedev->GetKeyCode();
+				KeyPressSub keycodeSpecial = keytriggeredcombinedev->GetSubKey();
+
+				//Do stuff
+				//RE_INFO(keytriggeredcombinedev->ToString());
+
+				return;
+			}
 			return;
 		}
 		default:
