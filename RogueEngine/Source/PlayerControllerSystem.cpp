@@ -12,7 +12,7 @@
 namespace Rogue
 {
 	PlayerControllerSystem::PlayerControllerSystem()
-		:System(SystemID::id_PLAYERCONTROLLERSYSTEM), m_ballCooldown{1.0f},m_jumpCooldown{1.0f}
+		:System(SystemID::id_PLAYERCONTROLLERSYSTEM), /*m_ballCooldown{1.0f},*/ m_jumpCooldown{1.0f}
 	{
 	}
 
@@ -53,13 +53,13 @@ namespace Rogue
 
 		//if (!m_timedEntities.size())
 		//{
-			m_ballCooldown -= g_deltaTime * g_engine.GetTimeScale();
-			if (m_ballCooldown < 0.0f)
-			{
-				ClearTimedEntities();
-			}
-			m_jumpCooldown -= g_deltaTime * g_engine.GetTimeScale();
+			//m_ballCooldown -= g_deltaTime * g_engine.GetTimeScale();
+			//if (m_ballCooldown < 0.0f)
+			//{
+			//	ClearTimedEntities();
+			//}
 		//}
+		m_jumpCooldown -= g_deltaTime * g_engine.GetTimeScale();
 
 		//To update all timed entities
 		/*for (auto timedEntityIt = m_timedEntities.begin(); timedEntityIt != m_timedEntities.end(); ++timedEntityIt)
@@ -95,6 +95,9 @@ namespace Rogue
 		{
 			KeyTriggeredEvent* keytriggeredevent = dynamic_cast<KeyTriggeredEvent*>(ev);
 			KeyPress keycode = keytriggeredevent->GetKeyCode();
+
+			if (keycode == KeyPress::KeyF5)
+				g_engine.m_coordinator.ToggleEditorIsRunning();
 
 			if (keycode == KeyPress::MB1)
 			{
@@ -253,11 +256,11 @@ namespace Rogue
 
 			if (keycode == KeyPress::MB1)
 			{
-				if (!m_timedEntities.size() && m_ballCooldown < 0.0f)
+				if (!m_timedEntities.size() /*&& m_ballCooldown < 0.0f*/)
 				{
 					CreateBallAttack();
 					//m_ballTimer = 1.0f;
-					m_ballCooldown = 1.0f;
+					//m_ballCooldown = 1.0f;
 					//RE_INFO("CLICKCLICK");
 
 					if (g_engine.m_coordinator.ComponentExists<AnimationComponent>(*m_entities.begin()))
