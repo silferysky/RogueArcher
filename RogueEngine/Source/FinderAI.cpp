@@ -28,7 +28,7 @@ namespace Rogue
 					auto& playerTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(iterator.m_Entity);
 					auto& aiTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(m_entity);
 
-					float distance = Vec2SqDistance(aiTransform.getPosition(), playerTransform.getPosition());
+					float distance = Vec2SqDistance(aiTransform.GetPosition(), playerTransform.GetPosition());
 
 					//Empty this queue
 					std::queue<Vec2> empty;
@@ -37,7 +37,7 @@ namespace Rogue
 					if (distance < DEF_DETECT_RANGE * DEF_DETECT_RANGE)
 					{
 						//RE_CORE_INFO("IN RANGE");
-						m_nextPoint.push(playerTransform.getPosition());
+						m_nextPoint.push(playerTransform.GetPosition());
 					}
 				}
 				break;
@@ -68,25 +68,25 @@ namespace Rogue
 			g_engine.m_coordinator.GetComponent<AnimationComponent>(m_entity).setIsAnimating(true);
 		}
 
-		float distance = Vec2SqDistance(aiTransform.getPosition(), m_nextPoint.front());
+		float distance = Vec2SqDistance(aiTransform.GetPosition(), m_nextPoint.front());
 
 		if (distance < aiStats.getSpeed() * DT_SPEED_MODIFIER)
 			aiTransform.setPosition(m_nextPoint.front());
 		else
 		{
 			Vec2 travelDistance;
-			Vec2Normalize(travelDistance, m_nextPoint.front() - aiTransform.getPosition());
+			Vec2Normalize(travelDistance, m_nextPoint.front() - aiTransform.GetPosition());
 			g_engine.m_coordinator.GetComponent<RigidbodyComponent>(m_entity).addForce(travelDistance * aiStats.getSpeed() * DT_SPEED_MODIFIER);
 			
 			//If facing right and moving left or facing left and moving right, flip
-			if ((travelDistance.x < 0 && aiTransform.getScale().x > 0.0f) || 
-				(travelDistance.x > 0 && aiTransform.getScale().x < 0.0f))
-				aiTransform.setScale(Vec2(-1 * aiTransform.getScale().x, aiTransform.getScale().y));
+			if ((travelDistance.x < 0 && aiTransform.GetScale().x > 0.0f) || 
+				(travelDistance.x > 0 && aiTransform.GetScale().x < 0.0f))
+				aiTransform.setScale(Vec2(-1 * aiTransform.GetScale().x, aiTransform.GetScale().y));
 
 			//If facing up and moving down or facing down and moving up, flip
-			if ((travelDistance.y < 0 && aiTransform.getScale().y > 0.0f) ||
-				(travelDistance.y > 0 && aiTransform.getScale().y < 0.0f))
-				aiTransform.setScale(Vec2(aiTransform.getScale().x, -1 * aiTransform.getScale().y));
+			if ((travelDistance.y < 0 && aiTransform.GetScale().y > 0.0f) ||
+				(travelDistance.y > 0 && aiTransform.GetScale().y < 0.0f))
+				aiTransform.setScale(Vec2(aiTransform.GetScale().x, -1 * aiTransform.GetScale().y));
 		
 				//transform.setScale(1 * g_engine.m_coordinator.GetComponent<TransformComponent>(m_entity).getScale());
 		}

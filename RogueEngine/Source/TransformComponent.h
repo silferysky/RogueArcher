@@ -22,9 +22,9 @@ namespace Rogue
 		void setRotation(float rot);
 		void offSetRotation(float rot);
 
-		Vec2 getPosition() const;
-		Vec2 getScale() const;
-		float getRotation() const;
+		Vec2 GetPosition() const;
+		Vec2 GetScale() const;
+		float GetRotation() const;
 
 		std::string Serialize() override;
 		void Deserialize(std::string_view toDeserialize) override;

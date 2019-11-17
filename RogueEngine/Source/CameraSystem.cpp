@@ -112,7 +112,7 @@ namespace Rogue
 			{
 				if (g_engine.m_coordinator.GetComponent<CameraComponent>(entity).getIsActive())
 				{
-					Vec2 transformPos = g_engine.m_coordinator.GetComponent<TransformComponent>(entity).getPosition();
+					Vec2 transformPos = g_engine.m_coordinator.GetComponent<TransformComponent>(entity).GetPosition();
 
 					// ensure camera doesnt go out of bounds
 					if (transformPos.x > m_cameraMax.x)

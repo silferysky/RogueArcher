@@ -47,11 +47,11 @@ namespace Rogue
 			Vec2 transformPos{};
 			
 			if (g_engine.m_coordinator.ComponentExists<TransformComponent>(entity))
-				transformPos = g_engine.m_coordinator.GetComponent<TransformComponent>(entity).getPosition();
+				transformPos = g_engine.m_coordinator.GetComponent<TransformComponent>(entity).GetPosition();
 
 			float distance = 0.0f;
 			if (g_engine.m_coordinator.ComponentExists<TransformComponent>(m_trackingTarget))
-				distance = Vec2SqDistance(transformPos, g_engine.m_coordinator.GetComponent<TransformComponent>(m_trackingTarget).getPosition());
+				distance = Vec2SqDistance(transformPos, g_engine.m_coordinator.GetComponent<TransformComponent>(m_trackingTarget).GetPosition());
 			
 			sound.Update();
 

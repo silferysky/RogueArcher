@@ -151,7 +151,7 @@
 		const float increment = 2.0f * 3.1415f / segments;
 
 		float radius = circle->m_collider.getRadius();
-		Rogue::Vec2 center = transform->getPosition();
+		Rogue::Vec2 center = transform->GetPosition();
 
 		float sinInc = sinf(increment);
 		float cosInc = cosf(increment);
@@ -185,8 +185,8 @@
 		glBindVertexArray(m_VAO);
 		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 
-		float posX = transform->getPosition().x;
-		float posY = transform->getPosition().y;
+		float posX = transform->GetPosition().x;
+		float posY = transform->GetPosition().y;
 
 		drawLine(Rogue::Vec2(posX, posY), Rogue::Vec2(posX + rBody->getVelocity().x * 0.3f,
 													  posY + rBody->getVelocity().y * 0.3f));
