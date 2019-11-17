@@ -21,7 +21,6 @@ namespace Rogue
 
 		// Add components to signature.
 		Signature signature;
-		signature.set(g_engine.m_coordinator.GetComponentType<TransformComponent>());
 		signature.set(g_engine.m_coordinator.GetComponentType<AudioEmitterComponent>());
 
 		// Set system signature.
@@ -118,9 +117,8 @@ namespace Rogue
 		for (auto entity : m_entities)
 		{
 			auto& aEmitter = g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(entity);
-			auto& sound = aEmitter.getSound();
 
-			if (!(sound.CheckPlaying()))
+			if (!(aEmitter.getSound().CheckPlaying()))
 				aEmitter.CreateSound();
 		}
 	}

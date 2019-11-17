@@ -32,10 +32,10 @@ namespace Rogue
 		void setIsScaling(bool isScaling);
 		bool& getIsScaling();
 
-		void setAudioScale(const float& audioScale);
+		void setAudioScale(const float audioScale);
 		float& getAudioScale();
 
-		void setVolume(const float& volume);
+		void setVolume(const float volume);
 		float& getVolume();
 
 		std::string Serialize() override;
