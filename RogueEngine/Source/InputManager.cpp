@@ -275,7 +275,10 @@ namespace Rogue
 	{
 		KeyPressEvent* event = new KeyPressEvent(key, repeat);
 		event->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
-		event->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
+		if (g_engine.m_coordinator.GameIsActive())
+			event->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
+		else if (!g_engine.m_coordinator.GetGameState())
+			event->SetSystemReceivers((int)SystemID::id_MENUCONTROLLERSYSTEM);
 		event->SetSystemReceivers((int)SystemID::id_CAMERASYSTEM);
 		EventDispatcher::instance().AddEvent(event);
 	}
@@ -284,7 +287,10 @@ namespace Rogue
 	{
 		KeyReleaseEvent* event = new KeyReleaseEvent(key);
 		event->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
-		event->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
+		if (g_engine.m_coordinator.GameIsActive())
+			event->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
+		else if (!g_engine.m_coordinator.GetGameState())
+			event->SetSystemReceivers((int)SystemID::id_MENUCONTROLLERSYSTEM);
 		EventDispatcher::instance().AddEvent(event);
 	}
 
@@ -292,7 +298,10 @@ namespace Rogue
 	{
 		KeyTriggeredEvent* event = new KeyTriggeredEvent(key);
 		event->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
-		event->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
+		if (g_engine.m_coordinator.GameIsActive())
+			event->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
+		else if (!g_engine.m_coordinator.GetGameState())
+			event->SetSystemReceivers((int)SystemID::id_MENUCONTROLLERSYSTEM);
 		event->SetSystemReceivers((int)SystemID::id_CAMERASYSTEM);
 		event->SetSystemReceivers((int)SystemID::id_AUDIOSYSTEM);
 		event->SetSystemReceivers((int)SystemID::id_GRAPHICSSYSTEM);
