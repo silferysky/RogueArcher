@@ -16,4 +16,13 @@ namespace Rogue
 		HierarchyInfo(Entity entity, std::string_view name,std::string_view tag = "")
 			: m_Entity{ entity }, m_objectName{ name }, m_tag{ tag }{}
 	};
+
+	class DirectoryInfo
+	{
+	public:
+		std::string m_objectName;
+		bool m_selected = false;
+		DirectoryInfo() = default;
+		DirectoryInfo(std::string_view name) : m_objectName(name) {}
+	};
 }

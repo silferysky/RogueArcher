@@ -1,6 +1,7 @@
 #pragma once
 #include "IEditable.h"
 #include <filesystem>
+#include "EditorHierarchyInfo.h"
 
 namespace Rogue
 {
@@ -18,7 +19,8 @@ namespace Rogue
 		void DisplayDirectoryTree(const std::filesystem::path& pathToShow);
 		std::string m_currentDirectory;
 		std::string m_currentSelectedDirectory;
-		std::vector<std::string> m_directories;
-		std::map<std::string, std::vector<std::string>> m_data;
+		std::map<std::string, std::pair<bool,std::vector<DirectoryInfo>>> m_data;
 	};
+
+
 }

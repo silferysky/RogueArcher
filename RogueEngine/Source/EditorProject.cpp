@@ -23,23 +23,38 @@ namespace Rogue
 	void ImGuiProject::Update()
 	{
 		ImGui::Begin("Project");
-		if (ImGui::CollapsingHeader("Folder Hierachy"))
+		if (ImGui::CollapsingHeader("Folder Hierachy"), ImGuiTreeNodeFlags_DefaultOpen)
 		{
-			//ImGui::
 			for (auto& i : m_data)
 			{
-				ImGui::Selectable(i.first.c_str());
+				if(ImGui::Selectable(i.first.c_str(), i.second.first, ImGuiSelectableFlags_AllowDoubleClick))
+				{
+					std::string temp = i.first;
+					if (ImGui::IsMouseClicked(0))
+					{
+						i.second.first = !i.second.first;
+						for (auto& i : m_data)
+						{
+							if (temp == i.first)
+								continue;
+							i.second.first = false;
+						}
+					}
+				}
 			}
 		}
 		ImGui::End();
 		ImGui::Begin("File");
-		if (ImGui::CollapsingHeader("File Display"))
+		if (ImGui::CollapsingHeader("File Display"), ImGuiTreeNodeFlags_DefaultOpen)
 		{
 			for (auto& i : m_data)
 			{	
-				for (auto& iterator : i.second)
+				if (i.second.first == false)
+						continue;
+				for (auto& iter : i.second.second)
 				{
-					ImGui::Text(iterator.c_str());
+					ImGui::Text(iter.m_objectName.c_str());
+					//ImGui::BeginDragDropSource();
 				}
 			}
 			
@@ -58,22 +73,22 @@ namespace Rogue
 			for (const auto& entry : std::filesystem::directory_iterator(pathToShow))
 			{
 				auto filename = entry.path().filename();
-				//std::string current = m_Data.begin();
+				if (filename == "Source" || filename == "Release" || filename == "Debug" || filename == "ECS")
+					continue;
 				if (std::filesystem::is_directory(entry.status()))
 				{
 					DisplayDirectoryTreeImp(entry, level + 1);
-					//m_Directories.emplace_back(filename.string());
 					m_currentDirectory = filename.string();
-					m_data[filename.string()].push_back("");
+					m_data[filename.string()].second.push_back(DirectoryInfo());
 				}
 				else if (std::filesystem::is_regular_file(entry.status()))
 				{
-					std::map<std::string, std::vector<std::string>>::iterator it = m_data.find(m_currentDirectory);
-					if (it != m_data.end())
+					DirectoryInfo temp;
+					temp.m_objectName = filename.string();
+					for (auto& i : m_data)
 					{
-						it->second.push_back(filename.string());
+						i.second.second.emplace_back(temp);
 					}
-					//DisplayFileInfo(entry, lead, filename);
 				}
 				else
 					throw;
