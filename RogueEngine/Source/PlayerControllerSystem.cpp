@@ -113,10 +113,10 @@ namespace Rogue
 				if (m_entities.size() && m_timedEntities.size())
 				{
 					//By right correct way of doing this
-					//CreateTeleportEvent(g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).getPosition());
-					if (keycode == KeyPress::MB2)
+					CreateTeleportEvent(g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).getPosition());
+					/*if (keycode == KeyPress::MB2)
 						g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin()).setPosition(
-							g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).getPosition());
+							g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).getPosition());*/
 
 					ClearTimedEntities();
 				}

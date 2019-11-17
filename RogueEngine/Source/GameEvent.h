@@ -43,9 +43,9 @@ namespace Rogue
 		SET_EVENT_TYPE(EvEntityTeleport)
 
 		EntTeleportEvent(Entity id, float x, float y)
-			:EntityEvent(id) {}
+			:EntityEvent(id), moveVector{ Vec2(x,y) } {}
 		EntTeleportEvent(Entity id, Vec2 vec)
-			:EntityEvent(id) {}
+			:EntityEvent(id), moveVector{ vec } {}
 
 		virtual ~EntTeleportEvent() = default;
 
