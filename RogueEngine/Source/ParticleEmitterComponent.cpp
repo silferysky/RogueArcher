@@ -1,5 +1,5 @@
-#include "ParticleEmitterComponent.h"
 #include "Precompiled.h"
+#include "ParticleEmitterComponent.h"
 #include "Main.h"
 
 namespace Rogue

@@ -1,8 +1,9 @@
+#include "Precompiled.h"
 #include "MenuControllerSystem.h"
 #include "Main.h"
 #include "KeyEvent.h"
 #include "GraphicsEvent.h"
-#include "Precompiled.h"
+
 
 namespace Rogue
 {
