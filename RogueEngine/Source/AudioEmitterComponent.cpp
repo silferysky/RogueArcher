@@ -16,21 +16,19 @@ namespace Rogue
 
 	void AudioEmitterComponent::DisplayOnInspector()
 	{
-		ImGui::DragFloat("Volume", &m_volume, 0.01f, 0.0f, 10.0f);
+		ImGui::DragFloat("Volume", &m_volume, 0.02f, 0.0f, 10.0f);
 		setVolume(m_volume);
 
 		bool m_isLooping = getIsLooping();
 
 		ImGui::PushItemWidth(75);
 		ImGui::Checkbox("Audio Looping", &m_isLooping);
-		ImGui::TextWrapped("Check this box if you would like the audio to loop.");
 		setIsLooping(m_isLooping);
 
 		bool m_isScaling = getIsScaling();
 
 		ImGui::PushItemWidth(75);
 		ImGui::Checkbox("Audio Scaling", &m_isScaling);
-		ImGui::TextWrapped("Check this box to enable audio scaling");
 		setIsScaling(m_isScaling);
 
 		static char m_newaudioPath[128];
@@ -94,6 +92,7 @@ namespace Rogue
 	void AudioEmitterComponent::setIsLooping(bool isLooping)
 	{
 		m_isLooping = isLooping;
+		m_sound.Pause(!m_isLooping);
 	}
 
 	bool& AudioEmitterComponent::getIsLooping()
@@ -111,7 +110,7 @@ namespace Rogue
 		return m_isScaling;
 	}
 
-	void AudioEmitterComponent::setAudioScale(const float& audioScale)
+	void AudioEmitterComponent::setAudioScale(const float audioScale)
 	{
 		m_audioScale = audioScale;
 	}
@@ -121,9 +120,10 @@ namespace Rogue
 		return m_audioScale;
 	}
 
-	void AudioEmitterComponent::setVolume(const float& volume)
+	void AudioEmitterComponent::setVolume(const float volume)
 	{
 		m_volume = volume;
+		m_sound.SetVolume(m_volume);
 	}
 
 	float& AudioEmitterComponent::getVolume()
@@ -136,7 +136,7 @@ namespace Rogue
 		std::ostringstream ss;
 		ss << m_soundPath << ";";
 		ss << m_audioScale << ";";
-		//ss << m_volume << ";";
+		ss << m_volume << ";";
 		ss << m_isLooping << ";";
 		ss << m_isScaling << ";";
 		return ss.str();
@@ -159,9 +159,12 @@ namespace Rogue
 				setAudioScale(std::stof(s1));
 				break;
 			case 2:
-				setIsLooping(std::stof(s1));
+				setVolume(std::stof(s1));
 				break;
 			case 3:
+				setIsLooping(std::stof(s1));
+				break;
+			case 4:
 				setIsScaling(std::stof(s1));
 				break;
 			default:
