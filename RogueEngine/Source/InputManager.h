@@ -14,6 +14,15 @@ namespace Rogue
 		void operator+=(KeyboardState& rhs);
 	};
 
+	struct KeyboardStateSpecial
+	{
+		//Since COUNT is the last KeyPress, it will always be same value as size of KeyPress
+		int Key[(int)KeyPressSpecial::KeyCount] = { 0 };
+
+		//overloaded += operator. Checks if rhs has value. If rhs has value, add it, otherwise reset to 0
+		void operator+=(KeyboardStateSpecial& rhs);
+	};
+
 	struct FuncState
 	{
 		int Func[FuncCount] = { 0 };
@@ -39,6 +48,7 @@ namespace Rogue
 		void RemakeState();
 		//Reset given state to be all null values
 		void ResetState(KeyboardState* toReset);
+		void ResetState(KeyboardStateSpecial* toReset);
 		void ResetState(FuncState* toReset);
 		//Add to current state only, not update it
 		void AddToState();
@@ -47,6 +57,7 @@ namespace Rogue
 		void DebugKeyInputs(KeyPress key);
 		//Functions to check buttons, applies to other controllers
 		FuncState* getFuncState();
+		bool CheckForSpecialKeys();
 
 		//Key Related
 
@@ -65,9 +76,10 @@ namespace Rogue
 		void ResetKeyBind();
 
 		//Creating Events
-		void CreateKeyPressEvent(KeyPress key, int repeat = 0);
-		void CreateKeyReleaseEvent(KeyPress key);
-		void CreateKeyTriggeredEvent(KeyPress key);
+
+		void CreateKeyPressEvent(KeyPress key, int repeat = 0, KeyPressSpecial subkey = KeyPressSpecial::UNDEF);
+		void CreateKeyReleaseEvent(KeyPress key, KeyPressSpecial subkey = KeyPressSpecial::UNDEF);
+		void CreateKeyTriggeredEvent(KeyPress key, KeyPressSpecial subkey = KeyPressSpecial::UNDEF);
 
 		// Shutdown
 		void Shutdown() override;
@@ -75,6 +87,11 @@ namespace Rogue
 	private:
 		KeyboardState CurKeyboardState;
 		KeyboardState PrevKeyboardState;
+
+		//For special keys
+		KeyboardStateSpecial CurKeyboardStateSpecial;
+		KeyboardStateSpecial PrevKeyboardStateSpecial;
+		
 		std::map<KeyPress, KeyFunction> GameKeyConfig;
 		std::map<KeyPress, KeyFunction> MenuKeyConfig;
 		FuncState CurFuncState;
