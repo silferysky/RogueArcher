@@ -4,25 +4,46 @@
 
 namespace Rogue
 {
-	void AudioEmitterComponent::Destroy()
+	void AudioEmitterComponent::DestroySound()
 	{
 		m_sound.Pause(true);
 
 		if (m_sound.GetSystem() != NULL)
 			m_sound.Release();
+
+		m_stream.Release();
 	}
 
 	void AudioEmitterComponent::DisplayOnInspector()
 	{
+		ImGui::DragFloat("Volume", &m_volume, 0.01f, 0.0f, 10.0f);
+		setVolume(m_volume);
+
+		bool m_isLooping = getIsLooping();
+
+		ImGui::PushItemWidth(75);
+		ImGui::Checkbox("Audio Looping", &m_isLooping);
+		ImGui::TextWrapped("Check this box if you would like the audio to loop.");
+		setIsLooping(m_isLooping);
+
+		bool m_isScaling = getIsScaling();
+
+		ImGui::PushItemWidth(75);
+		ImGui::Checkbox("Audio Scaling", &m_isScaling);
+		ImGui::TextWrapped("Check this box to enable audio scaling");
+		setIsScaling(m_isScaling);
+
 		static char m_newaudioPath[128];
 		const std::string m_constAudioPath = "Resources/Sounds/";
 		ImGui::PushItemWidth(75);
 		ImGui::TextWrapped("Current Sound Path : ");
 		ImGui::TextWrapped("%s", m_soundPath.c_str());
+
 		ImGui::TextDisabled("New Sound Path");
 		ImGui::SameLine();
 		ImGui::PushItemWidth(250);
 		ImGui::InputText("                    ", m_newaudioPath, 128);
+
 		if (ImGui::Button("Set new path"))
 		{
 			m_soundPath = m_constAudioPath + m_newaudioPath;
@@ -51,14 +72,43 @@ namespace Rogue
 		return m_soundPath;
 	}
 
-	void AudioEmitterComponent::setSound(std::string_view sound)
+	void AudioEmitterComponent::CreateSound()
 	{
-		//m_sound = g_engine.m_coordinator.loadSound(sound);
+		m_stream.Initialize();
+		m_sound = g_engine.m_coordinator.loadSound(getSoundPath());
+
+		if (m_isLooping)
+		{
+			m_sound.CreateBGM(getSoundPath().c_str(), 120.0f, &m_stream);
+			m_sound.Play(m_volume);
+		}
+		else
+			m_sound.Create(getSoundPath().c_str(), 1.0f, &m_stream);
 	}
 
 	Sound& AudioEmitterComponent::getSound()
 	{
 		return m_sound;
+	}
+
+	void AudioEmitterComponent::setIsLooping(bool isLooping)
+	{
+		m_isLooping = isLooping;
+	}
+
+	bool& AudioEmitterComponent::getIsLooping()
+	{
+		return m_isLooping;
+	}
+
+	void AudioEmitterComponent::setIsScaling(bool isScaling)
+	{
+		m_isScaling = isScaling;
+	}
+
+	bool& AudioEmitterComponent::getIsScaling()
+	{
+		return m_isScaling;
 	}
 
 	void AudioEmitterComponent::setAudioScale(const float& audioScale)
@@ -71,11 +121,24 @@ namespace Rogue
 		return m_audioScale;
 	}
 
+	void AudioEmitterComponent::setVolume(const float& volume)
+	{
+		m_volume = volume;
+	}
+
+	float& AudioEmitterComponent::getVolume()
+	{
+		return m_volume;
+	}
+
 	std::string AudioEmitterComponent::Serialize()
 	{
 		std::ostringstream ss;
 		ss << m_soundPath << ";";
 		ss << m_audioScale << ";";
+		//ss << m_volume << ";";
+		ss << m_isLooping << ";";
+		ss << m_isScaling << ";";
 		return ss.str();
 	}
 
@@ -94,6 +157,12 @@ namespace Rogue
 				break;
 			case 1:
 				setAudioScale(std::stof(s1));
+				break;
+			case 2:
+				setIsLooping(std::stof(s1));
+				break;
+			case 3:
+				setIsScaling(std::stof(s1));
 				break;
 			default:
 				break;

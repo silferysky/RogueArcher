@@ -366,7 +366,7 @@ namespace Rogue
 
 						if (ImGui::MenuItem("Sound", nullptr, false, g_engine.m_coordinator.ComponentExists<AudioEmitterComponent>(i.m_Entity)))
 						{
-							g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(i.m_Entity).Destroy();
+							g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(i.m_Entity).DestroySound();
 							g_engine.m_coordinator.RemoveComponent<AudioEmitterComponent>(i.m_Entity);
 						}
 
@@ -391,7 +391,7 @@ namespace Rogue
 					if (ImGui::Button("Delete Object"))
 					{
 						if (g_engine.m_coordinator.ComponentExists<AudioEmitterComponent>(i.m_Entity))
-							g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(i.m_Entity).Destroy();
+							g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(i.m_Entity).DestroySound();
 
 						SceneManager::instance().DeleteActiveEntity(i.m_Entity);
 					}
