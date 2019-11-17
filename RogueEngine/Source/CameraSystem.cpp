@@ -36,8 +36,8 @@ namespace Rogue
 
 	glm::mat4 CameraSystem::GetViewMatrix(const float& parallax)
 	{
-		return glm::lookAt({ static_cast<int>(m_cameraPos.x) * parallax, static_cast<int>(m_cameraPos.y) * parallax, static_cast<int>(m_cameraPos.z) },
-			glm::vec3{ static_cast<int>(m_cameraPos.x) * parallax, static_cast<int>(m_cameraPos.y) * parallax, static_cast<int>(m_cameraPos.z) } + m_cameraFront, m_cameraUp);
+		return glm::lookAt({ m_cameraPos.x * parallax, m_cameraPos.y * parallax, m_cameraPos.z },
+			glm::vec3{ m_cameraPos.x * parallax, m_cameraPos.y * parallax, m_cameraPos.z } + m_cameraFront, m_cameraUp);
 	}
 
 	void CameraSystem::ResetCamera()
@@ -132,10 +132,8 @@ namespace Rogue
 
 					// For camera panning
 					glm::vec3 position = m_cameraPos;
-					position.x += (transformPos.x - position.x + shakeOffset.x) * m_cameraLerp * g_deltaTime;
-					position.y += (transformPos.y - position.y + shakeOffset.y) * m_cameraLerp * g_deltaTime;
-
-
+					position.x += static_cast<int>((transformPos.x - position.x + shakeOffset.x) * m_cameraLerp * g_deltaTime);
+					position.y += static_cast<int>((transformPos.y - position.y + shakeOffset.y) * m_cameraLerp * g_deltaTime);
 
 					m_cameraPos = position;
 					//glm::vec3(transformPos.x + shakeOffset.x, transformPos.y + shakeOffset.y, 0.0f);
