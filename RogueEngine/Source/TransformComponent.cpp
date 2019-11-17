@@ -38,17 +38,17 @@ namespace Rogue
 		m_rotation += rot;
 	}
 
-	Vec2 TransformComponent::getPosition() const
+	Vec2 TransformComponent::GetPosition() const
 	{
 		return m_position;
 	}
 
-	Vec2 TransformComponent::getScale() const
+	Vec2 TransformComponent::GetScale() const
 	{
 		return m_scale;
 	}
 
-	float TransformComponent::getRotation() const
+	float TransformComponent::GetRotation() const
 	{
 		return m_rotation;
 	}

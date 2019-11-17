@@ -113,7 +113,7 @@ namespace Rogue
 					//CreateTeleportEvent(g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).getPosition());
 					if (keycode == KeyPress::MB2)
 						g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin()).setPosition(
-							g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).getPosition());
+							g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).GetPosition());
 
 					ClearTimedEntities();
 				}
@@ -333,7 +333,7 @@ namespace Rogue
 			std::ostringstream strstream;
 			Entity ball = g_engine.m_coordinator.CreateEntity();
 			auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
-			Vec2 playerPos = trans.getPosition();
+			Vec2 playerPos = trans.GetPosition();
 
 			Vec2 ballDir{ g_engine.GetWorldCursor().x - playerPos.x, g_engine.GetWorldCursor().y - playerPos.y };
 			Vec2Normalize(ballDir, ballDir);

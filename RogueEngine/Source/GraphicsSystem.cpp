@@ -119,15 +119,15 @@ namespace Rogue
 		auto viewMat = m_pCamera->GetViewMatrix(1.0f);
 		auto texture = sprite.getTexture();
 
-		transformMat = glm::translate(transformMat, { transform.getPosition().x, transform.getPosition().y, 1.0f });
+		transformMat = glm::translate(transformMat, { transform.GetPosition().x, transform.GetPosition().y, 1.0f });
 
-		transformMat = glm::rotate(transformMat, transform.getRotation(), glm::vec3(0.0f, 0.0f, 1.0f));
+		transformMat = glm::rotate(transformMat, transform.GetRotation(), glm::vec3(0.0f, 0.0f, 1.0f));
 
 		// Flip the player depending on direction
 		if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(entity))
 			transformMat = glm::scale(transformMat, glm::vec3(m_playerX, 1.0f, 1.0f));
 
-		transformMat = glm::scale(transformMat, glm::vec3(transform.getScale().x, transform.getScale().y, 1.0f));
+		transformMat = glm::scale(transformMat, glm::vec3(transform.GetScale().x, transform.GetScale().y, 1.0f));
 
 		glBindTexture(GL_TEXTURE_2D, texture.m_texture);
 		UpdateTextureCoords(sprite.getTexCoordMin(), sprite.getTexCoordMax());
@@ -160,9 +160,9 @@ namespace Rogue
 		auto transformMat = glm::mat4(1.0f);
 		auto texture = sprite.getTexture();
 
-		transformMat = glm::translate(transformMat, { transform.getPosition().x, transform.getPosition().y, 1.0f });
-		transformMat = glm::rotate(transformMat, transform.getRotation(), glm::vec3(0.0f, 0.0f, 1.0f));
-		transformMat = glm::scale(transformMat, glm::vec3(transform.getScale().x, transform.getScale().y, 1.0f));
+		transformMat = glm::translate(transformMat, { transform.GetPosition().x, transform.GetPosition().y, 1.0f });
+		transformMat = glm::rotate(transformMat, transform.GetRotation(), glm::vec3(0.0f, 0.0f, 1.0f));
+		transformMat = glm::scale(transformMat, glm::vec3(transform.GetScale().x, transform.GetScale().y, 1.0f));
 
 		glBindTexture(GL_TEXTURE_2D, texture.m_texture);
 		UpdateTextureCoords(sprite.getTexCoordMin(), sprite.getTexCoordMax());
