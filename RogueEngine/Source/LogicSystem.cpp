@@ -76,6 +76,7 @@ namespace Rogue
 			Entity triggered = event->GetOtherEntity();
 			for (Entity m : m_entities)
 			{
+				//TODO since most of the time the AI is not part of LogicSystem's entities, ensure that AI handles it properly.
 				if (m == object || m == triggered)
 					m_entityLogicMap[m]->HandleCollision(event);
 			}
