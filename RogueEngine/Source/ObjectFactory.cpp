@@ -111,8 +111,8 @@ namespace Rogue
 			{
 				if (g_engine.m_coordinator.ComponentExists<SpriteComponent>(curHierarchy.m_Entity))
 				{
-					std::string_view backgroundStr(g_engine.m_coordinator.GetComponent<SpriteComponent>(curHierarchy.m_Entity).Serialize());
-					RESerialiser::WriteToFile(fileName, "BackgroundTexture", backgroundStr.data());
+					std::string backgroundStr(g_engine.m_coordinator.GetComponent<SpriteComponent>(curHierarchy.m_Entity).Serialize());
+					RESerialiser::WriteToFile(fileName, "BackgroundTexture", backgroundStr.c_str());
 				}
 
 				writingBackground = false;
