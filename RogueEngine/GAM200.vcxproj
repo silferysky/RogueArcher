@@ -72,6 +72,7 @@
     <ClInclude Include="Source\LogicComponent.h" />
     <ClInclude Include="Source\LogicSystem.h" />
     <ClInclude Include="Source\Manifold.h" />
+    <ClInclude Include="Source\MenuControllerSystem.h" />
     <ClInclude Include="Source\PatrolAI.h" />
     <ClInclude Include="Source\PhysicsSystem.h" />
     <ClInclude Include="Source\AABB.h" />
@@ -179,6 +180,7 @@
     <ClCompile Include="Source\LogicComponent.cpp" />
     <ClCompile Include="Source\LogicSystem.cpp" />
     <ClCompile Include="Source\Manifold.cpp" />
+    <ClCompile Include="Source\MenuControllerSystem.cpp" />
     <ClCompile Include="Source\PatrolAI.cpp" />
     <ClCompile Include="source\Precompiled.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>

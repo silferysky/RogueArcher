@@ -116,6 +116,9 @@
     <Filter Include="RogueEngine\Systems\Background">
       <UniqueIdentifier>{35b776bc-69be-4171-bdd6-d15d73e24b2a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="RogueEngine\Systems\MenuController">
+      <UniqueIdentifier>{bd10c2f1-4f88-4468-8fc1-005733ac1d17}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Resource.h">
@@ -481,6 +484,9 @@
     <ClInclude Include="Source\Precompiled.h">
       <Filter>RogueEngine\Core</Filter>
     </ClInclude>
+    <ClInclude Include="Source\MenuControllerSystem.h">
+      <Filter>RogueEngine\Systems\MenuController</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -743,6 +749,9 @@
     </ClCompile>
     <ClCompile Include="source\Precompiled.cpp">
       <Filter>RogueEngine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MenuControllerSystem.cpp">
+      <Filter>RogueEngine\Systems\MenuController</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
