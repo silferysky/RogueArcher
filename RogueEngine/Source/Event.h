@@ -68,8 +68,8 @@ namespace Rogue
 		EventCatEntity			= EvCatFlag(7),			//For entity events
 		EventCatEntChangeState	= EvCatFlag(8),			//For entity behavior changing state
 		EventCatEntMove			= EvCatFlag(9),			//For entity movement/teleportation
-		EventCatEntAttack		= EvCatFlag(10),			//For entity attacking/taking damage
-		EventCatEntDestroy		= EvCatFlag(11),			//For completely removing entities
+		EventCatEntAttack		= EvCatFlag(10),		//For entity attacking/taking damage
+		EventCatEntDestroy		= EvCatFlag(11),		//For completely removing entities
 
 		EventCatCollision		= EvCatFlag(12),
 
