@@ -241,6 +241,7 @@ namespace Rogue
 		glShadeModel(GL_SMOOTH);						   // Smooth shading
 		glDepthFunc(GL_LEQUAL);							   // Depth testing type
 		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Perspective Calculations
+		glEnable(GL_LINE_SMOOTH);
 
 		// Enable alpha
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

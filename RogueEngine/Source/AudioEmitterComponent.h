@@ -1,6 +1,7 @@
 #pragma once
 #include "BaseComponent.h"
 #include "Sound.h"
+#include "Stream.h"
 
 namespace Rogue
 {
@@ -9,8 +10,12 @@ namespace Rogue
 	{
 		std::string m_soundPath;
 		Sound m_sound;
+		Stream m_stream;
 
+		bool m_isLooping;
+		bool m_isScaling;
 		float m_audioScale = 1.0f;
+		float m_volume = 0.3f;
 	public:
 		AudioEmitterComponent() = default;
 		~AudioEmitterComponent() = default;
@@ -18,16 +23,25 @@ namespace Rogue
 		void setSoundPath(std::string_view soundPath);
 		std::string getSoundPath() const;
 
-		void setSound(std::string_view soundPath);
+		void CreateSound();
 		Sound& getSound();
+
+		void setIsLooping(bool isLooping);
+		bool& getIsLooping();
+
+		void setIsScaling(bool isScaling);
+		bool& getIsScaling();
 
 		void setAudioScale(const float& audioScale);
 		float& getAudioScale();
 
+		void setVolume(const float& volume);
+		float& getVolume();
+
 		std::string Serialize() override;
 		void Deserialize(std::string_view toDeserialize) override;
 
-		void Destroy();
+		void DestroySound();
 
 		void DisplayOnInspector();
 	};
