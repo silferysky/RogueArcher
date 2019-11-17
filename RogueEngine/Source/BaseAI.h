@@ -1,11 +1,10 @@
 #pragma once
+#include "Precompiled.h"
 #include "ILogic.h"
 #include "LogicComponent.h"
-#include <memory>
-#include <vector>
-#include <queue>
 #include "Vector2D.h"
 #include "Types.h"
+#include "GameEvent.h"
 
 //Default values
 #define DEF_PATROL_RANGE 10
@@ -36,6 +35,16 @@ namespace Rogue
 		virtual void AIChaseUpdate();
 		virtual void AIPatrolUpdate();
 		virtual void AIIdleUpdate();
+
+		//Collision handlers
+		virtual void HandleCollision(EntCollisionOrTrigger* ev);
+
+		virtual void OnCollisionEnter(Entity otherEnt);
+		virtual void OnCollisionStay(Entity otherEnt);
+		virtual void OnCollisionExit(Entity otherEnt);
+		virtual void OnTriggerEnter(Entity otherEnt);
+		virtual void OnTriggerStay(Entity otherEnt);
+		virtual void OnTriggerExit(Entity otherEnt);
 
 		//Getter/Setter
 		std::shared_ptr<LogicComponent> GetLogicComponent();

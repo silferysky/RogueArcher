@@ -487,6 +487,9 @@
     <ClInclude Include="Source\MenuControllerSystem.h">
       <Filter>RogueEngine\Systems\MenuController</Filter>
     </ClInclude>
+    <ClInclude Include="Source\TriggerAI.h">
+      <Filter>RogueEngine\Systems\AI\AI Types</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -752,6 +755,9 @@
     </ClCompile>
     <ClCompile Include="Source\MenuControllerSystem.cpp">
       <Filter>RogueEngine\Systems\MenuController</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TriggerAI.cpp">
+      <Filter>RogueEngine\Systems\AI\AI Types</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
