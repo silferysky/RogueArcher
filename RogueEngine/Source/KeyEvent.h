@@ -9,9 +9,8 @@ namespace Rogue
 	class KeyEvent : public Event
 	{
 	public:
-		SET_EVENT_CATEGORY(EventCatInput | EventCatKeyboard)
 
-			virtual KeyPress GetKeyCode() const { return KeyCode; }
+		virtual KeyPress GetKeyCode() const { return KeyCode; }
 		virtual const char* GetKeyName() const { return "None"; }
 
 		//This should not be used
@@ -31,6 +30,7 @@ namespace Rogue
 	public:
 
 		SET_EVENT_TYPE(EvKeyPressed)
+		SET_EVENT_CATEGORY(EventCatInput | EventCatKeyboard)
 
 		KeyPressEvent(KeyPress key, int repeatCount = 0)
 			: KeyEvent(key), RepeatCount(repeatCount) {}
@@ -53,8 +53,9 @@ namespace Rogue
 	public:
 
 		SET_EVENT_TYPE(EvKeyReleased)
+		SET_EVENT_CATEGORY(EventCatInput | EventCatKeyboard)
 
-			KeyReleaseEvent(KeyPress key)
+		KeyReleaseEvent(KeyPress key)
 			: KeyEvent(key) {}
 
 		std::string ToString() const override
@@ -70,6 +71,7 @@ namespace Rogue
 	public:
 
 		SET_EVENT_TYPE(EvKeyTriggered)
+		SET_EVENT_CATEGORY(EventCatInput | EventCatKeyboard)
 
 			KeyTriggeredEvent(KeyPress key)
 			: KeyEvent(key) {}
@@ -88,7 +90,7 @@ namespace Rogue
 		SET_EVENT_TYPE(EvKeyPressed)
 		SET_EVENT_CATEGORY(EventCatInput | EventCatKeyboard | EventCatCombinedInput)
 
-		KeyPressCombinedEvent(KeyPress key, KeyPressSpecial subkey, int repeatCount = 0)
+		KeyPressCombinedEvent(KeyPress key, KeyPressSub subkey, int repeatCount = 0)
 			: KeyPressEvent(key, repeatCount), SubKey{ subkey } { }
 
 		std::string ToString() const override
@@ -98,10 +100,10 @@ namespace Rogue
 			return ss.str();
 		}
 
-		inline KeyPressSpecial GetSubKey() const { return SubKey; }
+		inline KeyPressSub GetSubKey() const { return SubKey; }
 
 	private:
-		KeyPressSpecial SubKey;
+		KeyPressSub SubKey;
 	};
 
 	class KeyTriggeredCombinedEvent : public KeyTriggeredEvent
@@ -111,20 +113,20 @@ namespace Rogue
 		SET_EVENT_TYPE(EvKeyTriggered)
 		SET_EVENT_CATEGORY(EventCatInput | EventCatKeyboard | EventCatCombinedInput)
 
-		KeyTriggeredCombinedEvent(KeyPress key, KeyPressSpecial subkey)
+		KeyTriggeredCombinedEvent(KeyPress key, KeyPressSub subkey)
 			: KeyTriggeredEvent(key), SubKey{ subkey } { }
 
 		std::string ToString() const override
 		{
 			std::stringstream ss;
-			ss << "KeyTriggeredCombinedEvent: " << (int)SubKey << " + " << (int)KeyCode;
+			ss << "KeyTriggeredCombinedEvent: " << eventCat << ":" << (int)SubKey << " + " << (int)KeyCode;
 			return ss.str();
 		}
 
-		inline KeyPressSpecial GetSubKey() const { return SubKey; }
+		inline KeyPressSub GetSubKey() const { return SubKey; }
 
 	private:
-		KeyPressSpecial SubKey;
+		KeyPressSub SubKey;
 	};
 
 	class KeyReleasedCombinedEvent : public KeyReleaseEvent
@@ -134,7 +136,7 @@ namespace Rogue
 		SET_EVENT_TYPE(EvKeyReleased)
 		SET_EVENT_CATEGORY(EventCatInput | EventCatKeyboard | EventCatCombinedInput)
 
-		KeyReleasedCombinedEvent(KeyPress key, KeyPressSpecial subkey)
+		KeyReleasedCombinedEvent(KeyPress key, KeyPressSub subkey)
 			: KeyReleaseEvent(key), SubKey{ subkey } { }
 
 		std::string ToString() const override
@@ -144,10 +146,10 @@ namespace Rogue
 			return ss.str();
 		}
 
-		inline KeyPressSpecial GetSubKey() const { return SubKey; }
+		inline KeyPressSub GetSubKey() const { return SubKey; }
 
 	private:
-		KeyPressSpecial SubKey;
+		KeyPressSub SubKey;
 	};
 
 

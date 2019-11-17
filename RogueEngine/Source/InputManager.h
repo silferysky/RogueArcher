@@ -17,7 +17,7 @@ namespace Rogue
 	struct KeyboardStateSpecial
 	{
 		//Since COUNT is the last KeyPress, it will always be same value as size of KeyPress
-		int Key[(int)KeyPressSpecial::KeyCount] = { 0 };
+		int Key[(int)KeyPressSub::KeyCount] = { 0 };
 
 		//overloaded += operator. Checks if rhs has value. If rhs has value, add it, otherwise reset to 0
 		void operator+=(KeyboardStateSpecial& rhs);
@@ -78,9 +78,9 @@ namespace Rogue
 
 		//Creating Events
 
-		void CreateKeyPressEvent(KeyPress key, int repeat = 0, KeyPressSpecial subkey = KeyPressSpecial::UNDEF);
-		void CreateKeyReleaseEvent(KeyPress key, KeyPressSpecial subkey = KeyPressSpecial::UNDEF);
-		void CreateKeyTriggeredEvent(KeyPress key, KeyPressSpecial subkey = KeyPressSpecial::UNDEF);
+		void CreateKeyPressEvent(KeyPress key, int repeat = 0, KeyPressSub subkey = KeyPressSub::UNDEF);
+		void CreateKeyReleaseEvent(KeyPress key, KeyPressSub subkey = KeyPressSub::UNDEF);
+		void CreateKeyTriggeredEvent(KeyPress key, KeyPressSub subkey = KeyPressSub::UNDEF);
 
 		// Shutdown
 		void Shutdown() override;

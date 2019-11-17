@@ -81,7 +81,7 @@ namespace Rogue
 		UNDEF //Represents no button pressed
 	};
 
-	enum class KeyPressSpecial
+	enum class KeyPressSub
 	{
 		KeyCtrl = 0,
 		KeyShift,
