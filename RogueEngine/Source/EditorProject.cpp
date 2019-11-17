@@ -16,7 +16,7 @@ namespace Rogue
 	{
 		
 		const fs::path pathToShow{ fs::current_path() };
-		////fs::current_path("Resources");
+		//fs::current_path("/Resources");
 		DisplayDirectoryTree(pathToShow);
 	}
 
@@ -70,16 +70,22 @@ namespace Rogue
 	{
 		if (std::filesystem::exists(pathToShow) && std::filesystem::is_directory(pathToShow))
 		{
+			m_currentLevel = level;
 			for (const auto& entry : std::filesystem::directory_iterator(pathToShow))
 			{
 				auto filename = entry.path().filename();
-				if (filename == "Source" || filename == "Release" || filename == "Debug" || filename == "ECS")
-					continue;
+				m_previousDirectory = filename.string();
 				if (std::filesystem::is_directory(entry.status()))
 				{
-					DisplayDirectoryTreeImp(entry, level + 1);
-					m_currentDirectory = filename.string();
-					m_data[filename.string()].second.push_back(DirectoryInfo());
+					//if (filename == "Resources" || filename == "Sounds" || filename == "Assets")
+					{
+						m_currentDirectory = filename.string();
+						//if (level == 0)
+						{
+							m_data[filename.string()].second.push_back(DirectoryInfo("", m_currentLevel));
+						}
+						DisplayDirectoryTreeImp(entry, level + 1);
+					}
 				}
 				else if (std::filesystem::is_regular_file(entry.status()))
 				{
@@ -87,7 +93,10 @@ namespace Rogue
 					temp.m_objectName = filename.string();
 					for (auto& i : m_data)
 					{
-						i.second.second.emplace_back(temp);
+						if (i.first == m_currentDirectory)
+						{
+							i.second.second.emplace_back(temp);
+						}
 					}
 				}
 				else
