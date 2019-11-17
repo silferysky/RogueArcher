@@ -87,7 +87,7 @@ namespace Rogue
 	public:
 		SET_EVENT_TYPE(EvKeyCombinedPressed)
 
-		KeyPressCombinedEvent(KeyPress key, KeyPress subkey, int repeatCount = 0)
+		KeyPressCombinedEvent(KeyPress key, KeyPressSpecial subkey, int repeatCount = 0)
 			: KeyPressEvent(key, repeatCount), SubKey{ subkey } { }
 
 		std::string ToString() const override
@@ -97,10 +97,10 @@ namespace Rogue
 			return ss.str();
 		}
 
-		inline KeyPress GetSubKey() const { return SubKey; }
+		inline KeyPressSpecial GetSubKey() const { return SubKey; }
 
 	private:
-		KeyPress SubKey;
+		KeyPressSpecial SubKey;
 	};
 
 	class KeyTriggeredCombinedEvent : public KeyTriggeredEvent
@@ -109,7 +109,7 @@ namespace Rogue
 
 		SET_EVENT_TYPE(EvKeyCombinedTriggered)
 
-		KeyTriggeredCombinedEvent(KeyPress key, KeyPress subkey)
+		KeyTriggeredCombinedEvent(KeyPress key, KeyPressSpecial subkey)
 			: KeyTriggeredEvent(key), SubKey{ subkey } { }
 
 		std::string ToString() const override
@@ -119,10 +119,10 @@ namespace Rogue
 			return ss.str();
 		}
 
-		inline KeyPress GetSubKey() const { return SubKey; }
+		inline KeyPressSpecial GetSubKey() const { return SubKey; }
 
 	private:
-		KeyPress SubKey;
+		KeyPressSpecial SubKey;
 	};
 
 	class KeyReleasedCombinedEvent : public KeyReleaseEvent
@@ -131,7 +131,7 @@ namespace Rogue
 
 		SET_EVENT_TYPE(EvKeyCombinedReleased)
 
-		KeyReleasedCombinedEvent(KeyPress key, KeyPress subkey)
+		KeyReleasedCombinedEvent(KeyPress key, KeyPressSpecial subkey)
 			: KeyReleaseEvent(key), SubKey{ subkey } { }
 
 		std::string ToString() const override
@@ -141,10 +141,10 @@ namespace Rogue
 			return ss.str();
 		}
 
-		inline KeyPress GetSubKey() const { return SubKey; }
+		inline KeyPressSpecial GetSubKey() const { return SubKey; }
 
 	private:
-		KeyPress SubKey;
+		KeyPressSpecial SubKey;
 	};
 
 

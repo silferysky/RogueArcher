@@ -47,9 +47,10 @@ namespace Rogue
 		KeyEsc,
 		KeyBackspace,
 		KeyTab,
-		KeyEnter,
-		KeyShift,
 		KeyCtrl,
+		KeyShift,
+		KeyAlt,
+		KeyEnter,
 		KeySpace,
 		Numpad0,
 		Numpad1,
@@ -78,6 +79,15 @@ namespace Rogue
 		MB3, //Scrollwheel
 		KeyCount, //Represents number of buttons
 		UNDEF //Represents no button pressed
+	};
+
+	enum class KeyPressSpecial
+	{
+		KeyCtrl = 0,
+		KeyShift,
+		KeyAlt,
+		KeyCount,
+		UNDEF
 	};
 
 	enum KeyFunction

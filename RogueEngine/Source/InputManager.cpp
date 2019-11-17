@@ -24,6 +24,17 @@ namespace Rogue
 		}
 	}
 
+	void KeyboardStateSpecial::operator+=(KeyboardStateSpecial& rhs)
+	{
+		for (int i = 0; i < (int)KeyPressSpecial::KeyCount; ++i)
+		{
+			if (rhs.Key[i] != 0)
+				Key[i] += rhs.Key[i];
+			else
+				Key[i] = 0;
+		}
+	}
+
 	InputManager::InputManager()
 		:System(SystemID::id_INPUTMANAGER)
 	{
@@ -52,9 +63,11 @@ namespace Rogue
 		//Always do this first
 		//Shallow add old keyboardstate details over to keep track of how long button is pressed
 		PrevKeyboardState += CurKeyboardState;
+		PrevKeyboardStateSpecial += CurKeyboardStateSpecial;
 
 		//Ensure state is empty
 		ResetState(&CurKeyboardState);
+		ResetState(&CurKeyboardStateSpecial);
 		//Detecting inputs
 		AddToState();
 
@@ -68,15 +81,45 @@ namespace Rogue
 
 	void InputManager::HandleState()
 	{
-		for (int i = 0; i < (int)KeyPress::KeyCount; ++i)
-		{
-			if (KeyTriggered(static_cast<KeyPress>(i)))
-				CreateKeyTriggeredEvent(static_cast<KeyPress>(i));
-			else if (CurKeyboardState.Key[i] > 0)
-				CreateKeyPressEvent((KeyPress(i)), CurKeyboardState.Key[i]);
-			else if (KeyReleased((KeyPress)i))
-				CreateKeyReleaseEvent((KeyPress)i);
-		}
+		if (!CheckForSpecialKeys())
+			for (int i = 0; i < (int)KeyPress::KeyCount; ++i)
+			{
+				if (KeyTriggered(static_cast<KeyPress>(i)))
+					CreateKeyTriggeredEvent(static_cast<KeyPress>(i));
+				else if (CurKeyboardState.Key[i] > 0)
+					CreateKeyPressEvent((static_cast<KeyPress>(i)), CurKeyboardState.Key[i]);
+				else if (KeyReleased(static_cast<KeyPress>(i)))
+					CreateKeyReleaseEvent(static_cast<KeyPress>(i));
+			}
+		else
+			for (int i = 0; i < (int)KeyPress::KeyCount; ++i)
+			{
+				//If i is any of the keys that belongs to the special key set
+				if (i == (int)KeyPress::KeyCtrl || i == (int)KeyPress::KeyShift || i == (int)KeyPress::KeyAlt)
+				{
+					//Creating single instance of each special key
+					if (KeyTriggered(static_cast<KeyPress>(i)))
+						CreateKeyTriggeredEvent(static_cast<KeyPress>(i));
+					else if (CurKeyboardState.Key[i] > 0)
+						CreateKeyPressEvent((static_cast<KeyPress>(i)), CurKeyboardState.Key[i]);
+					else if (KeyReleased(static_cast<KeyPress>(i)))
+						CreateKeyReleaseEvent((KeyPress)i);
+
+					//Skip, since we don't want a Shift key with a sub Shift Key
+					continue;
+				}
+
+				for (int j = 0; j < (int)KeyPressSpecial::KeyCount; ++j)
+				{
+					//Creating all cases of combined events
+					if (KeyTriggered(static_cast<KeyPress>(i)))
+						CreateKeyTriggeredEvent(static_cast<KeyPress>(i), static_cast<KeyPressSpecial>(j));
+					else if (CurKeyboardState.Key[i] > 0)
+						CreateKeyPressEvent((static_cast<KeyPress>(i)), CurKeyboardState.Key[i], static_cast<KeyPressSpecial>(j));
+					else if (KeyReleased(static_cast<KeyPress>(i)))
+						CreateKeyReleaseEvent(static_cast<KeyPress>(i), static_cast<KeyPressSpecial>(j));
+				}
+			}
 	}
 
 	void InputManager::RemakeState()
@@ -88,6 +131,14 @@ namespace Rogue
 	void InputManager::ResetState(KeyboardState* toReset)
 	{
 		for (int i = 0; i < (int)KeyPress::KeyCount; ++i)
+		{
+			toReset->Key[i] = 0;
+		}
+	}
+
+	void InputManager::ResetState(KeyboardStateSpecial* toReset)
+	{
+		for (int i = 0; i < (int)KeyPressSpecial::KeyCount; ++i)
 		{
 			toReset->Key[i] = 0;
 		}
@@ -148,7 +199,7 @@ namespace Rogue
 		if (GetAsyncKeyState(VK_MBUTTON))
 			++CurKeyboardState.Key[(int)KeyPress::MB3];
 
-		//FOr Misc Key Inputs
+		//For Misc Key Inputs
 		if (GetAsyncKeyState(VK_ESCAPE))
 			++CurKeyboardState.Key[(int)KeyPress::KeyEsc];
 		if (GetAsyncKeyState(VK_BACK))
@@ -157,12 +208,25 @@ namespace Rogue
 			++CurKeyboardState.Key[(int)KeyPress::KeyTab];
 		if (GetAsyncKeyState(VK_RETURN))
 			++CurKeyboardState.Key[(int)KeyPress::KeyEnter];
-		if (GetAsyncKeyState(VK_SHIFT))
-			++CurKeyboardState.Key[(int)KeyPress::KeyShift];
-		if (GetAsyncKeyState(VK_CONTROL))
-			++CurKeyboardState.Key[(int)KeyPress::KeyCtrl];
 		if (GetAsyncKeyState(VK_SPACE))
 			++CurKeyboardState.Key[(int)KeyPress::KeySpace];
+
+		//For special keyboard
+		if (GetAsyncKeyState(VK_CONTROL))
+		{
+			++CurKeyboardState.Key[(int)KeyPress::KeyCtrl];
+			++CurKeyboardStateSpecial.Key[(int)KeyPressSpecial::KeyCtrl];
+		}
+		if (GetAsyncKeyState(VK_SHIFT))
+		{
+			++CurKeyboardState.Key[(int)KeyPress::KeyShift];
+			++CurKeyboardStateSpecial.Key[(int)KeyPressSpecial::KeyShift];
+		}
+		if (GetAsyncKeyState(VK_MENU))
+		{
+			++CurKeyboardState.Key[(int)KeyPress::KeyAlt];
+			++CurKeyboardStateSpecial.Key[(int)KeyPressSpecial::KeyAlt];
+		}
 
 		/*for (int i = 0; i < KeyCount; ++i)
 		{
@@ -193,6 +257,16 @@ namespace Rogue
 	FuncState* InputManager::getFuncState()
 	{
 		return &CurFuncState;
+	}
+
+	bool InputManager::CheckForSpecialKeys()
+	{
+		for (int i = 0; i < (int)KeyPressSpecial::KeyCount; ++i)
+		{
+			if (CurKeyboardStateSpecial.Key[i])
+				return true;
+		}
+		return false;
 	}
 
 	bool InputManager::KeyUp(KeyPress checkKey)
@@ -271,9 +345,14 @@ namespace Rogue
 		MenuKeyConfig = MenuKeyBinding;
 	}
 
-	void InputManager::CreateKeyPressEvent(KeyPress key, int repeat)
+	void InputManager::CreateKeyPressEvent(KeyPress key, int repeat, KeyPressSpecial subkey)
 	{
-		KeyPressEvent* event = new KeyPressEvent(key, repeat);
+		KeyPressEvent* event;
+		if (subkey != KeyPressSpecial::UNDEF)
+			event = new KeyPressEvent(key, repeat);
+		else
+			event = new KeyPressCombinedEvent(key, subkey, repeat);
+
 		event->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
 		if (g_engine.m_coordinator.GameIsActive())
 			event->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
@@ -283,9 +362,14 @@ namespace Rogue
 		EventDispatcher::instance().AddEvent(event);
 	}
 
-	void InputManager::CreateKeyReleaseEvent(KeyPress key)
+	void InputManager::CreateKeyReleaseEvent(KeyPress key, KeyPressSpecial subkey)
 	{
-		KeyReleaseEvent* event = new KeyReleaseEvent(key);
+		KeyReleaseEvent* event;
+		if (subkey != KeyPressSpecial::UNDEF)
+			event = new KeyReleaseEvent(key);
+		else
+			event = new KeyReleasedCombinedEvent(key, subkey);
+
 		event->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
 		if (g_engine.m_coordinator.GameIsActive())
 			event->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
@@ -294,9 +378,14 @@ namespace Rogue
 		EventDispatcher::instance().AddEvent(event);
 	}
 
-	void InputManager::CreateKeyTriggeredEvent(KeyPress key)
+	void InputManager::CreateKeyTriggeredEvent(KeyPress key, KeyPressSpecial subkey)
 	{
-		KeyTriggeredEvent* event = new KeyTriggeredEvent(key);
+		KeyTriggeredEvent* event;
+		if (subkey != KeyPressSpecial::UNDEF)
+			event = new KeyTriggeredEvent(key);
+		else
+			event = new KeyTriggeredCombinedEvent(key, subkey);
+
 		event->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
 		if (g_engine.m_coordinator.GameIsActive())
 			event->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
