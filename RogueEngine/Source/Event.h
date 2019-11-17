@@ -46,8 +46,9 @@ namespace Rogue
 		EvEntityDamaged,
 		EvEntityDestroy,
 
-		EvOnCollision,
-		EvOnTrigger,
+		EvOnCollisionEnter,
+		EvOnCollisionStay,
+		EvOnCollisionExit,
 
 		EvCameraShake,
 		EvChangeAnimation
@@ -72,8 +73,9 @@ namespace Rogue
 		EventCatEntDestroy		= EvCatFlag(11),		//For completely removing entities
 
 		EventCatCollision		= EvCatFlag(12),
+		EventCatTrigger			= EvCatFlag(13),
 
-		EventCatGraphics		= EvCatFlag(13)
+		EventCatGraphics		= EvCatFlag(14)
 	};
 
 	/*enum EventMessageType

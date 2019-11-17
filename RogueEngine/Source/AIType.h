@@ -8,6 +8,7 @@ namespace Rogue
 		AI_Static,
 		AI_Patrol,
 		AI_Finder,
+		AI_Trigger,
 		AI_Last
 	};
 

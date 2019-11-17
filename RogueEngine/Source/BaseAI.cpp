@@ -83,6 +83,88 @@ namespace Rogue
 		//RE_INFO("AI IDLE");
 	}
 
+	void BaseAI::HandleCollision(EntCollisionOrTrigger* ev)
+	{
+		switch (ev->GetEventType())
+		{
+		case EventType::EvOnCollisionEnter:
+		{
+			//Set entity to either first or second ID depending on which it isn't
+			Entity otherEnt = ev->GetEntityID();
+
+			if (ev->GetEntityID() == m_entity)
+				otherEnt = ev->GetOtherEntity();
+
+			if (ev->GetEventCat() & EventCatTrigger)
+				OnTriggerEnter(otherEnt);
+			else
+				OnCollisionEnter(otherEnt);
+
+			return;
+		}
+		case EventType::EvOnCollisionStay:
+		{
+			//Set entity to either first or second ID depending on which it isn't
+			Entity otherEnt = ev->GetEntityID();
+
+			if (ev->GetEntityID() == m_entity)
+				otherEnt = ev->GetOtherEntity();
+
+			if (ev->GetEventCat() & EventCatTrigger)
+				OnTriggerStay(otherEnt);
+			else
+				OnCollisionStay(otherEnt);
+
+			return;
+		}
+		case EventType::EvOnCollisionExit:
+		{
+			//Set entity to either first or second ID depending on which it isn't
+			Entity otherEnt = ev->GetEntityID();
+
+			if (ev->GetEntityID() == m_entity)
+				otherEnt = ev->GetOtherEntity();
+
+			if (ev->GetEventCat() & EventCatTrigger)
+				OnTriggerExit(otherEnt);
+			else
+				OnCollisionExit(otherEnt);
+
+			return;
+		}
+		}
+	}
+
+	void BaseAI::OnCollisionEnter(Entity otherEnt)
+	{
+		RE_INFO("COLLISION ENTER");
+	}
+
+	void BaseAI::OnCollisionStay(Entity otherEnt)
+	{
+		RE_INFO("COLLISION STAY");
+	}
+
+	void BaseAI::OnCollisionExit(Entity otherEnt)
+	{
+		RE_INFO("COLLISION EXIT");
+	}
+
+	void BaseAI::OnTriggerEnter(Entity otherEnt)
+	{
+		RE_INFO("TRIGGER ENTER");
+	}
+
+	void BaseAI::OnTriggerStay(Entity otherEnt)
+	{
+		RE_INFO("TRIGGER STAY");
+	}
+
+	void BaseAI::OnTriggerExit(Entity otherEnt)
+	{
+		RE_INFO("TRIGGER EXIT");
+	}
+
 	std::shared_ptr<LogicComponent> BaseAI::GetLogicComponent()
 	{
 		return m_logicComponent;
