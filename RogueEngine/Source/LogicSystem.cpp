@@ -78,7 +78,8 @@ namespace Rogue
 			{
 				//TODO since most of the time the AI is not part of LogicSystem's entities, ensure that AI handles it properly.
 				if (m == object || m == triggered)
-					m_entityLogicMap[m]->HandleCollision(event);
+					if (m_entityLogicMap[m] != nullptr)
+						m_entityLogicMap[m]->HandleCollision(event);
 			}
 			return;
 		}
