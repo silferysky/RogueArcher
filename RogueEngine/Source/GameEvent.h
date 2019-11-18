@@ -43,9 +43,9 @@ namespace Rogue
 		SET_EVENT_TYPE(EvEntityTeleport)
 
 		EntTeleportEvent(Entity id, float x, float y)
-			:EntityEvent(id) {}
+			:EntityEvent(id), moveVector{ Vec2(x,y) } {}
 		EntTeleportEvent(Entity id, Vec2 vec)
-			:EntityEvent(id) {}
+			:EntityEvent(id), moveVector{ vec } {}
 
 		virtual ~EntTeleportEvent() = default;
 
@@ -123,14 +123,11 @@ namespace Rogue
 
 	};
 
-	class EntCollisionEvent : public EntityEvent
+	class EntCollisionOrTrigger : public EntityEvent
 	{
 	public:
-		SET_EVENT_CATEGORY(EventCatCollision)
-		SET_EVENT_TYPE(EvOnCollision)
-
-		EntCollisionEvent(Entity id_1, Entity id_2)
-			:EntityEvent(id_1), collidedEntity{id_2}{}
+		EntCollisionOrTrigger(Entity id_1, Entity id_2)
+			:EntityEvent(id_1), collidedEntity{ id_2 }{}
 
 		inline Entity GetOtherEntity() { return collidedEntity; }
 
@@ -138,18 +135,63 @@ namespace Rogue
 		Entity collidedEntity;
 	};
 
-	class EntTriggeredEvent : public EntityEvent
+	class EntCollisionEnterEvent : public EntCollisionOrTrigger
 	{
 	public:
 		SET_EVENT_CATEGORY(EventCatCollision)
-		SET_EVENT_TYPE(EvOnTrigger)
+		SET_EVENT_TYPE(EvOnCollisionEnter)
 
-		EntTriggeredEvent(Entity id_1, Entity id_2)
-			:EntityEvent(id_1), collidedEntity{ id_2 }{}
+		EntCollisionEnterEvent(Entity id_1, Entity id_2)
+			:EntCollisionOrTrigger(id_1, id_2){}
+	};
 
-		inline Entity GetOtherEntity() { return collidedEntity; }
+	class EntCollisionStayEvent : public EntCollisionOrTrigger
+	{
+	public:
+		SET_EVENT_CATEGORY(EventCatCollision)
+		SET_EVENT_TYPE(EvOnCollisionStay)
 
-	private:
-		Entity collidedEntity;
+		EntCollisionStayEvent(Entity id_1, Entity id_2)
+			:EntCollisionOrTrigger(id_1, id_2) {}
+	};
+
+	class EntCollisionExitEvent : public EntCollisionOrTrigger
+	{
+	public:
+		SET_EVENT_CATEGORY(EventCatCollision)
+		SET_EVENT_TYPE(EvOnCollisionExit)
+
+		EntCollisionExitEvent(Entity id_1, Entity id_2)
+			:EntCollisionOrTrigger(id_1, id_2) {}
+	};
+
+	class EntTriggerEnterEvent : public EntCollisionEnterEvent
+	{
+	public:
+		SET_EVENT_CATEGORY(EventCatTrigger)
+		SET_EVENT_TYPE(EvOnCollisionEnter)
+
+		EntTriggerEnterEvent(Entity id_1, Entity id_2)
+			:EntCollisionEnterEvent(id_1, id_2) {}
+	};
+
+	class EntTriggerStayEvent : public EntCollisionStayEvent
+	{
+	public:
+		SET_EVENT_CATEGORY(EventCatTrigger)
+		SET_EVENT_TYPE(EvOnCollisionStay)
+
+		EntTriggerStayEvent(Entity id_1, Entity id_2)
+			:EntCollisionStayEvent(id_1, id_2) {}
+	};
+
+	class EntTriggerExitEvent : public EntCollisionExitEvent
+	{
+	public:
+		SET_EVENT_CATEGORY(EventCatTrigger)
+		SET_EVENT_TYPE(EvOnCollisionExit)
+
+		EntTriggerExitEvent(Entity id_1, Entity id_2)
+			:EntCollisionExitEvent(id_1, id_2) {}
 	};
 }

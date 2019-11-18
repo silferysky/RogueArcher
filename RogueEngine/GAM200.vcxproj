@@ -130,6 +130,7 @@
     <ClInclude Include="Source\SpriteComponent.h" />
     <ClInclude Include="Source\SystemManager.h" />
     <ClInclude Include="Source\Timer.h" />
+    <ClInclude Include="Source\TriggerAI.h" />
     <ClInclude Include="Source\Types.h" />
     <ClInclude Include="Source\UIComponent.h" />
     <ClInclude Include="Source\Vector2D.h" />
@@ -225,6 +226,7 @@
     <ClCompile Include="Source\REMath.cpp" />
     <ClCompile Include="Source\SpriteComponent.cpp" />
     <ClCompile Include="Source\Timer.cpp" />
+    <ClCompile Include="Source\TriggerAI.cpp" />
     <ClCompile Include="Source\UIComponent.cpp" />
     <ClCompile Include="Source\Vector2D.cpp" />
     <ClCompile Include="Source\VSync.cpp" />

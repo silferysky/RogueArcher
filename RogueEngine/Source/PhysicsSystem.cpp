@@ -116,6 +116,8 @@ namespace Rogue
 			EntTeleportEvent* EvEntTeleport = dynamic_cast<EntTeleportEvent*>(ev);
 			g_engine.m_coordinator.GetComponent<TransformComponent>(EvEntTeleport->GetEntityID()).
 				setPosition(EvEntTeleport->GetVecMovement());
+
+			return;
 		}
 		default:
 		{

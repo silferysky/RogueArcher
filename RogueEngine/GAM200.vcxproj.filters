@@ -496,6 +496,9 @@
     <ClInclude Include="Source\ParticleEmitterComponent.h">
       <Filter>RogueEngine\Systems\Particle System</Filter>
     </ClInclude>
+    <ClInclude Include="Source\TriggerAI.h">
+      <Filter>RogueEngine\Systems\AI\AI Types</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -767,6 +770,9 @@
     </ClCompile>
     <ClCompile Include="Source\ParticleEmitterComponent.cpp">
       <Filter>RogueEngine\Systems\Particle System</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TriggerAI.cpp">
+      <Filter>RogueEngine\Systems\AI\AI Types</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
