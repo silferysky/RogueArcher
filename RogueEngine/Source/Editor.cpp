@@ -48,7 +48,7 @@ namespace Rogue
 
 			for (int i = 0; i < 1500; ++i)
 			{
-				Vec2 Position = g_engine.m_coordinator.GetComponent<TransformComponent>(selected).getPosition();
+				Vec2 Position = g_engine.m_coordinator.GetComponent<TransformComponent>(selected).GetPosition();
 				Position.x = (float)(rand() % 1500);
 				Position.y = (float)(rand() % 1500);
 				g_engine.m_coordinator.GetComponent<TransformComponent>(selected).setPosition(Position);

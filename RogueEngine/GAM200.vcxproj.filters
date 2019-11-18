@@ -59,17 +59,11 @@
     <Filter Include="RogueEngine\Systems\AI\Interface">
       <UniqueIdentifier>{847c7d63-e621-4015-ba7e-024dcbef5d5e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="RogueEngine\Systems\DebugDraw">
-      <UniqueIdentifier>{72496074-30f5-465a-abd5-300a936ce5a7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="RogueEngine\Systems\Collision">
       <UniqueIdentifier>{e4319b4b-0961-4d86-8ff7-4c14b6b262b4}</UniqueIdentifier>
     </Filter>
     <Filter Include="RogueEngine\Systems\Camera">
       <UniqueIdentifier>{508febc0-b3e9-4c4b-9cc8-7e422407a8bc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="RogueEngine\Systems\PlayerController">
-      <UniqueIdentifier>{0d94350a-4a50-4e83-8f56-fb5c30539fb8}</UniqueIdentifier>
     </Filter>
     <Filter Include="RogueEngine\Debug">
       <UniqueIdentifier>{c8c7defc-4043-4b41-8c06-6572d6de7638}</UniqueIdentifier>
@@ -116,8 +110,17 @@
     <Filter Include="RogueEngine\Systems\Background">
       <UniqueIdentifier>{35b776bc-69be-4171-bdd6-d15d73e24b2a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="RogueEngine\Systems\MenuController">
+    <Filter Include="RogueEngine\Systems\Particle System">
+      <UniqueIdentifier>{368b5bf4-6c90-4902-9e57-4634c120da48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RogueEngine\Systems\Player Controller">
+      <UniqueIdentifier>{0d94350a-4a50-4e83-8f56-fb5c30539fb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RogueEngine\Systems\Menu Controller">
       <UniqueIdentifier>{bd10c2f1-4f88-4468-8fc1-005733ac1d17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RogueEngine\Systems\Debug Draw">
+      <UniqueIdentifier>{72496074-30f5-465a-abd5-300a936ce5a7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -338,7 +341,7 @@
       <Filter>RogueEngine\Systems\UI</Filter>
     </ClInclude>
     <ClInclude Include="Source\DebugDrawSystem.h">
-      <Filter>RogueEngine\Systems\DebugDraw</Filter>
+      <Filter>RogueEngine\Systems\Debug Draw</Filter>
     </ClInclude>
     <ClInclude Include="Source\imgui.h">
       <Filter>RogueEditor\EditorLibrary</Filter>
@@ -368,10 +371,10 @@
       <Filter>RogueEngine\Debug</Filter>
     </ClInclude>
     <ClInclude Include="Source\PlayerControllerSystem.h">
-      <Filter>RogueEngine\Systems\PlayerController</Filter>
+      <Filter>RogueEngine\Systems\Player Controller</Filter>
     </ClInclude>
     <ClInclude Include="Source\PlayerControllerComponent.h">
-      <Filter>RogueEngine\Systems\PlayerController</Filter>
+      <Filter>RogueEngine\Systems\Player Controller</Filter>
     </ClInclude>
     <ClInclude Include="Source\Main.h">
       <Filter>RogueEngine\Entry Point</Filter>
@@ -485,7 +488,13 @@
       <Filter>RogueEngine\Core</Filter>
     </ClInclude>
     <ClInclude Include="Source\MenuControllerSystem.h">
-      <Filter>RogueEngine\Systems\MenuController</Filter>
+      <Filter>RogueEngine\Systems\Menu Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ParticleSystem.h">
+      <Filter>RogueEngine\Systems\Particle System</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ParticleEmitterComponent.h">
+      <Filter>RogueEngine\Systems\Particle System</Filter>
     </ClInclude>
     <ClInclude Include="Source\TriggerAI.h">
       <Filter>RogueEngine\Systems\AI\AI Types</Filter>
@@ -616,7 +625,7 @@
       <Filter>RogueEngine\Systems\UI</Filter>
     </ClCompile>
     <ClCompile Include="Source\DebugDrawSystem.cpp">
-      <Filter>RogueEngine\Systems\DebugDraw</Filter>
+      <Filter>RogueEngine\Systems\Debug Draw</Filter>
     </ClCompile>
     <ClCompile Include="Source\imgui.cpp">
       <Filter>RogueEditor\EditorLibrary</Filter>
@@ -652,10 +661,10 @@
       <Filter>RogueEngine\Debug</Filter>
     </ClCompile>
     <ClCompile Include="Source\PlayerControllerSystem.cpp">
-      <Filter>RogueEngine\Systems\PlayerController</Filter>
+      <Filter>RogueEngine\Systems\Player Controller</Filter>
     </ClCompile>
     <ClCompile Include="Source\PlayerControllerComponent.cpp">
-      <Filter>RogueEngine\Systems\PlayerController</Filter>
+      <Filter>RogueEngine\Systems\Player Controller</Filter>
     </ClCompile>
     <ClCompile Include="Source\Main.cpp">
       <Filter>RogueEngine\Entry Point</Filter>
@@ -754,7 +763,13 @@
       <Filter>RogueEngine\Core</Filter>
     </ClCompile>
     <ClCompile Include="Source\MenuControllerSystem.cpp">
-      <Filter>RogueEngine\Systems\MenuController</Filter>
+      <Filter>RogueEngine\Systems\Menu Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ParticleSystem.cpp">
+      <Filter>RogueEngine\Systems\Particle System</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ParticleEmitterComponent.cpp">
+      <Filter>RogueEngine\Systems\Particle System</Filter>
     </ClCompile>
     <ClCompile Include="Source\TriggerAI.cpp">
       <Filter>RogueEngine\Systems\AI\AI Types</Filter>

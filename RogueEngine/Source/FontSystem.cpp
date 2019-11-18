@@ -39,6 +39,7 @@ namespace Rogue
 				std::cout << "ERROR - Failed to load Glyph" << std::endl;
 				continue;
 			}
+
 			// Generate texture
 			GLuint texture;
 			glGenTextures(1, &texture);
@@ -104,7 +105,7 @@ namespace Rogue
 			auto& text = g_engine.m_coordinator.GetComponent<TextComponent>(entity);
 			auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
 
-			RenderText(text.GetWords(), transform.getPosition(), text.GetScale(), text.GetColour());
+			RenderText(text.GetWords(), transform.GetPosition(), transform.GetScale(), text.GetColour());
 		}
 
 		glBindVertexArray(0);
@@ -115,7 +116,7 @@ namespace Rogue
 	}
 
 
-	void FontSystem::RenderText(std::string_view text, Vec2 transform, float scale, glm::vec4 color)
+	void FontSystem::RenderText(const std::string_view& text, Vec2 transform, const Vec2& scale, const glm::vec4& color)
 	{
 		glUniform4f(glGetUniformLocation(m_shader.GetShader(), "textColor"), color.x, color.y, color.z, color.w);
 
@@ -125,11 +126,11 @@ namespace Rogue
 		{
 			Character ch = Characters[*c];
 
-			GLfloat xpos = transform.x + ch.Bearing.x * scale;
-			GLfloat ypos = transform.y - (ch.Size.y - ch.Bearing.y) * scale;
+			GLfloat xpos = transform.x + ch.Bearing.x * scale.x;
+			GLfloat ypos = transform.y - (ch.Size.y - ch.Bearing.y) * scale.y;
 
-			GLfloat w = ch.Size.x * scale;
-			GLfloat h = ch.Size.y * scale;
+			GLfloat w = ch.Size.x * scale.x;
+			GLfloat h = ch.Size.y * scale.y;
 
 			// Update VBO for each character
 			GLfloat vertices[6][4] = {
@@ -154,7 +155,7 @@ namespace Rogue
 			glDrawArrays(GL_TRIANGLES, 0, 6);
 
 			// Now advance cursors for next glyph (note that advance is number of 1/64 pixels)
-			transform.x += (ch.Advance >> 6)* scale; // Bitshift by 6 to get value in pixels (2^6 = 64)
+			transform.x += (ch.Advance >> 6)* scale.x; // Bitshift by 6 to get value in pixels (2^6 = 64)
 		}
 	}
 

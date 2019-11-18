@@ -25,25 +25,27 @@ namespace Rogue
 	void CursorSystem::Update()
 	{
 		g_engine.m_coordinator.InitTimeSystem("Cursor System");
-
-		// Get Cursor position
-		POINT cursor;
 		Vec2 cursorPos;
 
-		if (GetCursorPos(&cursor))
+		// Windows cursor
+		POINT cursor;
+
+		if (g_engine.m_coordinator.GetEditorIsRunning())
+			cursorPos = g_engine.GetViewportCursor();
+
+		else if (GetCursorPos(&cursor))
 		{
 			ScreenToClient(g_engine.GetWindowHandler(), &cursor);
 			cursorPos.x = static_cast<float>(cursor.x);
 			cursorPos.y = static_cast<float>(cursor.y);
 		}
 
+
 		float x = (2.0f * cursorPos.x) / GetWindowWidth(g_engine.GetWindowHandler()) - 1.0f;
 		float y = 1.0f - (2.0f * cursorPos.y) / GetWindowHeight(g_engine.GetWindowHandler());
 		float z = 1.0f;
 
 		glm::vec3 rayNDC = glm::vec3(x, y, z);
-
-		// convert from ndc to viewport coordinates if editor is on
 
 		glm::vec4 rayClip = glm::vec4(rayNDC.x, rayNDC.y, -1.0f, 1.0f);
 
@@ -53,22 +55,23 @@ namespace Rogue
 
 		glm::vec4 rayWorld4D = glm::inverse(viewMat) * rayEye;
 
-		g_engine.SetWorldCursor(Vec2{ rayWorld4D.x, rayWorld4D.y });
+		for (Entity entity : m_entities)
+		{
+			if (g_engine.m_coordinator.GetEditorIsRunning())
+			{
+				auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
+				Vec2 worldCursor(rayWorld4D.x, -rayWorld4D.y);
+				g_engine.SetWorldCursor(worldCursor);
+				trans.setPosition(worldCursor);
 
-		if (g_engine.m_coordinator.GetEditorIsRunning())
-		{
-			for (Entity entity : m_entities)
-			{
-				auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
-				trans.setPosition(g_engine.GetViewportCursor());
 			}
-		}
-		else
-		{
-			for (Entity entity : m_entities)
+			else
 			{
+				Vec2 worldCursor(rayWorld4D.x, rayWorld4D.y);
 				auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
-				trans.setPosition(g_engine.GetWorldCursor());
+				g_engine.SetWorldCursor(worldCursor);
+				trans.setPosition(worldCursor);
+
 			}
 		}
 		g_engine.m_coordinator.EndTimeSystem("Cursor System");

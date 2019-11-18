@@ -55,20 +55,20 @@ namespace Rogue
 		Vec2 travelDistance, travelDistValue;
 		
 		if (m_nextPoint.size())
-			travelDistValue = m_nextPoint.front() - aiTransform.getPosition();
+			travelDistValue = m_nextPoint.front() - aiTransform.GetPosition();
 		else if (m_waypoints.size())
 		{
 			m_nextPoint.push(m_waypoints.front());
-			travelDistValue = m_nextPoint.front() - aiTransform.getPosition();
+			travelDistValue = m_nextPoint.front() - aiTransform.GetPosition();
 		}
 		else
 			return;
 
 		Vec2Normalize(travelDistance, travelDistValue);
-		aiTransform.setPosition(aiTransform.getPosition() + travelDistance * aiStats.getSpeed() * DT_TRANSFORM_MODIFIER);
+		aiTransform.setPosition(aiTransform.GetPosition() + travelDistance * aiStats.getSpeed() * DT_TRANSFORM_MODIFIER);
 
 		//If within a certain radius, assign next point
-		if (Vec2SqDistance(aiTransform.getPosition(), m_nextPoint.front()) < aiStats.getSightRange() * aiStats.getSightRange())
+		if (Vec2SqDistance(aiTransform.GetPosition(), m_nextPoint.front()) < aiStats.getSightRange() * aiStats.getSightRange())
 		{
 			m_nextPoint.pop();
 			if (++m_currentPointIndex >= m_waypoints.size())
@@ -76,14 +76,14 @@ namespace Rogue
 			m_nextPoint.push(m_waypoints[m_currentPointIndex]);
 
 			//If facing right and moving left or facing left and moving right, flip
-			if ((travelDistance.x < 0 && aiTransform.getScale().x > 0.0f) || 
-				(travelDistance.x > 0 && aiTransform.getScale().x < 0.0f))
-				aiTransform.setScale(Vec2(-1 * aiTransform.getScale().x, aiTransform.getScale().y));
+			if ((travelDistance.x < 0 && aiTransform.GetScale().x > 0.0f) || 
+				(travelDistance.x > 0 && aiTransform.GetScale().x < 0.0f))
+				aiTransform.setScale(Vec2(-1 * aiTransform.GetScale().x, aiTransform.GetScale().y));
 
 			//If facing up and moving down or facing down and moving up, flip
-			if ((travelDistance.y < 0 && aiTransform.getScale().y > 0.0f) ||
-				(travelDistance.y > 0 && aiTransform.getScale().y < 0.0f))
-				aiTransform.setScale(Vec2(aiTransform.getScale().x, -1 * aiTransform.getScale().y));
+			if ((travelDistance.y < 0 && aiTransform.GetScale().y > 0.0f) ||
+				(travelDistance.y > 0 && aiTransform.GetScale().y < 0.0f))
+				aiTransform.setScale(Vec2(aiTransform.GetScale().x, -1 * aiTransform.GetScale().y));
 		}
 
 	}

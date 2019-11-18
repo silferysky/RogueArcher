@@ -113,7 +113,7 @@ namespace Rogue
 				if (m_entities.size() && m_timedEntities.size())
 				{
 					//By right correct way of doing this
-					CreateTeleportEvent(g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).getPosition());
+					CreateTeleportEvent(g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).GetPosition());
 					/*if (keycode == KeyPress::MB2)
 						g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin()).setPosition(
 							g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).getPosition());*/
@@ -266,8 +266,8 @@ namespace Rogue
 					if (g_engine.m_coordinator.ComponentExists<AnimationComponent>(*m_entities.begin()))
 						g_engine.m_coordinator.GetComponent<AnimationComponent>(*m_entities.begin()).setIsAnimating(true);
 
-					AudioManager::instance().loadSound("Resources/Sounds/[Shoot Projectile]SCI-FI-WHOOSH_GEN-HDF-20864.ogg").Play();
-					AudioManager::instance().loadSound("Resources/Sounds/[Ela Appear]SCI-FI-WHOOSH_GEN-HDF-20870.ogg").Play(0.1f);
+					AudioManager::instance().loadSound("[Shoot Projectile]SCI-FI-WHOOSH_GEN-HDF-20864.ogg").Play();
+					AudioManager::instance().loadSound("[Ela Appear]SCI-FI-WHOOSH_GEN-HDF-20870.ogg").Play(0.1f);
 				}
 				g_engine.SetTimeScale(1.0f);
 			}
@@ -336,7 +336,7 @@ namespace Rogue
 			std::ostringstream strstream;
 			Entity ball = g_engine.m_coordinator.CreateEntity();
 			auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
-			Vec2 playerPos = trans.getPosition();
+			Vec2 playerPos = trans.GetPosition();
 
 			Vec2 ballDir{ g_engine.GetWorldCursor().x - playerPos.x, g_engine.GetWorldCursor().y - playerPos.y };
 			Vec2Normalize(ballDir, ballDir);

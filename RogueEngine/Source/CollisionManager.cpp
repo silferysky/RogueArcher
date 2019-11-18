@@ -28,17 +28,17 @@ namespace Rogue
 
 	inline Vec2 CollisionManager::GetColliderScale(const BaseCollider& collider, const TransformComponent& trans) const
 	{
-		return collider.getScaleOffSet() + Vec2(REAbs(trans.getScale().x), REAbs(trans.getScale().y));
+		return collider.getScaleOffSet() + Vec2(REAbs(trans.GetScale().x), REAbs(trans.GetScale().y));
 	}
 
 	inline Vec2 CollisionManager::GetColliderPosition(const BaseCollider& collider, const TransformComponent& trans) const
 	{
-		return collider.getCenterOffSet() + trans.getPosition();
+		return collider.getCenterOffSet() + trans.GetPosition();
 	}
 
 	inline float CollisionManager::GetColliderRotation(const BaseCollider& collider, const TransformComponent& trans) const
 	{
-		return collider.getRotationOffSet() + trans.getRotation();
+		return collider.getRotationOffSet() + trans.GetRotation();
 	}
 
 	void CollisionManager::GenerateManifoldCirclevsCircle(Entity A, Entity B)
@@ -52,8 +52,8 @@ namespace Rogue
 		
 		float radiusA = circleA.m_collider.getRadius();
 		float radiusB = circleB.m_collider.getRadius();
-		Vec2 centerA = transA.getPosition() + circleA.m_collider.getCenterOffSet();
-		Vec2 centerB = transB.getPosition() + circleB.m_collider.getCenterOffSet();
+		Vec2 centerA = transA.GetPosition() + circleA.m_collider.getCenterOffSet();
+		Vec2 centerB = transB.GetPosition() + circleB.m_collider.getCenterOffSet();
 
 		Vec2 vAB = centerB - centerA;
 		float distAB = Vec2Distance(centerA, centerB); // For colliding circles, actual distance is required.
@@ -158,10 +158,10 @@ namespace Rogue
 		auto& TransA = g_engine.m_coordinator.GetComponent<TransformComponent>(A);
 		auto& TransB = g_engine.m_coordinator.GetComponent<TransformComponent>(B);
 
-		Vec2 scaleA = TransA.getScale() + BoxCompA.m_aabb.getScaleOffSet();
-		Vec2 scaleB = TransB.getScale() + BoxCompB.m_aabb.getScaleOffSet();
-		Vec2 centerA = TransA.getPosition() + BoxCompA.m_aabb.getCenterOffSet();
-		Vec2 centerB = TransB.getPosition() + BoxCompB.m_aabb.getCenterOffSet();
+		Vec2 scaleA = TransA.GetScale() + BoxCompA.m_aabb.getScaleOffSet();
+		Vec2 scaleB = TransB.GetScale() + BoxCompB.m_aabb.getScaleOffSet();
+		Vec2 centerA = TransA.GetPosition() + BoxCompA.m_aabb.getCenterOffSet();
+		Vec2 centerB = TransB.GetPosition() + BoxCompB.m_aabb.getCenterOffSet();
 		Vec2 vAB = centerB - centerA;
 
 		float AextentX = (BoxCompA.m_aabb.getMax().x - BoxCompA.m_aabb.getMin().x) / 2;
@@ -227,7 +227,7 @@ namespace Rogue
 
 	void CollisionManager::UpdateCircleCollider(CircleCollider& circle, const TransformComponent& trans) const
 	{
-		circle.SetCenter(circle.getCenterOffSet() + trans.getPosition());
+		circle.SetCenter(circle.getCenterOffSet() + trans.GetPosition());
 	}
 
 	//_________________________________________________________________________
@@ -240,7 +240,7 @@ namespace Rogue
 	{
 		float totalRadius = circleA.getRadius() + circleB.getRadius();
 
-		return Vec2SqDistance(transA.getPosition() + circleA.getCenterOffSet(), transB.getPosition() + circleB.getCenterOffSet()) <
+		return Vec2SqDistance(transA.GetPosition() + circleA.getCenterOffSet(), transB.GetPosition() + circleB.getCenterOffSet()) <
 			totalRadius * totalRadius;
 	}
 
