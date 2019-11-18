@@ -14,7 +14,11 @@ namespace Rogue
 	{
 		/* Throw an error if FMOD finds something wrong */
 		if (resultCheck != FMOD_OK)
-			RE_INFO("FMOD error:", resultCheck, FMOD_ErrorString(resultCheck));
+		{
+			std::ostringstream ss;
+			ss << "FMOD error: " << resultCheck << FMOD_ErrorString(resultCheck);
+			RE_INFO(ss.str());
+		}
 	}
 
 	/* General System Functions */
