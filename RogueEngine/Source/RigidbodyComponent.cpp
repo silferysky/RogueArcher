@@ -176,6 +176,10 @@ namespace Rogue
 		ImGui::PushItemWidth(75);
 		ImGui::SliderFloat("Gravity Scale", &m_gravityScale, 0.0f, 2.0f);
 		setGravityScale(m_gravityScale);
+
+		ImGui::PushItemWidth(75);
+		ImGui::DragFloat("Mass", &m_massData.m_mass, 0.05f, 0.01f, 10000.0f);
+		setMass(m_massData.m_mass);
 	}
 
 	std::string RigidbodyComponent::Serialize()
