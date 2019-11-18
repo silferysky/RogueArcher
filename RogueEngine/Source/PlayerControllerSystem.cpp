@@ -99,7 +99,10 @@ namespace Rogue
 			if (keycode == KeyPress::KeyF5)
 				g_engine.m_coordinator.ToggleEditorIsRunning();
 
-			if (keycode == KeyPress::MB1)
+			else if (keycode == KeyPress::KeyF6)
+				g_engine.ToggleVSync();
+
+			else if (keycode == KeyPress::MB1)
 			{
 				for (Entity entity : m_entities)
 				{
@@ -108,7 +111,7 @@ namespace Rogue
 				}
 			}
 
-			if (keycode == KeyPress::MB2 || keycode == KeyPress::MB3)
+			else if (keycode == KeyPress::MB2)
 			{
 				if (m_entities.size() && m_timedEntities.size())
 				{
@@ -121,8 +124,12 @@ namespace Rogue
 					ClearTimedEntities();
 				}
 			}
+			else if (keycode == KeyPress::MB3)
+			{
+				ClearTimedEntities();
+			}
 
-			if (keycode == KeyPress::KeySpace)
+			else if (keycode == KeyPress::KeySpace)
 			{
 				if (m_jumpCooldown < 0.0f)
 				{
