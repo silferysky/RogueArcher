@@ -194,6 +194,8 @@ namespace Rogue
 						}
 					}
 
+					ImGui::Separator();
+
 					if (ImGui::Button("Add Component"))
 					{
 						ImGui::OpenPopup("Add Component");
