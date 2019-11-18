@@ -81,6 +81,9 @@ namespace Rogue
 		if (!g_engine.m_coordinator.GameIsActive())
 			return;
 
+		if (m_entities.size() == 0)
+			return;
+
 		switch (ev->GetEventType())
 		{
 		case EventType::EvMouseMoved:
