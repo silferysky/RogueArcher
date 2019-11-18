@@ -15,8 +15,7 @@ namespace Rogue
 	void ImGuiProject::Init()
 	{
 		
-		const fs::path pathToShow{ fs::current_path() };
-		//fs::current_path("/Resources");
+		const fs::path pathToShow{ "\Resources" };
 		DisplayDirectoryTree(pathToShow);
 	}
 
