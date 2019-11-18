@@ -1,4 +1,6 @@
+#include "Precompiled.h"
 #include "TriggerAI.h"
+
 
 namespace Rogue
 {
