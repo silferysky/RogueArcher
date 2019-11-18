@@ -23,16 +23,6 @@ namespace Rogue
 		return m_words;
 	}
 
-	void TextComponent::SetScale(const float& scale)
-	{
-		m_scale = scale;
-	}
-
-	float& TextComponent::GetScale()
-	{
-		return m_scale;
-	}
-
 	void TextComponent::DisplayOnInspector()
 	{
 		static char m_newwords[128];
@@ -52,10 +42,6 @@ namespace Rogue
 		ImGui::PushItemWidth(250);
 		ImGui::ColorEdit4("Color", (float*)& m_colour);
 		SetColour(m_colour);
-
-		ImGui::DragFloat("Text Size Scale", &m_scale, 0.01f, 0.0f, 10.0f);
-
-		SetScale(m_scale);
 	}
 
 	std::string TextComponent::Serialize()
@@ -64,7 +50,6 @@ namespace Rogue
 		std::ostringstream ss;
 		ss << m_colour.x << ";" << m_colour.y << ";" << m_colour.z << ";" << m_colour.w << ";";
 		ss << m_words << ";";
-		ss << m_scale << ";";
 		return ss.str();
 	}
 
@@ -92,9 +77,6 @@ namespace Rogue
 				break;
 			case 1:
 				SetWords(s1);
-				break;
-			case 2:
-				SetScale(std::stof(s1));
 				break;
 			default:
 				break;

@@ -39,7 +39,7 @@ namespace Rogue
 
 		void TrueUpdate();
 
-		void RenderText(std::string_view text, Vec2 transform, float scale, glm::vec4 color);
+		void RenderText(const std::string_view& text, Vec2 transform, const Vec2& scale, const glm::vec4& color);
 
 		void Receive(Event* ev);
 	};

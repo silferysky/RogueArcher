@@ -26,6 +26,7 @@ namespace Rogue
 		id_TESTSYSTEM,
 		id_EDITOR,
 		id_CURSORSYSTEM,
+		id_PARTICLESYSTEM,
 
 		id_LASTSYS
 	};

@@ -38,6 +38,7 @@ namespace Rogue
 		COLLIDER,
 		TEXT,
 		BACKGROUND,
+		PARTICLEEMITTER,
 		LASTCOMP
 	};
 }
