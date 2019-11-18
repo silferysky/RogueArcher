@@ -42,6 +42,7 @@ namespace Rogue
 				}
 			}
 		}
+		//
 		ImGui::End();
 		ImGui::Begin("File");
 		if (ImGui::CollapsingHeader("File Display"), ImGuiTreeNodeFlags_DefaultOpen)
