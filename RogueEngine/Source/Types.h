@@ -7,7 +7,7 @@ namespace Rogue
 {
 	using Entity = std::uint32_t;
 
-	const Entity MAX_ENTITIES = 5000; // Test with 2048
+	const Entity MAX_ENTITIES = 8192;
 
 	using ComponentType = std::uint8_t;
 
