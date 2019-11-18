@@ -221,7 +221,7 @@ namespace Rogue
 				m_velocity = Vec2(std::stof(s1), std::stof(s2));
 				break;
 			case 2:
-				setMass(std::stof(s1));
+				setMass(std::stof(s1)); // Always call set mass to set correctly.
 				break;
 			case 3:
 				m_volume = std::stof(s1);
