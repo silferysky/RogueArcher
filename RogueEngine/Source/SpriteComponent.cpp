@@ -112,6 +112,21 @@ namespace Rogue
 			ImGui::Text("Higher number means the object will be drawn infront");
 			ImGui::EndTooltip();
 		}
+		ImGui::SameLine();
+		if (ImGui::Button("Drag Drop Sprite here"))
+		{			
+		}
+		if (ImGui::BeginDragDropTarget())
+		{
+			if (const ImGuiPayload * payload = ImGui::AcceptDragDropPayload("Sprite"))
+			{
+				std::string payload_n = *(std::string*)payload->Data;
+				m_texturePath = payload_n.c_str();
+				setTexture(m_texturePath.c_str());
+				std::cout << payload_n.c_str() << std::endl;
+			}
+			ImGui::EndDragDropTarget();
+		}
 	}
 
 	std::string SpriteComponent::Serialize()
