@@ -66,18 +66,22 @@ namespace Rogue
 
 	void LogicSystem::Receive(Event* ev)
 	{
-		switch (ev->GetEventType())
+		switch (ev->GetEventCat())
 		{
-		case EventType::EvOnTrigger:
-			EntTriggeredEvent* triggerEvent = dynamic_cast<EntTriggeredEvent*>(ev);
-			Entity object = triggerEvent->GetEntityID();
-			Entity triggered = triggerEvent->GetOtherEntity();
-
-			std::stringstream ss;
-			ss << triggered << " triggered from " << object;
-
-			RE_INFO(ss.str());
-
+		case EventCategory::EventCatCollision:
+		case EventCategory::EventCatTrigger:
+		{
+			EntCollisionOrTrigger* event = dynamic_cast<EntCollisionOrTrigger*>(ev);
+			Entity object = event->GetEntityID();
+			Entity triggered = event->GetOtherEntity();
+			for (Entity m : m_entities)
+			{
+				//TODO since most of the time the AI is not part of LogicSystem's entities, ensure that AI handles it properly.
+				if (m == object || m == triggered)
+					m_entityLogicMap[m]->HandleCollision(event);
+			}
+			return;
+		}
 		}
 	}
 

@@ -66,7 +66,7 @@ namespace Rogue
 					// If A or B is a trigger, dispatch trigger event.
 					if (currBoxCollider.GetCollisionMode() == CollisionMode::e_trigger)
 					{
-						Event* ev = new EntTriggeredEvent{ *iNextEntity, *iEntity };
+						EntTriggerEnterEvent* ev = new EntTriggerEnterEvent{ *iNextEntity, *iEntity };
 						ev->SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
 						EventDispatcher::instance().AddEvent(ev);
 
@@ -74,7 +74,7 @@ namespace Rogue
 					}
 					if (nextBoxCollider.GetCollisionMode() == CollisionMode::e_trigger)
 					{
-						Event* ev = new EntTriggeredEvent{ *iEntity, *iNextEntity };
+						EntTriggerEnterEvent* ev = new EntTriggerEnterEvent{ *iNextEntity, *iEntity };
 						ev->SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
 						EventDispatcher::instance().AddEvent(ev);
 
