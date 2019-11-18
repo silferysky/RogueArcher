@@ -10,6 +10,7 @@
 //AI Types
 #include "FinderAI.h"
 #include "PatrolAI.h"
+#include "TriggerAI.h"
 
 namespace Rogue
 {
@@ -139,6 +140,12 @@ namespace Rogue
 				{
 					PatrolAI newAI(entities, logicComponent);
 					AddLogicInterface(entities, std::make_shared<PatrolAI>(newAI));
+					break;
+				}
+				case AIType::AI_Trigger:
+				{
+					TriggerAI newAI(entities, logicComponent);
+					AddLogicInterface(entities, std::make_shared<TriggerAI>(newAI));
 					break;
 				}
 				case AIType::AI_Static:
