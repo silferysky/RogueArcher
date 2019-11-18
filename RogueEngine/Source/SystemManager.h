@@ -112,9 +112,9 @@ namespace Rogue
 				{
 					if (system.second->m_systemID == SystemID::id_LOGICSYSTEM ||
 						system.second->m_systemID == SystemID::id_DEBUGDRAWSYSTEM ||
-						system.second->m_systemID == SystemID::id_COLLISIONSYSTEM ||
+						//system.second->m_systemID == SystemID::id_COLLISIONSYSTEM ||
 						//system.second->m_systemID == SystemID::id_BOXCOLLISIONSYSTEM ||
-						system.second->m_systemID == SystemID::id_CIRCLECOLLISIONSYSTEM ||
+						//system.second->m_systemID == SystemID::id_CIRCLECOLLISIONSYSTEM ||
 						system.second->m_systemID == SystemID::id_ANIMATIONSYSTEM ||
 						system.second->m_systemID == SystemID::id_PHYSICSSYSTEM
 						)
