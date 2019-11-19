@@ -2,6 +2,7 @@
 #include "BaseAI.h"
 #include "EventListener.h"
 #include <memory>
+#include <vector>
 
 namespace Rogue
 {
@@ -32,7 +33,7 @@ namespace Rogue
 		void CreateMoveEvent(Entity ent, Vec2 vec);
 
 	private:
-		std::map<Entity, std::shared_ptr<BaseAI>> m_entityLogicMap;
+		std::map<Entity, std::vector<std::shared_ptr<BaseAI>>> m_entityLogicMap;
 	};
 
 }

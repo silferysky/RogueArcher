@@ -289,7 +289,24 @@ namespace Rogue
 						{
 							g_engine.m_coordinator.AddComponent(i.m_Entity, TextComponent());
 						}
-						ImGui::EndPopup();
+						ImGui::EndPopup(); 
+						
+						if (ImGui::BeginMenu("Scripts"))
+						{
+							if (ImGui::MenuItem("Patrol AI", nullptr, false, !g_engine.m_coordinator.ComponentExists<CircleCollider2DComponent>(i.m_Entity)))
+							{
+							}
+
+							if (ImGui::MenuItem("Finder AI", nullptr, false, !g_engine.m_coordinator.ComponentExists<BoxCollider2DComponent>(i.m_Entity)))
+							{
+							}
+
+							if (ImGui::MenuItem("Trigger AI", nullptr, false, !g_engine.m_coordinator.ComponentExists<BoxCollider2DComponent>(i.m_Entity)))
+							{
+							}
+
+							ImGui::EndMenu();
+						}
 					}
 					if (ImGui::BeginPopup("Delete Component"))
 					{

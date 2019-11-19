@@ -6,8 +6,8 @@
 
 namespace Rogue
 {
-	BaseAI::BaseAI(Entity entity, LogicComponent& logicComp)
-		: m_entity{entity}, m_logicComponent{std::make_shared<LogicComponent>(logicComp)}
+	BaseAI::BaseAI(Entity entity, LogicComponent& logicComp, StatsComponent& statsComp)
+		: m_entity{entity}, m_logicComponent{std::make_shared<LogicComponent>(logicComp)}, m_statsComponent{std::make_shared<StatsComponent>(statsComp)}
 	{
 		LogicInit();
 	}
