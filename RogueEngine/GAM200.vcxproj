@@ -24,6 +24,7 @@
     <ClInclude Include="Source\BaseSystem.h" />
     <ClInclude Include="Source\BoxCollider2DComponent.h" />
     <ClInclude Include="Source\CameraComponent.h" />
+    <ClInclude Include="source\CameraManager.h" />
     <ClInclude Include="Source\CameraShake.h" />
     <ClInclude Include="Source\CameraSystem.h" />
     <ClInclude Include="Source\CircleCollider.h" />

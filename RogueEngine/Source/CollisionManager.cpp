@@ -947,7 +947,7 @@ namespace Rogue
 		for (auto manifold : m_manifolds)
 		{
 			manifold.Resolve();
-			//manifold.PositionalCorrection();
+			manifold.PositionalCorrection();
 		}
 
 		m_manifolds.clear();
