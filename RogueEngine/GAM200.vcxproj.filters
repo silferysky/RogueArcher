@@ -104,9 +104,6 @@
     <Filter Include="RogueEngine\Systems\UI">
       <UniqueIdentifier>{0b09499a-b5ad-41dc-946a-16db0a0a9183}</UniqueIdentifier>
     </Filter>
-    <Filter Include="RogueEngine\Systems\Cursor">
-      <UniqueIdentifier>{9231369d-d291-484d-86b5-06cc6c94dddc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="RogueEngine\Systems\Background">
       <UniqueIdentifier>{35b776bc-69be-4171-bdd6-d15d73e24b2a}</UniqueIdentifier>
     </Filter>
@@ -121,6 +118,12 @@
     </Filter>
     <Filter Include="RogueEngine\Systems\Debug Draw">
       <UniqueIdentifier>{72496074-30f5-465a-abd5-300a936ce5a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RogueEngine\Systems\Picking">
+      <UniqueIdentifier>{9231369d-d291-484d-86b5-06cc6c94dddc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RogueEngine\Systems\Picking\Cursor">
+      <UniqueIdentifier>{ce9604b8-0908-4818-aa4a-cae28126becc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -418,9 +421,6 @@
     <ClInclude Include="Source\AudioEmitterComponent.h">
       <Filter>RogueEngine\Systems\Audio</Filter>
     </ClInclude>
-    <ClInclude Include="Source\CircleCollider.h">
-      <Filter>RogueEngine\Systems\Collision\Colliders</Filter>
-    </ClInclude>
     <ClInclude Include="Source\PhysicsDataStructures.hpp">
       <Filter>RogueEngine\Systems\Collision</Filter>
     </ClInclude>
@@ -463,12 +463,6 @@
     <ClInclude Include="Source\AudioManager.h">
       <Filter>RogueEngine\Systems\Audio</Filter>
     </ClInclude>
-    <ClInclude Include="Source\CursorComponent.h">
-      <Filter>RogueEngine\Systems\Cursor</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\CursorSystem.h">
-      <Filter>RogueEngine\Systems\Cursor</Filter>
-    </ClInclude>
     <ClInclude Include="Source\ColliderComponent.h">
       <Filter>RogueEngine\Systems\Collision\Components</Filter>
     </ClInclude>
@@ -499,11 +493,23 @@
     <ClInclude Include="Source\TriggerAI.h">
       <Filter>RogueEngine\Systems\AI\AI Types</Filter>
     </ClInclude>
-    <ClInclude Include="Source\CursorManager.h">
-      <Filter>RogueEngine\Systems\Cursor</Filter>
-    </ClInclude>
     <ClInclude Include="source\CameraManager.h">
       <Filter>RogueEngine\Systems\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BoundingCircle.h">
+      <Filter>RogueEngine\Systems\Collision\Colliders</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CursorSystem.h">
+      <Filter>RogueEngine\Systems\Picking\Cursor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CursorComponent.h">
+      <Filter>RogueEngine\Systems\Picking\Cursor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PickingSystem.h">
+      <Filter>RogueEngine\Systems\Picking</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PickingManager.h">
+      <Filter>RogueEngine\Systems\Picking</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -711,9 +717,6 @@
     <ClCompile Include="Source\AudioEmitterComponent.cpp">
       <Filter>RogueEngine\Systems\Audio</Filter>
     </ClCompile>
-    <ClCompile Include="Source\CircleCollider.cpp">
-      <Filter>RogueEngine\Systems\Collision\Colliders</Filter>
-    </ClCompile>
     <ClCompile Include="Source\BoxCollisionSystem.cpp">
       <Filter>RogueEngine\Systems\Collision\Collision Systems</Filter>
     </ClCompile>
@@ -743,12 +746,6 @@
     </ClCompile>
     <ClCompile Include="Source\UIComponent.cpp">
       <Filter>RogueEngine\Systems\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\CursorComponent.cpp">
-      <Filter>RogueEngine\Systems\Cursor</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\CursorSystem.cpp">
-      <Filter>RogueEngine\Systems\Cursor</Filter>
     </ClCompile>
     <ClCompile Include="Source\ColliderComponent.cpp">
       <Filter>RogueEngine\Systems\Collision\Components</Filter>
@@ -780,8 +777,20 @@
     <ClCompile Include="Source\TriggerAI.cpp">
       <Filter>RogueEngine\Systems\AI\AI Types</Filter>
     </ClCompile>
-    <ClCompile Include="Source\CursorManager.cpp">
-      <Filter>RogueEngine\Systems\Cursor</Filter>
+    <ClCompile Include="Source\BoundingCircle.cpp">
+      <Filter>RogueEngine\Systems\Collision\Colliders</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CursorSystem.cpp">
+      <Filter>RogueEngine\Systems\Picking\Cursor</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CursorComponent.cpp">
+      <Filter>RogueEngine\Systems\Picking\Cursor</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PickingSystem.cpp">
+      <Filter>RogueEngine\Systems\Picking</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PickingManager.cpp">
+      <Filter>RogueEngine\Systems\Picking</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

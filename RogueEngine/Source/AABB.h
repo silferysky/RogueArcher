@@ -10,9 +10,10 @@ namespace Rogue
 		Vec2 m_max;
 
 	public:
-		AABB() = default;
+		AABB(const Vec2& min = Vec2{}, const Vec2& max = Vec2{});
 		~AABB() = default;
 
+		
 		AABB(const AABB& aabb);
 		AABB(AABB&& rhs) noexcept;
 		AABB& operator=(const AABB& rhs);

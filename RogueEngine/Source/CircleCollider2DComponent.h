@@ -1,7 +1,7 @@
 #pragma once
 #include "BaseComponent.h"
 #include "BaseCollider.h"
-#include "CircleCollider.h"
+#include "BoundingCircle.h"
 
 namespace Rogue
 {
@@ -18,7 +18,7 @@ namespace Rogue
 		CircleCollider2DComponent& operator=(const CircleCollider2DComponent&);
 		CircleCollider2DComponent& operator=(CircleCollider2DComponent&& rhs) noexcept;
 
-		CircleCollider m_collider;
+		BoundingCircle m_collider;
 
 		void DisplayOnInspector();
 		std::string Serialize() override;

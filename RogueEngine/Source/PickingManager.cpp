@@ -1,24 +1,10 @@
 #include "Precompiled.h"
-#include "CursorManager.h"
-#include "Main.h"
+#include "PickingManager.h"
 
 namespace Rogue
 {
-	void CursorManager::TransformCursorToWorld(Vec2& cursorPos) const
+	void PickingManager::TransformCursorToWorld(Vec2& cursorPos) const
 	{
-		// Windows cursor
-		POINT cursor;
-
-		if (g_engine.m_coordinator.GetEditorIsRunning())
-			cursorPos = g_engine.GetViewportCursor();
-
-		else if (GetCursorPos(&cursor))
-		{
-			ScreenToClient(g_engine.GetWindowHandler(), &cursor);
-			cursorPos.x = static_cast<float>(cursor.x);
-			cursorPos.y = static_cast<float>(cursor.y);
-		}
-
 		float x = (2.0f * cursorPos.x) / GetWindowWidth(g_engine.GetWindowHandler()) - 1.0f;
 		float y = 1.0f - (2.0f * cursorPos.y) / GetWindowHeight(g_engine.GetWindowHandler());
 		float z = 1.0f;
@@ -36,7 +22,7 @@ namespace Rogue
 		cursorPos = Vec2{ rayWorld4D.x, rayWorld4D.y };
 	}
 
-	void CursorManager::GenerateMeshAABB(TransformComponent& trans) const
+	void PickingManager::GenerateMeshAABB(TransformComponent& trans) const
 	{
 		AABB pickArea;
 		Vec2 pos = trans.GetPosition();
@@ -48,8 +34,29 @@ namespace Rogue
 		trans.setPickArea(pickArea);
 	}
 
-	void CursorManager::GenerateViewPortArea()
+	void PickingManager::GenerateViewPortArea(const Vec2& min, const Vec2& max)
 	{
+		m_viewportArea = AABB{ min, max };
+	}
 
+	const AABB& PickingManager::GetViewPortArea() const
+	{
+		return m_viewportArea;
+	}
+
+	Entity PickingManager::ChooseTopLayer() const
+	{
+		// Return the last element of the set.
+		return *m_pickedEntities.rbegin();
+	}
+
+	void PickingManager::SetViewPortArea(const AABB& aabb)
+	{
+		m_viewportArea = aabb;
+	}
+
+	void PickingManager::AddPickedEntity(Entity entity)
+	{
+		m_pickedEntities.emplace(entity);
 	}
 }
