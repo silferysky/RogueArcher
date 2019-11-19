@@ -138,9 +138,9 @@ namespace Rogue
 		Manifold manifold(A, B);
 
 		if (circleIsInside)
-			manifold.m_normal = -vAB;
+			manifold.m_normal = -normal / normalLength;
 		else
-			manifold.m_normal = vAB;
+			manifold.m_normal = normal / normalLength;
 
 		manifold.m_penetration = radius - normalLength;
 
@@ -948,7 +948,7 @@ namespace Rogue
 		for (auto manifold : m_manifolds)
 		{
 			manifold.Resolve();
-			manifold.PositionalCorrection();
+			//manifold.PositionalCorrection();
 		}
 
 		m_manifolds.clear();

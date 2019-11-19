@@ -54,13 +54,13 @@ namespace Rogue
 
 			for (iNextEntity++; iNextEntity != m_entities.end(); ++iNextEntity)
 			{
-				auto& nextRigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iNextEntity);
+				RigidbodyComponent& nextRigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iNextEntity);
 
 				if (currRigidbody.getIsStatic() && nextRigidbody.getIsStatic())
 					continue;
 
-				auto& nextCollider = g_engine.m_coordinator.GetComponent<ColliderComponent>(*iNextEntity);
-				auto& nextTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iNextEntity);
+				ColliderComponent& nextCollider = g_engine.m_coordinator.GetComponent<ColliderComponent>(*iNextEntity);
+				TransformComponent& nextTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iNextEntity);
 
 				Shape::Type type = nextCollider.GetShape()->GetType();
 				if (nextCollider.GetShape()->GetType() == Shape::Type::e_circle)
@@ -80,14 +80,14 @@ namespace Rogue
 					if (CollisionManager::instance().DiscreteCircleVsAABB(circleA.m_collider, boxB.m_aabb))
 						CollisionManager::instance().GenerateManifoldCirclevsAABB(*iEntity, *iNextEntity);
 				}
-				else if (currColliderType == Shape::Type::e_box && nextColliderType == Shape::Type::e_circle)
-				{
-					auto& boxA = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iEntity);
-					auto& circleB = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(*iNextEntity);
-
-					if (CollisionManager::instance().DiscreteAABBVsCircle(boxA.m_aabb, circleB.m_collider))
-						CollisionManager::instance().GenerateManifoldAABBvsCircle(*iEntity, *iNextEntity);
-				}
+				//else if (currColliderType == Shape::Type::e_box && nextColliderType == Shape::Type::e_circle)
+				//{
+				//	auto& boxA = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iEntity);
+				//	auto& circleB = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(*iNextEntity);
+				//
+				//	if (CollisionManager::instance().DiscreteAABBVsCircle(boxA.m_aabb, circleB.m_collider))
+				//		CollisionManager::instance().GenerateManifoldAABBvsCircle(*iEntity, *iNextEntity);
+				//}
 			}
 
 			// Collision Response (Contact, forces, rest, Impulse, Torque)

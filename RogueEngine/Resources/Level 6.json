@@ -2,8 +2,8 @@
     "MaxEntityCount": 2,
     "EntityCount": 2,
     "BackgroundTexture": "Resources/Assets/DefaultSprite.png;1;1;1;1;1",
-    "Signature0": 8751,
-    "Signature1": 8207,
-    "Entity0": "Name{Game Object 1}|Tag{}|Sprite{Resources/Assets/DefaultSprite.png;1;1;1;1;1}|Rigidbody{0;0;0;0;1.51515;1;0;1}|Transform{-108.069;0;100;100;0}|CircleCollider{126;0;0;0;0}||PlayerController{0;0;}||||Camera{0;0;1;}||||Collider{CIRCLE}||||",
-    "Entity1": "Name{Game Object 2}|Tag{}|Sprite{Resources/Assets/DefaultSprite.png;1;1;1;1;1}|Rigidbody{0;0;0;0;0.060241;1;0;1.344}|Transform{104.921;0;100;100;0}|CircleCollider{87;0;0;0;0}||||||||||Collider{CIRCLE}||||"
+    "Signature0": 8207,
+    "Signature1": 8247,
+    "Entity0": "Name{Game Object 2}|Tag{}|Sprite{Resources/Assets/DefaultSprite.png;1;1;1;1;1}|Rigidbody{0;0;0;0;1;1;0;1.344}|Transform{345.648;0;100;100;0}|CircleCollider{177.5;0;0;0;0}||||||||||Collider{CIRCLE}||||",
+    "Entity1": "Name{Game Object 3}|Tag{}|Sprite{Resources/Assets/DefaultSprite.png;1;1;1;1;1}|Rigidbody{0;0;0;0;1;1;0;1}|Transform{-940.727;0;109;100;0}||BoxCollider{0;0;0;80;87;AWAKE}|PlayerController{0;0;}||||||||Collider{BOX}||||"
 }
