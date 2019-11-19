@@ -4,6 +4,7 @@
 #include "EventDispatcher.h"
 #include "KeyEvent.h"
 #include "GraphicsEvent.h"
+#include "CameraManager.h"
 
 namespace Rogue
 {
@@ -15,7 +16,7 @@ namespace Rogue
 		: System(SystemID::id_CAMERASYSTEM), m_worldCamera{ false },
 		m_cameraPos{ 0.0f, 0.0f, 0.0f }, m_worldUp{ 0.0f, 1.0f, 0.0f },
 		m_cameraFront{ 0.0f, 0.0f, -1.0f }, m_cameraUp{}, m_cameraRight{},
-		m_cameraShake{}, m_cameraMin{ -1600, -1600 }, m_cameraMax{ 1600, 1600 }
+		m_cameraShake{}
 	{}
 
 	void CameraSystem::Init()
@@ -59,16 +60,6 @@ namespace Rogue
 		return m_cameraShake;
 	}
 
-	Vec2 CameraSystem::GetCameraMin() const
-	{
-		return m_cameraMin;
-	}
-
-	Vec2 CameraSystem::GetCameraMax() const
-	{
-		return m_cameraMax;
-	}
-
 	bool CameraSystem::GetWorldCamera() const
 	{
 		return m_worldCamera;
@@ -82,16 +73,6 @@ namespace Rogue
 	glm::vec3 CameraSystem::GetCameraPos() const
 	{
 		return m_cameraPos;
-	}
-
-	void CameraSystem::SetCameraMin(const Vec2& cameraMin)
-	{
-		m_cameraMin = cameraMin;
-	}
-
-	void CameraSystem::SetCameraMax(const Vec2& cameraMax)
-	{
-		m_cameraMax = cameraMax;
 	}
 
 	void CameraSystem::SetCameraPos(const glm::vec3& position)
@@ -114,19 +95,21 @@ namespace Rogue
 				if (g_engine.m_coordinator.GetComponent<CameraComponent>(entity).getIsActive())
 				{
 					Vec2 transformPos = g_engine.m_coordinator.GetComponent<TransformComponent>(entity).GetPosition();
+					Vec2 cameraMin = CameraManager::instance().GetCameraMin();
+					Vec2 cameraMax = CameraManager::instance().GetCameraMax();
 
 					// ensure camera doesnt go out of bounds
-					if (transformPos.x > m_cameraMax.x)
-						transformPos.x = m_cameraMax.x;
+					if (transformPos.x > cameraMax.x)
+						transformPos.x = cameraMax.x;
 
-					if (transformPos.x < m_cameraMin.x)
-						transformPos.x = m_cameraMin.x;
+					if (transformPos.x < cameraMin.x)
+						transformPos.x = cameraMin.x;
 
-					if (transformPos.y > m_cameraMax.y)
-						transformPos.y = m_cameraMax.y;
+					if (transformPos.y > cameraMax.y)
+						transformPos.y = cameraMax.y;
 
-					if (transformPos.y < m_cameraMin.y)
-						transformPos.y = m_cameraMin.y;
+					if (transformPos.y < cameraMin.y)
+						transformPos.y = cameraMin.y;
 
 					//m_target = transformPos;
 
