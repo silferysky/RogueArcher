@@ -105,6 +105,8 @@ namespace Rogue
 		g_engine.m_coordinator.GetSystem<FontSystem>()->TrueUpdate();
 		g_engine.m_coordinator.GetSystem<DebugDrawSystem>()->TrueUpdate();
 
+		g_engine.SwapBuffer();
+
 		UseFrameBuffer();
 
 		g_engine.m_coordinator.EndTimeSystem("Graphics System");

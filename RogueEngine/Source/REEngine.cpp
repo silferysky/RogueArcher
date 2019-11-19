@@ -147,8 +147,6 @@ namespace Rogue
 			}
 			m_coordinator.Update();
 
-			SwapBuffers(hDC);
-
 			//m_projMat = glm::ortho(-16.0f * 0.5f, 16.0f * 0.5f, -9.0f * 0.5f, 9.0f * 0.5f, -1024.0f, 1024.0f);
 			
 			auto m_dimensions = Vec2{ m_size, aspect_ratio * m_size } * 0.5;
@@ -165,6 +163,11 @@ namespace Rogue
 		ReleaseDC(hWnd, hDC);
 		wglDeleteContext(hRC);
 		DestroyWindow(hWnd);
+	}
+
+	void REEngine::SwapBuffer()
+	{
+		SwapBuffers(hDC);
 	}
 
 	HWND REEngine::GetWindowHandler() const

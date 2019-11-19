@@ -56,6 +56,8 @@ namespace Rogue
 		void Update();
 		void Shutdown();
 
+		void SwapBuffer();
+
 		HWND GetWindowHandler() const;
 		MSG GetWindowMessage() const;
 		glm::mat4 GetProjMat() const;
