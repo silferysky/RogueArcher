@@ -2,6 +2,7 @@
 #include "Precompiled.h"
 #include "ILogic.h"
 #include "LogicComponent.h"
+#include "StatsComponent.h"
 #include "Vector2D.h"
 #include "Types.h"
 #include "GameEvent.h"
@@ -49,6 +50,8 @@ namespace Rogue
 		//Getter/Setter
 		std::shared_ptr<LogicComponent> GetLogicComponent();
 		void SetLogicComponent(LogicComponent& logicComp);
+		std::shared_ptr<StatsComponent> GetStatsComponent();
+		void SetStatsComponent(StatsComponent& statsComp);
 
 		void AddNextPoint(Vec2 newPoint);
 		Vec2 GetNextPoint();
@@ -59,6 +62,7 @@ namespace Rogue
 
 		Entity m_entity;
 		std::shared_ptr<LogicComponent> m_logicComponent;
+		std::shared_ptr<StatsComponent> m_statsComponent;
 		std::queue<Vec2> m_nextPoint;
 	};
 }

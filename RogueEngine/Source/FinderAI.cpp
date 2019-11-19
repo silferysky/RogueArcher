@@ -56,11 +56,10 @@ namespace Rogue
 		//Check if Transform component and Rigidbody exist
 		if (!(g_engine.m_coordinator.ComponentExists<TransformComponent>(m_entity) &&
 			g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(m_entity) && 
-			g_engine.m_coordinator.ComponentExists<StatsComponent>(m_entity)))
+			m_statsComponent != nullptr))
 			return;
 
 		TransformComponent& aiTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(m_entity);
-		StatsComponent& aiStats = g_engine.m_coordinator.GetComponent<StatsComponent>(m_entity);
 
 		if (g_engine.m_coordinator.ComponentExists<AnimationComponent>(m_entity))
 		{
@@ -70,13 +69,13 @@ namespace Rogue
 
 		float distance = Vec2SqDistance(aiTransform.GetPosition(), m_nextPoint.front());
 
-		if (distance < aiStats.getSpeed() * DT_SPEED_MODIFIER)
+		if (distance < m_statsComponent->getSpeed() * DT_SPEED_MODIFIER)
 			aiTransform.setPosition(m_nextPoint.front());
 		else
 		{
 			Vec2 travelDistance;
 			Vec2Normalize(travelDistance, m_nextPoint.front() - aiTransform.GetPosition());
-			g_engine.m_coordinator.GetComponent<RigidbodyComponent>(m_entity).addForce(travelDistance * aiStats.getSpeed() * DT_SPEED_MODIFIER);
+			g_engine.m_coordinator.GetComponent<RigidbodyComponent>(m_entity).addForce(travelDistance * m_statsComponent->getSpeed() * DT_SPEED_MODIFIER);
 			
 			//If facing right and moving left or facing left and moving right, flip
 			if ((travelDistance.x < 0 && aiTransform.GetScale().x > 0.0f) || 

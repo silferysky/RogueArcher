@@ -175,6 +175,16 @@ namespace Rogue
 		m_logicComponent = std::make_shared<LogicComponent>(logicComp);
 	}
 
+	std::shared_ptr<StatsComponent> BaseAI::GetStatsComponent()
+	{
+		return m_statsComponent;
+	}
+
+	void BaseAI::SetStatsComponent(StatsComponent& statsComp)
+	{
+		m_statsComponent = std::make_shared<StatsComponent>(statsComp);
+	}
+
 	void BaseAI::AddNextPoint(Vec2 newPoint)
 	{
 		m_nextPoint.push(newPoint);
