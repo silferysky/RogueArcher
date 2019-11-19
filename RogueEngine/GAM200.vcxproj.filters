@@ -502,6 +502,9 @@
     <ClInclude Include="Source\CursorManager.h">
       <Filter>RogueEngine\Systems\Cursor</Filter>
     </ClInclude>
+    <ClInclude Include="source\CameraManager.h">
+      <Filter>RogueEngine\Systems\Camera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">

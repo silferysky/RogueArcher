@@ -121,13 +121,14 @@ namespace Rogue
 		int width = g_engine.GetEngineWindowWidth();
 		int height = g_engine.GetEngineWindowHeight();
 
+		// Bring mousePos to the bottom left of the viewport
 		mousePos.x -= ImGui::GetCursorScreenPos().x;
 		mousePos.y -= ImGui::GetCursorScreenPos().y;
 
+		// Bring mousePos to the top left of the viewport
 		mousePos.y += imageSize.y;
 
-		std::cout << mousePos << std::endl;
-		
+		// Scale viewport coordinates to screen coordinates
 		mousePos.x = mousePos.x * width / imageSize.x;
 		mousePos.y = mousePos.y * height / imageSize.y;
 

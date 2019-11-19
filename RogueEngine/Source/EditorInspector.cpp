@@ -1,6 +1,7 @@
 #include "Precompiled.h"
 #include "EditorInspector.h"
 #include "REEngine.h"
+#include "CameraManager.h"
 #include "Main.h"
 
 namespace Rogue
@@ -454,8 +455,8 @@ namespace Rogue
 		ImGui::DragFloat("Camera X", &m_cameraPos.x, 1.0f, -10000.0f, 10000.0f);
 		ImGui::DragFloat("Camera Y", &m_cameraPos.y, 1.0f, -10000.0f, 10000.0f);
 
-		Vec2 m_cameraMin = g_engine.m_coordinator.GetSystem<CameraSystem>()->GetCameraMin();
-		Vec2 m_cameraMax = g_engine.m_coordinator.GetSystem<CameraSystem>()->GetCameraMax();
+		Vec2 m_cameraMin = CameraManager::instance().GetCameraMin();
+		Vec2 m_cameraMax = CameraManager::instance().GetCameraMax();
 
 		ImGui::DragFloat("Camera Min X", &m_cameraMin.x, 1.0f, -10000.0f, 10000.0f);
 		ImGui::DragFloat("Camera Min Y", &m_cameraMin.y, 1.0f, -10000.0f, 10000.0f);
@@ -473,8 +474,8 @@ namespace Rogue
 
 		g_engine.m_coordinator.GetSystem<CameraSystem>()->SetCameraPos(m_cameraPos);
 
-		g_engine.m_coordinator.GetSystem<CameraSystem>()->SetCameraMin(m_cameraMin);
-		g_engine.m_coordinator.GetSystem<CameraSystem>()->SetCameraMax(m_cameraMax);
+		CameraManager::instance().SetCameraMin(m_cameraMin);
+		CameraManager::instance().SetCameraMax(m_cameraMax);
 
 		g_engine.SetCameraZoom(m_cameraZoom);
 

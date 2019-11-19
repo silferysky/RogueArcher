@@ -4,8 +4,8 @@
 
 namespace Rogue
 {
-	TransformComponent::TransformComponent(const Vec2& pos, const Vec2& scale, float rot) :
-		m_position{ pos }, m_scale{ scale }, m_rotation{ rot }
+	TransformComponent::TransformComponent(const Vec2& pos, const Vec2& scale, float rot, const AABB& aabb) :
+		m_position{ pos }, m_scale{ scale }, m_rotation{ rot }, m_pickArea{ aabb }
 	{}
 
 	void TransformComponent::setPosition(const Vec2& pos)
@@ -38,6 +38,11 @@ namespace Rogue
 		m_rotation += rot;
 	}
 
+	void TransformComponent::setPickArea(const AABB& aabb)
+	{
+		m_pickArea = aabb;
+	}
+
 	Vec2 TransformComponent::GetPosition() const
 	{
 		return m_position;
@@ -51,6 +56,11 @@ namespace Rogue
 	float TransformComponent::GetRotation() const
 	{
 		return m_rotation;
+	}
+
+	const AABB& TransformComponent::GetPickArea() const
+	{
+		return m_pickArea;
 	}
 
 	std::string TransformComponent::Serialize()
