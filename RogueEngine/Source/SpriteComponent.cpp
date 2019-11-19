@@ -96,22 +96,6 @@ namespace Rogue
 		ImGui::PushItemWidth(250);
 		ImGui::ColorEdit4("Color", (float*)& m_filter);
 
-
-		ImGui::TextWrapped("Current Draw Priority : %d", m_drawPriority);
-		ImGui::TextWrapped("Set Draw Priority");
-		ImGui::InputText("                       ", m_priorityDraw, 128);
-		if (ImGui::Button("Set Priority"))
-		{
-			m_drawPriority = atoi(m_priorityDraw);
-			setDrawPriority(m_drawPriority);
-			memset(m_priorityDraw, 0, 128);
-		}
-		if (ImGui::IsItemHovered())
-		{
-			ImGui::BeginTooltip();
-			ImGui::Text("Higher number means the object will be drawn infront");
-			ImGui::EndTooltip();
-		}
 		ImGui::SameLine();
 		if (ImGui::Button("Drag Drop Sprite here"))
 		{			
@@ -135,7 +119,6 @@ namespace Rogue
 		std::ostringstream strstream;
 		
 		strstream << getTexturePath() << ";";
-		strstream << m_drawPriority << ";";
 		strstream << m_filter.r << ";" << m_filter.g << ";" << m_filter.b << ";" << m_filter.a;
 
 		return strstream.str();
@@ -158,9 +141,6 @@ namespace Rogue
 
 		setTexturePath(stdstr);
 		setTexture(m_texturePath.c_str());
-
-		std::getline(strstream, stdstr, ';');
-		m_drawPriority = std::stoi(stdstr);
 
 		std::getline(strstream, stdstr, ';');
 		m_filter.r = std::stof(stdstr);

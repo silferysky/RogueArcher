@@ -43,6 +43,11 @@ namespace Rogue
 		m_pickArea = aabb;
 	}
 
+	void TransformComponent::setZ(int z)
+	{
+		m_fakeZ = z;
+	}
+
 	Vec2 TransformComponent::GetPosition() const
 	{
 		return m_position;
@@ -63,6 +68,11 @@ namespace Rogue
 		return m_pickArea;
 	}
 
+	int TransformComponent::GetZ() const
+	{
+		return m_fakeZ;
+	}
+
 	std::string TransformComponent::Serialize()
 	{
 		//Position, Scale, Rotation
@@ -70,6 +80,7 @@ namespace Rogue
 		ss << m_position.x << ";" << m_position.y << ";";
 		ss << m_scale.x << ";" << m_scale.y << ";";
 		ss << m_rotation;
+		ss << m_fakeZ;
 		return ss.str();
 	}
 
@@ -97,6 +108,8 @@ namespace Rogue
 			case 2:
 				setRotation(std::stof(s1));
 				break;
+			case 3:
+				setZ(std::stof(s1));
 			default:
 				break;
 			}
@@ -127,6 +140,23 @@ namespace Rogue
 		ImGui::PushItemWidth(75);
 		ImGui::DragFloat("      ", &m_position.y);
 		ImGui::PushItemWidth(50);
+
+		static char m_priorityDraw[128];
+		ImGui::TextWrapped("Current Draw Priority : %d", m_fakeZ);
+		ImGui::TextWrapped("Set Draw Priority");
+		ImGui::InputText("                       ", m_priorityDraw, 128);
+		if (ImGui::Button("Set Priority"))
+		{
+			m_fakeZ = atoi(m_priorityDraw);
+			setZ(m_fakeZ);
+			memset(m_priorityDraw, 0, 128);
+		}
+		if (ImGui::IsItemHovered())
+		{
+			ImGui::BeginTooltip();
+			ImGui::Text("Higher number means the object will be drawn infront");
+			ImGui::EndTooltip();
+		}
 		
 		if (ImGui::Button("Reset Position"))
 		{
