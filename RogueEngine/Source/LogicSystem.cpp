@@ -17,7 +17,7 @@ namespace Rogue
 	LogicSystem::LogicSystem()
 		: System(SystemID::id_LOGICSYSTEM)
 	{
-		m_entityLogicMap = std::map<Entity, std::shared_ptr<BaseAI>>();
+		m_entityLogicMap = std::map<Entity, std::vector<std::shared_ptr<BaseAI>>>();
 	}
 
 
@@ -54,13 +54,10 @@ namespace Rogue
 			return;
 		}
 
-		for (auto& it : m_entityLogicMap)
+		for (std::pair<Entity, std::vector<std::shared_ptr<BaseAI>>> it : m_entityLogicMap)
 		{
-			//Null checker
-			if (!it.second)
-				continue;
-
-			it.second->LogicUpdate();
+			for (std::shared_ptr<BaseAI> ai : it.second)
+				ai->LogicUpdate();
 		}
 		g_engine.m_coordinator.EndTimeSystem("Logic System");
 	}
@@ -79,8 +76,11 @@ namespace Rogue
 			{
 				//TODO since most of the time the AI is not part of LogicSystem's entities, ensure that AI handles it properly.
 				if (m == object || m == triggered)
-					if (m_entityLogicMap[m] != nullptr)
-						m_entityLogicMap[m]->HandleCollision(event);
+					if (m_entityLogicMap[m].size())
+					{
+						for (auto& ai : m_entityLogicMap[m])
+							ai->HandleCollision(event);
+					}
 			}
 			return;
 		}
@@ -89,7 +89,7 @@ namespace Rogue
 
 	void LogicSystem::AddLogicInterface(Entity entity, std::shared_ptr<BaseAI> logicInterface)
 	{
-		m_entityLogicMap[entity] = logicInterface;
+		m_entityLogicMap[entity].push_back(logicInterface);
 		//m_entityLogicMap.emplace(std::pair < Entity, std::shared_ptr<BaseAI>>(entity, logicInterface));
 		//m_entityLogicMap.insert({ entity, logicInterface });
 	}
@@ -123,35 +123,36 @@ namespace Rogue
 	{
 		for (auto& entities : m_entities)
 		{
-			if (m_entityLogicMap[entities] == nullptr)
+			if (!m_entityLogicMap[entities].size())
 			{
 				//Logic component will exist if it is in m_entities
 				auto& logicComponent = g_engine.m_coordinator.GetComponent<LogicComponent>(entities);
+				auto& statsComponent = g_engine.m_coordinator.GetComponent<StatsComponent>(entities);
 
 				switch (logicComponent.GetLogicType())
 				{
 				case AIType::AI_Finder:
 				{
-					FinderAI newAI(entities, logicComponent);
+					FinderAI newAI(entities, logicComponent, statsComponent);
 					AddLogicInterface(entities, std::make_shared<FinderAI>(newAI));
 					break;
 				}
 				case AIType::AI_Patrol:
 				{
-					PatrolAI newAI(entities, logicComponent);
+					PatrolAI newAI(entities, logicComponent, statsComponent);
 					AddLogicInterface(entities, std::make_shared<PatrolAI>(newAI));
 					break;
 				}
 				case AIType::AI_Trigger:
 				{
-					TriggerAI newAI(entities, logicComponent);
+					TriggerAI newAI(entities, logicComponent, statsComponent);
 					AddLogicInterface(entities, std::make_shared<TriggerAI>(newAI));
 					break;
 				}
 				case AIType::AI_Static:
 				default:
 				{
-					BaseAI newAI(entities, logicComponent);
+					BaseAI newAI(entities, logicComponent, statsComponent);
 					AddLogicInterface(entities, std::make_shared<BaseAI>(newAI));
 					break;
 				}

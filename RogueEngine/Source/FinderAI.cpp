@@ -4,8 +4,8 @@
 
 namespace Rogue
 {
-	FinderAI::FinderAI(Entity entity, LogicComponent& logicComponent)
-		: BaseAI(entity, logicComponent) {}
+	FinderAI::FinderAI(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent)
+		: BaseAI(entity, logicComponent, statsComponent) {}
 
 	void FinderAI::AIActiveStateUpdate()
 	{

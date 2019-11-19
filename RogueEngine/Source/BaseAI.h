@@ -21,7 +21,7 @@ namespace Rogue
 	{
 	public:
 
-		BaseAI(Entity entValue, LogicComponent& logicComp);
+		BaseAI(Entity entValue, LogicComponent& logicComp, StatsComponent& statsComp);
 		virtual ~BaseAI() = default;
 
 		//From ILogic (Component Related)

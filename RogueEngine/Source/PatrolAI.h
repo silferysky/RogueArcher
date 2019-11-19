@@ -7,7 +7,7 @@ namespace Rogue
 		: public BaseAI
 	{
 	public:
-		PatrolAI(Entity entity, LogicComponent& logicComponent);
+		PatrolAI(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent);
 
 		virtual void LogicInit() override;
 		virtual void AIActiveStateUpdate() override;

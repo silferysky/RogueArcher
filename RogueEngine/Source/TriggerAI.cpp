@@ -4,8 +4,8 @@
 
 namespace Rogue
 {
-	TriggerAI::TriggerAI(Entity entity, LogicComponent& logicComponent)
-		: BaseAI(entity, logicComponent) {}
+	TriggerAI::TriggerAI(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent)
+		: BaseAI(entity, logicComponent, statsComponent) {}
 
 	void TriggerAI::OnTriggerEnter(Entity other)
 	{

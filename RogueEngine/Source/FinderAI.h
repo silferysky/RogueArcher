@@ -7,7 +7,7 @@ namespace Rogue
 		: public BaseAI
 	{
 	public:
-		FinderAI(Entity entity, LogicComponent& logicComponent);
+		FinderAI(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent);
 
 		virtual void AIActiveStateUpdate() override;
 
