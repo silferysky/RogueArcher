@@ -30,6 +30,7 @@ namespace Rogue
 		// Windows cursor
 		POINT cursor;
 
+
 		if (g_engine.m_coordinator.GetEditorIsRunning())
 			cursorPos = g_engine.GetViewportCursor();
 
@@ -60,7 +61,7 @@ namespace Rogue
 			if (g_engine.m_coordinator.GetEditorIsRunning())
 			{
 				auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
-				Vec2 worldCursor(rayWorld4D.x, -rayWorld4D.y);
+				Vec2 worldCursor(rayWorld4D.x, rayWorld4D.y);
 				g_engine.SetWorldCursor(worldCursor);
 				trans.setPosition(worldCursor);
 

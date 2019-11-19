@@ -75,6 +75,10 @@ namespace Rogue
 						{
 							auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(i.m_Entity);
 							trans.DisplayOnInspector();
+							if (ImGui::Button("Remove Component"))
+							{
+								g_engine.m_coordinator.RemoveComponent<TransformComponent>(i.m_Entity);
+							}
 						}
 					}
 					
@@ -83,7 +87,11 @@ namespace Rogue
 						if (ImGui::CollapsingHeader("Sprite"))
 						{
 							auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(i.m_Entity);
-							sprite.DisplayOnInspector();							
+							sprite.DisplayOnInspector();			
+							if (ImGui::Button("Remove Component"))
+							{
+								g_engine.m_coordinator.RemoveComponent<SpriteComponent>(i.m_Entity);
+							}
 						}
 					}
 
@@ -93,6 +101,10 @@ namespace Rogue
 						{
 							auto& animation = g_engine.m_coordinator.GetComponent<AnimationComponent>(i.m_Entity);
 							animation.DisplayOnInspector();
+							if (ImGui::Button("Remove Component"))
+							{
+								g_engine.m_coordinator.RemoveComponent<AnimationComponent>(i.m_Entity);
+							}
 						}
 					}
 
@@ -102,6 +114,10 @@ namespace Rogue
 						{
 							auto& circle2D = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i.m_Entity);
 							circle2D.DisplayOnInspector();
+							if (ImGui::Button("Remove Component"))
+							{
+								g_engine.m_coordinator.RemoveComponent<CircleCollider2DComponent>(i.m_Entity);
+							}
 						}
 					}
 
@@ -111,6 +127,10 @@ namespace Rogue
 						{
 							auto& box2D = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(i.m_Entity);
 							box2D.DisplayOnInspector();
+							if (ImGui::Button("Remove Component"))
+							{
+								g_engine.m_coordinator.RemoveComponent<BoxCollider2DComponent>(i.m_Entity);
+							}
 						}
 					}
 
@@ -121,6 +141,10 @@ namespace Rogue
 							auto& RigidBody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(i.m_Entity);
 							RigidBody.DisplayOnInspector();
 						}
+						if (ImGui::Button("Remove Component"))
+						{
+							g_engine.m_coordinator.RemoveComponent<RigidbodyComponent>(i.m_Entity);
+						}
 					}
 
 					if (g_engine.m_coordinator.ComponentExists<LogicComponent>(i.m_Entity))
@@ -129,6 +153,10 @@ namespace Rogue
 						{
 							auto& Logic = g_engine.m_coordinator.GetComponent<LogicComponent>(i.m_Entity);
 							Logic.DisplayOnInspector();
+						}
+						if (ImGui::Button("Remove Component"))
+						{
+							g_engine.m_coordinator.RemoveComponent<LogicComponent>(i.m_Entity);
 						}
 					}
 
@@ -139,6 +167,10 @@ namespace Rogue
 							auto& Stats = g_engine.m_coordinator.GetComponent<StatsComponent>(i.m_Entity);
 							Stats.DisplayOnInspector();
 						}
+						if (ImGui::Button("Remove Component"))
+						{
+							g_engine.m_coordinator.RemoveComponent<StatsComponent>(i.m_Entity);
+						}
 					}
 
 					if (g_engine.m_coordinator.ComponentExists<CameraComponent>(i.m_Entity))
@@ -147,6 +179,10 @@ namespace Rogue
 						{
 							auto& Camera = g_engine.m_coordinator.GetComponent<CameraComponent>(i.m_Entity);
 							Camera.DisplayOnInspector();
+						}
+						if (ImGui::Button("Remove Component"))
+						{
+							g_engine.m_coordinator.RemoveComponent<CameraComponent>(i.m_Entity);
 						}
 					}
 
