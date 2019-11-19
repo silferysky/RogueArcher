@@ -15,7 +15,7 @@ namespace Rogue
 	void ImGuiProject::Init()
 	{
 		
-		const fs::path pathToShow{ "\Resources" };
+		const fs::path pathToShow{ "Resources" };
 		DisplayDirectoryTree(pathToShow);
 	}
 
@@ -29,7 +29,7 @@ namespace Rogue
 				if(ImGui::Selectable(i.first.c_str(), i.second.first, ImGuiSelectableFlags_AllowDoubleClick))
 				{
 					std::string temp = i.first;
-					if (ImGui::IsMouseClicked(0))
+					if (ImGui::IsItemClicked() || ImGui::IsMouseClicked(0))
 					{
 						i.second.first = !i.second.first;
 						for (auto& i : m_data)
@@ -40,9 +40,10 @@ namespace Rogue
 						}
 					}
 				}
+
 			}
 		}
-		//
+
 		ImGui::End();
 		ImGui::Begin("File");
 		if (ImGui::CollapsingHeader("File Display"), ImGuiTreeNodeFlags_DefaultOpen)
@@ -53,8 +54,15 @@ namespace Rogue
 						continue;
 				for (auto& iter : i.second.second)
 				{
-					ImGui::Text(iter.m_objectName.c_str());
-					//ImGui::BeginDragDropSource();
+					ImGui::Selectable(iter.m_objectName.c_str());
+					if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
+					{
+						ImGui::SetDragDropPayload("Sprite", &iter.m_objectPath, sizeof(iter.m_objectPath));
+						ImGui::BeginTooltip();
+						ImGui::Text("Dragging %s",iter.m_objectName.c_str());
+						ImGui::EndTooltip();
+						ImGui::EndDragDropSource();
+					}
 				}
 			}
 			
@@ -77,20 +85,15 @@ namespace Rogue
 				m_previousDirectory = filename.string();
 				if (std::filesystem::is_directory(entry.status()))
 				{
-					//if (filename == "Resources" || filename == "Sounds" || filename == "Assets")
-					{
 						m_currentDirectory = filename.string();
-						//if (level == 0)
-						{
-							m_data[filename.string()].second.push_back(DirectoryInfo("", m_currentLevel));
-						}
+						m_data[filename.string()].second.push_back(DirectoryInfo("","", m_currentLevel));
 						DisplayDirectoryTreeImp(entry, level + 1);
-					}
 				}
 				else if (std::filesystem::is_regular_file(entry.status()))
 				{
 					DirectoryInfo temp;
 					temp.m_objectName = filename.string();
+					temp.m_objectPath = pathToShow.string() + "\\" + filename.string();
 					for (auto& i : m_data)
 					{
 						if (i.first == m_currentDirectory)

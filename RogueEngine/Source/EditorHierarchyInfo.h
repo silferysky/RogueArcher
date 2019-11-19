@@ -21,9 +21,10 @@ namespace Rogue
 	{
 	public:
 		std::string m_objectName;
+		std::string m_objectPath;
 		bool m_selected = false;
 		int m_level = 0;
 		DirectoryInfo() = default;
-		DirectoryInfo(std::string_view name,int level) : m_objectName(name),m_level(level) {}
+		DirectoryInfo(std::string path,std::string_view name,int level) : m_objectPath(path),m_objectName(name),m_level(level) {}
 	};
 }
