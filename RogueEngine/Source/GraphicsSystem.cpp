@@ -66,7 +66,7 @@ namespace Rogue
 		// For all entities
 		for (auto entity : m_entities)
 		{
-			auto priority = g_engine.m_coordinator.GetComponent<SpriteComponent>(entity).getDrawPriority();
+			auto priority = g_engine.m_coordinator.GetComponent<TransformComponent>(entity).GetZ();
 
 			m_drawQueue.insert(std::make_pair(priority, entity));
 		}
