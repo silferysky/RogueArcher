@@ -110,6 +110,7 @@ namespace Rogue
 				break;
 			case 3:
 				setZ(std::stof(s1));
+				break;
 			default:
 				break;
 			}
@@ -142,10 +143,10 @@ namespace Rogue
 		ImGui::PushItemWidth(50);
 
 		static char m_priorityDraw[128];
-		ImGui::TextWrapped("Current Draw Priority : %d", m_fakeZ);
-		ImGui::TextWrapped("Set Draw Priority");
+		ImGui::TextWrapped("Current Z : %d", m_fakeZ);
+		ImGui::TextWrapped("Set Z");
 		ImGui::InputText("                       ", m_priorityDraw, 128);
-		if (ImGui::Button("Set Priority"))
+		if (ImGui::Button("Set Z"))
 		{
 			m_fakeZ = atoi(m_priorityDraw);
 			setZ(m_fakeZ);

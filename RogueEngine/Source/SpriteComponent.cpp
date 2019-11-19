@@ -25,16 +25,6 @@ namespace Rogue
 		return m_texturePath;
 	}
 
-	void SpriteComponent::setDrawPriority(const int& drawPriority)
-	{
-		m_drawPriority = drawPriority;
-	}
-
-	int SpriteComponent::getDrawPriority() const
-	{
-		return m_drawPriority;
-	}
-
 	void SpriteComponent::setTexCoordMin(const float& TexCoordMin)
 	{
 		m_texCoordMin = TexCoordMin;
