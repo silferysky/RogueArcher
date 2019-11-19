@@ -499,6 +499,9 @@
     <ClInclude Include="Source\TriggerAI.h">
       <Filter>RogueEngine\Systems\AI\AI Types</Filter>
     </ClInclude>
+    <ClInclude Include="Source\CursorManager.h">
+      <Filter>RogueEngine\Systems\Cursor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -773,6 +776,9 @@
     </ClCompile>
     <ClCompile Include="Source\TriggerAI.cpp">
       <Filter>RogueEngine\Systems\AI\AI Types</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CursorManager.cpp">
+      <Filter>RogueEngine\Systems\Cursor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

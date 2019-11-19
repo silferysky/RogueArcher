@@ -32,6 +32,7 @@
     <ClInclude Include="Source\ColliderComponent.h" />
     <ClInclude Include="Source\CollisionSystem.h" />
     <ClInclude Include="Source\CursorComponent.h" />
+    <ClInclude Include="Source\CursorManager.h" />
     <ClInclude Include="Source\CursorSystem.h" />
     <ClInclude Include="Source\DebugDrawSystem.h" />
     <ClInclude Include="Source\Editor.h" />
@@ -207,6 +208,7 @@
     <ClCompile Include="Source\FontSystem.cpp" />
     <ClCompile Include="Source\Sound.cpp" />
     <ClCompile Include="Source\BackgroundComponent.cpp" />
+    <ClCompile Include="Source\CursorManager.cpp" />
     <ClCompile Include="Source\StatsComponent.cpp" />
     <ClCompile Include="Source\Stream.cpp" />
     <ClCompile Include="Source\TextComponent.cpp" />
