@@ -5,6 +5,8 @@ namespace Rogue
 {
 	class ImGuiEditorViewport : public IEditable
 	{
+		void ReloadLevel();
+
 	public:
 		ImGuiEditorViewport() = default;
 		~ImGuiEditorViewport() = default;
