@@ -49,8 +49,7 @@ namespace Rogue
 		// BOUNDING CIRCLE
 		void UpdateCircleCollider(CircleCollider& circle, const TransformComponent& trans) const;
 
-		bool DiscreteCircleVsCircle(const CircleCollider& circleA, const CircleCollider& circleB,
-			const TransformComponent& transA, const TransformComponent& transB);
+		bool DiscreteCircleVsCircle(const CircleCollider& circleA, const CircleCollider& circleB);
 
 		int ContinuousCircleVsLineSegment(const CircleCollider2DComponent& circle, const Vec2& ptEnd, const LineSegment& lineSeg,	
 			Vec2& interPt, Vec2& normalAtCollision, float& interTime, bool& checkLineEdges);
