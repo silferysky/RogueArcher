@@ -5,7 +5,7 @@
 namespace Rogue
 {
 	CircleCollider2DComponent::CircleCollider2DComponent(CircleCollider2DComponent&& rhs) noexcept :
-		m_collider{ CircleCollider{} }
+		m_collider{ BoundingCircle{} }
 	{
 		std::swap(m_collider, rhs.m_collider);
 	}

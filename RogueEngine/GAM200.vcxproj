@@ -27,13 +27,13 @@
     <ClInclude Include="source\CameraManager.h" />
     <ClInclude Include="Source\CameraShake.h" />
     <ClInclude Include="Source\CameraSystem.h" />
-    <ClInclude Include="Source\CircleCollider.h" />
+    <ClInclude Include="Source\BoundingCircle.h" />
     <ClInclude Include="Source\BoxCollisionSystem.h" />
     <ClInclude Include="Source\CircleCollisionSystem.h" />
     <ClInclude Include="Source\ColliderComponent.h" />
     <ClInclude Include="Source\CollisionSystem.h" />
     <ClInclude Include="Source\CursorComponent.h" />
-    <ClInclude Include="Source\CursorManager.h" />
+    <ClInclude Include="Source\PickingManager.h" />
     <ClInclude Include="Source\CursorSystem.h" />
     <ClInclude Include="Source\DebugDrawSystem.h" />
     <ClInclude Include="Source\Editor.h" />
@@ -86,6 +86,7 @@
     <ClInclude Include="Source\MaterialComponent.h" />
     <ClInclude Include="Source\OBB.h" />
     <ClInclude Include="Source\PhysicsDataStructures.hpp" />
+    <ClInclude Include="Source\PickingSystem.h" />
     <ClInclude Include="Source\PlayerControllerComponent.h" />
     <ClInclude Include="Source\PlayerControllerSystem.h" />
     <ClInclude Include="Source\Polygon.h" />
@@ -149,7 +150,7 @@
     <ClCompile Include="Source\CameraComponent.cpp" />
     <ClCompile Include="Source\CameraShake.cpp" />
     <ClCompile Include="Source\CameraSystem.cpp" />
-    <ClCompile Include="Source\CircleCollider.cpp" />
+    <ClCompile Include="Source\BoundingCircle.cpp" />
     <ClCompile Include="Source\BoxCollisionSystem.cpp" />
     <ClCompile Include="Source\CircleCollisionSystem.cpp" />
     <ClCompile Include="Source\ColliderComponent.cpp" />
@@ -189,6 +190,7 @@
     <ClCompile Include="Source\ParticleEmitterComponent.cpp" />
     <ClCompile Include="Source\ParticleSystem.cpp" />
     <ClCompile Include="Source\PatrolAI.cpp" />
+    <ClCompile Include="Source\PickingSystem.cpp" />
     <ClCompile Include="source\Precompiled.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
@@ -209,7 +211,7 @@
     <ClCompile Include="Source\FontSystem.cpp" />
     <ClCompile Include="Source\Sound.cpp" />
     <ClCompile Include="Source\BackgroundComponent.cpp" />
-    <ClCompile Include="Source\CursorManager.cpp" />
+    <ClCompile Include="Source\PickingManager.cpp" />
     <ClCompile Include="Source\StatsComponent.cpp" />
     <ClCompile Include="Source\Stream.cpp" />
     <ClCompile Include="Source\TextComponent.cpp" />

@@ -462,7 +462,7 @@ namespace Rogue
 					}
 					case static_cast<int>(CIRCLECOLLIDER2D) :
 					{
-						strstream << "CircleCollider{" << g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(entityToSerialize).Serialize() << "}";
+						strstream << "BoundingCircle{" << g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(entityToSerialize).Serialize() << "}";
 						break;
 					}
 					case static_cast<int>(BOXCOLLIDER2D) :

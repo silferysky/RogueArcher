@@ -25,6 +25,7 @@
 #include "AudioSystem.h"
 #include "VSync.h"
 #include "CursorSystem.h"
+#include "PickingSystem.h"
 
 namespace Rogue
 {
@@ -36,8 +37,9 @@ namespace Rogue
 	void REEngine::RegisterSystems()
 	{
 		m_coordinator.RegisterSystem<InputManager>();
-		m_coordinator.RegisterSystem<CursorSystem>();
 		m_coordinator.RegisterSystem<LogicSystem>();
+		m_coordinator.RegisterSystem<CursorSystem>();
+		m_coordinator.RegisterSystem<PickingSystem>();
 		m_coordinator.RegisterSystem<PlayerControllerSystem>();
 		m_coordinator.RegisterSystem<MenuControllerSystem>();
 		m_coordinator.RegisterSystem<PhysicsSystem>();

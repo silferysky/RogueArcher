@@ -137,9 +137,9 @@ namespace Rogue
 			//PositionX, PositionY, ScaleX, ScaleY, Rotate
 			strstream << "Transform{0;0;1;1;0}|";
 
-			//CircleCollider
+			//BoundingCircle
 			//Radius
-			strstream << "CircleCollider{0}|";
+			strstream << "BoundingCircle{0}|";
 
 			//BoxCollider
 			//Number of vertices

@@ -1,5 +1,8 @@
 #include "Precompiled.h"
 #include "CursorSystem.h"
+#include "PickingManager.h"
+#include "CollisionManager.h"
+#include "CameraManager.h"
 #include "Main.h"
 #include "GameEvent.h"
 
@@ -26,17 +29,33 @@ namespace Rogue
 	{
 		g_engine.m_coordinator.InitTimeSystem("Cursor System");
 		
+		// Windows cursor
+		POINT windowCursor;
 		Vec2 cursorPos;
 
-		CursorManager::instance().TransformCursorToWorld(cursorPos);
+		if (g_engine.m_coordinator.GetEditorIsRunning())
+			cursorPos = g_engine.GetViewportCursor();
+		
+		else if (GetCursorPos(&windowCursor))
+		{
+			ScreenToClient(g_engine.GetWindowHandler(), &windowCursor);
+			cursorPos.x = static_cast<float>(windowCursor.x);
+			cursorPos.y = static_cast<float>(windowCursor.y);
+		}
+
+		PickingManager::instance().TransformCursorToWorld(cursorPos);
+
+		Vec2 worldCursor(cursorPos);
+		g_engine.SetWorldCursor(worldCursor);
 
 		for (Entity entity : m_entities)
 		{
 			auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
-			Vec2 worldCursor(cursorPos);
-			g_engine.SetWorldCursor(worldCursor);
+
 			trans.setPosition(worldCursor);
 		}
+
+		PickingManager::instance().GenerateViewPortArea(CameraManager::instance().GetCameraMin(), CameraManager::instance().GetCameraMax());
 		
 		g_engine.m_coordinator.EndTimeSystem("Cursor System");
 	}

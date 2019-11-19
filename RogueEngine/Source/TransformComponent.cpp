@@ -4,8 +4,8 @@
 
 namespace Rogue
 {
-	TransformComponent::TransformComponent(const Vec2& pos, const Vec2& scale, float rot, const AABB& aabb) :
-		m_position{ pos }, m_scale{ scale }, m_rotation{ rot }, m_pickArea{ aabb }
+	TransformComponent::TransformComponent(const Vec2& pos, const Vec2& scale, float rot, int Z, const AABB& aabb) :
+		m_position{ pos }, m_scale{ scale }, m_rotation{ rot }, m_fakeZ{ Z }, m_pickArea{ aabb }
 	{}
 
 	void TransformComponent::setPosition(const Vec2& pos)

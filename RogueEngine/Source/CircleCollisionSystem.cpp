@@ -34,10 +34,10 @@ namespace Rogue
 		{
 			auto& currRigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
 			auto& currTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
-			auto& currCircleCollider = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(*iEntity);
+			auto& currBoundingCircle = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(*iEntity);
 
 			// Colliders updated.
-			CollisionManager::instance().UpdateCircleCollider(currCircleCollider.m_collider, currTransform);
+			CollisionManager::instance().UpdateBoundingCircle(currBoundingCircle.m_collider, currTransform);
 
 			// Spatial partitioning conducted in main collision system.
 
@@ -46,13 +46,13 @@ namespace Rogue
 
 			for (iNextEntity++; iNextEntity != m_entities.end(); ++iNextEntity)
 			{
-				auto& nextCircleCollider = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(*iNextEntity);
+				auto& nextBoundingCircle = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(*iNextEntity);
 				auto& nextRigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iNextEntity);
 
 				if (currRigidbody.getIsStatic() && nextRigidbody.getIsStatic())
 					continue;
 
-				if (CollisionManager::instance().DiscreteCircleVsCircle(currCircleCollider.m_collider, nextCircleCollider.m_collider))
+				if (CollisionManager::instance().DiscreteCircleVsCircle(currBoundingCircle.m_collider, nextBoundingCircle.m_collider))
 				{
 					CollisionManager::instance().GenerateManifoldCirclevsCircle(*iEntity, *iNextEntity);
 				}

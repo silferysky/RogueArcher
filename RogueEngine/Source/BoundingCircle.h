@@ -5,28 +5,28 @@
 
 namespace Rogue
 {
-	class CircleCollider : public BaseCollider
+	class BoundingCircle : public BaseCollider
 	{
 		float m_radius;
 		Vec2 m_center;
 
 	public:
-		CircleCollider() :
+		BoundingCircle() :
 			BaseCollider(), m_radius{ 0.0f }, m_center{ Vec2{} }
 		{}
 
-		CircleCollider(const CircleCollider& rhs) :
+		BoundingCircle(const BoundingCircle& rhs) :
 			m_radius{ rhs.m_radius }, m_center{ rhs.m_center }
 		{}
 		
-		CircleCollider(CircleCollider&& rhs) noexcept :
+		BoundingCircle(BoundingCircle&& rhs) noexcept :
 			BaseCollider(rhs), m_radius{ 0.0f }, m_center{ Vec2{} }
 		{
 			std::swap(m_radius, rhs.m_radius);
 			std::swap(m_center, rhs.m_center);
 		}
 
-		CircleCollider& operator=(const CircleCollider& rhs)
+		BoundingCircle& operator=(const BoundingCircle& rhs)
 		{
 			if (this != &rhs)
 			{
@@ -36,7 +36,7 @@ namespace Rogue
 			return *this;
 		}
 
-		CircleCollider& operator=(CircleCollider&& rhs) noexcept
+		BoundingCircle& operator=(BoundingCircle&& rhs) noexcept
 		{
 			if (this != &rhs)
 			{

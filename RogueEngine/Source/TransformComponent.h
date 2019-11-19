@@ -8,16 +8,16 @@ namespace Rogue
 	class TransformComponent
 		: public BaseComponent
 	{
-		Vec2 m_position = Vec2(0.0f, 0.0f);
-		Vec2 m_scale = Vec2(0.5f, 0.5f);
-		float m_rotation = 0.0f;
+		Vec2 m_position;
+		Vec2 m_scale;
+		float m_rotation;
 
-		int m_fakeZ = 0;
+		int m_fakeZ;
 
 		AABB m_pickArea;
 	public:
 		TransformComponent(const Vec2& pos = { 0.0f, 0.0f }, const Vec2& scale = { 1.0f, 1.0f },
-			float rot = 0.0f, const AABB& aabb = AABB{});
+			float rot = 0.0f, int Z = 0, const AABB& aabb = AABB{});
 
 		void setPosition(const Vec2& pos);
 		void offSetPosition(const Vec2& pos);
