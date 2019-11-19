@@ -67,6 +67,7 @@ namespace Rogue
 		{
 			m_scaleOffset = scale;
 		}
+
 		void setRotationOffSet(float rot)
 		{
 			m_rotationOffset = rot;

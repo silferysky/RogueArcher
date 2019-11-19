@@ -2,6 +2,7 @@
 #include "BaseSystem.h"
 #include "EventListener.h"
 #include "Vector2D.h"
+#include "CursorManager.h"
 
 namespace Rogue
 {

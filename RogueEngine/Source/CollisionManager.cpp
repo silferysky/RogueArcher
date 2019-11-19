@@ -144,6 +144,7 @@ namespace Rogue
 
 		manifold.m_penetration = radius - normalLength;
 
+
 		m_manifolds.emplace_back(manifold);
 
 		return true;
@@ -235,13 +236,11 @@ namespace Rogue
 	//__________________________BOUNDING CIRCLE________________________________|
 	//_________________________________________________________________________|
 	//_________________________________________________________________________|
-	bool CollisionManager::DiscreteCircleVsCircle(const CircleCollider& circleA, const CircleCollider& circleB,
-		const TransformComponent& transA, const TransformComponent& transB)
+	bool CollisionManager::DiscreteCircleVsCircle(const CircleCollider& circleA, const CircleCollider& circleB)
 	{
 		float totalRadius = circleA.getRadius() + circleB.getRadius();
 
-		return Vec2SqDistance(transA.GetPosition() + circleA.getCenterOffSet(), transB.GetPosition() + circleB.getCenterOffSet()) <
-			totalRadius * totalRadius;
+		return Vec2SqDistance(circleA.GetCenter(), circleB.GetCenter()) < totalRadius * totalRadius;
 	}
 
 	/******************************************************************************/
@@ -948,7 +947,7 @@ namespace Rogue
 		for (auto manifold : m_manifolds)
 		{
 			manifold.Resolve();
-			//manifold.PositionalCorrection();
+			manifold.PositionalCorrection();
 		}
 
 		m_manifolds.clear();
