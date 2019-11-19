@@ -12,7 +12,7 @@ namespace Rogue
 
 	public:
 		CircleCollider() :
-			BaseCollider(), m_radius{ 1.0f }, m_center{ Vec2{} }
+			BaseCollider(), m_radius{ 0.0f }, m_center{ Vec2{} }
 		{}
 
 		CircleCollider(const CircleCollider& rhs) :
@@ -20,7 +20,7 @@ namespace Rogue
 		{}
 		
 		CircleCollider(CircleCollider&& rhs) noexcept :
-			BaseCollider(rhs), m_radius{ 1.0f }, m_center{ Vec2{} }
+			BaseCollider(rhs), m_radius{ 0.0f }, m_center{ Vec2{} }
 		{
 			std::swap(m_radius, rhs.m_radius);
 			std::swap(m_center, rhs.m_center);
@@ -46,7 +46,6 @@ namespace Rogue
 
 			return *this;
 		}
-
 
 		float getRadius() const
 		{
