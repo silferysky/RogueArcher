@@ -13,8 +13,7 @@ namespace Rogue
 	//-------------------------------------------------------//
 
 	CameraSystem::CameraSystem()
-		: System(SystemID::id_CAMERASYSTEM), m_worldCamera{ false },
-		m_cameraPos{ 0.0f, 0.0f, 0.0f }, m_worldUp{ 0.0f, 1.0f, 0.0f },
+		: System(SystemID::id_CAMERASYSTEM), m_worldCamera{ false }, m_worldUp{ 0.0f, 1.0f, 0.0f },
 		m_cameraFront{ 0.0f, 0.0f, -1.0f }, m_cameraUp{}, m_cameraRight{},
 		m_cameraShake{}
 	{}
@@ -37,13 +36,14 @@ namespace Rogue
 
 	glm::mat4 CameraSystem::GetViewMatrix(const float& parallax)
 	{
-		return glm::lookAt({ m_cameraPos.x * parallax, m_cameraPos.y * parallax, m_cameraPos.z },
-			glm::vec3{ m_cameraPos.x * parallax, m_cameraPos.y * parallax, m_cameraPos.z } + m_cameraFront, m_cameraUp);
+		glm::vec3 cameraPos = CameraManager::instance().GetCameraPos();
+		return glm::lookAt({ cameraPos.x * parallax, cameraPos.y * parallax, cameraPos.z },
+			glm::vec3{ cameraPos.x * parallax, cameraPos.y * parallax, cameraPos.z } + m_cameraFront, m_cameraUp);
 	}
 
 	void CameraSystem::ResetCamera()
 	{
-		m_cameraPos = { 0.0f, 0.0f, 0.0f };
+		CameraManager::instance().SetCameraPos({ 0.0f, 0.0f, 0.0f });
 	}
 
 	void CameraSystem::ToggleWorldCamera()
@@ -68,16 +68,6 @@ namespace Rogue
 	void CameraSystem::SetWorldCamera(const bool& camera)
 	{
 		m_worldCamera = camera;
-	}
-
-	glm::vec3 CameraSystem::GetCameraPos() const
-	{
-		return m_cameraPos;
-	}
-
-	void CameraSystem::SetCameraPos(const glm::vec3& position)
-	{
-		m_cameraPos = position;
 	}
 
 	void CameraSystem::Update()
@@ -114,11 +104,11 @@ namespace Rogue
 					//m_target = transformPos;
 
 					// For camera panning
-					glm::vec3 position = m_cameraPos;
+					glm::vec3 position = CameraManager::instance().GetCameraPos();
 					position.x += static_cast<int>((transformPos.x - position.x + shakeOffset.x) * m_cameraLerp * g_deltaTime);
 					position.y += static_cast<int>((transformPos.y - position.y + shakeOffset.y) * m_cameraLerp * g_deltaTime);
 
-					m_cameraPos = position;
+					CameraManager::instance().SetCameraPos(position);
 					//glm::vec3(transformPos.x + shakeOffset.x, transformPos.y + shakeOffset.y, 0.0f);
 
 					break;
@@ -159,10 +149,10 @@ namespace Rogue
 			KeyPress keycode = EvPressKey->GetKeyCode();
 
 			if (keycode == KeyPress::KeyF1)
-				g_engine.ZoomIn();
+				CameraManager::instance().ZoomIn();
 
 			if (keycode == KeyPress::KeyF2)
-				g_engine.ZoomOut();
+				CameraManager::instance().ZoomOut();
 
 			return;
 		} //End KeyPressed

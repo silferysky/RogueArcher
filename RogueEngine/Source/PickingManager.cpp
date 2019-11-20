@@ -37,9 +37,16 @@ namespace Rogue
 		trans.setPickArea(pickArea);
 	}
 
-	void PickingManager::GenerateViewPortArea(const Vec2& min, const Vec2& max)
+	void PickingManager::GenerateViewPortAABB(const glm::vec3& cameraPos3D, float zoom)
 	{
-		m_viewportArea = AABB{ min, max };
+		Vec2 cameraPos{ cameraPos3D.x, cameraPos3D.y };
+		int height = g_engine.GetEngineWindowHeight();
+		int width = g_engine.GetEngineWindowWidth();
+		float widthAmount = width / zoom * 0.5f;
+		float heightAmount = height / zoom * 0.5f;
+
+		m_viewportArea.setMin(Vec2{ cameraPos.x - widthAmount, cameraPos.y - heightAmount });
+		m_viewportArea.setMax(Vec2{ cameraPos.x + widthAmount, cameraPos.y + heightAmount });
 	}
 
 	const AABB& PickingManager::GetViewPortArea() const

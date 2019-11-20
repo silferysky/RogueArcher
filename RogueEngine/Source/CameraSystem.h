@@ -10,8 +10,6 @@ namespace Rogue
 
 	class CameraSystem : public System, public EventListener
 	{
-		glm::vec3 m_cameraPos;
-
 		glm::vec3 m_cameraFront;
 		glm::vec3 m_cameraUp;
 		glm::vec3 m_cameraRight;
@@ -36,10 +34,6 @@ namespace Rogue
 
 		bool GetWorldCamera() const;
 		void SetWorldCamera(const bool& camera);
-
-		glm::vec3 GetCameraPos() const;
-
-		void SetCameraPos(const glm::vec3& position);
 
 		void Init() override;
 		void Update() override;
