@@ -39,6 +39,7 @@ namespace Rogue
 
 	void SceneManager::ClearAllEntities()
 	{
+		g_engine.m_coordinator.GetSystem<AudioSystem>()->ShutdownSounds();
 		g_engine.m_coordinator.DestroyAllEntity();
 		ClearActiveEntities();
 	}
@@ -62,8 +63,6 @@ namespace Rogue
 	{
 		std::ostringstream ostrstream;
 		ostrstream << "Resources/" << fileName;
-
-		g_engine.m_coordinator.GetSystem<AudioSystem>()->ShutdownSounds();
 
 		m_objectFactory->LoadLevel(ostrstream.str().c_str()); 
 		std::vector<std::string>::iterator it = std::find(m_loadedLevels.begin(), m_loadedLevels.end(), std::string(fileName));
