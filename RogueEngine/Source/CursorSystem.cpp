@@ -43,19 +43,17 @@ namespace Rogue
 			cursorPos.y = static_cast<float>(windowCursor.y);
 		}
 
-		PickingManager::instance().TransformCursorToWorld(cursorPos);
+		Vec2 worldCursor = PickingManager::instance().TransformCursorToWorld(cursorPos);
 
-		Vec2 worldCursor(cursorPos);
 		g_engine.SetWorldCursor(worldCursor);
 
 		for (Entity entity : m_entities)
 		{
+			// Set the cursor entity's position to be the cursor's world position
 			auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
 
 			trans.setPosition(worldCursor);
 		}
-
-		PickingManager::instance().GenerateViewPortArea(CameraManager::instance().GetCameraMin(), CameraManager::instance().GetCameraMax());
 		
 		g_engine.m_coordinator.EndTimeSystem("Cursor System");
 	}

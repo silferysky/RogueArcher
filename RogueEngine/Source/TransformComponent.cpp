@@ -79,7 +79,7 @@ namespace Rogue
 		std::ostringstream ss;
 		ss << m_position.x << ";" << m_position.y << ";";
 		ss << m_scale.x << ";" << m_scale.y << ";";
-		ss << m_rotation;
+		ss << m_rotation << ";";
 		ss << m_fakeZ;
 		return ss.str();
 	}
@@ -109,7 +109,7 @@ namespace Rogue
 				setRotation(std::stof(s1));
 				break;
 			case 3:
-				setZ(std::stof(s1));
+				setZ(std::stoi(s1));
 				break;
 			default:
 				break;

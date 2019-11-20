@@ -32,7 +32,7 @@ namespace Rogue
 			return instance;
 		}
 
-		void TransformCursorToWorld(Vec2& cursor) const;
+		Vec2 TransformCursorToWorld(const Vec2& cursor) const;
 		void GenerateMeshAABB(TransformComponent& trans) const;
 		void GenerateViewPortArea(const Vec2& min, const Vec2& max);
 		

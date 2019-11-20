@@ -1,0 +1,7 @@
+{
+    "MaxEntityCount": 1,
+    "EntityCount": 0,
+    "BackgroundTexture": "Resources\\Assets\\test.bmp;1;1;1;1",
+    "Signature0": 4101,
+    "Entity0": "Name{Game Object 1}|Tag{}|Sprite{Resources\\Assets\\crosshair.png;1;1;1;1}||Transform{-948.373;614.768;162;201;0;0}||||||||||Cursor{0;0}|||||"
+}
