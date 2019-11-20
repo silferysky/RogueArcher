@@ -15,24 +15,33 @@ namespace Rogue
 	void ImGuiProject::Init()
 	{
 		
-		const fs::path pathToShow{ "Resources" };
-		DisplayDirectoryTree(pathToShow);
+
 	}
 
 	void ImGuiProject::Update()
 	{
+		const fs::path pathToShow{ "Resources" };
+		m_data.clear();
+		DisplayDirectoryTree(pathToShow);
+
+		if (m_updateData.size() != m_data.size())
+		{
+			m_updateData.clear();
+			m_updateData = m_data;
+		}
+
 		ImGui::Begin("Project");
 		if (ImGui::CollapsingHeader("Folder Hierachy"), ImGuiTreeNodeFlags_DefaultOpen)
 		{
-			for (auto& i : m_data)
+			for (auto& i : m_updateData)
 			{
 				if(ImGui::Selectable(i.first.c_str(), i.second.first, ImGuiSelectableFlags_AllowDoubleClick))
 				{
 					std::string temp = i.first;
-					if (ImGui::IsItemClicked() || ImGui::IsMouseClicked(0))
+					if (ImGui::IsMouseDoubleClicked(0) || ImGui::IsMouseClicked(0))
 					{
 						i.second.first = !i.second.first;
-						for (auto& i : m_data)
+						for (auto& i : m_updateData)
 						{
 							if (temp == i.first)
 								continue;
@@ -40,7 +49,6 @@ namespace Rogue
 						}
 					}
 				}
-
 			}
 		}
 
@@ -48,7 +56,7 @@ namespace Rogue
 		ImGui::Begin("File");
 		if (ImGui::CollapsingHeader("File Display"), ImGuiTreeNodeFlags_DefaultOpen)
 		{
-			for (auto& i : m_data)
+			for (auto& i : m_updateData)
 			{	
 				if (i.second.first == false)
 						continue;
@@ -76,11 +84,9 @@ namespace Rogue
 							ImGui::EndTooltip();
 							ImGui::EndDragDropSource();
 						}
-
 					}
 				}
-			}
-			
+			}			
 		}
 		ImGui::End();
 	}
@@ -91,6 +97,7 @@ namespace Rogue
 
 	void ImGuiProject::DisplayDirectoryTreeImp(const std::filesystem::path& pathToShow, int level)
 	{
+
 		if (std::filesystem::exists(pathToShow) && std::filesystem::is_directory(pathToShow))
 		{
 			m_currentLevel = level;

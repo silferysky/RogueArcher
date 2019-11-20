@@ -22,6 +22,7 @@ namespace Rogue
 		std::string m_previousDirectory;
 		std::string m_currentSelectedDirectory;
 		std::map<std::string, std::pair<bool,std::vector<DirectoryInfo>>> m_data;
+		std::map<std::string, std::pair<bool, std::vector<DirectoryInfo>>> m_updateData;
 	};
 
 
