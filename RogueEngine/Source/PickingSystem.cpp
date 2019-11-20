@@ -48,21 +48,29 @@ namespace Rogue
 			KeyTriggeredEvent* keyTriggered = dynamic_cast<KeyTriggeredEvent*>(ev);
 			KeyPress keycode = keyTriggered->GetKeyCode();
 
+			// If left-mouse click is triggered
 			if (keycode == KeyPress::MB1)
 			{
+				// Get the cursor's world position
 				Vec2 cursor = g_engine.GetWorldCursor();
+
+				PickingManager::instance().GenerateViewPortArea(CameraManager::instance().GetCameraMin(), CameraManager::instance().GetCameraMax());
+
+				// Get the viewport's AABB
 				const AABB& viewportArea = PickingManager::instance().GetViewPortArea();
 
 				// If cursor is in the viewport area, proceed.
 				if (CollisionManager::instance().DiscretePointVsAABB(cursor, viewportArea))
 				{
+					// Go through every transform component
 					for (Entity entity : m_entities)
 					{
 						TransformComponent& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
 
-						// If entity is in the viewport area, generate the transform aabb of the entity
+						// If entity is in the viewport area
 						if (CollisionManager::instance().DiscretePointVsAABB(trans.GetPosition(), viewportArea))
 						{
+							// Generate the transform aabb of the entity
 							PickingManager::instance().GenerateMeshAABB(trans);
 
 							// Check if cursor is on the entity
@@ -76,7 +84,9 @@ namespace Rogue
 					Entity pickedEntity = PickingManager::instance().ChooseTopLayer();
 
 					// Send EntityPickedEvent
-					std::cout << "Entity picked: " << pickedEntity << std::endl;
+					std::stringstream ss;
+					ss << "Entity picked: " << pickedEntity;
+					RE_INFO(ss.str());
 				}
 			}
 			return;

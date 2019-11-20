@@ -3,7 +3,7 @@
 
 namespace Rogue
 {
-	void PickingManager::TransformCursorToWorld(Vec2& cursorPos) const
+	Vec2 PickingManager::TransformCursorToWorld(const Vec2& cursorPos) const
 	{
 		float x = (2.0f * cursorPos.x) / GetWindowWidth(g_engine.GetWindowHandler()) - 1.0f;
 		float y = 1.0f - (2.0f * cursorPos.y) / GetWindowHeight(g_engine.GetWindowHandler());
@@ -19,7 +19,7 @@ namespace Rogue
 
 		glm::vec4 rayWorld4D = glm::inverse(viewMat) * rayEye;
 
-		cursorPos = Vec2{ rayWorld4D.x, rayWorld4D.y };
+		return Vec2{ rayWorld4D.x, rayWorld4D.y };
 	}
 
 	void PickingManager::GenerateMeshAABB(TransformComponent& trans) const
@@ -27,6 +27,9 @@ namespace Rogue
 		AABB pickArea;
 		Vec2 pos = trans.GetPosition();
 		Vec2 scale = trans.GetScale();
+		
+		scale.x = REAbs(scale.x);
+		scale.y = REAbs(scale.y);
 
 		pickArea.setMin(Vec2{ pos.x - scale.x * 0.5f, pos.y - scale.y * 0.5f });
 		pickArea.setMax(Vec2{ pos.x + scale.x * 0.5f, pos.y + scale.y * 0.5f });
