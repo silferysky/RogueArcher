@@ -43,14 +43,15 @@ namespace Rogue
 		CollisionManager() = default;
 		~CollisionManager() = default;
 
-		bool DiscreteAABBVsCircle(const AABB& aabb, const CircleCollider& circle);
-		bool DiscreteCircleVsAABB(const CircleCollider& circle, const AABB& aabb);
+		bool DiscreteAABBVsCircle(const AABB& aabb, const BoundingCircle& circle);
+		bool DiscreteCircleVsAABB(const BoundingCircle& circle, const AABB& aabb);
+
+		bool DiscretePointVsAABB(const Vec2& point, const AABB& aabb) const;
 
 		// BOUNDING CIRCLE
-		void UpdateCircleCollider(CircleCollider& circle, const TransformComponent& trans) const;
+		void UpdateBoundingCircle(BoundingCircle& circle, const TransformComponent& trans) const;
 
-		bool DiscreteCircleVsCircle(const CircleCollider& circleA, const CircleCollider& circleB,
-			const TransformComponent& transA, const TransformComponent& transB);
+		bool DiscreteCircleVsCircle(const BoundingCircle& circleA, const BoundingCircle& circleB);
 
 		int ContinuousCircleVsLineSegment(const CircleCollider2DComponent& circle, const Vec2& ptEnd, const LineSegment& lineSeg,	
 			Vec2& interPt, Vec2& normalAtCollision, float& interTime, bool& checkLineEdges);

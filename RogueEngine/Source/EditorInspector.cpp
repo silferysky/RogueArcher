@@ -1,6 +1,7 @@
 #include "Precompiled.h"
 #include "EditorInspector.h"
 #include "REEngine.h"
+#include "CameraManager.h"
 #include "Main.h"
 
 namespace Rogue
@@ -75,6 +76,10 @@ namespace Rogue
 						{
 							auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(i.m_Entity);
 							trans.DisplayOnInspector();
+							if (ImGui::Button("Remove Component"))
+							{
+								g_engine.m_coordinator.RemoveComponent<TransformComponent>(i.m_Entity);
+							}
 						}
 					}
 					
@@ -83,7 +88,11 @@ namespace Rogue
 						if (ImGui::CollapsingHeader("Sprite"))
 						{
 							auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(i.m_Entity);
-							sprite.DisplayOnInspector();							
+							sprite.DisplayOnInspector();			
+							if (ImGui::Button("Remove Component"))
+							{
+								g_engine.m_coordinator.RemoveComponent<SpriteComponent>(i.m_Entity);
+							}
 						}
 					}
 
@@ -93,6 +102,10 @@ namespace Rogue
 						{
 							auto& animation = g_engine.m_coordinator.GetComponent<AnimationComponent>(i.m_Entity);
 							animation.DisplayOnInspector();
+							if (ImGui::Button("Remove Component"))
+							{
+								g_engine.m_coordinator.RemoveComponent<AnimationComponent>(i.m_Entity);
+							}
 						}
 					}
 
@@ -102,6 +115,10 @@ namespace Rogue
 						{
 							auto& circle2D = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i.m_Entity);
 							circle2D.DisplayOnInspector();
+							if (ImGui::Button("Remove Component"))
+							{
+								g_engine.m_coordinator.RemoveComponent<CircleCollider2DComponent>(i.m_Entity);
+							}
 						}
 					}
 
@@ -111,6 +128,10 @@ namespace Rogue
 						{
 							auto& box2D = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(i.m_Entity);
 							box2D.DisplayOnInspector();
+							if (ImGui::Button("Remove Component"))
+							{
+								g_engine.m_coordinator.RemoveComponent<BoxCollider2DComponent>(i.m_Entity);
+							}
 						}
 					}
 
@@ -121,6 +142,10 @@ namespace Rogue
 							auto& RigidBody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(i.m_Entity);
 							RigidBody.DisplayOnInspector();
 						}
+						if (ImGui::Button("Remove Component"))
+						{
+							g_engine.m_coordinator.RemoveComponent<RigidbodyComponent>(i.m_Entity);
+						}
 					}
 
 					if (g_engine.m_coordinator.ComponentExists<LogicComponent>(i.m_Entity))
@@ -129,6 +154,10 @@ namespace Rogue
 						{
 							auto& Logic = g_engine.m_coordinator.GetComponent<LogicComponent>(i.m_Entity);
 							Logic.DisplayOnInspector();
+						}
+						if (ImGui::Button("Remove Component"))
+						{
+							g_engine.m_coordinator.RemoveComponent<LogicComponent>(i.m_Entity);
 						}
 					}
 
@@ -139,6 +168,10 @@ namespace Rogue
 							auto& Stats = g_engine.m_coordinator.GetComponent<StatsComponent>(i.m_Entity);
 							Stats.DisplayOnInspector();
 						}
+						if (ImGui::Button("Remove Component"))
+						{
+							g_engine.m_coordinator.RemoveComponent<StatsComponent>(i.m_Entity);
+						}
 					}
 
 					if (g_engine.m_coordinator.ComponentExists<CameraComponent>(i.m_Entity))
@@ -147,6 +180,10 @@ namespace Rogue
 						{
 							auto& Camera = g_engine.m_coordinator.GetComponent<CameraComponent>(i.m_Entity);
 							Camera.DisplayOnInspector();
+						}
+						if (ImGui::Button("Remove Component"))
+						{
+							g_engine.m_coordinator.RemoveComponent<CameraComponent>(i.m_Entity);
 						}
 					}
 
@@ -435,8 +472,8 @@ namespace Rogue
 		ImGui::DragFloat("Camera X", &m_cameraPos.x, 1.0f, -10000.0f, 10000.0f);
 		ImGui::DragFloat("Camera Y", &m_cameraPos.y, 1.0f, -10000.0f, 10000.0f);
 
-		Vec2 m_cameraMin = g_engine.m_coordinator.GetSystem<CameraSystem>()->GetCameraMin();
-		Vec2 m_cameraMax = g_engine.m_coordinator.GetSystem<CameraSystem>()->GetCameraMax();
+		Vec2 m_cameraMin = CameraManager::instance().GetCameraMin();
+		Vec2 m_cameraMax = CameraManager::instance().GetCameraMax();
 
 		ImGui::DragFloat("Camera Min X", &m_cameraMin.x, 1.0f, -10000.0f, 10000.0f);
 		ImGui::DragFloat("Camera Min Y", &m_cameraMin.y, 1.0f, -10000.0f, 10000.0f);
@@ -454,8 +491,8 @@ namespace Rogue
 
 		g_engine.m_coordinator.GetSystem<CameraSystem>()->SetCameraPos(m_cameraPos);
 
-		g_engine.m_coordinator.GetSystem<CameraSystem>()->SetCameraMin(m_cameraMin);
-		g_engine.m_coordinator.GetSystem<CameraSystem>()->SetCameraMax(m_cameraMax);
+		CameraManager::instance().SetCameraMin(m_cameraMin);
+		CameraManager::instance().SetCameraMax(m_cameraMax);
 
 		g_engine.SetCameraZoom(m_cameraZoom);
 

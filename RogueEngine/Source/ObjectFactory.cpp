@@ -8,6 +8,7 @@
 #include "EntityManager.h"
 #include "FileIO.h"
 #include "EditorHierarchyInfo.h"
+#include "CameraManager.h"
 
 namespace Rogue
 {
@@ -259,8 +260,8 @@ namespace Rogue
 
 		m_maxFileCount = SceneManager::instance().GetLoadedLevels().size();
 
-		g_engine.m_coordinator.GetSystem<CameraSystem>()->SetCameraMin(Vec2(level["CameraMinX"].GetFloat(), level["CameraMinY"].GetFloat()));
-		g_engine.m_coordinator.GetSystem<CameraSystem>()->SetCameraMax(Vec2(level["CameraMaxX"].GetFloat(), level["CameraMaxY"].GetFloat()));
+		CameraManager::instance().SetCameraMin(Vec2(level["CameraMinX"].GetFloat(), level["CameraMinY"].GetFloat()));
+		CameraManager::instance().SetCameraMax(Vec2(level["CameraMaxX"].GetFloat(), level["CameraMaxY"].GetFloat()));
 
 		stdstr = std::string();
 
@@ -461,7 +462,7 @@ namespace Rogue
 					}
 					case static_cast<int>(CIRCLECOLLIDER2D) :
 					{
-						strstream << "CircleCollider{" << g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(entityToSerialize).Serialize() << "}";
+						strstream << "BoundingCircle{" << g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(entityToSerialize).Serialize() << "}";
 						break;
 					}
 					case static_cast<int>(BOXCOLLIDER2D) :

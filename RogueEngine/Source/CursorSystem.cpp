@@ -1,5 +1,8 @@
 #include "Precompiled.h"
 #include "CursorSystem.h"
+#include "PickingManager.h"
+#include "CollisionManager.h"
+#include "CameraManager.h"
 #include "Main.h"
 #include "GameEvent.h"
 
@@ -25,55 +28,35 @@ namespace Rogue
 	void CursorSystem::Update()
 	{
 		g_engine.m_coordinator.InitTimeSystem("Cursor System");
-		Vec2 cursorPos;
-
+		
 		// Windows cursor
-		POINT cursor;
+		POINT windowCursor;
+		Vec2 cursorPos;
 
 		if (g_engine.m_coordinator.GetEditorIsRunning())
 			cursorPos = g_engine.GetViewportCursor();
-
-		else if (GetCursorPos(&cursor))
+		
+		else if (GetCursorPos(&windowCursor))
 		{
-			ScreenToClient(g_engine.GetWindowHandler(), &cursor);
-			cursorPos.x = static_cast<float>(cursor.x);
-			cursorPos.y = static_cast<float>(cursor.y);
+			ScreenToClient(g_engine.GetWindowHandler(), &windowCursor);
+			cursorPos.x = static_cast<float>(windowCursor.x);
+			cursorPos.y = static_cast<float>(windowCursor.y);
 		}
 
+		PickingManager::instance().TransformCursorToWorld(cursorPos);
 
-		float x = (2.0f * cursorPos.x) / GetWindowWidth(g_engine.GetWindowHandler()) - 1.0f;
-		float y = 1.0f - (2.0f * cursorPos.y) / GetWindowHeight(g_engine.GetWindowHandler());
-		float z = 1.0f;
-
-		glm::vec3 rayNDC = glm::vec3(x, y, z);
-
-		glm::vec4 rayClip = glm::vec4(rayNDC.x, rayNDC.y, -1.0f, 1.0f);
-
-		glm::vec4 rayEye = glm::inverse(g_engine.GetProjMat()) * rayClip;
-
-		glm::mat4 viewMat = g_engine.m_coordinator.GetSystem<CameraSystem>()->GetViewMatrix(1.0f);
-
-		glm::vec4 rayWorld4D = glm::inverse(viewMat) * rayEye;
+		Vec2 worldCursor(cursorPos);
+		g_engine.SetWorldCursor(worldCursor);
 
 		for (Entity entity : m_entities)
 		{
-			if (g_engine.m_coordinator.GetEditorIsRunning())
-			{
-				auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
-				Vec2 worldCursor(rayWorld4D.x, -rayWorld4D.y);
-				g_engine.SetWorldCursor(worldCursor);
-				trans.setPosition(worldCursor);
+			auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
 
-			}
-			else
-			{
-				Vec2 worldCursor(rayWorld4D.x, rayWorld4D.y);
-				auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
-				g_engine.SetWorldCursor(worldCursor);
-				trans.setPosition(worldCursor);
-
-			}
+			trans.setPosition(worldCursor);
 		}
+
+		PickingManager::instance().GenerateViewPortArea(CameraManager::instance().GetCameraMin(), CameraManager::instance().GetCameraMax());
+		
 		g_engine.m_coordinator.EndTimeSystem("Cursor System");
 	}
 

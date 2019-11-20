@@ -58,6 +58,22 @@ namespace Rogue
 			ImGui::Text("Enter name of file and click on Set New Path to update sound. Note that new sound will only be loaded when scene is saved and restarted");
 			ImGui::EndTooltip();
 		}
+
+		if (ImGui::Button("Drag Drop Sound Path Here"))
+		{
+
+		}
+
+		if (ImGui::BeginDragDropTarget())
+		{
+			if (const ImGuiPayload * payload = ImGui::AcceptDragDropPayload("Sound"))
+			{
+				std::string payload_n = *(std::string*)payload->Data;
+				m_soundPath = payload_n.c_str();
+				setSoundPath(m_soundPath);
+			}
+			ImGui::EndDragDropTarget();
+		}
 	}
 
 	void AudioEmitterComponent::setSoundPath(std::string_view soundPath)

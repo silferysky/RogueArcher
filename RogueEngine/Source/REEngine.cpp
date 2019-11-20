@@ -25,6 +25,7 @@
 #include "AudioSystem.h"
 #include "VSync.h"
 #include "CursorSystem.h"
+#include "PickingSystem.h"
 
 namespace Rogue
 {
@@ -36,8 +37,9 @@ namespace Rogue
 	void REEngine::RegisterSystems()
 	{
 		m_coordinator.RegisterSystem<InputManager>();
-		m_coordinator.RegisterSystem<CursorSystem>();
 		m_coordinator.RegisterSystem<LogicSystem>();
+		m_coordinator.RegisterSystem<CursorSystem>();
+		m_coordinator.RegisterSystem<PickingSystem>();
 		m_coordinator.RegisterSystem<PlayerControllerSystem>();
 		m_coordinator.RegisterSystem<MenuControllerSystem>();
 		m_coordinator.RegisterSystem<PhysicsSystem>();
@@ -137,8 +139,8 @@ namespace Rogue
 			// Avoid spiral of death and clamp dt, thus clamping
 			// how many times the UpdatePhysics can be called in
 			// a single game loop.
-			if (m_accumulatedTime > 0.2f)
-				m_accumulatedTime = 0.2f;
+			//if (m_accumulatedTime > 0.2f)
+			//	m_accumulatedTime = 0.2f;
 
 			while (m_accumulatedTime >= g_fixedDeltaTime)
 			{
@@ -146,8 +148,6 @@ namespace Rogue
 				m_stepCount++;
 			}
 			m_coordinator.Update();
-
-			SwapBuffers(hDC);
 
 			//m_projMat = glm::ortho(-16.0f * 0.5f, 16.0f * 0.5f, -9.0f * 0.5f, 9.0f * 0.5f, -1024.0f, 1024.0f);
 			
@@ -165,6 +165,11 @@ namespace Rogue
 		ReleaseDC(hWnd, hDC);
 		wglDeleteContext(hRC);
 		DestroyWindow(hWnd);
+	}
+
+	void REEngine::SwapBuffer()
+	{
+		SwapBuffers(hDC);
 	}
 
 	HWND REEngine::GetWindowHandler() const

@@ -12,7 +12,6 @@ namespace Rogue
 	{
 		std::string m_texturePath;
 		Texture m_texture;
-		int m_drawPriority = 0;
 		float m_texCoordMin = 0.0f;
 		float m_texCoordMax = 1.0f;
 
@@ -23,9 +22,6 @@ namespace Rogue
 
 		void setTexture(const char* texture);
 		Texture& getTexture();
-
-		void setDrawPriority(const int& drawPriority);
-		int getDrawPriority() const;
 
 		void setTexCoordMin(const float& TexCoordMin);
 		float getTexCoordMin() const;
@@ -40,6 +36,7 @@ namespace Rogue
 		void setFilter(const glm::vec4& filter);
 
 		void DisplayOnInspector();
+
 		//Serialize
 		virtual std::string Serialize() override;
 		virtual void Deserialize(std::string_view toDeserialize) override;

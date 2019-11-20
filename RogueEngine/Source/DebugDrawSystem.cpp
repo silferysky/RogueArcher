@@ -25,9 +25,8 @@
 
 		// Add components to signature
 		Rogue::Signature signature;
-		signature.set(g_engine.m_coordinator.GetComponentType<Rogue::TransformComponent>());
-		signature.set(g_engine.m_coordinator.GetComponentType<Rogue::RigidbodyComponent>());
-
+		signature.set(g_engine.m_coordinator.GetComponentType<Rogue::ColliderComponent>());
+		
 		// Set graphics system signature
 		g_engine.m_coordinator.SetSystemSignature<DebugDrawSystem>(signature);
 
@@ -148,10 +147,10 @@
 		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 
 		const float segments = 32.0f;
-		const float increment = 2.0f * 3.1415f / segments;
+		const float increment = 2.0f * Rogue::RE_PI / segments;
 
 		float radius = circle->m_collider.getRadius();
-		Rogue::Vec2 center = transform->GetPosition();
+		Rogue::Vec2 center = circle->m_collider.GetCenter();
 
 		float sinInc = sinf(increment);
 		float cosInc = cosf(increment);

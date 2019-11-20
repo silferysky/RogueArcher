@@ -357,6 +357,7 @@ namespace Rogue
 			event = new KeyPressCombinedEvent(key, subkey, repeat);
 
 		event->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
+
 		if (g_engine.m_coordinator.GameIsActive())
 			event->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
 		else if (!g_engine.m_coordinator.GetGameState())
@@ -389,16 +390,18 @@ namespace Rogue
 		else
 			event = new KeyTriggeredCombinedEvent(key, subkey);
 
-		event->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
 		if (g_engine.m_coordinator.GameIsActive())
 			event->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
 		else if (!g_engine.m_coordinator.GetGameState())
 			event->SetSystemReceivers((int)SystemID::id_MENUCONTROLLERSYSTEM);
+
+		event->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
 		event->SetSystemReceivers((int)SystemID::id_CAMERASYSTEM);
 		event->SetSystemReceivers((int)SystemID::id_AUDIOSYSTEM);
 		event->SetSystemReceivers((int)SystemID::id_GRAPHICSSYSTEM);
 		event->SetSystemReceivers((int)SystemID::id_DEBUGDRAWSYSTEM);
 		event->SetSystemReceivers((int)SystemID::id_EDITOR);
+		event->SetSystemReceivers((int)SystemID::id_PICKINGSYSTEM);
 		EventDispatcher::instance().AddEvent(event);
 	}
 

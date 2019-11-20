@@ -119,13 +119,20 @@ namespace Rogue
 		ImVec2 imageSize = ImGui::GetContentRegionAvail();
 		ImGui::Image((void*)(intptr_t)(g_engine.m_coordinator.GetSystem<GraphicsSystem>()->getFBO()), ImVec2(imageSize.x,imageSize.y ), ImVec2(0, 1), ImVec2(1, 0));
 
-
 		ImVec2 mousePos = ImGui::GetMousePos();
 		int width = g_engine.GetEngineWindowWidth();
 		int height = g_engine.GetEngineWindowHeight();
 
-		mousePos.x = (mousePos.x - ImGui::GetCursorScreenPos().x) * width / imageSize.x;
-		mousePos.y = (mousePos.y - ImGui::GetCursorScreenPos().y) * height / -imageSize.y;
+		// Bring mousePos to the bottom left of the viewport
+		mousePos.x -= ImGui::GetCursorScreenPos().x;
+		mousePos.y -= ImGui::GetCursorScreenPos().y;
+
+		// Bring mousePos to the top left of the viewport
+		mousePos.y += imageSize.y;
+
+		// Scale viewport coordinates to screen coordinates
+		mousePos.x = mousePos.x * width / imageSize.x;
+		mousePos.y = mousePos.y * height / imageSize.y;
 
 		g_engine.SetViewportCursor(mousePos);
 		ImGui::End();
