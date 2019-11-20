@@ -7,7 +7,7 @@
 namespace Rogue
 {
 	ImGuiInspector::ImGuiInspector() :
-		activeObjects{ g_engine.m_coordinator.GetEntityManager().m_getActiveObjects() }, m_color{ 0.0f,0.0f,0.0f,0.0f }
+		activeObjects{ g_engine.m_coordinator.GetActiveObjects() }, m_color{ 0.0f,0.0f,0.0f,0.0f }
 	{}
 
 	void ImGuiInspector::Init()
