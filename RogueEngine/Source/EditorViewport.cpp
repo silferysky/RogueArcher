@@ -6,6 +6,7 @@ namespace Rogue
 {
 	void ImGuiEditorViewport::ReloadLevel()
 	{
+		g_engine.m_coordinator.GetSystem<AudioSystem>()->ShutdownSounds();
 		SceneManager::instance().ClearAllEntities();
 		SceneManager::instance().LoadLevel(SceneManager::instance().getCurrentFileName().c_str());
 		g_engine.m_coordinator.SetGameState(false);
