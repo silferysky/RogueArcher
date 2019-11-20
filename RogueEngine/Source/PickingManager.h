@@ -34,7 +34,7 @@ namespace Rogue
 
 		Vec2 TransformCursorToWorld(const Vec2& cursor) const;
 		void GenerateMeshAABB(TransformComponent& trans) const;
-		void GenerateViewPortArea(const Vec2& min, const Vec2& max);
+		void GenerateViewPortAABB(const glm::vec3& cameraPos, float zoom);
 		
 		const AABB& GetViewPortArea() const;
 		Entity ChooseTopLayer() const;
