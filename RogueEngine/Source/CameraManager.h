@@ -24,31 +24,5 @@ namespace Rogue
 
 		void SetCameraMin(const Vec2& min) { m_cameraMin = min; }
 		void SetCameraMax(const Vec2& max) { m_cameraMax = max; }
-<<<<<<< Updated upstream
-=======
-		void SetCameraPos(const glm::vec3& position) { m_cameraPos = position; }
-
-		void ZoomIn()
-		{
-			if (m_cameraZoom > 0.0f)
-				m_cameraZoom -= 0.01f;
-		}
-
-		void ZoomOut()
-		{
-			m_cameraZoom += 0.01f; 
-		}
-
-		float GetCameraZoom() const
-		{
-			return m_cameraZoom;
-		}
-
-		void SetCameraZoom(float cameraZoom)
-		{
-			m_cameraZoom = cameraZoom;
-		}
-
->>>>>>> Stashed changes
 	};
 }

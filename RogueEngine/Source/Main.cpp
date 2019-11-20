@@ -1,5 +1,11 @@
+#define _CRT_SECURE_NO_WARNINGS
+
 #include "Precompiled.h"
 #include "Main.h"
+
+#if _DEBUG
+#include <iostream>
+#endif
 
 Rogue::REEngine g_engine;
 float g_deltaTime;

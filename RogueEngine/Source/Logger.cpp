@@ -49,9 +49,8 @@ namespace Rogue
 		if (!args)
 		{
 			RE_CORE_ERROR(errorMsg);
-
-#if defined(DEBUG) | defined(_DEBUG)
-			assert(args && std::string(errorMsg).data());
+#if (DEBUG)
+			assert(args && errorMsg);
 #endif
 
 		}
