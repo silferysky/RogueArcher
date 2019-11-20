@@ -53,8 +53,7 @@ namespace Rogue
 			{
 				// Get the cursor's world position
 				Vec2 cursor = g_engine.GetWorldCursor();
-
-				PickingManager::instance().GenerateViewPortArea(CameraManager::instance().GetCameraMin(), CameraManager::instance().GetCameraMax());
+				PickingManager::instance().GenerateViewPortAABB(CameraManager::instance().GetCameraPos(), CameraManager::instance().GetCameraZoom());
 
 				// Get the viewport's AABB
 				const AABB& viewportArea = PickingManager::instance().GetViewPortArea();

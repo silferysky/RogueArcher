@@ -26,6 +26,7 @@
 #include "VSync.h"
 #include "CursorSystem.h"
 #include "PickingSystem.h"
+#include "CameraManager.h"
 
 namespace Rogue
 {
@@ -152,7 +153,8 @@ namespace Rogue
 			//m_projMat = glm::ortho(-16.0f * 0.5f, 16.0f * 0.5f, -9.0f * 0.5f, 9.0f * 0.5f, -1024.0f, 1024.0f);
 			
 			auto m_dimensions = Vec2{ m_size, aspect_ratio * m_size } * 0.5;
-			m_projMat = glm::ortho(-m_dimensions.x * m_cameraZoom, m_dimensions.x * m_cameraZoom, -m_dimensions.y * m_cameraZoom, m_dimensions.y * m_cameraZoom, -1024.0f, 1024.0f);
+			float cameraZoom = CameraManager::instance().GetCameraZoom();
+			m_projMat = glm::ortho(-m_dimensions.x * cameraZoom, m_dimensions.x * cameraZoom, -m_dimensions.y * cameraZoom, m_dimensions.y * cameraZoom, -1024.0f, 1024.0f);
 			
 			m_loopEnd = mainLoopTimer.now();
 		}
@@ -230,27 +232,6 @@ namespace Rogue
 	void REEngine::SetTimeScale(float timeScale)
 	{
 		m_timeScale = timeScale;
-	}
-
-	void REEngine::ZoomIn()
-	{
-		if (m_cameraZoom > 0.0f)
-			m_cameraZoom -= 0.01f;
-	}
-
-	void REEngine::ZoomOut()
-	{
-		m_cameraZoom += 0.01f;
-	}
-
-	float& REEngine::GetCameraZoom()
-	{
-		return m_cameraZoom;
-	}
-
-	void REEngine::SetCameraZoom(const float& cameraZoom)
-	{
-		m_cameraZoom = cameraZoom;
 	}
 
 	void REEngine::ToggleVSync()

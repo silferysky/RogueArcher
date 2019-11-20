@@ -459,8 +459,8 @@ namespace Rogue
 		ImGui::Checkbox("Toggle World Camera?", &m_worldCamera);
 		g_engine.m_coordinator.GetSystem<CameraSystem>()->SetWorldCamera(m_worldCamera);
 
-		float m_cameraZoom = g_engine.GetCameraZoom();
-		glm::vec3 m_cameraPos = g_engine.m_coordinator.GetSystem<CameraSystem>()->GetCameraPos();
+		float m_cameraZoom = CameraManager::instance().GetCameraZoom();
+		glm::vec3 m_cameraPos = CameraManager::instance().GetCameraPos();
 
 		if (m_worldCamera)
 		{
@@ -489,12 +489,10 @@ namespace Rogue
 			m_cameraZoom = 1.630f;
 		}
 
-		g_engine.m_coordinator.GetSystem<CameraSystem>()->SetCameraPos(m_cameraPos);
-
+		CameraManager::instance().SetCameraPos(m_cameraPos);
 		CameraManager::instance().SetCameraMin(m_cameraMin);
 		CameraManager::instance().SetCameraMax(m_cameraMax);
-
-		g_engine.SetCameraZoom(m_cameraZoom);
+		CameraManager::instance().SetCameraZoom(m_cameraZoom);
 
 		bool m_toggleGravity = g_engine.m_coordinator.GetSystem<PhysicsSystem>()->getToggleGravity();
 		Vec2 m_gravity = g_engine.m_coordinator.GetSystem<PhysicsSystem>()->getGravity();
