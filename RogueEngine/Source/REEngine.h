@@ -40,7 +40,6 @@ namespace Rogue
 		REConfig config;
 
 		glm::mat4 m_projMat;
-		float m_cameraZoom = 1.0f;
 
 		float aspect_ratio;	
 		float m_size = 2000.0f;
@@ -68,11 +67,6 @@ namespace Rogue
 		ImVec2 GetViewportCursor() const;
 		int GetEngineWindowWidth() const;
 		int GetEngineWindowHeight() const;
-
-		float& GetCameraZoom();
-		void SetCameraZoom(const float& cameraZoom);
-		void ZoomIn();
-		void ZoomOut();
 
 		void SetGameIsRunning(bool set);
 		void SetTimeScale(float timeScale);
