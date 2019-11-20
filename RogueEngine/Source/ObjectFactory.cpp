@@ -584,7 +584,8 @@ namespace Rogue
 						break;
 					}
 					case static_cast<int>(COLLIDER) :
-					{		g_engine.m_coordinator.LoadComponent<ColliderComponent>(curEnt, readstr);
+					{
+						g_engine.m_coordinator.LoadComponent<ColliderComponent>(curEnt, readstr);
 						break;
 					}
 					case static_cast<int>(PLAYERCONTROLLER) :
