@@ -38,57 +38,57 @@ namespace Rogue
 
 	void PickingSystem::Receive(Event* ev)
 	{
-		// If no entities with transform exist, don't bother.
-		if (m_entities.size() == 0)
-			return;
+		//// If no entities with transform exist, don't bother.
+		//if (m_entities.size() == 0)
+		//	return;
 
-		switch (ev->GetEventType())
-		{
-		case EventType::EvKeyTriggered:
-			KeyTriggeredEvent* keyTriggered = dynamic_cast<KeyTriggeredEvent*>(ev);
-			KeyPress keycode = keyTriggered->GetKeyCode();
+		//switch (ev->GetEventType())
+		//{
+		//case EventType::EvKeyTriggered:
+		//	KeyTriggeredEvent* keyTriggered = dynamic_cast<KeyTriggeredEvent*>(ev);
+		//	KeyPress keycode = keyTriggered->GetKeyCode();
 
-			// If left-mouse click is triggered
-			if (keycode == KeyPress::MB1)
-			{
-				// Get the cursor's world position
-				Vec2 cursor = g_engine.GetWorldCursor();
-				PickingManager::instance().GenerateViewPortAABB(CameraManager::instance().GetCameraPos(), CameraManager::instance().GetCameraZoom());
+		//	// If left-mouse click is triggered
+		//	if (keycode == KeyPress::MB1)
+		//	{
+		//		// Get the cursor's world position
+		//		Vec2 cursor = g_engine.GetWorldCursor();
+		//		PickingManager::instance().GenerateViewPortAABB(CameraManager::instance().GetCameraPos(), CameraManager::instance().GetCameraZoom());
 
-				// Get the viewport's AABB
-				const AABB& viewportArea = PickingManager::instance().GetViewPortArea();
+		//		// Get the viewport's AABB
+		//		const AABB& viewportArea = PickingManager::instance().GetViewPortArea();
 
-				// If cursor is in the viewport area, proceed.
-				if (CollisionManager::instance().DiscretePointVsAABB(cursor, viewportArea))
-				{
-					// Go through every transform component
-					for (Entity entity : m_entities)
-					{
-						TransformComponent& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
+		//		// If cursor is in the viewport area, proceed.
+		//		if (CollisionManager::instance().DiscretePointVsAABB(cursor, viewportArea))
+		//		{
+		//			// Go through every transform component
+		//			for (Entity entity : m_entities)
+		//			{
+		//				TransformComponent& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
 
-						// If entity is in the viewport area
-						if (CollisionManager::instance().DiscretePointVsAABB(trans.GetPosition(), viewportArea))
-						{
-							// Generate the transform aabb of the entity
-							PickingManager::instance().GenerateMeshAABB(trans);
+		//				// If entity is in the viewport area
+		//				if (CollisionManager::instance().DiscretePointVsAABB(trans.GetPosition(), viewportArea))
+		//				{
+		//					// Generate the transform aabb of the entity
+		//					PickingManager::instance().GenerateMeshAABB(trans);
 
-							// Check if cursor is on the entity
-							if (CollisionManager::instance().DiscretePointVsAABB(cursor, trans.GetPickArea()))
-							{
-								// If true, add to the set of potentially picked entities
-								PickingManager::instance().AddPickedEntity(entity);
-							}
-						}
-					}
-					Entity pickedEntity = PickingManager::instance().ChooseTopLayer();
+		//					// Check if cursor is on the entity
+		//					if (CollisionManager::instance().DiscretePointVsAABB(cursor, trans.GetPickArea()))
+		//					{
+		//						// If true, add to the set of potentially picked entities
+		//						PickingManager::instance().AddPickedEntity(entity);
+		//					}
+		//				}
+		//			}
+		//			Entity pickedEntity = PickingManager::instance().ChooseTopLayer();
 
-					// Send EntityPickedEvent
-					std::stringstream ss;
-					ss << "Entity picked: " << pickedEntity;
-					RE_INFO(ss.str());
-				}
-			}
-			return;
-		} // End switch case
+		//			// Send EntityPickedEvent
+		//			std::stringstream ss;
+		//			ss << "Entity picked: " << pickedEntity;
+		//			RE_INFO(ss.str());
+		//		}
+		//	}
+		//	return;
+		//} // End switch case
 	} // End receive()
 } // End namespace Rogue
