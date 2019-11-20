@@ -189,7 +189,7 @@ namespace Rogue
 			{
 				// Triangle vertices, third vertex implied as (0, 0)
 				Vec2 p1(m_vertices[i1]);
-				unsigned int i2 = i1 + 1 < m_vertexCount ? i1 + 1 : 0;
+				unsigned int i2 = i1 + static_cast<unsigned int>(1) < m_vertexCount ? i1 + 1 : 0;
 				Vec2 p2(m_vertices[i2]);
 
 				//	float D = Cross(p1, p2); // Cross product
