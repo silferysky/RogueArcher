@@ -5,7 +5,7 @@
 namespace Rogue
 {
 	CircleCollider2DComponent::CircleCollider2DComponent(CircleCollider2DComponent&& rhs) noexcept :
-		m_collider{ CircleCollider{} }
+		m_collider{ BoundingCircle{} }
 	{
 		std::swap(m_collider, rhs.m_collider);
 	}
@@ -29,25 +29,16 @@ namespace Rogue
 	}
 	void CircleCollider2DComponent::DisplayOnInspector()
 	{
-		float m_radius = m_collider.getRadius();
-		Vec2 m_centerOffset = m_collider.getCenterOffSet();
-		float m_rotationOffset = m_collider.getRotationOffSet();
-		Vec2 m_scaleOffset = m_collider.getScaleOffSet();
+		float radius = m_collider.getRadius();
+		Vec2 centerOffset = m_collider.getCenterOffSet();
 
 		ImGui::PushItemWidth(75);
-		ImGui::DragFloat("Radius", &m_radius, 0.5f, -100000.0f, 100000.0f);
-		m_collider.setRadius(m_radius);
+		ImGui::DragFloat("Radius", &radius, 0.5f, -100000.0f, 100000.0f);
+		m_collider.setRadius(radius);
 
-		ImGui::DragFloat("Center Offset X ", &m_centerOffset.x, 0.5f, -100000.0f, 100000.0f);
-		ImGui::DragFloat("Center Offset Y ", &m_centerOffset.y, 0.5f, -100000.0f, 100000.0f);
-		m_collider.setCenterOffSet(m_centerOffset);
-
-		ImGui::DragFloat("Rotation Offset ", &m_rotationOffset, 0.5f, -100000.0f, 100000.0f);
-		m_collider.setRotationOffSet(m_rotationOffset);
-
-		ImGui::DragFloat("Scale Offset X ", &m_scaleOffset.x, 0.5f, -100000.0f, 100000.0f);
-		ImGui::DragFloat("Scale Offset Y ", &m_scaleOffset.y, 0.5f, -100000.0f, 100000.0f);
-		m_collider.setScaleOffSet(m_scaleOffset);
+		ImGui::DragFloat("Center Offset X ", &centerOffset.x, 0.5f, -100000.0f, 100000.0f);
+		ImGui::DragFloat("Center Offset Y ", &centerOffset.y, 0.5f, -100000.0f, 100000.0f);
+		m_collider.setCenterOffSet(centerOffset);
 	}
 
 	std::string CircleCollider2DComponent::Serialize()

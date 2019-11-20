@@ -138,11 +138,12 @@ namespace Rogue
 		Manifold manifold(A, B);
 
 		if (circleIsInside)
-			manifold.m_normal = -vAB;
+			manifold.m_normal = -normal / normalLength;
 		else
-			manifold.m_normal = vAB;
+			manifold.m_normal = normal / normalLength;
 
 		manifold.m_penetration = radius - normalLength;
+
 
 		m_manifolds.emplace_back(manifold);
 
@@ -209,7 +210,7 @@ namespace Rogue
 
 	}
 
-	bool CollisionManager::DiscreteAABBVsCircle(const AABB& aabb, const CircleCollider& circle)
+	bool CollisionManager::DiscreteAABBVsCircle(const AABB& aabb, const BoundingCircle& circle)
 	{
 		AABB aabb2;
 		Vec2 circleCenter = circle.GetCenter();
@@ -220,12 +221,23 @@ namespace Rogue
 		return DiscreteAABBvsAABB(aabb, aabb2);
 	}
 
-	bool CollisionManager::DiscreteCircleVsAABB(const CircleCollider& circle, const AABB& aabb)
+	bool CollisionManager::DiscreteCircleVsAABB(const BoundingCircle& circle, const AABB& aabb)
 	{
 		return DiscreteAABBVsCircle(aabb, circle);
 	}
 
-	void CollisionManager::UpdateCircleCollider(CircleCollider& circle, const TransformComponent& trans) const
+	bool CollisionManager::DiscretePointVsAABB(const Vec2& point, const AABB& aabb) const
+	{
+		Vec2 min = aabb.getMin();
+		Vec2 max = aabb.getMax();
+
+		if (point.x < min.x || point.x > max.x || point.y < min.y || point.y > max.y)
+			return false;
+		
+		return true;
+	}
+
+	void CollisionManager::UpdateBoundingCircle(BoundingCircle& circle, const TransformComponent& trans) const
 	{
 		circle.SetCenter(circle.getCenterOffSet() + trans.GetPosition());
 	}
@@ -235,13 +247,11 @@ namespace Rogue
 	//__________________________BOUNDING CIRCLE________________________________|
 	//_________________________________________________________________________|
 	//_________________________________________________________________________|
-	bool CollisionManager::DiscreteCircleVsCircle(const CircleCollider& circleA, const CircleCollider& circleB,
-		const TransformComponent& transA, const TransformComponent& transB)
+	bool CollisionManager::DiscreteCircleVsCircle(const BoundingCircle& circleA, const BoundingCircle& circleB)
 	{
 		float totalRadius = circleA.getRadius() + circleB.getRadius();
 
-		return Vec2SqDistance(transA.GetPosition() + circleA.getCenterOffSet(), transB.GetPosition() + circleB.getCenterOffSet()) <
-			totalRadius * totalRadius;
+		return Vec2SqDistance(circleA.GetCenter(), circleB.GetCenter()) < totalRadius * totalRadius;
 	}
 
 	/******************************************************************************/

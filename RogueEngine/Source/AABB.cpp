@@ -3,6 +3,10 @@
 
 namespace Rogue
 {
+	AABB::AABB(const Vec2& min, const Vec2& max) :
+		m_min{ min }, m_max{ max }
+	{}
+
 	AABB::AABB(const AABB& aabb) :
 		BaseCollider(aabb), m_min{ aabb.m_min }, m_max{ aabb.m_max }
 	{}
