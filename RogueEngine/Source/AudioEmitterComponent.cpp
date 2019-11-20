@@ -66,7 +66,7 @@ namespace Rogue
 
 		if (ImGui::BeginDragDropTarget())
 		{
-			if (const ImGuiPayload * payload = ImGui::AcceptDragDropPayload("Sprite"))
+			if (const ImGuiPayload * payload = ImGui::AcceptDragDropPayload("Sound"))
 			{
 				std::string payload_n = *(std::string*)payload->Data;
 				m_soundPath = payload_n.c_str();

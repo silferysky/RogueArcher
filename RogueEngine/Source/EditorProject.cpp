@@ -54,14 +54,29 @@ namespace Rogue
 						continue;
 				for (auto& iter : i.second.second)
 				{
-					ImGui::Selectable(iter.m_objectName.c_str());
-					if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
+					ImGui::Selectable(iter.m_fileName.c_str());
+					if (iter.m_fileType == "png" || iter.m_fileType == "bmp")
 					{
-						ImGui::SetDragDropPayload("Sprite", &iter.m_objectPath, sizeof(iter.m_objectPath));
-						ImGui::BeginTooltip();
-						ImGui::Text("Dragging %s",iter.m_objectName.c_str());
-						ImGui::EndTooltip();
-						ImGui::EndDragDropSource();
+						if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
+						{
+							ImGui::SetDragDropPayload("Sprite", &iter.m_filePath, sizeof(iter.m_filePath));
+							ImGui::BeginTooltip();
+							ImGui::Text("Dragging %s to Sprite Component", iter.m_fileName.c_str());
+							ImGui::EndTooltip();
+							ImGui::EndDragDropSource();
+						}
+					}
+					if (iter.m_fileType == "ogg" || iter.m_fileType == "wav")
+					{
+						if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
+						{
+							ImGui::SetDragDropPayload("Sound", &iter.m_filePath, sizeof(iter.m_filePath));
+							ImGui::BeginTooltip();
+							ImGui::Text("Dragging %s to Audio Component", iter.m_fileName.c_str());
+							ImGui::EndTooltip();
+							ImGui::EndDragDropSource();
+						}
+
 					}
 				}
 			}
@@ -86,14 +101,16 @@ namespace Rogue
 				if (std::filesystem::is_directory(entry.status()))
 				{
 						m_currentDirectory = filename.string();
-						m_data[filename.string()].second.push_back(DirectoryInfo("","", m_currentLevel));
+						m_data[filename.string()].second.push_back(DirectoryInfo("","", m_currentLevel,""));
 						DisplayDirectoryTreeImp(entry, level + 1);
 				}
 				else if (std::filesystem::is_regular_file(entry.status()))
 				{
 					DirectoryInfo temp;
-					temp.m_objectName = filename.string();
-					temp.m_objectPath = pathToShow.string() + "\\" + filename.string();
+					temp.m_fileName = filename.string();
+					temp.m_filePath = pathToShow.string() + "\\" + filename.string();
+					size_t pos = filename.string().find_last_of(".");
+					temp.m_fileType = filename.string().substr(pos + 1);
 					for (auto& i : m_data)
 					{
 						if (i.first == m_currentDirectory)

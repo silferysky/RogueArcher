@@ -86,10 +86,8 @@ namespace Rogue
 		ImGui::PushItemWidth(250);
 		ImGui::ColorEdit4("Color", (float*)& m_filter);
 
-		ImGui::SameLine();
-		if (ImGui::Button("Drag Drop Sprite here"))
-		{			
-		}
+		ImGui::Text("Drag Drop Sprite here");
+
 		if (ImGui::BeginDragDropTarget())
 		{
 			if (const ImGuiPayload * payload = ImGui::AcceptDragDropPayload("Sprite"))

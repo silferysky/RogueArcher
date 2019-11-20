@@ -20,11 +20,12 @@ namespace Rogue
 	class DirectoryInfo
 	{
 	public:
-		std::string m_objectName;
-		std::string m_objectPath;
+		std::string m_fileName;
+		std::string m_filePath;
+		std::string m_fileType;
 		bool m_selected = false;
 		int m_level = 0;
 		DirectoryInfo() = default;
-		DirectoryInfo(std::string path,std::string_view name,int level) : m_objectPath(path),m_objectName(name),m_level(level) {}
+		DirectoryInfo(std::string_view path,std::string_view name,int level,std::string_view type) : m_filePath(path),m_fileName(name),m_level(level),m_fileType(type) {}
 	};
 }
