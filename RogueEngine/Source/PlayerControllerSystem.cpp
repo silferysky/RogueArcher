@@ -373,7 +373,7 @@ namespace Rogue
 			HierarchyInfo newInfo{};
 			newInfo.m_Entity = ball;
 			newInfo.m_objectName = "Ball";
-			g_engine.m_coordinator.GetEntityManager().m_getActiveObjects().push_back(newInfo);
+			g_engine.m_coordinator.GetActiveObjects().push_back(newInfo);
 
 			AddToTimedEntities(ball, 0.8f);
 			break;

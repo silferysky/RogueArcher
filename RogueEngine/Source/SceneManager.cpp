@@ -34,7 +34,7 @@ namespace Rogue
 
 	void SceneManager::ClearActiveEntities()
 	{
-		g_engine.m_coordinator.GetEntityManager().m_getActiveObjects().clear();
+		g_engine.m_coordinator.GetActiveObjects().clear();
 	}
 
 	void SceneManager::ClearAllEntities()
@@ -211,7 +211,7 @@ namespace Rogue
 	void SceneManager::AddToActiveEntities(Entity newEnt)
 	{
 		//Safety Check
-		auto& activeObjects = g_engine.m_coordinator.GetEntityManager().m_getActiveObjects();
+		auto& activeObjects = g_engine.m_coordinator.GetActiveObjects();
 		for (auto& iterator : activeObjects)
 		{
 			if (iterator.m_Entity == newEnt)
@@ -225,7 +225,7 @@ namespace Rogue
 		strstream << "Game Object " << m_objectIterator++;
 		sstr = strstream.str();
 		newInfo.m_objectName = sstr;
-		g_engine.m_coordinator.GetEntityManager().m_getActiveObjects().push_back(newInfo);
+		g_engine.m_coordinator.GetActiveObjects().push_back(newInfo);
 	}
 
 	void SceneManager::DeleteActiveEntity(Entity ent)
@@ -262,7 +262,7 @@ namespace Rogue
 		strstream << "Game Object " << m_objectIterator++;
 		sstr = strstream.str();
 		newInfo.m_objectName = sstr;
-		g_engine.m_coordinator.GetEntityManager().m_getActiveObjects().push_back(newInfo);
+		g_engine.m_coordinator.GetActiveObjects().push_back(newInfo);
 
 		return newEnt;
 	}
@@ -278,7 +278,7 @@ namespace Rogue
 		strstream << "Camera " << m_cameraIterator++;
 		sstr = strstream.str();
 		newInfo.m_objectName = sstr;
-		g_engine.m_coordinator.GetEntityManager().m_getActiveObjects().push_back(newInfo);
+		g_engine.m_coordinator.GetActiveObjects().push_back(newInfo);
 
 		return m_newentity;
 	}
