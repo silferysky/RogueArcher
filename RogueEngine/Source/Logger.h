@@ -29,7 +29,7 @@ namespace Rogue
 
 		inline static std::vector<std::string>& GetConsole() { return RE_Console; }
 		static void AddStringToConsole(std::string_view stringData);
-		static void AssertArgs(bool args, std::string_view errorMsg);
+		static void AssertArgs(bool args, const char* errorMsg);
 
 	private:
 		static std::vector<std::string> RE_Console;

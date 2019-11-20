@@ -44,12 +44,12 @@ namespace Rogue
 		}
 	}
 
-	void Logger::AssertArgs(bool args, std::string_view errorMsg)
+	void Logger::AssertArgs(bool args, const char* errorMsg)
 	{
 		if (!args)
 		{
 			RE_CORE_ERROR(errorMsg);
-#if (DEBUG)
+#if defined (_DEBUG) | defined (DEBUG)
 			assert(args && errorMsg);
 #endif
 
