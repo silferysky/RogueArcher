@@ -290,6 +290,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)Dep\STB\include;$(SolutionDir)Dep\glm;$(SolutionDir)Dep\FMOD\inc;$(SolutionDir)Dep\spdlog-1.x\include;$(SolutionDir)Dep\FreeType\include;$(SolutionDir)Dep\SOIL\include;$(SolutionDir)Dep\GLFW\include;$(SolutionDir)Dep\glew-2.1.0\include;$(SolutionDir)Dep\rapidjson-master\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalOptions>/std:c++17 %(AdditionalOptions)</AdditionalOptions>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)Dep\FreeType\win64;$(SolutionDir)Dep\FMOD\lib\x64;$(SolutionDir)Dep\SOIL\x64;$(SolutionDir)Dep\GLFW\lib-vc2019;$(SolutionDir)Dep\glew-2.1.0\lib\Release\x64</AdditionalLibraryDirectories>
