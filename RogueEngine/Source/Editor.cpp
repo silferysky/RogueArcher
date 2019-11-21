@@ -11,55 +11,69 @@ namespace Rogue
 		Signature signature;
 		g_engine.m_coordinator.SetSystemSignature<Editor>(signature);
 		REGISTER_LISTENER(SystemID::id_EDITOR, Editor::Receive);
-		m_EditorManager->AddEditorWindow<ImGuiEditorFile>("File");
-		m_EditorManager->AddEditorWindow<ImGuiEditorEdit>("Edit");
-		m_EditorManager->AddEditorWindow<ImGuiComponent>("Component");
-		m_EditorManager->AddEditorWindow<ImGuiGameObject>("Game Object");
-		m_EditorManager->AddEditorWindow<ImGuiEditorHierarchy>("Hierarchy");
-		m_EditorManager->AddEditorWindow<ImGuiInspector>("Inspector");
-		m_EditorManager->AddEditorWindow<ImGuiProject>("Project");
-		m_EditorManager->AddEditorWindow<ImGuiEditorViewport>("Viewport");
-		m_EditorManager->AddEditorWindow<ImGuiEditorSettings>("Settings");
-		m_EditorManager->AddEditorWindow<ImGuiConsole>("Console");
-		m_EditorManager->AddEditorWindow<ImGuiProfiler>("Profiler");
-		m_EditorManager->Init();
+		EditorManager::instance().AddEditorWindow<ImGuiEditorFile>("File");
+		EditorManager::instance().AddEditorWindow<ImGuiEditorEdit>("Edit");
+		EditorManager::instance().AddEditorWindow<ImGuiComponent>("Component");
+		EditorManager::instance().AddEditorWindow<ImGuiGameObject>("Game Object");
+		EditorManager::instance().AddEditorWindow<ImGuiEditorHierarchy>("Hierarchy");
+		EditorManager::instance().AddEditorWindow<ImGuiInspector>("Inspector");
+		EditorManager::instance().AddEditorWindow<ImGuiProject>("Project");
+		EditorManager::instance().AddEditorWindow<ImGuiEditorViewport>("Viewport");
+		EditorManager::instance().AddEditorWindow<ImGuiEditorSettings>("Settings");
+		EditorManager::instance().AddEditorWindow<ImGuiConsole>("Console");
+		EditorManager::instance().AddEditorWindow<ImGuiProfiler>("Profiler");
+		EditorManager::instance().Init();
 	}
 
 	void Editor::Update()
 	{
-		m_EditorManager->Update();
+		EditorManager::instance().Update();
 	}
 
 	void Editor::Receive(Event* ev)
 	{
-		KeyTriggeredEvent* keytriggeredevent = dynamic_cast<KeyTriggeredEvent*>(ev);
-		KeyPress keycode = keytriggeredevent->GetKeyCode();
-		if (keytriggeredevent->GetKeyCode() == KeyPress::Numpad8)
+		switch (ev->GetEventType())
 		{
-			Entity selected = 0;
-			for (auto& i : m_currentVector)
+		case EventType::EvKeyTriggered:
+		{
+			KeyTriggeredEvent* keytriggeredevent = dynamic_cast<KeyTriggeredEvent*>(ev);
+			KeyPress keycode = keytriggeredevent->GetKeyCode();
+			if (keytriggeredevent->GetKeyCode() == KeyPress::Numpad8)
 			{
-				if (i.m_selected == true)
-					selected = i.m_Entity;
-			}
+				Entity selected = 0;
+				for (auto& i : m_currentVector)
+				{
+					if (i.m_selected == true)
+						selected = i.m_Entity;
+				}
 
-			if (!g_engine.m_coordinator.ComponentExists<TransformComponent>(selected))
-				return;
+				if (!g_engine.m_coordinator.ComponentExists<TransformComponent>(selected))
+					return;
 
-			for (int i = 0; i < 1500; ++i)
-			{
-				Vec2 Position = g_engine.m_coordinator.GetComponent<TransformComponent>(selected).GetPosition();
-				Position.x = (float)(rand() % 1500);
-				Position.y = (float)(rand() % 1500);
-				g_engine.m_coordinator.GetComponent<TransformComponent>(selected).setPosition(Position);
-				g_engine.m_coordinator.clone(selected);
+				for (int i = 0; i < 1500; ++i)
+				{
+					Vec2 Position = g_engine.m_coordinator.GetComponent<TransformComponent>(selected).GetPosition();
+					Position.x = (float)(rand() % 1500);
+					Position.y = (float)(rand() % 1500);
+					g_engine.m_coordinator.GetComponent<TransformComponent>(selected).setPosition(Position);
+					g_engine.m_coordinator.clone(selected);
+				}
 			}
+			return;
+		}
+		case EventType::EvEntityPicked:
+		{
+			EntPickedEvent* pickedEvent = dynamic_cast<EntPickedEvent*>(ev);
+			EditorManager::instance().SetPickedEntity(pickedEvent->GetEntityID());
+
+			return;
+		}
 		}
 	}
 
 	void Editor::Shutdown()
 	{
-		m_EditorManager->Shutdown();
+		EditorManager::instance().Shutdown();
 	}
 }
 
