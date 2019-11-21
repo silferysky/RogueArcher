@@ -36,7 +36,7 @@ namespace Rogue
 	}
 
 	InputManager::InputManager()
-		:System(SystemID::id_INPUTMANAGER)
+		:System(SystemID::id_INPUTMANAGER), m_clickTimer{ DOUBLE_CLICK_MAX_DELAY }
 	{
 		//Init();
 	}
@@ -123,6 +123,15 @@ namespace Rogue
 						CreateKeyReleaseEvent(static_cast<KeyPress>(i), static_cast<KeyPressSub>(j));
 				}
 			}
+
+		//For double click logic
+		m_clickTimer += g_deltaTime;
+		if (CurKeyboardState.Key[(int)KeyPress::MB1])
+		{
+			if (!PrevKeyboardState.Key[(int)KeyPress::MB1] && m_clickTimer < DOUBLE_CLICK_MAX_DELAY)
+				CreateDoubleClickEvent(KeyPress::MB1);
+			m_clickTimer = 0.0f;
+		}
 	}
 
 	void InputManager::RemakeState()
@@ -402,6 +411,13 @@ namespace Rogue
 		event->SetSystemReceivers((int)SystemID::id_DEBUGDRAWSYSTEM);
 		event->SetSystemReceivers((int)SystemID::id_EDITOR);
 		event->SetSystemReceivers((int)SystemID::id_PICKINGSYSTEM);
+		EventDispatcher::instance().AddEvent(event);
+	}
+
+	void InputManager::CreateDoubleClickEvent(KeyPress key)
+	{
+		MouseDoubleClickEvent* event = new MouseDoubleClickEvent(key);
+
 		EventDispatcher::instance().AddEvent(event);
 	}
 

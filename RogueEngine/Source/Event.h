@@ -37,6 +37,7 @@ namespace Rogue
 		EvMouseButtonTriggered,
 		EvMouseMoved,
 		EvMouseScrolled,
+		EvMouseDoubleClick,
 
 		EvEntityChangeState,
 
