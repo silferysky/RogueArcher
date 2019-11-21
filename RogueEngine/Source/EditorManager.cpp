@@ -5,7 +5,8 @@
 namespace Rogue
 {
 	static ImGuiDockNodeFlags opt_flags = ImGuiDockNodeFlags_None;
-	EditorManager::EditorManager()
+	EditorManager::EditorManager() :
+		m_pickedEntity{ -1 }
 	{}
 
 	void EditorManager::Init()

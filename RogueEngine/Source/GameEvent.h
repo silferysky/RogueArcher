@@ -194,4 +194,14 @@ namespace Rogue
 		EntTriggerExitEvent(Entity id_1, Entity id_2)
 			:EntCollisionExitEvent(id_1, id_2) {}
 	};
+
+	class EntPickedEvent : public EntityEvent
+	{
+	public:
+		SET_EVENT_TYPE(EvEntityPicked)
+
+		EntPickedEvent(Entity _id) :
+			EntityEvent(_id)
+		{}
+	};
 }
