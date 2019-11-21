@@ -9,6 +9,7 @@ namespace Rogue
 		AI_Patrol,
 		AI_Finder,
 		AI_Trigger,
+		Obj_Transition,
 		AI_Last
 	};
 

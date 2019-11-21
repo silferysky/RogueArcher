@@ -35,7 +35,7 @@ namespace Rogue
 		void LoadLevelFiles(const char* fileName);
 		void SaveLevelFiles(const char* fileName);
 
-		void LoadLevel(const char* fileName);
+		void LoadLevel(std::string_view fileName);
 		void SaveLevel(const char* fileName);
 		void SaveAndLoadLevel();
 

@@ -11,6 +11,7 @@
 #include "FinderAI.h"
 #include "PatrolAI.h"
 #include "TriggerAI.h"
+#include "TransitionObject.h"
 
 namespace Rogue
 {
@@ -147,6 +148,12 @@ namespace Rogue
 				{
 					TriggerAI newAI(entities, logicComponent, statsComponent);
 					AddLogicInterface(entities, std::make_shared<TriggerAI>(newAI));
+					break;
+				}
+				case AIType::Obj_Transition:
+				{
+					TransitionObject newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<TransitionObject>(newAI));
 					break;
 				}
 				case AIType::AI_Static:
