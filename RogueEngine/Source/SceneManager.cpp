@@ -203,6 +203,15 @@ namespace Rogue
 		return m_sceneIterator;
 	}
 
+	void SceneManager::ReloadLevel()
+	{
+		ClearAllEntities();
+		LoadLevel(getCurrentFileName().c_str());
+		g_engine.m_coordinator.SetGameState(false);
+		g_engine.m_coordinator.SetPauseState(false);
+		g_engine.SetTimeScale(1.0f);
+	}
+
 	std::map<std::string, std::pair<Signature, std::string>> SceneManager::GetArchetypeMap() const
 	{
 		return m_objectFactory->GetArchetypeMap();
