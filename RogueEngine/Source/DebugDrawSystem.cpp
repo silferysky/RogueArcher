@@ -26,6 +26,8 @@
 		// Add components to signature
 		Rogue::Signature signature;
 		signature.set(g_engine.m_coordinator.GetComponentType<Rogue::ColliderComponent>());
+		signature.set(g_engine.m_coordinator.GetComponentType<Rogue::RigidbodyComponent>());
+		signature.set(g_engine.m_coordinator.GetComponentType<Rogue::TransformComponent>());
 		
 		// Set graphics system signature
 		g_engine.m_coordinator.SetSystemSignature<DebugDrawSystem>(signature);

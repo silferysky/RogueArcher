@@ -152,9 +152,8 @@ namespace Rogue
 
 			//m_projMat = glm::ortho(-16.0f * 0.5f, 16.0f * 0.5f, -9.0f * 0.5f, 9.0f * 0.5f, -1024.0f, 1024.0f);
 			
-			auto m_dimensions = Vec2{ m_size, aspect_ratio * m_size } * 0.5;
-			float cameraZoom = CameraManager::instance().GetCameraZoom();
-			m_projMat = glm::ortho(-m_dimensions.x * cameraZoom, m_dimensions.x * cameraZoom, -m_dimensions.y * cameraZoom, m_dimensions.y * cameraZoom, -1024.0f, 1024.0f);
+			m_dimensions = Vec2{ m_size, aspect_ratio * m_size } * 0.5 * CameraManager::instance().GetCameraZoom();
+			m_projMat = glm::ortho(-m_dimensions.x, m_dimensions.x, -m_dimensions.y, m_dimensions.y, -1024.0f, 1024.0f);
 			
 			m_loopEnd = mainLoopTimer.now();
 		}
@@ -224,6 +223,11 @@ namespace Rogue
 		return GetWindowHeight(hWnd);
 	}
 
+	Vec2 REEngine::GetWorldDimensions() const
+	{
+		return m_dimensions;
+	}
+
 	void REEngine::SetGameIsRunning(bool set)
 	{
 		m_gameIsRunning = set;
@@ -256,6 +260,11 @@ namespace Rogue
 	void REEngine::SetViewportCursor(const ImVec2& pos)
 	{
 		m_viewportCursorPos = pos;
+	}
+
+	void REEngine::SetWorldDimensions(const Vec2& dim)
+	{
+		m_dimensions = dim;
 	}
 
 	HWND REEngine::CreateOpenGLWindow(char* title, int x, int y, int width, int height,
