@@ -59,8 +59,9 @@ namespace Rogue
 		m_objectFactory->SaveLevelFiles(ostrstream.str().c_str());
 	}
 
-	void SceneManager::LoadLevel(const char* fileName)
+	void SceneManager::LoadLevel(std::string_view fileName)
 	{
+		ClearAllEntities();
 		std::ostringstream ostrstream;
 		ostrstream << "Resources/" << fileName;
 

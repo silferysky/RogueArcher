@@ -511,6 +511,9 @@
     <ClInclude Include="Source\PickingManager.h">
       <Filter>RogueEngine\Systems\Picking</Filter>
     </ClInclude>
+    <ClInclude Include="Source\TransitionObject.h">
+      <Filter>RogueEngine\Systems\AI\AI Types</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -791,6 +794,9 @@
     </ClCompile>
     <ClCompile Include="Source\PickingManager.cpp">
       <Filter>RogueEngine\Systems\Picking</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TransitionObject.cpp">
+      <Filter>RogueEngine\Systems\AI\AI Types</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

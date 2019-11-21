@@ -1,6 +1,5 @@
 #include "Precompiled.h"
 #include "TriggerAI.h"
-#include "Logger.h"
 
 namespace Rogue
 {
@@ -9,6 +8,5 @@ namespace Rogue
 
 	void TriggerAI::OnTriggerEnter(Entity other)
 	{
-		RE_INFO("TRIGGER ENTER TRIGGER AI");
 	}
 }

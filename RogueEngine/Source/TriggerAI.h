@@ -8,8 +8,7 @@ namespace Rogue
 	{
 	public:
 		TriggerAI(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent);
-
-	private:
+	
 		virtual void OnTriggerEnter(Entity other) override;
 	};
 }
