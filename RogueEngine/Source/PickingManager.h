@@ -14,13 +14,15 @@ namespace Rogue
 		{
 			TransformComponent& transA = g_engine.m_coordinator.GetComponent<TransformComponent>(entityA);
 			TransformComponent& transB = g_engine.m_coordinator.GetComponent<TransformComponent>(entityB);
-			return transA.GetZ() < transB.GetZ();
+			return transA.GetZ() > transB.GetZ();
 		}
 	};
 
 	class PickingManager
 	{
 		AABB m_viewportArea;
+
+		// Entities sorted according in descending z order
 		std::set<Entity, LayerComparer> m_pickedEntities;
 	public:
 		PickingManager() = default;
@@ -41,6 +43,9 @@ namespace Rogue
 
 		void SetViewPortArea(const AABB& aabb);
 		void AddPickedEntity(Entity entity);
+
+		bool Empty();
+		void Clear();
 	};
 
 }

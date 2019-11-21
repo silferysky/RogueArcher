@@ -14,6 +14,7 @@ namespace Rogue
 		bool m_gameIsRunning;
 		float m_timeScale;
 		bool m_verticalSync;
+		Vec2 m_dimensions;
 
 		Vec2 m_cursorPos;
 		ImVec2 m_viewportCursorPos;
@@ -68,16 +69,13 @@ namespace Rogue
 		ImVec2 GetViewportCursor() const;
 		int GetEngineWindowWidth() const;
 		int GetEngineWindowHeight() const;
-
-		float& GetCameraZoom();
-		void SetCameraZoom(const float& cameraZoom);
-		void ZoomIn();
-		void ZoomOut();
+		Vec2 GetWorldDimensions() const;
 
 		void SetGameIsRunning(bool set);
 		void SetTimeScale(float timeScale);
 		void ToggleVSync();
 		void SetWorldCursor(const Vec2& pos);
 		void SetViewportCursor(const ImVec2& pos);
+		void SetWorldDimensions(const Vec2& dim);
 	};
 }

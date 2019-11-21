@@ -1,13 +1,17 @@
 {
-    "MaxEntityCount": 4,
-    "EntityCount": 4,
-    "BackgroundTexture": "Resources/Assets/DefaultSprite.png;1;1;1;1",
+    "MaxEntityCount": 6,
+    "EntityCount": 6,
+    "BackgroundTexture": "Resources\\Assets\\test.bmp;1;1;1;1",
     "Signature0": 8207,
     "Signature1": 8247,
-    "Signature2": 5,
+    "Signature2": 8215,
     "Signature3": 8215,
-    "Entity0": "Name{Game Object 2}|Tag{}|Sprite{Resources/Assets/DefaultSprite.png;1;1;1;1}|Rigidbody{0;0;0;0;1;1;0;1.344}|Transform{345.648;0;100;100;0;0}|BoundingCircle{60.5;-2.5;-72;0;0}||||||||||Collider{CIRCLE}||||",
-    "Entity1": "Name{Game Object 3}|Tag{}|Sprite{Resources/Assets/DefaultSprite.png;1;1;1;1}|Rigidbody{0;0;0;0;1;1;0;1}|Transform{-940.727;0;109;100;0;0}||BoxCollider{0;0;0;80;87;AWAKE}|PlayerController{0;0;}||||||||Collider{BOX}||||",
-    "Entity2": "Name{Game Object 5}|Tag{}|Sprite{Resources/Assets/DefaultSprite.png;1;1;1;1}||Transform{2;0;100;100;0;0}|||||||||||||||",
-    "Entity3": "Name{Game Object 4}|Tag{}|Sprite{Resources/Assets/DefaultSprite.png;1;1;1;1}|Rigidbody{0;0;0;0;1;1;1;1}|Transform{52;-446;2014;208;0;0}||BoxCollider{0;0;0;0;0;AWAKE}|||||||||Collider{BOX}||||"
+    "Signature4": 8215,
+    "Signature5": 8215,
+    "Entity0": "Name{Ball}|Tag{Circle}|Sprite{Resources\\Assets\\Projectile.png;1;1;1;1}|Rigidbody{0;0;0;0;1;1;1;1.344}|Transform{345.648;0;100;100;0;0}|BoundingCircle{48.5;0;0;0;0}||||||||||Collider{CIRCLE}||||",
+    "Entity1": "Name{Box}|Tag{}|Sprite{Resources\\Assets\\empty.png;1;1;1;1}|Rigidbody{0;0;0;0;1;1;0;1}|Transform{2;267.761;100;100;0;0}||BoxCollider{0;0;0;0;0;AWAKE}|PlayerController{0;0;}||||||||Collider{BOX}||||",
+    "Entity2": "Name{Wall1}|Tag{}|Sprite{Resources\\Assets\\tile.png;1;1;1;1}|Rigidbody{0;0;0;0;1;1;1;1}|Transform{0;-439;1574;100;0;0}||BoxCollider{0;0;0;0;0;AWAKE}|||||||||Collider{BOX}||||",
+    "Entity3": "Name{Wall2}|Tag{Wall}|Sprite{Resources\\Assets\\tile.png;1;1;1;1}|Rigidbody{0;0;0;0;1;1;1;1}|Transform{0;431;1574;100;0;0}||BoxCollider{0;0;0;0;0;AWAKE}|||||||||Collider{BOX}||||",
+    "Entity4": "Name{Wall3}|Tag{Wall}|Sprite{Resources\\Assets\\tile.png;1;1;1;1}|Rigidbody{0;0;0;0;1;1;1;1}|Transform{832.99;-4;92;971;0;0}||BoxCollider{0;0;0;0;0;AWAKE}|||||||||Collider{BOX}||||",
+    "Entity5": "Name{Wall4}|Tag{}|Sprite{Resources\\Assets\\tile.png;1;1;1;1}|Rigidbody{0;0;0;0;1;1;1;1}|Transform{-832.99;-4;92;971;0;0}||BoxCollider{0;0;0;0;0;AWAKE}|||||||||Collider{BOX}||||"
 }
