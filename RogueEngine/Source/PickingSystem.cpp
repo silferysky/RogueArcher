@@ -61,6 +61,9 @@ namespace Rogue
 				// If cursor is in the viewport area, proceed.
 				if (CollisionManager::instance().DiscretePointVsAABB(cursor, viewportArea))
 				{
+					int pickedEntity = -1;
+					float highestZ = 0;
+
 					// Go through every transform component
 					for (Entity entity : m_entities)
 					{
@@ -76,21 +79,19 @@ namespace Rogue
 							// Check if cursor is on the entity
 							if (CollisionManager::instance().DiscretePointVsAABB(cursor, pickArea))
 							{
-								// If true, add to the set of potentially picked entities
-								PickingManager::instance().AddPickedEntity(entity);
+								if (trans.GetZ() >= highestZ)
+								{
+									highestZ = trans.GetZ();
+									pickedEntity = entity;
+								}
 							}
 						}
 					}
-					Entity pickedEntity;
-	
-					if(!PickingManager::instance().Empty())
-						pickedEntity = PickingManager::instance().ChooseTopLayer();
-					else
-						std::cout << "No entity found." << std::endl;
 
-					PickingManager::instance().Clear();
 					// Send EntityPickedEvent
-					
+					std::stringstream ss;
+					ss << pickedEntity;
+					RE_INFO(ss.str());
 				}
 			}
 			return;

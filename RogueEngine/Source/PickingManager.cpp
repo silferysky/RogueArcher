@@ -51,55 +51,8 @@ namespace Rogue
 		return m_viewportArea;
 	}
 
-	Entity PickingManager::ChooseTopLayer() const
-	{
-		std::stringstream ss;
-		for (auto entity : m_pickedEntities)
-		{
-			 std::cout << "Entity found: " << entity << " ";
-		}
-		std::cout << std::endl;
-		//RE_INFO(ss.str());
-		// Return the last element of the set.
-
-		if (m_pickedEntities.size())
-		{
-			return *m_pickedEntities.begin();
-
-			std::cout << "Entity picked: " << *m_pickedEntities.begin() << std::endl;
-		}
-	}
-
 	void PickingManager::SetViewPortArea(const AABB& aabb)
 	{
 		m_viewportArea = aabb;
-	}
-
-	void PickingManager::AddPickedEntity(Entity entity)
-	{
-		for (auto entity : m_pickedEntities)
-		{
-			std::cout << "Entities in list: " << entity << " ";
-		}
-		auto ret = m_pickedEntities.emplace(entity);
-		if (ret.second)
-			std::cout << "Emplace successful!\n";
-		else
-			std::cout << "Emplace unsuccessful (Duplicate exists)!\n";
-		
-		for (auto entity : m_pickedEntities)
-		{
-			std::cout << "Entities in list: " << entity << " ";
-		}
-	}
-
-	bool PickingManager::Empty()
-	{
-		return m_pickedEntities.empty();
-	}
-
-	void PickingManager::Clear()
-	{
-		m_pickedEntities.clear();
 	}
 }

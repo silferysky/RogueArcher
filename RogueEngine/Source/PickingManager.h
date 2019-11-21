@@ -7,23 +7,9 @@
 
 namespace Rogue
 {
-	class LayerComparer
-	{
-	public:
-		bool operator()(Entity entityA, Entity entityB) const
-		{
-			TransformComponent& transA = g_engine.m_coordinator.GetComponent<TransformComponent>(entityA);
-			TransformComponent& transB = g_engine.m_coordinator.GetComponent<TransformComponent>(entityB);
-			return transA.GetZ() > transB.GetZ();
-		}
-	};
-
 	class PickingManager
 	{
 		AABB m_viewportArea;
-
-		// Entities sorted according in descending z order
-		std::set<Entity, LayerComparer> m_pickedEntities;
 	public:
 		PickingManager() = default;
 		~PickingManager() = default;
@@ -39,13 +25,7 @@ namespace Rogue
 		void GenerateViewPortAABB(const glm::vec3& cameraPos, float zoom);
 		
 		const AABB& GetViewPortArea() const;
-		Entity ChooseTopLayer() const;
-
 		void SetViewPortArea(const AABB& aabb);
-		void AddPickedEntity(Entity entity);
-
-		bool Empty();
-		void Clear();
 	};
 
 }
