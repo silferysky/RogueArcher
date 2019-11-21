@@ -67,6 +67,10 @@ namespace Rogue
 					// Go through every transform component
 					for (Entity entity : m_entities)
 					{
+						// Skip cursor entities (crosshair)
+						if (g_engine.m_coordinator.ComponentExists<CursorComponent>(entity))
+							continue;
+
 						TransformComponent& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
 
 						// If entity is in the viewport area
@@ -89,9 +93,15 @@ namespace Rogue
 					}
 
 					// Send EntityPickedEvent
-					std::stringstream ss;
-					ss << pickedEntity;
-					RE_INFO(ss.str());
+					if (pickedEntity >= 0)
+					{
+						EntPickedEvent* event = new EntPickedEvent{ static_cast<Entity>(pickedEntity) };
+
+						if (g_engine.m_coordinator.GetEditorIsRunning() && !g_engine.m_coordinator.GetGameState())
+							event->SetSystemReceivers((int)SystemID::id_EDITOR);
+
+						EventDispatcher::instance().AddEvent(event);
+					}
 				}
 			}
 			return;

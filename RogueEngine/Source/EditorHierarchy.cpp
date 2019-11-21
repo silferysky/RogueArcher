@@ -1,5 +1,6 @@
 #include "Precompiled.h"
 #include "EditorHierarchy.h"
+#include "EditorManager.h"
 
 namespace Rogue
 {
@@ -62,7 +63,29 @@ namespace Rogue
 		{
 			std::string_view tagName(i.m_tag.c_str(), search.size());
 			std::string_view objectName(i.m_objectName.c_str(), search.size());
-			
+			int pickedEntity = EditorManager::instance().GetPickedEntity();
+
+			// If there's any picked entity
+			if (pickedEntity >= 0)
+			{
+				if (pickedEntity == i.m_Entity)
+				{
+					// Select this entity cus it's picked
+					i.m_selected = true;
+					Entity newSelected = i.m_Entity;
+
+					// Find all the other entitiies
+					for (auto& hierarchyInfo : m_currentVector)
+					{
+						// If it's the picked entity, skip
+						if (hierarchyInfo.m_Entity == newSelected)
+							continue;
+						// Unselect the rest
+						else
+							hierarchyInfo.m_selected = false;
+					}
+				}
+			}
 			if (tagName == search || objectName == search)
 			{
 				if (ImGui::Selectable(i.m_objectName.c_str(), i.m_selected, ImGuiSelectableFlags_AllowDoubleClick))
@@ -70,7 +93,7 @@ namespace Rogue
 					if (ImGui::IsMouseClicked(0))
 					{
 						i.m_selected = !i.m_selected;
-						int temp = i.m_Entity;
+						Entity temp = i.m_Entity;
 						for (auto& i : m_currentVector)
 						{
 							if (i.m_Entity == temp)
