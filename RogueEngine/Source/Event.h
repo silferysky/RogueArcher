@@ -52,7 +52,8 @@ namespace Rogue
 		EvOnCollisionExit,
 
 		EvCameraShake,
-		EvChangeAnimation
+		EvChangeAnimation,
+		EvEntityPicked
 	};
 
 	enum EventCategory

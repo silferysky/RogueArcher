@@ -11,8 +11,7 @@ namespace Rogue
 	{
 	public:
 		Editor() :
-			System(SystemID::id_EDITOR),
-			m_EditorManager{ std::make_shared<EditorManager>() }
+			System(SystemID::id_EDITOR)
 		{}
 
 		void Init() override;
@@ -20,7 +19,6 @@ namespace Rogue
 		void Receive(Event* ev) override final;
 		void Shutdown() override;
 	private:
-		 std::shared_ptr<EditorManager> m_EditorManager;
 		 std::vector<HierarchyInfo>& m_currentVector = g_engine.m_coordinator.GetActiveObjects();
 	};
 }
