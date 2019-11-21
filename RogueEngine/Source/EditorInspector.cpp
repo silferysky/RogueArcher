@@ -141,10 +141,10 @@ namespace Rogue
 						{
 							auto& RigidBody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(i.m_Entity);
 							RigidBody.DisplayOnInspector();
-						}
-						if (ImGui::Button("Remove Component"))
-						{
-							g_engine.m_coordinator.RemoveComponent<RigidbodyComponent>(i.m_Entity);
+							if (ImGui::Button("Remove Component"))
+							{
+								g_engine.m_coordinator.RemoveComponent<RigidbodyComponent>(i.m_Entity);
+							}
 						}
 					}
 
@@ -154,23 +154,23 @@ namespace Rogue
 						{
 							auto& Logic = g_engine.m_coordinator.GetComponent<LogicComponent>(i.m_Entity);
 							Logic.DisplayOnInspector();
-						}
-						if (ImGui::Button("Remove Component"))
-						{
-							g_engine.m_coordinator.RemoveComponent<LogicComponent>(i.m_Entity);
+							if (ImGui::Button("Remove Component"))
+							{
+								g_engine.m_coordinator.RemoveComponent<LogicComponent>(i.m_Entity);
+							}
 						}
 					}
 
-					if (g_engine.m_coordinator.ComponentExists<LogicComponent>(i.m_Entity))
+					if (g_engine.m_coordinator.ComponentExists<StatsComponent>(i.m_Entity))
 					{
 						if (ImGui::CollapsingHeader("Stats"))
 						{
 							auto& Stats = g_engine.m_coordinator.GetComponent<StatsComponent>(i.m_Entity);
 							Stats.DisplayOnInspector();
-						}
-						if (ImGui::Button("Remove Component"))
-						{
-							g_engine.m_coordinator.RemoveComponent<StatsComponent>(i.m_Entity);
+							if (ImGui::Button("Remove Component"))
+							{
+								g_engine.m_coordinator.RemoveComponent<StatsComponent>(i.m_Entity);
+							}
 						}
 					}
 
@@ -180,10 +180,10 @@ namespace Rogue
 						{
 							auto& Camera = g_engine.m_coordinator.GetComponent<CameraComponent>(i.m_Entity);
 							Camera.DisplayOnInspector();
-						}
-						if (ImGui::Button("Remove Component"))
-						{
-							g_engine.m_coordinator.RemoveComponent<CameraComponent>(i.m_Entity);
+							if (ImGui::Button("Remove Component"))
+							{
+								g_engine.m_coordinator.RemoveComponent<CameraComponent>(i.m_Entity);
+							}
 						}
 					}
 
@@ -196,6 +196,11 @@ namespace Rogue
 							ImGui::TextWrapped("Check this box to show the UI element.");
 							if (g_engine.m_coordinator.ComponentExists<CameraComponent>(i.m_Entity))
 								g_engine.m_coordinator.GetComponent<CameraComponent>(i.m_Entity).setIsActive(isActive);
+
+							if (ImGui::Button("Remove Component"))
+							{
+								g_engine.m_coordinator.RemoveComponent<UIComponent>(i.m_Entity);
+							}
 						}
 					}
 
@@ -205,7 +210,12 @@ namespace Rogue
 						{
 							auto& PCC = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(i.m_Entity);
 							PCC.DisplayOnInspector();
-						}					
+
+							if (ImGui::Button("Remove Component"))
+							{
+								g_engine.m_coordinator.RemoveComponent<PlayerControllerComponent>(i.m_Entity);
+							}
+						}
 					}
 
 					if (g_engine.m_coordinator.ComponentExists<AudioEmitterComponent>(i.m_Entity))
@@ -214,6 +224,11 @@ namespace Rogue
 						{
 							auto& audio = g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(i.m_Entity);
 							audio.DisplayOnInspector();
+
+							if (ImGui::Button("Remove Component"))
+							{
+								g_engine.m_coordinator.RemoveComponent<AudioEmitterComponent>(i.m_Entity);
+							}
 						}
 					}
 
@@ -228,6 +243,11 @@ namespace Rogue
 						{
 							auto& text = g_engine.m_coordinator.GetComponent<TextComponent>(i.m_Entity);
 							text.DisplayOnInspector();
+
+							if (ImGui::Button("Remove Component"))
+							{
+								g_engine.m_coordinator.RemoveComponent<TextComponent>(i.m_Entity);
+							}
 						}
 					}
 
