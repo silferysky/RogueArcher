@@ -4,14 +4,6 @@
 
 namespace Rogue
 {
-	void ImGuiEditorViewport::ReloadLevel()
-	{
-		SceneManager::instance().ClearAllEntities();
-		SceneManager::instance().LoadLevel(SceneManager::instance().getCurrentFileName().c_str());
-		g_engine.m_coordinator.SetGameState(false);
-		g_engine.m_coordinator.SetPauseState(false);
-		g_engine.SetTimeScale(1.0f);
-	}
 	void ImGuiEditorViewport::Init()
 	{}
 
@@ -32,7 +24,7 @@ namespace Rogue
 			else //If game is running, just stop and reload old data
 			{
 				//Loads last iteration and pauses game
-				ReloadLevel();
+				SceneManager::instance().ReloadLevel();
 				//ShowCursor(true);
 			}
 		}
@@ -95,7 +87,7 @@ namespace Rogue
 			if (g_engine.m_coordinator.GetGameState())
 			{
 				//Loads last iteration and pauses game
-				ReloadLevel();
+				SceneManager::instance().ReloadLevel(); 
 			}
 		}
 		ImGui::PopStyleColor(3);

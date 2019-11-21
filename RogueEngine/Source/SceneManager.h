@@ -60,6 +60,8 @@ namespace Rogue
 		void ResetSceneIterator();
 		unsigned int GetSceneIterator() const;
 
+		void ReloadLevel();
+
 		std::map<std::string, std::pair<Signature, std::string>> GetArchetypeMap() const;
 
 		//For other systems to add entites here
