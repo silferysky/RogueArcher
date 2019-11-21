@@ -3,6 +3,8 @@
 #include "SystemManager.h"
 #include <map>
 
+#define DOUBLE_CLICK_MAX_DELAY 0.1f
+
 namespace Rogue
 {
 	struct KeyboardState
@@ -81,6 +83,7 @@ namespace Rogue
 		void CreateKeyPressEvent(KeyPress key, int repeat = 0, KeyPressSub subkey = KeyPressSub::UNDEF);
 		void CreateKeyReleaseEvent(KeyPress key, KeyPressSub subkey = KeyPressSub::UNDEF);
 		void CreateKeyTriggeredEvent(KeyPress key, KeyPressSub subkey = KeyPressSub::UNDEF);
+		void CreateDoubleClickEvent(KeyPress key);
 
 		// Shutdown
 		void Shutdown() override;
@@ -96,5 +99,7 @@ namespace Rogue
 		std::map<KeyPress, KeyFunction> GameKeyConfig;
 		std::map<KeyPress, KeyFunction> MenuKeyConfig;
 		FuncState CurFuncState;
+
+		float m_clickTimer;
 	};
 }

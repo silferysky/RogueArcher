@@ -176,7 +176,7 @@ namespace Rogue
 		SET_EVENT_CATEGORY(EventCatMouse | EventCatInput)
 			SET_EVENT_TYPE(EvMouseButtonReleased)
 
-			MouseReleaseEvent(KeyPress key)
+		MouseReleaseEvent(KeyPress key)
 			: KeyReleaseEvent(key) {}
 
 		std::string ToString() const override
@@ -210,7 +210,7 @@ namespace Rogue
 	public:
 
 		SET_EVENT_CATEGORY(EventCatMouse)
-			SET_EVENT_TYPE(EvMouseMoved)
+		SET_EVENT_TYPE(EvMouseMoved)
 
 		inline float GetX() { return x; }
 		inline float GetY() { return y; }
@@ -227,5 +227,22 @@ namespace Rogue
 
 	private:
 		float x, y;
+	};
+
+	class MouseDoubleClickEvent : public KeyEvent
+	{
+	public:		
+		SET_EVENT_CATEGORY(EventCatMouse)
+		SET_EVENT_TYPE(EvMouseDoubleClick)
+
+		MouseDoubleClickEvent(KeyPress key = KeyPress::UNDEF)
+			: KeyEvent(key) {}
+
+		std::string ToString() const override
+		{
+			std::stringstream ss;
+			ss << "MouseDoubleClickEvent: " << (int)KeyCode << ")";
+			return ss.str();
+		}
 	};
 }
