@@ -57,12 +57,12 @@ namespace Rogue
 	//MACROS (HIERARCHY)
 #define CREATE_HIERARCHY_OBJ_TAG(entityValue, name, tag)	HierarchyInfo newInfo(entityValue, name, tag); \
 														g_engine.m_coordinator.GetActiveObjects().push_back(entityValue); \
-														g_engine.m_coordinator.GetHierarchyInfoArray()[entityValue] = newInfo; \
+														g_engine.m_coordinator.GetHierarchyInfo(entityValue) = newInfo; \
 														SceneManager::instance().IncrementObjectIterator();
 
 #define CREATE_HIERARCHY_OBJ(entityValue, name)			HierarchyInfo newInfo(entityValue, name); \
 														g_engine.m_coordinator.GetActiveObjects().push_back(entityValue); \
-														g_engine.m_coordinator.GetHierarchyInfoArray()[entityValue] = newInfo; \
+														g_engine.m_coordinator.GetHierarchyInfo(entityValue) = newInfo; \
 														SceneManager::instance().IncrementObjectIterator();
 
 //cstr will go out of scope if you choose to do strstream.str().c_str()

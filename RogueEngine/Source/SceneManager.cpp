@@ -234,7 +234,7 @@ namespace Rogue
 		strstream << "Game Object " << m_objectIterator++;
 		HierarchyInfo newInfo(newEnt, strstream.str());
 		g_engine.m_coordinator.GetActiveObjects().push_back(newEnt);
-		g_engine.m_coordinator.GetHierarchyInfoArray()[newEnt] = newInfo;
+		g_engine.m_coordinator.GetHierarchyInfo(newEnt) = newInfo;
 	}
 
 	void SceneManager::DeleteActiveEntity(Entity ent)
@@ -268,7 +268,7 @@ namespace Rogue
 		HierarchyInfo newInfo(newEnt, strstream.str());
 		newInfo.m_selected = true;
 		g_engine.m_coordinator.GetActiveObjects().push_back(newEnt);
-		g_engine.m_coordinator.GetHierarchyInfoArray()[newEnt] = newInfo;
+		g_engine.m_coordinator.GetHierarchyInfo(newEnt) = newInfo;
 
 		return newEnt;
 	}
@@ -282,7 +282,7 @@ namespace Rogue
 		HierarchyInfo newInfo(newEnt, strstream.str());
 		newInfo.m_selected = true;
 		g_engine.m_coordinator.GetActiveObjects().push_back(newEnt);
-		g_engine.m_coordinator.GetHierarchyInfoArray()[newEnt] = newInfo;
+		g_engine.m_coordinator.GetHierarchyInfo(newEnt) = newInfo;
 
 		return newEnt;
 	}
