@@ -199,8 +199,7 @@ namespace Rogue
 			strstream << set.first << ";";
 		}
 
-		std::string_view stdstr(strstream.str().c_str(), strstream.str().size() - 1);
-		RESerialiser::WriteToFile(fileName, "ArchetypeList", stdstr.data());
+		RESerialiser::WriteToFile(fileName, "ArchetypeList", strstream.str().c_str());
 
 		/*/For EntCount
 		Entity entCount = static_cast<Entity>(m_archetypes.size());
