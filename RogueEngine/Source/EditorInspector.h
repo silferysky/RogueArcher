@@ -6,7 +6,7 @@ namespace Rogue
 {
 	class ImGuiInspector : public IEditable
 	{
-		std::vector <HierarchyInfo>& activeObjects;
+		std::vector <Entity>& activeObjects;
 		ImVec4 m_color;
 		public:
 			ImGuiInspector();

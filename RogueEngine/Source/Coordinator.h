@@ -86,7 +86,7 @@ namespace Rogue
 		{
 			while (GetActiveObjects().size())
 			{
-				DestroyEntity(GetActiveObjects().back().m_Entity);
+				DestroyEntity(GetActiveObjects().back());
 				GetActiveObjects().pop_back();
 			}
 
@@ -242,9 +242,19 @@ namespace Rogue
 			return *m_entityManager;
 		}
 
-		std::vector <HierarchyInfo>& GetActiveObjects()
+		std::vector <Entity>& GetActiveObjects() const
 		{
 			return m_entityManager->m_getActiveObjects();
+		}
+
+		HierarchyInfo& GetHierarchyInfo(Entity ent)
+		{
+			return m_entityManager->GetHierarchyInfo(ent);
+		}
+
+		std::array<HierarchyInfo, MAX_ENTITIES>& GetHierarchyInfoArray()
+		{
+			return m_entityManager->GetHierarchyInfoArray();
 		}
 
 		bool GetGameState() const

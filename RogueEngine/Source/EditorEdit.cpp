@@ -65,9 +65,9 @@ namespace Rogue
 				{
 					for (auto& i : m_currentVector)
 					{
-						if (i.m_selected == true)
+						if (g_engine.m_coordinator.GetHierarchyInfo(i).m_selected == true)
 						{
-							SceneManager::instance().DeleteActiveEntity(i.m_Entity);
+							SceneManager::instance().DeleteActiveEntity(i);
 						}
 					}
 				}

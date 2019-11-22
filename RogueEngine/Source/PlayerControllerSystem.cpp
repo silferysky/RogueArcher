@@ -321,9 +321,9 @@ namespace Rogue
 		auto& activeObjects = g_engine.m_coordinator.GetActiveObjects();
 		for (auto iterator = activeObjects.begin(); iterator != activeObjects.end(); ++iterator)
 		{
-			if (iterator->m_Entity == m_timedEntities.begin()->m_entity)
+			if (*iterator == m_timedEntities.begin()->m_entity)
 			{
-				iterator = activeObjects.erase(iterator);
+				activeObjects.erase(iterator);
 				break;
 			}
 		}
@@ -370,10 +370,9 @@ namespace Rogue
 			BoxCollider2DComponent& boxCollider = g_engine.m_coordinator.CreateComponent<BoxCollider2DComponent>(ball);
 			boxCollider.Deserialize("0;0;0;0;0");
 
-			HierarchyInfo newInfo{};
-			newInfo.m_Entity = ball;
-			newInfo.m_objectName = "Ball";
-			g_engine.m_coordinator.GetActiveObjects().push_back(newInfo);
+			HierarchyInfo newInfo(ball, "Ball");
+			g_engine.m_coordinator.GetActiveObjects().push_back(ball);
+			g_engine.m_coordinator.GetHierarchyInfoArray()[ball] = newInfo;
 
 			AddToTimedEntities(ball, 0.8f);
 			break;

@@ -21,11 +21,15 @@ namespace Rogue
 		
 		for (auto& iterator : activeObjects)
 		{
-			if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(iterator.m_Entity))
+			//Skip if found self
+			if (iterator == m_entity)
+				return;
+
+			if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(iterator))
 			{
-				if (g_engine.m_coordinator.ComponentExists<TransformComponent>(iterator.m_Entity) && g_engine.m_coordinator.ComponentExists<TransformComponent>(m_entity))
+				if (g_engine.m_coordinator.ComponentExists<TransformComponent>(iterator) && g_engine.m_coordinator.ComponentExists<TransformComponent>(m_entity))
 				{
-					auto& playerTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(iterator.m_Entity);
+					auto& playerTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(iterator);
 					auto& aiTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(m_entity);
 
 					float distance = Vec2SqDistance(aiTransform.GetPosition(), playerTransform.GetPosition());

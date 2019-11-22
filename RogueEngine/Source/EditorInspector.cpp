@@ -26,9 +26,10 @@ namespace Rogue
 			ImGui::TextDisabled("Name");
 			for (auto& i : activeObjects)
 			{
-				if (i.m_selected == true)
+				HierarchyInfo infoObj = g_engine.m_coordinator.GetHierarchyInfo(i);
+				if (infoObj.m_selected == true)
 				{
-					ImGui::TextWrapped("%s", i.m_objectName.c_str());
+					ImGui::TextWrapped("%s", infoObj.m_objectName.c_str());
 					static char buffer[64] = "";
 					static char tagging[64] = "";
 
@@ -42,211 +43,211 @@ namespace Rogue
 						{
 							return;
 						}
-						i.m_objectName = buffer;
+						infoObj.m_objectName = buffer;
 						memset(buffer, 0, 64);
 					}
 					
 					ImGui::TextDisabled("Current Tag");
 					ImGui::SameLine();
-					ImGui::TextDisabled("%s",i.m_tag.c_str());
+					ImGui::TextDisabled("%s",infoObj.m_tag.c_str());
 					ImGui::TextDisabled("New Tag Name");
 					ImGui::SameLine();
 					ImGui::InputText("               ", tagging, 64);
 					if (ImGui::Button("Add New Tag"))
 					{
-						i.m_tag = tagging;
+						infoObj.m_tag = tagging;
 						memset(tagging, 0, 64);
 					}
 					if (ImGui::Button("Save As Prefab"))
 					{
 						auto archetypeMap = SceneManager::instance().GetArchetypeMap();
-						auto it = archetypeMap.find(i.m_objectName);
+						auto it = archetypeMap.find(infoObj.m_objectName);
 						if (it != archetypeMap.end())
-							SceneManager::instance().SaveArchetype(i.m_objectName.c_str());
+							SceneManager::instance().SaveArchetype(infoObj.m_objectName.c_str());
 						else
 						{
-							SceneManager::instance().AddToArchetypes(i.m_Entity);
-							SceneManager::instance().SaveArchetype(i.m_objectName.c_str());
+							SceneManager::instance().AddToArchetypes(i);
+							SceneManager::instance().SaveArchetype(infoObj.m_objectName.c_str());
 						}
 					}
 
-					if (g_engine.m_coordinator.ComponentExists<TransformComponent>(i.m_Entity))
+					if (g_engine.m_coordinator.ComponentExists<TransformComponent>(i))
 					{
 						if (ImGui::CollapsingHeader("Transform"))
 						{
-							auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(i.m_Entity);
+							auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(i);
 							trans.DisplayOnInspector();
 							if (ImGui::Button("Remove Component"))
 							{
-								g_engine.m_coordinator.RemoveComponent<TransformComponent>(i.m_Entity);
+								g_engine.m_coordinator.RemoveComponent<TransformComponent>(i);
 							}
 						}
 					}
 					
-					if (g_engine.m_coordinator.ComponentExists<SpriteComponent>(i.m_Entity))
+					if (g_engine.m_coordinator.ComponentExists<SpriteComponent>(i))
 					{
 						if (ImGui::CollapsingHeader("Sprite"))
 						{
-							auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(i.m_Entity);
+							auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(i);
 							sprite.DisplayOnInspector();			
 							if (ImGui::Button("Remove Component"))
 							{
-								g_engine.m_coordinator.RemoveComponent<SpriteComponent>(i.m_Entity);
+								g_engine.m_coordinator.RemoveComponent<SpriteComponent>(i);
 							}
 						}
 					}
 
-					if (g_engine.m_coordinator.ComponentExists<AnimationComponent>(i.m_Entity))
+					if (g_engine.m_coordinator.ComponentExists<AnimationComponent>(i))
 					{
 						if (ImGui::CollapsingHeader("Animation"))
 						{
-							auto& animation = g_engine.m_coordinator.GetComponent<AnimationComponent>(i.m_Entity);
+							auto& animation = g_engine.m_coordinator.GetComponent<AnimationComponent>(i);
 							animation.DisplayOnInspector();
 							if (ImGui::Button("Remove Component"))
 							{
-								g_engine.m_coordinator.RemoveComponent<AnimationComponent>(i.m_Entity);
+								g_engine.m_coordinator.RemoveComponent<AnimationComponent>(i);
 							}
 						}
 					}
 
-					if (g_engine.m_coordinator.ComponentExists<CircleCollider2DComponent>(i.m_Entity))
+					if (g_engine.m_coordinator.ComponentExists<CircleCollider2DComponent>(i))
 					{
 						if (ImGui::CollapsingHeader("Circle 2D Collider"))
 						{
-							auto& circle2D = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i.m_Entity);
+							auto& circle2D = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i);
 							circle2D.DisplayOnInspector();
 							if (ImGui::Button("Remove Component"))
 							{
-								g_engine.m_coordinator.RemoveComponent<CircleCollider2DComponent>(i.m_Entity);
+								g_engine.m_coordinator.RemoveComponent<CircleCollider2DComponent>(i);
 							}
 						}
 					}
 
-					if (g_engine.m_coordinator.ComponentExists<BoxCollider2DComponent>(i.m_Entity))
+					if (g_engine.m_coordinator.ComponentExists<BoxCollider2DComponent>(i))
 					{
 						if (ImGui::CollapsingHeader("Box2D Collider"))
 						{
-							auto& box2D = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(i.m_Entity);
+							auto& box2D = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(i);
 							box2D.DisplayOnInspector();
 							if (ImGui::Button("Remove Component"))
 							{
-								g_engine.m_coordinator.RemoveComponent<BoxCollider2DComponent>(i.m_Entity);
+								g_engine.m_coordinator.RemoveComponent<BoxCollider2DComponent>(i);
 							}
 						}
 					}
 
-					if (g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(i.m_Entity))
+					if (g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(i))
 					{
 						if (ImGui::CollapsingHeader("RigidBody"))
 						{
-							auto& RigidBody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(i.m_Entity);
+							auto& RigidBody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(i);
 							RigidBody.DisplayOnInspector();
 							if (ImGui::Button("Remove Component"))
 							{
-								g_engine.m_coordinator.RemoveComponent<RigidbodyComponent>(i.m_Entity);
+								g_engine.m_coordinator.RemoveComponent<RigidbodyComponent>(i);
 							}
 						}
 					}
 
-					if (g_engine.m_coordinator.ComponentExists<LogicComponent>(i.m_Entity))
+					if (g_engine.m_coordinator.ComponentExists<LogicComponent>(i))
 					{
 						if (ImGui::CollapsingHeader("Logic"))
 						{
-							auto& Logic = g_engine.m_coordinator.GetComponent<LogicComponent>(i.m_Entity);
+							auto& Logic = g_engine.m_coordinator.GetComponent<LogicComponent>(i);
 							Logic.DisplayOnInspector();
 							if (ImGui::Button("Remove Component"))
 							{
-								g_engine.m_coordinator.RemoveComponent<LogicComponent>(i.m_Entity);
+								g_engine.m_coordinator.RemoveComponent<LogicComponent>(i);
 							}
 						}
 					}
 
-					if (g_engine.m_coordinator.ComponentExists<StatsComponent>(i.m_Entity))
+					if (g_engine.m_coordinator.ComponentExists<StatsComponent>(i))
 					{
 						if (ImGui::CollapsingHeader("Stats"))
 						{
-							auto& Stats = g_engine.m_coordinator.GetComponent<StatsComponent>(i.m_Entity);
+							auto& Stats = g_engine.m_coordinator.GetComponent<StatsComponent>(i);
 							Stats.DisplayOnInspector();
 							if (ImGui::Button("Remove Component"))
 							{
-								g_engine.m_coordinator.RemoveComponent<StatsComponent>(i.m_Entity);
+								g_engine.m_coordinator.RemoveComponent<StatsComponent>(i);
 							}
 						}
 					}
 
-					if (g_engine.m_coordinator.ComponentExists<CameraComponent>(i.m_Entity))
+					if (g_engine.m_coordinator.ComponentExists<CameraComponent>(i))
 					{
 						if (ImGui::CollapsingHeader("Camera"))
 						{
-							auto& Camera = g_engine.m_coordinator.GetComponent<CameraComponent>(i.m_Entity);
+							auto& Camera = g_engine.m_coordinator.GetComponent<CameraComponent>(i);
 							Camera.DisplayOnInspector();
 							if (ImGui::Button("Remove Component"))
 							{
-								g_engine.m_coordinator.RemoveComponent<CameraComponent>(i.m_Entity);
+								g_engine.m_coordinator.RemoveComponent<CameraComponent>(i);
 							}
 						}
 					}
 
-					if (g_engine.m_coordinator.ComponentExists<UIComponent>(i.m_Entity))
+					if (g_engine.m_coordinator.ComponentExists<UIComponent>(i))
 					{
 						if (ImGui::CollapsingHeader("UI"))
 						{
-							auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(i.m_Entity);
+							auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(i);
 							bool isActive = UI.getIsActive();
 							ImGui::TextWrapped("Check this box to show the UI element.");
-							if (g_engine.m_coordinator.ComponentExists<CameraComponent>(i.m_Entity))
-								g_engine.m_coordinator.GetComponent<CameraComponent>(i.m_Entity).setIsActive(isActive);
+							if (g_engine.m_coordinator.ComponentExists<CameraComponent>(i))
+								g_engine.m_coordinator.GetComponent<CameraComponent>(i).setIsActive(isActive);
 
 							if (ImGui::Button("Remove Component"))
 							{
-								g_engine.m_coordinator.RemoveComponent<UIComponent>(i.m_Entity);
+								g_engine.m_coordinator.RemoveComponent<UIComponent>(i);
 							}
 						}
 					}
 
-					if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(i.m_Entity))
+					if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(i))
 					{
 						if (ImGui::CollapsingHeader("Player Controllable"))
 						{
-							auto& PCC = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(i.m_Entity);
+							auto& PCC = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(i);
 							PCC.DisplayOnInspector();
 
 							if (ImGui::Button("Remove Component"))
 							{
-								g_engine.m_coordinator.RemoveComponent<PlayerControllerComponent>(i.m_Entity);
+								g_engine.m_coordinator.RemoveComponent<PlayerControllerComponent>(i);
 							}
 						}
 					}
 
-					if (g_engine.m_coordinator.ComponentExists<AudioEmitterComponent>(i.m_Entity))
+					if (g_engine.m_coordinator.ComponentExists<AudioEmitterComponent>(i))
 					{
 						if (ImGui::CollapsingHeader("Sound"))
 						{
-							auto& audio = g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(i.m_Entity);
+							auto& audio = g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(i);
 							audio.DisplayOnInspector();
 
 							if (ImGui::Button("Remove Component"))
 							{
-								g_engine.m_coordinator.RemoveComponent<AudioEmitterComponent>(i.m_Entity);
+								g_engine.m_coordinator.RemoveComponent<AudioEmitterComponent>(i);
 							}
 						}
 					}
 
-					if (g_engine.m_coordinator.ComponentExists<CursorComponent>(i.m_Entity))
+					if (g_engine.m_coordinator.ComponentExists<CursorComponent>(i))
 					{
 						// If we need to edit anything about the cursor e.g offset from the actual cursor
 					}
 
-					if (g_engine.m_coordinator.ComponentExists<TextComponent>(i.m_Entity))
+					if (g_engine.m_coordinator.ComponentExists<TextComponent>(i))
 					{
 						if (ImGui::CollapsingHeader("Text"))
 						{
-							auto& text = g_engine.m_coordinator.GetComponent<TextComponent>(i.m_Entity);
+							auto& text = g_engine.m_coordinator.GetComponent<TextComponent>(i);
 							text.DisplayOnInspector();
 
 							if (ImGui::Button("Remove Component"))
 							{
-								g_engine.m_coordinator.RemoveComponent<TextComponent>(i.m_Entity);
+								g_engine.m_coordinator.RemoveComponent<TextComponent>(i);
 							}
 						}
 					}
@@ -267,98 +268,98 @@ namespace Rogue
 					{
 						if (ImGui::BeginMenu("Component"))
 						{
-							if (ImGui::MenuItem("Sprite Component", nullptr, false, !g_engine.m_coordinator.ComponentExists<SpriteComponent>(i.m_Entity)))
+							if (ImGui::MenuItem("Sprite Component", nullptr, false, !g_engine.m_coordinator.ComponentExists<SpriteComponent>(i)))
 							{
-								auto& Sprite = g_engine.m_coordinator.CreateComponent<SpriteComponent>(i.m_Entity);
+								auto& Sprite = g_engine.m_coordinator.CreateComponent<SpriteComponent>(i);
 								Sprite.Deserialize("Resources/Assets/DefaultSprite.png;1;1;1;1;1");
 							}
 
-							if (ImGui::MenuItem("Animation Component", nullptr, false, !g_engine.m_coordinator.ComponentExists<AnimationComponent>(i.m_Entity)))
+							if (ImGui::MenuItem("Animation Component", nullptr, false, !g_engine.m_coordinator.ComponentExists<AnimationComponent>(i)))
 							{
-								g_engine.m_coordinator.AddComponent(i.m_Entity,AnimationComponent());
+								g_engine.m_coordinator.AddComponent(i,AnimationComponent());
 							}
 
-							if (ImGui::MenuItem("Transform Component",nullptr,false, !g_engine.m_coordinator.ComponentExists<TransformComponent>(i.m_Entity)))
+							if (ImGui::MenuItem("Transform Component",nullptr,false, !g_engine.m_coordinator.ComponentExists<TransformComponent>(i)))
 							{
-								g_engine.m_coordinator.AddComponent<TransformComponent>(i.m_Entity,TransformComponent(Vec2{ 0.0f, 0.0f }, Vec2{ 100.0f, 100.0f }, 0.0f));
+								g_engine.m_coordinator.AddComponent<TransformComponent>(i,TransformComponent(Vec2{ 0.0f, 0.0f }, Vec2{ 100.0f, 100.0f }, 0.0f));
 							}
 
-							if (ImGui::MenuItem("Player Controller Component", nullptr, false, !g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(i.m_Entity)))
+							if (ImGui::MenuItem("Player Controller Component", nullptr, false, !g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(i)))
 							{
-								g_engine.m_coordinator.AddComponent(i.m_Entity, PlayerControllerComponent());
+								g_engine.m_coordinator.AddComponent(i, PlayerControllerComponent());
 							}
 
-							if (ImGui::MenuItem("Logic Component", nullptr, false, !g_engine.m_coordinator.ComponentExists<LogicComponent>(i.m_Entity)))
+							if (ImGui::MenuItem("Logic Component", nullptr, false, !g_engine.m_coordinator.ComponentExists<LogicComponent>(i)))
 							{
-								g_engine.m_coordinator.AddComponent(i.m_Entity, LogicComponent());
-								g_engine.m_coordinator.AddComponent(i.m_Entity, StatsComponent());
+								g_engine.m_coordinator.AddComponent(i, LogicComponent());
+								g_engine.m_coordinator.AddComponent(i, StatsComponent());
 							}
 							
-							if (ImGui::MenuItem("Cursor Component", nullptr, false, !g_engine.m_coordinator.ComponentExists<CursorComponent>(i.m_Entity)))
+							if (ImGui::MenuItem("Cursor Component", nullptr, false, !g_engine.m_coordinator.ComponentExists<CursorComponent>(i)))
 							{
-								g_engine.m_coordinator.AddComponent(i.m_Entity, CursorComponent());
+								g_engine.m_coordinator.AddComponent(i, CursorComponent());
 							}
 
 							ImGui::EndMenu();
 						}
 						if (ImGui::BeginMenu("Colliders"))
 						{
-							if (ImGui::MenuItem("Circle Collider", nullptr, false, !g_engine.m_coordinator.ComponentExists<CircleCollider2DComponent>(i.m_Entity)))
+							if (ImGui::MenuItem("Circle Collider", nullptr, false, !g_engine.m_coordinator.ComponentExists<CircleCollider2DComponent>(i)))
 							{
-								g_engine.m_coordinator.AddComponent(i.m_Entity, CircleCollider2DComponent());
+								g_engine.m_coordinator.AddComponent(i, CircleCollider2DComponent());
 
-								if(!g_engine.m_coordinator.ComponentExists<ColliderComponent>(i.m_Entity))
-									g_engine.m_coordinator.AddComponent(i.m_Entity, ColliderComponent(std::make_shared<CircleShape>()));
+								if(!g_engine.m_coordinator.ComponentExists<ColliderComponent>(i))
+									g_engine.m_coordinator.AddComponent(i, ColliderComponent(std::make_shared<CircleShape>()));
 							}
 
-							if (ImGui::MenuItem("Box Collider 2D", nullptr, false, !g_engine.m_coordinator.ComponentExists<BoxCollider2DComponent>(i.m_Entity)))
+							if (ImGui::MenuItem("Box Collider 2D", nullptr, false, !g_engine.m_coordinator.ComponentExists<BoxCollider2DComponent>(i)))
 							{
-								g_engine.m_coordinator.AddComponent(i.m_Entity, BoxCollider2DComponent());
+								g_engine.m_coordinator.AddComponent(i, BoxCollider2DComponent());
 
-								if (!g_engine.m_coordinator.ComponentExists<ColliderComponent>(i.m_Entity))
-									g_engine.m_coordinator.AddComponent(i.m_Entity, ColliderComponent(std::make_shared<BoxShape>()));
+								if (!g_engine.m_coordinator.ComponentExists<ColliderComponent>(i))
+									g_engine.m_coordinator.AddComponent(i, ColliderComponent(std::make_shared<BoxShape>()));
 							}
 
 							ImGui::EndMenu();
 						}
 
-						if (ImGui::MenuItem("RigidBody", nullptr, false, !g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(i.m_Entity)))
+						if (ImGui::MenuItem("RigidBody", nullptr, false, !g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(i)))
 						{
-							g_engine.m_coordinator.AddComponent(i.m_Entity, RigidbodyComponent());
+							g_engine.m_coordinator.AddComponent(i, RigidbodyComponent());
 						}
 
-						if (ImGui::MenuItem("Camera", nullptr, false, !g_engine.m_coordinator.ComponentExists<CameraComponent>(i.m_Entity)))
+						if (ImGui::MenuItem("Camera", nullptr, false, !g_engine.m_coordinator.ComponentExists<CameraComponent>(i)))
 						{
-							g_engine.m_coordinator.AddComponent(i.m_Entity, CameraComponent());
+							g_engine.m_coordinator.AddComponent(i, CameraComponent());
 						}
 
-						if (ImGui::MenuItem("Sound", nullptr, false, !g_engine.m_coordinator.ComponentExists<AudioEmitterComponent>(i.m_Entity)))
+						if (ImGui::MenuItem("Sound", nullptr, false, !g_engine.m_coordinator.ComponentExists<AudioEmitterComponent>(i)))
 						{
-							g_engine.m_coordinator.AddComponent(i.m_Entity, AudioEmitterComponent());
+							g_engine.m_coordinator.AddComponent(i, AudioEmitterComponent());
 						}
 
-						if (ImGui::MenuItem("UI", nullptr, false, !g_engine.m_coordinator.ComponentExists<UIComponent>(i.m_Entity)))
+						if (ImGui::MenuItem("UI", nullptr, false, !g_engine.m_coordinator.ComponentExists<UIComponent>(i)))
 						{
-							g_engine.m_coordinator.AddComponent(i.m_Entity, UIComponent());
+							g_engine.m_coordinator.AddComponent(i, UIComponent());
 						}
 
-						if (ImGui::MenuItem("Text", nullptr, false, !g_engine.m_coordinator.ComponentExists<TextComponent>(i.m_Entity)))
+						if (ImGui::MenuItem("Text", nullptr, false, !g_engine.m_coordinator.ComponentExists<TextComponent>(i)))
 						{
-							g_engine.m_coordinator.AddComponent(i.m_Entity, TextComponent());
+							g_engine.m_coordinator.AddComponent(i, TextComponent());
 						}
 						ImGui::EndPopup(); 
 						
 						if (ImGui::BeginMenu("Scripts"))
 						{
-							if (ImGui::MenuItem("Patrol AI", nullptr, false, !g_engine.m_coordinator.ComponentExists<CircleCollider2DComponent>(i.m_Entity)))
+							if (ImGui::MenuItem("Patrol AI", nullptr, false, !g_engine.m_coordinator.ComponentExists<CircleCollider2DComponent>(i)))
 							{
 							}
 
-							if (ImGui::MenuItem("Finder AI", nullptr, false, !g_engine.m_coordinator.ComponentExists<BoxCollider2DComponent>(i.m_Entity)))
+							if (ImGui::MenuItem("Finder AI", nullptr, false, !g_engine.m_coordinator.ComponentExists<BoxCollider2DComponent>(i)))
 							{
 							}
 
-							if (ImGui::MenuItem("Trigger AI", nullptr, false, !g_engine.m_coordinator.ComponentExists<BoxCollider2DComponent>(i.m_Entity)))
+							if (ImGui::MenuItem("Trigger AI", nullptr, false, !g_engine.m_coordinator.ComponentExists<BoxCollider2DComponent>(i)))
 							{
 							}
 
@@ -369,91 +370,91 @@ namespace Rogue
 					{
 						if (ImGui::BeginMenu("Component"))
 						{
-							if (ImGui::MenuItem("Sprite Component", nullptr, false, g_engine.m_coordinator.ComponentExists<SpriteComponent>(i.m_Entity)))
+							if (ImGui::MenuItem("Sprite Component", nullptr, false, g_engine.m_coordinator.ComponentExists<SpriteComponent>(i)))
 							{
-								g_engine.m_coordinator.RemoveComponent<SpriteComponent>(i.m_Entity);
+								g_engine.m_coordinator.RemoveComponent<SpriteComponent>(i);
 							}
 
-							if (ImGui::MenuItem("Animation Component", nullptr, false, g_engine.m_coordinator.ComponentExists<AnimationComponent>(i.m_Entity)))
+							if (ImGui::MenuItem("Animation Component", nullptr, false, g_engine.m_coordinator.ComponentExists<AnimationComponent>(i)))
 							{
-								g_engine.m_coordinator.RemoveComponent<AnimationComponent>(i.m_Entity);
+								g_engine.m_coordinator.RemoveComponent<AnimationComponent>(i);
 							}
 
-							if (ImGui::MenuItem("Transform Component", nullptr, false, g_engine.m_coordinator.ComponentExists<TransformComponent>(i.m_Entity)))
+							if (ImGui::MenuItem("Transform Component", nullptr, false, g_engine.m_coordinator.ComponentExists<TransformComponent>(i)))
 							{
-								g_engine.m_coordinator.RemoveComponent<TransformComponent>(i.m_Entity);
+								g_engine.m_coordinator.RemoveComponent<TransformComponent>(i);
 							}
 
-							if (ImGui::MenuItem("Player Controller Component", nullptr, false, g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(i.m_Entity)))
+							if (ImGui::MenuItem("Player Controller Component", nullptr, false, g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(i)))
 							{
-								g_engine.m_coordinator.RemoveComponent<PlayerControllerComponent>(i.m_Entity);
+								g_engine.m_coordinator.RemoveComponent<PlayerControllerComponent>(i);
 							}
 
-							if (ImGui::MenuItem("Logic Component", nullptr, false, g_engine.m_coordinator.ComponentExists<LogicComponent>(i.m_Entity)))
+							if (ImGui::MenuItem("Logic Component", nullptr, false, g_engine.m_coordinator.ComponentExists<LogicComponent>(i)))
 							{
-								g_engine.m_coordinator.RemoveComponent<LogicComponent>(i.m_Entity);
-								g_engine.m_coordinator.RemoveComponent<StatsComponent>(i.m_Entity);
+								g_engine.m_coordinator.RemoveComponent<LogicComponent>(i);
+								g_engine.m_coordinator.RemoveComponent<StatsComponent>(i);
 							}
 
-							if (ImGui::MenuItem("Cursor Component", nullptr, false, g_engine.m_coordinator.ComponentExists<CursorComponent>(i.m_Entity)))
+							if (ImGui::MenuItem("Cursor Component", nullptr, false, g_engine.m_coordinator.ComponentExists<CursorComponent>(i)))
 							{
-								g_engine.m_coordinator.RemoveComponent<LogicComponent>(i.m_Entity);
+								g_engine.m_coordinator.RemoveComponent<LogicComponent>(i);
 							}
 
 							ImGui::EndMenu();
 						}
 						if (ImGui::BeginMenu("Colliders"))
 						{
-							if (ImGui::MenuItem("Circle Collider", nullptr, false, g_engine.m_coordinator.ComponentExists<CircleCollider2DComponent>(i.m_Entity)))
+							if (ImGui::MenuItem("Circle Collider", nullptr, false, g_engine.m_coordinator.ComponentExists<CircleCollider2DComponent>(i)))
 							{
-								g_engine.m_coordinator.RemoveComponent<CircleCollider2DComponent>(i.m_Entity);
+								g_engine.m_coordinator.RemoveComponent<CircleCollider2DComponent>(i);
 								
 								// If no more collider components in entity, remove the general collider component.
-								if (!g_engine.m_coordinator.ComponentExists<BoxCollider2DComponent>(i.m_Entity) &&
-									g_engine.m_coordinator.ComponentExists<ColliderComponent>(i.m_Entity))
+								if (!g_engine.m_coordinator.ComponentExists<BoxCollider2DComponent>(i) &&
+									g_engine.m_coordinator.ComponentExists<ColliderComponent>(i))
 								{
-									g_engine.m_coordinator.RemoveComponent<ColliderComponent>(i.m_Entity);
+									g_engine.m_coordinator.RemoveComponent<ColliderComponent>(i);
 								}
 							}
 
-							if (ImGui::MenuItem("Box Collider 2D", nullptr, false, g_engine.m_coordinator.ComponentExists<BoxCollider2DComponent>(i.m_Entity)))
+							if (ImGui::MenuItem("Box Collider 2D", nullptr, false, g_engine.m_coordinator.ComponentExists<BoxCollider2DComponent>(i)))
 							{
-								g_engine.m_coordinator.RemoveComponent<BoxCollider2DComponent>(i.m_Entity);
+								g_engine.m_coordinator.RemoveComponent<BoxCollider2DComponent>(i);
 
-								if (!g_engine.m_coordinator.ComponentExists<CircleCollider2DComponent>(i.m_Entity) &&
-									g_engine.m_coordinator.ComponentExists<ColliderComponent>(i.m_Entity))
+								if (!g_engine.m_coordinator.ComponentExists<CircleCollider2DComponent>(i) &&
+									g_engine.m_coordinator.ComponentExists<ColliderComponent>(i))
 								{
-									g_engine.m_coordinator.RemoveComponent<ColliderComponent>(i.m_Entity);
+									g_engine.m_coordinator.RemoveComponent<ColliderComponent>(i);
 								}
 							}
 
 							ImGui::EndMenu();
 						}
 
-						if (ImGui::MenuItem("RigidBody", nullptr, false, g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(i.m_Entity)))
+						if (ImGui::MenuItem("RigidBody", nullptr, false, g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(i)))
 						{
-							g_engine.m_coordinator.RemoveComponent<RigidbodyComponent>(i.m_Entity);
+							g_engine.m_coordinator.RemoveComponent<RigidbodyComponent>(i);
 						}
 
-						if (ImGui::MenuItem("Camera", nullptr, false, g_engine.m_coordinator.ComponentExists<CameraComponent>(i.m_Entity)))
+						if (ImGui::MenuItem("Camera", nullptr, false, g_engine.m_coordinator.ComponentExists<CameraComponent>(i)))
 						{
-							g_engine.m_coordinator.RemoveComponent<CameraComponent>(i.m_Entity);
+							g_engine.m_coordinator.RemoveComponent<CameraComponent>(i);
 						}
 
-						if (ImGui::MenuItem("Sound", nullptr, false, g_engine.m_coordinator.ComponentExists<AudioEmitterComponent>(i.m_Entity)))
+						if (ImGui::MenuItem("Sound", nullptr, false, g_engine.m_coordinator.ComponentExists<AudioEmitterComponent>(i)))
 						{
-							g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(i.m_Entity).DestroySound();
-							g_engine.m_coordinator.RemoveComponent<AudioEmitterComponent>(i.m_Entity);
+							g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(i).DestroySound();
+							g_engine.m_coordinator.RemoveComponent<AudioEmitterComponent>(i);
 						}
 
-						if (ImGui::MenuItem("UI", nullptr, false, g_engine.m_coordinator.ComponentExists<UIComponent>(i.m_Entity)))
+						if (ImGui::MenuItem("UI", nullptr, false, g_engine.m_coordinator.ComponentExists<UIComponent>(i)))
 						{
-							g_engine.m_coordinator.RemoveComponent<UIComponent>(i.m_Entity);
+							g_engine.m_coordinator.RemoveComponent<UIComponent>(i);
 						}
 
-						if (ImGui::MenuItem("Text", nullptr, false, g_engine.m_coordinator.ComponentExists<TextComponent>(i.m_Entity)))
+						if (ImGui::MenuItem("Text", nullptr, false, g_engine.m_coordinator.ComponentExists<TextComponent>(i)))
 						{
-							g_engine.m_coordinator.RemoveComponent<TextComponent>(i.m_Entity);
+							g_engine.m_coordinator.RemoveComponent<TextComponent>(i);
 						}
 
 						ImGui::EndPopup();
@@ -461,15 +462,15 @@ namespace Rogue
 
 					if (ImGui::Button("Clone Object"))
 					{
-						g_engine.m_coordinator.clone(i.m_Entity);
+						g_engine.m_coordinator.clone(i);
 					}
 					ImGui::SameLine();
 					if (ImGui::Button("Delete Object"))
 					{
-						if (g_engine.m_coordinator.ComponentExists<AudioEmitterComponent>(i.m_Entity))
-							g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(i.m_Entity).DestroySound();
+						if (g_engine.m_coordinator.ComponentExists<AudioEmitterComponent>(i))
+							g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(i).DestroySound();
 
-						SceneManager::instance().DeleteActiveEntity(i.m_Entity);
+						SceneManager::instance().DeleteActiveEntity(i);
 					}
 
 				}		

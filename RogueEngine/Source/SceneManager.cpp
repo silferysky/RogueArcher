@@ -113,20 +113,22 @@ namespace Rogue
 		auto it = activeObjects.begin();
 		for (; it != activeObjects.end(); ++it)
 		{
-			if (it->m_Entity == archetypeEntity)
+			if (*it == archetypeEntity)
 				break;
 		}
 
 		if (it == activeObjects.end())
 			return;
 
+		HierarchyInfo& info = g_engine.m_coordinator.GetHierarchyInfo(*it);
+
 		m_objectFactory->AddToArchetypes(
-			it->m_objectName,
-			g_engine.m_coordinator.GetEntityManager().GetSignature(it->m_Entity),
-			m_objectFactory->SerializeComponents(*it));
+			info.m_objectName,
+			g_engine.m_coordinator.GetEntityManager().GetSignature(*it),
+			m_objectFactory->SerializeComponents(info));
 
 		std::ostringstream ostrstream;
-		ostrstream << "Resources/" << it->m_objectName << ".json";
+		ostrstream << "Resources/" << info.m_objectName << ".json";
 		BasicIO::WriteArchetypeJsonFile(ostrstream.str());
 		SaveArchetypeList("Resources/Archetypes.json");
 	}
@@ -224,18 +226,15 @@ namespace Rogue
 		auto& activeObjects = g_engine.m_coordinator.GetActiveObjects();
 		for (auto& iterator : activeObjects)
 		{
-			if (iterator.m_Entity == newEnt)
+			if (iterator == newEnt)
 				return;
 		}
 
-		HierarchyInfo newInfo{};
-		newInfo.m_Entity = newEnt;
 		std::ostringstream strstream;
-		std::string sstr;
 		strstream << "Game Object " << m_objectIterator++;
-		sstr = strstream.str();
-		newInfo.m_objectName = sstr;
-		g_engine.m_coordinator.GetActiveObjects().push_back(newInfo);
+		HierarchyInfo newInfo(newEnt, strstream.str());
+		g_engine.m_coordinator.GetActiveObjects().push_back(newEnt);
+		g_engine.m_coordinator.GetHierarchyInfoArray()[newEnt] = newInfo;
 	}
 
 	void SceneManager::DeleteActiveEntity(Entity ent)
@@ -243,7 +242,7 @@ namespace Rogue
 		auto& ActiveObjects = g_engine.m_coordinator.GetActiveObjects();
 		for (auto object = ActiveObjects.begin(); object != ActiveObjects.end(); ++object)
 		{
-			if (object->m_Entity == ent)
+			if (*object == ent)
 			{
 				g_engine.m_coordinator.DestroyEntity(ent);
 				ActiveObjects.erase(object);
@@ -264,32 +263,27 @@ namespace Rogue
 		auto& Sprite = g_engine.m_coordinator.CreateComponent<SpriteComponent>(newEnt);
 		Sprite.Deserialize("Resources/Assets/DefaultSprite.png;1;1;1;1;1");
 
-		HierarchyInfo newInfo{};
-		newInfo.m_selected = true;
-		newInfo.m_Entity = newEnt;
 		std::ostringstream strstream;
-		std::string sstr;
 		strstream << "Game Object " << m_objectIterator++;
-		sstr = strstream.str();
-		newInfo.m_objectName = sstr;
-		g_engine.m_coordinator.GetActiveObjects().push_back(newInfo);
+		HierarchyInfo newInfo(newEnt, strstream.str());
+		newInfo.m_selected = true;
+		g_engine.m_coordinator.GetActiveObjects().push_back(newEnt);
+		g_engine.m_coordinator.GetHierarchyInfoArray()[newEnt] = newInfo;
 
 		return newEnt;
 	}
 	Entity SceneManager::CreateCamera()
 	{
-		Entity m_newentity = g_engine.m_coordinator.CreateEntity();
-		g_engine.m_coordinator.AddComponent<CameraComponent>(m_newentity,CameraComponent());
+		Entity newEnt = g_engine.m_coordinator.CreateEntity();
+		g_engine.m_coordinator.AddComponent<CameraComponent>(newEnt,CameraComponent());
 
-		HierarchyInfo newInfo{};
-		newInfo.m_Entity = m_newentity;
 		std::ostringstream strstream;
-		std::string sstr;
 		strstream << "Camera " << m_cameraIterator++;
-		sstr = strstream.str();
-		newInfo.m_objectName = sstr;
-		g_engine.m_coordinator.GetActiveObjects().push_back(newInfo);
+		HierarchyInfo newInfo(newEnt, strstream.str());
+		newInfo.m_selected = true;
+		g_engine.m_coordinator.GetActiveObjects().push_back(newEnt);
+		g_engine.m_coordinator.GetHierarchyInfoArray()[newEnt] = newInfo;
 
-		return m_newentity;
+		return newEnt;
 	}
 }

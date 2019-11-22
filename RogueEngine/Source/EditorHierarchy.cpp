@@ -32,7 +32,7 @@ namespace Rogue
 			{
 				for (auto&i : m_currentVector)
 				{
-					i.m_selected = false;
+					g_engine.m_coordinator.GetHierarchyInfo(i).m_selected = false;
 				}
 				SceneManager::instance().Create2DSprite();
 			}
@@ -61,28 +61,29 @@ namespace Rogue
 		std::string_view search(bufferX);
 		for (auto& i : m_currentVector)
 		{
-			std::string_view tagName(i.m_tag.c_str(), search.size());
-			std::string_view objectName(i.m_objectName.c_str(), search.size());
+			HierarchyInfo& objInfo = g_engine.m_coordinator.GetHierarchyInfo(i);
+			std::string_view tagName(objInfo.m_tag.c_str(), search.size());
+			std::string_view objectName(objInfo.m_objectName.c_str(), search.size());
 			int pickedEntity = EditorManager::instance().GetPickedEntity();
 
 			// If there's any picked entity
 			if (pickedEntity >= 0)
 			{
-				if (pickedEntity == i.m_Entity)
+				if (pickedEntity == i)
 				{
 					// Select this entity cus it's picked
-					i.m_selected = true;
-					Entity newSelected = i.m_Entity;
+					objInfo.m_selected = true;
+					Entity newSelected = i;
 
 					// Find all the other entitiies
 					for (auto& hierarchyInfo : m_currentVector)
 					{
 						// If it's the picked entity, skip
-						if (hierarchyInfo.m_Entity == newSelected)
+						if (hierarchyInfo == newSelected)
 							continue;
 						// Unselect the rest
 						else
-							hierarchyInfo.m_selected = false;
+							objInfo.m_selected = false;
 					}
 					
 					EditorManager::instance().SetPickedEntity(-1);
@@ -90,19 +91,19 @@ namespace Rogue
 			}
 			if (tagName == search || objectName == search)
 			{
-				if (ImGui::Selectable(i.m_objectName.c_str(), i.m_selected, ImGuiSelectableFlags_AllowDoubleClick))
+				if (ImGui::Selectable(objInfo.m_objectName.c_str(), objInfo.m_selected, ImGuiSelectableFlags_AllowDoubleClick))
 				{
 					if (ImGui::IsMouseClicked(0))
 					{
-						i.m_selected = !i.m_selected;
-						Entity temp = i.m_Entity;
+						objInfo.m_selected = !objInfo.m_selected;
+						Entity temp = objInfo.m_Entity;
 						for (auto& i : m_currentVector)
 						{
-							if (i.m_Entity == temp)
+							if (i == temp)
 								continue;
 							else
 							{
-								i.m_selected = false;
+								objInfo.m_selected = false;
 							}
 						}
 					}
@@ -110,19 +111,19 @@ namespace Rogue
 			}
 			else if (search == "")
 			{
-				if (ImGui::Selectable(i.m_objectName.c_str(), i.m_selected, ImGuiSelectableFlags_AllowDoubleClick))
+				if (ImGui::Selectable(objInfo.m_objectName.c_str(), objInfo.m_selected, ImGuiSelectableFlags_AllowDoubleClick))
 				{
 					if (ImGui::IsMouseClicked(0))
 					{
-						i.m_selected = !i.m_selected;
-						int temp = i.m_Entity;
+						objInfo.m_selected = !objInfo.m_selected;
+						int temp = i;
 						for (auto& i : m_currentVector)
 						{
-							if (i.m_Entity == temp)
+							if (i == temp)
 								continue;
 							else
 							{
-								i.m_selected = false;
+								objInfo.m_selected = false;
 							}
 						}
 					}

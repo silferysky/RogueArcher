@@ -19,6 +19,6 @@ namespace Rogue
 		void Receive(Event* ev) override final;
 		void Shutdown() override;
 	private:
-		 std::vector<HierarchyInfo>& m_currentVector = g_engine.m_coordinator.GetActiveObjects();
+		 std::vector<Entity>& m_currentVector = g_engine.m_coordinator.GetActiveObjects();
 	};
 }

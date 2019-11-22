@@ -43,8 +43,8 @@ namespace Rogue
 				Entity selected = 0;
 				for (auto& i : m_currentVector)
 				{
-					if (i.m_selected == true)
-						selected = i.m_Entity;
+					if (g_engine.m_coordinator.GetHierarchyInfo(i).m_selected == true)
+						selected = i;
 				}
 
 				if (!g_engine.m_coordinator.ComponentExists<TransformComponent>(selected))
