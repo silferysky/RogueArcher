@@ -83,7 +83,7 @@ namespace Rogue
 							continue;
 						// Unselect the rest
 						else
-							objInfo.m_selected = false;
+							g_engine.m_coordinator.GetHierarchyInfo(hierarchyInfo).m_selected = false;
 					}
 					
 					EditorManager::instance().SetPickedEntity(-1);
@@ -103,7 +103,7 @@ namespace Rogue
 								continue;
 							else
 							{
-								objInfo.m_selected = false;
+								g_engine.m_coordinator.GetHierarchyInfo(i).m_selected = false;
 							}
 						}
 					}
@@ -123,7 +123,7 @@ namespace Rogue
 								continue;
 							else
 							{
-								objInfo.m_selected = false;
+								g_engine.m_coordinator.GetHierarchyInfo(i).m_selected = false;
 							}
 						}
 					}
