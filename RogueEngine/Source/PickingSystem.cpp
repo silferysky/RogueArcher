@@ -44,66 +44,64 @@ namespace Rogue
 
 		switch (ev->GetEventType())
 		{
-		case EventType::EvKeyTriggered:
-			KeyTriggeredEvent* keyTriggered = dynamic_cast<KeyTriggeredEvent*>(ev);
-			KeyPress keycode = keyTriggered->GetKeyCode();
+			// If double click event triggered
+		case EventType::EvMouseDoubleClick:
+		{	
+			MouseDoubleClickEvent* keyTriggered = dynamic_cast<MouseDoubleClickEvent*>(ev);
 
-			// If left-mouse click is triggered
-			if (keycode == KeyPress::MB1)
+			// Get the cursor's world position
+			Vec2 cursor = g_engine.GetWorldCursor();
+			PickingManager::instance().GenerateViewPortAABB(CameraManager::instance().GetCameraPos(), CameraManager::instance().GetCameraZoom());
+
+			// Get the viewport's AABB
+			const AABB& viewportArea = PickingManager::instance().GetViewPortArea();
+
+			// If cursor is in the viewport area, proceed.
+			if (CollisionManager::instance().DiscretePointVsAABB(cursor, viewportArea))
 			{
-				// Get the cursor's world position
-				Vec2 cursor = g_engine.GetWorldCursor();
-				PickingManager::instance().GenerateViewPortAABB(CameraManager::instance().GetCameraPos(), CameraManager::instance().GetCameraZoom());
+				int pickedEntity = -1;
+				float highestZ = 0;
 
-				// Get the viewport's AABB
-				const AABB& viewportArea = PickingManager::instance().GetViewPortArea();
-
-				// If cursor is in the viewport area, proceed.
-				if (CollisionManager::instance().DiscretePointVsAABB(cursor, viewportArea))
+				// Go through every transform component
+				for (Entity entity : m_entities)
 				{
-					int pickedEntity = -1;
-					float highestZ = 0;
+					// Skip cursor entities (crosshair)
+					if (g_engine.m_coordinator.ComponentExists<CursorComponent>(entity))
+						continue;
 
-					// Go through every transform component
-					for (Entity entity : m_entities)
-					{
-						// Skip cursor entities (crosshair)
-						if (g_engine.m_coordinator.ComponentExists<CursorComponent>(entity))
-							continue;
+					TransformComponent& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
 
-						TransformComponent& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
+					// If entity is in the viewport area
+					if (CollisionManager::instance().DiscretePointVsAABB(trans.GetPosition(), viewportArea))
+					{	
+						// Generate the transform aabb of the entity
+						PickingManager::instance().GenerateMeshAABB(trans);
+						auto pickArea = trans.GetPickArea();
 
-						// If entity is in the viewport area
-						if (CollisionManager::instance().DiscretePointVsAABB(trans.GetPosition(), viewportArea))
+						// Check if cursor is on the entity
+						if (CollisionManager::instance().DiscretePointVsAABB(cursor, pickArea))
 						{
-							// Generate the transform aabb of the entity
-							PickingManager::instance().GenerateMeshAABB(trans);
-							auto pickArea = trans.GetPickArea();
-
-							// Check if cursor is on the entity
-							if (CollisionManager::instance().DiscretePointVsAABB(cursor, pickArea))
+							if (trans.GetZ() >= highestZ)
 							{
-								if (trans.GetZ() >= highestZ)
-								{
-									highestZ = trans.GetZ();
-									pickedEntity = entity;
-								}
+								highestZ = trans.GetZ();
+								pickedEntity = entity;
 							}
 						}
 					}
+				}
 
-					// Send EntityPickedEvent
-					if (pickedEntity >= 0)
-					{
-						EntPickedEvent* event = new EntPickedEvent{ static_cast<Entity>(pickedEntity) };
+				// Send EntityPickedEvent
+				if (pickedEntity >= 0)
+				{
+					EntPickedEvent* event = new EntPickedEvent{ static_cast<Entity>(pickedEntity) };
 
-						if (g_engine.m_coordinator.GetEditorIsRunning() && !g_engine.m_coordinator.GetGameState())
-							event->SetSystemReceivers((int)SystemID::id_EDITOR);
+					if (g_engine.m_coordinator.GetEditorIsRunning() && !g_engine.m_coordinator.GetGameState())
+						event->SetSystemReceivers((int)SystemID::id_EDITOR);
 
-						EventDispatcher::instance().AddEvent(event);
-					}
+					EventDispatcher::instance().AddEvent(event);
 				}
 			}
+		}
 			return;
 		} // End switch case
 	} // End receive()

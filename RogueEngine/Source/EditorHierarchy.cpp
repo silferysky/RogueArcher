@@ -84,6 +84,8 @@ namespace Rogue
 						else
 							hierarchyInfo.m_selected = false;
 					}
+					
+					EditorManager::instance().SetPickedEntity(-1);
 				}
 			}
 			if (tagName == search || objectName == search)
