@@ -372,7 +372,7 @@ namespace Rogue
 
 			HierarchyInfo newInfo(ball, "Ball");
 			g_engine.m_coordinator.GetActiveObjects().push_back(ball);
-			g_engine.m_coordinator.GetHierarchyInfoArray()[ball] = newInfo;
+			g_engine.m_coordinator.GetHierarchyInfo(ball) = newInfo;
 
 			AddToTimedEntities(ball, 0.8f);
 			break;

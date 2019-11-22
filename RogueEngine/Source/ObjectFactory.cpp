@@ -106,7 +106,7 @@ namespace Rogue
 
 		for (Entity& curEntity : g_engine.m_coordinator.GetActiveObjects())
 		{
-			HierarchyInfo& curHierarchy = g_engine.m_coordinator.GetHierarchyInfoArray()[curEntity];
+			HierarchyInfo& curHierarchy = g_engine.m_coordinator.GetHierarchyInfo(curEntity);
 			//Background layer is unique
 			if (writingBackground)
 			{
