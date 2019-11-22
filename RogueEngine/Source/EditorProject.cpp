@@ -85,6 +85,19 @@ namespace Rogue
 							ImGui::EndDragDropSource();
 						}
 					}
+					if (iter.m_fileType == "json")
+					{
+						if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
+						{
+							ImGui::SetDragDropPayload("Level", &iter.m_filePath, sizeof(iter.m_filePath));
+							{
+								ImGui::BeginTooltip();
+								ImGui::Text("Dragging %s to Viewport", iter.m_fileName.c_str());
+								ImGui::EndTooltip();
+								ImGui::EndDragDropSource();
+							}
+						}
+					}
 				}
 			}			
 		}
