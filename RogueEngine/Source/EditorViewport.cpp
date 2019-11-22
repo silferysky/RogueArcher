@@ -108,8 +108,37 @@ namespace Rogue
 			g_engine.m_coordinator.StepOnce();
 		}
 
+		ImGui::SameLine();
+		if (ImGui::Button("Scale"))
+		{
+
+		}
+
+		ImGui::SameLine();
+		if (ImGui::Button("Rotate"))
+		{
+
+		}
+
+		ImGui::SameLine();
+		if (ImGui::Button("Translate"))
+		{
+
+		}
+
 		ImVec2 imageSize = ImGui::GetContentRegionAvail();
 		ImGui::Image((void*)(intptr_t)(g_engine.m_coordinator.GetSystem<GraphicsSystem>()->getFBO()), ImVec2(imageSize.x,imageSize.y ), ImVec2(0, 1), ImVec2(1, 0));
+		if (ImGui::BeginDragDropTarget())
+		{
+			if (const ImGuiPayload * payload = ImGui::AcceptDragDropPayload("Level"))
+			{
+			//	std::string payload_n = *(std::string*)payload->Data;
+			//	m_texturePath = payload_n.c_str();
+			//	setTexture(m_texturePath.c_str());
+			//	std::cout << payload_n.c_str() << std::endl;
+			}
+			ImGui::EndDragDropTarget();
+		}
 
 		ImVec2 mousePos = ImGui::GetMousePos();
 		int width = g_engine.GetEngineWindowWidth();
