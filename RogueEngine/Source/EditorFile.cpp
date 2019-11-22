@@ -35,8 +35,9 @@ namespace Rogue
 					sceneManager.Create2DSprite();
 
 					//Setting values
-					g_engine.m_coordinator.GetActiveObjects().begin()->m_objectName = "Background";
-					g_engine.m_coordinator.GetComponent<TransformComponent>(g_engine.m_coordinator.GetActiveObjects().begin()->m_Entity).
+					size_t backgroundEnt = *g_engine.m_coordinator.GetActiveObjects().begin();
+					g_engine.m_coordinator.GetHierarchyInfo(backgroundEnt).m_objectName = "Background";
+					g_engine.m_coordinator.GetComponent<TransformComponent>(backgroundEnt).
 						setScale(Vec2(GetWindowWidth(g_engine.GetWindowHandler()), GetWindowHeight(g_engine.GetWindowHandler())));
 					
 					//Resetting camera

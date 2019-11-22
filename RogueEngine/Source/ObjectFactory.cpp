@@ -104,15 +104,15 @@ namespace Rogue
 		bool writingBackground = true;
 		Entity entityVal = 0;
 
-		for (HierarchyInfo& curHierarchy : g_engine.m_coordinator.GetActiveObjects())
+		for (Entity& curEntity : g_engine.m_coordinator.GetActiveObjects())
 		{
-			Entity curEntity = curHierarchy.m_Entity;
+			HierarchyInfo& curHierarchy = g_engine.m_coordinator.GetHierarchyInfoArray()[curEntity];
 			//Background layer is unique
 			if (writingBackground)
 			{
-				if (g_engine.m_coordinator.ComponentExists<SpriteComponent>(curHierarchy.m_Entity))
+				if (g_engine.m_coordinator.ComponentExists<SpriteComponent>(curEntity))
 				{
-					std::string backgroundStr(g_engine.m_coordinator.GetComponent<SpriteComponent>(curHierarchy.m_Entity).Serialize());
+					std::string backgroundStr(g_engine.m_coordinator.GetComponent<SpriteComponent>(curEntity).Serialize());
 					RESerialiser::WriteToFile(fileName, "BackgroundTexture", backgroundStr.c_str());
 				}
 
@@ -121,7 +121,7 @@ namespace Rogue
 			}
 
 			//Entity value acts as the value to store (-1 because of background)
-			Signature currentSignature = em->GetSignature(curHierarchy.m_Entity);
+			Signature currentSignature = em->GetSignature(curEntity);
 
 			//cstr will go out of scope if you choose to do strstream.str().c_str()
 			//This is the proper (Non macro) way of setting the string

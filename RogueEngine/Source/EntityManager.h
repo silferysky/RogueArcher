@@ -20,7 +20,9 @@ namespace Rogue
 
 		std::array<Signature, MAX_ENTITIES> RESignatures{};
 
-		std::vector <HierarchyInfo> m_currentActiveObjects;
+		std::array<HierarchyInfo, MAX_ENTITIES> m_entityInfo;
+
+		std::vector<Entity> m_currentActiveObjects;
 
 		uint32_t REActiveEntityCount{};
 
@@ -76,12 +78,23 @@ namespace Rogue
 			return RESignatures[entity];
 		}
 
+		HierarchyInfo& GetHierarchyInfo(Entity entity)
+		{
+			RE_ASSERT(entity < MAX_ENTITIES, "Entity out of range.");
+			return m_entityInfo[entity];
+		}
+
+		std::array<HierarchyInfo, MAX_ENTITIES>& GetHierarchyInfoArray()
+		{
+			return m_entityInfo;
+		}
+
 		uint32_t GetActiveEntityCount()
 		{
 			return REActiveEntityCount;
 		}
 
-		std::vector <HierarchyInfo>& m_getActiveObjects()
+		std::vector <Entity>& m_getActiveObjects()
 		{
 			return m_currentActiveObjects;
 		}

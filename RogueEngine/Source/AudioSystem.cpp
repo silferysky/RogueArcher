@@ -101,9 +101,9 @@ namespace Rogue
 	{
 		for (auto& objectIterator : g_engine.m_coordinator.GetActiveObjects())
 		{
-			if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(objectIterator.m_Entity))
+			if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(objectIterator))
 			{
-				m_trackingTarget = objectIterator.m_Entity;
+				m_trackingTarget = objectIterator;
 
 				return;
 			}

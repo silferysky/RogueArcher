@@ -11,7 +11,7 @@ namespace Rogue
 	class ImGuiEditorHierarchy : public IEditable
 	{
 	private:
-		std::vector<HierarchyInfo>& m_currentVector;
+		std::vector<Entity>& m_currentVector;
 	public:
 		ImGuiEditorHierarchy();
 		~ImGuiEditorHierarchy();

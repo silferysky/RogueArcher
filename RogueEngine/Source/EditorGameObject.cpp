@@ -47,7 +47,7 @@ namespace Rogue
 					{
 						for (auto& i : m_currentVector)
 						{
-							i.m_selected = false;
+							g_engine.m_coordinator.GetHierarchyInfo(i).m_selected = false;
 						}
 						SceneManager::instance().Create2DSprite();
 					}
