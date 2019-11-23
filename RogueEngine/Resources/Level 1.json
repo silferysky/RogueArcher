@@ -1,6 +1,7 @@
 {
     "MaxEntityCount": 60,
     "EntityCount": 60,
+    "BackgroundTexture": "Resources/Assets/test.bmp;0;1;1;1",
     "Signature0": 5,
     "Signature1": 32773,
     "Signature2": 32773,
