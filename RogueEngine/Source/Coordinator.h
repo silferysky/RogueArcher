@@ -84,7 +84,7 @@ namespace Rogue
 
 		void DestroyAllEntity()
 		{
-			while (GetActiveObjects().size())
+			while (m_entityManager->GetActiveEntityCount())
 			{
 				DestroyEntity(GetActiveObjects().back());
 				GetActiveObjects().pop_back();
