@@ -35,7 +35,7 @@ namespace Rogue
 					sceneManager.Create2DSprite();
 
 					//Setting values
-					size_t backgroundEnt = *g_engine.m_coordinator.GetActiveObjects().begin();
+					Entity backgroundEnt = *g_engine.m_coordinator.GetActiveObjects().begin();
 					g_engine.m_coordinator.GetHierarchyInfo(backgroundEnt).m_objectName = "Background";
 					g_engine.m_coordinator.GetComponent<TransformComponent>(backgroundEnt).
 						setScale(Vec2(GetWindowWidth(g_engine.GetWindowHandler()), GetWindowHeight(g_engine.GetWindowHandler())));

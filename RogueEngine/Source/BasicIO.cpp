@@ -58,6 +58,7 @@ namespace Rogue
 
 		strstream << InitializeHeader(numOfEnt, true);
 		strstream << InitializeComponentStr(numOfEnt);
+		strstream << InitializeParentStr(numOfEnt);
 		strstream << "\n}";
 
 		WriteFile(FileName.data(), strstream.str().c_str());
@@ -159,6 +160,18 @@ namespace Rogue
 			//End
 			strstream << "\"";
 		}
+		return strstream.str();
+	}
+	std::string BasicIO::InitializeParentStr(size_t numOfEnt)
+	{
+		std::ostringstream strstream;
+		
+		for (size_t i = 0; i < numOfEnt; ++i)
+		{
+			//Header
+			strstream << ",\n  \"EntityParent" << i << "\": -1" ;
+		}
+
 		return strstream.str();
 	}
 }

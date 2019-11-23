@@ -21,6 +21,7 @@ namespace Rogue
 		static std::string InitializeHeader(size_t numOfEnt, bool includeBackground = false);
 		static std::string InitializeSignatureJsonFile(size_t numOfEnt);
 		static std::string InitializeComponentStr(size_t numOfEnt = 1, bool writingLevel = true);
+		static std::string InitializeParentStr(size_t numOfEnt = 1);
 
 	};
 }

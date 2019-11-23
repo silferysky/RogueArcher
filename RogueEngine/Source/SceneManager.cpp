@@ -79,7 +79,7 @@ namespace Rogue
 		ostrstream << "Resources/" << fileName;
 		if (m_objectFactory->CheckFileTooSmall(FILETYPE_LEVEL, g_engine.m_coordinator.GetActiveObjects().size()))
 			if (g_engine.m_coordinator.GetActiveObjects().size() != 0)
-				BasicIO::WriteLevelJsonFile(ostrstream.str().c_str(), g_engine.m_coordinator.GetActiveObjects().size() - 1);
+				BasicIO::WriteLevelJsonFile(ostrstream.str().c_str(), g_engine.m_coordinator.GetActiveObjects().size());
 			else
 				BasicIO::WriteLevelJsonFile(ostrstream.str().c_str(), 0);
 		m_objectFactory->SaveLevel(ostrstream.str().c_str());
