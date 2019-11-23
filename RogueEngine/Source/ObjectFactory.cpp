@@ -63,7 +63,7 @@ namespace Rogue
 			istrstream.str(level[cstr].GetString());
 
 			//For entity name
-			//Does this twice to skip the name line
+			//Does this twice to skip the name line, twice for tag
 			istrstream.clear();
 			stdstr = "";
 			std::getline(istrstream, readstr, '{');
@@ -92,23 +92,21 @@ namespace Rogue
 		std::string stdstr;
 		const char* cstr;
 
-		//Minus one off due to Background being part of the list as well.
-		//Background is unique and will not be counted to the entCount
 		Entity entCount = 0;
 		if (g_engine.m_coordinator.GetActiveObjects().size() != 0)
-			entCount = static_cast<Entity>(g_engine.m_coordinator.GetActiveObjects().size() - 1);
+			entCount = static_cast<Entity>(g_engine.m_coordinator.GetActiveObjects().size());
 		EntityManager* em = &g_engine.m_coordinator.GetEntityManager();
 		int intVar = static_cast<int>(entCount);
 		RESerialiser::WriteToFile(fileName, "EntityCount", &intVar);
 
 		bool writingBackground = true;
-		Entity entityVal = 0;
+		entCount = 0; //Reset entCount for saving loop
 
 		for (Entity& curEntity : g_engine.m_coordinator.GetActiveObjects())
 		{
 			HierarchyInfo& curHierarchy = g_engine.m_coordinator.GetHierarchyInfo(curEntity);
 			//Background layer is unique
-			if (writingBackground)
+			/*if (writingBackground)
 			{
 				if (g_engine.m_coordinator.ComponentExists<SpriteComponent>(curEntity))
 				{
@@ -118,7 +116,7 @@ namespace Rogue
 
 				writingBackground = false;
 				continue;
-			}
+			}*/
 
 			//Entity value acts as the value to store (-1 because of background)
 			Signature currentSignature = em->GetSignature(curEntity);
@@ -126,7 +124,7 @@ namespace Rogue
 			//cstr will go out of scope if you choose to do strstream.str().c_str()
 			//This is the proper (Non macro) way of setting the string
 			CLEARSTR(strstream);
-			strstream << "Signature" << entityVal;
+			strstream << "Signature" << entCount;
 			SETSSTOSTR(strstream);
 			intVar = static_cast<int>(currentSignature.to_ulong());
 			RESerialiser::WriteToFile(fileName, cstr, &intVar);
@@ -136,9 +134,9 @@ namespace Rogue
 
 			SETSSTOSTR(strstream);
 			CLEARSTR(strstream);
-			strstream << "Entity" << entityVal;
+			strstream << "Entity" << entCount;
 			RESerialiser::WriteToFile(fileName, strstream.str().c_str(), cstr);
-			++entityVal;
+			++entCount;
 		}
 
 		RE_INFO("LEVEL SAVED");
@@ -418,7 +416,7 @@ namespace Rogue
 			if (m_maxEntityCount == 0)
 				return true;
 			else
-				return size > m_maxEntityCount + 1; // +1 for background
+				return size > m_maxEntityCount;
 		else if (type == FILETYPE_ARCHETYPE)
 			return size > m_maxArchetypeCount;
 		else
