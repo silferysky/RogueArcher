@@ -26,7 +26,7 @@ namespace Rogue
 			ImGui::TextDisabled("Name");
 			for (auto& i : activeObjects)
 			{
-				HierarchyInfo infoObj = g_engine.m_coordinator.GetHierarchyInfo(i);
+				HierarchyInfo& infoObj = g_engine.m_coordinator.GetHierarchyInfo(i);
 				if (infoObj.m_selected == true)
 				{
 					ImGui::TextWrapped("%s", infoObj.m_objectName.c_str());
