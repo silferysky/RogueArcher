@@ -81,6 +81,15 @@ namespace Rogue
 		DelayedEventQueue.push(e);
 	}
 
+	void EventDispatcher::ResetEvents()
+	{
+		while (instance().EventQueue.size())
+			instance().EventQueue.pop();
+
+		while (instance().DelayedEventQueue.size())
+			instance().DelayedEventQueue.pop();
+	}
+
 	void EventDispatcher::Update()
 	{
 		g_engine.m_coordinator.InitTimeSystem("Event System");

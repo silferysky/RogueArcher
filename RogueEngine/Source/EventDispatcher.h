@@ -31,8 +31,10 @@ namespace Rogue
 		void RemoveListener(SystemID ID);
 		std::map<SystemID, LISTENER_HANDLER> GetMap();
 
+		//Adding / Removing Events
 		void AddEvent(Event* e);
 		void AddEventDelayed(Event* e);
+		void ResetEvents();
 
 		void Update() override;
 		void Shutdown() override;

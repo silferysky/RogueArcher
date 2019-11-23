@@ -35,6 +35,7 @@ namespace Rogue
 	void SceneManager::ClearActiveEntities()
 	{
 		g_engine.m_coordinator.GetActiveObjects().clear();
+		g_engine.m_coordinator.GetSystem<LogicSystem>()->ClearLogicInterface();
 	}
 
 	void SceneManager::ClearAllEntities()
@@ -59,7 +60,7 @@ namespace Rogue
 		m_objectFactory->SaveLevelFiles(ostrstream.str().c_str());
 	}
 
-	void SceneManager::LoadLevel(std::string_view fileName)
+	void SceneManager::LoadLevel(const std::string& fileName)
 	{
 		ClearAllEntities();
 		std::ostringstream ostrstream;
@@ -71,6 +72,7 @@ namespace Rogue
 			m_loadedLevels.push_back(std::string(fileName));
 
 		g_engine.m_coordinator.SystemInits();
+		//g_engine.m_coordinator.ResetEvents();
 	}
 
 	void SceneManager::SaveLevel(const char* fileName)

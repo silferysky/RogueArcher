@@ -80,7 +80,11 @@ namespace Rogue
 					if (m_entityLogicMap[m].size())
 					{
 						for (auto& ai : m_entityLogicMap[m])
+						{
 							ai->HandleCollision(event);
+							if (!m_entityLogicMap[m].size())
+								return;
+						}
 					}
 			}
 			return;
@@ -102,6 +106,11 @@ namespace Rogue
 
 	void LogicSystem::ClearLogicInterface()
 	{
+		for (auto& elements : m_entityLogicMap)
+		{
+			elements.second.clear();
+		}
+
 		m_entityLogicMap.clear();
 	}
 
@@ -112,7 +121,7 @@ namespace Rogue
 			auto it = m_entities.find(entityLogicIt->first);
 			if (it == m_entities.end())
 			{
-				m_entityLogicMap.erase(entityLogicIt);
+				entityLogicIt = m_entityLogicMap.erase(entityLogicIt);
 			}
 
 			if (!m_entityLogicMap.size())
