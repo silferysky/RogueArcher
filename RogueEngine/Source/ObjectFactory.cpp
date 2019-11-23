@@ -29,7 +29,7 @@ namespace Rogue
 		m_maxEntityCount = level["MaxEntityCount"].GetInt();
 		Entity entCount = level["EntityCount"].GetInt();
 
-		//For Background
+		/*/For Background
 		Entity backgroundEnt = g_engine.m_coordinator.CreateEntity();
 		std::string_view backgroundStr = level["BackgroundTexture"].GetString();
 		SpriteComponent backgroundSprite = SpriteComponent();
@@ -43,7 +43,7 @@ namespace Rogue
 		g_engine.m_coordinator.AddComponent(backgroundEnt, backgroundSprite);
 		g_engine.m_coordinator.AddComponent(backgroundEnt, backgroundTransform);
 		CREATE_HIERARCHY_OBJ(backgroundEnt, "Background");
-		newInfo.m_objectName = std::string_view("Background");
+		newInfo.m_objectName = std::string_view("Background");*/
 
 		for (Entity entity = 0; entity < entCount; ++entity)
 		{
