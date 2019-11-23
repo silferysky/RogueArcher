@@ -1,0 +1,15 @@
+{
+    "MaxEntityCount": 5,
+    "EntityCount": 5,
+    "BackgroundTexture": "Resources\\Assets\\BackColor1.png;1;1;1;1",
+    "Signature0": 5,
+    "Signature1": 5,
+    "Signature2": 5,
+    "Signature3": 5,
+    "Signature4": 261,
+    "Entity0": "Name{Game Object 1}|Tag{}|Sprite{Resources\\Assets\\Background1.png;1;1;1;1}||Transform{0;0;1600;900;0;-4}|||||||||||||||",
+    "Entity1": "Name{Game Object 2}|Tag{}|Sprite{Resources\\Assets\\MidGround1.png;1;1;1;1}||Transform{0;0;1600;900;0;-2}|||||||||||||||",
+    "Entity2": "Name{Game Object 3}|Tag{}|Sprite{Resources\\Assets\\Foreground1.png;1;1;1;1}||Transform{0;0;1600;900;0;0}|||||||||||||||",
+    "Entity3": "Name{Game Object 4}|Tag{}|Sprite{Resources\\Assets\\door.png;0.838235;0.838227;0.838227;1}||Transform{776;-275;300;400;0;-1}|||||||||||||||",
+    "Entity4": "Name{Game Object 5}|Tag{}|Sprite{Resources\\Assets\\CrystalFlower.png;1;1;1;1}||Transform{0;0;300;300;0;1}||||||Animation{6;0.1;0;}|||||||||"
+}
