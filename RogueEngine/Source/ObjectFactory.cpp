@@ -255,6 +255,8 @@ namespace Rogue
 		while(std::getline(strstream, stdstr, ';'))
 			SceneManager::instance().AddToLoadedLevels(stdstr);
 
+		SceneManager::instance().setCurrentFileName(SceneManager::instance().GetLoadedLevels().front());
+
 		m_maxFileCount = SceneManager::instance().GetLoadedLevels().size();
 
 		CameraManager::instance().SetCameraMin(Vec2(level["CameraMinX"].GetFloat(), level["CameraMinY"].GetFloat()));

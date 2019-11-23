@@ -13,8 +13,6 @@ namespace Rogue
 		{
 			SceneManager& sceneManager = SceneManager::instance();
 
-			sceneManager.setCurrentFileName(m_levelToLoad.c_str());
-			sceneManager.ClearAllEntities();
 			sceneManager.LoadLevel(sceneManager.getCurrentFileName().c_str());
 		}
 	}
