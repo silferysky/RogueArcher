@@ -237,6 +237,11 @@ namespace Rogue
 			//m_sceneManager->Clone(existingEntity);
 		}
 
+		void ResetEvents()
+		{
+			EventDispatcher::instance().ResetEvents();
+		}
+
 		EntityManager& GetEntityManager() const
 		{
 			return *m_entityManager;

@@ -8,7 +8,7 @@ namespace Rogue
 		: public BaseAI
 	{
 	public:
-		TransitionObject(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent, std::string levelToLoad = "Level 1.json");
+		TransitionObject(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent, const std::string& levelToLoad = "Level 1.json");
 
 		virtual void OnTriggerEnter(Entity other) override;
 
