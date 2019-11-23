@@ -66,8 +66,6 @@ namespace Rogue
 						{
 							SceneManager& sceneManager = SceneManager::instance();
 
-							sceneManager.setCurrentFileName(levelStrIterator.c_str());
-							sceneManager.ClearAllEntities();
 							sceneManager.LoadLevel(sceneManager.getCurrentFileName().c_str());
 
 							g_engine.m_coordinator.SetGameState(false);
