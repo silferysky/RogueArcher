@@ -1509,7 +1509,7 @@
     "Signature1504": 0,
     "Signature1505": 0,
     "Entity0": "Name{Background}|Tag{}|Sprite{Resources/Assets/test.bmp;1;1;1;1}||Transform{0;0;1600;900;0;0}|||||||||||||||",
-    "Entity1": "Name{Spear}|Tag{}|Sprite{Resources/Assets/arrow.png;1;1;1;1}|Rigidbody{0;0;0;0;1;1;0;1}|Transform{-400;0;101;100;0;0}|BoundingCircle{0;0;0;0;0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;0;0;0;0;AWAKE}|PlayerController{1;1;}||StatsComponent{0;0;0;0;0;}|Animation{1;1;1;}|Camera{0;0;0;}||||||||",
+    "Entity1": "Name{Spear}|Tag{}|Sprite{Resources/Assets/arrow.png;1;1;1;1}|Rigidbody{0;0;0;0;1;1;0;1}|Transform{-400;0;101;100;0;0}|BoundingCircle{0;0;0;0;0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;0;0;0;0;AWAKE}|PlayerController{1;1;}||StatsComponent{0;0;0;0;;0;}|Animation{1;1;1;}|Camera{0;0;0;}||||||||",
     "Entity2": "Name{Textured Fally}|Tag{}|Sprite{Resources/Assets/test.bmp;1;1;1;1}|Rigidbody{0;0;0;0;1;1;0;1}|Transform{400;0;99;100;0;0}|BoundingCircle{0;0;0;0;0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;0;0;0;0;AWAKE}|PlayerController{1;1;}||||||||||||",
     "Entity3": "Name{Ground}|Tag{}|Sprite{Resources/Assets/tile.png;1;1;1;1}|Rigidbody{0;0;0;0;1;1;1;1}|Transform{0;-400;1200;100;0;0}|BoundingCircle{0;0;0;0;0}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;0;0;0;0;AWAKE}|||||||||||||",
     "Entity4": "Name{Textureless Fally}|Tag{}|Sprite{Resources/Assets/DefaultSprite.png;1;1;1;1}|Rigidbody{0;0;0;0;1;1;0;1}|Transform{0;0;101;100;0;0}|BoundingCircle{1;0;0;0;0}|BoxCollider{0;0;0;0;0;AWAKE}|||||||||||||",

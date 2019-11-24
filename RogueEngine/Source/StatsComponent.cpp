@@ -73,6 +73,16 @@ namespace Rogue
 		std::swap(loc, newPos);
 	}
 
+	void StatsComponent::SetTransitionLevel(const char* nextLevelStr)
+	{
+		m_nextLevel = nextLevelStr;
+	}
+
+	std::string& StatsComponent::GetTransitionLevel()
+	{
+		return m_nextLevel;
+	}
+
 	std::string StatsComponent::Serialize()
 	{
 		//Health, speed, attack range, sight range
@@ -81,6 +91,7 @@ namespace Rogue
 		ss << m_speed << ";";
 		ss << m_sightRange << ";";
 		ss << m_attackRange << ";";
+		ss << m_nextLevel << ";";
 		ss << m_waypoints.size() << ";";
 
 		for (Vec2& vec : m_waypoints)
@@ -104,6 +115,8 @@ namespace Rogue
 		m_sightRange = std::stoi(s1);
 		std::getline(ss, s1, ';');
 		m_attackRange = std::stoi(s1);
+		std::getline(ss, s1, ';');
+		SetTransitionLevel(s1.c_str());
 
 		std::getline(ss, s1, ';');
 		size_t count = std::stoi(s1);
@@ -130,6 +143,20 @@ namespace Rogue
 
 		ImGui::PushItemWidth(75);
 		ImGui::DragInt("Sight Range", &m_sightRange, 1, 0, 1000);
+
+		static char newLevelPath[128];
+		ImGui::PushItemWidth(75);
+		ImGui::TextWrapped("Next Transition Level");
+		ImGui::TextWrapped("%s", m_nextLevel.c_str());
+		ImGui::TextWrapped("Transition Level Name");
+		ImGui::SameLine();
+		ImGui::PushItemWidth(200);
+		ImGui::InputText("                      ", newLevelPath, 128);
+
+		if (ImGui::Button("Set New Transition Level"))
+		{
+			SetTransitionLevel(newLevelPath);
+		}
 
 		std::ostringstream ostrstream;
 		size_t count = 1;
