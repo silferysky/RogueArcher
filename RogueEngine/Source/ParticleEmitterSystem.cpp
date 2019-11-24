@@ -39,7 +39,7 @@ namespace Rogue
 				GenerateExplosion(pEmitter, transform);
 				break;
 			case ParticleType::SPRAY:
-				//GenerateSpray(pEmitter, transform);
+				GenerateSpray(pEmitter, transform);
 				break;
 			}
 
@@ -56,7 +56,7 @@ namespace Rogue
 	{
 	}
 
-	void ParticleEmitterSystem::GenerateExplosion(ParticleEmitterComponent pEmitter, TransformComponent transform)
+	void ParticleEmitterSystem::GenerateExplosion(const ParticleEmitterComponent& pEmitter, const TransformComponent& transform)
 	{
 		const float& magnitude = pEmitter.GetMagnitude();
 		for (int i = 0; i < 100 * magnitude; ++i)
@@ -99,8 +99,8 @@ namespace Rogue
 		}
 	}
 
-	/* void ParticleEmitterSystem::GenerateSpray(const ParticleEmitterComponent& pEmitter, const TransformComponent& transform)
+	void ParticleEmitterSystem::GenerateSpray(const ParticleEmitterComponent& pEmitter, const TransformComponent& transform)
 	{
 
-	} */
+	}
 }
