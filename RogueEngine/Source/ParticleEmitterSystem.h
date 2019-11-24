@@ -4,6 +4,16 @@
 #include "ParticleEmitterComponent.h"
 #include "TransformComponent.h"
 
+float RandFloat()
+{
+	return static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+}
+
+float RandFloat(const float& limit)
+{
+	return static_cast <float> (rand()) / static_cast <float> (RAND_MAX / limit);
+}
+
 namespace Rogue
 {
 	class ParticleEmitterSystem
@@ -19,7 +29,8 @@ namespace Rogue
 		void Receive(Event* ev) override;
 		void Shutdown() override;
 
-		void GenerateExplosion(const ParticleEmitterComponent& pEmitter, const TransformComponent& transform);
-		void GenerateSpray(const ParticleEmitterComponent& pEmitter, const TransformComponent& transform);
+		void GenerateExplosion(const Entity& entity);
+		void GenerateSpray(const Entity& entity);
+		void GenerateTrail(const Entity& entity);
 	};
 }
