@@ -153,7 +153,7 @@ namespace Rogue
 		while (std::getline(istrstream, stdstr, ';'))
 		{
 			CLEARSTR(ostrstream);
-			ostrstream << "Resources/" << stdstr << ".json";
+			ostrstream << "Resources/Archetypes/" << stdstr << ".json";
 
 			rapidjson::Document archetypeFile = RESerialiser::DeserialiseFromFile(ostrstream.str().c_str());
 			curSignature = archetypeFile["Signature"].GetInt();
