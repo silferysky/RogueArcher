@@ -233,6 +233,20 @@ namespace Rogue
 						}
 					}
 
+					if (g_engine.m_coordinator.ComponentExists<ParticleEmitterComponent>(i))
+					{
+						if (ImGui::CollapsingHeader("Particle Emitter"))
+						{
+							auto& audio = g_engine.m_coordinator.GetComponent<ParticleEmitterComponent>(i);
+							audio.DisplayOnInspector();
+
+							if (ImGui::Button("Remove Component"))
+							{
+								g_engine.m_coordinator.RemoveComponent<ParticleEmitterComponent>(i);
+							}
+						}
+					}
+
 					if (g_engine.m_coordinator.ComponentExists<CursorComponent>(i))
 					{
 						// If we need to edit anything about the cursor e.g offset from the actual cursor
@@ -298,6 +312,11 @@ namespace Rogue
 							if (ImGui::MenuItem("Cursor Component", nullptr, false, !g_engine.m_coordinator.ComponentExists<CursorComponent>(i)))
 							{
 								g_engine.m_coordinator.AddComponent(i, CursorComponent());
+							}
+
+							if (ImGui::MenuItem("Particle Emitter Component", nullptr, false, !g_engine.m_coordinator.ComponentExists<ParticleEmitterComponent>(i)))
+							{
+								g_engine.m_coordinator.AddComponent(i, ParticleEmitterComponent());
 							}
 
 							ImGui::EndMenu();
@@ -399,6 +418,10 @@ namespace Rogue
 							if (ImGui::MenuItem("Cursor Component", nullptr, false, g_engine.m_coordinator.ComponentExists<CursorComponent>(i)))
 							{
 								g_engine.m_coordinator.RemoveComponent<LogicComponent>(i);
+							}
+							if (ImGui::MenuItem("Particle Emitter Component", nullptr, false, g_engine.m_coordinator.ComponentExists<ParticleEmitterComponent>(i)))
+							{
+								g_engine.m_coordinator.RemoveComponent<ParticleEmitterComponent>(i);
 							}
 
 							ImGui::EndMenu();

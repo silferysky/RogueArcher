@@ -524,6 +524,16 @@ namespace Rogue
 						strstream << "Background{" << g_engine.m_coordinator.GetComponent<BackgroundComponent>(entityToSerialize).Serialize() << "}";
 						break;
 					}
+					case static_cast<int>(PARTICLEEMITTER) :
+					{
+						strstream << "Particle Emitter{" << g_engine.m_coordinator.GetComponent<ParticleEmitterComponent>(entityToSerialize).Serialize() << "}";
+						break;
+					}
+					case static_cast<int>(PARTICLE) :
+					{
+						strstream << "Particle{" << g_engine.m_coordinator.GetComponent<ParticleComponent>(entityToSerialize).Serialize() << "}";
+						break;
+					}
 					default:
 					{
 						RE_CORE_WARN("OUT OF BOUNDS OBJECT COMPONENT SAVING");
@@ -635,6 +645,16 @@ namespace Rogue
 					case static_cast<int>(BACKGROUND) :
 					{
 						g_engine.m_coordinator.LoadComponent<BackgroundComponent>(curEnt, readstr);
+						break;
+					}
+					case static_cast<int>(PARTICLEEMITTER) :
+					{
+						g_engine.m_coordinator.LoadComponent<ParticleEmitterComponent>(curEnt, readstr);
+						break;
+					}
+					case static_cast<int>(PARTICLE) :
+					{
+						g_engine.m_coordinator.LoadComponent<ParticleComponent>(curEnt, readstr);
 						break;
 					}
 					default:
