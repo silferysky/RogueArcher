@@ -9,8 +9,8 @@ namespace Rogue
 	{
 		bool m_isActive = true;
 		bool m_isContinuous = false;
-		enum ParticleType m_type;
-		float m_magnitude;
+		enum ParticleType m_type = ParticleType::EXPLOSION;
+		float m_magnitude = 0.0f;
 		std::string m_texturePath;
 	public:
 		ParticleEmitterComponent() = default;
