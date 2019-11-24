@@ -19,7 +19,7 @@ namespace Rogue
 		void Receive(Event* ev) override;
 		void Shutdown() override;
 
-		void GenerateExplosion(ParticleEmitterComponent pEmitter, TransformComponent transform);
-		//void GenerateSpray(const ParticleEmitterComponent& pEmitter, const TransformComponent& transform);
+		void GenerateExplosion(const ParticleEmitterComponent& pEmitter, const TransformComponent& transform);
+		void GenerateSpray(const ParticleEmitterComponent& pEmitter, const TransformComponent& transform);
 	};
 }
