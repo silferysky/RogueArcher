@@ -35,10 +35,10 @@ namespace Rogue
 					sceneManager.Create2DSprite();
 
 					//Setting values
-					Entity backgroundEnt = *g_engine.m_coordinator.GetActiveObjects().begin();
-					g_engine.m_coordinator.GetHierarchyInfo(backgroundEnt).m_objectName = "Background";
-					g_engine.m_coordinator.GetComponent<TransformComponent>(backgroundEnt).
-						setScale(Vec2(GetWindowWidth(g_engine.GetWindowHandler()), GetWindowHeight(g_engine.GetWindowHandler())));
+					//Entity backgroundEnt = *g_engine.m_coordinator.GetActiveObjects().begin();
+					//g_engine.m_coordinator.GetHierarchyInfo(backgroundEnt).m_objectName = "Background";
+					//g_engine.m_coordinator.GetComponent<TransformComponent>(backgroundEnt).
+					//	setScale(Vec2(GetWindowWidth(g_engine.GetWindowHandler()), GetWindowHeight(g_engine.GetWindowHandler())));
 					
 					//Resetting camera
 					g_engine.m_coordinator.GetSystem<CameraSystem>()->ResetCamera();
@@ -66,7 +66,7 @@ namespace Rogue
 						{
 							SceneManager& sceneManager = SceneManager::instance();
 
-							sceneManager.LoadLevel(sceneManager.getCurrentFileName().c_str());
+							sceneManager.LoadLevel(levelStrIterator);
 
 							g_engine.m_coordinator.SetGameState(false);
 							g_engine.m_coordinator.SetPauseState(false);
