@@ -17,6 +17,8 @@
 #include "ColliderComponent.h"
 #include "TextComponent.h"
 #include "BackgroundComponent.h"
+#include "ParticleComponent.h"
+#include "ParticleEmitterComponent.h"
 
 namespace Rogue
 {
@@ -39,6 +41,7 @@ namespace Rogue
 		TEXT,
 		BACKGROUND,
 		PARTICLEEMITTER,
+		PARTICLE,
 		LASTCOMP
 	};
 }

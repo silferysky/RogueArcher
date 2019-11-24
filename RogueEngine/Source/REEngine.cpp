@@ -26,6 +26,8 @@
 #include "VSync.h"
 #include "CursorSystem.h"
 #include "PickingSystem.h"
+#include "ParticleSystem.h"
+#include "ParticleEmitterSystem.h"
 #include "CameraManager.h"
 
 namespace Rogue
@@ -53,6 +55,8 @@ namespace Rogue
 		m_coordinator.RegisterSystem<FontSystem>();
 		m_coordinator.RegisterSystem<CameraSystem>();
 		m_coordinator.RegisterSystem<AudioSystem>();
+		m_coordinator.RegisterSystem<ParticleSystem>();
+		m_coordinator.RegisterSystem<ParticleEmitterSystem>();
 		m_coordinator.RegisterSystem<Editor>();
 	}
 
@@ -74,6 +78,8 @@ namespace Rogue
 		m_coordinator.RegisterComponent<ColliderComponent>();
 		m_coordinator.RegisterComponent<TextComponent>();
 		m_coordinator.RegisterComponent<BackgroundComponent>();
+		m_coordinator.RegisterComponent<ParticleComponent>();
+		m_coordinator.RegisterComponent<ParticleEmitterComponent>();
 	}
 
 	void REEngine::Init()
