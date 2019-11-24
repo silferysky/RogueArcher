@@ -38,7 +38,7 @@ namespace Rogue
 
 			// Load first scene
 			SceneManager::instance().LoadLevelFiles("Levels.json");
-			SceneManager::instance().LoadArchetypes("Resources/Archetypes.json");
+			SceneManager::instance().LoadArchetypes("Resources/Archetypes/Archetypes.json");
 
 			SystemInits();
 		}
