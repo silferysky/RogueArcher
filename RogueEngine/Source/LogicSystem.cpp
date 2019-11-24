@@ -161,7 +161,7 @@ namespace Rogue
 				}
 				case AIType::Obj_Transition:
 				{
-					TransitionObject newAI(entities, logicComponent, statsComponent);
+					TransitionObject newAI(entities, logicComponent, statsComponent, statsComponent.GetTransitionLevel());
 					AddLogicInterface(entities, std::make_shared<TransitionObject>(newAI));
 					break;
 				}
