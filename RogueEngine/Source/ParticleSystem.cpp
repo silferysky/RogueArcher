@@ -32,8 +32,18 @@ namespace Rogue
 
 			if (particle.GetLifetime() <= 0)
 			{
-				g_engine.m_coordinator.DestroyEntity(entity);
-				break;
+				//g_engine.m_coordinator.DestroyEntity(entity);
+				//++entity;
+				/* auto& activeObjects = g_engine.m_coordinator.GetActiveObjects();
+				for (auto iterator = activeObjects.begin(); iterator != activeObjects.end(); ++iterator)
+				{
+					if (*iterator == entity)
+					{
+						++entity;
+						activeObjects.erase(iterator);
+						break;
+					}
+				} */
 			}
 		}
 	}
