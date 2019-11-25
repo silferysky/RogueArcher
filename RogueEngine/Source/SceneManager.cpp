@@ -66,7 +66,7 @@ namespace Rogue
 		setCurrentFileName(fileName);
 		ClearAllEntities();
 		std::ostringstream ostrstream;
-		ostrstream << "Resources/" << fileName;
+		ostrstream << "Resources/Levels/" << fileName;
 
 		m_objectFactory->LoadLevel(ostrstream.str().c_str()); 
 		std::vector<std::string>::iterator it = std::find(m_loadedLevels.begin(), m_loadedLevels.end(), std::string(fileName));
@@ -80,7 +80,7 @@ namespace Rogue
 	void SceneManager::SaveLevel(const char* fileName)
 	{
 		std::ostringstream ostrstream;
-		ostrstream << "Resources/" << fileName;
+		ostrstream << "Resources/Levels/" << fileName;
 		if (m_objectFactory->CheckFileTooSmall(FILETYPE_LEVEL, g_engine.m_coordinator.GetActiveObjects().size()))
 			if (g_engine.m_coordinator.GetActiveObjects().size() != 0)
 				BasicIO::WriteLevelJsonFile(ostrstream.str().c_str(), g_engine.m_coordinator.GetActiveObjects().size());
@@ -131,9 +131,9 @@ namespace Rogue
 			m_objectFactory->SerializeComponents(info));
 
 		std::ostringstream ostrstream;
-		ostrstream << "Resources/" << info.m_objectName << ".json";
+		ostrstream << "Resources/Archetypes/" << info.m_objectName << ".json";
 		BasicIO::WriteArchetypeJsonFile(ostrstream.str());
-		SaveArchetypeList("Resources/Archetypes.json");
+		SaveArchetypeList("Resources/Archetypes/Archetypes.json");
 	}
 
 	void SceneManager::RemoveArchetype(std::string_view archetypeEntity)
@@ -149,7 +149,7 @@ namespace Rogue
 			return;
 
 		m_objectFactory->GetArchetypeMap().erase(it);
-		m_objectFactory->SaveArchetypeList("Resources/Archetypes.json");
+		m_objectFactory->SaveArchetypeList("Resources/Archetypes/Archetypes.json");
 	}
 
 	void SceneManager::Clone(Entity toClone)

@@ -153,7 +153,7 @@ namespace Rogue
 		while (std::getline(istrstream, stdstr, ';'))
 		{
 			CLEARSTR(ostrstream);
-			ostrstream << "Resources/" << stdstr << ".json";
+			ostrstream << "Resources/Archetypes/" << stdstr << ".json";
 
 			rapidjson::Document archetypeFile = RESerialiser::DeserialiseFromFile(ostrstream.str().c_str());
 			curSignature = archetypeFile["Signature"].GetInt();
@@ -531,7 +531,8 @@ namespace Rogue
 					}
 					case static_cast<int>(PARTICLE) :
 					{
-						strstream << "Particle{" << g_engine.m_coordinator.GetComponent<ParticleComponent>(entityToSerialize).Serialize() << "}";
+						strstream << "Particle{}";
+						//strstream << "Particle{" << g_engine.m_coordinator.GetComponent<ParticleComponent>(entityToSerialize).Serialize() << "}";
 						break;
 					}
 					default:

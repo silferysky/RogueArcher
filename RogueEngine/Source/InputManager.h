@@ -3,7 +3,7 @@
 #include "SystemManager.h"
 #include <map>
 
-#define DOUBLE_CLICK_MAX_DELAY 0.1f
+#define DOUBLE_CLICK_MAX_DELAY 0.2f
 
 namespace Rogue
 {

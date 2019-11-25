@@ -237,8 +237,8 @@ namespace Rogue
 					{
 						if (ImGui::CollapsingHeader("Particle Emitter"))
 						{
-							auto& audio = g_engine.m_coordinator.GetComponent<ParticleEmitterComponent>(i);
-							audio.DisplayOnInspector();
+							auto& particleEmitter = g_engine.m_coordinator.GetComponent<ParticleEmitterComponent>(i);
+							particleEmitter.DisplayOnInspector();
 
 							if (ImGui::Button("Remove Component"))
 							{

@@ -1,6 +1,7 @@
 #pragma once
 #include "BaseComponent.h"
 #include <vector>
+#include <string>
 #include "Vector2D.h"
 
 namespace Rogue
@@ -31,6 +32,9 @@ namespace Rogue
 		void clearWaypoints();
 		void setWaypoint(Vec2& loc, Vec2& newPos);
 
+		void SetTransitionLevel(const char* nextLevelStr);
+		std::string& GetTransitionLevel();
+
 		//From BaseComponent
 		std::string Serialize() override;
 		void Deserialize(std::string_view toDeserialize) override;
@@ -46,6 +50,6 @@ namespace Rogue
 		int m_sightRange;	//Max range of detection
 
 		std::vector<Vec2> m_waypoints;	//Waypoints if need to patrol
-
+		std::string m_nextLevel;
 	};
 }

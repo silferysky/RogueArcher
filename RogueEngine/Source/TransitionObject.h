@@ -12,6 +12,9 @@ namespace Rogue
 
 		virtual void OnTriggerEnter(Entity other) override;
 
+		std::string& GetTransitionLevelName();
+		void SetTransitionLevelName(std::string name);
+
 	private:
 		std::string m_levelToLoad;
 	};
