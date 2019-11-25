@@ -4,12 +4,12 @@
 #include "ParticleEmitterComponent.h"
 #include "TransformComponent.h"
 
-float RandFloat()
+static float RandFloat()
 {
 	return static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
 }
 
-float RandFloat(const float& limit)
+static float RandFloat(const float& limit)
 {
 	return static_cast <float> (rand()) / static_cast <float> (RAND_MAX / limit);
 }
