@@ -33,6 +33,9 @@
     <ClInclude Include="Source\ColliderComponent.h" />
     <ClInclude Include="Source\CollisionSystem.h" />
     <ClInclude Include="Source\CursorComponent.h" />
+    <ClInclude Include="Source\ParticleComponent.h" />
+    <ClInclude Include="Source\ParticleEmitterSystem.h" />
+    <ClInclude Include="Source\ParticleType.h" />
     <ClInclude Include="Source\PickingManager.h" />
     <ClInclude Include="Source\CursorSystem.h" />
     <ClInclude Include="Source\DebugDrawSystem.h" />
@@ -188,7 +191,9 @@
     <ClCompile Include="Source\LogicSystem.cpp" />
     <ClCompile Include="Source\Manifold.cpp" />
     <ClCompile Include="Source\MenuControllerSystem.cpp" />
+    <ClCompile Include="Source\ParticleComponent.cpp" />
     <ClCompile Include="Source\ParticleEmitterComponent.cpp" />
+    <ClCompile Include="Source\ParticleEmitterSystem.cpp" />
     <ClCompile Include="Source\ParticleSystem.cpp" />
     <ClCompile Include="Source\PatrolAI.cpp" />
     <ClCompile Include="Source\PickingSystem.cpp" />

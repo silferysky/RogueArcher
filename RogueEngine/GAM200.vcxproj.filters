@@ -514,6 +514,15 @@
     <ClInclude Include="Source\TransitionObject.h">
       <Filter>RogueEngine\Systems\AI\AI Types</Filter>
     </ClInclude>
+    <ClInclude Include="Source\ParticleComponent.h">
+      <Filter>RogueEngine\Systems\Particle System</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ParticleEmitterSystem.h">
+      <Filter>RogueEngine\Systems\Particle System</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ParticleType.h">
+      <Filter>RogueEngine\Systems\Particle System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -797,6 +806,12 @@
     </ClCompile>
     <ClCompile Include="Source\TransitionObject.cpp">
       <Filter>RogueEngine\Systems\AI\AI Types</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ParticleComponent.cpp">
+      <Filter>RogueEngine\Systems\Particle System</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ParticleEmitterSystem.cpp">
+      <Filter>RogueEngine\Systems\Particle System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
