@@ -78,8 +78,8 @@ namespace Rogue
 		m_coordinator.RegisterComponent<ColliderComponent>();
 		m_coordinator.RegisterComponent<TextComponent>();
 		m_coordinator.RegisterComponent<BackgroundComponent>();
-		m_coordinator.RegisterComponent<ParticleComponent>();
 		m_coordinator.RegisterComponent<ParticleEmitterComponent>();
+		m_coordinator.RegisterComponent<ParticleComponent>();
 	}
 
 	void REEngine::Init()
