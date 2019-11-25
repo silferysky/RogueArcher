@@ -6,12 +6,12 @@ namespace Rogue
 {
 	void ParticleEmitterComponent::DisplayOnInspector()
 	{
-		/*const char* particleType[] = { "Explosion", "Spray" };
+		const char* particleType[] = { "Explosion", "Spray" };
 		int tempInt = (int)m_type;
 
 		//For Particle Type
 		ImGui::Combo("Particle Type", &tempInt, particleType, IM_ARRAYSIZE(particleType));
-		m_type = (ParticleType)tempInt; */
+		m_type = (ParticleType)tempInt;
 
 		bool m_isActive = GetIsActive();
 
@@ -123,17 +123,17 @@ namespace Rogue
 	std::string ParticleEmitterComponent::Serialize()
 	{
 		std::ostringstream ss;
-		/*ss << m_isActive << ";";
+		ss << m_isActive << ";";
 		ss << m_isContinuous << ";";
-		//ss << static_cast<int>(m_type) << ";";
+		ss << static_cast<int>(m_type) << ";";
 		ss << m_magnitude << ";";
-		ss << m_texturePath << ";"; */
+		ss << m_texturePath << ";";
 		return ss.str();
 	}
 
 	void ParticleEmitterComponent::Deserialize(std::string_view toDeserialize)
 	{
-		/* std::istringstream ss(toDeserialize.data());
+		std::istringstream ss(toDeserialize.data());
 		std::string s1;			//s2 is used if two are needed
 		int counter = 0;		//Needed to take in for multiple values
 
@@ -147,13 +147,13 @@ namespace Rogue
 			case 1:
 				SetIsContinuous(std::stof(s1));
 				break;
-			//case 2:
-				//SetParticleType(static_cast<ParticleType>(stoi(s1)));
-				//break;
 			case 2:
-				SetMagnitude(std::stof(s1));
+				SetParticleType(static_cast<ParticleType>(stoi(s1)));
 				break;
 			case 3:
+				SetMagnitude(std::stof(s1));
+				break;
+			case 4:
 				SetTexturePath(s1);
 				break;
 			default:
@@ -161,6 +161,6 @@ namespace Rogue
 			}
 
 			++counter;
-		} */
+		}
 	}
 }

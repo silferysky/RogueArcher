@@ -31,7 +31,10 @@ namespace Rogue
 			particle.Update(g_deltaTime);
 
 			if (particle.GetLifetime() <= 0)
+			{
 				g_engine.m_coordinator.DestroyEntity(entity);
+				break;
+			}
 		}
 	}
 

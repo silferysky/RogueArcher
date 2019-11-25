@@ -13,7 +13,15 @@ namespace Rogue
 		{
 			SceneManager& sceneManager = SceneManager::instance();
 
-			sceneManager.LoadLevel(sceneManager.getCurrentFileName().c_str());
+			sceneManager.LoadLevel(m_levelToLoad.c_str());
 		}
+	}
+	std::string& TransitionObject::GetTransitionLevelName()
+	{
+		return m_levelToLoad;
+	}
+	void TransitionObject::SetTransitionLevelName(std::string name)
+	{
+		m_levelToLoad = name;
 	}
 }
