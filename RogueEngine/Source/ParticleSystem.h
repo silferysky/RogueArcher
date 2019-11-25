@@ -8,7 +8,6 @@ namespace Rogue
 		: public System, public EventListener
 	{
 	public:
-
 		ParticleSystem();
 		~ParticleSystem() = default;
 
