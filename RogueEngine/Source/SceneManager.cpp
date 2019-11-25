@@ -80,7 +80,7 @@ namespace Rogue
 	void SceneManager::SaveLevel(const char* fileName)
 	{
 		std::ostringstream ostrstream;
-		ostrstream << "Resources/" << fileName;
+		ostrstream << "Resources/Levels/" << fileName;
 		if (m_objectFactory->CheckFileTooSmall(FILETYPE_LEVEL, g_engine.m_coordinator.GetActiveObjects().size()))
 			if (g_engine.m_coordinator.GetActiveObjects().size() != 0)
 				BasicIO::WriteLevelJsonFile(ostrstream.str().c_str(), g_engine.m_coordinator.GetActiveObjects().size());

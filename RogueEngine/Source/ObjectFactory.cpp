@@ -531,7 +531,8 @@ namespace Rogue
 					}
 					case static_cast<int>(PARTICLE) :
 					{
-						strstream << "Particle{" << g_engine.m_coordinator.GetComponent<ParticleComponent>(entityToSerialize).Serialize() << "}";
+						strstream << "Particle{}";
+						//strstream << "Particle{" << g_engine.m_coordinator.GetComponent<ParticleComponent>(entityToSerialize).Serialize() << "}";
 						break;
 					}
 					default:
