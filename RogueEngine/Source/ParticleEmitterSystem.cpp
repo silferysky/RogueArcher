@@ -72,7 +72,10 @@ namespace Rogue
 			Vec2 pos = transform.GetPosition();
 			strstream << pos.x << ";"
 				<< pos.y << ";"
-				<< "20;20;0";
+				<< "20;20;0;100";
+			ballTransform.Deserialize(strstream.str());
+
+			strstream.str(std::string());;
 
 			Vec2 velocity;
 			velocity.y = RandFloat() * 10 * magnitude;
@@ -95,7 +98,7 @@ namespace Rogue
 			sprite.Deserialize(strstream.str());
 
 			ParticleComponent& particleComp = g_engine.m_coordinator.CreateComponent<ParticleComponent>(particle);
-			particleComp.SetLifetime(RandFloat(2.0f));
+			particleComp.SetLifetime(RandFloat(20.0f));
 			
 			HierarchyInfo newInfo(particle, "Particle " + std::to_string(i));
 			g_engine.m_coordinator.GetActiveObjects().push_back(particle);
@@ -138,7 +141,7 @@ namespace Rogue
 			sprite.Deserialize(strstream.str());
 
 			ParticleComponent& particleComp = g_engine.m_coordinator.CreateComponent<ParticleComponent>(particle);
-			particleComp.SetLifetime(RandFloat(2.0f));
+			particleComp.SetLifetime(RandFloat(20.0f));
 
 			HierarchyInfo newInfo(particle, "Particle " + std::to_string(i));
 			g_engine.m_coordinator.GetActiveObjects().push_back(particle);
