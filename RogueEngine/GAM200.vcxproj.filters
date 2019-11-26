@@ -520,9 +520,6 @@
     <ClInclude Include="Source\ParticleEmitterSystem.h">
       <Filter>RogueEngine\Systems\Particle System</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ParticleType.h">
-      <Filter>RogueEngine\Systems\Particle System</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
