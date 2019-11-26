@@ -124,12 +124,6 @@ namespace Rogue
 				}
 
 				system.second->Update();
-
-				/* if (m_gameIsRunning)
-					ShowCursor(false);
-				else
-					ShowCursor(true); */
-
 			}
 		}
 

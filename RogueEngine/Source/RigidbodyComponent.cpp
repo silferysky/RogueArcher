@@ -186,15 +186,23 @@ namespace Rogue
 	{
 		//Acceleration, Velocity, Mass, Volume, isStatic
 		std::ostringstream ss;
-		ss << m_acceleration.x << ";" << m_acceleration.y << ";";
-		ss << m_velocity.x << ";" << m_velocity.y << ";";
+		ss
+			<< m_acceleration.x << ";" << m_acceleration.y << ";";
+		ss
+			<< m_velocity.x << ";" << m_velocity.y << ";";
 		if (m_massData.m_invMass != 0.0f)
-			ss << m_massData.m_invMass << ";";
+			ss
+				<< m_massData.m_invMass << ";";
 		else
-			ss << 1 << ";";
-		ss << m_volume << ";";
-		ss << m_isStatic << ";";
-		ss << m_gravityScale;
+			ss
+				<< 1 << ";";
+		ss
+			<< m_volume << ";"
+			<< m_isStatic << ";"
+			<< m_gravityScale << ";"
+			<< m_damping << ";"
+			<< m_restitution << ";"
+			<< m_friction << ";";
 
 		return ss.str();
 	}
@@ -231,6 +239,15 @@ namespace Rogue
 				break;
 			case 5:
 				m_gravityScale = std::stof(s1);
+				break;
+			case 6:
+				m_damping = std::stof(s1);
+				break;
+			case 7:
+				m_restitution = std::stof(s1);
+				break;
+			case 8:
+				m_friction = std::stof(s1);
 				break;
 			default:
 				break;
