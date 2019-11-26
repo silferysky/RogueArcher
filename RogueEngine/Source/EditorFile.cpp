@@ -86,6 +86,7 @@ namespace Rogue
 						if (ImGui::MenuItem(levelStrIterator.c_str()))
 						{
 							SceneManager& sceneManager = SceneManager::instance();
+							sceneManager.ResetMaxEntityInCurrentFile();
 							sceneManager.setCurrentFileName(levelStrIterator.c_str());
 							SceneManager::instance().SaveLevel(sceneManager.getCurrentFileName().c_str());
 						}
