@@ -81,7 +81,7 @@
     "Entity16": "Name{Fg4-2}|Tag{}|Sprite{Resources/Assets/Fg_4_2.png;6;1;1;1}||Transform{800;450;1600;900;0;0}||||||||||||||||",
     "Entity17": "Name{Fg2}|Tag{}|Sprite{Resources/Assets/Fg2.png;1;1;1;1}||Transform{-800;-451;1600;900;0;0}||||||||||||||||",
     "Entity18": "Name{crystals3}|Tag{}|Sprite{Resources/Assets/Crystal1.png;1;1;1;1}||Transform{-1534;-660;300;300;0;0}||||||||||||||||",
-    "Entity19": "Name{crystals4}|Tag{}|Sprite{Resources/Assets/Crystal2.png;1;1;1;1}|Rigidbody{0;0;0;0;1;1;1;1}|Transform{42;606.49;300;300;0;0}||BoxCollider{0;0;18;-158;-172;TRIGGER}|||||||||Collider{BOX}|||Particle Emitter{0;0;0;0.05;Resources/Assets/Projectile.png;}||",
+    "Entity19": "Name{crystals4}|Tag{}|Sprite{Resources/Assets/Crystal2.png;1;1;1;1}|Rigidbody{0;0;0;0;1;1;1;1}|Transform{42;606.49;300;300;0;0}||BoxCollider{0;0;18;-158;-172;TRIGGER}|||||||||Collider{BOX}|||Particle Emitter{0;0;0;0.05;0;}||",
     "Entity20": "Name{shadow}|Tag{}|Sprite{Resources/Assets/Crystal2_Shadow.png;1;1;1;1}||Transform{38;605;300;300;0;0}||||||||||||||||",
     "Entity21": "Name{collider1}|Tag{}||Rigidbody{0;0;0;0;1;1;1;1}|Transform{-1466;-26;100;100;0;0}||BoxCollider{0;0;0;478;442;AWAKE}||||||||||||||",
     "Entity22": "Name{collider2}|Tag{}||Rigidbody{0;0;0;0;1;1;1;1}|Transform{-1007;-60;100;100;0;0}||BoxCollider{0;-8;0;293;130;AWAKE}||||||||||||||",

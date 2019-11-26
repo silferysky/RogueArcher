@@ -1,13 +1,12 @@
 #pragma once
 #include "BaseComponent.h"
-#include "ParticleType.h"
 
 namespace Rogue
 {
 	class ParticleComponent
 		: public BaseComponent
 	{
-		float m_lifetime;
+		float m_lifetime = 0.0f;
 	public:
 		ParticleComponent() = default;
 		~ParticleComponent() = default;

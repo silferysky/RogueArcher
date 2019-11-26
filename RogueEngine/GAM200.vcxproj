@@ -35,7 +35,6 @@
     <ClInclude Include="Source\CursorComponent.h" />
     <ClInclude Include="Source\ParticleComponent.h" />
     <ClInclude Include="Source\ParticleEmitterSystem.h" />
-    <ClInclude Include="Source\ParticleType.h" />
     <ClInclude Include="Source\PickingManager.h" />
     <ClInclude Include="Source\CursorSystem.h" />
     <ClInclude Include="Source\DebugDrawSystem.h" />
