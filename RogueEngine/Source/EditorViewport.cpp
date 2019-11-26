@@ -169,12 +169,12 @@ namespace Rogue
 	}
 	void ImGuiEditorViewport::ShowGizmo(Entity& selectedentity)
 	{
-
 		if (g_engine.m_coordinator.ComponentExists<TransformComponent>(selectedentity))
 		{
 			auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(selectedentity);
 			float gizmoMatrix[16]{};
 			float matrixScale[3]{}, matrixRotate[3]{}, matrixTranslate[3]{};
+			float buttonOffset = 21.0f;
 			ImVec2 m_Min = ImGui::GetWindowContentRegionMin();
 			ImVec2 m_Max = ImGui::GetWindowContentRegionMax();
 			ImVec2 imageSize = ImGui::GetContentRegionAvail();
@@ -182,7 +182,6 @@ namespace Rogue
 			m_Min.y += ImGui::GetWindowPos().y;
 			m_Max.x += ImGui::GetWindowPos().x;
 			m_Max.y += ImGui::GetWindowPos().y;
-			//std::cout << "height :" << x << "width: " << y << std::endl;
 			matrixScale[0] = transform.GetScale().x;
 			matrixScale[1] = transform.GetScale().y;
 			matrixScale[2] = 1;
@@ -198,7 +197,7 @@ namespace Rogue
 			ImGuizmo::RecomposeMatrixFromComponents(matrixTranslate, matrixRotate, matrixScale, gizmoMatrix);
 			ImGuiIO& io = ImGui::GetIO();
 			
-			ImGuizmo::SetRect(235, 75,imageSize.x, imageSize.y);
+			ImGuizmo::SetRect(m_Min.x, m_Min.y + buttonOffset,imageSize.x, imageSize.y);
 			ImGuizmo::Manipulate(glm::value_ptr(g_engine.m_coordinator.GetSystem<CameraSystem>()->GetViewMatrix(1.0f)),glm::value_ptr( g_engine.GetProjMat()), m_CurrentGizmoOperation, ImGuizmo::LOCAL, gizmoMatrix, NULL);
 			ImGuizmo::DecomposeMatrixToComponents(gizmoMatrix, matrixTranslate, matrixRotate, matrixScale);
 
