@@ -34,7 +34,7 @@ namespace Rogue
 {
 	REEngine::REEngine() :
 		m_coordinator{}, m_accumulatedTime{ 0.0f }, m_timeScale{ 1.0f }, m_stepCount{ 0 },
-		m_gameIsRunning{ true }, m_verticalSync{ false }, m_projMat{ 1.0f }
+		m_gameIsRunning{ true }, m_verticalSync{ false }, m_projMat{ 1.0f }, m_isFocused{ true }
 	{}
 
 	void REEngine::RegisterSystems()
@@ -154,10 +154,9 @@ namespace Rogue
 				m_accumulatedTime -= g_fixedDeltaTime;
 				m_stepCount++;
 			}
+
 			m_coordinator.Update();
 
-			//m_projMat = glm::ortho(-16.0f * 0.5f, 16.0f * 0.5f, -9.0f * 0.5f, 9.0f * 0.5f, -1024.0f, 1024.0f);
-			
 			m_dimensions = Vec2{ m_size, aspect_ratio * m_size } * 0.5 * CameraManager::instance().GetCameraZoom();
 			m_projMat = glm::ortho(-m_dimensions.x, m_dimensions.x, -m_dimensions.y, m_dimensions.y, -1024.0f, 1024.0f);
 			
@@ -234,6 +233,11 @@ namespace Rogue
 		return m_dimensions;
 	}
 
+	bool REEngine::GetIsFocused() const
+	{
+		return m_isFocused;
+	}
+
 	void REEngine::SetGameIsRunning(bool set)
 	{
 		m_gameIsRunning = set;
@@ -271,6 +275,11 @@ namespace Rogue
 	void REEngine::SetWorldDimensions(const Vec2& dim)
 	{
 		m_dimensions = dim;
+	}
+
+	void REEngine::SetIsFocused(bool set)
+	{
+		m_isFocused = set;
 	}
 
 	HWND REEngine::CreateOpenGLWindow(char* title, int x, int y, int width, int height,
