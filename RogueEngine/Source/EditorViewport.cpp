@@ -3,6 +3,7 @@
 #include "Main.h"
 #include "PickingManager.h"
 #include "CameraManager.h"
+#include "REMath.h"
 
 namespace Rogue
 {
@@ -174,20 +175,30 @@ namespace Rogue
 			auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(selectedentity);
 			float gizmoMatrix[16]{};
 			float matrixScale[3]{}, matrixRotate[3]{}, matrixTranslate[3]{};
-
+			ImVec2 m_Min = ImGui::GetWindowContentRegionMin();
+			ImVec2 m_Max = ImGui::GetWindowContentRegionMax();
+			ImVec2 imageSize = ImGui::GetContentRegionAvail();
+			m_Min.x += ImGui::GetWindowPos().x;
+			m_Min.y += ImGui::GetWindowPos().y;
+			m_Max.x += ImGui::GetWindowPos().x;
+			m_Max.y += ImGui::GetWindowPos().y;
+			//std::cout << "height :" << x << "width: " << y << std::endl;
 			matrixScale[0] = transform.GetScale().x;
 			matrixScale[1] = transform.GetScale().y;
 			matrixScale[2] = 1;
 
-
+			float width = m_Max.x - m_Min.x;
+			float height = m_Max.y - m_Min.y;
+			
 			matrixRotate[2] = transform.GetRotation();
-
+			
 			matrixTranslate[0] = transform.GetPosition().x;
 			matrixTranslate[1] = transform.GetPosition().y;
-			float m_cameraZoom = CameraManager::instance().GetCameraZoom();
+			
 			ImGuizmo::RecomposeMatrixFromComponents(matrixTranslate, matrixRotate, matrixScale, gizmoMatrix);
 			ImGuiIO& io = ImGui::GetIO();
-			ImGuizmo::SetRect(0, 0, io.DisplaySize.x, io.DisplaySize.y);
+			
+			ImGuizmo::SetRect(235, 75,imageSize.x, imageSize.y);
 			ImGuizmo::Manipulate(glm::value_ptr(g_engine.m_coordinator.GetSystem<CameraSystem>()->GetViewMatrix(1.0f)),glm::value_ptr( g_engine.GetProjMat()), m_CurrentGizmoOperation, ImGuizmo::LOCAL, gizmoMatrix, NULL);
 			ImGuizmo::DecomposeMatrixToComponents(gizmoMatrix, matrixTranslate, matrixRotate, matrixScale);
 
