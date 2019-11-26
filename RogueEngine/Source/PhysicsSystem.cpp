@@ -64,18 +64,23 @@ namespace Rogue
 
 		for (int step = 0; step < g_engine.GetStepCount(); ++step)
 		{
-			ForceManager::instance().UpdateAges();
-
 			// For all entities
 			std::set<Entity>::iterator iEntity;
 			for (iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
 			{
+				std::string name = g_engine.m_coordinator.GetHierarchyInfo(*iEntity).m_objectName;
+				bool correct = false;
+				if (name == "Ball")
+				{
+					correct = true;
+				}
 				auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
 
 				if (rigidbody.getIsStatic())
 					continue;
 
 				auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
+
 
 				// Add relevant forces to each rigidbody
 				ForceManager::instance().AddForce(*iEntity, rigidbody);
@@ -86,6 +91,8 @@ namespace Rogue
 				// Reset accForce
 				rigidbody.setAccForce(Vec2());
 			}
+
+			ForceManager::instance().UpdateAges();
 		}
 		g_engine.m_coordinator.EndTimeSystem("Physics System");
 	}
