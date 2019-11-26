@@ -235,7 +235,7 @@ namespace Rogue
 			return;
 		
 		std::ostringstream ostrstream;
-		ostrstream << "Resources/" << file << ".json";
+		ostrstream << "Resources/Archetypes/" << file << ".json";
 
 		int signatureInInt = static_cast<int>(iterator->second.first.to_ulong());
 		
