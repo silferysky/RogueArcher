@@ -9,21 +9,20 @@ namespace Rogue
 
 	class REEngine
 	{
+		/*********************************
+		******* Engine variables *********
+		**********************************/
+		// General variables
+		float m_timeScale;
+		Vec2 m_cursorPos;				// Mouse cursor's world position
+		ImVec2 m_viewportCursorPos;		// Mouse cursor's editor viewport position
+
+		// Game loop variables
+		Timer::ChronoTime m_loopStart;
+		Timer::ChronoTime m_loopEnd;
 		float m_accumulatedTime;
 		int	m_stepCount;
 		bool m_gameIsRunning;
-		float m_timeScale;
-		bool m_verticalSync;
-		Vec2 m_dimensions;
-
-		Vec2 m_cursorPos;
-		ImVec2 m_viewportCursorPos;
-
-		Timer::ChronoTime m_loopStart;
-		Timer::ChronoTime m_loopEnd;
-
-		void RegisterSystems();
-		void RegisterComponents();
 
 		/*********************************
 		******* Window Variables *********
@@ -38,14 +37,20 @@ namespace Rogue
 		PIXELFORMATDESCRIPTOR pfd{ 0 };
 		HINSTANCE hInstance;
 
-		REConfig config;
+		REConfig config;			// Config class
+		glm::mat4 m_projMat;		// Projection matrix
+		float m_cameraZoom = 1.0f;	// Camera zoom
+		bool m_verticalSync;		// Vsync
+		float m_size = 2000.0f;		// World size of viewport
+		Vec2 m_dimensions;			// Viewport world dimensions
+		float aspect_ratio;			// Width and height ratio
+		bool m_isFocused;
 
-		glm::mat4 m_projMat;
-		float m_cameraZoom = 1.0f;
-
-		float aspect_ratio;	
-		float m_size = 2000.0f;
-
+		/*********************************
+		******* Private Functions *********
+		**********************************/
+		void RegisterSystems();
+		void RegisterComponents();
 		HWND CreateOpenGLWindow(char* title, int x, int y, int width, int height,
 			BYTE type, DWORD flags);
 	public:
@@ -70,6 +75,7 @@ namespace Rogue
 		int GetEngineWindowWidth() const;
 		int GetEngineWindowHeight() const;
 		Vec2 GetWorldDimensions() const;
+		bool GetIsFocused() const;
 
 		void SetGameIsRunning(bool set);
 		void SetTimeScale(float timeScale);
@@ -77,5 +83,6 @@ namespace Rogue
 		void SetWorldCursor(const Vec2& pos);
 		void SetViewportCursor(const ImVec2& pos);
 		void SetWorldDimensions(const Vec2& dim);
+		void SetIsFocused(bool set);
 	};
 }
