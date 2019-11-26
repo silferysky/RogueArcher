@@ -156,7 +156,7 @@ namespace Rogue
 		auto& hierarchyObj = g_engine.m_coordinator.GetHierarchyInfo(otherEnt);
 		if (hierarchyObj.m_objectName == "Ball")
 		{
-			g_engine.m_coordinator.DestroyEntity(otherEnt);
+			//ClearTimedEntities already deletes entity
 			g_engine.m_coordinator.ClearTimedEntities();
 		}
 	}
