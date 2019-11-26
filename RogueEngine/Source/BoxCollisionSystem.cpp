@@ -54,6 +54,11 @@ namespace Rogue
 			{
 				auto& nextBoxCollider = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iNextEntity);
 				auto& nextRigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iNextEntity);
+				auto& nextTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iNextEntity);
+
+				// Update collidables
+				CollisionManager::instance().UpdateAABB(nextBoxCollider.m_aabb, nextTransform);
+				CollisionManager::instance().UpdateOBB(nextBoxCollider.m_obb, nextTransform);
 
 				if (nextBoxCollider.GetCollisionMode() == CollisionMode::e_asleep)
 					continue;

@@ -251,14 +251,6 @@
     <ClCompile Include="Source\VSync.cpp" />
     <ClCompile Include="Source\WindowHelper.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Archetypes.json" />
-    <None Include="Resources\Config.json" />
-    <None Include="Resources\Level 1.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Resources\tile.png" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{63B4A48E-83B8-4090-AC7E-1263A5B407D8}</ProjectGuid>

@@ -363,10 +363,10 @@ namespace Rogue
 			sprite.Deserialize("Resources/Assets/Projectile.png;1;1;1;1;1");
 
 			RigidbodyComponent& rigidbody = g_engine.m_coordinator.CreateComponent<RigidbodyComponent>(ball);
-			rigidbody.Deserialize("0;0;0;0;1;1;0");
+			rigidbody.Deserialize("0;0;0;0;1;1;0;0.5;0.8;0.01");
 
-			//ForceManager::instance().RegisterForce(ball, Vec2(cursorPos.x * FORCE_FACTOR, cursorPos.y * FORCE_FACTOR), 1.0f);
-			rigidbody.addForce(Vec2(ballDir.x * FORCE_FACTOR, ballDir.y * FORCE_FACTOR));
+			ForceManager::instance().RegisterForce(ball, Vec2(ballDir.x * FORCE_FACTOR, ballDir.y * FORCE_FACTOR), g_fixedDeltaTime);
+
 			BoxCollider2DComponent& boxCollider = g_engine.m_coordinator.CreateComponent<BoxCollider2DComponent>(ball);
 			boxCollider.Deserialize("0;0;0;0;0");
 

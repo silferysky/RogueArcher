@@ -66,6 +66,11 @@ namespace Rogue
 		case WM_CLOSE:
 			g_engine.SetGameIsRunning(false);
 			return 0;
+		case WM_ACTIVATE:
+			if (wParam == WA_INACTIVE)
+				g_engine.SetIsFocused(false);
+			else if (wParam == WA_ACTIVE || wParam == WA_CLICKACTIVE)
+				g_engine.SetIsFocused(true);
 		}
 		return DefWindowProc(hWnd, uMsg, wParam, lParam);
 	}

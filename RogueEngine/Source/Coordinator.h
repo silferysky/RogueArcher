@@ -62,6 +62,7 @@ namespace Rogue
 			EventDispatcher::instance().Update();
 
 			DeleteEntities();
+
 		}
 
 		void Shutdown()

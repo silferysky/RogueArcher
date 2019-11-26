@@ -60,7 +60,7 @@ namespace Rogue
 			if (CollisionManager::instance().DiscretePointVsAABB(cursor, viewportArea))
 			{
 				int pickedEntity = -1;
-				float highestZ = 0;
+				int highestZ = 0;
 
 				// Go through every transform component
 				for (Entity entity : m_entities)
