@@ -17,6 +17,7 @@ namespace Rogue
 	class ParticleEmitterSystem
 		: public System, public EventListener
 	{
+		Entity unitParticle;
 	public:
 		ParticleEmitterSystem();
 		~ParticleEmitterSystem() = default;

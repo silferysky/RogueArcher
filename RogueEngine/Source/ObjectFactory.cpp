@@ -391,7 +391,7 @@ namespace Rogue
 
 	}
 
-	void ObjectFactory::Clone(const char* archetype)
+	Entity ObjectFactory::Clone(const char* archetype)
 	{
 		//If the key exists
 		if (m_archetypes.count(archetype))
@@ -412,7 +412,11 @@ namespace Rogue
 
 			ostrstream << "Game Object " << SceneManager::instance().GetObjectIterator();
 			CREATE_HIERARCHY_OBJ_TAG(curEnt, ostrstream.str(), tagDeserialized);
+
+			return curEnt;
 		}
+		else
+			return NULL;
 	}
 
 	bool ObjectFactory::CheckFileTooSmall(size_t type, size_t size)

@@ -158,9 +158,9 @@ namespace Rogue
 		//MOVE_OBJECTFACTORY_TO_SCENEMANAGER;
 	}
 
-	void SceneManager::Clone(const char* archetype)
+	Entity SceneManager::Clone(const char* archetype)
 	{
-		m_objectFactory->Clone(archetype);
+		return m_objectFactory->Clone(archetype);
 		//MOVE_OBJECTFACTORY_TO_SCENEMANAGER;
 	}
 
