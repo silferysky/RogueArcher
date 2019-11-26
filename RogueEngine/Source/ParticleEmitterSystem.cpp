@@ -90,10 +90,6 @@ namespace Rogue
 
 			ParticleComponent& particleComp = g_engine.m_coordinator.CreateComponent<ParticleComponent>(particle);
 			particleComp.SetLifetime(RandFloat(pEmitter.GetLifetimeLimit()));
-			
-			HierarchyInfo newInfo(particle, "Particle " + std::to_string(i));
-			g_engine.m_coordinator.GetActiveObjects().push_back(particle);
-			g_engine.m_coordinator.GetHierarchyInfo(particle) = newInfo;
 		}
 	}
 }

@@ -200,14 +200,14 @@ namespace Rogue
 	std::string ParticleEmitterComponent::Serialize()
 	{
 		std::ostringstream ss;
-		ss << m_isActive << ";";
-		ss << m_isContinuous << ";";
+		ss << m_scale.x << ";" << m_scale.y << ";";
+		ss << m_velocityFactor.x << ";" << m_velocityFactor.y << ";";;
 		ss << m_magnitude << ";";
 		ss << m_arc << ";";
 		ss << m_lifetimeLimit << ";";
 		ss << m_fade << ";";
-		ss << m_scale << ";";
-		ss << m_velocityFactor << ";";
+		ss << m_isActive << ";";
+		ss << m_isContinuous << ";";
 		ss << m_texturePath << ";";
 		return ss.str();
 	}
@@ -228,10 +228,10 @@ namespace Rogue
 			switch (counter)
 			{
 			case 0:
-				SetIsActive(std::stof(s1));
+				SetScale(Vec2(std::stof(s1), std::stof(s2)));
 				break;
 			case 1:
-				SetIsContinuous(std::stof(s1));
+				SetVelocity(Vec2(std::stof(s1), std::stof(s2)));
 				break;
 			case 2:
 				SetMagnitude(std::stof(s1));
@@ -246,10 +246,10 @@ namespace Rogue
 				SetFade(std::stof(s1));
 				break;
 			case 6:
-				SetScale(Vec2(std::stof(s1), std::stof(s2)));
+				SetIsActive(std::stof(s1));
 				break;
 			case 7:
-				SetVelocity(Vec2(std::stof(s1), std::stof(s2)));
+				SetIsContinuous(std::stof(s1));
 				break;
 			case 8:
 				SetTexturePath(s1);
