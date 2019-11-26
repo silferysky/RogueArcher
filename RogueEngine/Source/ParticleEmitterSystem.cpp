@@ -21,6 +21,8 @@ namespace Rogue
 		signature.set(g_engine.m_coordinator.GetComponentType<TransformComponent>());
 
 		g_engine.m_coordinator.SetSystemSignature<ParticleEmitterSystem>(signature);
+
+		unitParticle = g_engine.m_coordinator.cloneArchetypes("Particle");
 	}
 
 	void ParticleEmitterSystem::Update()
@@ -58,36 +60,24 @@ namespace Rogue
 
 		for (int i = 0; i < 100 * magnitude; ++i)
 		{
-			std::ostringstream strstream;
-			Entity particle = g_engine.m_coordinator.CreateEntity();
+			Entity particle = g_engine.m_coordinator.clone(unitParticle);
 
-			TransformComponent& ballTransform = g_engine.m_coordinator.CreateComponent<TransformComponent>(particle);
+			TransformComponent& particleTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(particle);
 			Vec2 pos = transform.GetPosition();
 
-			strstream << pos.x + RandFloat(positionalOffset.x) << ";"
-				      << pos.y + RandFloat(positionalOffset.x) << ";"
-				      << scale.x << ";"
-					  << scale.y << ";"
-				      << "0" << ";"
-				      << transform.GetZ();
-			ballTransform.Deserialize(strstream.str());
-
-			strstream.str(std::string()); // clear the string stream
+			particleTransform.setPosition(Vec2(pos.x + RandFloat(positionalOffset.x), pos.y + RandFloat(positionalOffset.x)));
+			particleTransform.setScale(scale);
+			particleTransform.setZ(transform.GetZ());
 
 			Vec2 velocity;
 			velocity.x = RandFloat() * 1000 * velocityFactor.x * cos(pEmitter.GetArc());
 			velocity.y = RandFloat() * 1000 * velocityFactor.y * sin(pEmitter.GetArc());
 
-			RigidbodyComponent& rigidbody = g_engine.m_coordinator.CreateComponent<RigidbodyComponent>(particle);
-			rigidbody.Deserialize("0;0;0;0;1;1;0");
+			RigidbodyComponent& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(particle);
 			rigidbody.addForce(velocity);
 
-			BoxCollider2DComponent& boxCollider = g_engine.m_coordinator.CreateComponent<BoxCollider2DComponent>(particle);
-			boxCollider.Deserialize("0;0;0;0;0");
-
-			SpriteComponent& sprite = g_engine.m_coordinator.CreateComponent<SpriteComponent>(particle);
-			strstream << pEmitter.GetTexturePath().data() << ";1;1;1;1;1";
-			sprite.Deserialize(strstream.str());
+			SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(particle);
+			sprite.setTexturePath(pEmitter.GetTexturePath().data());
 
 			ParticleComponent& particleComp = g_engine.m_coordinator.CreateComponent<ParticleComponent>(particle);
 			particleComp.SetLifetime(RandFloat(pEmitter.GetLifetimeLimit()));

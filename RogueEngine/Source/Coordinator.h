@@ -217,9 +217,9 @@ namespace Rogue
 			return Timer::instance().GetSystemTimes();
 		}
 
-		void cloneArchetypes(const char* archetype)
+		Entity cloneArchetypes(const char* archetype)
 		{
-			SceneManager::instance().Clone(archetype);
+			return SceneManager::instance().Clone(archetype);
 		}
 
 		void SaveArchetype(const char* archetype)
@@ -227,7 +227,7 @@ namespace Rogue
 			SceneManager::instance().SaveArchetype(archetype);
 		}
 
-		void clone(Entity existingEntity)
+		Entity clone(Entity existingEntity)
 		{
 			Entity clonedEntity = CreateEntity();
 			m_componentManager->clone(existingEntity, clonedEntity);
@@ -237,6 +237,7 @@ namespace Rogue
 			m_systemManager->EntitySignatureChanged(clonedEntity, newEntitySignature);
 			SceneManager::instance().AddToActiveEntities(clonedEntity);
 
+			return clonedEntity;
 			//m_sceneManager->Clone(existingEntity);
 		}
 
@@ -260,11 +261,11 @@ namespace Rogue
 			for (auto& entity : m_deleteQueue)
 			{
 				DestroyEntity(entity);
-				for (auto itr = GetActiveObjects().begin(); itr != GetActiveObjects().end(); ++itr)
+				/*for (auto itr = GetActiveObjects().begin(); itr != GetActiveObjects().end(); ++itr)
 				{
 					if (*itr == entity)
 						GetActiveObjects().erase(itr);
-				}
+				} */
 			}
 
 			m_deleteQueue.clear();

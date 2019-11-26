@@ -25,7 +25,7 @@ namespace Rogue
 		void SaveLevelFiles(const char* fileName);
 
 		void Clone(Entity toClone);
-		void Clone(const char* archetype);
+		Entity Clone(const char* archetype);
 
 		bool CheckFileTooSmall(size_t type, size_t size);
 		void ResetMaxEntity();

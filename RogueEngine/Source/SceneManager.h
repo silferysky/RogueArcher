@@ -46,7 +46,7 @@ namespace Rogue
 		void RemoveArchetype(std::string_view archetypeEntity);
 
 		void Clone(Entity toClone);
-		void Clone(const char* archetype);
+		Entity Clone(const char* archetype);
 
 		std::vector<std::string> GetLoadedLevels() const;
 		void AddToLoadedLevels(std::string_view name);
