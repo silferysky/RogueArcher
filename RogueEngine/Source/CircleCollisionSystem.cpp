@@ -48,6 +48,10 @@ namespace Rogue
 			{
 				auto& nextBoundingCircle = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(*iNextEntity);
 				auto& nextRigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iNextEntity);
+				auto& nextTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iNextEntity);
+
+				// Update collidables
+				CollisionManager::instance().UpdateBoundingCircle(nextBoundingCircle.m_collider, nextTransform);
 
 				if (currRigidbody.getIsStatic() && nextRigidbody.getIsStatic())
 					continue;
