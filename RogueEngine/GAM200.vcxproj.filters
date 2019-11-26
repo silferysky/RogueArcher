@@ -520,6 +520,18 @@
     <ClInclude Include="Source\ParticleEmitterSystem.h">
       <Filter>RogueEngine\Systems\Particle System</Filter>
     </ClInclude>
+    <ClInclude Include="Source\ImCurveEdit.h">
+      <Filter>RogueEditor\EditorLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ImGradient.h">
+      <Filter>RogueEditor\EditorLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ImGuizmo.h">
+      <Filter>RogueEditor\EditorLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ImSequencer.h">
+      <Filter>RogueEditor\EditorLibrary</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -809,6 +821,18 @@
     </ClCompile>
     <ClCompile Include="Source\ParticleEmitterSystem.cpp">
       <Filter>RogueEngine\Systems\Particle System</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ImCurveEdit.cpp">
+      <Filter>RogueEditor\EditorLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ImGradient.cpp">
+      <Filter>RogueEditor\EditorLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ImGuizmo.cpp">
+      <Filter>RogueEditor\EditorLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ImSequencer.cpp">
+      <Filter>RogueEditor\EditorLibrary</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,3 +1,4 @@
+#include "Precompiled.h"
 #include "ImCurveEdit.h"
 #include "imgui.h"
 #include "imgui_internal.h"
