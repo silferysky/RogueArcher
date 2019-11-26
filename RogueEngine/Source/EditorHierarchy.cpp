@@ -14,6 +14,7 @@ namespace Rogue
 	{
 	}
 
+
 	void ImGuiEditorHierarchy::Init()
 	{
 
@@ -74,7 +75,6 @@ namespace Rogue
 					// Select this entity cus it's picked
 					objInfo.m_selected = true;
 					Entity newSelected = i;
-
 					// Find all the other entitiies
 					for (auto& hierarchyInfo : m_currentVector)
 					{
@@ -137,6 +137,7 @@ namespace Rogue
 	void ImGuiEditorHierarchy::Shutdown()
 	{
 	}
+
 
 }
 
