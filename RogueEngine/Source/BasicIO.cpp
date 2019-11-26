@@ -56,7 +56,7 @@ namespace Rogue
 	{
 		std::ostringstream strstream;
 
-		strstream << InitializeHeader(numOfEnt, true);
+		strstream << InitializeHeader(numOfEnt);
 		strstream << InitializeComponentStr(numOfEnt);
 		strstream << InitializeParentStr(numOfEnt);
 		strstream << "\n}";
@@ -82,7 +82,7 @@ namespace Rogue
 		WriteFile(FileName.data(), strstream.str().c_str());
 	}
 
-	std::string BasicIO::InitializeHeader(size_t numOfEnt, bool includeBackground)
+	std::string BasicIO::InitializeHeader(size_t numOfEnt)
 	{
 		std::ostringstream strstream;
 
@@ -90,9 +90,11 @@ namespace Rogue
 		strstream << "{\n  \"MaxEntityCount\": " << numOfEnt;
 		strstream << ",\n  \"EntityCount\": " << 0;
 
-		//For Background Texture
-		if (includeBackground)
-			strstream << ",\n  \"BackgroundTexture\": \"Resources/Assets/test.bmp\"";
+		//For Camera
+		strstream << ",\n  \"CameraMinX\": " << 0;
+		strstream << ",\n  \"CameraMinY\": " << 0;
+		strstream << ",\n  \"CameraMaxX\": " << 0;
+		strstream << ",\n  \"CameraMaxY\": " << 0;
 
 		//For Signature
 		strstream << InitializeSignatureJsonFile(numOfEnt);
