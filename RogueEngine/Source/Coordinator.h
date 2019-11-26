@@ -257,10 +257,11 @@ namespace Rogue
 
 		void DeleteEntities()
 		{
-			for (auto& entity : m_deleteQueue)
-			{
-				DestroyEntity(entity);
-			}
+			if (GameIsActive())
+				for (auto& entity : m_deleteQueue)
+				{
+					DestroyEntity(entity);
+				}
 			m_deleteQueue.clear();
 		}
 
