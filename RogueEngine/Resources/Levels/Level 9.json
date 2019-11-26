@@ -1,7 +1,10 @@
 {
     "MaxEntityCount": 31,
     "EntityCount": 31,
-    "BackgroundTexture": "Resources/Assets/test.bmp",
+    "CameraMinX": -630,
+    "CameraMinY": -350,
+    "CameraMaxX": 630,
+    "CameraMaxY": 350,
     "Signature0": 5,
     "Signature1": 5,
     "Signature2": 5,

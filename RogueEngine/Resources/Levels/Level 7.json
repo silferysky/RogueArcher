@@ -1,7 +1,10 @@
 {
     "MaxEntityCount": 1,
     "EntityCount": 1,
-    "BackgroundTexture": "Resources\\Assets\\test.bmp;1;1;1;1",
+    "CameraMinX": -630,
+    "CameraMinY": -350,
+    "CameraMaxX": 630,
+    "CameraMaxY": 350,
     "Signature0": 5,
     "Entity0": "Name{Background}|Tag{}|Sprite{Resources\\Assets\\test.bmp;1;1;1;1}||Transform{0;0;1600;900;0;0}|||||||||||||||"
 }

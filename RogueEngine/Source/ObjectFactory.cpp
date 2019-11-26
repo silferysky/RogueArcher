@@ -25,6 +25,10 @@ namespace Rogue
 		std::string stdstr, tagstr, readstr;
 		const char* cstr;
 
+		//For Camera
+		CameraManager::instance().SetCameraMin(Vec2(level["CameraMinX"].GetFloat(), level["CameraMinY"].GetFloat()));
+		CameraManager::instance().SetCameraMax(Vec2(level["CameraMaxX"].GetFloat(), level["CameraMaxY"].GetFloat()));
+
 		//For Entity Count
 		m_maxEntityCount = level["MaxEntityCount"].GetInt();
 		Entity entCount = level["EntityCount"].GetInt();
@@ -248,7 +252,7 @@ namespace Rogue
 	{
 		rapidjson::Document level = RESerialiser::DeserialiseFromFile(fileName);
 		std::stringstream strstream;
-		std::istringstream istrstream(level["Sounds"].GetString());
+		//std::istringstream istrstream(level["Sounds"].GetString());
 		std::string stdstr;
 		strstream << level["Files"].GetString();
 
@@ -259,21 +263,21 @@ namespace Rogue
 
 		m_maxFileCount = SceneManager::instance().GetLoadedLevels().size();
 
-		CameraManager::instance().SetCameraMin(Vec2(level["CameraMinX"].GetFloat(), level["CameraMinY"].GetFloat()));
-		CameraManager::instance().SetCameraMax(Vec2(level["CameraMaxX"].GetFloat(), level["CameraMaxY"].GetFloat()));
+		//CameraManager::instance().SetCameraMin(Vec2(level["CameraMinX"].GetFloat(), level["CameraMinY"].GetFloat()));
+		//CameraManager::instance().SetCameraMax(Vec2(level["CameraMaxX"].GetFloat(), level["CameraMaxY"].GetFloat()));
 
 		stdstr = std::string();
 
 		auto& audioManager = AudioManager::instance();
 
-		while (std::getline(istrstream, stdstr, ';'))
+		/*while (std::getline(istrstream, stdstr, ';'))
 		{
 			strstream.clear();
 			strstream.str("");
 			strstream << "Resources/Sounds/" << stdstr;
 
 			audioManager.loadSound(strstream.str());
-		}
+		}*/
 		
 	}
 
