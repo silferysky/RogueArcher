@@ -23,12 +23,13 @@ namespace Rogue
 		std::unique_ptr<ComponentManager> m_componentManager;
 		std::unique_ptr<EntityManager> m_entityManager;
 		std::unique_ptr<SystemManager> m_systemManager;
-
+		std::vector<Entity> m_deleteQueue;
 	public:
 		Coordinator() :
 			m_entityManager{ std::make_unique<EntityManager>() },
 			m_componentManager{ std::make_unique<ComponentManager>() },
-			m_systemManager{ std::make_unique<SystemManager>() }
+			m_systemManager{ std::make_unique<SystemManager>() },
+			m_deleteQueue{}
 		{}
 
 		void Init()
@@ -58,6 +59,8 @@ namespace Rogue
 
 			// If placed before ^, will cause memory leak.
 			EventDispatcher::instance().Update();
+
+			DeleteEntities();
 		}
 
 		void Shutdown()
@@ -239,6 +242,19 @@ namespace Rogue
 		void ResetEvents()
 		{
 			EventDispatcher::instance().ResetEvents();
+		}
+
+		void AddToDeleteQueue(const Entity& entity)
+		{
+			m_deleteQueue.push_back(entity);
+		}
+
+		void DeleteEntities()
+		{
+			for (auto& entity : m_deleteQueue)
+			{
+				DestroyEntity(entity);
+			}
 		}
 
 		EntityManager& GetEntityManager() const
