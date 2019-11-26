@@ -260,7 +260,14 @@ namespace Rogue
 			for (auto& entity : m_deleteQueue)
 			{
 				DestroyEntity(entity);
+				for (auto itr = GetActiveObjects().begin(); itr != GetActiveObjects().end(); ++itr)
+				{
+					if (*itr == entity)
+						GetActiveObjects().erase(itr);
+				}
 			}
+
+			m_deleteQueue.clear();
 		}
 
 		EntityManager& GetEntityManager() const
