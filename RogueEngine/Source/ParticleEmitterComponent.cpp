@@ -52,7 +52,7 @@ namespace Rogue
 		ImGui::DragFloat("       ", &m_velocityFactor.x);
 		ImGui::SameLine();
 		ImGui::PushItemWidth(75);
-		ImGui::DragFloat("       ", &m_velocityFactor.y);
+		ImGui::DragFloat("        ", &m_velocityFactor.y);
 		ImGui::PushItemWidth(50);
 
 		if (ImGui::IsItemHovered())

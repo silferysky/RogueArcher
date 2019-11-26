@@ -9,6 +9,7 @@ namespace Rogue
 	ParticleEmitterSystem::ParticleEmitterSystem()
 		:System(SystemID::id_PARTICLEEMITTERSYSTEM)
 	{
+
 	}
 
 	void ParticleEmitterSystem::Init()
@@ -74,8 +75,8 @@ namespace Rogue
 			strstream.str(std::string()); // clear the string stream
 
 			Vec2 velocity;
-			velocity.x = RandFloat() * 100 * velocityFactor.x * cos(pEmitter.GetArc());
-			velocity.y = RandFloat() * 100 * velocityFactor.y * sin(pEmitter.GetArc());
+			velocity.x = RandFloat() * 1000 * velocityFactor.x * cos(pEmitter.GetArc());
+			velocity.y = RandFloat() * 1000 * velocityFactor.y * sin(pEmitter.GetArc());
 
 			RigidbodyComponent& rigidbody = g_engine.m_coordinator.CreateComponent<RigidbodyComponent>(particle);
 			rigidbody.Deserialize("0;0;0;0;1;1;0");
