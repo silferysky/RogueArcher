@@ -835,20 +835,4 @@
       <Filter>RogueEditor\EditorLibrary</Filter>
     </ClCompile>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Level 1.json">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="Resources\Archetypes.json">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="Resources\Config.json">
-      <Filter>Resource Files</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Resources\tile.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-  </ItemGroup>
 </Project>
