@@ -16,6 +16,7 @@ namespace Rogue
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
+		ImGuizmo::SetOrthographic(true);
 		RECT rect;
 		::GetClientRect(g_engine.GetWindowHandler(), &rect);
 		io.DisplaySize = ImVec2((float)(rect.right - rect.left), (float)(rect.bottom - rect.top));
@@ -39,6 +40,7 @@ namespace Rogue
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplWin32_NewFrame();
 		ImGui::NewFrame();
+		ImGuizmo::BeginFrame();
 		bool i = true;
 		static ImGuiDockNodeFlags opt_flags = ImGuiDockNodeFlags_None;
 		ImGuiViewport* viewport = ImGui::GetMainViewport();

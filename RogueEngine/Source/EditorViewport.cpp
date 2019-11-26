@@ -1,9 +1,16 @@
 #include "Precompiled.h"
 #include "EditorViewport.h"
 #include "Main.h"
+#include "PickingManager.h"
+#include "CameraManager.h"
+#include "REMath.h"
 
 namespace Rogue
 {
+	ImGuiEditorViewport::ImGuiEditorViewport() :
+		m_currentVector{ g_engine.m_coordinator.GetActiveObjects() }, m_CurrentGizmoOperation{ ImGuizmo::TRANSLATE }
+	{
+	}
 	void ImGuiEditorViewport::Init()
 	{}
 
@@ -109,21 +116,19 @@ namespace Rogue
 		}
 
 		ImGui::SameLine();
-		if (ImGui::Button("Scale"))
-		{
-
-		}
-
+		if (ImGui::RadioButton("Translate", m_CurrentGizmoOperation == ImGuizmo::TRANSLATE))
+			m_CurrentGizmoOperation = ImGuizmo::TRANSLATE;
 		ImGui::SameLine();
-		if (ImGui::Button("Rotate"))
-		{
-
-		}
-
+		if (ImGui::RadioButton("Rotate", m_CurrentGizmoOperation == ImGuizmo::ROTATE))
+			m_CurrentGizmoOperation = ImGuizmo::ROTATE;
 		ImGui::SameLine();
-		if (ImGui::Button("Translate"))
+		if (ImGui::RadioButton("Scale", m_CurrentGizmoOperation == ImGuizmo::SCALE))
+			m_CurrentGizmoOperation = ImGuizmo::SCALE;
+		for (auto& i : m_currentVector)
 		{
-
+			HierarchyInfo& objInfo = g_engine.m_coordinator.GetHierarchyInfo(i);
+			if (objInfo.m_selected == true)
+				ShowGizmo(i);
 		}
 
 		ImVec2 imageSize = ImGui::GetContentRegionAvail();
@@ -160,6 +165,74 @@ namespace Rogue
 	}
 	void ImGuiEditorViewport::Shutdown()
 	{
+
+	}
+	void ImGuiEditorViewport::ShowGizmo(Entity& selectedentity)
+	{
+		if (g_engine.m_coordinator.ComponentExists<TransformComponent>(selectedentity))
+		{
+			auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(selectedentity);
+			float gizmoMatrix[16]{};
+			float matrixScale[3]{}, matrixRotate[3]{}, matrixTranslate[3]{};
+			float buttonOffset = 21.0f;
+			ImVec2 m_Min = ImGui::GetWindowContentRegionMin();
+			ImVec2 m_Max = ImGui::GetWindowContentRegionMax();
+			ImVec2 imageSize = ImGui::GetContentRegionAvail();
+			m_Min.x += ImGui::GetWindowPos().x;
+			m_Min.y += ImGui::GetWindowPos().y;
+			m_Max.x += ImGui::GetWindowPos().x;
+			m_Max.y += ImGui::GetWindowPos().y;
+			matrixScale[0] = transform.GetScale().x;
+			matrixScale[1] = transform.GetScale().y;
+			matrixScale[2] = 1;
+
+			float width = m_Max.x - m_Min.x;
+			float height = m_Max.y - m_Min.y;
+			
+			matrixRotate[2] = transform.GetRotation();
+			
+			matrixTranslate[0] = transform.GetPosition().x;
+			matrixTranslate[1] = transform.GetPosition().y;
+			
+			ImGuizmo::RecomposeMatrixFromComponents(matrixTranslate, matrixRotate, matrixScale, gizmoMatrix);
+			ImGuiIO& io = ImGui::GetIO();
+			
+			ImGuizmo::SetRect(m_Min.x, m_Min.y + buttonOffset,imageSize.x, imageSize.y);
+			ImGuizmo::Manipulate(glm::value_ptr(g_engine.m_coordinator.GetSystem<CameraSystem>()->GetViewMatrix(1.0f)),glm::value_ptr( g_engine.GetProjMat()), m_CurrentGizmoOperation, ImGuizmo::LOCAL, gizmoMatrix, NULL);
+			ImGuizmo::DecomposeMatrixToComponents(gizmoMatrix, matrixTranslate, matrixRotate, matrixScale);
+
+
+			switch (m_CurrentGizmoOperation)
+			{
+			case ImGuizmo::OPERATION::TRANSLATE:
+				if (ImGuizmo::IsUsing())
+				{
+					Vec2 m_Translate{ matrixTranslate[0],matrixTranslate[1] };
+					g_engine.m_coordinator.GetComponent<TransformComponent>(selectedentity).setPosition(m_Translate);
+				}
+				break;
+			case ImGuizmo::OPERATION::ROTATE:
+				if (ImGuizmo::IsUsing())
+				{
+					g_engine.m_coordinator.GetComponent<TransformComponent>(selectedentity).setRotation(matrixRotate[2]);
+				}
+				break;
+			case ImGuizmo::OPERATION::SCALE:
+				if (ImGuizmo::IsUsing())
+				{
+					Vec2 m_Scale{ matrixScale[0],matrixScale[1] };
+					g_engine.m_coordinator.GetComponent<TransformComponent>(selectedentity).setScale(m_Scale);
+				}
+				break;
+			default:
+				break;
+			}
+			if (ImGuizmo::IsOver())
+				ImGuizmo::Enable(true);
+			else
+				ImGuizmo::Enable(false);
+		}
+
 
 	}
 }
