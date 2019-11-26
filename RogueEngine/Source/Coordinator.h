@@ -15,6 +15,7 @@
 #include "LogicSystem.h"
 #include "AudioManager.h"
 #include "AnimationSystem.h"
+#include "PlayerControllerSystem.h"
 
 namespace Rogue
 {
@@ -239,6 +240,11 @@ namespace Rogue
 		void ResetEvents()
 		{
 			EventDispatcher::instance().ResetEvents();
+		}
+
+		void ClearTimedEntities()
+		{
+			GetSystem<PlayerControllerSystem>()->ClearTimedEntities();
 		}
 
 		EntityManager& GetEntityManager() const

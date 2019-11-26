@@ -137,32 +137,38 @@ namespace Rogue
 
 	void BaseAI::OnCollisionEnter(Entity otherEnt)
 	{
-		RE_INFO("COLLISION ENTER");
+		//RE_INFO("COLLISION ENTER");
 	}
 
 	void BaseAI::OnCollisionStay(Entity otherEnt)
 	{
-		RE_INFO("COLLISION STAY");
+		//RE_INFO("COLLISION STAY");
 	}
 
 	void BaseAI::OnCollisionExit(Entity otherEnt)
 	{
-		RE_INFO("COLLISION EXIT");
+		//RE_INFO("COLLISION EXIT");
 	}
 
 	void BaseAI::OnTriggerEnter(Entity otherEnt)
 	{
-		RE_INFO("TRIGGER ENTER");
+		//RE_INFO("TRIGGER ENTER");
+		auto& hierarchyObj = g_engine.m_coordinator.GetHierarchyInfo(otherEnt);
+		if (hierarchyObj.m_objectName == "Ball")
+		{
+			g_engine.m_coordinator.DestroyEntity(otherEnt);
+			g_engine.m_coordinator.ClearTimedEntities();
+		}
 	}
 
 	void BaseAI::OnTriggerStay(Entity otherEnt)
 	{
-		RE_INFO("TRIGGER STAY");
+		//RE_INFO("TRIGGER STAY");
 	}
 
 	void BaseAI::OnTriggerExit(Entity otherEnt)
 	{
-		RE_INFO("TRIGGER EXIT");
+		//RE_INFO("TRIGGER EXIT");
 	}
 
 	std::shared_ptr<LogicComponent> BaseAI::GetLogicComponent()
