@@ -1,8 +1,6 @@
 #pragma once
 #include "EventListener.h"
 #include "BaseSystem.h"
-#include "ParticleEmitterComponent.h"
-#include "TransformComponent.h"
 
 static float RandFloat()
 {
@@ -29,8 +27,6 @@ namespace Rogue
 		void Receive(Event* ev) override;
 		void Shutdown() override;
 
-		void GenerateExplosion(const Entity& entity);
-		void GenerateSpray(const Entity& entity);
-		void GenerateTrail(const Entity& entity);
+		void GenerateParticles(const Entity& entity);
 	};
 }
