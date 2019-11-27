@@ -45,6 +45,11 @@ namespace Rogue
 		return m_acceleration;
 	}
 
+	float RigidbodyComponent::getMass() const
+	{
+		return m_massData.m_mass;
+	}
+
 	void RigidbodyComponent::setAccForce(const Vec2& accforce)
 	{
 		m_accForce = accforce;

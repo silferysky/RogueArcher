@@ -95,7 +95,7 @@ namespace Rogue
 
 	float	Vec2SqDistance(const Vector2D& pVec0, const Vector2D& pVec1);
 
-	float	Vec2DotProd(const Vector2D& pVec0, const Vector2D& pVec1);
+	float	Vec2DotProduct(const Vector2D& pVec0, const Vector2D& pVec1);
 
 	float	Vec2CrossProd(const Vector2D& pVec0, const Vector2D& pVec1);
 

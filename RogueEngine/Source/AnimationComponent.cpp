@@ -131,7 +131,7 @@ namespace Rogue
 				setFrames(std::stoi(s1));
 				break;
 			case 1:
-				setEndFrame(std::stof(s1));
+				setEndFrame(std::stoi(s1));
 				break;
 			case 2:
 				setSecondsPerFrame(std::stof(s1));

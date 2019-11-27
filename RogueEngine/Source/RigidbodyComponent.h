@@ -30,6 +30,7 @@ namespace Rogue
 		Vec2 getVelocity() const;
 		Vec2 getAccForce() const;
 		Vec2 getAcceleration() const;
+		float getMass() const;
 		float getInvMass() const;
 		float getVolume() const;
 		float getDamping() const;

@@ -4,18 +4,18 @@
 
 namespace Rogue
 {
+	PlayerControllerComponent::PlayerControllerComponent() :
+		m_moveSpeed{ 5000.0f }, m_slowTime{ 0.1f }, m_isActive{ true }, m_moveState{ MoveState::e_stop }
+	{}
+
 	void PlayerControllerComponent::DisplayOnInspector()
 	{
 		ImGui::PushItemWidth(75);
 		ImGui::DragFloat("Time Scale", &m_slowTime, 0.01f, 0.0f, 1.0f);
 		SetSlowTime(m_slowTime);
 
-		ImGui::Text("Movement Speed");
 		ImGui::PushItemWidth(75);
-		ImGui::DragFloat("X", &m_moveSpeed.x, 1.0f, 1.0f, 99999.0f);
-		ImGui::SameLine();
-		ImGui::PushItemWidth(75);
-		ImGui::DragFloat("Y", &m_moveSpeed.y, 1.0f, 1.0f, 99999.0f);
+		ImGui::DragFloat("Movement Speed", &m_moveSpeed, 1.0f, 1.0f, 1000000.0f);
 	}
 
 	void PlayerControllerComponent::SetSlowTime(float slowTime)
@@ -23,19 +23,14 @@ namespace Rogue
 		m_slowTime = slowTime;
 	}
 
-	void PlayerControllerComponent::SetMoveSpeed(const Vec2& speed)
+	void PlayerControllerComponent::SetMoveSpeed(float speed)
 	{
 		m_moveSpeed = speed;
 	}
 
-	void PlayerControllerComponent::SetMoveSpeedX(float x)
+	void PlayerControllerComponent::SetMoveState(MoveState state)
 	{
-		m_moveSpeed.x = x;
-	}
-
-	void PlayerControllerComponent::SetMoveSpeedY(float y)
-	{
-		m_moveSpeed.y = y;
+		m_moveState = state;
 	}
 
 	float PlayerControllerComponent::GetSlowTime() const
@@ -43,9 +38,14 @@ namespace Rogue
 		return m_slowTime;
 	}
 
-	Vec2 PlayerControllerComponent::GetMoveSpeed() const
+	float PlayerControllerComponent::GetMoveSpeed() const
 	{
 		return m_moveSpeed;
+	}
+
+	MoveState PlayerControllerComponent::GetMoveState() const
+	{
+		return m_moveState;
 	}
 
 	std::string PlayerControllerComponent::Serialize()
@@ -53,8 +53,7 @@ namespace Rogue
 		std::ostringstream ss;
 		ss << m_isActive << ";";
 		ss << m_slowTime << ";";
-		ss << m_moveSpeed.x << ";";
-		ss << m_moveSpeed.y << ";";
+		ss << m_moveSpeed << ";";
 		return ss.str();
 	}
 
@@ -70,10 +69,7 @@ namespace Rogue
 			m_slowTime = std::stof(s1);
 
 		if(std::getline(ss, s1, ';'))
-			m_moveSpeed.x = std::stof(s1);
-
-		if(std::getline(ss, s1, ';'))
-			m_moveSpeed.y = std::stof(s1);
+			m_moveSpeed = std::stof(s1);
 	}
 
 }

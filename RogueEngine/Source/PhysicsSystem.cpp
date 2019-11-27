@@ -52,7 +52,7 @@ namespace Rogue
 		
 		// Set physics system signature.
 		g_engine.m_coordinator.SetSystemSignature<PhysicsSystem>(signature);
-		m_gravity = Vec2{ 0.0f, -500.0f };
+		m_gravity = Vec2{ 0.0f, -1500.0f };
 
 		// Initialize Force Manager.
 		ForceManager::instance().Init();
@@ -68,12 +68,14 @@ namespace Rogue
 			std::set<Entity>::iterator iEntity;
 			for (iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
 			{
+#if 0
 				std::string name = g_engine.m_coordinator.GetHierarchyInfo(*iEntity).m_objectName;
 				bool correct = false;
 				if (name == "Ball")
 				{
 					correct = true;
 				}
+#endif
 				auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
 
 				if (rigidbody.getIsStatic())
@@ -122,31 +124,43 @@ namespace Rogue
 			PlayerControllerComponent& playerCtrl = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(player);
 			RigidbodyComponent& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(player);
 			
-			float playerX = playerCtrl.GetMoveSpeed().x;
-			float playerY = playerCtrl.GetMoveSpeed().y;
+			float playerSpeed = playerCtrl.GetMoveSpeed();
 
-			const float forceMultiplier = 5.0f;
-			const float maxForce = 10000.0f;
-			const float maxForceSq = maxForce * maxForce;
+			const float forceMultiplier = 10.0f; // How fast the player accelerates
+			//const float maxForce = 10000.0f; // An arbitruary number to limit the max force
+			Vec2 vecMovement = EvEntMove->GetVecMovement();
+			Vec2 targetVel = vecMovement * playerSpeed; // The max speed the player can go
+			Vec2 force{}; // The force to apply on the player
 
-			Vec2 targetVel = EvEntMove->GetVecMovement() * playerX;
-			Vec2 force = (targetVel - rigidbody.getVelocity()) * forceMultiplier;
+			if (vecMovement.y == 0)
+				force.x = targetVel.x - rigidbody.getVelocity().x * forceMultiplier;
+			else if (vecMovement.x == 0)
+				force.y = targetVel.y - rigidbody.getVelocity().y * forceMultiplier;
+			else
+				force = Vec2(targetVel - rigidbody.getVelocity()) * forceMultiplier;
 
 #if 0
 			// Clamp force to prevent force from exceeding an amount
-			if (Vec2SqLength(force) > maxForceSq)
+			if (Vec2SqDistance(force) > maxForce * maxForce)
 			{
 				Vec2 forceNormalized;
 				Vec2Normalize(forceNormalized, force);
 
 				force = maxForce * forceNormalized;
-
+			}
+#endif
+#if 0
+			// Clamp force to prevent force from exceeding an amount (For horizontal movement tentatively)
+			if (force.x > maxForce)
+			{
+				force.x = maxForce;
 			}
 #endif	
 			ForceManager::instance().RegisterForce(player, force, g_fixedDeltaTime);
 
 			return;
 		}
+
 		case EventType::EvEntityTeleport:
 		{
 			EntTeleportEvent* EvEntTeleport = dynamic_cast<EntTeleportEvent*>(ev);

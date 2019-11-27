@@ -198,7 +198,7 @@ namespace Rogue
 	//		//pline0 = pline1
 	//		return sqrt((pPos.x - pLine0.x)*(pPos.x - pLine0.x) + (pPos.y - pLine0.y) * (pPos.y - pLine0.y));
 	//	}
-	//	const float t = Max(0, Min(1, Vec2DotProd(pPos - pLine0, pLine1 - pLine0) / length));
+	//	const float t = Max(0, Min(1, Vec2DotProduct(pPos - pLine0, pLine1 - pLine0) / length));
 	//	const Vec2 projection = v + t * (pLine1 - pLine0);
 	//	return Vec2Distance(pPos, projection);
 	//}

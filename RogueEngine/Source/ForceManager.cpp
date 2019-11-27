@@ -22,28 +22,35 @@ namespace Rogue
 	{
 		m_currTime = g_engine.m_coordinator.GetCurrTime();
 		Timer::FloatSec delta = m_currTime - m_prevTime;
+		m_prevTime = m_currTime;
+
 		float duration = static_cast<float>(std::chrono::duration_cast<std::chrono::microseconds>(delta).count()) /
 			Timer::s_microsecondsPerSecond;
-		
-		ForceVector::iterator i;
 
-		for (i = m_forceInfos.begin(); i != m_forceInfos.cend(); ++i)
+		ForceVector::iterator i = m_forceInfos.begin();
+
+		while(i != m_forceInfos.cend())
 		{
-			if (i->m_isActive == false)
+			if (!i->m_isActive)
 				continue;
 
 			i->m_age += duration;
 
 			if (i->m_age >= i->m_lifetime)
-			{
-				std::cout << i->m_age << std::endl;
-				std::cout << i->m_lifetime << std::endl;
-
 				i->m_isActive = false;
-			}
+
+			++i;
 		}
 
-		m_prevTime = m_currTime;
+		// Remove-erase idiom
+		// Move all safe elements to the front, returning iterator the "new end"
+		auto newEnd = std::remove_if(m_forceInfos.begin(), m_forceInfos.end(), [](ForceInfo& force)
+		{
+			return force.m_age >= force.m_lifetime;
+		});
+
+		// Erase unwanted elements from new end to old end.
+		m_forceInfos.erase(newEnd, m_forceInfos.end());
 	}
 
 	void ForceManager::RegisterForce(Entity entity, const Vec2& force, float lifetime)

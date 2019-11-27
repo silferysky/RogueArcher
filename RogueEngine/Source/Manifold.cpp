@@ -16,7 +16,7 @@ namespace Rogue
 		m_entityB{ b }
 	{}
 
-	void Manifold::Resolve()
+	void Manifold::ResolveImpulse()
 	{
 		auto& bodyA = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(m_entityA);
 		auto& bodyB = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(m_entityB);
@@ -28,7 +28,7 @@ namespace Rogue
 		Vec2 rv = bodyB.getVelocity() - bodyA.getVelocity();
 		
 		// Relative velocity along the collision normal
-		float velOnNormal = Vec2DotProd(rv, m_normal);
+		float velOnNormal = Vec2DotProduct(rv, m_normal);
 
 		// If velocities are already separating, don't resolve anything.
 		if (velOnNormal > 0)
@@ -44,6 +44,36 @@ namespace Rogue
 		Vec2 impulse = impulseMagnitude * m_normal;
 		bodyA.offSetVelocity(-bodyA.getInvMass() * impulse);
 		bodyB.offSetVelocity(bodyB.getInvMass() * impulse);
+	}
+
+	void Manifold::ResolveFriction()
+	{
+		auto& bodyA = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(m_entityA);
+		auto& bodyB = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(m_entityB);
+		auto& transA = g_engine.m_coordinator.GetComponent<TransformComponent>(m_entityA);
+		auto& transB = g_engine.m_coordinator.GetComponent<TransformComponent>(m_entityB);
+
+		Vec2 relVel = bodyB.getVelocity() - bodyA.getVelocity();
+		Vec2 tangent = relVel - Vec2DotProduct(relVel, m_normal) * m_normal;
+		Vec2Normalize(tangent, tangent);
+
+		// Magnitude force along the friction vector
+		float jt = -Vec2DotProduct(relVel, tangent);
+		jt = jt / (bodyA.getInvMass() + bodyB.getInvMass());
+
+		// Find overall friction
+		float mu = (bodyA.getFriction() * bodyA.getFriction() + bodyB.getFriction() * bodyB.getFriction()) * 0.5f;
+
+		// Clamp friction magnitude and create impulse vector
+		Vec2 frictionImpulse;
+
+		if (REAbs(jt) < jt * mu)
+			frictionImpulse = jt * tangent;
+		else
+			frictionImpulse = -jt * tangent * mu;
+
+		bodyA.offSetVelocity(-bodyA.getInvMass() * frictionImpulse);
+		bodyB.offSetVelocity(bodyB.getInvMass() * frictionImpulse);
 	}
 
 	void Manifold::PositionalCorrection()
