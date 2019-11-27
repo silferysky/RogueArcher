@@ -1,7 +1,4 @@
 #pragma once
-#include <unordered_map>
-#include <cassert>
-
 #include "EntityManager.h"
 #include "ComponentArray.h"
 #include "ComponentList.h"
