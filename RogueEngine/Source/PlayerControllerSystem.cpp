@@ -73,6 +73,17 @@ namespace Rogue
 					break;
 			}
 		}*/
+
+		const float c_stopFactor = 10.0f;
+
+		for (Entity entity : m_entities)
+		{
+			auto& ctrl = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity);
+			auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
+
+			if(ctrl.GetMoveState() == MoveState::e_stop)
+				ForceManager::instance().RegisterForce(entity, Vec2(rigidbody.getVelocity().x * -c_stopFactor, 0.0f));
+		}
 	}
 
 	void PlayerControllerSystem::Receive(Event* ev)
@@ -81,7 +92,7 @@ namespace Rogue
 		if (!g_engine.m_coordinator.GameIsActive())
 			return;
 
-		if (m_entities.size() == 0)
+		if (m_entities.begin() == m_entities.end())
 			return;
 
 		switch (ev->GetEventType())
@@ -136,15 +147,13 @@ namespace Rogue
 			{
 				if (m_jumpCooldown < 0.0f)
 				{
-					m_jumpCooldown = 2.0f;
+					m_jumpCooldown = 1.0f;
 					for (std::set<Entity>::iterator iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
 					{
 						//For 1st entity
 						if (iEntity == m_entities.begin() && g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(*iEntity))
 						{
-							//AddToTimedEntities(*iEntity);
-							auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
-							rigidbody.addForce(Vec2(0.0f, 40000.0f));
+							ForceManager::instance().RegisterForce(*iEntity, Vec2(0.0f, 60000.0f), g_fixedDeltaTime);
 						}
 					}
 				}
@@ -168,9 +177,9 @@ namespace Rogue
 				{
 					if (keycode == KeyPress::KeyA)
 					{
-						//ForceManager::instance().RegisterForce(*iEntity, -Vec2::s_unitX * playerX, g_fixedDeltaTime);
+						auto& ctrler = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(*iEntity);
+						ctrler.SetMoveState(MoveState::e_left);
 
-						//RE_INFO("Move A Left!");
 						Event* ev = new EntMoveEvent{ *iEntity, true, -1.0f, 0.0f };
 						ev->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
 						ev->SetSystemReceivers((int)SystemID::id_GRAPHICSSYSTEM);
@@ -178,7 +187,9 @@ namespace Rogue
 					}
 					else if (keycode == KeyPress::KeyD)
 					{
-						//RE_INFO("Move A Right!");
+						auto& ctrler = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(*iEntity);
+						ctrler.SetMoveState(MoveState::e_right);
+
 						Event* ev = new EntMoveEvent{ *iEntity, true, 1.0f, 0.0f };
 						ev->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
 						ev->SetSystemReceivers((int)SystemID::id_GRAPHICSSYSTEM);
@@ -187,19 +198,16 @@ namespace Rogue
 					else if (keycode == KeyPress::KeyW)
 					{
 						//ForceManager::instance().RegisterForce(*iEntity, Vec2::s_unitY * playerX, g_fixedDeltaTime);
-						//RE_INFO("Move A Up!");
 					}
 					else if (keycode == KeyPress::KeyS)
 					{
 						//ForceManager::instance().RegisterForce(*iEntity, -Vec2::s_unitY * playerX, g_fixedDeltaTime);
-						//RE_INFO("Move A Down!");
 					}
 
 					auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
 					if (keycode == KeyPress::Numpad4)
 					{
 						transform.offSetScale(Vec2(100.0f, 100.0f) * g_deltaTime * 60.0f);
-						//RE_INFO("Scaled Up!");
 					}
 					else if (keycode == KeyPress::Numpad5)
 					{
@@ -258,7 +266,7 @@ namespace Rogue
 		{
 			KeyReleaseEvent* KeyReleaseEv = dynamic_cast<KeyReleaseEvent*>(ev);
 			KeyPress keycode = KeyReleaseEv->GetKeyCode();
-
+			
 			if (!g_engine.m_coordinator.GameIsActive())
 				return;
 
@@ -278,6 +286,12 @@ namespace Rogue
 					AudioManager::instance().loadSound("[Ela Appear]SCI-FI-WHOOSH_GEN-HDF-20870.ogg").Play(0.1f);
 				}
 				g_engine.SetTimeScale(1.0f);
+			}
+			if (keycode == KeyPress::KeyA || keycode == KeyPress::KeyD)
+			{
+				auto& ctrler = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(*m_entities.begin());
+
+				ctrler.SetMoveState(MoveState::e_stop);
 			}
 			return;
 		}

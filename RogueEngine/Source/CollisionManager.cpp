@@ -278,7 +278,7 @@ namespace Rogue
 
 
 		// If LNS1 is within the range of the radius
-		if (Vec2DotProd(N, Bs - P0) <= -R)
+		if (Vec2DotProduct(N, Bs - P0) <= -R)
 		{
 			// Check if velocity vector is within end points of LNS1
 			Vec2 P0_ = P0 - R * N; 	// P0', End of imaginary line LNS1
@@ -286,9 +286,9 @@ namespace Rogue
 			Vec2 Velocity = ptEnd - Bs; // Velocity vector of circle
 			Vec2 M = { Velocity.y, -Velocity.x }; // Outward normal of velocity vector
 
-			if (Vec2DotProd(M, P0_ - Bs) * Vec2DotProd(M, P1_ - Bs) < 0.0f)
+			if (Vec2DotProduct(M, P0_ - Bs) * Vec2DotProduct(M, P1_ - Bs) < 0.0f)
 			{
-				interTime = (Vec2DotProd(N, P0 - Bs) - R) / Vec2DotProd(N, Velocity); // Displacement divided by velocity gives time.
+				interTime = (Vec2DotProduct(N, P0 - Bs) - R) / Vec2DotProduct(N, Velocity); // Displacement divided by velocity gives time.
 
 				if (0.0f <= interTime && interTime <= 1.0f) // If Ti is within 0 and 1, there is collision within this time frame.
 				{
@@ -304,16 +304,16 @@ namespace Rogue
 		}
 
 		// Check for other side of the line.
-		else if (Vec2DotProd(N, Bs - P0) >= R)
+		else if (Vec2DotProduct(N, Bs - P0) >= R)
 		{
 			Vec2 P0_ = P0 + R * N;
 			Vec2 P1_ = P1 + R * N;
 			Vec2 Velocity = ptEnd - Bs;
 			Vec2 M = { Velocity.y, -Velocity.x };
 
-			if (Vec2DotProd(M, P0_ - Bs) * Vec2DotProd(M, P1_ - Bs) < 0.0f)
+			if (Vec2DotProduct(M, P0_ - Bs) * Vec2DotProduct(M, P1_ - Bs) < 0.0f)
 			{
-				interTime = (Vec2DotProd(N, P0 - Bs) + R) / Vec2DotProd(N, Velocity);
+				interTime = (Vec2DotProduct(N, P0 - Bs) + R) / Vec2DotProduct(N, Velocity);
 
 				if (0.0f <= interTime && interTime <= 1.0f)
 				{
@@ -351,20 +351,20 @@ namespace Rogue
 		if (withinBothLines) // Bs is starting between both imaginary lines.
 		{
 			// Bs is closer to P0.
-			if (Vec2DotProd(lineSeg.m_pt0 - circle.m_collider.getCenterOffSet(), lineSeg.m_pt1 - lineSeg.m_pt0) > 0)
+			if (Vec2DotProduct(lineSeg.m_pt0 - circle.m_collider.getCenterOffSet(), lineSeg.m_pt1 - lineSeg.m_pt0) > 0)
 			{
 				Vec2 circleVel = ptEnd - circle.m_collider.getCenterOffSet(); // Velocity vector of the circle.
 				Vec2 circleDir; // Normalized directional vector of the circle.
 				Vec2Normalize(circleDir, circleVel);
 				// Dot product of circle to P0 and circle's vel vector
-				float m = Vec2DotProd(lineSeg.m_pt0 - circle.m_collider.getCenterOffSet(), circleDir);
+				float m = Vec2DotProduct(lineSeg.m_pt0 - circle.m_collider.getCenterOffSet(), circleDir);
 
 
 				if (m > 0) // Circle is facing/moving towards P0
 				{
 					Vec2 M = { circleDir.y, -circleDir.x }; // Circle's normalized outward normal of it's velocity vector.
 
-					float dist0 = Vec2DotProd(lineSeg.m_pt0 - circle.m_collider.getCenterOffSet(), M);
+					float dist0 = Vec2DotProduct(lineSeg.m_pt0 - circle.m_collider.getCenterOffSet(), M);
 					if (abs(dist0) > circle.m_collider.getRadius()) // Circle misses P0. Shortest distance is bigger than the radius
 						return 0;
 
@@ -387,12 +387,12 @@ namespace Rogue
 				Vec2Normalize(circleDir, circleVel);
 
 				// Dot product of circle to P0 and circle's vel vector
-				float m = Vec2DotProd(lineSeg.m_pt1 - circle.m_collider.getCenterOffSet(), circleDir);
+				float m = Vec2DotProduct(lineSeg.m_pt1 - circle.m_collider.getCenterOffSet(), circleDir);
 
 				if (m > 0) // Circle is facing P1
 				{
 					Vec2 M = { circleDir.y, -circleDir.x }; // Circle's normalized outward normal of it's velocity vector.
-					float dist1 = Vec2DotProd(lineSeg.m_pt1 - circle.m_collider.getCenterOffSet(), M);
+					float dist1 = Vec2DotProduct(lineSeg.m_pt1 - circle.m_collider.getCenterOffSet(), M);
 
 					if (abs(dist1) > circle.m_collider.getRadius()) // Circle misses P1. Shortest distance from velocity vector to P1 is greater than radius.
 						return 0;
@@ -417,8 +417,8 @@ namespace Rogue
 			Vec2Normalize(circleDir, circleVel);
 			Vec2 M = { circleDir.y, -circleDir.x }; // Circle's normalized outward normal of it's velocity vector.
 			bool onP0Side = false;
-			float dist0 = Vec2DotProd(lineSeg.m_pt0 - circle.m_collider.getCenterOffSet(), M);
-			float dist1 = Vec2DotProd(lineSeg.m_pt1 - circle.m_collider.getCenterOffSet(), M);
+			float dist0 = Vec2DotProduct(lineSeg.m_pt0 - circle.m_collider.getCenterOffSet(), M);
+			float dist1 = Vec2DotProduct(lineSeg.m_pt1 - circle.m_collider.getCenterOffSet(), M);
 			float absDist0 = abs(dist0);
 			float absDist1 = abs(dist1);
 
@@ -427,8 +427,8 @@ namespace Rogue
 
 			else if (absDist0 <= circle.m_collider.getRadius() && absDist1 <= circle.m_collider.getRadius())
 			{
-				float m0 = Vec2DotProd(lineSeg.m_pt0 - circle.m_collider.getCenterOffSet(), circleDir);
-				float m1 = Vec2DotProd(lineSeg.m_pt1 - circle.m_collider.getCenterOffSet(), circleDir);
+				float m0 = Vec2DotProduct(lineSeg.m_pt0 - circle.m_collider.getCenterOffSet(), circleDir);
+				float m1 = Vec2DotProduct(lineSeg.m_pt1 - circle.m_collider.getCenterOffSet(), circleDir);
 				float absM0 = abs(m0);
 				float absM1 = abs(m1);
 
@@ -446,7 +446,7 @@ namespace Rogue
 
 			if (onP0Side) // Circle is closer to P0
 			{
-				float m = Vec2DotProd(lineSeg.m_pt0 - circle.m_collider.getCenterOffSet(), circleDir);
+				float m = Vec2DotProduct(lineSeg.m_pt0 - circle.m_collider.getCenterOffSet(), circleDir);
 
 				if (m < 0)
 					return 0; // Circle is moving away from P0
@@ -463,7 +463,7 @@ namespace Rogue
 			}
 			else // Circle is closer to P1
 			{
-				float m = Vec2DotProd(lineSeg.m_pt1 - circle.m_collider.getCenterOffSet(), circleDir);
+				float m = Vec2DotProduct(lineSeg.m_pt1 - circle.m_collider.getCenterOffSet(), circleDir);
 
 				if (m < 0)
 					return 0; // Circle is moving away from P1
@@ -493,7 +493,7 @@ namespace Rogue
 	{
 		Vec2 rayDirNormalized;
 		Vec2Normalize(rayDirNormalized, ray.m_dir); // Assign normalized ray directional vector
-		float m = Vec2DotProd(circle.m_collider.getCenterOffSet() - ray.m_pt0, rayDirNormalized); // Distance for the ray to travel to a point closest to the circle
+		float m = Vec2DotProduct(circle.m_collider.getCenterOffSet() - ray.m_pt0, rayDirNormalized); // Distance for the ray to travel to a point closest to the circle
 
 		if (m < 0.0f && Vec2SqDistance(ray.m_pt0, circle.m_collider.getCenterOffSet()) > circle.m_collider.getRadius()* circle.m_collider.getRadius()) // If m < 0 and Bs is outside circle
 			return 0; // Circle is behind ray origin.
@@ -504,9 +504,9 @@ namespace Rogue
 			return 0; // Ray will miss the circle.
 
 		// Compute interTime
-		float a = Vec2DotProd(ray.m_dir, ray.m_dir); // v.v
-		float b = -2 * Vec2DotProd((circle.m_collider.getCenterOffSet() - ray.m_pt0), ray.m_dir); // -2(C-Bs).v
-		float c = Vec2DotProd(circle.m_collider.getCenterOffSet() - ray.m_pt0, circle.m_collider.getCenterOffSet() - ray.m_pt0) - circle.m_collider.getRadius() * circle.m_collider.getRadius(); // (C-Bs).(C-Bs) - r^2
+		float a = Vec2DotProduct(ray.m_dir, ray.m_dir); // v.v
+		float b = -2 * Vec2DotProduct((circle.m_collider.getCenterOffSet() - ray.m_pt0), ray.m_dir); // -2(C-Bs).v
+		float c = Vec2DotProduct(circle.m_collider.getCenterOffSet() - ray.m_pt0, circle.m_collider.getCenterOffSet() - ray.m_pt0) - circle.m_collider.getRadius() * circle.m_collider.getRadius(); // (C-Bs).(C-Bs) - r^2
 		float det = b * b - (4 * a * c); // b^2 - 4ac
 
 		if (det < RE_EPSILON && det > -RE_EPSILON) // If determinant is 0, ray grazes circle.
@@ -589,7 +589,7 @@ namespace Rogue
 		Vec2& reflected)
 	{
 		Vec2 i = ptEnd - ptInter;
-		ptEnd = ptInter + i - 2.0f * Vec2DotProd(i, normal) * normal;
+		ptEnd = ptInter + i - 2.0f * Vec2DotProduct(i, normal) * normal;
 		reflected = ptEnd - ptInter;
 		Vec2Normalize(reflected, reflected);
 	}
@@ -610,7 +610,7 @@ namespace Rogue
 		(void)interTime;
 
 		Vec2 i = ptEnd - ptInter;
-		ptEnd = ptInter + i - 2.0f * Vec2DotProd(i, normal) * normal;
+		ptEnd = ptInter + i - 2.0f * Vec2DotProduct(i, normal) * normal;
 		reflectedVectorNormalized = ptEnd - ptInter;
 		Vec2Normalize(reflectedVectorNormalized, reflectedVectorNormalized);
 	}
@@ -633,8 +633,8 @@ namespace Rogue
 		Vec2& reflectedVectorB,
 		Vec2& ptEndB)
 	{
-		float aA = Vec2DotProd(velA, normal);
-		float aB = Vec2DotProd(velB, normal);
+		float aA = Vec2DotProduct(velA, normal);
+		float aB = Vec2DotProduct(velB, normal);
 		reflectedVectorA = velA - 2 * (aA - aB) / (massA + massB) * massB * normal;
 		reflectedVectorB = velB + 2 * (aA - aB) / (massA + massB) * massA * normal;
 		ptEndA = interPtA + (1 - interTime) * reflectedVectorA;
@@ -900,7 +900,7 @@ namespace Rogue
 
 		for (Vec2 vertex : obb.globVerts()) // Dot every vertex with the current normal
 		{
-			float result = Vec2DotProd(vertex, currNormal);
+			float result = Vec2DotProduct(vertex, currNormal);
 
 			// We only need to find the extreme mins and maxes of the shape.
 			if (result < obb.getMin())
@@ -960,7 +960,8 @@ namespace Rogue
 	{
 		for (auto manifold : m_manifolds)
 		{
-			manifold.Resolve();
+			manifold.ResolveImpulse();
+		//	manifold.ResolveFriction();
 			manifold.PositionalCorrection();
 		}
 

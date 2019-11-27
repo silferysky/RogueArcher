@@ -21,7 +21,8 @@ namespace Rogue
 		Manifold(Entity a, Entity b);
 		~Manifold() = default;
 
-		void Resolve();
+		void ResolveImpulse();
+		void ResolveFriction();
 		void PositionalCorrection();
 	};
 }

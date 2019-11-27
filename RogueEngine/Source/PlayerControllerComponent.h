@@ -4,25 +4,34 @@
 
 namespace Rogue
 {
+	enum class MoveState
+	{
+		e_left = 0,
+		e_stop,
+		e_right
+	};
+
 	class PlayerControllerComponent
 		: public BaseComponent
 	{
-		Vec2 m_moveSpeed;
+		float m_moveSpeed;
 		float m_slowTime;
 		bool m_isActive;
+		MoveState m_moveState;
+
 	public:
-		PlayerControllerComponent() = default;
+		PlayerControllerComponent();
 		~PlayerControllerComponent() = default;
 
 		void DisplayOnInspector();
 
 		void SetSlowTime(float slowTime);
-		void SetMoveSpeed(const Vec2& speed);
-		void SetMoveSpeedX(float x);
-		void SetMoveSpeedY(float y);
+		void SetMoveSpeed(float speed);
+		void SetMoveState(MoveState state);
 
 		float GetSlowTime() const;
-		Vec2 GetMoveSpeed() const;
+		float GetMoveSpeed() const;
+		MoveState GetMoveState() const;
 
 		std::string Serialize() override;
 		void Deserialize(std::string_view toDeserialize) override;

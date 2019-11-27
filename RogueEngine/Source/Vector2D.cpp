@@ -240,7 +240,15 @@ namespace Rogue
 	 /**************************************************************************/
 	void	Vec2Normalize(Vector2D& pResult, const Vector2D& pVec0)
 	{
-		pResult = pVec0 / static_cast<float>(sqrt(pVec0.x * pVec0.x + pVec0.y * pVec0.y));
+		if (pVec0 == Vec2())
+		{
+			pResult = Vec2();
+			return;
+		}
+
+		float root = sqrtf(pVec0.x * pVec0.x + pVec0.y * pVec0.y);
+
+		pResult = pVec0 / root;
 	}
 
 
@@ -251,7 +259,7 @@ namespace Rogue
 	 /**************************************************************************/
 	float	Vec2Length(const Vector2D& pVec0)
 	{
-		return static_cast<float>(sqrt(pVec0.x * pVec0.x + pVec0.y * pVec0.y));
+		return (sqrtf(pVec0.x * pVec0.x + pVec0.y * pVec0.y));
 	}
 
 
@@ -296,7 +304,7 @@ namespace Rogue
 		This function returns the dot product between pVec0 and pVec1
 	 */
 	 /**************************************************************************/
-	float	Vec2DotProd(const Vector2D& pVec0, const Vector2D& pVec1)
+	float	Vec2DotProduct(const Vector2D& pVec0, const Vector2D& pVec1)
 	{
 		return pVec0.x * pVec1.x + pVec0.y * pVec1.y;
 	}
