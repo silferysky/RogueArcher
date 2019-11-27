@@ -167,10 +167,13 @@ namespace Rogue
 				if (iEntity == m_entities.begin())
 				{
 					auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
+					auto& player = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(*iEntity);
+					float playerX = player.GetMoveSpeed().x;
+					float playerY = player.GetMoveSpeed().y;
 
 					if (keycode == KeyPress::KeyA)
 					{
-						rigidbody.addForce(Vec2(-100.0f, 0.0f) * g_deltaTime * 1000.0f);
+						ForceManager::instance().RegisterForce(*iEntity, -Vec2::s_unitX * playerX, g_fixedDeltaTime);
 
 						//RE_INFO("Move A Left!");
 						Event* ev = new EntMoveEvent{ *iEntity, true, -1.0f, 0.0f };
@@ -179,7 +182,7 @@ namespace Rogue
 					}
 					else if (keycode == KeyPress::KeyD)
 					{
-						rigidbody.addForce(Vec2(100.0f, 0.0f) * g_deltaTime * 1000.0f);
+						ForceManager::instance().RegisterForce(*iEntity, Vec2::s_unitX * playerX, g_fixedDeltaTime);
 
 						//RE_INFO("Move A Right!");
 						Event* ev = new EntMoveEvent{ *iEntity, true, 1.0f, 0.0f };
@@ -188,12 +191,12 @@ namespace Rogue
 					}
 					else if (keycode == KeyPress::KeyW)
 					{
-						//rigidbody.addForce(Vec2(0.0f, 100.0f) * g_deltaTime * 1000.0f);
+						//ForceManager::instance().RegisterForce(*iEntity, Vec2::s_unitY * playerX, g_fixedDeltaTime);
 						//RE_INFO("Move A Up!");
 					}
 					else if (keycode == KeyPress::KeyS)
 					{
-						rigidbody.addForce(Vec2(0.0f, -100.0f) * g_deltaTime * 1000.0f);
+						ForceManager::instance().RegisterForce(*iEntity, -Vec2::s_unitY * playerX, g_fixedDeltaTime);
 						//RE_INFO("Move A Down!");
 					}
 

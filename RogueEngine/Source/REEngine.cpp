@@ -41,22 +41,22 @@ namespace Rogue
 	{
 		m_coordinator.RegisterSystem<InputManager>();
 		m_coordinator.RegisterSystem<LogicSystem>();
+		m_coordinator.RegisterSystem<ParticleSystem>();
+		m_coordinator.RegisterSystem<ParticleEmitterSystem>();
 		m_coordinator.RegisterSystem<CursorSystem>();
 		m_coordinator.RegisterSystem<PickingSystem>();
 		m_coordinator.RegisterSystem<PlayerControllerSystem>();
 		m_coordinator.RegisterSystem<MenuControllerSystem>();
+		m_coordinator.RegisterSystem<PhysicsSystem>();
 		m_coordinator.RegisterSystem<CircleCollisionSystem>();
 		m_coordinator.RegisterSystem<BoxCollisionSystem>();
 		m_coordinator.RegisterSystem<CollisionSystem>(); // Must be after circle and box collision systems
-		m_coordinator.RegisterSystem<PhysicsSystem>();
 		m_coordinator.RegisterSystem<GraphicsSystem>();
 		m_coordinator.RegisterSystem<AnimationSystem>();
 		m_coordinator.RegisterSystem<DebugDrawSystem>();
 		m_coordinator.RegisterSystem<FontSystem>();
 		m_coordinator.RegisterSystem<CameraSystem>();
 		m_coordinator.RegisterSystem<AudioSystem>();
-		m_coordinator.RegisterSystem<ParticleSystem>();
-		m_coordinator.RegisterSystem<ParticleEmitterSystem>();
 		m_coordinator.RegisterSystem<Editor>();
 	}
 

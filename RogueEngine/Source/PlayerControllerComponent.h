@@ -13,9 +13,16 @@ namespace Rogue
 	public:
 		PlayerControllerComponent() = default;
 		~PlayerControllerComponent() = default;
+
 		void DisplayOnInspector();
-		void SetSlowTime(const float& slowTime);
+
+		void SetSlowTime(float slowTime);
+		void SetMoveSpeed(const Vec2& speed);
+		void SetMoveSpeedX(float x);
+		void SetMoveSpeedY(float y);
+
 		float GetSlowTime() const;
+		Vec2 GetMoveSpeed() const;
 
 		std::string Serialize() override;
 		void Deserialize(std::string_view toDeserialize) override;
