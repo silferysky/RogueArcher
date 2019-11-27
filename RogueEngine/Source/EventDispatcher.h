@@ -1,6 +1,7 @@
 #pragma once
 #include <map>
 #include "EventListener.h"
+#include "BaseSystem.h"
 
 namespace Rogue
 {

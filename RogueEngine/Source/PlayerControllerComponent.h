@@ -1,11 +1,13 @@
 #pragma once
 #include "BaseComponent.h"
+#include "Vector2D.h"
 
 namespace Rogue
 {
 	class PlayerControllerComponent
 		: public BaseComponent
 	{
+		Vec2 m_moveSpeed;
 		float m_slowTime;
 		bool m_isActive;
 	public:
@@ -14,7 +16,7 @@ namespace Rogue
 		void DisplayOnInspector();
 		void SetSlowTime(const float& slowTime);
 		float GetSlowTime() const;
-		//No need to serialize PlayerControllerComponent as of now
+
 		std::string Serialize() override;
 		void Deserialize(std::string_view toDeserialize) override;
 	};

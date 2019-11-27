@@ -1,5 +1,4 @@
 #pragma once
-#include <set>
 #include "SystemList.h"
 #include "Types.h"
 
