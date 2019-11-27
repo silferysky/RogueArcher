@@ -2,7 +2,6 @@
 #include "SceneManager.h"
 #include "ObjectFactory.h"
 #include "EditorHierarchyInfo.h"
-#include <sstream>
 #include "BasicIO.h"
 
 namespace Rogue

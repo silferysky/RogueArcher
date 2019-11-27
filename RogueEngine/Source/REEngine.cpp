@@ -1,14 +1,16 @@
-
-
 #include "Precompiled.h"
 #include "Logger.h"
-#include "InputManager.h"
-#include "EventDispatcher.h"
+#include "EventDispatcher.h" // Is actually a system too. (Probably change to non-singleton)
 #include "REEngine.h"
 #include "GLHelper.hpp"
 #include "ComponentList.h"
 #include "Main.h"
 #include "Editor.h"
+#include "VSync.h"
+#include "CameraManager.h"
+
+// Systems
+#include "InputManager.h"	// Should probably rename to input SYSTEM
 #include "PhysicsSystem.h"
 #include "CollisionTagSystem.h"
 #include "CircleCollisionSystem.h"
@@ -23,12 +25,10 @@
 #include "AnimationSystem.h"
 #include "CameraSystem.h"
 #include "AudioSystem.h"
-#include "VSync.h"
 #include "CursorSystem.h"
 #include "PickingSystem.h"
 #include "ParticleSystem.h"
 #include "ParticleEmitterSystem.h"
-#include "CameraManager.h"
 
 namespace Rogue
 {
@@ -45,10 +45,10 @@ namespace Rogue
 		m_coordinator.RegisterSystem<PickingSystem>();
 		m_coordinator.RegisterSystem<PlayerControllerSystem>();
 		m_coordinator.RegisterSystem<MenuControllerSystem>();
-		m_coordinator.RegisterSystem<PhysicsSystem>();
 		m_coordinator.RegisterSystem<CircleCollisionSystem>();
 		m_coordinator.RegisterSystem<BoxCollisionSystem>();
-		m_coordinator.RegisterSystem<CollisionSystem>();
+		m_coordinator.RegisterSystem<CollisionSystem>(); // Must be after circle and box collision systems
+		m_coordinator.RegisterSystem<PhysicsSystem>();
 		m_coordinator.RegisterSystem<GraphicsSystem>();
 		m_coordinator.RegisterSystem<AnimationSystem>();
 		m_coordinator.RegisterSystem<DebugDrawSystem>();
