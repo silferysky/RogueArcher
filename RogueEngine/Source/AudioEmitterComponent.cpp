@@ -59,36 +59,34 @@ namespace Rogue
 			ImGui::EndTooltip();
 		}
 
-		if (ImGui::Button("Drag Drop Sound Path Here"))
-		{
-
-		}
+		ImGui::Text("Drag Drop Sound Path Here");
 
 		if (ImGui::BeginDragDropTarget())
 		{
-			if (const ImGuiPayload * payload = ImGui::AcceptDragDropPayload("Sound"))
-			{
-				std::string payload_n = *(std::string*)payload->Data;
-				m_soundPath = payload_n.c_str();
-				setSoundPath(m_soundPath);
-			}
-			ImGui::EndDragDropTarget();
-
-			/*if (const ImGuiPayload * payload = ImGui::AcceptDragDropPayload("Sound"))
+			if (const ImGuiPayload * payload = ImGui::AcceptDragDropPayload("Data"))
 			{
 				DirectoryInfo payload_n = *(DirectoryInfo*)payload->Data;
-				if (payload_n.m_fileType == "ogg")
+				if (payload_n.m_fileType == "ogg" || payload_n.m_fileType == "wav")
 				{
 					m_soundPath = payload_n.m_filePath.c_str();
+					std::cout << m_soundPath << std::endl;
 					setSoundPath(m_soundPath);
+					ImGui::EndDragDropTarget();
 				}
+
 				else
 				{
-					ImGui::Begin("Error");
-					ImGui::Text("ERROR!");
-					ImGui::EndPopup();
+					ImGui::OpenPopup("Sound Error");
 				}
-			}*/
+			}
+		}
+		bool open = true;
+		if (ImGui::BeginPopupModal("Sound Error", &open))
+		{
+			ImGui::Text("Error!, Please only put in sound files!");
+			if (ImGui::Button("Close"))
+				ImGui::CloseCurrentPopup();
+			ImGui::EndPopup();
 		}
 	}
 

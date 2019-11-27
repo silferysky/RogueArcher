@@ -4,6 +4,7 @@
 #include "PickingManager.h"
 #include "CameraManager.h"
 #include "REMath.h"
+#include "CollisionManager.h"
 
 namespace Rogue
 {
@@ -124,6 +125,7 @@ namespace Rogue
 		ImGui::SameLine();
 		if (ImGui::RadioButton("Scale", m_CurrentGizmoOperation == ImGuizmo::SCALE))
 			m_CurrentGizmoOperation = ImGuizmo::SCALE;
+		//ImGui::BeginChild("Render");
 		for (auto& i : m_currentVector)
 		{
 			HierarchyInfo& objInfo = g_engine.m_coordinator.GetHierarchyInfo(i);
@@ -133,16 +135,53 @@ namespace Rogue
 
 		ImVec2 imageSize = ImGui::GetContentRegionAvail();
 		ImGui::Image((void*)(intptr_t)(g_engine.m_coordinator.GetSystem<GraphicsSystem>()->getFBO()), ImVec2(imageSize.x,imageSize.y ), ImVec2(0, 1), ImVec2(1, 0));
+
 		if (ImGui::BeginDragDropTarget())
 		{
-			if (const ImGuiPayload * payload = ImGui::AcceptDragDropPayload("Level"))
+			if (const ImGuiPayload * payload = ImGui::AcceptDragDropPayload("Data"))
 			{
-			//	std::string payload_n = *(std::string*)payload->Data;
-			//	m_texturePath = payload_n.c_str();
-			//	setTexture(m_texturePath.c_str());
-			//	std::cout << payload_n.c_str() << std::endl;
+				DirectoryInfo payload_n = *(DirectoryInfo*)payload->Data;
+				size_t levelcheck = payload_n.m_filePath.find_last_of("Level");
+				std::cout << levelcheck << std::endl;
+				size_t filetype = payload_n.m_filePath.find_last_of(".");
+				std::string levelnumber = payload_n.m_filePath.substr(levelcheck - 4, filetype);
+				std::string level = levelnumber.substr(0, 5);
+				if (payload_n.m_fileType == "json" && level == ("Level"))
+				{
+						SceneManager& sceneManager = SceneManager::instance();
+						std::cout << "load!" << std::endl;
+						sceneManager.LoadLevel(levelnumber);
+						
+						g_engine.m_coordinator.SetGameState(false);
+						g_engine.m_coordinator.SetPauseState(false);
+						
+					ImGui::EndDragDropTarget();
+				}
+				else if (payload_n.m_fileType == "json")
+				{
+					size_t filetype = payload_n.m_fileName.find_last_of(".");
+					std::string fileNameWithoutType = payload_n.m_fileName.substr(0, filetype);
+					for (auto& i : SceneManager::instance().GetArchetypeMap())
+					{
+						SceneManager::instance().Clone(fileNameWithoutType.c_str());
+						std::cout << "clone!" << std::endl;
+					}
+				}
+
+				else
+				{
+					ImGui::OpenPopup("File Error");
+				}
 			}
-			ImGui::EndDragDropTarget();
+		}
+
+		bool open = true;
+		if (ImGui::BeginPopupModal("File Error", &open))
+		{
+			ImGui::Text("Error!, Please only put in level files or prefabs!");
+			if (ImGui::Button("Close"))
+				ImGui::CloseCurrentPopup();
+			ImGui::EndPopup();
 		}
 
 		ImVec2 mousePos = ImGui::GetMousePos();
@@ -161,6 +200,7 @@ namespace Rogue
 		mousePos.y = mousePos.y * height / imageSize.y;
 
 		g_engine.SetViewportCursor(mousePos);
+		//ImGui::EndChild();
 		ImGui::End();
 	}
 	void ImGuiEditorViewport::Shutdown()
@@ -169,9 +209,13 @@ namespace Rogue
 	}
 	void ImGuiEditorViewport::ShowGizmo(Entity& selectedentity)
 	{
+		const AABB& viewportArea = PickingManager::instance().GetViewPortArea();
+		
 		if (g_engine.m_coordinator.ComponentExists<TransformComponent>(selectedentity))
 		{
+
 			auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(selectedentity);
+
 			float gizmoMatrix[16]{};
 			float matrixScale[3]{}, matrixRotate[3]{}, matrixTranslate[3]{};
 			float buttonOffset = 21.0f;
@@ -179,13 +223,13 @@ namespace Rogue
 			ImVec2 m_Max = ImGui::GetWindowContentRegionMax();
 			ImVec2 imageSize = ImGui::GetContentRegionAvail();
 			ImVec2 mousePos = ImGui::GetMousePos();
-
-			const AABB& viewportArea = PickingManager::instance().GetViewPortArea();
 			
 			m_Min.x += ImGui::GetWindowPos().x;
 			m_Min.y += ImGui::GetWindowPos().y;
 			m_Max.x += ImGui::GetWindowPos().x;
 			m_Max.y += ImGui::GetWindowPos().y;
+			const AABB& viewportArea = PickingManager::instance().GetViewPortArea();
+			
 			matrixScale[0] = abs(transform.GetScale().x);
 			matrixScale[1] = abs(transform.GetScale().y);
 			matrixScale[2] = 1;
@@ -197,12 +241,16 @@ namespace Rogue
 			
 			matrixTranslate[0] = transform.GetPosition().x;
 			matrixTranslate[1] = transform.GetPosition().y;
-			std::cout << "Mouse" << mousePos.y << std::endl;
-			std::cout << viewportArea.getMax().y << std::endl;
+
 			ImGuizmo::RecomposeMatrixFromComponents(matrixTranslate, matrixRotate, matrixScale, gizmoMatrix);
 			ImGuiIO& io = ImGui::GetIO();
 
+			ImVec2 size = ImGui::GetWindowSize();
 			ImGuizmo::SetRect(m_Min.x, m_Min.y + buttonOffset, imageSize.x, imageSize.y);
+			//ImGui::GetWindowDrawList()->PushClipRect(m_Min, m_Max, false);
+			//ImGui::GetWindowDrawList()->PushClipRect(m_Min, m_Max, false);
+			//ImGuizmo::SetDrawlist();
+			
 			//if (mousePos.x < m_Min.x)
 			//{
 			//	

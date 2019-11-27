@@ -90,14 +90,29 @@ namespace Rogue
 
 		if (ImGui::BeginDragDropTarget())
 		{
-			if (const ImGuiPayload * payload = ImGui::AcceptDragDropPayload("Sprite"))
+			if (const ImGuiPayload * payload = ImGui::AcceptDragDropPayload("Data"))
 			{
-				std::string payload_n = *(std::string*)payload->Data;
-				m_texturePath = payload_n.c_str();
-				setTexture(m_texturePath.c_str());
-				std::cout << payload_n.c_str() << std::endl;
+				DirectoryInfo payload_n = *(DirectoryInfo*)payload->Data;
+				if (payload_n.m_fileType == "png" || payload_n.m_fileType == "bmp")
+				{
+					m_texturePath = payload_n.m_filePath.c_str();
+					setTexture(m_texturePath.c_str());
+					ImGui::EndDragDropTarget();
+				}
+
+				else
+				{
+					ImGui::OpenPopup("Texture Error");
+				}
 			}
-			ImGui::EndDragDropTarget();
+		}
+		bool open = true;
+		if (ImGui::BeginPopupModal("Texture Error", &open))
+		{
+			ImGui::Text("Error!, Please only put in texture files!");
+			if (ImGui::Button("Close"))
+				ImGui::CloseCurrentPopup();
+			ImGui::EndPopup();
 		}
 	}
 
