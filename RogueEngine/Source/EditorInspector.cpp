@@ -247,6 +247,20 @@ namespace Rogue
 						}
 					}
 
+					if (g_engine.m_coordinator.ComponentExists<BackgroundComponent>(i))
+					{
+						if (ImGui::CollapsingHeader("Background"))
+						{
+							auto& particleEmitter = g_engine.m_coordinator.GetComponent<BackgroundComponent>(i);
+							particleEmitter.DisplayOnInspector();
+
+							if (ImGui::Button("Remove Component"))
+							{
+								g_engine.m_coordinator.RemoveComponent<BackgroundComponent>(i);
+							}
+						}
+					}
+
 					if (g_engine.m_coordinator.ComponentExists<CursorComponent>(i))
 					{
 						// If we need to edit anything about the cursor e.g offset from the actual cursor
@@ -317,6 +331,11 @@ namespace Rogue
 							if (ImGui::MenuItem("Particle Emitter Component", nullptr, false, !g_engine.m_coordinator.ComponentExists<ParticleEmitterComponent>(i)))
 							{
 								g_engine.m_coordinator.AddComponent(i, ParticleEmitterComponent());
+							}
+
+							if (ImGui::MenuItem("Background Component", nullptr, false, !g_engine.m_coordinator.ComponentExists<ParticleEmitterComponent>(i)))
+							{
+								g_engine.m_coordinator.AddComponent(i, BackgroundComponent());
 							}
 
 							ImGui::EndMenu();
