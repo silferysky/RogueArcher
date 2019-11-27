@@ -73,6 +73,22 @@ namespace Rogue
 				setSoundPath(m_soundPath);
 			}
 			ImGui::EndDragDropTarget();
+
+			/*if (const ImGuiPayload * payload = ImGui::AcceptDragDropPayload("Sound"))
+			{
+				DirectoryInfo payload_n = *(DirectoryInfo*)payload->Data;
+				if (payload_n.m_fileType == "ogg")
+				{
+					m_soundPath = payload_n.m_filePath.c_str();
+					setSoundPath(m_soundPath);
+				}
+				else
+				{
+					ImGui::Begin("Error");
+					ImGui::Text("ERROR!");
+					ImGui::EndPopup();
+				}
+			}*/
 		}
 	}
 

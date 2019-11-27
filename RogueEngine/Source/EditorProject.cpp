@@ -98,6 +98,14 @@ namespace Rogue
 							}
 						}
 					}
+					//if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
+					//{
+					//	ImGui::SetDragDropPayload("Sound", &iter, sizeof(iter));
+					//	ImGui::BeginTooltip();
+					//	ImGui::Text("Dragging %s to Audio Component", iter.m_fileName.c_str());
+					//	ImGui::EndTooltip();
+					//	ImGui::EndDragDropSource();
+					//}
 				}
 			}			
 		}
