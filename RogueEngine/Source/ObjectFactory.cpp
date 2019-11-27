@@ -391,7 +391,7 @@ namespace Rogue
 
 	}
 
-	Entity ObjectFactory::Clone(const char* archetype)
+	Entity ObjectFactory::Clone(const char* archetype, bool createHierarchy)
 	{
 		//If the key exists
 		if (m_archetypes.count(archetype))
@@ -404,14 +404,19 @@ namespace Rogue
 			std::istringstream istrstream(m_archetypes[archetype].second);
 			std::string toDeserialise, tagDeserialized;
 			//To skip 2 things - name
-			std::getline(istrstream, toDeserialise, '|');
-			std::getline(istrstream, tagDeserialized, '|');
+			std::getline(istrstream, toDeserialise, '{');
+			std::getline(istrstream, toDeserialise, '}');
+			ostrstream << toDeserialise << SceneManager::instance().GetObjectIterator();
+			std::getline(istrstream, tagDeserialized, '{');
+			std::getline(istrstream, tagDeserialized, '}');
 			//And get the rest of the details
 			std::getline(istrstream, toDeserialise);
 			FactoryLoadComponent(curEnt, curSignature, toDeserialise);
 
-			ostrstream << "Game Object " << SceneManager::instance().GetObjectIterator();
-			CREATE_HIERARCHY_OBJ_TAG(curEnt, ostrstream.str(), tagDeserialized);
+			if (createHierarchy)
+			{
+				CREATE_HIERARCHY_OBJ_TAG(curEnt, ostrstream.str(), tagDeserialized);
+			}
 
 			return curEnt;
 		}

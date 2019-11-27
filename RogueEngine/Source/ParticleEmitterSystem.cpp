@@ -22,7 +22,6 @@ namespace Rogue
 
 		g_engine.m_coordinator.SetSystemSignature<ParticleEmitterSystem>(signature);
 
-		unitParticle = g_engine.m_coordinator.cloneArchetypes("Particle");
 	}
 
 	void ParticleEmitterSystem::Update()
@@ -51,6 +50,7 @@ namespace Rogue
 
 	void ParticleEmitterSystem::GenerateParticles(const Entity& entity)
 	{
+		unitParticle = g_engine.m_coordinator.cloneArchetypes("Particle", false);
 		auto& pEmitter = g_engine.m_coordinator.GetComponent<ParticleEmitterComponent>(entity);
 		auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
 		const float& magnitude = pEmitter.GetMagnitude();
@@ -58,9 +58,12 @@ namespace Rogue
 		const Vec2& velocityFactor = pEmitter.GetVelocity();
 		const Vec2& positionalOffset = pEmitter.GetPositionalOffset();
 
+		SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(unitParticle);
+		sprite.setTexturePath(pEmitter.GetTexturePath().data());
+
 		for (int i = 0; i < 100 * magnitude; ++i)
 		{
-			Entity particle = g_engine.m_coordinator.clone(unitParticle);
+			Entity particle = g_engine.m_coordinator.clone(unitParticle, false);
 
 			TransformComponent& particleTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(particle);
 			Vec2 pos = transform.GetPosition();
@@ -76,11 +79,10 @@ namespace Rogue
 			RigidbodyComponent& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(particle);
 			rigidbody.addForce(velocity);
 
-			SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(particle);
-			sprite.setTexturePath(pEmitter.GetTexturePath().data());
-
 			ParticleComponent& particleComp = g_engine.m_coordinator.CreateComponent<ParticleComponent>(particle);
 			particleComp.SetLifetime(RandFloat(pEmitter.GetLifetimeLimit()));
 		}
+
+		g_engine.m_coordinator.AddToDeleteQueue(unitParticle);
 	}
 }
