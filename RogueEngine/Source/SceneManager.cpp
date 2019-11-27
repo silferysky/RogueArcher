@@ -158,9 +158,9 @@ namespace Rogue
 		//MOVE_OBJECTFACTORY_TO_SCENEMANAGER;
 	}
 
-	Entity SceneManager::Clone(const char* archetype)
+	Entity SceneManager::Clone(const char* archetype, bool createHierarchy)
 	{
-		return m_objectFactory->Clone(archetype);
+		return m_objectFactory->Clone(archetype, createHierarchy);
 		//MOVE_OBJECTFACTORY_TO_SCENEMANAGER;
 	}
 
@@ -223,7 +223,7 @@ namespace Rogue
 		return m_objectFactory->GetArchetypeMap();
 	}
 
-	void SceneManager::AddToActiveEntities(Entity newEnt)
+	void SceneManager::AddToActiveEntities(Entity newEnt, bool createHierarchy)
 	{
 		//Safety Check
 		auto& activeObjects = g_engine.m_coordinator.GetActiveObjects();
@@ -233,11 +233,14 @@ namespace Rogue
 				return;
 		}
 
-		std::ostringstream strstream;
-		strstream << "Game Object " << m_objectIterator++;
-		HierarchyInfo newInfo(newEnt, strstream.str());
-		g_engine.m_coordinator.GetActiveObjects().push_back(newEnt);
-		g_engine.m_coordinator.GetHierarchyInfo(newEnt) = newInfo;
+		if (createHierarchy)
+		{
+			g_engine.m_coordinator.GetActiveObjects().push_back(newEnt);
+			std::ostringstream strstream;
+			strstream << "Game Object " << m_objectIterator++;
+			HierarchyInfo newInfo(newEnt, strstream.str());
+			g_engine.m_coordinator.GetHierarchyInfo(newEnt) = newInfo;
+		}
 	}
 
 	void SceneManager::DeleteActiveEntity(Entity ent)

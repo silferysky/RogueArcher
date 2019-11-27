@@ -121,8 +121,15 @@ namespace Rogue
 		case EventType::EvEntityTeleport:
 		{
 			EntTeleportEvent* EvEntTeleport = dynamic_cast<EntTeleportEvent*>(ev);
-			g_engine.m_coordinator.GetComponent<TransformComponent>(EvEntTeleport->GetEntityID()).
-				setPosition(EvEntTeleport->GetVecMovement());
+			if (g_engine.m_coordinator.ComponentExists<TransformComponent>(EvEntTeleport->GetEntityID()))
+				g_engine.m_coordinator.GetComponent<TransformComponent>(EvEntTeleport->GetEntityID()).
+					setPosition(EvEntTeleport->GetVecMovement());
+
+			if (g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(EvEntTeleport->GetEntityID()))
+			{
+				g_engine.m_coordinator.GetComponent<RigidbodyComponent>(EvEntTeleport->GetEntityID()).setVelocity(Vec2());
+				g_engine.m_coordinator.GetComponent<RigidbodyComponent>(EvEntTeleport->GetEntityID()).setAcceleration(Vec2());
+			}
 
 			return;
 		}

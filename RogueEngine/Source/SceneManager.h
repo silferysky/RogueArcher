@@ -46,7 +46,7 @@ namespace Rogue
 		void RemoveArchetype(std::string_view archetypeEntity);
 
 		void Clone(Entity toClone);
-		Entity Clone(const char* archetype);
+		Entity Clone(const char* archetype, bool createHierarchy = true);
 
 		std::vector<std::string> GetLoadedLevels() const;
 		void AddToLoadedLevels(std::string_view name);
@@ -65,7 +65,7 @@ namespace Rogue
 		std::map<std::string, std::pair<Signature, std::string>> GetArchetypeMap() const;
 
 		//For other systems to add entites here
-		void AddToActiveEntities(Entity ent);
+		void AddToActiveEntities(Entity ent, bool createHierarchy = true);
 		void DeleteActiveEntity(Entity ent);
 
 		Entity Create2DSprite();
