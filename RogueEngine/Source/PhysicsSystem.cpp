@@ -112,10 +112,39 @@ namespace Rogue
 		}
 		case EventType::EvEntityMove:
 		{
-			//EntMoveEvent* EvEntMove = dynamic_cast<EntMoveEvent*>(ev);
-			//ForceManager::instance().RegisterForce(EvEntMove->GetEntityID(),
-				//EvEntMove->GetVecMovement(),
-				//g_fixedDeltaTime);
+			EntMoveEvent* EvEntMove = dynamic_cast<EntMoveEvent*>(ev);
+
+			Entity player = EvEntMove->GetEntityID();
+
+			if (!g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(player))
+				return;
+
+			PlayerControllerComponent& playerCtrl = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(player);
+			RigidbodyComponent& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(player);
+			
+			float playerX = playerCtrl.GetMoveSpeed().x;
+			float playerY = playerCtrl.GetMoveSpeed().y;
+
+			const float forceMultiplier = 5.0f;
+			const float maxForce = 10000.0f;
+			const float maxForceSq = maxForce * maxForce;
+
+			Vec2 targetVel = EvEntMove->GetVecMovement() * playerX;
+			Vec2 force = (targetVel - rigidbody.getVelocity()) * forceMultiplier;
+
+#if 0
+			// Clamp force to prevent force from exceeding an amount
+			if (Vec2SqLength(force) > maxForceSq)
+			{
+				Vec2 forceNormalized;
+				Vec2Normalize(forceNormalized, force);
+
+				force = maxForce * forceNormalized;
+
+			}
+#endif	
+			ForceManager::instance().RegisterForce(player, force, g_fixedDeltaTime);
+
 			return;
 		}
 		case EventType::EvEntityTeleport:
