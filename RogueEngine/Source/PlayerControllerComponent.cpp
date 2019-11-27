@@ -12,20 +12,40 @@ namespace Rogue
 
 		ImGui::Text("Movement Speed");
 		ImGui::PushItemWidth(75);
-		ImGui::DragFloat("X", &m_moveSpeed.x, 0.01f, 0.0f, 99999.0f);
+		ImGui::DragFloat("X", &m_moveSpeed.x, 1.0f, 1.0f, 99999.0f);
 		ImGui::SameLine();
 		ImGui::PushItemWidth(75);
-		ImGui::DragFloat("Y", &m_moveSpeed.y, 0.01f, 0.0f, 99999.0f);
+		ImGui::DragFloat("Y", &m_moveSpeed.y, 1.0f, 1.0f, 99999.0f);
 	}
 
-	void PlayerControllerComponent::SetSlowTime(const float& slowTime)
+	void PlayerControllerComponent::SetSlowTime(float slowTime)
 	{
 		m_slowTime = slowTime;
+	}
+
+	void PlayerControllerComponent::SetMoveSpeed(const Vec2& speed)
+	{
+		m_moveSpeed = speed;
+	}
+
+	void PlayerControllerComponent::SetMoveSpeedX(float x)
+	{
+		m_moveSpeed.x = x;
+	}
+
+	void PlayerControllerComponent::SetMoveSpeedY(float y)
+	{
+		m_moveSpeed.y = y;
 	}
 
 	float PlayerControllerComponent::GetSlowTime() const
 	{
 		return m_slowTime;
+	}
+
+	Vec2 PlayerControllerComponent::GetMoveSpeed() const
+	{
+		return m_moveSpeed;
 	}
 
 	std::string PlayerControllerComponent::Serialize()
