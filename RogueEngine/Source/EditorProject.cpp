@@ -63,49 +63,14 @@ namespace Rogue
 				for (auto& iter : i.second.second)
 				{
 					ImGui::Selectable(iter.m_fileName.c_str());
-					if (iter.m_fileType == "png" || iter.m_fileType == "bmp")
+					if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
 					{
-						if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
-						{
-							ImGui::SetDragDropPayload("Sprite", &iter.m_filePath, sizeof(iter.m_filePath));
-							ImGui::BeginTooltip();
-							ImGui::Text("Dragging %s to Sprite Component", iter.m_fileName.c_str());
-							ImGui::EndTooltip();
-							ImGui::EndDragDropSource();
-						}
+						ImGui::SetDragDropPayload("Data", &iter, sizeof(iter));
+						ImGui::BeginTooltip();
+						ImGui::Text("Dragging %s", iter.m_fileName.c_str());
+						ImGui::EndTooltip();
+						ImGui::EndDragDropSource();
 					}
-					if (iter.m_fileType == "ogg" || iter.m_fileType == "wav")
-					{
-						if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
-						{
-							ImGui::SetDragDropPayload("Sound", &iter.m_filePath, sizeof(iter.m_filePath));
-							ImGui::BeginTooltip();
-							ImGui::Text("Dragging %s to Audio Component", iter.m_fileName.c_str());
-							ImGui::EndTooltip();
-							ImGui::EndDragDropSource();
-						}
-					}
-					if (iter.m_fileType == "json")
-					{
-						if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
-						{
-							ImGui::SetDragDropPayload("Level", &iter.m_filePath, sizeof(iter.m_filePath));
-							{
-								ImGui::BeginTooltip();
-								ImGui::Text("Dragging %s to Viewport", iter.m_fileName.c_str());
-								ImGui::EndTooltip();
-								ImGui::EndDragDropSource();
-							}
-						}
-					}
-					//if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
-					//{
-					//	ImGui::SetDragDropPayload("Sound", &iter, sizeof(iter));
-					//	ImGui::BeginTooltip();
-					//	ImGui::Text("Dragging %s to Audio Component", iter.m_fileName.c_str());
-					//	ImGui::EndTooltip();
-					//	ImGui::EndDragDropSource();
-					//}
 				}
 			}			
 		}
