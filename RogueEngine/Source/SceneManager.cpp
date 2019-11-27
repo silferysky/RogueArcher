@@ -233,12 +233,14 @@ namespace Rogue
 				return;
 		}
 
-		std::ostringstream strstream;
-		strstream << "Game Object " << m_objectIterator++;
-		HierarchyInfo newInfo(newEnt, strstream.str());
-		g_engine.m_coordinator.GetActiveObjects().push_back(newEnt);
 		if (createHierarchy)
+		{
+			g_engine.m_coordinator.GetActiveObjects().push_back(newEnt);
+			std::ostringstream strstream;
+			strstream << "Game Object " << m_objectIterator++;
+			HierarchyInfo newInfo(newEnt, strstream.str());
 			g_engine.m_coordinator.GetHierarchyInfo(newEnt) = newInfo;
+		}
 	}
 
 	void SceneManager::DeleteActiveEntity(Entity ent)
