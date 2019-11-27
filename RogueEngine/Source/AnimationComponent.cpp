@@ -98,7 +98,7 @@ namespace Rogue
 		setFrames(m_frames);
 
 		ImGui::DragInt("Final Frame", &m_endFrame, 1.0f, 0, 60);
-		setEndFrames(m_endFrame);
+		setEndFrame(m_endFrame);
 
 		ImGui::DragFloat("Seconds Per Frame", &m_secondsPerFrame, 0.1f, 0.0f, 1.0f);
 		setSecondsPerFrame(m_secondsPerFrame);
