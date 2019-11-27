@@ -218,9 +218,9 @@ namespace Rogue
 			return Timer::instance().GetSystemTimes();
 		}
 
-		Entity cloneArchetypes(const char* archetype)
+		Entity cloneArchetypes(const char* archetype, bool createHierarchy = true)
 		{
-			return SceneManager::instance().Clone(archetype);
+			return SceneManager::instance().Clone(archetype, createHierarchy);
 		}
 
 		void SaveArchetype(const char* archetype)
@@ -228,7 +228,7 @@ namespace Rogue
 			SceneManager::instance().SaveArchetype(archetype);
 		}
 
-		Entity clone(Entity existingEntity)
+		Entity clone(Entity existingEntity, bool createHierarchy = true)
 		{
 			Entity clonedEntity = CreateEntity();
 			m_componentManager->clone(existingEntity, clonedEntity);
@@ -236,7 +236,7 @@ namespace Rogue
 			Signature newEntitySignature = m_entityManager->GetSignature(existingEntity);
 			m_entityManager->SetSignature(clonedEntity, newEntitySignature);
 			m_systemManager->EntitySignatureChanged(clonedEntity, newEntitySignature);
-			SceneManager::instance().AddToActiveEntities(clonedEntity);
+			SceneManager::instance().AddToActiveEntities(clonedEntity, createHierarchy);
 
 			return clonedEntity;
 			//m_sceneManager->Clone(existingEntity);
