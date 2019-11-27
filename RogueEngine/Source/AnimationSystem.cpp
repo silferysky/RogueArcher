@@ -57,10 +57,14 @@ namespace Rogue
 		// reset the frame number
 		if (currentFrame >= animate->getFrames())
 		{
-			currentFrame = 0;
-			animate->setCurrentFrame(static_cast<int>(currentFrame));
 			if (!animate->getIsLooping())
+			{
 				animate->setIsAnimating(false);
+				currentFrame = animate->getEndFrame();
+			}
+			else
+				currentFrame = 0;
+			animate->setCurrentFrame(static_cast<int>(currentFrame));
 		}
 
 		double min = currentFrame / totalFrames;
