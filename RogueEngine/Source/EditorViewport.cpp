@@ -178,12 +178,16 @@ namespace Rogue
 			ImVec2 m_Min = ImGui::GetWindowContentRegionMin();
 			ImVec2 m_Max = ImGui::GetWindowContentRegionMax();
 			ImVec2 imageSize = ImGui::GetContentRegionAvail();
+			ImVec2 mousePos = ImGui::GetMousePos();
+
+			const AABB& viewportArea = PickingManager::instance().GetViewPortArea();
+			
 			m_Min.x += ImGui::GetWindowPos().x;
 			m_Min.y += ImGui::GetWindowPos().y;
 			m_Max.x += ImGui::GetWindowPos().x;
 			m_Max.y += ImGui::GetWindowPos().y;
-			matrixScale[0] = transform.GetScale().x;
-			matrixScale[1] = transform.GetScale().y;
+			matrixScale[0] = abs(transform.GetScale().x);
+			matrixScale[1] = abs(transform.GetScale().y);
 			matrixScale[2] = 1;
 
 			float width = m_Max.x - m_Min.x;
@@ -193,11 +197,16 @@ namespace Rogue
 			
 			matrixTranslate[0] = transform.GetPosition().x;
 			matrixTranslate[1] = transform.GetPosition().y;
-			
+			std::cout << "Mouse" << mousePos.y << std::endl;
+			std::cout << viewportArea.getMax().y << std::endl;
 			ImGuizmo::RecomposeMatrixFromComponents(matrixTranslate, matrixRotate, matrixScale, gizmoMatrix);
 			ImGuiIO& io = ImGui::GetIO();
-			
-			ImGuizmo::SetRect(m_Min.x, m_Min.y + buttonOffset,imageSize.x, imageSize.y);
+
+			ImGuizmo::SetRect(m_Min.x, m_Min.y + buttonOffset, imageSize.x, imageSize.y);
+			//if (mousePos.x < m_Min.x)
+			//{
+			//	
+			//}
 			ImGuizmo::Manipulate(glm::value_ptr(g_engine.m_coordinator.GetSystem<CameraSystem>()->GetViewMatrix(1.0f)),glm::value_ptr( g_engine.GetProjMat()), m_CurrentGizmoOperation, ImGuizmo::LOCAL, gizmoMatrix, NULL);
 			ImGuizmo::DecomposeMatrixToComponents(gizmoMatrix, matrixTranslate, matrixRotate, matrixScale);
 
