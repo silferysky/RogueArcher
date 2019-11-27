@@ -30,4 +30,10 @@ namespace Rogue
 			SetParallax(std::stof(s1));
 		}
 	}
+
+	void BackgroundComponent::DisplayOnInspector()
+	{
+		ImGui::DragFloat("Background Parallax", &m_parallax, 0.01f, 0.0f, 10.0f);
+		SetParallax(m_parallax);
+	}
 }
