@@ -37,8 +37,8 @@ namespace Rogue
 	glm::mat4 CameraSystem::GetViewMatrix(const float& parallax)
 	{
 		glm::vec3 cameraPos = CameraManager::instance().GetCameraPos();
-		return glm::lookAt({ cameraPos.x * parallax, cameraPos.y * parallax, cameraPos.z },
-			glm::vec3{ cameraPos.x * parallax, cameraPos.y * parallax, cameraPos.z } + m_cameraFront, m_cameraUp);
+		return glm::lookAt({ cameraPos.x * parallax, cameraPos.y, cameraPos.z },
+			glm::vec3{ cameraPos.x * parallax, cameraPos.y, cameraPos.z } + m_cameraFront, m_cameraUp);
 	}
 
 	void CameraSystem::ResetCamera()
