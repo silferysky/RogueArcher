@@ -1,4 +1,4 @@
 {
     "Signature": 8215,
-    "Entity": "Name{Particle}|Tag{}|Sprite{Resources/Assets/DefaultSprite.png;1;1;1;1}|Rigidbody{0;0;0;0;1;1;0;1}|Transform{11.49;0;100;100;0;0}||BoxCollider{0;0;0;0;0;AWAKE}|||||||||Collider{BOX}|||||"
+    "Entity": "Name{Particle}|Tag{}|Sprite{Resources/Assets/Projectile.png;1;1;1;1}|Rigidbody{0;0;0;0;1;1;0;1}|Transform{11.49;0;100;100;0;0}||BoxCollider{0;0;0;0;0;AWAKE}|||||||||Collider{BOX}|||||"
 }
