@@ -24,6 +24,16 @@ namespace Rogue
 		return m_currentFrame;
 	}
 
+	void AnimationComponent::setEndFrame(const int& frame)
+	{
+		m_endFrame = frame;
+	}
+
+	int AnimationComponent::getEndFrame() const
+	{
+		return m_endFrame;
+	}
+
 	void AnimationComponent::setOffSet(const int& offSet)
 	{
 		m_offSet = offSet;
@@ -87,6 +97,9 @@ namespace Rogue
 		ImGui::DragInt("Frames", &m_frames, 1.0f, 0, 60);
 		setFrames(m_frames);
 
+		ImGui::DragInt("Final Frame", &m_endFrame, 1.0f, 0, 60);
+		setEndFrame(m_endFrame);
+
 		ImGui::DragFloat("Seconds Per Frame", &m_secondsPerFrame, 0.1f, 0.0f, 1.0f);
 		setSecondsPerFrame(m_secondsPerFrame);
 
@@ -98,6 +111,7 @@ namespace Rogue
 	{
 		std::ostringstream ss;
 		ss << m_frames << ";";
+		ss << m_endFrame << ";";
 		ss << m_secondsPerFrame << ";";
 		ss << m_isLooping << ";";
 		return ss.str();
@@ -117,9 +131,12 @@ namespace Rogue
 				setFrames(std::stoi(s1));
 				break;
 			case 1:
-				setSecondsPerFrame(std::stof(s1));
+				setEndFrame(std::stof(s1));
 				break;
 			case 2:
+				setSecondsPerFrame(std::stof(s1));
+				break;
+			case 3:
 				setIsLooping(std::stof(s1));
 				break;
 			default:
