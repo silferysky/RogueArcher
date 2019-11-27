@@ -32,7 +32,6 @@ namespace Rogue
 		std::set<Entity>::iterator iEntity;
 		for (iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
 		{
-			auto& currRigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
 			auto& currTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
 			auto& currBoundingCircle = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(*iEntity);
 
@@ -40,7 +39,14 @@ namespace Rogue
 			CollisionManager::instance().UpdateBoundingCircle(currBoundingCircle.m_collider, currTransform);
 
 			// Spatial partitioning conducted in main collision system.
+		}
 
+		for (iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
+		{
+			auto& currRigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
+			auto& currTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
+			auto& currBoundingCircle = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(*iEntity);
+		
 			// Test Circle Collisions
 			std::set<Entity>::iterator iNextEntity = iEntity;
 
@@ -49,9 +55,6 @@ namespace Rogue
 				auto& nextBoundingCircle = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(*iNextEntity);
 				auto& nextRigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iNextEntity);
 				auto& nextTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iNextEntity);
-
-				// Update collidables
-				CollisionManager::instance().UpdateBoundingCircle(nextBoundingCircle.m_collider, nextTransform);
 
 				if (currRigidbody.getIsStatic() && nextRigidbody.getIsStatic())
 					continue;

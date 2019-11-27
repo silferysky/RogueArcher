@@ -2,6 +2,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #define NOMINMAX
 #include <vector>
+#include <array>
 #include <map>
 #include <memory>
 #include <set>
@@ -17,6 +18,9 @@
 #include <cstdlib>
 #include <string>
 #include <string_view>
+#include <cassert>
+#include <unordered_map>
+#include <typeindex>
 
 #include "imgui.h"
 #include "imgui_impl_opengl3.h"

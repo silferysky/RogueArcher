@@ -31,9 +31,10 @@ namespace Rogue
 		g_engine.m_coordinator.InitTimeSystem("Box Collision System");
 
 		std::set<Entity>::iterator iEntity;
+		
+		// Update colliders and partition them.
 		for (iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
 		{
-			auto& currRigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
 			auto& currTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
 			auto& currBoxCollider = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iEntity);
 
@@ -46,29 +47,37 @@ namespace Rogue
 			CollisionManager::instance().UpdateOBB(currBoxCollider.m_obb, currTransform);
 
 			// Conduct spatial partitioning
+		}
+
+		// Test for collisions
+		// Loop through entities
+		for (iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
+		{
+			auto& currRigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
+			auto& currTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
+			auto& currBoxCollider = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iEntity);
 
 			// Test AABB/OBB Collision
 			std::set<Entity>::iterator iNextEntity = iEntity;
 
+			// For each entity, the rest of the entities
 			for (iNextEntity++; iNextEntity != m_entities.end(); ++iNextEntity)
 			{
 				auto& nextBoxCollider = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iNextEntity);
 				auto& nextRigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iNextEntity);
 				auto& nextTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iNextEntity);
 
-				// Update collidables
-				CollisionManager::instance().UpdateAABB(nextBoxCollider.m_aabb, nextTransform);
-				CollisionManager::instance().UpdateOBB(nextBoxCollider.m_obb, nextTransform);
-
+				// Skip asleep or static colliders.
 				if (nextBoxCollider.GetCollisionMode() == CollisionMode::e_asleep)
 					continue;
 
 				if (currRigidbody.getIsStatic() && nextRigidbody.getIsStatic())
 					continue;
 
+				// Test for AABBs vs AABBs
 				if (CollisionManager::instance().DiscreteAABBvsAABB(currBoxCollider.m_aabb, nextBoxCollider.m_aabb))
 				{
-					// If A or B is a trigger, dispatch trigger event.
+					// If A and/or B is/are a trigger(s), dispatch trigger event(s).
 					if (currBoxCollider.GetCollisionMode() == CollisionMode::e_trigger)
 					{
 						EntTriggerEnterEvent* ev = new EntTriggerEnterEvent{ *iNextEntity, *iEntity };
@@ -89,6 +98,7 @@ namespace Rogue
 					CollisionManager::instance().GenerateManifolds(*iEntity, *iNextEntity);
 				}
 
+				// Test OBBs vs OBBs collision
 				//if (CollisionManager::instance().DiscreteOBBvsOBB(currBoxCollider.m_obb, nextBoxCollider.m_obb))
 				//{
 				//	std::cout << "Entity " << *iEntity << " OBB collides with Entity " << *iNextEntity << " OBB" << std::endl;
@@ -96,7 +106,7 @@ namespace Rogue
 
 			}
 
-			// Collision Response (Contact, forces, rest, Impulse, Torque)
+			// Collision Impulse and Torque/Contact Resolution (Other resolutionsdone using trigger events: Other weird forces, rest, game logic)
 			CollisionManager::instance().ResolveManifolds();
 		}
 

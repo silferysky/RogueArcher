@@ -1,6 +1,5 @@
 #pragma once
 
-
 namespace Rogue
 {
 	enum class SystemID
