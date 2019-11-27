@@ -319,6 +319,11 @@ namespace Rogue
 								g_engine.m_coordinator.AddComponent(i, ParticleEmitterComponent());
 							}
 
+							if (ImGui::MenuItem("Background Component", nullptr, false, !g_engine.m_coordinator.ComponentExists<ParticleEmitterComponent>(i)))
+							{
+								g_engine.m_coordinator.AddComponent(i, BackgroundComponent());
+							}
+
 							ImGui::EndMenu();
 						}
 						if (ImGui::BeginMenu("Colliders"))
