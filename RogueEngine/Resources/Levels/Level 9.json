@@ -1,6 +1,6 @@
 {
-    "MaxEntityCount": 47,
-    "EntityCount": 47,
+    "MaxEntityCount": 48,
+    "EntityCount": 48,
     "CameraMinX": 0,
     "CameraMinY": 0,
     "CameraMaxX": 0,
@@ -52,6 +52,7 @@
     "Signature44": 8214,
     "Signature45": 261,
     "Signature46": 261,
+    "Signature47": 2309,
     "Entity0": "Name{Background}|Tag{}|Sprite{Resources\\Assets\\BackColor2.png;1;1;1;1}||Transform{0;0;3200;1800;0;-4}||||||||||||||||",
     "Entity1": "Name{BackG}|Tag{}|Sprite{Resources\\Assets\\Background2.png;1;1;1;1}||Transform{0;0;3200;1800;0;-4}||||||||||||||||",
     "Entity2": "Name{Midground}|Tag{}|Sprite{Resources\\Assets\\MidGround2.png;1;1;1;1}||Transform{0;0;3200;1800;0;-3}||||||||||||||||",
@@ -83,9 +84,9 @@
     "Entity28": "Name{Collider25}|Tag{}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{1892;51;100;100;0;0}||BoxCollider{0;0;0;39;1881;AWAKE}|||||||||Collider{BOX}|||||",
     "Entity29": "Name{CompleteGameTrigger}|Tag{}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{1712;659;100;100;0;0}||BoxCollider{0;0;0;93;295;TRIGGER}|||||||||Collider{BOX}|||||",
     "Entity30": "Name{Player}|Tag{}|Sprite{Resources\\Assets\\ExaElaBall.png;1;1;1;1}|Rigidbody{0;0;0;0;1;1;0;1;0.5;0.1;0.01;}|Transform{-1531.67;272.457;64;64;0;-1}||BoxCollider{0;0;0;0;0;AWAKE}|PlayerController{0;0.2;}||||Camera{0;0;1;}||||Collider{BOX}|||||",
-    "Entity31": "Name{crossHair}|Tag{}|Sprite{Resources\\Assets\\crosshair.png;1;1;1;1}||Transform{-1813.51;180.749;100;100;0;1000}||||||||||Cursor{0;0}||||||",
+    "Entity31": "Name{crossHair}|Tag{}|Sprite{Resources\\Assets\\crosshair.png;1;1;1;1}||Transform{-966.704;607.301;100;100;0;1000}||||||||||Cursor{0;0}||||||",
     "Entity32": "Name{WaterfallSFX}|Tag{}|||Transform{-636;-177;60;60;0;0}||||||||Audio{Resources/Sounds/[Waterfall SFX]WATER-FALL_GEN-HDF-25489.ogg;0.8;0.06;1;0;}||||||||",
-    "Entity33": "Name{CrystalFlower}|Tag{}|Sprite{Resources\\Assets\\CrystalFlowerIdle.png;0.694637;0.962378;0.970588;1}||Transform{-1463;-733;150;150;0.4;-1}||||||Animation{8;0.25;1;}||||||||||",
+    "Entity33": "Name{CrystalFlower}|Tag{}|Sprite{Resources\\Assets\\CrystalFlowerIdle.png;0.694637;0.962378;0.970588;1}||Transform{-1463;-733;150;150;0.4;-1}||||||Animation{8;0;1;0;}||||||||||",
     "Entity34": "Name{WindSFX}|Tag{}|||Transform{0;0;60;60;0;0}||||||||Audio{Resources\\Sounds\\[Cave Ambience]WIND-HOWL_GEN-HDF-25929.ogg;1;0.05;1;0;}||||||||",
     "Entity35": "Name{door}|Tag{}|Sprite{Resources\\Assets\\door.png;1;1;1;1}|Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-339;-325;300;540;0;-1}||BoxCollider{0;24;0;-234;-252;AWAKE}|||||||||Collider{BOX}|||||",
     "Entity36": "Name{doorCrystal}|Tag{}|Sprite{Resources\\Assets\\door_Crystal.png;1;1;1;1}||Transform{-370;-325;300;400;0;-1}||||||||||||||||",
@@ -97,8 +98,9 @@
     "Entity42": "Name{Collider31}|Tag{}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{1083;-388;100;100;0;0}||BoxCollider{0;0;0;244;-33;AWAKE}|||||||||Collider{BOX}|||||",
     "Entity43": "Name{Collider32}|Tag{}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-1501;767;100;100;0;0}||BoxCollider{0;0;0;139;117;AWAKE}|||||||||Collider{BOX}|||||",
     "Entity44": "Name{Collider33}|Tag{}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-1098;842;100;100;0;0}||BoxCollider{0;0;0;517;-47;AWAKE}|||||||||Collider{BOX}|||||",
-    "Entity45": "Name{Waterfall_Anim}|Tag{}|Sprite{Resources\\Assets\\WaterfallShine.png;1;1;1;1}||Transform{-647.005;-74.4497;402.733;139.349;0;0}||||||Animation{5;0.1;1;}||||||||||",
-    "Entity46": "Name{Waterfall_Anim2}|Tag{}|Sprite{Resources\\Assets\\WaterfallShine.png;1;1;1;1}||Transform{-679.715;665.289;402.733;139.349;3.1;-4}||||||Animation{5;0.1;1;}||||||||||",
+    "Entity45": "Name{Waterfall_Anim}|Tag{}|Sprite{Resources\\Assets\\WaterfallShine.png;1;1;1;1}||Transform{-647.005;-74.4497;402.733;139.349;0;0}||||||Animation{5;0;1;0;}||||||||||",
+    "Entity46": "Name{Waterfall_Anim2}|Tag{}|Sprite{Resources\\Assets\\WaterfallShine.png;1;1;1;1}||Transform{-679.715;665.289;402.733;139.349;3.1;-4}||||||Animation{5;0;1;0;}||||||||||",
+    "Entity47": "Name{LevelTitle}|Tag{}|Sprite{Resources\\Assets\\TheWaterfallFadeOut.png;1;1;1;1}||Transform{0;0;400;80;0;100}||||||Animation{16;16;0.1;0;}|||UI{1;}|||||||",
     "EntityParent0": -1,
     "EntityParent1": -1,
     "EntityParent2": -1,
@@ -145,5 +147,6 @@
     "EntityParent43": -1,
     "EntityParent44": -1,
     "EntityParent45": -1,
-    "EntityParent46": -1
+    "EntityParent46": -1,
+    "EntityParent47": -1
 }
