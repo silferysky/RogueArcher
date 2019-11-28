@@ -6,7 +6,7 @@
 #include <memory>
 
 #define FORCE_FACTOR 100000
-#define POSITION_RELATIVITY 100
+#define POSITION_RELATIVITY 10
 
 namespace Rogue
 {
