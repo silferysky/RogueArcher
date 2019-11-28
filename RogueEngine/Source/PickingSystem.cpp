@@ -103,6 +103,7 @@ namespace Rogue
 				}
 			}
 			return;
+		}
 		} // End switch case
 	} // End receive()
 } // End namespace Rogue
