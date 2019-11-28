@@ -406,7 +406,7 @@ namespace Rogue
 			//To skip 2 things - name
 			std::getline(istrstream, toDeserialise, '{');
 			std::getline(istrstream, toDeserialise, '}');
-			ostrstream << toDeserialise << SceneManager::instance().GetObjectIterator();
+			ostrstream << toDeserialise;// << SceneManager::instance().GetObjectIterator();
 			std::getline(istrstream, tagDeserialized, '{');
 			std::getline(istrstream, tagDeserialized, '}');
 			//And get the rest of the details

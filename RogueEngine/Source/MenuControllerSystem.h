@@ -9,6 +9,8 @@ namespace Rogue
 		: public System, public EventListener
 	{
 		std::vector<Entity> m_menuObjs;
+
+		void ClearMenuObjs();
 	public:
 
 		MenuControllerSystem();
