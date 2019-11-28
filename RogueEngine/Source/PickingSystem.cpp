@@ -97,11 +97,11 @@ namespace Rogue
 
 					if (g_engine.m_coordinator.GetEditorIsRunning() && !g_engine.m_coordinator.GetGameState())
 						event->SetSystemReceivers((int)SystemID::id_EDITOR);
+					event->SetSystemReceivers((int)SystemID::id_MENUCONTROLLERSYSTEM);
 
 					EventDispatcher::instance().AddEvent(event);
 				}
 			}
-		}
 			return;
 		} // End switch case
 	} // End receive()

@@ -8,7 +8,7 @@
 namespace Rogue
 {
 	MenuControllerSystem::MenuControllerSystem()
-		:System(SystemID::id_MENUCONTROLLERSYSTEM)
+		:System(SystemID::id_MENUCONTROLLERSYSTEM), m_menuObjs{std::vector<Entity>()}
 	{
 	}
 
@@ -30,12 +30,61 @@ namespace Rogue
 	}
 	void MenuControllerSystem::Receive(Event* ev)
 	{
-		//Statement here to make sure all commands only apply if game is not running
-		if (g_engine.m_coordinator.GameIsActive())
-			return;
-
 		switch (ev->GetEventType())
 		{
+		case EventType::EvEntityPicked:
+		{
+			//Game must specifically be not in editor mode in order for this to be allowed
+			if (!g_engine.m_coordinator.GetEditorIsRunning())
+				return;
+
+			EntPickedEvent* entPicked = dynamic_cast<EntPickedEvent*>(ev);
+
+			bool UIPicked = false;
+			for (Entity ent : m_entities)
+			{
+				if (ent == entPicked->GetEntityID())
+				{
+					UIPicked = true;
+					break;
+				}
+			}
+
+			if (UIPicked)
+			{
+				HierarchyInfo hierarchyObj = g_engine.m_coordinator.GetHierarchyInfo(entPicked->GetEntityID());
+				
+				//For all cases of "How to Play" (Main Menu and Pause Screens)
+				if (hierarchyObj.m_objectName == "HowToPlay")
+				{
+					InitControlHelpMenu();
+				}
+				//Main Menu Start
+				else if (hierarchyObj.m_objectName == "StartBtn")
+				{
+					SceneManager& sceneManager = SceneManager::instance();
+					sceneManager.LoadLevel("Level 8.json");
+				}
+				//Exit from Main Menu. Cannot exit from game
+				else if (hierarchyObj.m_objectName == "QuitBtn")
+				{
+					g_engine.SetGameIsRunning(false);
+				}
+				//Resuming game from paused game state
+				else if (hierarchyObj.m_objectName == "BackToGame")
+				{
+					g_engine.m_coordinator.SetPauseState(false);
+				}
+				//Exit to Main menu
+				else if (hierarchyObj.m_objectName == "BackToMenu")
+				{
+					SceneManager& sceneManager = SceneManager::instance();
+					sceneManager.LoadLevel("Level 10.json");
+				}
+			}
+
+			return;
+		}
 		case EventType::EvMouseMoved:
 		{
 			MouseMoveEvent* mouseMove = dynamic_cast<MouseMoveEvent*>(ev);
@@ -46,6 +95,16 @@ namespace Rogue
 
 		case EventType::EvKeyTriggered:
 		{
+			while (m_menuObjs.size())
+			{
+				g_engine.m_coordinator.AddToDeleteQueue(m_menuObjs.back());
+				m_menuObjs.pop_back();
+			}
+
+			//Statement here to make sure all commands only apply if game is not running
+			if (g_engine.m_coordinator.GameIsActive())
+				return;
+
 			KeyTriggeredEvent* keytriggeredevent = dynamic_cast<KeyTriggeredEvent*>(ev);
 			KeyPress keycode = keytriggeredevent->GetKeyCode();
 
@@ -93,5 +152,12 @@ namespace Rogue
 	}
 	void MenuControllerSystem::Shutdown()
 	{
+	}
+	void MenuControllerSystem::InitPauseMenu()
+	{
+	}
+	void MenuControllerSystem::InitControlHelpMenu()
+	{
+		m_menuObjs.push_back(g_engine.m_coordinator.cloneArchetypes("HowToPlay"));
 	}
 }
