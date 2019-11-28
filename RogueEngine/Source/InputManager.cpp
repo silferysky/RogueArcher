@@ -401,7 +401,7 @@ namespace Rogue
 
 		if (g_engine.m_coordinator.GameIsActive())
 			event->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
-		else if (!g_engine.m_coordinator.GetGameState())
+		else
 			event->SetSystemReceivers((int)SystemID::id_MENUCONTROLLERSYSTEM);
 
 		event->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
