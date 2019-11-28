@@ -34,10 +34,6 @@ namespace Rogue
 		{
 		case EventType::EvEntityPicked:
 		{
-			//Game must specifically be not in editor mode in order for this to be allowed
-			if (!g_engine.m_coordinator.GetEditorIsRunning())
-				return;
-
 			EntPickedEvent* entPicked = dynamic_cast<EntPickedEvent*>(ev);
 
 			bool UIPicked = false;
@@ -73,9 +69,7 @@ namespace Rogue
 				//Resuming game from paused game state
 				else if (hierarchyObj.m_objectName == "Resume")
 				{
-					ClearMenuObjs();
-					g_engine.m_coordinator.SetPauseState(false);
-					g_engine.SetTimeScale(1.0f);
+					ResumeGame();
 				}
 				//Exit to Main menu
 				else if (hierarchyObj.m_objectName == "MainMenu_Btn")
@@ -117,7 +111,7 @@ namespace Rogue
 			{
 				if (g_engine.m_coordinator.GetEditorIsRunning())
 					g_engine.SetGameIsRunning(false);
-				g_engine.m_coordinator.SetPauseState(false);
+				ResumeGame();
 			}
 
 			if (keycode == KeyPress::KeyF5)
@@ -165,14 +159,22 @@ namespace Rogue
 	void MenuControllerSystem::InitPauseMenu()
 	{
 		g_engine.SetTimeScale(0.0f);
-		//m_menuObjs.push_back(g_engine.m_coordinator.cloneArchetypes("MainMenu_Bg"));
+		m_menuObjs.push_back(g_engine.m_coordinator.cloneArchetypes("MainMenu_Bg"));
 		m_menuObjs.push_back(g_engine.m_coordinator.cloneArchetypes("HowToPlayBtn"));
 		m_menuObjs.push_back(g_engine.m_coordinator.cloneArchetypes("MainMenu_Btn"));
 		m_menuObjs.push_back(g_engine.m_coordinator.cloneArchetypes("Resume"));
+		g_engine.m_coordinator.GetComponent<TransformComponent>(m_menuObjs.back()).setZ(2);
 	}
 	void MenuControllerSystem::InitControlHelpMenu()
 	{
 		m_menuObjs.push_back(g_engine.m_coordinator.cloneArchetypes("HowToPlay"));
+	}
+
+	void MenuControllerSystem::ResumeGame()
+	{
+		ClearMenuObjs();
+		g_engine.m_coordinator.SetPauseState(false);
+		g_engine.SetTimeScale(1.0f);
 	}
 
 	void MenuControllerSystem::ClearMenuObjs()
