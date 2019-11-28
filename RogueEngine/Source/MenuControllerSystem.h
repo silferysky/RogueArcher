@@ -24,6 +24,7 @@ namespace Rogue
 
 		void InitPauseMenu();
 		void InitControlHelpMenu();
+		void ResumeGame();
 	};
 }
 
