@@ -11,8 +11,8 @@
 #define DEF_PATROL_RANGE 10
 #define DEF_DETECT_RANGE 200
 
-#define DT_SPEED_MODIFIER 10000 * g_deltaTime
-#define DT_TRANSFORM_MODIFIER 100 * g_deltaTime
+#define DT_SPEED_MODIFIER 10000 * g_deltaTime * g_engine.GetTimeScale()
+#define DT_TRANSFORM_MODIFIER 100 * g_deltaTime * g_engine.GetTimeScale()
 
 namespace Rogue
 {
