@@ -71,15 +71,26 @@ namespace Rogue
 					g_engine.SetGameIsRunning(false);
 				}
 				//Resuming game from paused game state
-				else if (hierarchyObj.m_objectName == "BackToGame")
+				else if (hierarchyObj.m_objectName == "Resume")
 				{
+					ClearMenuObjs();
 					g_engine.m_coordinator.SetPauseState(false);
+					g_engine.SetTimeScale(1.0f);
 				}
 				//Exit to Main menu
-				else if (hierarchyObj.m_objectName == "BackToMenu")
+				else if (hierarchyObj.m_objectName == "MainMenu_Btn")
 				{
+					ClearMenuObjs();
 					SceneManager& sceneManager = SceneManager::instance();
 					sceneManager.LoadLevel("Level 10.json");
+				}
+				else if (hierarchyObj.m_objectName == "ControlHelp")
+				{
+					if (m_menuObjs.size())
+					{
+						g_engine.m_coordinator.DestroyEntity(m_menuObjs.back());
+						m_menuObjs.pop_back();
+					}
 				}
 			}
 
@@ -95,12 +106,6 @@ namespace Rogue
 
 		case EventType::EvKeyTriggered:
 		{
-			while (m_menuObjs.size())
-			{
-				g_engine.m_coordinator.AddToDeleteQueue(m_menuObjs.back());
-				m_menuObjs.pop_back();
-			}
-
 			//Statement here to make sure all commands only apply if game is not running
 			if (g_engine.m_coordinator.GameIsActive())
 				return;
@@ -159,10 +164,23 @@ namespace Rogue
 	}
 	void MenuControllerSystem::InitPauseMenu()
 	{
-		RE_INFO("HI");
+		g_engine.SetTimeScale(0.0f);
+		//m_menuObjs.push_back(g_engine.m_coordinator.cloneArchetypes("MainMenu_Bg"));
+		m_menuObjs.push_back(g_engine.m_coordinator.cloneArchetypes("HowToPlayBtn"));
+		m_menuObjs.push_back(g_engine.m_coordinator.cloneArchetypes("MainMenu_Btn"));
+		m_menuObjs.push_back(g_engine.m_coordinator.cloneArchetypes("Resume"));
 	}
 	void MenuControllerSystem::InitControlHelpMenu()
 	{
 		m_menuObjs.push_back(g_engine.m_coordinator.cloneArchetypes("HowToPlay"));
+	}
+
+	void MenuControllerSystem::ClearMenuObjs()
+	{
+		while (m_menuObjs.size())
+		{
+			g_engine.m_coordinator.DestroyEntity(m_menuObjs.back());
+			m_menuObjs.pop_back();
+		}
 	}
 }
