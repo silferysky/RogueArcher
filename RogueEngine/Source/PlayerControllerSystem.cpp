@@ -350,7 +350,6 @@ namespace Rogue
 		EventDispatcher::instance().AddEvent(event);
 	}
 
-
 	void PlayerControllerSystem::CreateBallAttack()
 	{
 		for (Entity entity : m_entities)
