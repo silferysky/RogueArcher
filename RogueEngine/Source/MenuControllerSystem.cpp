@@ -109,7 +109,11 @@ namespace Rogue
 			KeyPress keycode = keytriggeredevent->GetKeyCode();
 
 			if (keycode == KeyPress::KeyEsc)
+			{
+				if (g_engine.m_coordinator.GetEditorIsRunning())
+					g_engine.SetGameIsRunning(false);
 				g_engine.m_coordinator.SetPauseState(false);
+			}
 
 			if (keycode == KeyPress::KeyF5)
 				g_engine.m_coordinator.ToggleEditorIsRunning();
