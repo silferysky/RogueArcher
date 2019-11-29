@@ -200,7 +200,7 @@ namespace Rogue
 		mousePos.x = mousePos.x * width / imageSize.x;
 		mousePos.y = mousePos.y * height / imageSize.y;
 
-		g_engine.SetViewportCursor(mousePos);
+		PickingManager::instance().SetViewPortCursor(mousePos);
 		//ImGui::EndChild();
 		ImGui::End();
 	}

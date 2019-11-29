@@ -3,7 +3,7 @@
 
 namespace Rogue
 {
-	Vec2 PickingManager::TransformCursorToWorld(const Vec2& cursorPos) const
+	void PickingManager::TransformCursorToWorld(const Vec2& cursorPos)
 	{
 		float x = (2.0f * cursorPos.x) / GetWindowWidth(g_engine.GetWindowHandler()) - 1.0f;
 		float y = 1.0f - (2.0f * cursorPos.y) / GetWindowHeight(g_engine.GetWindowHandler());
@@ -19,7 +19,9 @@ namespace Rogue
 
 		glm::vec4 rayWorld4D = glm::inverse(viewMat) * rayEye;
 
-		return Vec2{ rayWorld4D.x, rayWorld4D.y };
+		m_cursorPos = Vec2{ rayWorld4D.x, rayWorld4D.y };
+
+		std::cout << m_cursorPos << std::endl;
 	}
 
 	void PickingManager::GenerateMeshAABB(TransformComponent& trans) const
@@ -51,8 +53,28 @@ namespace Rogue
 		return m_viewportArea;
 	}
 
+	const Vec2& PickingManager::GetWorldCursor() const
+	{
+		return m_cursorPos;
+	}
+
+	const ImVec2& PickingManager::GetViewportCursor() const
+	{
+		return m_viewportCursorPos;
+	}
+
 	void PickingManager::SetViewPortArea(const AABB& aabb)
 	{
 		m_viewportArea = aabb;
+	}
+
+	void PickingManager::SetWorldCursor(const Vec2& pos)
+	{
+		m_cursorPos = pos;
+	}
+
+	void PickingManager::SetViewPortCursor(const ImVec2& pos)
+	{
+		m_viewportCursorPos = pos;
 	}
 }

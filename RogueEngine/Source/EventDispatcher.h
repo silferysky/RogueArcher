@@ -5,8 +5,7 @@
 
 namespace Rogue
 {
-	class EventDispatcher :
-		public System
+	class EventDispatcher
 	{
 	public:
 		static EventDispatcher& instance()
@@ -15,10 +14,10 @@ namespace Rogue
 			return instance;
 		}
 
-		EventDispatcher();
+		EventDispatcher() = default;
 		~EventDispatcher() = default;
 
-		void Init() override;
+		void Init();
 
 		//Queue functions
 		Event* GetQueueHead();
@@ -37,8 +36,7 @@ namespace Rogue
 		void AddEventDelayed(Event* e);
 		void ResetEvents();
 
-		void Update() override;
-		void Shutdown() override;
+		void Update();
 
 		//Dispatch sends it to the relavent system to execute event
 		void DispatchEvent(Event* toHandle);
