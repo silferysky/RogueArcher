@@ -129,7 +129,7 @@
     "Entity28": "Name{Collider25}|Tag{}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{1892;51;100;100;0;0}||BoxCollider{0;0;0;39;1881;AWAKE}|||||||||Collider{BOX}|||||",
     "Entity29": "Name{CompleteGameTrigger}|Tag{}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{1748.26;659;100;100;0;0}||BoxCollider{0;0;0;-38;321;TRIGGER}||LogicComponent{4;0;}|StatsComponent{0;0;0;0;Level 11.json;0;}||||||Collider{BOX}|||||",
     "Entity30": "Name{Player}|Tag{}|Sprite{Resources\\Assets\\ExaElaBall.png;1;1;1;1}|Rigidbody{0;0;0;0;1;1;0;1;0.5;0.1;0.01;}|Transform{-1531.67;272.457;60;60;0;-1}||BoxCollider{0;0;0;0;0;AWAKE}|PlayerController{0;0.2;3000;}||||Camera{0;0;1;}||||Collider{BOX}|||||",
-    "Entity31": "Name{crossHair}|Tag{}|Sprite{Resources\\Assets\\crosshair.png;1;1;1;1}||Transform{-2464.04;977.73;100;100;0;1000}||||||||||Cursor{0;0}||||||",
+    "Entity31": "Name{crossHair}|Tag{}|Sprite{Resources\\Assets\\crosshair.png;1;1;1;1}||Transform{-808.343;511.576;100;100;0;1000}||||||||||Cursor{0;0}||||||",
     "Entity32": "Name{WaterfallSFX}|Tag{}|||Transform{-642.649;-170.089;60;60;0;0}||||||||Audio{Resources/Sounds/[Waterfall SFX]WATER-FALL_GEN-HDF-25489.ogg;0.8;0.06;1;0;}||||||||",
     "Entity33": "Name{CrystalFlower}|Tag{}|Sprite{Resources\\Assets\\CrystalFlowerIdle.png;0.694637;0.962378;0.970588;1}|Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-1463;-733;150;150;0.4;-1}||BoxCollider{0;0;0;-67;-79;TRIGGER}||LogicComponent{3;0;}|StatsComponent{0;0;0;0;;0;}|Animation{8;7;0.2;1;}|||||Collider{BOX}|||||",
     "Entity34": "Name{WindSFX}|Tag{}|||Transform{0;0;60;60;0;0}||||||||Audio{Resources\\Sounds\\[Cave Ambience]WIND-HOWL_GEN-HDF-25929.ogg;1;0.05;1;0;}||||||||",
