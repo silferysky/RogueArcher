@@ -14,7 +14,7 @@
 namespace Rogue
 {
 	PlayerControllerSystem::PlayerControllerSystem()
-		:System(SystemID::id_PLAYERCONTROLLERSYSTEM), /*m_ballCooldown{1.0f},*/ m_jumpCooldown{1.0f}
+		:System(SystemID::id_PLAYERCONTROLLERSYSTEM), /*m_ballCooldown{1.0f},*/ m_jumpCooldown{ 1.0f }, m_inLightArea{ false }
 	{
 	}
 
@@ -129,7 +129,7 @@ namespace Rogue
 
 			else if (keycode == KeyPress::MB2)
 			{
-				if (m_entities.size() && m_timedEntities.size())
+				if (m_entities.size() && m_timedEntities.size() && !m_inLightArea)
 				{
 					//By right correct way of doing this
 					CreateTeleportEvent(g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).GetPosition());
@@ -356,6 +356,16 @@ namespace Rogue
 		EntTeleportEvent* event = new EntTeleportEvent(*m_entities.begin(), newPosition);
 		event->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
 		EventDispatcher::instance().AddEvent(event);
+	}
+
+	void PlayerControllerSystem::setInLight(bool check)
+	{
+		m_inLightArea = check;
+	}
+
+	bool PlayerControllerSystem::getInLight()
+	{
+		return m_inLightArea;
 	}
 
 	void PlayerControllerSystem::CreateBallAttack()
