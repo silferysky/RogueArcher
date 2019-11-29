@@ -208,16 +208,6 @@ namespace Rogue
 		return m_stepCount;
 	}
 
-	Vec2 REEngine::GetWorldCursor() const
-	{
-		return m_cursorPos;
-	}
-
-	ImVec2 REEngine::GetViewportCursor() const
-	{
-		return m_viewportCursorPos;
-	}
-
 	int REEngine::GetEngineWindowWidth() const
 	{
 		return GetWindowWidth(hWnd);
@@ -260,16 +250,6 @@ namespace Rogue
 			m_verticalSync = true;
 			setVSync(true);
 		}
-	}
-
-	void REEngine::SetWorldCursor(const Vec2& pos)
-	{
-		m_cursorPos = pos;
-	}
-
-	void REEngine::SetViewportCursor(const ImVec2& pos)
-	{
-		m_viewportCursorPos = pos;
 	}
 
 	void REEngine::SetWorldDimensions(const Vec2& dim)
