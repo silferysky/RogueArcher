@@ -163,6 +163,36 @@ namespace Rogue
 		//MOVE_OBJECTFACTORY_TO_SCENEMANAGER;
 	}
 
+	Vec2 SceneManager::GetLevelCameraMin() const
+	{
+		return m_levelCameraMin;
+	}
+
+	Vec2 SceneManager::GetLevelCameraMax() const
+	{
+		return m_levelCameraMax;
+	}
+
+	float SceneManager::GetLevelCameraZoom() const
+	{
+		return m_levelCameraZoom;
+	}
+
+	void SceneManager::SetLevelCameraMin(const Vec2& cameraMin)
+	{
+		m_levelCameraMin = cameraMin;
+	}
+
+	void SceneManager::SetLevelCameraMax(const Vec2& cameraMax)
+	{
+		m_levelCameraMax = cameraMax;
+	}
+
+	void SceneManager::SetLevelCameraZoom(const float& cameraZoom)
+	{
+		m_levelCameraZoom = cameraZoom;
+	}
+
 	std::vector<std::string> SceneManager::GetLoadedLevels() const
 	{
 		return m_loadedLevels;
