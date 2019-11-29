@@ -5,7 +5,7 @@
 namespace Rogue
 {
 	PatrolAI::PatrolAI(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent)
-		: BaseAI(entity, logicComponent, statsComponent), m_currentPointIndex{0} 
+		: BaseAI(entity, logicComponent, statsComponent), m_currentPointIndex{0}
 	{
 		//AddWaypoint(g_engine.m_coordinator.GetComponent<TransformComponent>(entity).getPosition() - Vec2(100, 0));
 		//AddWaypoint(g_engine.m_coordinator.GetComponent<TransformComponent>(entity).getPosition());
@@ -22,6 +22,7 @@ namespace Rogue
 			{
 				m_waypoints.push_back(waypoint);
 			}
+			m_nextPoint.push(*stats.getWaypoints().begin());
 		}
 
 		if (g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(m_entity))
@@ -39,7 +40,10 @@ namespace Rogue
 	void PatrolAI::AIPatrolUpdate()
 	{
 		//Only can do waypoint patrol if 2 waypoints exist
-		if (m_waypoints.size() < 2)
+		//if (m_waypoints.size() < 2)
+			//return;
+		//Only can do waypoint patrol if set to Patrolling
+		if (!m_statsComponent->GetIsPatrolling())
 			return;
 
 		//Check if Transform component and Rigidbody exist
@@ -57,6 +61,9 @@ namespace Rogue
 			travelDistValue = m_nextPoint.front() - aiTransform.GetPosition();
 		else if (m_waypoints.size())
 		{
+			if (m_waypoints.size() == 1)
+				return;
+
 			m_nextPoint.push(m_waypoints.front());
 			travelDistValue = m_nextPoint.front() - aiTransform.GetPosition();
 		}
@@ -70,8 +77,13 @@ namespace Rogue
 		if (Vec2SqDistance(aiTransform.GetPosition(), m_nextPoint.front()) < m_statsComponent->getSightRange() * m_statsComponent->getSightRange())
 		{
 			m_nextPoint.pop();
+
+			if (m_waypoints.size() == 1)
+				return;
+
 			if (++m_currentPointIndex >= m_waypoints.size())
 				m_currentPointIndex = 0;
+
 			m_nextPoint.push(m_waypoints[m_currentPointIndex]);
 
 			//If facing right and moving left or facing left and moving right, flip
@@ -100,10 +112,5 @@ namespace Rogue
 	std::vector<Vec2> PatrolAI::GetWaypoints()
 	{
 		return m_waypoints;
-	}
-
-	void PatrolAI::SetIsPatrolling(bool patrol)
-	{
-		m_isPatrolling = patrol;
 	}
 }

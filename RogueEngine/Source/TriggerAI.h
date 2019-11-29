@@ -6,8 +6,6 @@ namespace Rogue
 	class TriggerAI
 		: public BaseAI
 	{
-
-
 	public:
 		TriggerAI(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent);
 	
