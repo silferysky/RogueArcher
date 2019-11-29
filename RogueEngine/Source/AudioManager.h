@@ -32,7 +32,7 @@ namespace Rogue
 
 		Sound& loadSound(std::string audio)
 		{
-			audio = directory + audio;
+			//audio = directory + audio;
 			auto itr = audioMap.find(audio);
 			if (itr != audioMap.end())
 				return itr->second;
@@ -40,7 +40,7 @@ namespace Rogue
 			{
 				Sound newSound;
 				audioMap.emplace(audio, newSound);
-
+				
 				auto itr1 = audioMap.find(audio);
 				return itr1->second;
 			}

@@ -24,15 +24,15 @@ namespace Rogue
 	/* General System Functions */
 	void Stream::Initialize()
 	{
-		FMOD_System_Create(&m_system);
+		m_result = FMOD_System_Create(&m_system);
 		FmodErrorCheck(m_result);
-		FMOD_System_Init(m_system, 64, FMOD_INIT_NORMAL, 0);
+		m_result = FMOD_System_Init(m_system, 64, FMOD_INIT_NORMAL, 0);
 		FmodErrorCheck(m_result);
 	}
 
 	void Stream::Release()
 	{
-		FMOD_System_Release(m_system);
+		m_result = FMOD_System_Release(m_system);
 		FmodErrorCheck(m_result);
 	}
 }
