@@ -170,7 +170,9 @@ namespace Rogue
 		g_engine.SetTimeScale(0.0f);
 		m_menuObjs.push_back(g_engine.m_coordinator.cloneArchetypes("MainMenu_Bg"));
 		m_menuObjs.push_back(g_engine.m_coordinator.cloneArchetypes("HowToPlayBtn"));
+		g_engine.m_coordinator.GetComponent<TransformComponent>(m_menuObjs.back()).setZ(2);
 		m_menuObjs.push_back(g_engine.m_coordinator.cloneArchetypes("MainMenu_Btn"));
+		g_engine.m_coordinator.GetComponent<TransformComponent>(m_menuObjs.back()).setZ(2);
 		m_menuObjs.push_back(g_engine.m_coordinator.cloneArchetypes("Resume"));
 		g_engine.m_coordinator.GetComponent<TransformComponent>(m_menuObjs.back()).setZ(2);
 	}
