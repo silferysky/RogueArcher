@@ -101,4 +101,9 @@ namespace Rogue
 	{
 		return m_waypoints;
 	}
+
+	void PatrolAI::SetIsPatrolling(bool patrol)
+	{
+		m_isPatrolling = patrol;
+	}
 }
