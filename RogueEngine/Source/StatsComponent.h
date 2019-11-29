@@ -27,6 +27,9 @@ namespace Rogue
 		void setSightRange(int sightRange);
 		int getSightRange() const;
 
+		void SetIsPatrolling(bool patrol);
+		bool GetIsPatrolling();
+
 		void addWaypoint(Vec2& vec);
 		std::vector<Vec2> getWaypoints() const;
 		void clearWaypoints();
@@ -48,6 +51,9 @@ namespace Rogue
 		//Range
 		int m_attackRange;	//Max range of attack
 		int m_sightRange;	//Max range of detection
+
+		//To enable Patrol State
+		bool m_isPatrolling = true;
 
 		std::vector<Vec2> m_waypoints;	//Waypoints if need to patrol
 		std::string m_nextLevel;
