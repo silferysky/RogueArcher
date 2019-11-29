@@ -25,6 +25,7 @@ namespace Rogue
 			if (!g_engine.m_coordinator.GetGameState())
 			{
 				SceneManager::instance().SaveLevel(SceneManager::instance().getCurrentFileName().c_str());
+				CameraManager::instance().SetCameraZoom(CameraManager::instance().GetLevelCameraZoom());
 				//SceneManager::instance().SaveAndLoadLevel();
 				g_engine.m_coordinator.SetGameState(true);
 				//ShowCursor(false);
