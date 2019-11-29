@@ -9,16 +9,8 @@
 
 namespace Rogue
 {
-	EventDispatcher::EventDispatcher()
-		: System(SystemID::id_EVENTMANAGER)
-	{}
-
 	void EventDispatcher::Init()
 	{
-		// Add components to signature
-		Signature signature;
-		g_engine.m_coordinator.SetSystemSignature<EventDispatcher>(signature);
-
 		EventQueue = std::queue<Event*>();
 		DelayedEventQueue = std::queue<Event*>();
 		ListenerMap = std::map<SystemID, LISTENER_HANDLER>();
@@ -92,7 +84,7 @@ namespace Rogue
 
 	void EventDispatcher::Update()
 	{
-		g_engine.m_coordinator.InitTimeSystem("Event System");
+		g_engine.m_coordinator.InitTimeSystem("Event Dispatcher");
 		if (isCombiningQueue)
 		{
 			instance().CombineQueue();
@@ -107,7 +99,7 @@ namespace Rogue
 			instance().EventQueue.pop();
 			delete nextEvent;
 		}
-		g_engine.m_coordinator.EndTimeSystem("Event System");
+		g_engine.m_coordinator.EndTimeSystem("Event Dispatcher");
 	}
 
 	void EventDispatcher::DispatchEvent(Event* toHandle)
@@ -124,7 +116,4 @@ namespace Rogue
 			++sysIt;
 		}
 	}
-
-	void EventDispatcher::Shutdown()
-	{}
 }

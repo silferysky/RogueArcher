@@ -28,14 +28,15 @@ namespace Rogue
 	void CursorSystem::Update()
 	{
 		g_engine.m_coordinator.InitTimeSystem("Cursor System");
-		
+
 		// Windows cursor
 		POINT windowCursor;
 		Vec2 cursorPos;
 
+
 		if (g_engine.m_coordinator.GetEditorIsRunning())
-			cursorPos = g_engine.GetViewportCursor();
-		
+			cursorPos = PickingManager::instance().GetViewportCursor();
+
 		else if (GetCursorPos(&windowCursor))
 		{
 			ScreenToClient(g_engine.GetWindowHandler(), &windowCursor);
@@ -43,18 +44,18 @@ namespace Rogue
 			cursorPos.y = static_cast<float>(windowCursor.y);
 		}
 
-		Vec2 worldCursor = PickingManager::instance().TransformCursorToWorld(cursorPos);
+		// Calculate cursor's world position and save it.
+		PickingManager::instance().TransformCursorToWorld(cursorPos);
 
-		g_engine.SetWorldCursor(worldCursor);
 
 		for (Entity entity : m_entities)
 		{
 			// Set the cursor entity's position to be the cursor's world position
 			auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
 
-			trans.setPosition(worldCursor);
+			trans.setPosition(PickingManager::instance().GetWorldCursor());
 		}
-		
+
 		g_engine.m_coordinator.EndTimeSystem("Cursor System");
 	}
 
