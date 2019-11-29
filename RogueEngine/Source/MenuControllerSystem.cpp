@@ -51,7 +51,7 @@ namespace Rogue
 				HierarchyInfo hierarchyObj = g_engine.m_coordinator.GetHierarchyInfo(entPicked->GetEntityID());
 				
 				//For all cases of "How to Play" (Main Menu and Pause Screens)
-				if (hierarchyObj.m_objectName == "HowToPlay")
+				if (hierarchyObj.m_objectName == "HowToPlay" || hierarchyObj.m_objectName == "HowToPlayBtn")
 				{
 					InitControlHelpMenu();
 				}
@@ -82,6 +82,15 @@ namespace Rogue
 				{
 					if (m_menuObjs.size())
 					{
+						auto& activeObjects = g_engine.m_coordinator.GetActiveObjects();
+						for (auto iterator = activeObjects.begin(); iterator != activeObjects.end(); ++iterator)
+						{
+							if (*iterator == m_menuObjs.back())
+							{
+								activeObjects.erase(iterator);
+								break;
+							}
+						}
 						g_engine.m_coordinator.DestroyEntity(m_menuObjs.back());
 						m_menuObjs.pop_back();
 					}
@@ -165,6 +174,7 @@ namespace Rogue
 		m_menuObjs.push_back(g_engine.m_coordinator.cloneArchetypes("Resume"));
 		g_engine.m_coordinator.GetComponent<TransformComponent>(m_menuObjs.back()).setZ(2);
 	}
+
 	void MenuControllerSystem::InitControlHelpMenu()
 	{
 		m_menuObjs.push_back(g_engine.m_coordinator.cloneArchetypes("HowToPlay"));
@@ -179,8 +189,18 @@ namespace Rogue
 
 	void MenuControllerSystem::ClearMenuObjs()
 	{
+
 		while (m_menuObjs.size())
 		{
+			auto& activeObjects = g_engine.m_coordinator.GetActiveObjects();
+			for (auto iterator = activeObjects.begin(); iterator != activeObjects.end(); ++iterator)
+			{
+				if (*iterator == m_menuObjs.back())
+				{
+					activeObjects.erase(iterator);
+					break;
+				}
+			}
 			g_engine.m_coordinator.DestroyEntity(m_menuObjs.back());
 			m_menuObjs.pop_back();
 		}
