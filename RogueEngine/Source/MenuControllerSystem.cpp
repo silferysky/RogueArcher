@@ -58,6 +58,7 @@ namespace Rogue
 				//Main Menu Start
 				else if (hierarchyObj.m_objectName == "StartBtn")
 				{
+					ResumeGame();
 					SceneManager& sceneManager = SceneManager::instance();
 					sceneManager.LoadLevel("Level 8.json");
 				}
@@ -74,7 +75,7 @@ namespace Rogue
 				//Exit to Main menu
 				else if (hierarchyObj.m_objectName == "MainMenu_Btn")
 				{
-					ClearMenuObjs();
+					ResumeGame();
 					SceneManager& sceneManager = SceneManager::instance();
 					sceneManager.LoadLevel("Level 10.json");
 				}
@@ -180,6 +181,7 @@ namespace Rogue
 	void MenuControllerSystem::InitControlHelpMenu()
 	{
 		m_menuObjs.push_back(g_engine.m_coordinator.cloneArchetypes("HowToPlay"));
+		g_engine.m_coordinator.GetComponent<TransformComponent>(m_menuObjs.back()).setZ(3);
 	}
 
 	void MenuControllerSystem::ResumeGame()
