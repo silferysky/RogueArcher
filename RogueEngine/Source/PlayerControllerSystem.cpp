@@ -8,12 +8,13 @@
 #include "KeyEvent.h"
 #include "GameEvent.h"
 #include "GraphicsEvent.h"
+#include "PickingManager.h"
 #include "MenuControllerSystem.h"
 
 namespace Rogue
 {
 	PlayerControllerSystem::PlayerControllerSystem()
-		:System(SystemID::id_PLAYERCONTROLLERSYSTEM), /*m_ballCooldown{1.0f},*/ m_jumpCooldown{1.0f}
+		:System(SystemID::id_PLAYERCONTROLLERSYSTEM), /*m_ballCooldown{1.0f},*/ m_jumpCooldown{ 1.0f }, m_isInLight{ 0.0f }
 	{
 	}
 
@@ -371,8 +372,9 @@ namespace Rogue
 			Entity ball = g_engine.m_coordinator.CreateEntity();
 			auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
 			Vec2 playerPos = trans.GetPosition();
+			Vec2 cursorPos = PickingManager::instance().GetWorldCursor();
 
-			Vec2 ballDir{ g_engine.GetWorldCursor().x - playerPos.x, g_engine.GetWorldCursor().y - playerPos.y };
+			Vec2 ballDir{ cursorPos.x - playerPos.x, cursorPos.y - playerPos.y };
 			Vec2Normalize(ballDir, ballDir);
 
 			strstream << playerPos.x + ballDir.x * POSITION_RELATIVITY << ";"

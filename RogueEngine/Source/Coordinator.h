@@ -35,6 +35,8 @@ namespace Rogue
 
 		void Init()
 		{
+			EventDispatcher::instance().Init();
+
 			// Init the systems and set their signatures.
 			m_systemManager->InitSystems();
 
