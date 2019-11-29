@@ -10,9 +10,6 @@ namespace Rogue
 		std::unique_ptr<ObjectFactory> m_objectFactory;
 		std::vector<std::string> m_loadedLevels;
 		std::string m_currentFileName;
-		Vec2 m_levelCameraMin{};
-		Vec2 m_levelCameraMax{};
-		float m_levelCameraZoom = 0.0f;
 		unsigned int m_objectIterator = 0;
 		unsigned int m_sceneIterator = 0;
 		unsigned int m_cameraIterator = 0;
@@ -48,14 +45,6 @@ namespace Rogue
 
 		void Clone(Entity toClone);
 		Entity Clone(const char* archetype, bool createHierarchy = true);
-
-		Vec2 GetLevelCameraMin() const;
-		Vec2 GetLevelCameraMax() const;
-		float GetLevelCameraZoom() const;
-
-		void SetLevelCameraMin(const Vec2& cameraMin);
-		void SetLevelCameraMax(const Vec2& cameraMax);
-		void SetLevelCameraZoom(const float& cameraZoom);
 
 
 		std::vector<std::string> GetLoadedLevels() const;

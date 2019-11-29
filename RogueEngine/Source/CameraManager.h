@@ -10,6 +10,7 @@ namespace Rogue
 
 		glm::vec3 m_cameraPos;
 		float m_cameraZoom;
+		float m_levelCameraZoom;
 	public:
 		// Singleton instance
 		static CameraManager& instance()
@@ -23,7 +24,8 @@ namespace Rogue
 			m_cameraMin{ -1600.0f, -1600.0f },
 			m_cameraMax{ 1600.0f, 1600.0f },
 			m_cameraPos{ 0.0f, 0.0f, 0.0f },
-			m_cameraZoom{ 1.0f }
+			m_cameraZoom{ 1.0f },
+			m_levelCameraZoom{ 1.0f }
 		{}
 
 		Vec2 GetCameraMin() const { return m_cameraMin; }
@@ -55,5 +57,14 @@ namespace Rogue
 			m_cameraZoom = cameraZoom;
 		}
 
+		float GetLevelCameraZoom()
+		{
+			return m_levelCameraZoom;
+		}
+
+		void SetLevelCameraZoom(float cameraZoom)
+		{
+			m_levelCameraZoom = cameraZoom;
+		}
 	};
 }
