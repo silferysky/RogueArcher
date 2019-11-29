@@ -61,6 +61,7 @@ namespace Rogue
 			//}
 		//}
 		m_jumpCooldown -= g_deltaTime * g_engine.GetTimeScale();
+		m_isInLight -= g_deltaTime * g_engine.GetTimeScale();
 
 		//To update all timed entities
 		/*for (auto timedEntityIt = m_timedEntities.begin(); timedEntityIt != m_timedEntities.end(); ++timedEntityIt)
@@ -128,7 +129,7 @@ namespace Rogue
 
 			else if (keycode == KeyPress::MB2)
 			{
-				if (m_entities.size() && m_timedEntities.size())
+				if (m_entities.size() && m_timedEntities.size() && m_isInLight < 0.0f)
 				{
 					//By right correct way of doing this
 					CreateTeleportEvent(g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).GetPosition());
@@ -355,6 +356,11 @@ namespace Rogue
 		EntTeleportEvent* event = new EntTeleportEvent(*m_entities.begin(), newPosition);
 		event->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
 		EventDispatcher::instance().AddEvent(event);
+	}
+
+	void PlayerControllerSystem::setInLight(float duration)
+	{
+		m_isInLight = duration;
 	}
 
 	void PlayerControllerSystem::CreateBallAttack()

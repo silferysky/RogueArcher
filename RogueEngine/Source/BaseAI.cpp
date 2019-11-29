@@ -159,6 +159,10 @@ namespace Rogue
 			//ClearTimedEntities already deletes entity
 			g_engine.m_coordinator.ClearTimedEntities();
 		}
+		else if (hierarchyObj.m_objectName == "Player")
+		{
+			g_engine.m_coordinator.GetSystem<PlayerControllerSystem>()->setInLight();
+		}
 	}
 
 	void BaseAI::OnTriggerStay(Entity otherEnt)
