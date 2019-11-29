@@ -26,6 +26,8 @@ namespace Rogue
 			g_engine.m_coordinator.GetComponent<AnimationComponent>(m_entity).setIsLooping(false);
 		}
 
+		g_engine.m_coordinator.GetSystem<LogicSystem>()->TriggerNextDoor();
+
 		BaseAI::OnTriggerEnter(other);
 		/*auto& hierarchyObj = g_engine.m_coordinator.GetHierarchyInfo(other);
 		if (hierarchyObj.m_objectName == "Ball")

@@ -177,6 +177,24 @@ namespace Rogue
 		}
 	}
 
+	void LogicSystem::TriggerNextDoor()
+	{
+		for (Entity entity : m_entities)
+		{
+			StatsComponent& stats = g_engine.m_coordinator.GetComponent<StatsComponent>(entity);
+
+			//If not patrolling, set patrolling
+			if (!stats.GetIsPatrolling())
+			{
+				(*m_entityLogicMap[entity].begin())->GetStatsComponent()->SetIsPatrolling(true);
+				stats.SetIsPatrolling(true);
+				if (g_engine.m_coordinator.ComponentExists<BoxCollider2DComponent>(entity))
+					g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(entity).SetCollisionMode(CollisionMode::e_trigger);
+				break;
+			}
+		}
+	}
+
 	/*void LogicSystem::SeekNearestWaypoint(Entity ent)
 	{
 		Vec2* currentLocation = &g_engine.m_coordinator.GetComponent<TransformComponent>(ent).getPosition();

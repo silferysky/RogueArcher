@@ -157,8 +157,8 @@ namespace Rogue
 		ImGui::PushItemWidth(75);
 		ImGui::DragInt("Sight Range", &m_sightRange, 1, 0, 1000);
 
-		//ImGui::PushItemWidth(75);
-		//ImGui::To("Patrolling", &m_isPatrolling, 1, 0, 1000);
+		ImGui::PushItemWidth(75);
+		ImGui::Checkbox("Patrolling", &m_isPatrolling);
 
 		static char newLevelPath[128];
 		ImGui::PushItemWidth(75);

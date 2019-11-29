@@ -53,7 +53,7 @@ namespace Rogue
 		int m_sightRange;	//Max range of detection
 
 		//To enable Patrol State
-		bool m_isPatrolling = true;
+		bool m_isPatrolling;
 
 		std::vector<Vec2> m_waypoints;	//Waypoints if need to patrol
 		std::string m_nextLevel;
