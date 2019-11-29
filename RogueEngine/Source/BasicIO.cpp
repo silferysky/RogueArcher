@@ -95,7 +95,7 @@ namespace Rogue
 		strstream << ",\n  \"CameraMinY\": " << 0;
 		strstream << ",\n  \"CameraMaxX\": " << 0;
 		strstream << ",\n  \"CameraMaxY\": " << 0;
-		strstream << ",\n  \"CameraZoom\": " << 0;
+		strstream << ",\n  \"CameraZoom\": " << 1.0;
 
 		//For Signature
 		strstream << InitializeSignatureJsonFile(numOfEnt);

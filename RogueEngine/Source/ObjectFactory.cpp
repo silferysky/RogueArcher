@@ -31,9 +31,7 @@ namespace Rogue
 		float cameraZoom(level["CameraZoom"].GetFloat());
 		CameraManager::instance().SetCameraMin(cameraMin);
 		CameraManager::instance().SetCameraMax(cameraMax);
-		SceneManager::instance().SetLevelCameraMin(cameraMin);
-		SceneManager::instance().SetLevelCameraMax(cameraMax);
-		SceneManager::instance().SetLevelCameraZoom(cameraZoom);
+		CameraManager::instance().SetLevelCameraZoom(cameraZoom);
 
 		//For Entity Count
 		m_maxEntityCount = level["MaxEntityCount"].GetInt();
@@ -103,9 +101,9 @@ namespace Rogue
 		const char* cstr;
 
 		//Camera Serialization
-		Vec2 cameraMin = SceneManager::instance().GetLevelCameraMin();
-		Vec2 cameraMax = SceneManager::instance().GetLevelCameraMax();
-		float cameraZoom = SceneManager::instance().GetLevelCameraZoom();
+		Vec2 cameraMin = CameraManager::instance().GetCameraMin();
+		Vec2 cameraMax = CameraManager::instance().GetCameraMax();
+		float cameraZoom = CameraManager::instance().GetLevelCameraZoom();
 		RESerialiser::WriteToFile(fileName, "CameraMinX", &cameraMin.x);
 		RESerialiser::WriteToFile(fileName, "CameraMinY", &cameraMin.y);
 		RESerialiser::WriteToFile(fileName, "CameraMaxX", &cameraMax.x);
