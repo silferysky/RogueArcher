@@ -5,14 +5,16 @@
 namespace Rogue
 {
 	TriggerAI::TriggerAI(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent)
-		: BaseAI(entity, logicComponent, statsComponent) {}
+		: BaseAI(entity, logicComponent, statsComponent), m_isTriggered{ false } {}
 
 	void TriggerAI::OnTriggerEnter(Entity other)
 	{
 		auto& hierarchyObj = g_engine.m_coordinator.GetHierarchyInfo(other);
 
-		if (hierarchyObj.m_objectName != "Ball")
+		if (hierarchyObj.m_objectName != "Ball" || m_isTriggered)
 			return;
+		
+		m_isTriggered = true;
 
 		if (g_engine.m_coordinator.ComponentExists<SpriteComponent>(m_entity))
 		{
