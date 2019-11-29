@@ -61,6 +61,7 @@ namespace Rogue
 					ResumeGame();
 					SceneManager& sceneManager = SceneManager::instance();
 					sceneManager.LoadLevel("Level 8.json");
+					g_engine.m_coordinator.SetGameState(true);
 				}
 				//Exit from Main Menu. Cannot exit from game
 				else if (hierarchyObj.m_objectName == "QuitBtn")
