@@ -26,8 +26,14 @@ namespace Rogue
 		const char* cstr;
 
 		//For Camera
-		CameraManager::instance().SetCameraMin(Vec2(level["CameraMinX"].GetFloat(), level["CameraMinY"].GetFloat()));
-		CameraManager::instance().SetCameraMax(Vec2(level["CameraMaxX"].GetFloat(), level["CameraMaxY"].GetFloat()));
+		Vec2 cameraMin(level["CameraMinX"].GetFloat(), level["CameraMinY"].GetFloat());
+		Vec2 cameraMax(level["CameraMaxX"].GetFloat(), level["CameraMaxY"].GetFloat());
+		float cameraZoom(level["CameraZoom"].GetFloat());
+		CameraManager::instance().SetCameraMin(cameraMin);
+		CameraManager::instance().SetCameraMax(cameraMax);
+		SceneManager::instance().SetLevelCameraMin(cameraMin);
+		SceneManager::instance().SetLevelCameraMax(cameraMax);
+		SceneManager::instance().SetLevelCameraZoom(cameraZoom);
 
 		//For Entity Count
 		m_maxEntityCount = level["MaxEntityCount"].GetInt();
@@ -95,6 +101,16 @@ namespace Rogue
 		std::ostringstream strstream;
 		std::string stdstr;
 		const char* cstr;
+
+		//Camera Serialization
+		Vec2 cameraMin = SceneManager::instance().GetLevelCameraMin();
+		Vec2 cameraMax = SceneManager::instance().GetLevelCameraMax();
+		float cameraZoom = SceneManager::instance().GetLevelCameraZoom();
+		RESerialiser::WriteToFile(fileName, "CameraMinX", &cameraMin.x);
+		RESerialiser::WriteToFile(fileName, "CameraMinY", &cameraMin.y);
+		RESerialiser::WriteToFile(fileName, "CameraMaxX", &cameraMax.x);
+		RESerialiser::WriteToFile(fileName, "CameraMaxY", &cameraMax.y);
+		RESerialiser::WriteToFile(fileName, "CameraZoom", &cameraZoom);
 
 		Entity entCount = 0;
 		if (g_engine.m_coordinator.GetActiveObjects().size() != 0)

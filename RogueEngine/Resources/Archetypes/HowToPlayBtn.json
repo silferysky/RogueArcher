@@ -1,4 +1,4 @@
 {
     "Signature": 2053,
-    "Entity": "Name{HowToPlayBtn}|Tag{}|Sprite{Resources\\Assets\\How to play.png;1;1;1;1}||Transform{-570.72;-232.615;300;200;0;0}|||||||||UI{1;}|||||||"
+    "Entity": "Name{HowToPlayBtn}|Tag{}|Sprite{Resources\\Assets\\How to play.png;1;1;1;1}||Transform{0;0;300;200;0;0}|||||||||UI{1;}|||||||"
 }
