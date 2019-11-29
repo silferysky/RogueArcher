@@ -6,43 +6,53 @@
 
 namespace Rogue
 {
-	/* Constructor */
 	Sound::Sound() : m_soundOn{ false }, m_canPlaySound{ true }, currentSound{ 0 }, m_result{ FMOD_OK },
 		m_system{ 0 }, m_fmodSound{ 0 }, m_channel{ 0 }
 	{
 	}
 
-	/* Error check */
 	void Sound::FmodErrorCheck(FMOD_RESULT resultCheck)
 	{
-		/* Throw an error if FMOD finds something wrong */
-		RE_ASSERT(resultCheck == FMOD_OK, FMOD_ErrorString(resultCheck));
+		// Throw an error if FMOD finds something wrong
+		if (resultCheck != FMOD_OK)
+		{
+			std::ostringstream ss;
+			ss << "FMOD error: " << resultCheck << FMOD_ErrorString(resultCheck);
+			RE_INFO(ss.str());
+		}
 	}
 
 	/* Sound Creation */
 
-	/* For SFX */
-	void Sound::Create(const char* filename, float playTimer, Stream* audioPtr)
+	// For SFX
+	void Sound::Create(const char* filename, float playTimer)
 	{
-		m_system = audioPtr->m_system;
-		m_f_PlayTimer = playTimer;
-		FMOD_System_CreateSound(m_system, filename, FMOD_LOOP_OFF | FMOD_CREATESTREAM, 0, &m_fmodSound);
+		m_result = FMOD_System_Create(&m_system);
 		FmodErrorCheck(m_result);
-		FMOD_System_PlaySound(m_system, m_fmodSound, 0, true, &m_channel);
+		m_result = FMOD_System_Init(m_system, 64, FMOD_INIT_NORMAL, 0);
+		FmodErrorCheck(m_result);
+		m_f_PlayTimer = playTimer;
+		m_result = FMOD_System_CreateSound(m_system, filename, FMOD_LOOP_OFF | FMOD_CREATESTREAM, 0, &m_fmodSound);
+		//FMOD_Channel_Set3DAttributes(m_channel,);
+		FmodErrorCheck(m_result);
+		m_result = FMOD_System_PlaySound(m_system, m_fmodSound, 0, true, &m_channel);
 		FmodErrorCheck(m_result);
 	}
 
-	/* For BGM */
-	void Sound::CreateBGM(const char* filename, float playTimer, Stream* audioPtr, int counterCap)
+	// For BGM
+	void Sound::CreateBGM(const char* filename, float playTimer, int counterCap)
 	{
-		m_system = audioPtr->m_system;
+		m_result = FMOD_System_Create(&m_system);
+		FmodErrorCheck(m_result);
+		m_result = FMOD_System_Init(m_system, 64, FMOD_INIT_NORMAL, 0);
+		FmodErrorCheck(m_result);
 		m_c_PlayCap = counterCap;
 		m_f_PlayTimer = playTimer;
-		FMOD_System_CreateStream(m_system, filename, FMOD_LOOP_NORMAL | FMOD_CREATESTREAM, 0, &m_fmodSound);
+		m_result = FMOD_System_CreateStream(m_system, filename, FMOD_LOOP_NORMAL, 0, &m_fmodSound);
 		FmodErrorCheck(m_result);
-		FMOD_Sound_SetMusicChannelVolume(m_fmodSound, 0, 0);
+		m_result = FMOD_Sound_SetMusicChannelVolume(m_fmodSound, 0, 0);
 		FmodErrorCheck(m_result);
-		FMOD_System_PlaySound(m_system, m_fmodSound, 0, true, &m_channel);
+		m_result = FMOD_System_PlaySound(m_system, m_fmodSound, 0, true, &m_channel);
 		FmodErrorCheck(m_result);
 	}
 
@@ -53,10 +63,11 @@ namespace Rogue
 		if (m_c_PlayCounter < m_c_PlayCap)
 		{
 			m_soundOn = true;
-			FMOD_System_PlaySound(m_system, m_fmodSound, 0, false, &m_channel);
+			m_result = FMOD_System_PlaySound(m_system, m_fmodSound, 0, false, &m_channel);
 			m_b_IsPlaying = true;
 			FmodErrorCheck(m_result);
-			FMOD_Channel_SetVolume(m_channel, volume);
+			m_result = FMOD_Channel_SetVolume(m_channel, volume);
+			FmodErrorCheck(m_result);
 			++m_c_PlayCounter;
 			m_f_Timer = 0;
 		}
@@ -64,7 +75,7 @@ namespace Rogue
 
 	void Sound::Update()
 	{
-		FMOD_System_Update(m_system);
+		m_result = FMOD_System_Update(m_system);
 		FmodErrorCheck(m_result);
 
 		if (m_f_Timer > m_f_PlayTimer)
@@ -96,6 +107,9 @@ namespace Rogue
 	void Sound::Release()
 	{
 		FMOD_Sound_Release(m_fmodSound);
+		FmodErrorCheck(m_result);
+
+		m_result = FMOD_System_Release(m_system);
 		FmodErrorCheck(m_result);
 	}
 

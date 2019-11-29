@@ -9,7 +9,7 @@ namespace Rogue
 		FMOD_BOOL m_canPlaySound;	/* is it possible to play sound? */
 		char* currentSound;	/* currently played sound */
 
-		/* FMOD-specific */
+		// FMOD-specific
 		FMOD_SYSTEM* m_system;	/* the system where the sound will be using */
 		FMOD_RESULT	m_result;		/* allows error checking for FMOD functions */
 		FMOD_SOUND* m_fmodSound;	/* holding the actual sound */
@@ -23,14 +23,13 @@ namespace Rogue
 		int m_c_PlayCap = 10000;
 	public:
 
-		/* Constructor */
 		Sound();
 		/* Error-checking*/
 		void FmodErrorCheck(FMOD_RESULT result);
 
 		/* FMOD sound/channel/system creation */
-		void CreateBGM(const char* filename, float playTimer, Stream* audioPtr, int counterCap = 1);
-		void Create(const char* filename, float playTimer, Stream* audioPtr);
+		void CreateBGM(const char* filename, float playTimer, int counterCap = 1);
+		void Create(const char* filename, float playTimer);
 
 		/* General Audio Functions */
 		/* Play the sound */

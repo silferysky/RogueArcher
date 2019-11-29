@@ -10,8 +10,6 @@ namespace Rogue
 
 		if (m_sound.GetSystem() != NULL)
 			m_sound.Release();
-
-		m_stream.Release();
 	}
 
 	void AudioEmitterComponent::DisplayOnInspector()
@@ -44,7 +42,7 @@ namespace Rogue
 
 		if (ImGui::Button("Set new path"))
 		{
-			m_soundPath = m_constAudioPath + m_newaudioPath;
+			//m_soundPath = m_constAudioPath + m_newaudioPath;
 			setSoundPath(m_soundPath);
 			memset(m_newaudioPath, 0, 128);
 		}
@@ -102,16 +100,15 @@ namespace Rogue
 
 	void AudioEmitterComponent::CreateSound()
 	{
-		m_stream.Initialize();
 		m_sound = g_engine.m_coordinator.loadSound(getSoundPath());
 
 		if (m_isLooping)
 		{
-			m_sound.CreateBGM(getSoundPath().c_str(), 120.0f, &m_stream);
+			m_sound.CreateBGM(getSoundPath().c_str(), 120.0f);
 			m_sound.Play(m_volume);
 		}
 		else
-			m_sound.Create(getSoundPath().c_str(), 1.0f, &m_stream);
+			m_sound.Create(getSoundPath().c_str(), 12.0f);
 	}
 
 	Sound& AudioEmitterComponent::getSound()

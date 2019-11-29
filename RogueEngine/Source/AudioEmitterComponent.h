@@ -1,7 +1,6 @@
 #pragma once
 #include "BaseComponent.h"
 #include "Sound.h"
-#include "Stream.h"
 
 namespace Rogue
 {
@@ -10,7 +9,6 @@ namespace Rogue
 	{
 		std::string m_soundPath;
 		Sound m_sound;
-		Stream m_stream;
 
 		bool m_isLooping;
 		bool m_isScaling;
