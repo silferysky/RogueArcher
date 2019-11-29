@@ -53,6 +53,16 @@ namespace Rogue
 		return m_sightRange;
 	}
 
+	void StatsComponent::SetIsPatrolling(bool patrol)
+	{
+		m_isPatrolling = patrol;
+	}
+
+	bool StatsComponent::GetIsPatrolling()
+	{
+		return m_isPatrolling;
+	}
+
 	void StatsComponent::addWaypoint(Vec2& vec)
 	{
 		m_waypoints.push_back(vec);
@@ -91,6 +101,7 @@ namespace Rogue
 		ss << m_speed << ";";
 		ss << m_sightRange << ";";
 		ss << m_attackRange << ";";
+		ss << m_isPatrolling << ";";
 		ss << m_nextLevel << ";";
 		ss << m_waypoints.size() << ";";
 
@@ -115,6 +126,8 @@ namespace Rogue
 		m_sightRange = std::stoi(s1);
 		std::getline(ss, s1, ';');
 		m_attackRange = std::stoi(s1);
+		std::getline(ss, s1, ';');
+		m_isPatrolling = std::stoi(s1);
 		std::getline(ss, s1, ';');
 		SetTransitionLevel(s1.c_str());
 
@@ -143,6 +156,9 @@ namespace Rogue
 
 		ImGui::PushItemWidth(75);
 		ImGui::DragInt("Sight Range", &m_sightRange, 1, 0, 1000);
+
+		ImGui::PushItemWidth(75);
+		ImGui::Checkbox("Patrolling", &m_isPatrolling);
 
 		static char newLevelPath[128];
 		ImGui::PushItemWidth(75);

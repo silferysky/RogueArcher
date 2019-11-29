@@ -1,5 +1,6 @@
 #pragma once
 #include "Types.h"
+#include "Vector2D.h"
 
 namespace Rogue
 {
@@ -44,6 +45,7 @@ namespace Rogue
 
 		void Clone(Entity toClone);
 		Entity Clone(const char* archetype, bool createHierarchy = true);
+
 
 		std::vector<std::string> GetLoadedLevels() const;
 		void AddToLoadedLevels(std::string_view name);

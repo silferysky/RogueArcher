@@ -28,6 +28,9 @@ namespace Rogue
 		void RemoveExcessAI();
 		void AddExcessAI();
 
+		//For Trigger AI
+		void TriggerNextDoor();
+
 		//void SeekNearestWaypoint(Entity ent);
 
 		void CreateMoveEvent(Entity ent, Vec2 vec);
