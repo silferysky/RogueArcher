@@ -5,6 +5,7 @@
     "CameraMinY": -350,
     "CameraMaxX": 630,
     "CameraMaxY": 350,
+    "CameraZoom": 0.86,
     "Signature0": 5,
     "Entity0": "Name{Background}|Tag{}|Sprite{Resources\\Assets\\test.bmp;1;1;1;1}||Transform{0;0;1600;900;0;0}|||||||||||||||"
 }

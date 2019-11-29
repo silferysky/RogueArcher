@@ -1,5 +1,6 @@
 #pragma once
 #include "Types.h"
+#include "Vector2D.h"
 
 namespace Rogue
 {
@@ -9,8 +10,8 @@ namespace Rogue
 		std::unique_ptr<ObjectFactory> m_objectFactory;
 		std::vector<std::string> m_loadedLevels;
 		std::string m_currentFileName;
-		Vec2 m_levelCameraMin;
-		Vec2 m_levelCameraMax;
+		Vec2 m_levelCameraMin{};
+		Vec2 m_levelCameraMax{};
 		float m_levelCameraZoom = 0.0f;
 		unsigned int m_objectIterator = 0;
 		unsigned int m_sceneIterator = 0;
