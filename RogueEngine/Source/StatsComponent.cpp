@@ -126,8 +126,8 @@ namespace Rogue
 		m_sightRange = std::stoi(s1);
 		std::getline(ss, s1, ';');
 		m_attackRange = std::stoi(s1);
-		//std::getline(ss, s1, ';');
-		//m_isPatrolling = std::stoi(s1);
+		std::getline(ss, s1, ';');
+		m_isPatrolling = std::stoi(s1);
 		std::getline(ss, s1, ';');
 		SetTransitionLevel(s1.c_str());
 
