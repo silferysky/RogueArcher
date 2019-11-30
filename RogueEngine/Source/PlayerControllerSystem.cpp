@@ -165,7 +165,7 @@ namespace Rogue
 			else if (keycode == KeyPress::KeyEsc)
 			{
 				g_engine.m_coordinator.SetPauseState(true);
-				g_engine.m_coordinator.GetSystem<MenuControllerSystem>()->InitPauseMenu();
+				g_engine.m_coordinator.GetSystem<MenuControllerSystem>()->ToggleUIMenuObjs();
 			}
 
 			//if (keycode == KeyPress::Numpad9)
