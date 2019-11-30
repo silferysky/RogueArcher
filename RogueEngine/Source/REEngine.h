@@ -14,9 +14,7 @@ namespace Rogue
 		**********************************/
 		// General variables
 		float m_timeScale;
-		Vec2 m_cursorPos;				// Mouse cursor's world position
-		ImVec2 m_viewportCursorPos;		// Mouse cursor's editor viewport position
-
+		
 		// Game loop variables
 		Timer::ChronoTime m_loopStart;
 		Timer::ChronoTime m_loopEnd;
@@ -70,8 +68,6 @@ namespace Rogue
 		float GetAccumulatedTime() const;
 		float GetTimeScale() const;
 		int GetStepCount() const;
-		Vec2 GetWorldCursor() const;
-		ImVec2 GetViewportCursor() const;
 		int GetEngineWindowWidth() const;
 		int GetEngineWindowHeight() const;
 		Vec2 GetWorldDimensions() const;
@@ -80,8 +76,6 @@ namespace Rogue
 		void SetGameIsRunning(bool set);
 		void SetTimeScale(float timeScale);
 		void ToggleVSync();
-		void SetWorldCursor(const Vec2& pos);
-		void SetViewportCursor(const ImVec2& pos);
 		void SetWorldDimensions(const Vec2& dim);
 		void SetIsFocused(bool set);
 	};

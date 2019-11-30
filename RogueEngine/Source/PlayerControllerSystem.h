@@ -31,13 +31,13 @@ namespace Rogue
 
 		void CreateTeleportEvent(Vec2 newPosition);
 
-
+		void setInLight(float duration = 0.16f);
 
 	private:
 		void CreateBallAttack();
 		std::vector<TimedEntity> m_timedEntities;
 		//float m_ballCooldown;
 		float m_jumpCooldown;
-
+		float m_isInLight;
 	};
 }
