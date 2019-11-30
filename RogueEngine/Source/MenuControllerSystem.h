@@ -10,7 +10,6 @@ namespace Rogue
 	{
 		std::vector<Entity> m_menuObjs;
 
-		void ClearMenuObjs();
 	public:
 
 		MenuControllerSystem();
@@ -22,8 +21,10 @@ namespace Rogue
 		void Receive(Event* ev) override;
 		void Shutdown() override;
 
+		void ClearMenuObjs();
 		void InitPauseMenu();
 		void InitControlHelpMenu();
+		void ToggleUIMenuObjs();
 		void ResumeGame();
 	};
 }

@@ -82,7 +82,8 @@ namespace Rogue
 				}
 				else if (hierarchyObj.m_objectName == "ControlHelp")
 				{
-					if (m_menuObjs.size())
+					InitControlHelpMenu();
+					/*if (m_menuObjs.size())
 					{
 						auto& activeObjects = g_engine.m_coordinator.GetActiveObjects();
 						for (auto iterator = activeObjects.begin(); iterator != activeObjects.end(); ++iterator)
@@ -95,7 +96,7 @@ namespace Rogue
 						}
 						g_engine.m_coordinator.DestroyEntity(m_menuObjs.back());
 						m_menuObjs.pop_back();
-					}
+					}*/
 				}
 			}
 
@@ -120,8 +121,8 @@ namespace Rogue
 
 			if (keycode == KeyPress::KeyEsc)
 			{
-				if (g_engine.m_coordinator.GetEditorIsRunning())
-					g_engine.SetGameIsRunning(false);
+				//if (g_engine.m_coordinator.GetEditorIsRunning())
+					//g_engine.SetGameIsRunning(false);
 				ResumeGame();
 			}
 
@@ -169,32 +170,57 @@ namespace Rogue
 	}
 	void MenuControllerSystem::InitPauseMenu()
 	{
-		g_engine.SetTimeScale(0.0f);
+		//g_engine.SetTimeScale(0.0f);
 		m_menuObjs.push_back(g_engine.m_coordinator.cloneArchetypes("MainMenu_Bg"));
 		m_menuObjs.push_back(g_engine.m_coordinator.cloneArchetypes("HowToPlayBtn"));
-		g_engine.m_coordinator.GetComponent<TransformComponent>(m_menuObjs.back()).setZ(2);
 		m_menuObjs.push_back(g_engine.m_coordinator.cloneArchetypes("MainMenu_Btn"));
-		g_engine.m_coordinator.GetComponent<TransformComponent>(m_menuObjs.back()).setZ(2);
 		m_menuObjs.push_back(g_engine.m_coordinator.cloneArchetypes("Resume"));
-		g_engine.m_coordinator.GetComponent<TransformComponent>(m_menuObjs.back()).setZ(2);
+		m_menuObjs.push_back(g_engine.m_coordinator.cloneArchetypes("HowToPlay"));
+
+		for (Entity ent : m_menuObjs)
+		{
+			if (g_engine.m_coordinator.ComponentExists<UIComponent>(ent))
+			{
+				g_engine.m_coordinator.GetComponent<UIComponent>(ent).setIsActive(false);
+			}
+		}
 	}
 
 	void MenuControllerSystem::InitControlHelpMenu()
 	{
-		m_menuObjs.push_back(g_engine.m_coordinator.cloneArchetypes("HowToPlay"));
-		g_engine.m_coordinator.GetComponent<TransformComponent>(m_menuObjs.back()).setZ(3);
+		//Toggle How to play only
+		if (m_entities.size())
+		{
+			if (g_engine.m_coordinator.ComponentExists<UIComponent>(m_menuObjs.back()))
+			{
+				UIComponent& ui = g_engine.m_coordinator.GetComponent<UIComponent>(m_menuObjs.back());
+				ui.setIsActive(!ui.getIsActive());
+			}
+		}
+	}
+
+	void MenuControllerSystem::ToggleUIMenuObjs()
+	{
+		for (Entity ent : m_menuObjs)
+		{
+			//Safety check
+			if (g_engine.m_coordinator.ComponentExists<UIComponent>(ent))
+			{
+				UIComponent& ui = g_engine.m_coordinator.GetComponent<UIComponent>(ent);
+				ui.setIsActive(!ui.getIsActive());
+			}
+		}
 	}
 
 	void MenuControllerSystem::ResumeGame()
 	{
-		ClearMenuObjs();
+		//ClearMenuObjs();
 		g_engine.m_coordinator.SetPauseState(false);
 		g_engine.SetTimeScale(1.0f);
 	}
 
 	void MenuControllerSystem::ClearMenuObjs()
 	{
-
 		while (m_menuObjs.size())
 		{
 			auto& activeObjects = g_engine.m_coordinator.GetActiveObjects();

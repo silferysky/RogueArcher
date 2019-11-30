@@ -114,14 +114,20 @@ namespace Rogue
 		if (g_engine.m_coordinator.GetActiveObjects().size() != 0)
 			entCount = static_cast<Entity>(g_engine.m_coordinator.GetActiveObjects().size());
 		EntityManager* em = &g_engine.m_coordinator.GetEntityManager();
-		int intVar = static_cast<int>(entCount);
+		int intVar = static_cast<int>(entCount) - 5;
 		RESerialiser::WriteToFile(fileName, "EntityCount", &intVar);
 
 		bool writingBackground = true;
 		entCount = 0; //Reset entCount for saving loop
+		size_t skipCount = 5;
 
 		for (Entity& curEntity : g_engine.m_coordinator.GetActiveObjects())
 		{
+			if (skipCount)
+			{
+				--skipCount;
+				break;
+			}
 			HierarchyInfo& curHierarchy = g_engine.m_coordinator.GetHierarchyInfo(curEntity);
 			//Background layer is unique
 			/*if (writingBackground)
