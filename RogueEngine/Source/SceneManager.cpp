@@ -84,11 +84,13 @@ namespace Rogue
 
 	void SceneManager::SaveLevel(const char* fileName)
 	{
+		std::shared_ptr<MenuControllerSystem> menuControl = g_engine.m_coordinator.GetSystem<MenuControllerSystem>();
 		std::ostringstream ostrstream;
 		ostrstream << "Resources/Levels/" << fileName;
-		if (m_objectFactory->CheckFileTooSmall(FILETYPE_LEVEL, g_engine.m_coordinator.GetActiveObjects().size()))
-			if (g_engine.m_coordinator.GetActiveObjects().size() != 0)
-				BasicIO::WriteLevelJsonFile(ostrstream.str().c_str(), g_engine.m_coordinator.GetActiveObjects().size());
+		int size = g_engine.m_coordinator.GetActiveObjects().size() - menuControl->GetUIMenuObjsSize();
+		if (m_objectFactory->CheckFileTooSmall(FILETYPE_LEVEL, size))
+			if (size > 0)
+				BasicIO::WriteLevelJsonFile(ostrstream.str().c_str(), size);
 			else
 				BasicIO::WriteLevelJsonFile(ostrstream.str().c_str(), 0);
 		m_objectFactory->SaveLevel(ostrstream.str().c_str());
