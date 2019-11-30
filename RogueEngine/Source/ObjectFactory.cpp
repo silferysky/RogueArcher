@@ -111,22 +111,22 @@ namespace Rogue
 		RESerialiser::WriteToFile(fileName, "CameraZoom", &cameraZoom);
 
 		Entity entCount = 0;
-		if (g_engine.m_coordinator.GetActiveObjects().size() != 0)
-			entCount = static_cast<Entity>(g_engine.m_coordinator.GetActiveObjects().size());
+		size_t skipCount = g_engine.m_coordinator.GetSystem<MenuControllerSystem>()->GetUIMenuObjsSize();
+		if (g_engine.m_coordinator.GetActiveObjects().size() - skipCount > 0)
+			entCount = static_cast<Entity>(g_engine.m_coordinator.GetActiveObjects().size() - skipCount);
 		EntityManager* em = &g_engine.m_coordinator.GetEntityManager();
-		int intVar = static_cast<int>(entCount) - 5;
+		int intVar = static_cast<int>(entCount);
 		RESerialiser::WriteToFile(fileName, "EntityCount", &intVar);
 
 		bool writingBackground = true;
 		entCount = 0; //Reset entCount for saving loop
-		size_t skipCount = g_engine.m_coordinator.GetSystem<MenuControllerSystem>()->GetUIMenuObjsSize();
 
 		for (Entity& curEntity : g_engine.m_coordinator.GetActiveObjects())
 		{
 			if (skipCount)
 			{
 				--skipCount;
-				break;
+				continue;
 			}
 			HierarchyInfo& curHierarchy = g_engine.m_coordinator.GetHierarchyInfo(curEntity);
 			//Background layer is unique
