@@ -126,7 +126,7 @@ namespace Rogue
 	{
 		for (auto entity : m_entities)
 		{
-			g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(entity).UnloadSound();
+			g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(entity).DestroySound();
 		}
 	}
 }
