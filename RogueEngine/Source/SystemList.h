@@ -28,6 +28,7 @@ namespace Rogue
 		id_PICKINGSYSTEM,
 		id_PARTICLESYSTEM,
 		id_PARTICLEEMITTERSYSTEM,
+		id_UISYSTEM,
 
 		id_LASTSYS
 	};

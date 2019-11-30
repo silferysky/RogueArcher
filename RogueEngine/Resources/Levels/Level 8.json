@@ -98,7 +98,7 @@
     "Entity40": "Name{Grass1}|Tag{}|Sprite{Resources\\Assets\\Plants2.png;0.252307;0.514706;0.506657;1}||Transform{470.944;-335.406;113.435;127.073;0;-2}||||||||||||||||",
     "Entity41": "Name{TallShroom3}|Tag{}|Sprite{Resources\\Assets\\Shroom2.png;0.203672;0.79902;0.780757;1}||Transform{85.6493;-396.883;87.2579;97.7484;5.58;-2}||||||||||||||||",
     "Entity42": "Name{Grass2}|Tag{}|Sprite{Resources\\Assets\\Plants1.png;0.25817;0.666667;0.654136;1}||Transform{524.537;-330.777;87.2579;97.7484;0;-2}||||||||||||||||",
-    "Entity43": "Name{crossHair}|Tag{}|Sprite{Resources\\Assets\\crosshair.png;1;1;1;1}||Transform{-1373.87;579.922;60;60;0;100}||||||||||Cursor{0;0}||||||",
+    "Entity43": "Name{crossHair}|Tag{}|Sprite{Resources\\Assets\\crosshair.png;1;1;1;1}||Transform{-402.059;228.389;60;60;0;100}||||||||||Cursor{0;0}||||||",
     "Entity44": "Name{LevelTitle}|Tag{}|Sprite{Resources\\Assets\\MysteriousCaveFadeOut.png;1;1;1;1}||Transform{0;0;400;60;0;0}||||||Animation{16;16;0.1;0;}|||UI{1;}|||||||",
     "Entity45": "Name{TeleportSFX}|Tag{}|||Transform{0;0;100;100;0;0}||||||||Audio{Resources\\Sounds\\[Ela Appear]SCI-FI-WHOOSH_GEN-HDF-20870.ogg;1;0.3;0;0;}||||||||",
     "Entity46": "Name{ShootSFX}|Tag{}|||Transform{0;0;100;100;0;0}||||||||Audio{Resources\\Sounds\\[Shoot Projectile]SCI-FI-WHOOSH_GEN-HDF-20864.ogg;1;0.3;0;0;}||||||||",

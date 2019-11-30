@@ -529,6 +529,9 @@
     <ClInclude Include="Source\ImSequencer.h">
       <Filter>RogueEditor\EditorLibrary</Filter>
     </ClInclude>
+    <ClInclude Include="Source\UISystem.h">
+      <Filter>RogueEngine\Systems\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -827,6 +830,9 @@
     </ClCompile>
     <ClCompile Include="Source\ImSequencer.cpp">
       <Filter>RogueEditor\EditorLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UISystem.cpp">
+      <Filter>RogueEngine\Systems\UI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

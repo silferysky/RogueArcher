@@ -92,9 +92,9 @@ namespace Rogue
 		{
 			auto& entity = pair.second;
 
-			if (g_engine.m_coordinator.ComponentExists<UIComponent>(entity))
-				drawUI(entity);
-			else
+			//if (g_engine.m_coordinator.ComponentExists<UIComponent>(entity))
+				//drawUI(entity);
+			//else
 				draw(entity);
 		}
 

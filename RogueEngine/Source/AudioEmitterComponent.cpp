@@ -42,7 +42,7 @@ namespace Rogue
 
 		if (ImGui::Button("Set new path"))
 		{
-			//m_soundPath = m_constAudioPath + m_newaudioPath;
+			m_soundPath = m_constAudioPath + m_newaudioPath;
 			setSoundPath(m_soundPath);
 			memset(m_newaudioPath, 0, 128);
 		}

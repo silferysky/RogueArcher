@@ -29,6 +29,7 @@
 #include "PickingSystem.h"
 #include "ParticleSystem.h"
 #include "ParticleEmitterSystem.h"
+#include "UISystem.h"
 
 namespace Rogue
 {
@@ -57,6 +58,7 @@ namespace Rogue
 		m_coordinator.RegisterSystem<FontSystem>();
 		m_coordinator.RegisterSystem<CameraSystem>();
 		m_coordinator.RegisterSystem<AudioSystem>();
+		m_coordinator.RegisterSystem<UISystem>();
 		m_coordinator.RegisterSystem<Editor>();
 	}
 
