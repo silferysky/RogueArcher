@@ -79,7 +79,8 @@ namespace Rogue
 		{
 			Vec2 travelDistance;
 			Vec2Normalize(travelDistance, m_nextPoint.front() - aiTransform.GetPosition());
-			g_engine.m_coordinator.GetComponent<RigidbodyComponent>(m_entity).addForce(travelDistance * m_statsComponent->getSpeed() * DT_SPEED_MODIFIER);
+			RigidbodyComponent rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(m_entity);
+			rigidbody.addForce(travelDistance * m_statsComponent->getSpeed() * DT_SPEED_MODIFIER);
 			
 			//If facing right and moving left or facing left and moving right, flip
 			if ((travelDistance.x < 0 && aiTransform.GetScale().x > 0.0f) || 
@@ -87,8 +88,8 @@ namespace Rogue
 				aiTransform.setScale(Vec2(-1 * aiTransform.GetScale().x, aiTransform.GetScale().y));
 
 			//If facing up and moving down or facing down and moving up, flip
-			if ((travelDistance.y < 0 && aiTransform.GetScale().y > 0.0f) ||
-				(travelDistance.y > 0 && aiTransform.GetScale().y < 0.0f))
+			if (((travelDistance.y < 0 && aiTransform.GetScale().y > 0.0f) ||
+				(travelDistance.y > 0 && aiTransform.GetScale().y < 0.0f)) && !rigidbody.getIsStatic())
 				aiTransform.setScale(Vec2(aiTransform.GetScale().x, -1 * aiTransform.GetScale().y));
 		
 				//transform.setScale(1 * g_engine.m_coordinator.GetComponent<TransformComponent>(m_entity).getScale());

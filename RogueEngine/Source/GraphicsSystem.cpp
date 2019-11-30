@@ -114,6 +114,10 @@ namespace Rogue
 
 	void GraphicsSystem::draw(Entity& entity)
 	{
+		//Check if it is UI and if UI is not active
+		if (g_engine.m_coordinator.ComponentExists<UIComponent>(entity) && !g_engine.m_coordinator.GetComponent<UIComponent>(entity).getIsActive())
+			return;
+
 		auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(entity);
 		auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
 

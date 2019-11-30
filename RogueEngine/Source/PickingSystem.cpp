@@ -67,6 +67,10 @@ namespace Rogue
 					if (g_engine.m_coordinator.ComponentExists<CursorComponent>(entity))
 						continue;
 
+					// Skip inactive UI entities
+					if (g_engine.m_coordinator.ComponentExists<UIComponent>(entity) && !g_engine.m_coordinator.GetComponent<UIComponent>(entity).getIsActive())
+						continue;
+
 					TransformComponent& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
 					Vec2 pos = trans.GetPosition();
 
@@ -128,6 +132,10 @@ namespace Rogue
 				{
 					// Skip cursor entities (crosshair)
 					if (g_engine.m_coordinator.ComponentExists<CursorComponent>(entity))
+						continue;
+
+					// Skip inactive UI entities
+					if (g_engine.m_coordinator.ComponentExists<UIComponent>(entity) && !g_engine.m_coordinator.GetComponent<UIComponent>(entity).getIsActive())
 						continue;
 
 					TransformComponent& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
