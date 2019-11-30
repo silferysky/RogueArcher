@@ -38,7 +38,6 @@ namespace Rogue
 		void Deserialize(std::string_view toDeserialize) override;
 
 		void DestroySound();
-		void UnloadSound();
 
 		void DisplayOnInspector();
 	};

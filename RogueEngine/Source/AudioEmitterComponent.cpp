@@ -12,13 +12,6 @@ namespace Rogue
 			m_sound.Release();
 	}
 
-	void AudioEmitterComponent::UnloadSound()
-	{
-		m_sound.Pause(true);
-
-		m_sound.Unload();
-	}
-
 	void AudioEmitterComponent::DisplayOnInspector()
 	{
 		float m_volume = getVolume();
