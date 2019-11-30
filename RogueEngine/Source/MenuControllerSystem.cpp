@@ -53,7 +53,7 @@ namespace Rogue
 				//For all cases of "How to Play" (Main Menu and Pause Screens)
 				if (hierarchyObj.m_objectName == "HowToPlay" || hierarchyObj.m_objectName == "HowToPlayBtn")
 				{
-					InitControlHelpMenu();
+					ToggleControlHelpMenu();
 				}
 				//Main Menu Start
 				else if (hierarchyObj.m_objectName == "StartBtn")
@@ -82,7 +82,7 @@ namespace Rogue
 				}
 				else if (hierarchyObj.m_objectName == "ControlHelp")
 				{
-					InitControlHelpMenu();
+					ToggleControlHelpMenu();
 					/*if (m_menuObjs.size())
 					{
 						auto& activeObjects = g_engine.m_coordinator.GetActiveObjects();
@@ -177,16 +177,10 @@ namespace Rogue
 		m_menuObjs.push_back(g_engine.m_coordinator.cloneArchetypes("Resume"));
 		m_menuObjs.push_back(g_engine.m_coordinator.cloneArchetypes("HowToPlay"));
 
-		for (Entity ent : m_menuObjs)
-		{
-			if (g_engine.m_coordinator.ComponentExists<UIComponent>(ent))
-			{
-				g_engine.m_coordinator.GetComponent<UIComponent>(ent).setIsActive(false);
-			}
-		}
+		SetUIMenuObjs(false);
 	}
 
-	void MenuControllerSystem::InitControlHelpMenu()
+	void MenuControllerSystem::ToggleControlHelpMenu()
 	{
 		//Toggle How to play only
 		if (m_entities.size())
@@ -203,6 +197,9 @@ namespace Rogue
 	{
 		for (Entity ent : m_menuObjs)
 		{
+			if (ent == m_menuObjs.back())
+				return;
+
 			//Safety check
 			if (g_engine.m_coordinator.ComponentExists<UIComponent>(ent))
 			{
@@ -212,9 +209,23 @@ namespace Rogue
 		}
 	}
 
+	void MenuControllerSystem::SetUIMenuObjs(bool newActive)
+	{
+		for (Entity ent : m_menuObjs)
+		{
+			//Safety check
+			if (g_engine.m_coordinator.ComponentExists<UIComponent>(ent))
+			{
+				UIComponent& ui = g_engine.m_coordinator.GetComponent<UIComponent>(ent);
+				ui.setIsActive(newActive);
+			}
+		}
+	}
+
 	void MenuControllerSystem::ResumeGame()
 	{
 		//ClearMenuObjs();
+		SetUIMenuObjs(false);
 		g_engine.m_coordinator.SetPauseState(false);
 		g_engine.SetTimeScale(1.0f);
 	}
