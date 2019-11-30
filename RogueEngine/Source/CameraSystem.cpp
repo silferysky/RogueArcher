@@ -60,6 +60,11 @@ namespace Rogue
 		return m_cameraShake;
 	}
 
+	float CameraSystem::GetLerp() const
+	{
+		return m_cameraLerp;
+	}
+
 	bool CameraSystem::GetWorldCamera() const
 	{
 		return m_worldCamera;

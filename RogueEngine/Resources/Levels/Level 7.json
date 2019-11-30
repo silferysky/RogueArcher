@@ -1,11 +1,11 @@
 {
     "MaxEntityCount": 1,
     "EntityCount": 1,
-    "CameraMinX": -630,
-    "CameraMinY": -350,
-    "CameraMaxX": 630,
-    "CameraMaxY": 350,
-    "CameraZoom": 0.86,
+    "CameraMinX": -630.0,
+    "CameraMinY": -350.0,
+    "CameraMaxX": 630.0,
+    "CameraMaxY": 350.0,
+    "CameraZoom": 0.8600000143051148,
     "Signature0": 5,
-    "Entity0": "Name{Background}|Tag{}|Sprite{Resources\\Assets\\test.bmp;1;1;1;1}||Transform{0;0;1600;900;0;0}|||||||||||||||"
+    "Entity0": "Name{Background}|Tag{}|Sprite{Resources\\Assets\\test.bmp;1;1;1;1}||Transform{0;0;1600;900;0;0}||||||||||||||||"
 }

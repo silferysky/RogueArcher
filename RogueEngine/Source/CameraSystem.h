@@ -26,11 +26,12 @@ namespace Rogue
 		CameraSystem();
 		~CameraSystem() = default;
 
-		glm::mat4 GetViewMatrix(const float& parallax);
+		glm::mat4 GetViewMatrix(const float& parallax = 1.0f);
 		void ToggleWorldCamera();
 		void ResetCamera();
 
 		CameraShake GetShake() const;
+		float GetLerp() const;
 
 		bool GetWorldCamera() const;
 		void SetWorldCamera(const bool& camera);
