@@ -35,6 +35,8 @@ namespace Rogue
 
 		void Init()
 		{
+			EventDispatcher::instance().Init();
+
 			// Init the systems and set their signatures.
 			m_systemManager->InitSystems();
 
@@ -88,7 +90,7 @@ namespace Rogue
 
 		void DestroyAllEntity()
 		{
-			while (m_entityManager->GetActiveEntityCount())
+			while (GetActiveObjects().size())
 			{
 				DestroyEntity(GetActiveObjects().back());
 				GetActiveObjects().pop_back();
