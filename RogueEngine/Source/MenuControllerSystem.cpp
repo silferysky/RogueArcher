@@ -222,6 +222,11 @@ namespace Rogue
 		}
 	}
 
+	size_t MenuControllerSystem::GetUIMenuObjsSize()
+	{
+		return m_menuObjs.size();
+	}
+
 	void MenuControllerSystem::ResumeGame()
 	{
 		//ClearMenuObjs();
