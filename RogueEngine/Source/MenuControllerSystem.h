@@ -23,8 +23,9 @@ namespace Rogue
 
 		void ClearMenuObjs();
 		void InitPauseMenu();
-		void InitControlHelpMenu();
+		void ToggleControlHelpMenu();
 		void ToggleUIMenuObjs();
+		void SetUIMenuObjs(bool newActive);
 		void ResumeGame();
 	};
 }
