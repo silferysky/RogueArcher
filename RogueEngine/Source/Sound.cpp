@@ -33,11 +33,10 @@ namespace Rogue
 		FmodErrorCheck(m_result);
 
 		if (m_isLooping)
-			m_result = FMOD_System_CreateStream(m_system, filename, FMOD_LOOP_NORMAL, 0, &m_fmodSound);
+			m_result = FMOD_System_CreateStream(m_system, filename, FMOD_3D | FMOD_LOOP_NORMAL, 0, &m_fmodSound);
 		else
-			m_result = FMOD_System_CreateSound(m_system, filename, FMOD_LOOP_OFF | FMOD_CREATESTREAM, 0, &m_fmodSound);
+			m_result = FMOD_System_CreateSound(m_system, filename, FMOD_3D | FMOD_LOOP_OFF | FMOD_CREATESTREAM, 0, &m_fmodSound);
 
-		//FMOD_Channel_Set3DAttributes(m_channel,);
 		FmodErrorCheck(m_result);
 		m_result = FMOD_Sound_SetMusicChannelVolume(m_fmodSound, 0, 0);
 		FmodErrorCheck(m_result);

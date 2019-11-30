@@ -50,10 +50,10 @@ namespace Rogue
 			float distance = 0.0f;
 			if (g_engine.m_coordinator.ComponentExists<TransformComponent>(m_trackingTarget))
 				distance = Vec2SqDistance(transformPos, g_engine.m_coordinator.GetComponent<TransformComponent>(m_trackingTarget).GetPosition());
-			
+			FMOD_VECTOR pos{ transformPos.x, transformPos.y, 0 };
 			sound.Update();
-
-			sound.SetVolume(1.0f * aEmitter.getAudioScale() - distance * 0.0015f * 0.0015f);
+			//FMOD_System_Set3DListenerAttributes(sound.m_system, 0, &pos, 0);
+			//sound.SetVolume(1.0f * aEmitter.getAudioScale() - distance * 0.0015f * 0.0015f);
 		}
 
 		for (auto& pair : AudioManager::instance().getAudioMap())
@@ -126,7 +126,7 @@ namespace Rogue
 	{
 		for (auto entity : m_entities)
 		{
-			g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(entity).DestroySound();
+			g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(entity).UnloadSound();
 		}
 	}
 }
