@@ -16,6 +16,7 @@
 #include "AudioManager.h"
 #include "AnimationSystem.h"
 #include "PlayerControllerSystem.h"
+#include "MenuControllerSystem.h"
 
 namespace Rogue
 {
@@ -40,11 +41,11 @@ namespace Rogue
 			// Init the systems and set their signatures.
 			m_systemManager->InitSystems();
 
-			// Load first scene
-			SceneManager::instance().LoadLevelFiles("Levels.json");
-			SceneManager::instance().LoadArchetypes("Resources/Archetypes/Archetypes.json");
-
 			SystemInits();
+
+			// Load first scene
+			SceneManager::instance().LoadArchetypes("Resources/Archetypes/Archetypes.json");
+			SceneManager::instance().LoadLevelFiles("Levels.json");
 		}
 
 		void SystemInits()
@@ -90,13 +91,15 @@ namespace Rogue
 
 		void DestroyAllEntity()
 		{
+			m_systemManager->GetSystem<MenuControllerSystem>()->ClearMenuObjs();
+			m_systemManager->GetSystem<LogicSystem>()->ClearLogicInterface();
+
 			while (GetActiveObjects().size())
 			{
 				DestroyEntity(GetActiveObjects().back());
 				GetActiveObjects().pop_back();
 			}
 
-			m_systemManager->GetSystem<LogicSystem>()->ClearLogicInterface();
 			SceneManager::instance().ResetObjectIterator();
 		}
 

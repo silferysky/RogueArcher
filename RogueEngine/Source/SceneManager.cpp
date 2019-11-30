@@ -3,6 +3,7 @@
 #include "ObjectFactory.h"
 #include "EditorHierarchyInfo.h"
 #include "BasicIO.h"
+#include "MenuControllerSystem.h"
 
 namespace Rogue
 {
@@ -62,8 +63,13 @@ namespace Rogue
 
 	void SceneManager::LoadLevel(const std::string& fileName)
 	{
+		//Setting up
 		setCurrentFileName(fileName);
 		ClearAllEntities();
+
+		std::shared_ptr<MenuControllerSystem> menuControl = g_engine.m_coordinator.GetSystem<MenuControllerSystem>();
+		menuControl->InitPauseMenu();
+
 		std::ostringstream ostrstream;
 		ostrstream << "Resources/Levels/" << fileName;
 
