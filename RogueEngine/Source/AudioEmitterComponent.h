@@ -10,10 +10,8 @@ namespace Rogue
 		std::string m_soundPath;
 		Sound m_sound;
 
-		bool m_isLooping;
 		bool m_isScaling;
 		float m_audioScale = 1.0f;
-		float m_volume = 0.3f;
 	public:
 		AudioEmitterComponent() = default;
 		~AudioEmitterComponent() = default;
@@ -22,7 +20,7 @@ namespace Rogue
 		std::string getSoundPath() const;
 
 		void CreateSound();
-		Sound& getSound();
+		Sound getSound();
 
 		void setIsLooping(bool isLooping);
 		bool& getIsLooping();
