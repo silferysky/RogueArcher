@@ -16,14 +16,7 @@ namespace Rogue
 		}
 
 		AudioManager() = default;
-		~AudioManager()
-		{
-			for (auto& audio : audioMap)
-			{
-				if (audio.second.GetSystem() != NULL)
-					audio.second.Release();
-			}
-		}
+		~AudioManager() = default;
 
 		std::map<std::string, Sound>& getAudioMap()
 		{
@@ -32,15 +25,17 @@ namespace Rogue
 
 		Sound& loadSound(std::string audio)
 		{
-			audio = directory + audio;
+			//audio = directory + audio;
 			auto itr = audioMap.find(audio);
 			if (itr != audioMap.end())
 				return itr->second;
 			else
 			{
 				Sound newSound;
+				newSound.Create(audio.c_str());
+				if (newSound.m_isLooping)
+					newSound.Play();
 				audioMap.emplace(audio, newSound);
-				
 				auto itr1 = audioMap.find(audio);
 				return itr1->second;
 			}

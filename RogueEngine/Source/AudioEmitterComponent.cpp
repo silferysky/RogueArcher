@@ -14,14 +14,17 @@ namespace Rogue
 
 	void AudioEmitterComponent::DisplayOnInspector()
 	{
+		float m_volume = getVolume();
 		ImGui::DragFloat("Volume", &m_volume, 0.02f, 0.0f, 10.0f);
 		setVolume(m_volume);
+		m_sound.SetVolume(m_volume);
 
 		bool m_isLooping = getIsLooping();
 
 		ImGui::PushItemWidth(75);
 		ImGui::Checkbox("Audio Looping", &m_isLooping);
 		setIsLooping(m_isLooping);
+		m_sound.Pause(!m_isLooping);
 
 		bool m_isScaling = getIsScaling();
 
@@ -91,6 +94,7 @@ namespace Rogue
 	void AudioEmitterComponent::setSoundPath(std::string_view soundPath)
 	{
 		m_soundPath = soundPath;
+		m_sound = g_engine.m_coordinator.loadSound(getSoundPath());
 	}
 
 	std::string AudioEmitterComponent::getSoundPath() const
@@ -101,30 +105,21 @@ namespace Rogue
 	void AudioEmitterComponent::CreateSound()
 	{
 		m_sound = g_engine.m_coordinator.loadSound(getSoundPath());
-
-		if (m_isLooping)
-		{
-			m_sound.CreateBGM(getSoundPath().c_str(), 120.0f);
-			m_sound.Play(m_volume);
-		}
-		else
-			m_sound.Create(getSoundPath().c_str(), 12.0f);
 	}
 
-	Sound& AudioEmitterComponent::getSound()
+	Sound AudioEmitterComponent::getSound()
 	{
 		return m_sound;
 	}
 
 	void AudioEmitterComponent::setIsLooping(bool isLooping)
 	{
-		m_isLooping = isLooping;
-		m_sound.Pause(!m_isLooping);
+		m_sound.m_isLooping = isLooping;
 	}
 
 	bool& AudioEmitterComponent::getIsLooping()
 	{
-		return m_isLooping;
+		return m_sound.m_isLooping;
 	}
 
 	void AudioEmitterComponent::setIsScaling(bool isScaling)
@@ -149,13 +144,12 @@ namespace Rogue
 
 	void AudioEmitterComponent::setVolume(const float volume)
 	{
-		m_volume = volume;
-		m_sound.SetVolume(m_volume);
+		m_sound.m_volume = volume;
 	}
 
 	float& AudioEmitterComponent::getVolume()
 	{
-		return m_volume;
+		return m_sound.m_volume;
 	}
 
 	std::string AudioEmitterComponent::Serialize()
@@ -163,8 +157,8 @@ namespace Rogue
 		std::ostringstream ss;
 		ss << m_soundPath << ";";
 		ss << m_audioScale << ";";
-		ss << m_volume << ";";
-		ss << m_isLooping << ";";
+		ss << m_sound.m_volume << ";";
+		ss << m_sound.m_isLooping << ";";
 		ss << m_isScaling << ";";
 		return ss.str();
 	}

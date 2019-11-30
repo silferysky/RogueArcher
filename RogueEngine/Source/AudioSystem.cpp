@@ -41,7 +41,7 @@ namespace Rogue
 			if (!aEmitter.getIsScaling())
 				continue;
 
-			auto& sound = aEmitter.getSound();
+			auto sound = aEmitter.getSound();
 			Vec2 transformPos{};
 			
 			if (g_engine.m_coordinator.ComponentExists<TransformComponent>(entity))
@@ -118,8 +118,7 @@ namespace Rogue
 		{
 			auto& aEmitter = g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(entity);
 
-			if (!(aEmitter.getSound().CheckPlaying()))
-				aEmitter.CreateSound();
+			aEmitter.CreateSound();
 		}
 	}
 
