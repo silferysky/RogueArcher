@@ -6,7 +6,7 @@ namespace Rogue
 	class UIComponent
 		: public BaseComponent
 	{
-		bool m_isActive = true;
+		bool m_isActive = false;
 	public:
 		UIComponent() = default;
 		~UIComponent() = default;
