@@ -116,7 +116,18 @@ namespace Rogue
 		{
 			g_engine.m_coordinator.StepOnce();
 		}
-
+		if (ImGui::IsKeyPressed('Q'))
+		{
+			m_CurrentGizmoOperation = ImGuizmo::TRANSLATE;
+		}
+		if (ImGui::IsKeyPressed('W'))
+		{
+			m_CurrentGizmoOperation = ImGuizmo::ROTATE;
+		}
+		if (ImGui::IsKeyPressed('E'))
+		{
+			m_CurrentGizmoOperation = ImGuizmo::SCALE;
+		}
 		ImGui::SameLine();
 		if (ImGui::RadioButton("Translate", m_CurrentGizmoOperation == ImGuizmo::TRANSLATE))
 			m_CurrentGizmoOperation = ImGuizmo::TRANSLATE;
