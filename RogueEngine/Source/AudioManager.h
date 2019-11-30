@@ -34,7 +34,7 @@ namespace Rogue
 				Sound newSound;
 				newSound.Create(audio.c_str());
 				if (newSound.m_isLooping)
-					newSound.Play();
+					newSound.Play(newSound.m_volume);
 				audioMap.emplace(audio, newSound);
 				auto itr1 = audioMap.find(audio);
 				return itr1->second;
