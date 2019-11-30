@@ -119,7 +119,7 @@ namespace Rogue
 
 		bool writingBackground = true;
 		entCount = 0; //Reset entCount for saving loop
-		size_t skipCount = 5;
+		size_t skipCount = g_engine.m_coordinator.GetSystem<MenuControllerSystem>()->GetUIMenuObjsSize();
 
 		for (Entity& curEntity : g_engine.m_coordinator.GetActiveObjects())
 		{
