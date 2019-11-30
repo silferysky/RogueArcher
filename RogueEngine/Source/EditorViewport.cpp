@@ -116,17 +116,20 @@ namespace Rogue
 		{
 			g_engine.m_coordinator.StepOnce();
 		}
-		if (ImGui::IsKeyPressed('Q'))
+		if (!g_engine.m_coordinator.GetGameState() || g_engine.m_coordinator.GetPauseState())
 		{
-			m_CurrentGizmoOperation = ImGuizmo::TRANSLATE;
-		}
-		if (ImGui::IsKeyPressed('W'))
-		{
-			m_CurrentGizmoOperation = ImGuizmo::ROTATE;
-		}
-		if (ImGui::IsKeyPressed('E'))
-		{
-			m_CurrentGizmoOperation = ImGuizmo::SCALE;
+			if (ImGui::IsKeyPressed('Q'))
+			{
+				m_CurrentGizmoOperation = ImGuizmo::TRANSLATE;
+			}
+			if (ImGui::IsKeyPressed('W'))
+			{
+				m_CurrentGizmoOperation = ImGuizmo::ROTATE;
+			}
+			if (ImGui::IsKeyPressed('E'))
+			{
+				m_CurrentGizmoOperation = ImGuizmo::SCALE;
+			}
 		}
 		ImGui::SameLine();
 		if (ImGui::RadioButton("Translate", m_CurrentGizmoOperation == ImGuizmo::TRANSLATE))
@@ -137,14 +140,15 @@ namespace Rogue
 		ImGui::SameLine();
 		if (ImGui::RadioButton("Scale", m_CurrentGizmoOperation == ImGuizmo::SCALE))
 			m_CurrentGizmoOperation = ImGuizmo::SCALE;
-		//ImGui::BeginChild("Render");
-		for (auto& i : m_currentVector)
+		if (!g_engine.m_coordinator.GetGameState() || g_engine.m_coordinator.GetPauseState())
 		{
-			HierarchyInfo& objInfo = g_engine.m_coordinator.GetHierarchyInfo(i);
-			if (objInfo.m_selected == true)
-				ShowGizmo(i);
+			for (auto& i : m_currentVector)
+			{
+				HierarchyInfo& objInfo = g_engine.m_coordinator.GetHierarchyInfo(i);
+				if (objInfo.m_selected == true)
+					ShowGizmo(i);
+			}
 		}
-
 		ImVec2 imageSize = ImGui::GetContentRegionAvail();
 		ImGui::Image((void*)(intptr_t)(g_engine.m_coordinator.GetSystem<GraphicsSystem>()->getFBO()), ImVec2(imageSize.x,imageSize.y ), ImVec2(0, 1), ImVec2(1, 0));
 
