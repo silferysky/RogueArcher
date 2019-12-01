@@ -42,5 +42,10 @@ namespace Rogue
 				return itr1->second;
 			}
 		}
+
+		void ClearAudioMap()
+		{
+			audioMap.clear();
+		}
 	};
 }
