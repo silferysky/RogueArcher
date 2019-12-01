@@ -115,7 +115,7 @@ namespace Rogue
 			{
 				m_trackingTarget = objectIterator;
 
-				return;
+				break;
 			}
 		}
 
@@ -146,5 +146,7 @@ namespace Rogue
 		{
 			g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(entity).DestroySound();
 		}
+
+
 	}
 }

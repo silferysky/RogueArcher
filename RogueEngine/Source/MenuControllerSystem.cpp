@@ -3,7 +3,7 @@
 #include "Main.h"
 #include "KeyEvent.h"
 #include "GraphicsEvent.h"
-
+#include "CameraManager.h"
 
 namespace Rogue
 {
@@ -132,14 +132,14 @@ namespace Rogue
 			if (keycode == KeyPress::KeyF6)
 				g_engine.ToggleVSync();
 
-			if (keycode == KeyPress::Numpad0 && m_entities.size() > 0)
+			/*if (keycode == KeyPress::Numpad0 && m_entities.size() > 0)
 				g_engine.m_coordinator.clone(*m_entities.begin());
 
 			if (keycode == KeyPress::Numpad1)
 				g_engine.m_coordinator.cloneArchetypes("Box");
 
 			if (keycode == KeyPress::Numpad2)
-				g_engine.m_coordinator.cloneArchetypes("Circle");
+				g_engine.m_coordinator.cloneArchetypes("Circle");*/
 
 			if (keycode == KeyPress::KeyF8)
 			{
@@ -205,6 +205,16 @@ namespace Rogue
 			{
 				UIComponent& ui = g_engine.m_coordinator.GetComponent<UIComponent>(ent);
 				ui.setIsActive(!ui.getIsActive());
+
+				/*if (g_engine.m_coordinator.ComponentExists<TransformComponent>(ent))
+				{
+					glm::vec3 cameraPos = CameraManager::instance().GetCameraPos();
+					TransformComponent& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(ent);
+					if (ui.getIsActive())
+						transform.setPosition(Vec2(transform.GetPosition().x - cameraPos.x, transform.GetPosition().y - cameraPos.y));
+					else
+						transform.setPosition(Vec2(transform.GetPosition().x + cameraPos.x, transform.GetPosition().y + cameraPos.y));
+				}*/
 			}
 		}
 	}
@@ -218,6 +228,16 @@ namespace Rogue
 			{
 				UIComponent& ui = g_engine.m_coordinator.GetComponent<UIComponent>(ent);
 				ui.setIsActive(newActive);
+
+				/*if (g_engine.m_coordinator.ComponentExists<TransformComponent>(ent))
+				{
+					glm::vec3 cameraPos = CameraManager::instance().GetCameraPos();
+					TransformComponent& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(ent);
+					if (ui.getIsActive())
+						transform.setPosition(Vec2(transform.GetPosition().x - cameraPos.x, transform.GetPosition().y - cameraPos.y));
+					else
+						transform.setPosition(Vec2(transform.GetPosition().x + cameraPos.x, transform.GetPosition().y + cameraPos.y));
+				}*/
 			}
 		}
 	}
@@ -230,7 +250,8 @@ namespace Rogue
 	void MenuControllerSystem::ResumeGame()
 	{
 		//ClearMenuObjs();
-		SetUIMenuObjs(false);
+		ToggleUIMenuObjs();
+		//SetUIMenuObjs(false);
 		g_engine.m_coordinator.SetPauseState(false);
 		g_engine.SetTimeScale(1.0f);
 	}

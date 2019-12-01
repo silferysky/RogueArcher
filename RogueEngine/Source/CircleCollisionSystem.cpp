@@ -61,6 +61,23 @@ namespace Rogue
 
 				if (CollisionManager::instance().DiscreteCircleVsCircle(currBoundingCircle.m_collider, nextBoundingCircle.m_collider))
 				{
+					// If A and/or B is/are a trigger(s), dispatch trigger event(s).
+					/*if (currBoundingCircle.GetCollisionMode() == CollisionMode::e_trigger)
+					{
+						EntTriggerEnterEvent* ev = new EntTriggerEnterEvent{ *iEntity, *iNextEntity };
+						ev->SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
+						EventDispatcher::instance().AddEvent(ev);
+
+						continue;
+					}
+					if (nextBoundingCircle.GetCollisionMode() == CollisionMode::e_trigger)
+					{
+						EntTriggerEnterEvent* ev = new EntTriggerEnterEvent{ *iNextEntity, *iEntity };
+						ev->SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
+						EventDispatcher::instance().AddEvent(ev);
+
+						continue;
+					}*/
 					CollisionManager::instance().GenerateManifoldCirclevsCircle(*iEntity, *iNextEntity);
 				}
 			}
