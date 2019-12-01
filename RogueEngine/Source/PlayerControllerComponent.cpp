@@ -22,7 +22,7 @@ Technology is prohibited.
 namespace Rogue
 {
 	PlayerControllerComponent::PlayerControllerComponent() :
-		m_moveSpeed{ 5000.0f }, m_slowTime{ 0.1f }, m_isActive{ true }, m_moveState{ MoveState::e_stop }, m_grounded{ false }
+		m_moveSpeed{ 5000.0f }, m_slowTime{ 0.1f }, m_isActive{ true }, m_moveState{ MoveState::e_stop }, m_grounded{ false }, m_jumpTimer{ 0.1f }
 	{}
 
 	void PlayerControllerComponent::DisplayOnInspector()
