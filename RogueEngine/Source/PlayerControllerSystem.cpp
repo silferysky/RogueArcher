@@ -170,6 +170,19 @@ namespace Rogue
 			{
 				if (m_entities.size() && m_timedEntities.size() && m_isInLight < 0.0f)
 				{
+					m_teleports.push_back(g_engine.m_coordinator.cloneArchetypes("TeleportSprite"));
+					if (g_engine.m_coordinator.ComponentExists<TransformComponent>(m_teleports.back()))
+					{
+						if (g_engine.m_coordinator.ComponentExists<TransformComponent>(*m_entities.begin()))
+						{
+							TransformComponent& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(m_teleports.back());
+							transform.setPosition(g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin()).GetPosition());
+						}
+
+						m_teleports.push_back(g_engine.m_coordinator.cloneArchetypes("TeleportSprite"));
+						TransformComponent& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(m_teleports.back());
+						transform.setPosition(g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).GetPosition());
+					}
 					//By right correct way of doing this
 					CreateTeleportEvent(g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).GetPosition());
 					/*if (keycode == KeyPress::MB2)
