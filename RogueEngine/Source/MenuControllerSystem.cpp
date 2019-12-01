@@ -119,17 +119,17 @@ namespace Rogue
 			KeyTriggeredEvent* keytriggeredevent = dynamic_cast<KeyTriggeredEvent*>(ev);
 			KeyPress keycode = keytriggeredevent->GetKeyCode();
 
-			if (keycode == KeyPress::KeyEsc)
+			if (keycode == KeyPress::KeyEsc && g_engine.GetIsFocused())
 			{
 				//if (g_engine.m_coordinator.GetEditorIsRunning())
 					//g_engine.SetGameIsRunning(false);
 				ResumeGame();
 			}
 
-			if (keycode == KeyPress::KeyF5)
+			if (keycode == KeyPress::KeyF5 && g_engine.GetIsFocused())
 				g_engine.m_coordinator.ToggleEditorIsRunning();
 
-			if (keycode == KeyPress::KeyF6)
+			if (keycode == KeyPress::KeyF6 && g_engine.GetIsFocused())
 				g_engine.ToggleVSync();
 
 			/*if (keycode == KeyPress::Numpad0 && m_entities.size() > 0)
@@ -141,7 +141,7 @@ namespace Rogue
 			if (keycode == KeyPress::Numpad2)
 				g_engine.m_coordinator.cloneArchetypes("Circle");*/
 
-			if (keycode == KeyPress::KeyF8)
+			if (keycode == KeyPress::KeyF8 && g_engine.GetIsFocused())
 			{
 				CameraShakeEvent* cameraShakeEvent = new CameraShakeEvent(220.0f);
 				EventDispatcher::instance().AddEvent(cameraShakeEvent);
