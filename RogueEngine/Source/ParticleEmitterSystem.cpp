@@ -77,6 +77,7 @@ namespace Rogue
 		const Vec2& positionalOffset = pEmitter.GetPositionalOffset();
 		const Vec2& spread = pEmitter.GetSpread();
 		const bool& isFading = pEmitter.GetIsFading();
+		const int& particleZ = pEmitter.GetParticleZ();
 
 		SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(unitParticle);
 		sprite.setTexturePath(pEmitter.GetTexturePath().data());
@@ -92,7 +93,7 @@ namespace Rogue
 
 			particleTransform.setPosition(Vec2(pos.x + positionalOffset.x + RandFloat(spread.x), pos.y + positionalOffset.y + RandFloat(spread.y)));
 			particleTransform.setScale(scale);
-			particleTransform.setZ(transform.GetZ());
+			particleTransform.setZ(particleZ);
 
 			double arc = pEmitter.GetArc() / 2.0;
 			float maxAngle = (static_cast<double>(pEmitter.GetAngle()) + arc) * PI / 180.0;
