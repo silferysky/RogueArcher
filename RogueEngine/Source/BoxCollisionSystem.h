@@ -7,6 +7,8 @@ namespace Rogue
 		public System, public EventListener
 	{
 	public:
+		bool m_eventSent = false;
+
 		BoxCollisionSystem();
 
 		void Init() override;

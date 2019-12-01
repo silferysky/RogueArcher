@@ -21,11 +21,6 @@ namespace Rogue
 		static const float s_correction_factor;
 		static const float s_correction_slop; // Penetration threshold
 
-		Mtx33 GetColliderWorldMatrix(const BaseCollider& collider, const TransformComponent& trans) const;
-		inline Vec2 GetColliderScale(const BaseCollider& collider, const TransformComponent& trans) const;
-		inline Vec2 GetColliderPosition(const BaseCollider& collider, const TransformComponent& trans) const;
-		inline float GetColliderRotation(const BaseCollider& collider, const TransformComponent& trans) const;
-
 	public:
 		static CollisionManager& instance()
 		{
@@ -37,6 +32,11 @@ namespace Rogue
 		{
 			return m_collidedPairs;
 		}
+
+		Mtx33 GetColliderWorldMatrix(const BaseCollider& collider, const TransformComponent& trans) const;
+		inline Vec2 GetColliderScale(const BaseCollider& collider, const TransformComponent& trans) const;
+		inline Vec2 GetColliderPosition(const BaseCollider& collider, const TransformComponent& trans) const;
+		inline float GetColliderRotation(const BaseCollider& collider, const TransformComponent& trans) const;
 
 		void GenerateManifoldCirclevsCircle(Entity A, Entity B);
 		bool GenerateManifoldCirclevsAABB(Entity A, Entity B);
