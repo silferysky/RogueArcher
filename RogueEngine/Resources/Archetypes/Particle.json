@@ -1,4 +1,4 @@
 {
-    "Signature": 7,
-    "Entity": "Name{Particle}|Tag{}|Sprite{Resources/Assets/DefaultSprite.png;1;1;1;1}|Rigidbody{0;0;0;0;1;1;0;1;0.5;0.1;0.01;}|Transform{0;0;100;100;0;0}||||||||||||||||"
+    "Signature": 5,
+    "Entity": "Name{ParticleTexture}|Tag{}|Sprite{Resources\\Assets\\Light.png;1;1;1;1}||Transform{0;0;100;100;0;0}||||||||||||||||"
 }
