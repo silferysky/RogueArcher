@@ -274,10 +274,24 @@ namespace Rogue
 		std::ostringstream ostrstream;
 		ostrstream << "Resources/Archetypes/" << file << ".json";
 
-		int signatureInInt = static_cast<int>(iterator->second.first.to_ulong());
+		HierarchyInfo info; //= g_engine.m_coordinator.GetHierarchyInfo();
+		auto& activeObjects = g_engine.m_coordinator.GetActiveObjects();
+		int signatureInInt = -1;
+		for (Entity& obj : activeObjects)
+		{
+			if (g_engine.m_coordinator.GetHierarchyInfo(obj).m_objectName == file)
+			{
+				info = g_engine.m_coordinator.GetHierarchyInfo(obj);
+				signatureInInt = static_cast<int>(g_engine.m_coordinator.GetEntityManager().GetSignature(obj).to_ulong());
+			}
+		}
 		
+		//Safety check if entity not found
+		if (signatureInInt == -1)
+			return;
+
 		RESerialiser::WriteToFile(ostrstream.str().c_str(), "Signature", &signatureInInt);
-		RESerialiser::WriteToFile(ostrstream.str().c_str(), "Entity", iterator->second.second.c_str());
+		RESerialiser::WriteToFile(ostrstream.str().c_str(), "Entity", SerializeComponents(info).c_str());
 	}
 
 	void ObjectFactory::AddToArchetypes(std::string_view archetypeName, Signature signature, std::string_view toDeserialize)

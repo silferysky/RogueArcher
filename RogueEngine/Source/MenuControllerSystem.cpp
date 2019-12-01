@@ -188,6 +188,7 @@ namespace Rogue
 	void MenuControllerSystem::InitPauseMenu()
 	{
 		//g_engine.SetTimeScale(0.0f);
+		m_menuObjs.push_back(g_engine.m_coordinator.cloneArchetypes("crosshair"));
 		m_menuObjs.push_back(g_engine.m_coordinator.cloneArchetypes("MainMenu_Bg"));
 		m_menuObjs.push_back(g_engine.m_coordinator.cloneArchetypes("HowToPlayBtn"));
 		m_menuObjs.push_back(g_engine.m_coordinator.cloneArchetypes("MainMenu_Btn"));
@@ -205,7 +206,16 @@ namespace Rogue
 			if (g_engine.m_coordinator.ComponentExists<UIComponent>(m_menuObjs.back()))
 			{
 				UIComponent& ui = g_engine.m_coordinator.GetComponent<UIComponent>(m_menuObjs.back());
-				ui.setIsActive(!ui.getIsActive());
+				ui.setIsActive(!ui.getIsActive());	
+				if (g_engine.m_coordinator.ComponentExists<TransformComponent>(m_menuObjs.back()))
+				{
+					glm::vec3 cameraPos = CameraManager::instance().GetCameraPos();
+					TransformComponent& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(m_menuObjs.back());
+					if (!ui.getIsActive())
+						transform.setPosition(Vec2(transform.GetPosition().x - cameraPos.x, transform.GetPosition().y - cameraPos.y));
+					else
+						transform.setPosition(Vec2(transform.GetPosition().x + cameraPos.x, transform.GetPosition().y + cameraPos.y));
+				}
 			}
 		}
 	}
@@ -223,15 +233,15 @@ namespace Rogue
 				UIComponent& ui = g_engine.m_coordinator.GetComponent<UIComponent>(ent);
 				ui.setIsActive(!ui.getIsActive());
 
-				/*if (g_engine.m_coordinator.ComponentExists<TransformComponent>(ent))
+				if (g_engine.m_coordinator.ComponentExists<TransformComponent>(ent))
 				{
 					glm::vec3 cameraPos = CameraManager::instance().GetCameraPos();
 					TransformComponent& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(ent);
-					if (ui.getIsActive())
+					if (!ui.getIsActive())
 						transform.setPosition(Vec2(transform.GetPosition().x - cameraPos.x, transform.GetPosition().y - cameraPos.y));
 					else
 						transform.setPosition(Vec2(transform.GetPosition().x + cameraPos.x, transform.GetPosition().y + cameraPos.y));
-				}*/
+				}
 			}
 		}
 	}

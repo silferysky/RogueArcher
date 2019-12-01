@@ -90,7 +90,7 @@ namespace Rogue
 						else
 						{
 							SceneManager::instance().AddToArchetypes(i);
-							SceneManager::instance().SaveArchetype(infoObj.m_objectName.c_str());
+							//SceneManager::instance().SaveArchetype(infoObj.m_objectName.c_str());
 						}
 					}
 
@@ -134,29 +134,29 @@ namespace Rogue
 					}
 
 					if (g_engine.m_coordinator.ComponentExists<CircleCollider2DComponent>(i))
-					{/*
+					{
 						if (ImGui::CollapsingHeader("Circle 2D Collider"))
 						{
 							auto& circle2D = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i);
 							circle2D.DisplayOnInspector();
-							if (ImGui::Button("Remove Component"))
+							/*if (ImGui::Button("Remove Component"))
 							{
 								g_engine.m_coordinator.RemoveComponent<CircleCollider2DComponent>(i);
-							}
-						}*/
+							}*/
+						}
 					}
 
 					if (g_engine.m_coordinator.ComponentExists<BoxCollider2DComponent>(i))
-					{/*
+					{
 						if (ImGui::CollapsingHeader("Box2D Collider"))
 						{
 							auto& box2D = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(i);
 							box2D.DisplayOnInspector();
-							if (ImGui::Button("Remove Component"))
+						/*	if (ImGui::Button("Remove Component"))
 							{
 								g_engine.m_coordinator.RemoveComponent<BoxCollider2DComponent>(i);
-							}
-						}*/
+							}*/
+						}
 					}
 
 					if (g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(i))
