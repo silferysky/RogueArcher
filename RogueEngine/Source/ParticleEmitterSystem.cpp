@@ -78,8 +78,8 @@ namespace Rogue
 			particleTransform.setZ(transform.GetZ());
 
 			double arc = pEmitter.GetArc() / 2.0;
-			float maxAngle = (static_cast<double>(pEmitter.GetAngle()) + arc) * PI / 180.0;
-			float minAngle = (static_cast<double>(pEmitter.GetAngle()) - arc) * PI / 180.0;
+			float maxAngle = static_cast<float>((static_cast<double>(pEmitter.GetAngle()) + arc) * PI / 180.0);
+			float minAngle = static_cast<float>((static_cast<double>(pEmitter.GetAngle()) - arc) * PI / 180.0);
 
 			float angle = RandFloat(minAngle, maxAngle);
 			
