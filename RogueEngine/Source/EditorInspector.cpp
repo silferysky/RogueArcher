@@ -67,7 +67,7 @@ namespace Rogue
 						else
 						{
 							SceneManager::instance().AddToArchetypes(i);
-							SceneManager::instance().SaveArchetype(infoObj.m_objectName.c_str());
+							//SceneManager::instance().SaveArchetype(infoObj.m_objectName.c_str());
 						}
 					}
 
