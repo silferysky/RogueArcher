@@ -38,7 +38,7 @@ namespace Rogue
 		{
 			KeyTriggeredEvent* keytriggeredevent = dynamic_cast<KeyTriggeredEvent*>(ev);
 			KeyPress keycode = keytriggeredevent->GetKeyCode();
-			if (keytriggeredevent->GetKeyCode() == KeyPress::Numpad8)
+			/*if (keytriggeredevent->GetKeyCode() == KeyPress::Numpad8)
 			{
 				Entity selected = 0;
 				for (auto& i : m_currentVector)
@@ -58,7 +58,7 @@ namespace Rogue
 					g_engine.m_coordinator.GetComponent<TransformComponent>(selected).setPosition(Position);
 					g_engine.m_coordinator.clone(selected);
 				}
-			}
+			}*/
 			return;
 		}
 		case EventType::EvEntityPicked:
