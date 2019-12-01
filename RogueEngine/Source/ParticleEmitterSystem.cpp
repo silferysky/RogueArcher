@@ -58,6 +58,7 @@ namespace Rogue
 		const Vec2& scale = pEmitter.GetScale();
 		const Vec2& velocityFactor = pEmitter.GetVelocity();
 		const Vec2& positionalOffset = pEmitter.GetPositionalOffset();
+		const Vec2& spread = pEmitter.GetSpread();
 		const bool& isFading = pEmitter.GetIsFading();
 
 		SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(unitParticle);
@@ -65,24 +66,26 @@ namespace Rogue
 
 		float timeScale = g_engine.GetTimeScale();
 
-		for (int i = 0; i < 100 * magnitude * timeScale; ++i)
+		for (int i = 0; i < magnitude * timeScale; ++i)
 		{
 			Entity particle = g_engine.m_coordinator.clone(unitParticle, false);
 
 			TransformComponent& particleTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(particle);
 			Vec2 pos = transform.GetPosition();
 
-			particleTransform.setPosition(Vec2(pos.x + RandFloat(positionalOffset.x), pos.y + RandFloat(positionalOffset.y)));
+			particleTransform.setPosition(Vec2(pos.x + positionalOffset.x + RandFloat(spread.x), pos.y + positionalOffset.y + RandFloat(spread.y)));
 			particleTransform.setScale(scale);
 			particleTransform.setZ(transform.GetZ());
 
 			double arc = pEmitter.GetArc() / 2.0;
 			float maxAngle = (static_cast<double>(pEmitter.GetAngle()) + arc) * PI / 180.0;
 			float minAngle = (static_cast<double>(pEmitter.GetAngle()) - arc) * PI / 180.0;
+
+			float angle = RandFloat(minAngle, maxAngle);
 			
 			Vec2 velocity;
-			velocity.x = RandFloat() * 1000 * velocityFactor.x * cos(RandFloat(minAngle, maxAngle));
-			velocity.y = RandFloat() * 1000 * velocityFactor.y * sin(RandFloat(minAngle, maxAngle));
+			velocity.x = RandFloat() * 1000 * velocityFactor.x * cos(angle);
+			velocity.y = RandFloat() * 1000 * velocityFactor.y * sin(angle);
 
 			RigidbodyComponent& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(particle);
 			rigidbody.addForce(velocity);
