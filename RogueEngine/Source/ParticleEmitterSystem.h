@@ -12,6 +12,11 @@ static float RandFloat(const float& limit)
 	return static_cast <float> (rand()) / static_cast <float> (RAND_MAX / limit);
 }
 
+static float RandFloat(const float& lowerLimit, const float& upperLimit)
+{
+	return lowerLimit + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (upperLimit - lowerLimit)));
+}
+
 namespace Rogue
 {
 	class ParticleEmitterSystem
