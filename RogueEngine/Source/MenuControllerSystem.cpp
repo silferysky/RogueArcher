@@ -95,7 +95,7 @@ namespace Rogue
 				{
 					ResumeGame();
 					SceneManager& sceneManager = SceneManager::instance();
-					sceneManager.LoadLevel("Level 10.json");
+					sceneManager.LoadLevel("Level 1.json");
 				}
 				else if (hierarchyObj.m_objectName == "ControlHelp")
 				{
