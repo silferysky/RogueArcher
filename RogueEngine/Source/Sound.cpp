@@ -31,6 +31,19 @@ namespace Rogue
 		FmodErrorCheck(m_result);
 		m_result = m_system->playSound(m_fmodSound, 0, true, &m_channel);
 		FmodErrorCheck(m_result);
+
+		m_system->createDSPByType(FMOD_DSP_TYPE_LOWPASS, &m_DSPLowPassFilter);
+		m_channel->addDSP(0, m_DSPLowPassFilter);
+		m_DSPLowPassFilter->setParameterFloat(FMOD_DSP_LOWPASS_CUTOFF, 1200.0f);
+
+		m_system->createDSPByType(FMOD_DSP_TYPE_HIGHPASS, &m_DSPHighPassFilter);
+		m_channel->addDSP(0, m_DSPHighPassFilter);
+		m_DSPLowPassFilter->setParameterFloat(FMOD_DSP_HIGHPASS_CUTOFF, 1200.0f);
+
+		FMOD_REVERB_PROPERTIES reverbProperties = FMOD_PRESET_CAVE;
+		m_system->createReverb3D(&m_reverb);
+		m_reverb->setProperties(&reverbProperties);
+		m_reverb->set3DAttributes(0, 0.0f, 10000.0f);
 	}
 
 	void Sound::Set3DLocation(Vec2 pos)
