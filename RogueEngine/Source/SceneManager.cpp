@@ -42,6 +42,7 @@ namespace Rogue
 	void SceneManager::ClearAllEntities()
 	{
 		g_engine.m_coordinator.GetSystem<AudioSystem>()->ShutdownSounds();
+		AudioManager::instance().ClearAudioMap();
 		g_engine.m_coordinator.DestroyAllEntity();
 		ClearActiveEntities();
 	}
@@ -81,6 +82,7 @@ namespace Rogue
 			m_loadedLevels.push_back(std::string(fileName));
 
 		g_engine.m_coordinator.SystemInits();
+		//g_engine.m_coordinator.GetSystem<AudioSystem>()->TrueInit();
 		//g_engine.m_coordinator.ResetEvents();
 	}
 
