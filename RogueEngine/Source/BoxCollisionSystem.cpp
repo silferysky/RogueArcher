@@ -80,7 +80,7 @@ namespace Rogue
 					// If A and/or B is/are a trigger(s), dispatch trigger event(s).
 					if (currBoxCollider.GetCollisionMode() == CollisionMode::e_trigger)
 					{
-						EntTriggerEnterEvent* ev = new EntTriggerEnterEvent{ *iEntity, *iNextEntity };
+						EntTriggerEnterEvent* ev = new EntTriggerEnterEvent{ *iNextEntity, *iEntity };
 						ev->SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
 						EventDispatcher::instance().AddEvent(ev);
 
@@ -93,13 +93,6 @@ namespace Rogue
 						EventDispatcher::instance().AddEvent(ev);
 
 						continue;
-					}
-
-					if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(*iEntity))
-					{
-						EntCollisionStayEvent* ev = new EntCollisionStayEvent{ *iEntity, *iNextEntity };
-						ev->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
-						EventDispatcher::instance().AddEvent(ev);
 					}
 					//std::cout << "Entity " << *iEntity << " AABB collides with Entity " << *iNextEntity << " AABB" << std::endl;
 					CollisionManager::instance().GenerateManifolds(*iEntity, *iNextEntity);

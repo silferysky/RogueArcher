@@ -14,7 +14,7 @@
 namespace Rogue
 {
 	PlayerControllerSystem::PlayerControllerSystem()
-		:System(SystemID::id_PLAYERCONTROLLERSYSTEM), m_isInLight{ 0.0f }
+		:System(SystemID::id_PLAYERCONTROLLERSYSTEM), /*m_ballCooldown{1.0f},*/ m_jumpCooldown{ 1.0f }, m_isInLight{ 0.0f }
 	{
 	}
 
@@ -61,6 +61,7 @@ namespace Rogue
 			//	ClearTimedEntities();
 			//}
 		//}
+		m_jumpCooldown -= g_deltaTime * g_engine.GetTimeScale();
 		m_isInLight -= g_deltaTime * g_engine.GetTimeScale();
 
 		//To update all timed entities
@@ -147,13 +148,16 @@ namespace Rogue
 
 			else if (keycode == KeyPress::KeySpace)
 			{
-
-				for (std::set<Entity>::iterator iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
+				if (m_jumpCooldown < 0.0f)
 				{
-					//For 1st entity
-					if (iEntity == m_entities.begin() && g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(*iEntity))
+					m_jumpCooldown = 1.0f;
+					for (std::set<Entity>::iterator iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
 					{
-						ForceManager::instance().RegisterForce(*iEntity, Vec2(0.0f, 35000.0f));
+						//For 1st entity
+						if (iEntity == m_entities.begin() && g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(*iEntity))
+						{
+							ForceManager::instance().RegisterForce(*iEntity, Vec2(0.0f, 60000.0f), g_fixedDeltaTime);
+						}
 					}
 				}
 			}
