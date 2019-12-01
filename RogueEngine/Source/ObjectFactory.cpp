@@ -49,6 +49,7 @@ namespace Rogue
 		CameraManager::instance().SetCameraMin(cameraMin);
 		CameraManager::instance().SetCameraMax(cameraMax);
 		CameraManager::instance().SetLevelCameraZoom(cameraZoom);
+		CameraManager::instance().SetCameraZoom(cameraZoom);
 
 		//For Entity Count
 		m_maxEntityCount = level["MaxEntityCount"].GetInt();
