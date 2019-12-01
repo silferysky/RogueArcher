@@ -33,6 +33,10 @@ namespace Rogue
 		Entity CreateEntity()
 		{
 			// Take an ID from the front of the queue
+			if (REActiveEntityCount > MAX_ENTITIES)
+			{
+				REActiveEntityCount = m_currentActiveObjects.size();
+			}
 			RE_ASSERT(REActiveEntityCount < MAX_ENTITIES, "Too many entities in existence.");
 			Entity id = REAvailableEntities.front();
 			REAvailableEntities.pop();
