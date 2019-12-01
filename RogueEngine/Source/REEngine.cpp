@@ -120,13 +120,16 @@ namespace Rogue
 		hWnd = CreateOpenGLWindow(const_cast<char*>(config.GetTitle().c_str()), config.GetX(), config.GetY(),
 			config.GetWidth(), config.GetHeight(), 0, config.GetFlags());
 
+		SetWindowLongPtr(hWnd, GWL_STYLE, WS_VISIBLE | WS_POPUP);
+		SetWindowPos(hWnd, HWND_TOP, 0, 0, GetSystemMetrics(SM_CXSCREEN),
+			GetSystemMetrics(SM_CYSCREEN), SWP_FRAMECHANGED);
+
 		if (hWnd == NULL)
 			exit(1);
 
 		hDC = GetDC(hWnd);
 		hRC = wglCreateContext(hDC);
 		wglMakeCurrent(hDC, hRC);
-
 		ShowWindow(hWnd, SW_SHOW);
 
 		aspect_ratio = (float)config.GetHeight() / config.GetWidth();
@@ -134,7 +137,7 @@ namespace Rogue
 		//Ensures program closes properly 
 		SetConsoleCtrlHandler(CtrlHandler, true);
 
-		setVSync(false);
+		setVSync(true);
 
 		// Register all components
 		RegisterComponents();

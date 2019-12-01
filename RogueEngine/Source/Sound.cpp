@@ -90,7 +90,7 @@ namespace Rogue
 	void Sound::Update()
 	{
 		m_result = m_system->update();
-		FmodErrorCheck(m_result);
+		//FmodErrorCheck(m_result);
 	}
 
 	void Sound::Pause(FMOD_BOOL pause)

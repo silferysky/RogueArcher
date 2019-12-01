@@ -59,7 +59,10 @@ namespace Rogue
 			);
 
 			if (newTexture.m_data == NULL)
-				RE_INFO("STBI error: ", stbi_failure_reason());
+			{
+				RE_INFO("STBI error: ");
+				RE_INFO(stbi_failure_reason());
+			}
 			
 			glBindTexture(GL_TEXTURE_2D, newTexture.m_texture);
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, newTexture.m_width, newTexture.m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, newTexture.m_data);
