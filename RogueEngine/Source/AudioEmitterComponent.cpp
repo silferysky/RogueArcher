@@ -102,7 +102,7 @@ namespace Rogue
 	void AudioEmitterComponent::setSoundPath(std::string_view soundPath)
 	{
 		m_soundPath = soundPath;
-		m_sound = g_engine.m_coordinator.loadSound(getSoundPath());
+		//m_sound = g_engine.m_coordinator.loadSound(getSoundPath());
 	}
 
 	std::string AudioEmitterComponent::getSoundPath() const
@@ -202,5 +202,7 @@ namespace Rogue
 
 			++counter;
 		}
+
+		m_sound = g_engine.m_coordinator.loadSound(getSoundPath(), getVolume(), getIsLooping());
 	}
 }

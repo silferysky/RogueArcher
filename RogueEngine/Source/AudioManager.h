@@ -23,7 +23,7 @@ namespace Rogue
 			return audioMap;
 		}
 
-		Sound& loadSound(std::string audio)
+		Sound& loadSound(std::string audio, float volume, bool looping)
 		{
 			//audio = directory + audio;
 			auto itr = audioMap.find(audio);
@@ -32,6 +32,8 @@ namespace Rogue
 			else
 			{
 				Sound newSound;
+				newSound.m_volume = volume;
+				newSound.m_isLooping = looping;
 				newSound.Create(audio.c_str());
 				if (newSound.m_isLooping)
 					newSound.Play(newSound.m_volume);
