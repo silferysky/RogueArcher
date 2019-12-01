@@ -24,11 +24,11 @@ namespace Rogue
 		ImGui::DragFloat("Particle Emitter Arc", &m_arc, 1.0f, 0.0f, 360.0f);
 		SetArc(m_arc);
 
+		ImGui::DragFloat("Particle Emitter Angle", &m_angle, 1.0f, 0.0f, 360.0f);
+		SetAngle(m_angle);
+
 		ImGui::DragFloat("Particle Max Lifetime", &m_lifetimeLimit, 0.1f, 0.0f, 10.0f);
 		SetLifetimeLimit(m_lifetimeLimit);
-
-		ImGui::DragFloat("Particle Fading", &m_fade, 0.1f, 0.0f, 10.0f);
-		SetFade(m_fade);
 
 		ImGui::Text("Particle Scale    ");
 		ImGui::SameLine();
@@ -44,6 +44,15 @@ namespace Rogue
 		ImGui::SameLine();
 		ImGui::PushItemWidth(75);
 		ImGui::DragFloat("      ", &m_positionalOffset.y);
+		ImGui::PushItemWidth(50);
+
+		ImGui::Text("Particle Spread");
+		ImGui::SameLine();
+		ImGui::PushItemWidth(75);
+		ImGui::DragFloat("     ", &m_spread.x);
+		ImGui::SameLine();
+		ImGui::PushItemWidth(75);
+		ImGui::DragFloat("      ", &m_spread.y);
 		ImGui::PushItemWidth(50);
 
 		ImGui::Text("Particle Velocity Factor");
@@ -137,6 +146,16 @@ namespace Rogue
 		return m_arc;
 	}
 
+	void ParticleEmitterComponent::SetAngle(const float angle)
+	{
+		m_angle = angle;
+	}
+
+	float ParticleEmitterComponent::GetAngle() const
+	{
+		return m_angle;
+	}
+
 	void ParticleEmitterComponent::SetLifetimeLimit(const float lifetimeLimit)
 	{
 		m_lifetimeLimit = lifetimeLimit;
@@ -147,14 +166,14 @@ namespace Rogue
 		return m_lifetimeLimit;
 	}
 
-	void ParticleEmitterComponent::SetFade(const float fade)
+	void ParticleEmitterComponent::SetIsFading(const bool isFading)
 	{
-		m_fade = fade;
+		m_isFading = isFading;
 	}
 
-	float ParticleEmitterComponent::GetFade() const
+	bool ParticleEmitterComponent::GetIsFading() const
 	{
-		return m_fade;
+		return m_isFading;
 	}
 
 	void ParticleEmitterComponent::SetScale(const Vec2 scale)
@@ -187,6 +206,16 @@ namespace Rogue
 		return m_positionalOffset;
 	}
 
+	void ParticleEmitterComponent::SetSpread(const Vec2 spread)
+	{
+		m_spread = spread;
+	}
+
+	Vec2 ParticleEmitterComponent::GetSpread() const
+	{
+		return m_spread;
+	}
+
 	void ParticleEmitterComponent::SetTexturePath(std::string_view texturePath)
 	{
 		m_texturePath.assign(texturePath);
@@ -200,15 +229,19 @@ namespace Rogue
 	std::string ParticleEmitterComponent::Serialize()
 	{
 		std::ostringstream ss;
+		ss << m_positionalOffset.x << ";" << m_positionalOffset.y << ";";
+		ss << m_spread.x << ";" << m_spread.y << ";";
 		ss << m_scale.x << ";" << m_scale.y << ";";
 		ss << m_velocityFactor.x << ";" << m_velocityFactor.y << ";";;
 		ss << m_magnitude << ";";
 		ss << m_arc << ";";
+		ss << m_angle << ";";
 		ss << m_lifetimeLimit << ";";
-		ss << m_fade << ";";
+		ss << m_isFading << ";";
 		ss << m_isActive << ";";
 		ss << m_isContinuous << ";";
 		ss << m_texturePath << ";";
+
 		return ss.str();
 	}
 
@@ -217,7 +250,7 @@ namespace Rogue
 		std::istringstream ss(toDeserialize.data());
 		std::string s1, s2;			//s2 is used if two are needed
 		int counter = 0;		//Needed to take in for multiple values
-		int sets = 2;			//Sets represents the number of "sets" that must be taken in simultaneously. Aka vec2 or more than 1 parameter to set
+		int sets = 4;			//Sets represents the number of "sets" that must be taken in simultaneously. Aka vec2 or more than 1 parameter to set
 
 		while (std::getline(ss, s1, ';'))
 		{
@@ -228,30 +261,37 @@ namespace Rogue
 			switch (counter)
 			{
 			case 0:
+				SetPositionalOffset(Vec2(std::stof(s1), std::stof(s2)));
+			case 1:
+				SetSpread(Vec2(std::stof(s1), std::stof(s2)));
+			case 2:
 				SetScale(Vec2(std::stof(s1), std::stof(s2)));
 				break;
-			case 1:
+			case 3:
 				SetVelocity(Vec2(std::stof(s1), std::stof(s2)));
 				break;
-			case 2:
+			case 4:
 				SetMagnitude(std::stof(s1));
 				break;
-			case 3:
+			case 5:
 				SetArc(std::stof(s1));
 				break;
-			case 4:
-				SetLifetimeLimit(std::stof(s1));
-				break;
-			case 5:
-				SetFade(std::stof(s1));
-				break;
 			case 6:
-				SetIsActive(std::stof(s1));
+				SetAngle(std::stof(s1));
 				break;
 			case 7:
-				SetIsContinuous(std::stof(s1));
+				SetLifetimeLimit(std::stof(s1));
 				break;
 			case 8:
+				SetIsFading(std::stof(s1));
+				break;
+			case 9:
+				SetIsActive(std::stof(s1));
+				break;
+			case 10:
+				SetIsContinuous(std::stof(s1));
+				break;
+			case 11:
 				SetTexturePath(s1);
 				break;
 			default:
