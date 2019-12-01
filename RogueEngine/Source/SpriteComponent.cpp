@@ -18,6 +18,7 @@ namespace Rogue
 	void SpriteComponent::setTexturePath(std::string_view texturePath)
 	{
 		m_texturePath.assign(texturePath);
+		setTexture(texturePath.data());
 	}
 
 	std::string_view SpriteComponent::getTexturePath() const
@@ -48,7 +49,7 @@ namespace Rogue
 	glm::vec4& SpriteComponent::getFilter()
 	{
 		return m_filter;
-	}
+	} 
 
 	void SpriteComponent::setFilter(const glm::vec4& filter)
 	{

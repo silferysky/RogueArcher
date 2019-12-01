@@ -14,6 +14,16 @@ namespace Rogue
 		return m_lifetime;
 	}
 
+	void ParticleComponent::SetIsFading(const bool isFading)
+	{
+		m_isFading = isFading;
+	}
+
+	bool ParticleComponent::GetIsFading() const
+	{
+		return m_isFading;
+	}
+
 	std::string ParticleComponent::Serialize()
 	{
 		std::ostringstream ss;

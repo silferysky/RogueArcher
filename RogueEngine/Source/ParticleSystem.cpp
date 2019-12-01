@@ -16,7 +16,6 @@ namespace Rogue
 
 		Signature signature;
 		signature.set(g_engine.m_coordinator.GetComponentType<ParticleComponent>());
-		signature.set(g_engine.m_coordinator.GetComponentType<TransformComponent>());
 
 		g_engine.m_coordinator.SetSystemSignature<ParticleSystem>(signature);
 	}
@@ -26,7 +25,6 @@ namespace Rogue
 		for (auto entity : m_entities)
 		{
 			auto& particle = g_engine.m_coordinator.GetComponent<ParticleComponent>(entity);
-			auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
 
 			particle.Update(g_deltaTime);
 
