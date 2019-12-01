@@ -477,7 +477,7 @@ namespace Rogue
 			RigidbodyComponent& rigidbody = g_engine.m_coordinator.CreateComponent<RigidbodyComponent>(ball);
 			rigidbody.Deserialize("0;0;0;0;1;1;0;0.5;0.8;0.01");
 
-			ForceManager::instance().RegisterForce(ball, Vec2(ballDir.x * FORCE_FACTOR, ballDir.y * FORCE_FACTOR), g_fixedDeltaTime);
+			ForceManager::instance().RegisterForce(ball, ballDir * FORCE_FACTOR);
 			//rigidbody.addForce(Vec2(ballDir.x * FORCE_FACTOR, ballDir.y * FORCE_FACTOR));
 
 			BoxCollider2DComponent& boxCollider = g_engine.m_coordinator.CreateComponent<BoxCollider2DComponent>(ball);
