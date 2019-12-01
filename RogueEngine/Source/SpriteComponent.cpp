@@ -18,6 +18,7 @@ namespace Rogue
 	void SpriteComponent::setTexturePath(std::string_view texturePath)
 	{
 		m_texturePath.assign(texturePath);
+		setTexture(texturePath.data());
 	}
 
 	std::string_view SpriteComponent::getTexturePath() const
