@@ -22,7 +22,7 @@ Technology is prohibited.
 #include "SpecialEntity.h"
 #include <memory>
 
-#define FORCE_FACTOR 100000
+#define FORCE_FACTOR 80000
 #define POSITION_RELATIVITY 10
 
 namespace Rogue
