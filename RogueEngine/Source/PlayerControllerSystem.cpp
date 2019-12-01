@@ -14,7 +14,7 @@
 namespace Rogue
 {
 	PlayerControllerSystem::PlayerControllerSystem()
-		:System(SystemID::id_PLAYERCONTROLLERSYSTEM), /*m_ballCooldown{1.0f},*/ m_jumpCooldown{ 1.0f }, m_isInLight{ 0.0f }
+		:System(SystemID::id_PLAYERCONTROLLERSYSTEM), m_isInLight{ 0.0f }
 	{
 	}
 
@@ -61,7 +61,6 @@ namespace Rogue
 			//	ClearTimedEntities();
 			//}
 		//}
-		m_jumpCooldown -= g_deltaTime * g_engine.GetTimeScale();
 		m_isInLight -= g_deltaTime * g_engine.GetTimeScale();
 
 		//To update all timed entities
@@ -148,16 +147,13 @@ namespace Rogue
 
 			else if (keycode == KeyPress::KeySpace)
 			{
-				if (m_jumpCooldown < 0.0f)
+
+				for (std::set<Entity>::iterator iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
 				{
-					m_jumpCooldown = 1.0f;
-					for (std::set<Entity>::iterator iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
+					//For 1st entity
+					if (iEntity == m_entities.begin() && g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(*iEntity))
 					{
-						//For 1st entity
-						if (iEntity == m_entities.begin() && g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(*iEntity))
-						{
-							ForceManager::instance().RegisterForce(*iEntity, Vec2(0.0f, 60000.0f), g_fixedDeltaTime);
-						}
+						ForceManager::instance().RegisterForce(*iEntity, Vec2(0.0f, 35000.0f));
 					}
 				}
 			}
@@ -291,8 +287,8 @@ namespace Rogue
 					if (g_engine.m_coordinator.ComponentExists<AnimationComponent>(*m_entities.begin()))
 						g_engine.m_coordinator.GetComponent<AnimationComponent>(*m_entities.begin()).setIsAnimating(true);
 
-					AudioManager::instance().loadSound("Resources/Sounds/[Shoot Projectile]SCI-FI-WHOOSH_GEN-HDF-20864.ogg").Play();
-					AudioManager::instance().loadSound("Resources/Sounds/[Ela Appear]SCI-FI-WHOOSH_GEN-HDF-20870.ogg").Play(0.3f);
+					AudioManager::instance().loadSound("Resources/Sounds/[Shoot Projectile]SCI-FI-WHOOSH_GEN-HDF-20864.ogg", 0.86f, false).Play();
+					AudioManager::instance().loadSound("Resources/Sounds/[Ela Appear]SCI-FI-WHOOSH_GEN-HDF-20870.ogg", 0.3f, false).Play(0.3f);
 				}
 				g_engine.SetTimeScale(1.0f);
 			}

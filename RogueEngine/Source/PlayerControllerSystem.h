@@ -36,8 +36,6 @@ namespace Rogue
 	private:
 		void CreateBallAttack();
 		std::vector<TimedEntity> m_timedEntities;
-		//float m_ballCooldown;
-		float m_jumpCooldown;
 		float m_isInLight;
 	};
 }
