@@ -1,3 +1,20 @@
+/* Start Header ************************************************************************/
+/*!
+\file           ParticleEmitterComponent.h
+\project        Exale
+\author         Javier Foo, javier.foo, 440002318 (100%)
+\par            javier.foo\@digipen.edu
+\date           1 December,2019
+\brief          This file contains the function definitions for ParticleEmitterComponent
+
+All content (C) 2019 DigiPen (SINGAPORE) Corporation, all rights
+reserved.
+
+Reproduction or disclosure of this file or its contents
+without the prior written consent of DigiPen Institute of
+Technology is prohibited.
+*/
+/* End Header **************************************************************************/
 #pragma once
 #include "BaseComponent.h"
 #include "Vector2D.h"
@@ -11,6 +28,7 @@ namespace Rogue
 		bool m_isContinuous = false;
 		float m_magnitude = 0.0f;
 
+		int m_particleZ = 0;
 		float m_arc = 0.0f;
 		float m_angle = 0.0f;
 		float m_lifetimeLimit = 0.0f;
@@ -34,6 +52,9 @@ namespace Rogue
 
 		void SetMagnitude(const float magnitude);
 		float GetMagnitude() const;
+
+		void SetParticleZ(const int particleZ);
+		int GetParticleZ() const;
 
 		void SetArc(const float arc);
 		float GetArc() const;

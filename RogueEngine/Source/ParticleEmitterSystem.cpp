@@ -1,3 +1,20 @@
+/* Start Header ************************************************************************/
+/*!
+\file           ParticleEmitterSystem.cpp
+\project        Exale
+\author         Javier Foo, javier.foo, 440002318 (100%)
+\par            javier.foo\@digipen.edu
+\date           1 December,2019
+\brief          This file contains the function definitions for ParticleEmitterSystem
+
+All content (C) 2019 DigiPen (SINGAPORE) Corporation, all rights
+reserved.
+
+Reproduction or disclosure of this file or its contents
+without the prior written consent of DigiPen Institute of
+Technology is prohibited.
+*/
+/* End Header **************************************************************************/
 #include "Precompiled.h"
 #include "ParticleEmitterSystem.h"
 #include "Main.h"
@@ -60,6 +77,7 @@ namespace Rogue
 		const Vec2& positionalOffset = pEmitter.GetPositionalOffset();
 		const Vec2& spread = pEmitter.GetSpread();
 		const bool& isFading = pEmitter.GetIsFading();
+		const int& particleZ = pEmitter.GetParticleZ();
 
 		SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(unitParticle);
 		sprite.setTexturePath(pEmitter.GetTexturePath().data());
@@ -75,11 +93,11 @@ namespace Rogue
 
 			particleTransform.setPosition(Vec2(pos.x + positionalOffset.x + RandFloat(spread.x), pos.y + positionalOffset.y + RandFloat(spread.y)));
 			particleTransform.setScale(scale);
-			particleTransform.setZ(transform.GetZ());
+			particleTransform.setZ(particleZ);
 
 			double arc = pEmitter.GetArc() / 2.0;
-			float maxAngle = (static_cast<double>(pEmitter.GetAngle()) + arc) * PI / 180.0;
-			float minAngle = (static_cast<double>(pEmitter.GetAngle()) - arc) * PI / 180.0;
+			float maxAngle = static_cast<float>((static_cast<double>(pEmitter.GetAngle()) + arc) * PI / 180.0);
+			float minAngle = static_cast<float>((static_cast<double>(pEmitter.GetAngle()) - arc) * PI / 180.0);
 
 			float angle = RandFloat(minAngle, maxAngle);
 			

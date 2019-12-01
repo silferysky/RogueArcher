@@ -1,16 +1,20 @@
-/******************************************************************************/
+/* Start Header ************************************************************************/
 /*!
-\file		Vector2D.h
-\author 	Lim Jia Hao
-\par    	email: l.jiahao\@digipen.edu
-\date   	March 27, 2019
-\brief
+\file           Vector2D.h
+\project        Exale
+\author         Lim Jia Hao, l.jiahao, 390006518 (100%)
+\par            l.jiahao\@digipen.edu
+\date           1 December,2019
+\brief          This file contains the function definitions for Vector2D
 
-Copyright (C) 2019 DigiPen Institute of Technology.
-Reproduction or disclosure of this file or its contents without the
-prior written consent of DigiPen Institute of Technology is prohibited.
- */
- /******************************************************************************/
+All content (C) 2019 DigiPen (SINGAPORE) Corporation, all rights
+reserved.
+
+Reproduction or disclosure of this file or its contents
+without the prior written consent of DigiPen Institute of
+Technology is prohibited.
+*/
+/* End Header **************************************************************************/
 #pragma once
 #ifdef _MSC_VER
 	// Supress warning: nonstandard extension used : nameless struct/union
