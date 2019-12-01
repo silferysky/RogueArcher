@@ -4,6 +4,7 @@
 #include "EditorHierarchyInfo.h"
 #include "BasicIO.h"
 #include "MenuControllerSystem.h"
+#include "CameraManager.h"
 
 namespace Rogue
 {
@@ -67,6 +68,7 @@ namespace Rogue
 		setCurrentFileName(fileName);
 		ClearAllEntities();
 
+		CameraManager::instance().SetCameraPos(glm::vec3());
 		std::shared_ptr<MenuControllerSystem> menuControl = g_engine.m_coordinator.GetSystem<MenuControllerSystem>();
 		menuControl->InitPauseMenu();
 
@@ -87,7 +89,7 @@ namespace Rogue
 		std::shared_ptr<MenuControllerSystem> menuControl = g_engine.m_coordinator.GetSystem<MenuControllerSystem>();
 		std::ostringstream ostrstream;
 		ostrstream << "Resources/Levels/" << fileName;
-		int size = g_engine.m_coordinator.GetActiveObjects().size() - menuControl->GetUIMenuObjsSize();
+		int size = static_cast<int>(g_engine.m_coordinator.GetActiveObjects().size() - menuControl->GetUIMenuObjsSize());
 		if (m_objectFactory->CheckFileTooSmall(FILETYPE_LEVEL, size))
 			if (size > 0)
 				BasicIO::WriteLevelJsonFile(ostrstream.str().c_str(), size);
@@ -218,7 +220,8 @@ namespace Rogue
 
 	void SceneManager::ReloadLevel()
 	{
-		ClearAllEntities();
+		//ClearAllEntities is already called in LoadLevel now
+		//ClearAllEntities();
 		LoadLevel(getCurrentFileName().c_str());
 		g_engine.m_coordinator.SetGameState(false);
 		g_engine.m_coordinator.SetPauseState(false);
