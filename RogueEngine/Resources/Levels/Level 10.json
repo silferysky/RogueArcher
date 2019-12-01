@@ -1,6 +1,6 @@
 {
     "MaxEntityCount": 8,
-    "EntityCount": 7,
+    "EntityCount": 6,
     "CameraMinX": 0.0,
     "CameraMinY": 0.0,
     "CameraMaxX": 0.0,
@@ -19,8 +19,8 @@
     "Entity2": "Name{StartBtn}|Tag{}|Sprite{Resources\\Assets\\Start.png;1;1;1;1}||Transform{-585.96;-98.1619;300;200;0;0}|||||||||UI{1;}|||||||",
     "Entity3": "Name{HowToPlay}|Tag{}|Sprite{Resources\\Assets\\How to play.png;1;1;1;1}||Transform{-570.72;-232.615;300;200;0;0}|||||||||UI{1;}|||||||",
     "Entity4": "Name{QuitBtn}|Tag{}|Sprite{Resources\\Assets\\Quit.png;1;1;1;1}||Transform{-658.621;-316.965;160;80;0;0}|||||||||UI{1;}|||||||",
-    "Entity5": "Name{BGM_SFX}|Tag{}|||Transform{0;0;100;100;0;0}||||||||Audio{Resources\\Sounds\\[BGM]ANCIENT RUINS - NewAge MSCNEW2_33.ogg;1;1;1;0;}||||||||",
-    "Entity6": "Name{Cursor}|Tag{}|Sprite{Resources/Assets/crosshair.png;1;1;1;1}||Transform{-1461.94;654.897;100;100;0;0}||||||||||Cursor{0;0}||||||",
+    "Entity5": "Name{BGM_SFX}|Tag{}|||Transform{0;0;100;100;0;0}||||||||Audio{Resources\\Sounds\\[BGM]ANCIENT RUINS - NewAge MSCNEW2_33.ogg;1;0;0;0;}||||||||",
+    "Entity6": "Name{Cursor}|Tag{}|Sprite{Resources/Assets/crosshair.png;1;1;1;1}||Transform{-827.888;513.717;100;100;0;0}||||||||||Cursor{0;0}||||||",
     "Entity7": "Name{ControlHelp7}|Tag{}|Sprite{Resources/Assets/HowToPlay.png;1;1;1;0.862745}||Transform{0;0;2000;1200;0;0}|||||||||UI{1;}|||||||",
     "EntityParent0": -1,
     "EntityParent1": -1,
