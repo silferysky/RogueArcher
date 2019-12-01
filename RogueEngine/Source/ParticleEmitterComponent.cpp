@@ -49,10 +49,10 @@ namespace Rogue
 		ImGui::Text("Particle Spread");
 		ImGui::SameLine();
 		ImGui::PushItemWidth(75);
-		ImGui::DragFloat("     ", &m_spread.x);
+		ImGui::DragFloat("         ", &m_spread.x);
 		ImGui::SameLine();
 		ImGui::PushItemWidth(75);
-		ImGui::DragFloat("      ", &m_spread.y);
+		ImGui::DragFloat("          ", &m_spread.y);
 		ImGui::PushItemWidth(50);
 
 		ImGui::Text("Particle Velocity Factor");
