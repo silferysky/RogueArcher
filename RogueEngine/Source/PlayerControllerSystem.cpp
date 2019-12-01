@@ -50,7 +50,20 @@ namespace Rogue
 		{
 			if (m_timedEntities.size())
 				ClearTimedEntities();
+			if (m_teleports.size())
+				ClearTeleportEntities();
 			return;
+		}
+
+		if (m_teleports.size())
+		{
+			for (TimedEntity& ent : m_teleports)
+			{
+				ent.m_durationLeft -= g_deltaTime * g_engine.GetTimeScale();
+			}
+
+			if (m_teleports.back().m_durationLeft < 0.0f)
+				ClearTeleportEntities();
 		}
 
 		//if (!m_timedEntities.size())
@@ -170,17 +183,11 @@ namespace Rogue
 			{
 				if (m_entities.size() && m_timedEntities.size() && m_isInLight < 0.0f)
 				{
-					m_teleports.push_back(g_engine.m_coordinator.cloneArchetypes("TeleportSprite"));
-					if (g_engine.m_coordinator.ComponentExists<TransformComponent>(m_teleports.back()))
+					TimedEntity ent(g_engine.m_coordinator.cloneArchetypes("TeleportSprite", false), 0.5f);
+					m_teleports.push_back(ent);
+					if (g_engine.m_coordinator.ComponentExists<TransformComponent>(m_teleports.back().m_entity))
 					{
-						if (g_engine.m_coordinator.ComponentExists<TransformComponent>(*m_entities.begin()))
-						{
-							TransformComponent& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(m_teleports.back());
-							transform.setPosition(g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin()).GetPosition());
-						}
-
-						m_teleports.push_back(g_engine.m_coordinator.cloneArchetypes("TeleportSprite"));
-						TransformComponent& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(m_teleports.back());
+						TransformComponent& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(m_teleports.back().m_entity);
 						transform.setPosition(g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).GetPosition());
 					}
 					//By right correct way of doing this
@@ -405,6 +412,29 @@ namespace Rogue
 		m_timedEntities.clear();
 	}
 
+	void PlayerControllerSystem::ClearTeleportEntities()
+	{
+		if (!m_teleports.size())
+			return;
+
+		auto& activeObjects = g_engine.m_coordinator.GetActiveObjects();
+		for (TimedEntity& entity : m_teleports)
+		{
+			g_engine.m_coordinator.DestroyEntity(entity.m_entity);
+
+			//for (auto iterator = activeObjects.begin(); iterator != activeObjects.end(); ++iterator)
+			//{
+			//	if (*iterator == m_teleports.begin()->m_entity)
+			//	{
+			//		activeObjects.erase(iterator);
+			//		break;
+			//	}
+			//}
+		}
+
+		m_teleports.clear();
+	}
+
 	void PlayerControllerSystem::CreateTeleportEvent(Vec2 newPosition)
 	{
 		EntTeleportEvent* event = new EntTeleportEvent(*m_entities.begin(), newPosition);
@@ -432,7 +462,7 @@ namespace Rogue
 
 			strstream << playerPos.x + ballDir.x * POSITION_RELATIVITY << ";"
 				<< playerPos.y + ballDir.y * POSITION_RELATIVITY << ";"
-				<< "20;20;0";
+				<< "30;30;0";
 
 			TransformComponent& ballTransform = g_engine.m_coordinator.CreateComponent<TransformComponent>(ball);
 

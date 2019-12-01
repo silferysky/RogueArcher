@@ -28,6 +28,7 @@ namespace Rogue
 		void AddToTimedEntities(TimedEntity newEnt);
 		void AddToTimedEntities(Entity entity, float duration = 1.0f);
 		void ClearTimedEntities();
+		void ClearTeleportEntities();
 
 		void CreateTeleportEvent(Vec2 newPosition);
 
@@ -36,7 +37,7 @@ namespace Rogue
 	private:
 		void CreateBallAttack();
 		std::vector<TimedEntity> m_timedEntities;
-		std::vector<Entity> m_teleports;
+		std::vector<TimedEntity> m_teleports;
 		bool m_grounded;
 		float m_isInLight;
 	};
