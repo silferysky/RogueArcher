@@ -86,6 +86,7 @@ namespace Rogue
 			if(ctrl.GetMoveState() == MoveState::e_stop)
 				ForceManager::instance().RegisterForce(entity, Vec2(rigidbody.getVelocity().x * -c_stopFactor, 0.0f));
 		}
+
 	}
 
 	void PlayerControllerSystem::Receive(Event* ev)
@@ -99,6 +100,44 @@ namespace Rogue
 
 		switch (ev->GetEventType())
 		{
+		case EventType::EvOnCollisionExit:
+		{
+			EntCollisionExitEvent* collisionExit = dynamic_cast<EntCollisionExitEvent*>(ev);
+			return;
+		}
+
+		case EventType::EvOnCollisionStay:
+		{
+			EntCollisionStayEvent* collisionStay = dynamic_cast<EntCollisionStayEvent*>(ev);
+
+			Entity player;
+			Entity ground;
+			Vec2 playerTrans, groundTrans;
+
+			if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(collisionStay->GetEntityID()))
+			{
+				player = collisionStay->GetEntityID();
+				playerTrans = collisionStay->GetAPos();
+				ground = collisionStay->GetOtherEntity();
+				groundTrans = collisionStay->GetBPos();
+			}
+			else if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(collisionStay->GetOtherEntity()))
+			{
+				player = collisionStay->GetOtherEntity();
+				playerTrans = collisionStay->GetBPos();
+				ground = collisionStay->GetEntityID();
+				groundTrans = collisionStay->GetAPos();
+			}
+			else
+				return;
+
+			if (playerTrans.y >= groundTrans.y)
+				m_grounded = true;
+			else
+				m_grounded = false;
+
+			return;
+		}
 		case EventType::EvMouseMoved:
 		{
 			MouseMoveEvent* mouseMove = dynamic_cast<MouseMoveEvent*>(ev);
@@ -147,6 +186,8 @@ namespace Rogue
 
 			else if (keycode == KeyPress::KeySpace)
 			{
+				if (!m_grounded)
+					return;
 
 				for (std::set<Entity>::iterator iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
 				{
@@ -154,6 +195,9 @@ namespace Rogue
 					if (iEntity == m_entities.begin() && g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(*iEntity))
 					{
 						ForceManager::instance().RegisterForce(*iEntity, Vec2(0.0f, 35000.0f));
+						
+						// Reset boolean for grounded
+						m_grounded = false;
 					}
 				}
 			}
@@ -168,8 +212,8 @@ namespace Rogue
 			//{
 			//	RE_ASSERT(false, "CRASH ON PURPOSE");
 			//}
-
 			return;
+
 		} //End KeyTriggered
 		case EventType::EvKeyPressed:
 		{
@@ -208,70 +252,16 @@ namespace Rogue
 					{
 						//ForceManager::instance().RegisterForce(*iEntity, -Vec2::s_unitY * playerX, g_fixedDeltaTime);
 					}
-
-					auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
-					/*if (keycode == KeyPress::Numpad4)
-					{
-						transform.offSetScale(Vec2(100.0f, 100.0f) * g_deltaTime * 60.0f);
-					}
-					else if (keycode == KeyPress::Numpad5)
-					{
-						transform.offSetScale(Vec2(-100.0f, -100.0f) * g_deltaTime * 60.0f);
-						//RE_INFO("Scaled Down!");
-					}
-					else if (keycode == KeyPress::Numpad6)
-					{
-						transform.offSetRotation(100.0f * g_deltaTime * 60.0f);
-						//RE_INFO("Rotated!");
-					}
-					else if (keycode == KeyPress::Numpad7)
-					{
-						transform.setPosition(Vec2(-200.0f, 0.0f));
-					}*/
-				}
-				//For 2nd Entity
-				//To be deleted in future (Since by right only one entityt should exist here for player
-				else if (iEntity != m_entities.begin())
-				{
-					auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
-					if (keycode == KeyPress::KeyArrowLeft)
-					{
-						rigidbody.addForce(Vec2(-100.0f, 0.0f) * g_deltaTime * 1000.0f);
-						//RE_INFO("Move B Left!");
-
-					}
-					else if (keycode == KeyPress::KeyArrowRight)
-					{
-						rigidbody.addForce(Vec2(100.0f, 0.0f) * g_deltaTime * 1000.0f);
-						//RE_INFO("Move B Right!");
-					}
-					else if (keycode == KeyPress::KeyArrowUp)
-					{
-						rigidbody.addForce(Vec2(0.0f, 100.0f) * g_deltaTime * 1000.0f);
-						//RE_INFO("Move B Up!");
-
-					}
-					else if (keycode == KeyPress::KeyArrowDown)
-					{
-						rigidbody.addForce(Vec2(0.0f, -100.0f) * g_deltaTime * 1000.0f);
-						//RE_INFO("Move B Down!");
-					}
-
-					auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
-					/*if (keycode == KeyPress::Numpad8)
-					{
-						transform.setPosition(Vec2(200.0f, 0.0f));
-					}*/
-				} // Entity 2 
-			} // End of Entity for-loop
-
+					return;
+				} // End of Entity for-loop
+			}
 			return;
 		}
 		case EventType::EvKeyReleased:
 		{
 			KeyReleaseEvent* KeyReleaseEv = dynamic_cast<KeyReleaseEvent*>(ev);
 			KeyPress keycode = KeyReleaseEv->GetKeyCode();
-			
+
 			if (!g_engine.m_coordinator.GameIsActive())
 				return;
 
@@ -299,9 +289,9 @@ namespace Rogue
 				ctrler.SetMoveState(MoveState::e_stop);
 			}
 			return;
-		}
 		} // switch (ev->GetEventType())
-	} // Receive
+		} // Receive
+	}
 
 	void PlayerControllerSystem::Shutdown()
 	{

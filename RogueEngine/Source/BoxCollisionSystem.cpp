@@ -31,7 +31,7 @@ namespace Rogue
 		g_engine.m_coordinator.InitTimeSystem("Box Collision System");
 
 		std::set<Entity>::iterator iEntity;
-		
+
 		// Update colliders and partition them.
 		for (iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
 		{
@@ -77,6 +77,8 @@ namespace Rogue
 				// Test for AABBs vs AABBs
 				if (CollisionManager::instance().DiscreteAABBvsAABB(currBoxCollider.m_aabb, nextBoxCollider.m_aabb))
 				{
+					//CollisionManager::instance().InsertColliderPair(*iEntity, *iNextEntity);
+
 					// If A and/or B is/are a trigger(s), dispatch trigger event(s).
 					if (currBoxCollider.GetCollisionMode() == CollisionMode::e_trigger)
 					{
@@ -95,14 +97,12 @@ namespace Rogue
 						continue;
 					}
 
-					if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(*iEntity))
-					{
-						EntCollisionStayEvent* ev = new EntCollisionStayEvent{ *iEntity, *iNextEntity };
-						ev->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
-						EventDispatcher::instance().AddEvent(ev);
-					}
-					//std::cout << "Entity " << *iEntity << " AABB collides with Entity " << *iNextEntity << " AABB" << std::endl;
-					CollisionManager::instance().GenerateManifolds(*iEntity, *iNextEntity);
+					EntCollisionStayEvent* ev =
+						new EntCollisionStayEvent{ *iEntity, *iNextEntity, currTransform.GetPosition(), nextTransform.GetPosition() };
+					ev->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
+					EventDispatcher::instance().AddEvent(ev);
+
+					CollisionManager::instance().GenerateManifoldAABBvsAABB(*iEntity, *iNextEntity);
 				}
 
 				// Test OBBs vs OBBs collision
@@ -115,6 +115,68 @@ namespace Rogue
 
 			// Collision Impulse and Torque/Contact Resolution (Other resolutionsdone using trigger events: Other weird forces, rest, game logic)
 			CollisionManager::instance().ResolveManifolds();
+
+			//auto& collidedPairs = CollisionManager::instance().GetCollidedPairs();
+
+			//for (auto i = collidedPairs.begin(); i != collidedPairs.end(); i++)
+			//{
+			//	auto& collidedPair = *i;
+
+			//	auto& currRigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(collidedPair.first);
+			//	auto& currTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(collidedPair.first);
+			//	auto& currBoxCollider = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(collidedPair.first);
+
+			//	// Skip asleep or static colliders.
+			//	if (currBoxCollider.GetCollisionMode() == CollisionMode::e_asleep)
+			//		continue;
+
+			//	auto& nextBoxCollider = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(collidedPair.second);
+			//	auto& nextRigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(collidedPair.second);
+			//	auto& nextTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(collidedPair.second);
+
+			//	// Skip asleep or static colliders.
+			//	if (nextBoxCollider.GetCollisionMode() == CollisionMode::e_asleep)
+			//		continue;
+
+			//	if (currRigidbody.getIsStatic() && nextRigidbody.getIsStatic())
+			//		continue;
+
+			//	// Test for AABBs vs AABBs FALSE TEST
+			//	if (!CollisionManager::instance().DiscreteAABBvsAABB(currBoxCollider.m_aabb, nextBoxCollider.m_aabb))
+			//	{
+			//		// If A and/or B is/are a trigger(s), dispatch trigger exit event(s).
+			//		if (currBoxCollider.GetCollisionMode() == CollisionMode::e_trigger)
+			//		{
+			//			EntTriggerExitEvent* ev = new EntTriggerExitEvent{ *iEntity, *iNextEntity };
+			//			ev->SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
+			//			EventDispatcher::instance().AddEvent(ev);
+			//		}
+			//		if (nextBoxCollider.GetCollisionMode() == CollisionMode::e_trigger)
+			//		{
+			//			EntTriggerExitEvent* ev = new EntTriggerExitEvent{ *iNextEntity, *iEntity };
+			//			ev->SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
+			//			EventDispatcher::instance().AddEvent(ev);
+			//		}
+			//		else
+			//		{
+			//			EntCollisionExitEvent* ev =
+			//				new EntCollisionExitEvent{ *iEntity, *iNextEntity };
+			//			ev->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
+			//			EventDispatcher::instance().AddEvent(ev);
+
+			//			CollisionManager::instance().GenerateManifolds(*iEntity, *iNextEntity);
+			//		}
+
+			//		collidedPairs.erase(i);
+			//	}
+			//}
+
+			// Test OBBs vs OBBs collision
+			//if (CollisionManager::instance().DiscreteOBBvsOBB(currBoxCollider.m_obb, nextBoxCollider.m_obb))
+			//{
+			//	std::cout << "Entity " << *iEntity << " OBB collides with Entity " << *iNextEntity << " OBB" << std::endl;
+			//}
+
 		}
 
 		g_engine.m_coordinator.EndTimeSystem("Box Collision System");
