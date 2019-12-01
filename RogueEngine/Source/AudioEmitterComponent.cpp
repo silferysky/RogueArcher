@@ -24,9 +24,6 @@ namespace Rogue
 	void AudioEmitterComponent::DestroySound()
 	{
 		m_sound.Pause(true);
-
-		if (m_sound.GetSystem() != NULL)
-			m_sound.Release();
 	}
 
 	void AudioEmitterComponent::DisplayOnInspector()
