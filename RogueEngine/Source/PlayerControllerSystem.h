@@ -56,5 +56,6 @@ namespace Rogue
 		std::vector<TimedEntity> m_timedEntities;
 		std::vector<TimedEntity> m_teleports;
 		float m_isInLight;
+		const float m_maxJumpTimer;
 	};
 }

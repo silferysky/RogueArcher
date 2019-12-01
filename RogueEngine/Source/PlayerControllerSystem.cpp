@@ -31,7 +31,7 @@ Technology is prohibited.
 namespace Rogue
 {
 	PlayerControllerSystem::PlayerControllerSystem()
-		:System(SystemID::id_PLAYERCONTROLLERSYSTEM), m_isInLight{ 0.0f }
+		:System(SystemID::id_PLAYERCONTROLLERSYSTEM), m_isInLight{ 0.0f }, m_maxJumpTimer{ 0.5f }
 	{
 	}
 
@@ -112,13 +112,16 @@ namespace Rogue
 		for (Entity entity : m_entities)
 		{
 			auto& player = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity);
-			std::cout << player.m_grounded << std::endl;
+			//std::cout << player.m_grounded << std::endl;
 
 			auto& ctrl = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity);
 			auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
 			 
-			if(ctrl.GetMoveState() == MoveState::e_stop)
-				ForceManager::instance().RegisterForce(entity, Vec2(rigidbody.getVelocity().x * -c_stopFactor, 0.0f));
+			if (ctrl.GetMoveState() == MoveState::e_stop)
+				//ForceManager::instance().RegisterForce(entity, Vec2(rigidbody.getVelocity().x * -c_stopFactor, 0.0f));
+				rigidbody.addForce(Vec2(rigidbody.getVelocity().x * -c_stopFactor, 0.0f));
+
+			player.m_jumpTimer -= g_deltaTime * g_engine.GetTimeScale();
 		}
 
 	}
@@ -192,15 +195,17 @@ namespace Rogue
 				for (std::set<Entity>::iterator iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
 				{
 					auto& player = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(*iEntity);
+					auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
 
-					if (!player.m_grounded)
+					if (!player.m_grounded || player.m_jumpTimer > 0.0f)
 						return;
 
-					ForceManager::instance().RegisterForce(*iEntity, Vec2(0.0f, 35000.0f));
+					//ForceManager::instance().RegisterForce(*iEntity, Vec2(0.0f, 35000.0f));
+					rigidbody.addForce(Vec2(0.0f, 35000.0f));
 
 					// Reset boolean for grounded
 					player.m_grounded = false;
-
+					player.m_jumpTimer = m_maxJumpTimer;
 				}
 			}
 
@@ -526,7 +531,8 @@ namespace Rogue
 			RigidbodyComponent& rigidbody = g_engine.m_coordinator.CreateComponent<RigidbodyComponent>(ball);
 			rigidbody.Deserialize("0;0;0;0;1;1;0;0.5;0.8;0.01");
 
-			ForceManager::instance().RegisterForce(ball, Vec2(ballDir.x * FORCE_FACTOR, ballDir.y * FORCE_FACTOR), g_fixedDeltaTime);
+			//ForceManager::instance().RegisterForce(ball, Vec2(ballDir.x * FORCE_FACTOR, ballDir.y * FORCE_FACTOR), g_fixedDeltaTime);
+			rigidbody.addForce(Vec2(ballDir.x * FORCE_FACTOR, ballDir.y * FORCE_FACTOR));
 
 			BoxCollider2DComponent& boxCollider = g_engine.m_coordinator.CreateComponent<BoxCollider2DComponent>(ball);
 			boxCollider.Deserialize("0;0;0;0;0");

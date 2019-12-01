@@ -38,6 +38,7 @@ namespace Rogue
 
 	public:
 		bool m_grounded;
+		float m_jumpTimer;
 
 		PlayerControllerComponent();
 		~PlayerControllerComponent() = default;
