@@ -1,3 +1,20 @@
+/* Start Header ************************************************************************/
+/*!
+\file           ParticleEmitterComponent.cpp
+\project        Exale
+\author         Javier Foo, javier.foo, 440002318 (100%)
+\par            javier.foo\@digipen.edu
+\date           1 December,2019
+\brief          This file contains the function definitions for ParticleEmitterComponent
+
+All content (C) 2019 DigiPen (SINGAPORE) Corporation, all rights
+reserved.
+
+Reproduction or disclosure of this file or its contents
+without the prior written consent of DigiPen Institute of
+Technology is prohibited.
+*/
+/* End Header **************************************************************************/
 #include "Precompiled.h"
 #include "Main.h"
 #include "ParticleEmitterComponent.h"
@@ -17,6 +34,18 @@ namespace Rogue
 		ImGui::PushItemWidth(75);
 		ImGui::Checkbox("Continuous/Looping?", &m_isContinuous);
 		SetIsContinuous(m_isContinuous);
+
+		static char m_priorityDraw[128];
+		ImGui::TextWrapped("Particle Z : %d", m_particleZ);
+		ImGui::TextWrapped("Set Z");
+		ImGui::InputText("                        ", m_priorityDraw, 128);
+		if (ImGui::Button("Set Z"))
+		{
+			m_particleZ = atoi(m_priorityDraw);
+			SetParticleZ(m_particleZ);
+			memset(m_priorityDraw, 0, 128);
+		}
+		
 
 		ImGui::DragFloat("Particle Emitter Magnitude", &m_magnitude, 0.01f, 0.0f, 10.0f);
 		SetMagnitude(m_magnitude);
@@ -136,6 +165,16 @@ namespace Rogue
 		return m_magnitude;
 	}
 
+	void ParticleEmitterComponent::SetParticleZ(const int particleZ)
+	{
+		m_particleZ = particleZ;
+	}
+
+	int ParticleEmitterComponent::GetParticleZ() const
+	{
+		return m_particleZ;
+	}
+
 	void ParticleEmitterComponent::SetArc(const float arc)
 	{
 		m_arc = arc;
@@ -241,6 +280,7 @@ namespace Rogue
 		ss << m_isActive << ";";
 		ss << m_isContinuous << ";";
 		ss << m_texturePath << ";";
+		ss << m_particleZ << ";";
 
 		return ss.str();
 	}
@@ -293,6 +333,9 @@ namespace Rogue
 				break;
 			case 11:
 				SetTexturePath(s1);
+				break;
+			case 12:
+				SetParticleZ(std::stof(s1));
 				break;
 			default:
 				break;
