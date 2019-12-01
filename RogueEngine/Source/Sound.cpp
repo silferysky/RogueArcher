@@ -36,9 +36,9 @@ namespace Rogue
 		m_channel->addDSP(0, m_DSPLowPassFilter);
 		m_DSPLowPassFilter->setParameterFloat(FMOD_DSP_LOWPASS_CUTOFF, 1200.0f);
 
-		m_system->createDSPByType(FMOD_DSP_TYPE_HIGHPASS, &m_DSPHighPassFilter);
-		m_channel->addDSP(0, m_DSPHighPassFilter);
-		m_DSPLowPassFilter->setParameterFloat(FMOD_DSP_HIGHPASS_CUTOFF, 1200.0f);
+		//m_system->createDSPByType(FMOD_DSP_TYPE_HIGHPASS, &m_DSPHighPassFilter);
+		//m_channel->addDSP(0, m_DSPHighPassFilter);
+		//m_DSPLowPassFilter->setParameterFloat(FMOD_DSP_HIGHPASS_CUTOFF, 1200.0f);
 
 		FMOD_REVERB_PROPERTIES reverbProperties = FMOD_PRESET_CAVE;
 		m_system->createReverb3D(&m_reverb);

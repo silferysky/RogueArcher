@@ -72,7 +72,7 @@ namespace Rogue
 			TransformComponent& particleTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(particle);
 			Vec2 pos = transform.GetPosition();
 
-			particleTransform.setPosition(Vec2(pos.x + RandFloat(positionalOffset.x), pos.y + RandFloat(positionalOffset.x)));
+			particleTransform.setPosition(Vec2(pos.x + RandFloat(positionalOffset.x), pos.y + RandFloat(positionalOffset.y)));
 			particleTransform.setScale(scale);
 			particleTransform.setZ(transform.GetZ());
 
