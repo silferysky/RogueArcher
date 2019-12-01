@@ -118,8 +118,8 @@ namespace Rogue
 			auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
 			 
 			if (ctrl.GetMoveState() == MoveState::e_stop)
-				//ForceManager::instance().RegisterForce(entity, Vec2(rigidbody.getVelocity().x * -c_stopFactor, 0.0f));
-				rigidbody.addForce(Vec2(rigidbody.getVelocity().x * -c_stopFactor, 0.0f));
+				ForceManager::instance().RegisterForce(entity, Vec2(rigidbody.getVelocity().x * -c_stopFactor, 0.0f));
+				//rigidbody.addForce(Vec2(rigidbody.getVelocity().x * -c_stopFactor, 0.0f));
 
 			player.m_jumpTimer -= g_deltaTime * g_engine.GetTimeScale();
 		}
@@ -200,8 +200,8 @@ namespace Rogue
 					if (!player.m_grounded || player.m_jumpTimer > 0.0f)
 						return;
 
-					//ForceManager::instance().RegisterForce(*iEntity, Vec2(0.0f, 35000.0f));
-					rigidbody.addForce(Vec2(0.0f, 35000.0f));
+					ForceManager::instance().RegisterForce(*iEntity, Vec2(0.0f, 35000.0f));
+					//rigidbody.addForce(Vec2(0.0f, 35000.0f));
 
 					// Reset boolean for grounded
 					player.m_grounded = false;
@@ -259,61 +259,7 @@ namespace Rogue
 					{
 						//ForceManager::instance().RegisterForce(*iEntity, -Vec2::s_unitY * playerX, g_fixedDeltaTime);
 					}
-
-					auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
-					/*if (keycode == KeyPress::Numpad4)
-					{
-						transform.offSetScale(Vec2(100.0f, 100.0f) * g_deltaTime * 60.0f);
-					}
-					else if (keycode == KeyPress::Numpad5)
-					{
-						transform.offSetScale(Vec2(-100.0f, -100.0f) * g_deltaTime * 60.0f);
-						//RE_INFO("Scaled Down!");
-					}
-					else if (keycode == KeyPress::Numpad6)
-					{
-						transform.offSetRotation(100.0f * g_deltaTime * 60.0f);
-						//RE_INFO("Rotated!");
-					}
-					else if (keycode == KeyPress::Numpad7)
-					{
-						transform.setPosition(Vec2(-200.0f, 0.0f));
-					}*/
 				}
-				//For 2nd Entity
-				//To be deleted in future (Since by right only one entityt should exist here for player
-				else if (iEntity != m_entities.begin())
-				{
-					auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
-					if (keycode == KeyPress::KeyArrowLeft && g_engine.GetIsFocused())
-					{
-						rigidbody.addForce(Vec2(-100.0f, 0.0f) * g_deltaTime * 1000.0f);
-						//RE_INFO("Move B Left!");
-
-					}
-					else if (keycode == KeyPress::KeyArrowRight && g_engine.GetIsFocused())
-					{
-						rigidbody.addForce(Vec2(100.0f, 0.0f) * g_deltaTime * 1000.0f);
-						//RE_INFO("Move B Right!");
-					}
-					else if (keycode == KeyPress::KeyArrowUp && g_engine.GetIsFocused())
-					{
-						rigidbody.addForce(Vec2(0.0f, 100.0f) * g_deltaTime * 1000.0f);
-						//RE_INFO("Move B Up!");
-
-					}
-					else if (keycode == KeyPress::KeyArrowDown && g_engine.GetIsFocused())
-					{
-						rigidbody.addForce(Vec2(0.0f, -100.0f) * g_deltaTime * 1000.0f);
-						//RE_INFO("Move B Down!");
-					}
-
-					auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
-					/*if (keycode == KeyPress::Numpad8)
-					{
-						transform.setPosition(Vec2(200.0f, 0.0f));
-					}*/
-				} // Entity 2 
 			} // End of Entity for-loop
 
 			return;
@@ -531,8 +477,8 @@ namespace Rogue
 			RigidbodyComponent& rigidbody = g_engine.m_coordinator.CreateComponent<RigidbodyComponent>(ball);
 			rigidbody.Deserialize("0;0;0;0;1;1;0;0.5;0.8;0.01");
 
-			//ForceManager::instance().RegisterForce(ball, Vec2(ballDir.x * FORCE_FACTOR, ballDir.y * FORCE_FACTOR), g_fixedDeltaTime);
-			rigidbody.addForce(Vec2(ballDir.x * FORCE_FACTOR, ballDir.y * FORCE_FACTOR));
+			ForceManager::instance().RegisterForce(ball, Vec2(ballDir.x * FORCE_FACTOR, ballDir.y * FORCE_FACTOR), g_fixedDeltaTime);
+			//rigidbody.addForce(Vec2(ballDir.x * FORCE_FACTOR, ballDir.y * FORCE_FACTOR));
 
 			BoxCollider2DComponent& boxCollider = g_engine.m_coordinator.CreateComponent<BoxCollider2DComponent>(ball);
 			boxCollider.Deserialize("0;0;0;0;0");
