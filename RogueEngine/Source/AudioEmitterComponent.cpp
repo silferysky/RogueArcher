@@ -29,7 +29,7 @@ namespace Rogue
 		bool m_isScaling = getIsScaling();
 
 		ImGui::PushItemWidth(75);
-		ImGui::Checkbox("Audio Scaling", &m_isScaling);
+		ImGui::Checkbox("Spatial Audio", &m_isScaling);
 		setIsScaling(m_isScaling);
 
 		static char m_newaudioPath[128];
@@ -50,13 +50,21 @@ namespace Rogue
 			memset(m_newaudioPath, 0, 128);
 		}
 
-		ImGui::DragFloat("Audio Scale", &m_audioScale, 0.01f, 0.0f, 10.0f);
-		setAudioScale(m_audioScale);
-
 		if (ImGui::IsItemHovered())
 		{
 			ImGui::BeginTooltip();
 			ImGui::Text("Enter name of file and click on Set New Path to update sound. Note that new sound will only be loaded when scene is saved and restarted");
+			ImGui::EndTooltip();
+		}
+
+		ImGui::DragFloat("Maximum Distance", &m_maxDistance, 10.0f, 0.0f, 10000.0f);
+		setMaxDistance(m_maxDistance);
+		m_sound.Set3DMaxDistance(m_maxDistance);
+
+		if (ImGui::IsItemHovered())
+		{
+			ImGui::BeginTooltip();
+			ImGui::Text("This sets maximum distance at which the sound can be heard.");
 			ImGui::EndTooltip();
 		}
 
@@ -132,14 +140,14 @@ namespace Rogue
 		return m_isScaling;
 	}
 
-	void AudioEmitterComponent::setAudioScale(const float audioScale)
+	void AudioEmitterComponent::setMaxDistance(const float audioScale)
 	{
-		m_audioScale = audioScale;
+		m_maxDistance = audioScale;
 	}
 
-	float& AudioEmitterComponent::getAudioScale()
+	float& AudioEmitterComponent::getMaxDistance()
 	{
-		return m_audioScale;
+		return m_maxDistance;
 	}
 
 	void AudioEmitterComponent::setVolume(const float volume)
@@ -156,7 +164,7 @@ namespace Rogue
 	{
 		std::ostringstream ss;
 		ss << m_soundPath << ";";
-		ss << m_audioScale << ";";
+		ss << m_maxDistance << ";";
 		ss << m_sound.m_volume << ";";
 		ss << m_sound.m_isLooping << ";";
 		ss << m_isScaling << ";";
@@ -177,7 +185,7 @@ namespace Rogue
 				setSoundPath(s1);
 				break;
 			case 1:
-				setAudioScale(std::stof(s1));
+				setMaxDistance(std::stof(s1));
 				break;
 			case 2:
 				setVolume(std::stof(s1));

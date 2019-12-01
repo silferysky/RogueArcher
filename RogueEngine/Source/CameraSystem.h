@@ -36,6 +36,9 @@ namespace Rogue
 		bool GetWorldCamera() const;
 		void SetWorldCamera(const bool& camera);
 
+		glm::vec3 GetCameraFront() const;
+		glm::vec3 GetCameraUp() const;
+
 		void Init() override;
 		void Update() override;
 		void Shutdown() override;

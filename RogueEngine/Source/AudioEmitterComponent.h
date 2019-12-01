@@ -11,7 +11,7 @@ namespace Rogue
 		Sound m_sound;
 
 		bool m_isScaling;
-		float m_audioScale = 1.0f;
+		float m_maxDistance = 1.0f;
 	public:
 		AudioEmitterComponent() = default;
 		~AudioEmitterComponent() = default;
@@ -28,8 +28,8 @@ namespace Rogue
 		void setIsScaling(bool isScaling);
 		bool& getIsScaling();
 
-		void setAudioScale(const float audioScale);
-		float& getAudioScale();
+		void setMaxDistance(const float audioScale);
+		float& getMaxDistance();
 
 		void setVolume(const float volume);
 		float& getVolume();

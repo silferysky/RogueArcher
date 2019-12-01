@@ -33,6 +33,7 @@
     <ClInclude Include="Source\ColliderComponent.h" />
     <ClInclude Include="Source\CollisionSystem.h" />
     <ClInclude Include="Source\CursorComponent.h" />
+    <ClInclude Include="Source\FMODHelper.h" />
     <ClInclude Include="Source\ImCurveEdit.h" />
     <ClInclude Include="Source\ImGradient.h" />
     <ClInclude Include="Source\ImGuizmo.h" />
