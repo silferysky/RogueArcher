@@ -20,6 +20,8 @@ namespace Rogue
 		glm::vec4 rayWorld4D = glm::inverse(viewMat) * rayEye;
 
 		m_cursorPos = Vec2{ rayWorld4D.x, rayWorld4D.y };
+
+		std::cout << m_cursorPos << std::endl;
 	}
 
 	void PickingManager::GenerateMeshAABB(TransformComponent& trans) const
