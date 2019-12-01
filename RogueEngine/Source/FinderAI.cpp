@@ -97,7 +97,8 @@ namespace Rogue
 			Vec2 travelDistance;
 			Vec2Normalize(travelDistance, m_nextPoint.front() - aiTransform.GetPosition());
 			RigidbodyComponent rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(m_entity);
-			rigidbody.addForce(travelDistance * m_statsComponent->getSpeed() * DT_SPEED_MODIFIER);
+			//rigidbody.addForce(travelDistance * m_statsComponent->getSpeed() * DT_SPEED_MODIFIER);
+			aiTransform.setPosition(aiTransform.GetPosition() + travelDistance * m_statsComponent->getSpeed() * DT_TRANSFORM_MODIFIER);
 			
 			//If facing right and moving left or facing left and moving right, flip
 			if ((travelDistance.x < 0 && aiTransform.GetScale().x > 0.0f) || 
