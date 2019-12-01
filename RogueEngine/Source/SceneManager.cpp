@@ -4,6 +4,7 @@
 #include "EditorHierarchyInfo.h"
 #include "BasicIO.h"
 #include "MenuControllerSystem.h"
+#include "CameraManager.h"
 
 namespace Rogue
 {
@@ -67,6 +68,7 @@ namespace Rogue
 		setCurrentFileName(fileName);
 		ClearAllEntities();
 
+		CameraManager::instance().SetCameraPos(glm::vec3());
 		std::shared_ptr<MenuControllerSystem> menuControl = g_engine.m_coordinator.GetSystem<MenuControllerSystem>();
 		menuControl->InitPauseMenu();
 
