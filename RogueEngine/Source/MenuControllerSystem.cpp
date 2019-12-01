@@ -132,14 +132,14 @@ namespace Rogue
 			if (keycode == KeyPress::KeyF6)
 				g_engine.ToggleVSync();
 
-			if (keycode == KeyPress::Numpad0 && m_entities.size() > 0)
+			/*if (keycode == KeyPress::Numpad0 && m_entities.size() > 0)
 				g_engine.m_coordinator.clone(*m_entities.begin());
 
 			if (keycode == KeyPress::Numpad1)
 				g_engine.m_coordinator.cloneArchetypes("Box");
 
 			if (keycode == KeyPress::Numpad2)
-				g_engine.m_coordinator.cloneArchetypes("Circle");
+				g_engine.m_coordinator.cloneArchetypes("Circle");*/
 
 			if (keycode == KeyPress::KeyF8)
 			{
