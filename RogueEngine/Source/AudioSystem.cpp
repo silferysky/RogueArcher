@@ -40,8 +40,25 @@ namespace Rogue
 	{
 		g_engine.m_coordinator.InitTimeSystem("Audio System");
 
+		if (!g_engine.GetIsFocused())
+		{
+			m_muted = true;
+			for (auto entity : m_entities)
+			{
+				g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(entity).getSound().Pause(m_muted);
+			}
+		}
+		else
+		{
+			m_muted = false;
+			for (auto entity : m_entities)
+			{
+				g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(entity).getSound().Pause(m_muted);
+			}
+		}
 		for (auto entity : m_entities)
 		{
+
 			if (m_muted)
 				break;
 
@@ -80,7 +97,7 @@ namespace Rogue
 			KeyTriggeredEvent* keytriggeredevent = dynamic_cast<KeyTriggeredEvent*>(ev);
 			KeyPress keycode = keytriggeredevent->GetKeyCode();
 
-			if (keycode == KeyPress::KeyM)
+			if (keycode == KeyPress::KeyM && g_engine.GetIsFocused())
 				ToggleMute();
 
 			return;

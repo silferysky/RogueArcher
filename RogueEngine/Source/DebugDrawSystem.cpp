@@ -205,7 +205,7 @@
 			Rogue::KeyTriggeredEvent* keytriggeredevent = dynamic_cast<Rogue::KeyTriggeredEvent*>(ev);
 			Rogue::KeyPress keycode = keytriggeredevent->GetKeyCode();
 		    
-			if (keycode == Rogue::KeyPress::KeyF3)
+			if (keycode == Rogue::KeyPress::KeyF3 && g_engine.GetIsFocused())
 				m_isActive = !m_isActive;
 
 			return;

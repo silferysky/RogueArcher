@@ -12,8 +12,9 @@ namespace Rogue
 		float m_magnitude = 0.0f;
 
 		float m_arc = 0.0f;
+		float m_angle = 0.0f;
 		float m_lifetimeLimit = 0.0f;
-		float m_fade = 0.0f;
+		bool m_isFading = false;
 
 		Vec2 m_scale;
 		Vec2 m_velocityFactor;
@@ -36,11 +37,14 @@ namespace Rogue
 		void SetArc(const float arc);
 		float GetArc() const;
 
+		void SetAngle(const float angle);
+		float GetAngle() const;
+
 		void SetLifetimeLimit(const float lifetimeLimit);
 		float GetLifetimeLimit() const;
 
-		void SetFade(const float fade);
-		float GetFade() const;
+		void SetIsFading(const bool isFading);
+		bool GetIsFading() const;
 
 		void SetScale(const Vec2 scale);
 		Vec2 GetScale() const;
