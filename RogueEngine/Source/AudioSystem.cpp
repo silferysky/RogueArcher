@@ -4,6 +4,7 @@
 #include "Main.h"
 #include "EventDispatcher.h"
 #include "KeyEvent.h"
+#include "FMODHelper.h"
 
 namespace Rogue
 {
@@ -25,6 +26,14 @@ namespace Rogue
 
 		// Set system signature.
 		g_engine.m_coordinator.SetSystemSignature<AudioSystem>(signature);
+
+		auto cameraSys = g_engine.m_coordinator.GetSystem<CameraSystem>();
+
+		auto front = cameraSys->GetCameraFront();
+		auto up = cameraSys->GetCameraUp();
+
+		listenerFront = { front.x, front.x, front.z };
+		listenerUp = { up.x, up.y, up.z };
 	}
 
 	void AudioSystem::Update()
@@ -37,23 +46,23 @@ namespace Rogue
 				break;
 
 			auto& aEmitter = g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(entity);
+			auto sound = aEmitter.getSound();
+
+			sound.Update();
 
 			if (!aEmitter.getIsScaling())
 				continue;
 
-			auto sound = aEmitter.getSound();
-			Vec2 transformPos{};
-			
-			if (g_engine.m_coordinator.ComponentExists<TransformComponent>(entity))
-				transformPos = g_engine.m_coordinator.GetComponent<TransformComponent>(entity).GetPosition();
-
-			float distance = 0.0f;
 			if (g_engine.m_coordinator.ComponentExists<TransformComponent>(m_trackingTarget))
-				distance = Vec2SqDistance(transformPos, g_engine.m_coordinator.GetComponent<TransformComponent>(m_trackingTarget).GetPosition());
-			FMOD_VECTOR pos{ transformPos.x, transformPos.y, 0 };
-			sound.Update();
-			//FMOD_System_Set3DListenerAttributes(sound.m_system, 0, &pos, 0);
-			//sound.SetVolume(1.0f * aEmitter.getAudioScale() - distance * 0.0015f * 0.0015f);
+			{
+				Vec2 targetPos = g_engine.m_coordinator.GetComponent<TransformComponent>(m_trackingTarget).GetPosition();
+				Vec2 targetVel = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(m_trackingTarget).getVelocity();
+
+				FMOD_VECTOR pos{ targetPos.x, targetPos.y, 0 };
+				FMOD_VECTOR vel{ targetVel.x * g_deltaTime, targetVel.y * g_deltaTime, 0 };
+
+				sound.m_system->set3DListenerAttributes(0, &pos, &vel, &listenerFront, &listenerUp);
+			}
 		}
 
 		for (auto& pair : AudioManager::instance().getAudioMap())
@@ -93,7 +102,10 @@ namespace Rogue
 	{
 		m_muted = !m_muted;
 
-		//TODO:
+		for (auto entity : m_entities)
+		{
+			g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(entity).getSound().Pause(m_muted);
+		}
 
 	}
 
@@ -119,6 +131,14 @@ namespace Rogue
 			auto& aEmitter = g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(entity);
 
 			aEmitter.CreateSound();
+
+			if (aEmitter.getIsScaling())
+			{
+				auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
+				aEmitter.getSound().Set3DLocation(transform.GetPosition());
+				aEmitter.getSound().Set3DMaxDistance(aEmitter.getMaxDistance());
+			}
+
 		}
 	}
 

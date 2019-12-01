@@ -532,6 +532,9 @@
     <ClInclude Include="Source\UISystem.h">
       <Filter>RogueEngine\Systems\UI</Filter>
     </ClInclude>
+    <ClInclude Include="Source\FMODHelper.h">
+      <Filter>RogueEngine\Systems\Audio</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">

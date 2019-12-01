@@ -55,6 +55,16 @@ namespace Rogue
 			ResetCamera();
 	}
 
+	glm::vec3 CameraSystem::GetCameraFront() const
+	{
+		return m_cameraFront;
+	}
+
+	glm::vec3 CameraSystem::GetCameraUp() const
+	{
+		return m_cameraUp;
+	}
+
 	CameraShake CameraSystem::GetShake() const
 	{
 		return m_cameraShake;

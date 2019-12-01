@@ -32,3 +32,6 @@
 #include "ImGuizmo.h"
 #include <Windows.h>
 
+#include "fmod.hpp"
+#include "fmod_errors.h"
+

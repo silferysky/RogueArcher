@@ -10,6 +10,8 @@ namespace Rogue
 
 	class AudioSystem : public System, public EventListener
 	{
+		FMOD_VECTOR listenerFront;
+		FMOD_VECTOR listenerUp;
 		bool m_muted;
 		Entity m_trackingTarget;
 	public:

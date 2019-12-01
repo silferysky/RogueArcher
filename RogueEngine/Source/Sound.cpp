@@ -3,6 +3,7 @@
 #include "Sound.h"
 #include "Logger.h"
 #include "Main.h"
+#include "FMODHelper.h"
 
 namespace Rogue
 {
@@ -11,37 +12,36 @@ namespace Rogue
 	{
 	}
 
-	void Sound::FmodErrorCheck(FMOD_RESULT resultCheck)
-	{
-		// Throw an error if FMOD finds something wrong
-		if (resultCheck != FMOD_OK)
-		{
-			std::ostringstream ss;
-			ss << "FMOD error: " << resultCheck << FMOD_ErrorString(resultCheck);
-			RE_INFO(ss.str());
-		}
-	}
-
 	/* Sound Creation */
 
-	// For SFX
 	void Sound::Create(const char* filename)
 	{
-		m_result = FMOD_System_Create(&m_system);
+		m_result = FMOD::System_Create(&m_system);
 		FmodErrorCheck(m_result);
-		m_result = FMOD_System_Init(m_system, 64, FMOD_INIT_NORMAL, 0);
+		m_result = m_system->init(64, FMOD_INIT_NORMAL, 0);
 		FmodErrorCheck(m_result);
 
 		if (m_isLooping)
-			m_result = FMOD_System_CreateStream(m_system, filename, FMOD_3D | FMOD_LOOP_NORMAL, 0, &m_fmodSound);
+			m_result = m_system->createStream(filename, FMOD_3D | FMOD_3D_LINEARROLLOFF | FMOD_LOOP_NORMAL, 0, &m_fmodSound);
 		else
-			m_result = FMOD_System_CreateSound(m_system, filename, FMOD_3D | FMOD_LOOP_OFF | FMOD_CREATESTREAM, 0, &m_fmodSound);
+			m_result = m_system->createSound(filename, FMOD_3D | FMOD_3D_LINEARROLLOFF |FMOD_LOOP_OFF | FMOD_CREATESTREAM, 0, &m_fmodSound);
 
 		FmodErrorCheck(m_result);
-		m_result = FMOD_Sound_SetMusicChannelVolume(m_fmodSound, 0, 0);
+		m_result = m_fmodSound->setMusicChannelVolume(0, 0);
 		FmodErrorCheck(m_result);
-		m_result = FMOD_System_PlaySound(m_system, m_fmodSound, 0, true, &m_channel);
+		m_result = m_system->playSound(m_fmodSound, 0, true, &m_channel);
 		FmodErrorCheck(m_result);
+	}
+
+	void Sound::Set3DLocation(Vec2 pos)
+	{
+		FMOD_VECTOR position{ pos.x, pos.y, 0 };
+		m_channel->set3DAttributes(&position, 0);
+	}
+
+	void Sound::Set3DMaxDistance(float max)
+	{
+		m_channel->set3DMinMaxDistance(0.0f, max);
 	}
 
 	/* General Audio Functions */
@@ -49,52 +49,52 @@ namespace Rogue
 	void Sound::Play(float volume)
 	{
 		m_soundOn = true;
-		m_result = FMOD_System_PlaySound(m_system, m_fmodSound, 0, false, &m_channel);
+		m_result = m_system->playSound(m_fmodSound, 0, false, &m_channel);
 		FmodErrorCheck(m_result);
-		m_result = FMOD_Channel_SetVolume(m_channel, volume);
+		m_result = m_channel->setVolume(volume);
 		FmodErrorCheck(m_result);
 	}
 
 	void Sound::Update()
 	{
-		m_result = FMOD_System_Update(m_system);
+		m_result = m_system->update();
 		FmodErrorCheck(m_result);
 	}
 
 	void Sound::Pause(FMOD_BOOL pause)
 	{
-		FMOD_Channel_SetPaused(m_channel, pause);
+		m_channel->setPaused(pause);
 		FmodErrorCheck(m_result);
 	}
 
 	void Sound::Unload()
 	{
 		m_soundOn = false;
-		FMOD_Sound_Release(m_fmodSound);
+		m_fmodSound->release();
 		FmodErrorCheck(m_result);
 	}
 
 	void Sound::Release()
 	{
-		FMOD_Sound_Release(m_fmodSound);
+		m_result = m_fmodSound->release();
 		FmodErrorCheck(m_result);
 
-		m_result = FMOD_System_Release(m_system);
+		m_result = m_system->release();
 		FmodErrorCheck(m_result);
 	}
 
 	/* Getters/Setters */
-	FMOD_SYSTEM* Sound::GetSystem()
+	FMOD::System* Sound::GetSystem()
 	{
 		return m_system;
 	}
 
-	FMOD_SOUND* Sound::GetFmodSound()
+	FMOD::Sound* Sound::GetFmodSound()
 	{
 		return m_fmodSound;
 	}
 
-	FMOD_CHANNEL* Sound::GetChannel()
+	FMOD::Channel* Sound::GetChannel()
 	{
 		return m_channel;
 	}
@@ -102,21 +102,21 @@ namespace Rogue
 	float Sound::GetVolume()
 	{
 		float volume;
-		FMOD_Channel_GetVolume(m_channel, &volume);
+		m_channel->getVolume(&volume);
 		return volume;
 	}
 
 	void Sound::SetVolume(float volume)
 	{
 		if (volume < 0)
-			FMOD_Channel_SetVolume(m_channel, 0.0f);
+			m_channel->setVolume(0.0f);
 		else
-			FMOD_Channel_SetVolume(m_channel, volume);
+			m_channel->setVolume(volume);
 	}
 
 	bool Sound::CheckPlaying()
 	{
-		FMOD_Channel_IsPlaying(m_channel, &m_soundOn);
+		m_channel->isPlaying(&m_soundOn);
 		FmodErrorCheck(m_result);
 		return m_soundOn;
 	}

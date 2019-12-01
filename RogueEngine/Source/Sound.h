@@ -1,28 +1,28 @@
 #pragma once
-#include "Stream.h"
+#include "Vector2D.h"
 
 namespace Rogue
 {
 	struct Sound
 	{
-		FMOD_BOOL m_soundOn;		/* is sound on? */
+		bool m_soundOn;		/* is sound on? */
 
 		// FMOD-specific
-		FMOD_SYSTEM* m_system;	/* the system where the sound will be using */
+		FMOD::System* m_system;	/* the system where the sound will be using */
 		FMOD_RESULT	m_result;		/* allows error checking for FMOD functions */
-		FMOD_SOUND* m_fmodSound;	/* holding the actual sound */
-		FMOD_CHANNEL* m_channel;	/* the channel where the sound will be playing from */
+		FMOD::Sound* m_fmodSound;	/* holding the actual sound */
+		FMOD::Channel* m_channel;	/* the channel where the sound will be playing from */
 
 		/* Sound Statistics */
 		bool m_isLooping = false;
 		float m_volume = 0.0f;
 
 		Sound();
-		/* Error-checking*/
-		void FmodErrorCheck(FMOD_RESULT result);
 
 		/* FMOD sound/channel/system creation */
 		void Create(const char* filename);
+		void Set3DLocation(Vec2 pos);
+		void Set3DMaxDistance(float max);
 
 		/* General Audio Functions */
 		/* Play the sound */
@@ -37,9 +37,9 @@ namespace Rogue
 		void Release();
 
 		/* Getter/Setter */
-		FMOD_SYSTEM* GetSystem();
-		FMOD_SOUND* GetFmodSound();
-		FMOD_CHANNEL* GetChannel();
+		FMOD::System* GetSystem();
+		FMOD::Sound* GetFmodSound();
+		FMOD::Channel* GetChannel();
 
 		float GetVolume();
 		void SetVolume(float volume);
