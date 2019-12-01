@@ -1,3 +1,20 @@
+/* Start Header ************************************************************************/
+/*!
+\file           PlayerControllerSystem.cpp
+\project        Exale
+\author         Chan Wai Kit Terence, c.terence, 440005918 (100%)
+\par            c.terence\@digipen.edu
+\date           1 December,2019
+\brief          This file contains the function definitions for PlayerControllerSystem
+
+All content (C) 2019 DigiPen (SINGAPORE) Corporation, all rights
+reserved.
+
+Reproduction or disclosure of this file or its contents
+without the prior written consent of DigiPen Institute of
+Technology is prohibited.
+*/
+/* End Header **************************************************************************/
 #pragma once
 #include "Precompiled.h"
 #include "PlayerControllerSystem.h"
@@ -50,7 +67,20 @@ namespace Rogue
 		{
 			if (m_timedEntities.size())
 				ClearTimedEntities();
+			if (m_teleports.size())
+				ClearTeleportEntities();
 			return;
+		}
+
+		if (m_teleports.size())
+		{
+			for (TimedEntity& ent : m_teleports)
+			{
+				ent.m_durationLeft -= g_deltaTime * g_engine.GetTimeScale();
+			}
+
+			if (m_teleports.back().m_durationLeft < 0.0f)
+				ClearTeleportEntities();
 		}
 
 		//if (!m_timedEntities.size())
@@ -190,6 +220,13 @@ namespace Rogue
 			{
 				if (m_entities.size() && m_timedEntities.size() && m_isInLight < 0.0f)
 				{
+					TimedEntity ent(g_engine.m_coordinator.cloneArchetypes("TeleportSprite", false), 0.5f);
+					m_teleports.push_back(ent);
+					if (g_engine.m_coordinator.ComponentExists<TransformComponent>(m_teleports.back().m_entity))
+					{
+						TransformComponent& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(m_teleports.back().m_entity);
+						transform.setPosition(g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).GetPosition());
+					}
 					//By right correct way of doing this
 					CreateTeleportEvent(g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).GetPosition());
 					/*if (keycode == KeyPress::MB2)
@@ -341,7 +378,7 @@ namespace Rogue
 
 			if (keycode == KeyPress::MB1 && g_engine.GetIsFocused())
 			{
-				if (!m_timedEntities.size() /*&& m_ballCooldown < 0.0f*/)
+				if (!m_timedEntities.size() && m_isInLight < 0.0f)
 				{
 					CreateBallAttack();
 					//m_ballTimer = 1.0f;
@@ -352,7 +389,7 @@ namespace Rogue
 						g_engine.m_coordinator.GetComponent<AnimationComponent>(*m_entities.begin()).setIsAnimating(true);
 
 					AudioManager::instance().loadSound("Resources/Sounds/[Shoot Projectile]SCI-FI-WHOOSH_GEN-HDF-20864.ogg", 0.86f, false).Play();
-					AudioManager::instance().loadSound("Resources/Sounds/[Ela Appear]SCI-FI-WHOOSH_GEN-HDF-20870.ogg", 0.3f, false).Play(0.3f);
+					AudioManager::instance().loadSound("Resources/Sounds/[Ela Appear]SCI-FI-WHOOSH_GEN-HDF-20870.ogg", 0.3f, false).Play();
 				}
 				g_engine.SetTimeScale(1.0f);
 			}
@@ -412,6 +449,29 @@ namespace Rogue
 		m_timedEntities.clear();
 	}
 
+	void PlayerControllerSystem::ClearTeleportEntities()
+	{
+		if (!m_teleports.size())
+			return;
+
+		auto& activeObjects = g_engine.m_coordinator.GetActiveObjects();
+		for (TimedEntity& entity : m_teleports)
+		{
+			g_engine.m_coordinator.DestroyEntity(entity.m_entity);
+
+			//for (auto iterator = activeObjects.begin(); iterator != activeObjects.end(); ++iterator)
+			//{
+			//	if (*iterator == m_teleports.begin()->m_entity)
+			//	{
+			//		activeObjects.erase(iterator);
+			//		break;
+			//	}
+			//}
+		}
+
+		m_teleports.clear();
+	}
+
 	void PlayerControllerSystem::CreateTeleportEvent(Vec2 newPosition)
 	{
 		EntTeleportEvent* event = new EntTeleportEvent(*m_entities.begin(), newPosition);
@@ -439,7 +499,7 @@ namespace Rogue
 
 			strstream << playerPos.x + ballDir.x * POSITION_RELATIVITY << ";"
 				<< playerPos.y + ballDir.y * POSITION_RELATIVITY << ";"
-				<< "20;20;0";
+				<< "30;30;0";
 
 			TransformComponent& ballTransform = g_engine.m_coordinator.CreateComponent<TransformComponent>(ball);
 
