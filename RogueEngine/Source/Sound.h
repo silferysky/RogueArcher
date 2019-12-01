@@ -12,6 +12,9 @@ namespace Rogue
 		FMOD_RESULT	m_result;		/* allows error checking for FMOD functions */
 		FMOD::Sound* m_fmodSound;	/* holding the actual sound */
 		FMOD::Channel* m_channel;	/* the channel where the sound will be playing from */
+		FMOD::DSP* m_DSPLowPassFilter; 
+		FMOD::DSP* m_DSPHighPassFilter;
+		FMOD::Reverb3D* m_reverb;
 
 		/* Sound Statistics */
 		bool m_isLooping = false;
