@@ -36,6 +36,7 @@ namespace Rogue
 	private:
 		void CreateBallAttack();
 		std::vector<TimedEntity> m_timedEntities;
+		bool m_grounded;
 		float m_isInLight;
 	};
 }
