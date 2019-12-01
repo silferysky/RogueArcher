@@ -136,15 +136,15 @@ namespace Rogue
 		}
 		if (!g_engine.m_coordinator.GetGameState() || g_engine.m_coordinator.GetPauseState())
 		{
-			if (ImGui::IsKeyPressed('Q'))
+			if (ImGui::IsKeyPressed('Q') && g_engine.GetIsFocused())
 			{
 				m_CurrentGizmoOperation = ImGuizmo::TRANSLATE;
 			}
-			if (ImGui::IsKeyPressed('W'))
+			if (ImGui::IsKeyPressed('W') && g_engine.GetIsFocused())
 			{
 				m_CurrentGizmoOperation = ImGuizmo::ROTATE;
 			}
-			if (ImGui::IsKeyPressed('E'))
+			if (ImGui::IsKeyPressed('E') && g_engine.GetIsFocused())
 			{
 				m_CurrentGizmoOperation = ImGuizmo::SCALE;
 			}
