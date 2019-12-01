@@ -46,15 +46,13 @@ namespace Rogue
 				break;
 
 			auto& aEmitter = g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(entity);
-			auto sound = aEmitter.getSound();
-
-			sound.Update();
 
 			if (!aEmitter.getIsScaling())
 				continue;
 
 			if (g_engine.m_coordinator.ComponentExists<TransformComponent>(m_trackingTarget))
 			{
+				auto sound = aEmitter.getSound();
 				Vec2 targetPos = g_engine.m_coordinator.GetComponent<TransformComponent>(m_trackingTarget).GetPosition();
 				Vec2 targetVel = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(m_trackingTarget).getVelocity();
 
