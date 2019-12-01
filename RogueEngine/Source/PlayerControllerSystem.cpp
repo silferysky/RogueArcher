@@ -214,7 +214,7 @@ namespace Rogue
 					}
 
 					auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
-					if (keycode == KeyPress::Numpad4)
+					/*if (keycode == KeyPress::Numpad4)
 					{
 						transform.offSetScale(Vec2(100.0f, 100.0f) * g_deltaTime * 60.0f);
 					}
@@ -231,7 +231,7 @@ namespace Rogue
 					else if (keycode == KeyPress::Numpad7)
 					{
 						transform.setPosition(Vec2(-200.0f, 0.0f));
-					}
+					}*/
 				}
 				//For 2nd Entity
 				//To be deleted in future (Since by right only one entityt should exist here for player
@@ -262,10 +262,10 @@ namespace Rogue
 					}
 
 					auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
-					if (keycode == KeyPress::Numpad8)
+					/*if (keycode == KeyPress::Numpad8)
 					{
 						transform.setPosition(Vec2(200.0f, 0.0f));
-					}
+					}*/
 				} // Entity 2 
 			} // End of Entity for-loop
 
