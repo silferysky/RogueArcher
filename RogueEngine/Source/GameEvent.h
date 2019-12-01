@@ -150,12 +150,14 @@ namespace Rogue
 	{
 		Vec2 m_posA;
 		Vec2 m_posB;
+		Vec2 m_scaleA;
+		Vec2 m_scaleB;
 	public:
 		SET_EVENT_CATEGORY(EventCatCollision)
 			SET_EVENT_TYPE(EvOnCollisionStay)
 
-		EntCollisionStayEvent(Entity id_1, Entity id_2, Vec2 posA, Vec2 posB) :
-			EntCollisionOrTrigger(id_1, id_2), m_posA{ posA }, m_posB{ posB }
+			EntCollisionStayEvent(Entity id_1, Entity id_2, Vec2 posA, Vec2 posB, Vec2 scaleA, Vec2 scaleB) :
+			EntCollisionOrTrigger(id_1, id_2), m_posA{ posA }, m_posB{ posB }, m_scaleA{ scaleA }, m_scaleB{ scaleB }
 		{}
 
 		Vec2 GetAPos() const
@@ -166,6 +168,16 @@ namespace Rogue
 		Vec2 GetBPos() const
 		{
 			return m_posB;
+		}
+
+		Vec2 GetScaleA() const
+		{
+			return m_scaleA;
+		}
+
+		Vec2 GetScaleB() const
+		{
+			return m_scaleB;
 		}
 	};
 
@@ -195,8 +207,8 @@ namespace Rogue
 		SET_EVENT_CATEGORY(EventCatTrigger)
 		SET_EVENT_TYPE(EvOnCollisionStay)
 
-		EntTriggerStayEvent(Entity id_1, Entity id_2, Vec2 transA, Vec2 transB)
-			:EntCollisionStayEvent(id_1, id_2, transA, transB) {}
+		EntTriggerStayEvent(Entity id_1, Entity id_2, Vec2 transA, Vec2 transB) :
+			EntCollisionStayEvent(id_1, id_2, transA, transB, Vec2(), Vec2()) {}
 	};
 
 	class EntTriggerExitEvent : public EntCollisionExitEvent
