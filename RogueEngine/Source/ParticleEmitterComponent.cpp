@@ -123,7 +123,7 @@ namespace Rogue
 
 		}
 
-		if (ImGui::BeginDragDropTarget())
+		/*if (ImGui::BeginDragDropTarget())
 		{
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Particle Texture"))
 			{
@@ -132,6 +132,32 @@ namespace Rogue
 				SetTexturePath(m_texturePath);
 			}
 			ImGui::EndDragDropTarget();
+		}*/
+		if (ImGui::BeginDragDropTarget())
+		{
+			if (const ImGuiPayload * payload = ImGui::AcceptDragDropPayload("Data"))
+			{
+				DirectoryInfo payload_n = *(DirectoryInfo*)payload->Data;
+				if (payload_n.m_fileType == "png" || payload_n.m_fileType == "bmp")
+				{
+					m_texturePath = payload_n.m_filePath.c_str();
+					SetTexturePath(m_texturePath);
+					ImGui::EndDragDropTarget();
+				}
+
+				else
+				{
+					ImGui::OpenPopup("Texture Error");
+				}
+			}
+		}
+		bool open = true;
+		if (ImGui::BeginPopupModal("Texture Error", &open))
+		{
+			ImGui::Text("Error!, Please only put in texture files!");
+			if (ImGui::Button("Close"))
+				ImGui::CloseCurrentPopup();
+			ImGui::EndPopup();
 		}
 	}
 
