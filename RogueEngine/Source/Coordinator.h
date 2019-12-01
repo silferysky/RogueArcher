@@ -113,9 +113,9 @@ namespace Rogue
 			return ShaderManager::instance().loadShader(shader.data());
 		}
 
-		Sound loadSound(std::string_view sound)
+		Sound loadSound(std::string_view sound, float volume = 1.0f, bool looping = false)
 		{
-			return AudioManager::instance().loadSound(sound.data());
+			return AudioManager::instance().loadSound(sound.data(), volume, looping);
 		}
 
 		template<typename T>
