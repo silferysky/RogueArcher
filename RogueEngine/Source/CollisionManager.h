@@ -33,6 +33,11 @@ namespace Rogue
 			return instance;
 		}
 
+		std::vector<std::pair<Entity, Entity>>& GetCollidedPairs()
+		{
+			return m_collidedPairs;
+		}
+
 		void GenerateManifoldCirclevsCircle(Entity A, Entity B);
 		bool GenerateManifoldCirclevsAABB(Entity A, Entity B);
 		bool GenerateManifoldAABBvsCircle(Entity A, Entity B);
