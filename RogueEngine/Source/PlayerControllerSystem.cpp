@@ -151,13 +151,13 @@ namespace Rogue
 			KeyTriggeredEvent* keytriggeredevent = dynamic_cast<KeyTriggeredEvent*>(ev);
 			KeyPress keycode = keytriggeredevent->GetKeyCode();
 
-			if (keycode == KeyPress::KeyF5)
+			if (keycode == KeyPress::KeyF5 && g_engine.GetIsFocused())
 				g_engine.m_coordinator.ToggleEditorIsRunning();
 
-			else if (keycode == KeyPress::KeyF6)
+			else if (keycode == KeyPress::KeyF6 && g_engine.GetIsFocused())
 				g_engine.ToggleVSync();
 
-			else if (keycode == KeyPress::MB1)
+			else if (keycode == KeyPress::MB1 && g_engine.GetIsFocused())
 			{
 				for (Entity entity : m_entities)
 				{
@@ -166,7 +166,7 @@ namespace Rogue
 				}
 			}
 
-			else if (keycode == KeyPress::MB2)
+			else if (keycode == KeyPress::MB2 && g_engine.GetIsFocused())
 			{
 				if (m_entities.size() && m_timedEntities.size() && m_isInLight < 0.0f)
 				{
@@ -179,12 +179,12 @@ namespace Rogue
 					ClearTimedEntities();
 				}
 			}
-			else if (keycode == KeyPress::MB3)
+			else if (keycode == KeyPress::MB3 && g_engine.GetIsFocused())
 			{
 				ClearTimedEntities();
 			}
 
-			else if (keycode == KeyPress::KeySpace)
+			else if (keycode == KeyPress::KeySpace && g_engine.GetIsFocused())
 			{
 				if (!m_grounded)
 					return;
@@ -202,7 +202,7 @@ namespace Rogue
 				}
 			}
 
-			else if (keycode == KeyPress::KeyEsc)
+			else if (keycode == KeyPress::KeyEsc && g_engine.GetIsFocused())
 			{
 				g_engine.m_coordinator.SetPauseState(true);
 				g_engine.m_coordinator.GetSystem<MenuControllerSystem>()->ToggleUIMenuObjs();
@@ -224,7 +224,7 @@ namespace Rogue
 				//For 1st entity
 				if (iEntity == m_entities.begin())
 				{
-					if (keycode == KeyPress::KeyA)
+					if (keycode == KeyPress::KeyA && g_engine.GetIsFocused())
 					{
 						auto& ctrler = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(*iEntity);
 						ctrler.SetMoveState(MoveState::e_left);
@@ -234,7 +234,7 @@ namespace Rogue
 						ev->SetSystemReceivers((int)SystemID::id_GRAPHICSSYSTEM);
 						EventDispatcher::instance().AddEvent(ev);
 					}
-					else if (keycode == KeyPress::KeyD)
+					else if (keycode == KeyPress::KeyD && g_engine.GetIsFocused())
 					{
 						auto& ctrler = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(*iEntity);
 						ctrler.SetMoveState(MoveState::e_right);
@@ -244,17 +244,71 @@ namespace Rogue
 						ev->SetSystemReceivers((int)SystemID::id_GRAPHICSSYSTEM);
 						EventDispatcher::instance().AddEvent(ev);
 					}
-					else if (keycode == KeyPress::KeyW)
+					else if (keycode == KeyPress::KeyW && g_engine.GetIsFocused())
 					{
 						//ForceManager::instance().RegisterForce(*iEntity, Vec2::s_unitY * playerX, g_fixedDeltaTime);
 					}
-					else if (keycode == KeyPress::KeyS)
+					else if (keycode == KeyPress::KeyS && g_engine.GetIsFocused())
 					{
 						//ForceManager::instance().RegisterForce(*iEntity, -Vec2::s_unitY * playerX, g_fixedDeltaTime);
 					}
-					return;
-				} // End of Entity for-loop
-			}
+
+					auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
+					/*if (keycode == KeyPress::Numpad4)
+					{
+						transform.offSetScale(Vec2(100.0f, 100.0f) * g_deltaTime * 60.0f);
+					}
+					else if (keycode == KeyPress::Numpad5)
+					{
+						transform.offSetScale(Vec2(-100.0f, -100.0f) * g_deltaTime * 60.0f);
+						//RE_INFO("Scaled Down!");
+					}
+					else if (keycode == KeyPress::Numpad6)
+					{
+						transform.offSetRotation(100.0f * g_deltaTime * 60.0f);
+						//RE_INFO("Rotated!");
+					}
+					else if (keycode == KeyPress::Numpad7)
+					{
+						transform.setPosition(Vec2(-200.0f, 0.0f));
+					}*/
+				}
+				//For 2nd Entity
+				//To be deleted in future (Since by right only one entityt should exist here for player
+				else if (iEntity != m_entities.begin())
+				{
+					auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
+					if (keycode == KeyPress::KeyArrowLeft && g_engine.GetIsFocused())
+					{
+						rigidbody.addForce(Vec2(-100.0f, 0.0f) * g_deltaTime * 1000.0f);
+						//RE_INFO("Move B Left!");
+
+					}
+					else if (keycode == KeyPress::KeyArrowRight && g_engine.GetIsFocused())
+					{
+						rigidbody.addForce(Vec2(100.0f, 0.0f) * g_deltaTime * 1000.0f);
+						//RE_INFO("Move B Right!");
+					}
+					else if (keycode == KeyPress::KeyArrowUp && g_engine.GetIsFocused())
+					{
+						rigidbody.addForce(Vec2(0.0f, 100.0f) * g_deltaTime * 1000.0f);
+						//RE_INFO("Move B Up!");
+
+					}
+					else if (keycode == KeyPress::KeyArrowDown && g_engine.GetIsFocused())
+					{
+						rigidbody.addForce(Vec2(0.0f, -100.0f) * g_deltaTime * 1000.0f);
+						//RE_INFO("Move B Down!");
+					}
+
+					auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
+					/*if (keycode == KeyPress::Numpad8)
+					{
+						transform.setPosition(Vec2(200.0f, 0.0f));
+					}*/
+				} // Entity 2 
+			} // End of Entity for-loop
+
 			return;
 		}
 		case EventType::EvKeyReleased:
@@ -265,7 +319,7 @@ namespace Rogue
 			if (!g_engine.m_coordinator.GameIsActive())
 				return;
 
-			if (keycode == KeyPress::MB1)
+			if (keycode == KeyPress::MB1 && g_engine.GetIsFocused())
 			{
 				if (!m_timedEntities.size() /*&& m_ballCooldown < 0.0f*/)
 				{
@@ -282,7 +336,7 @@ namespace Rogue
 				}
 				g_engine.SetTimeScale(1.0f);
 			}
-			if (keycode == KeyPress::KeyA || keycode == KeyPress::KeyD)
+			if ((keycode == KeyPress::KeyA && g_engine.GetIsFocused() )|| (keycode == KeyPress::KeyD && g_engine.GetIsFocused()))
 			{
 				auto& ctrler = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(*m_entities.begin());
 

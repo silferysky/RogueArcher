@@ -153,7 +153,7 @@ namespace Rogue
 			//if (keycode == KeyPress::Numpad9)
 			//	m_cameraShake.SetShake(13.0f);
 
-			if (keycode == KeyPress::KeyShift)
+			if (keycode == KeyPress::KeyShift && g_engine.GetIsFocused())
 				ToggleWorldCamera();
 
 			return;
@@ -163,10 +163,10 @@ namespace Rogue
 			KeyPressEvent* EvPressKey = dynamic_cast<KeyPressEvent*>(ev);
 			KeyPress keycode = EvPressKey->GetKeyCode();
 
-			if (keycode == KeyPress::KeyF1)
+			if (keycode == KeyPress::KeyF1 && g_engine.GetIsFocused())
 				CameraManager::instance().ZoomIn();
 
-			if (keycode == KeyPress::KeyF2)
+			if (keycode == KeyPress::KeyF2 && g_engine.GetIsFocused())
 				CameraManager::instance().ZoomOut();
 
 			return;
