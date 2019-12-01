@@ -86,6 +86,7 @@ namespace Rogue
 			if(ctrl.GetMoveState() == MoveState::e_stop)
 				ForceManager::instance().RegisterForce(entity, Vec2(rigidbody.getVelocity().x * -c_stopFactor, 0.0f));
 		}
+
 	}
 
 	void PlayerControllerSystem::Receive(Event* ev)
@@ -99,6 +100,44 @@ namespace Rogue
 
 		switch (ev->GetEventType())
 		{
+		case EventType::EvOnCollisionExit:
+		{
+			EntCollisionExitEvent* collisionExit = dynamic_cast<EntCollisionExitEvent*>(ev);
+			return;
+		}
+
+		case EventType::EvOnCollisionStay:
+		{
+			EntCollisionStayEvent* collisionStay = dynamic_cast<EntCollisionStayEvent*>(ev);
+
+			Entity player;
+			Entity ground;
+			Vec2 playerTrans, groundTrans;
+
+			if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(collisionStay->GetEntityID()))
+			{
+				player = collisionStay->GetEntityID();
+				playerTrans = collisionStay->GetAPos();
+				ground = collisionStay->GetOtherEntity();
+				groundTrans = collisionStay->GetBPos();
+			}
+			else if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(collisionStay->GetOtherEntity()))
+			{
+				player = collisionStay->GetOtherEntity();
+				playerTrans = collisionStay->GetBPos();
+				ground = collisionStay->GetEntityID();
+				groundTrans = collisionStay->GetAPos();
+			}
+			else
+				return;
+
+			if (playerTrans.y >= groundTrans.y)
+				m_grounded = true;
+			else
+				m_grounded = false;
+
+			return;
+		}
 		case EventType::EvMouseMoved:
 		{
 			MouseMoveEvent* mouseMove = dynamic_cast<MouseMoveEvent*>(ev);
@@ -147,6 +186,8 @@ namespace Rogue
 
 			else if (keycode == KeyPress::KeySpace && g_engine.GetIsFocused())
 			{
+				if (!m_grounded)
+					return;
 
 				for (std::set<Entity>::iterator iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
 				{
@@ -154,6 +195,9 @@ namespace Rogue
 					if (iEntity == m_entities.begin() && g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(*iEntity))
 					{
 						ForceManager::instance().RegisterForce(*iEntity, Vec2(0.0f, 35000.0f));
+						
+						// Reset boolean for grounded
+						m_grounded = false;
 					}
 				}
 			}
@@ -168,8 +212,8 @@ namespace Rogue
 			//{
 			//	RE_ASSERT(false, "CRASH ON PURPOSE");
 			//}
-
 			return;
+
 		} //End KeyTriggered
 		case EventType::EvKeyPressed:
 		{
@@ -271,7 +315,7 @@ namespace Rogue
 		{
 			KeyReleaseEvent* KeyReleaseEv = dynamic_cast<KeyReleaseEvent*>(ev);
 			KeyPress keycode = KeyReleaseEv->GetKeyCode();
-			
+
 			if (!g_engine.m_coordinator.GameIsActive())
 				return;
 
@@ -299,9 +343,9 @@ namespace Rogue
 				ctrler.SetMoveState(MoveState::e_stop);
 			}
 			return;
-		}
 		} // switch (ev->GetEventType())
-	} // Receive
+		} // Receive
+	}
 
 	void PlayerControllerSystem::Shutdown()
 	{
