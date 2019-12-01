@@ -108,12 +108,12 @@ namespace Rogue
 			return TextureManager::instance().loadTexture(texture);
 		}
 
-		Shader loadShader(std::string_view shader)
+		Shader loadShader(const std::string& shader)
 		{
 			return ShaderManager::instance().loadShader(shader.data());
 		}
 
-		Sound loadSound(std::string_view sound, float volume = 1.0f, bool looping = false)
+		Sound loadSound(const std::string& sound, float volume = 1.0f, bool looping = false)
 		{
 			return AudioManager::instance().loadSound(sound.data(), volume, looping);
 		}
