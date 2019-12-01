@@ -321,7 +321,7 @@ namespace Rogue
 
 			if (keycode == KeyPress::MB1 && g_engine.GetIsFocused())
 			{
-				if (!m_timedEntities.size() /*&& m_ballCooldown < 0.0f*/)
+				if (!m_timedEntities.size() && m_isInLight < 0.0f)
 				{
 					CreateBallAttack();
 					//m_ballTimer = 1.0f;
