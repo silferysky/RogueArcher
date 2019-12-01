@@ -24,7 +24,7 @@ Special Thanks to:
 	- KEH Choon Wee
 	- Teo Yi Quan Raymond
 
-© 2019 DigiPen, All Rights Reserved.
+All content © 2019 DigiPen (SINGAPORE) Corporation, all rights reserved.
 
 
 = Game Controls =

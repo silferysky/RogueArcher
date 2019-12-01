@@ -1,34 +1,20 @@
-/******************************************************************************/
+/* Start Header ************************************************************************/
 /*!
-\file		Matrix3x3.cpp
-\author 	
-\par    	
-\date   	
-\brief
-This module contains the necessary functions and operator overloads for the
-3x3 Matrix. 
+\file           Matrix33.cpp
+\project        Exale
+\author         Lim Jia Hao, l.jiahao, 390006518 (100%)
+\par            l.jiahao\@digipen.edu
+\date           1 December,2019
+\brief          This file contains the function definitions for Matrix33
 
-The functions are:
-Conversion constructor - Array of floats
-Conversion constructor - 9 arguments of floats
-Copy assignment operator
-Compound concatenation of matrices
-Concatenation of matrices
-Multiplication of a matrix with a vector
-Producing an Identity matrix
-Producing a Scaling transformation matrix
-Producing a Translation transformation matrix
-Producing a Rotation transformation matrix in radians
-Producing a Rotation transformation matrix in degrees
-Transposing a given matrix
-Inversing a given matrix
+All content (C) 2019 DigiPen (SINGAPORE) Corporation, all rights
+reserved.
 
-
-Copyright (C) 2019 DigiPen Institute of Technology.
-Reproduction or disclosure of this file or its contents without the
-prior written consent of DigiPen Institute of Technology is prohibited.
- */
- /******************************************************************************/
+Reproduction or disclosure of this file or its contents
+without the prior written consent of DigiPen Institute of
+Technology is prohibited.
+*/
+/* End Header **************************************************************************/
 #pragma once
 #include "Precompiled.h"
 #include "REMath.h"
