@@ -84,9 +84,16 @@ namespace Rogue
 			return 0;
 		case WM_ACTIVATE:
 			if (wParam == WA_INACTIVE)
+			{
 				g_engine.SetIsFocused(false);
+				g_engine.SetTimeScale(0.0f);
+			}
 			else if (wParam == WA_ACTIVE || wParam == WA_CLICKACTIVE)
+			{
 				g_engine.SetIsFocused(true);
+				g_engine.SetTimeScale(1.0f);
+			}
+
 		}
 		return DefWindowProc(hWnd, uMsg, wParam, lParam);
 	}
