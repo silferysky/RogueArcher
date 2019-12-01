@@ -31,7 +31,7 @@ Technology is prohibited.
 namespace Rogue
 {
 	PlayerControllerSystem::PlayerControllerSystem()
-		:System(SystemID::id_PLAYERCONTROLLERSYSTEM), m_isInLight{ 0.0f }, m_grounded{ false }
+		:System(SystemID::id_PLAYERCONTROLLERSYSTEM), m_isInLight{ 0.0f }
 	{
 	}
 
@@ -106,12 +106,14 @@ namespace Rogue
 			}
 		}*/
 
-		std::cout << m_grounded << std::endl;
 
 		const float c_stopFactor = 10.0f;
 
 		for (Entity entity : m_entities)
 		{
+			auto& player = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity);
+			std::cout << player.m_grounded << std::endl;
+
 			auto& ctrl = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity);
 			auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
 			 
@@ -132,62 +134,6 @@ namespace Rogue
 
 		switch (ev->GetEventType())
 		{
-		case EventType::EvOnCollisionExit:
-		{
-			EntCollisionExitEvent* collisionExit = dynamic_cast<EntCollisionExitEvent*>(ev);
-			return;
-		}
-
-		case EventType::EvOnCollisionStay:
-		{
-			EntCollisionStayEvent* collisionStay = dynamic_cast<EntCollisionStayEvent*>(ev);
-
-			Entity player;
-			Entity ground;
-			Vec2 playerTrans, groundTrans;
-			Vec2 playerScale, groundScale;
-
-			HierarchyInfo infoA = g_engine.m_coordinator.GetHierarchyInfo(collisionStay->GetEntityID());
-			HierarchyInfo infoB = g_engine.m_coordinator.GetHierarchyInfo(collisionStay->GetOtherEntity());
-
-			if (infoA.m_tag == "Player")
-			{
-				if (infoB.m_tag == "Ground")
-				{
-					player = collisionStay->GetEntityID();
-					playerTrans = collisionStay->GetAPos();
-					playerScale = collisionStay->GetScaleA();
-
-					ground = collisionStay->GetOtherEntity();
-					groundTrans = collisionStay->GetBPos();
-					groundScale = collisionStay->GetScaleB();
-				}
-			}
-			else if (infoB.m_tag == "Player")
-			{
-				if (infoA.m_tag == "Ground")
-				{
-					ground = collisionStay->GetEntityID();
-					groundTrans = collisionStay->GetAPos();
-					groundScale = collisionStay->GetScaleA();
-
-					player = collisionStay->GetOtherEntity();
-					playerTrans = collisionStay->GetBPos();
-					playerScale = collisionStay->GetScaleB();
-				}
-				else
-					return;
-			}
-			else
-				return;
-
-			if (playerTrans.y - playerScale.y < groundTrans.y + groundScale.y)
-				m_grounded = true;
-			else
-				m_grounded = false;
-
-			return;
-		}
 		case EventType::EvMouseMoved:
 		{
 			MouseMoveEvent* mouseMove = dynamic_cast<MouseMoveEvent*>(ev);
@@ -243,20 +189,19 @@ namespace Rogue
 
 			else if (keycode == KeyPress::KeySpace && g_engine.GetIsFocused())
 			{
-  				if (!m_grounded)
-					return;
-
 				for (std::set<Entity>::iterator iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
 				{
-					//For 1st entity
-					if (iEntity == m_entities.begin() && g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(*iEntity))
-					{
-						ForceManager::instance().RegisterForce(*iEntity, Vec2(0.0f, 35000.0f));
-						
-						// Reset boolean for grounded
-					}
+					auto& player = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(*iEntity);
+
+					if (!player.m_grounded)
+						return;
+
+					ForceManager::instance().RegisterForce(*iEntity, Vec2(0.0f, 35000.0f));
+
+					// Reset boolean for grounded
+					player.m_grounded = false;
+
 				}
-				m_grounded = false;
 			}
 
 			else if (keycode == KeyPress::KeyEsc && g_engine.GetIsFocused())
@@ -393,11 +338,81 @@ namespace Rogue
 				}
 				g_engine.SetTimeScale(1.0f);
 			}
-			if ((keycode == KeyPress::KeyA && g_engine.GetIsFocused() )|| (keycode == KeyPress::KeyD && g_engine.GetIsFocused()))
+			if ((keycode == KeyPress::KeyA && g_engine.GetIsFocused()) || (keycode == KeyPress::KeyD && g_engine.GetIsFocused()))
 			{
 				auto& ctrler = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(*m_entities.begin());
 
 				ctrler.SetMoveState(MoveState::e_stop);
+			}
+
+			else if (keycode == KeyPress::KeySpace && g_engine.GetIsFocused())
+			{
+				for (Entity entity : m_entities)
+				{
+					PlayerControllerComponent& player = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity);
+					
+					player.m_grounded = false;
+				}
+			}
+			return;
+		}
+		case EventType::EvOnCollisionExit:
+		{
+			EntCollisionExitEvent* collisionExit = dynamic_cast<EntCollisionExitEvent*>(ev);
+			return;
+		}
+
+		case EventType::EvOnCollisionStay:
+		{
+			EntCollisionStayEvent* collisionStay = dynamic_cast<EntCollisionStayEvent*>(ev);
+
+			Entity player;
+			Entity ground;
+			Vec2 playerTrans, groundTrans;
+			Vec2 playerScale, groundScale;
+
+			HierarchyInfo infoA = g_engine.m_coordinator.GetHierarchyInfo(collisionStay->GetEntityID());
+			HierarchyInfo infoB = g_engine.m_coordinator.GetHierarchyInfo(collisionStay->GetOtherEntity());
+
+			if (infoA.m_tag == "Player")
+			{
+				if (infoB.m_tag == "Ground")
+				{
+					player = collisionStay->GetEntityID();
+					playerTrans = collisionStay->GetAPos();
+					playerScale = collisionStay->GetScaleA();
+
+					ground = collisionStay->GetOtherEntity();
+					groundTrans = collisionStay->GetBPos();
+					groundScale = collisionStay->GetScaleB();
+				}
+			}
+			else if (infoB.m_tag == "Player")
+			{
+				if (infoA.m_tag == "Ground")
+				{
+					ground = collisionStay->GetEntityID();
+					groundTrans = collisionStay->GetAPos();
+					groundScale = collisionStay->GetScaleA();
+
+					player = collisionStay->GetOtherEntity();
+					playerTrans = collisionStay->GetBPos();
+					playerScale = collisionStay->GetScaleB();
+				}
+				else
+					return;
+			}
+			else
+				return;
+
+			for (Entity entity : m_entities)
+			{
+				auto& player = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity);
+
+				if (playerTrans.y - playerScale.y < groundTrans.y + groundScale.y)
+					player.m_grounded = true;
+				else
+					player.m_grounded = false;
 			}
 			return;
 		} // switch (ev->GetEventType())

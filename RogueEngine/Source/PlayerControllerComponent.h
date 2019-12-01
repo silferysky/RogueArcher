@@ -37,6 +37,8 @@ namespace Rogue
 		MoveState m_moveState;
 
 	public:
+		bool m_grounded;
+
 		PlayerControllerComponent();
 		~PlayerControllerComponent() = default;
 
