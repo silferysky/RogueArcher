@@ -19,6 +19,7 @@ namespace Rogue
 		Vec2 m_scale;
 		Vec2 m_velocityFactor;
 		Vec2 m_positionalOffset;
+		Vec2 m_spread;
 
 		std::string m_texturePath;
 	public:
@@ -54,6 +55,9 @@ namespace Rogue
 
 		void SetPositionalOffset(const Vec2 positionalOffset);
 		Vec2 GetPositionalOffset() const;
+
+		void SetSpread(const Vec2 spread);
+		Vec2 GetSpread() const;
 
 		void SetTexturePath(std::string_view texturePath);
 		std::string_view GetTexturePath() const;
