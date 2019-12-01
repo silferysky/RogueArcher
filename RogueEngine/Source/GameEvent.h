@@ -2,6 +2,7 @@
 #include "Event.h"
 #include "Vector2D.h"
 #include "Types.h"
+#include "Vector2D.h"
 
 namespace Rogue
 {
@@ -131,7 +132,7 @@ namespace Rogue
 
 		inline Entity GetOtherEntity() { return collidedEntity; }
 
-	private:
+	protected:
 		Entity collidedEntity;
 	};
 
@@ -147,12 +148,25 @@ namespace Rogue
 
 	class EntCollisionStayEvent : public EntCollisionOrTrigger
 	{
+		Vec2 m_posA;
+		Vec2 m_posB;
 	public:
 		SET_EVENT_CATEGORY(EventCatCollision)
-		SET_EVENT_TYPE(EvOnCollisionStay)
+			SET_EVENT_TYPE(EvOnCollisionStay)
 
-		EntCollisionStayEvent(Entity id_1, Entity id_2)
-			:EntCollisionOrTrigger(id_1, id_2) {}
+		EntCollisionStayEvent(Entity id_1, Entity id_2, Vec2 posA, Vec2 posB) :
+			EntCollisionOrTrigger(id_1, id_2), m_posA{ posA }, m_posB{ posB }
+		{}
+
+		Vec2 GetAPos() const
+		{
+			return m_posA;
+		}
+
+		Vec2 GetBPos() const
+		{
+			return m_posB;
+		}
 	};
 
 	class EntCollisionExitEvent : public EntCollisionOrTrigger
@@ -181,8 +195,8 @@ namespace Rogue
 		SET_EVENT_CATEGORY(EventCatTrigger)
 		SET_EVENT_TYPE(EvOnCollisionStay)
 
-		EntTriggerStayEvent(Entity id_1, Entity id_2)
-			:EntCollisionStayEvent(id_1, id_2) {}
+		EntTriggerStayEvent(Entity id_1, Entity id_2, Vec2 transA, Vec2 transB)
+			:EntCollisionStayEvent(id_1, id_2, transA, transB) {}
 	};
 
 	class EntTriggerExitEvent : public EntCollisionExitEvent
