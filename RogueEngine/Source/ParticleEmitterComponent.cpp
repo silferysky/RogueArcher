@@ -216,7 +216,7 @@ namespace Rogue
 		ss << m_arc << ";";
 		ss << m_angle << ";";
 		ss << m_lifetimeLimit << ";";
-		ss << m_fade << ";";
+		ss << m_isFading << ";";
 		ss << m_isActive << ";";
 		ss << m_isContinuous << ";";
 		ss << m_texturePath << ";";
@@ -258,7 +258,7 @@ namespace Rogue
 				SetLifetimeLimit(std::stof(s1));
 				break;
 			case 6:
-				SetFade(std::stof(s1));
+				SetIsFading(std::stof(s1));
 				break;
 			case 7:
 				SetIsActive(std::stof(s1));

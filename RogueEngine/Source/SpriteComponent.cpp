@@ -49,7 +49,7 @@ namespace Rogue
 	glm::vec4& SpriteComponent::getFilter()
 	{
 		return m_filter;
-	}
+	} 
 
 	void SpriteComponent::setFilter(const glm::vec4& filter)
 	{
