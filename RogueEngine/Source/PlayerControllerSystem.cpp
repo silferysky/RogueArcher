@@ -210,7 +210,7 @@ namespace Rogue
 					}
 
 					auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
-					/*if (keycode == KeyPress::Numpad4)
+					if (keycode == KeyPress::Numpad4)
 					{
 						transform.offSetScale(Vec2(100.0f, 100.0f) * g_deltaTime * 60.0f);
 					}
@@ -227,7 +227,7 @@ namespace Rogue
 					else if (keycode == KeyPress::Numpad7)
 					{
 						transform.setPosition(Vec2(-200.0f, 0.0f));
-					}*/
+					}
 				}
 				//For 2nd Entity
 				//To be deleted in future (Since by right only one entityt should exist here for player
@@ -258,10 +258,10 @@ namespace Rogue
 					}
 
 					auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
-					/*if (keycode == KeyPress::Numpad8)
+					if (keycode == KeyPress::Numpad8)
 					{
 						transform.setPosition(Vec2(200.0f, 0.0f));
-					}*/
+					}
 				} // Entity 2 
 			} // End of Entity for-loop
 
@@ -287,8 +287,8 @@ namespace Rogue
 					if (g_engine.m_coordinator.ComponentExists<AnimationComponent>(*m_entities.begin()))
 						g_engine.m_coordinator.GetComponent<AnimationComponent>(*m_entities.begin()).setIsAnimating(true);
 
-					AudioManager::instance().loadSound("Resources/Sounds/[Shoot Projectile]SCI-FI-WHOOSH_GEN-HDF-20864.ogg", 0.86f, false).Play();
-					AudioManager::instance().loadSound("Resources/Sounds/[Ela Appear]SCI-FI-WHOOSH_GEN-HDF-20870.ogg", 0.3f, false).Play(0.3f);
+					AudioManager::instance().loadSound("Resources/Sounds/[Shoot Projectile]SCI-FI-WHOOSH_GEN-HDF-20864.ogg").Play();
+					AudioManager::instance().loadSound("Resources/Sounds/[Ela Appear]SCI-FI-WHOOSH_GEN-HDF-20870.ogg").Play(0.3f);
 				}
 				g_engine.SetTimeScale(1.0f);
 			}
