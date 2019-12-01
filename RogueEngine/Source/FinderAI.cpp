@@ -23,7 +23,7 @@ namespace Rogue
 		{
 			//Skip if found self
 			if (iterator == m_entity)
-				return;
+				continue;
 
 			if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(iterator))
 			{

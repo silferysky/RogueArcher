@@ -11,6 +11,7 @@ namespace Rogue
 		bool m_isContinuous = false;
 		float m_magnitude = 0.0f;
 
+		int m_particleZ = 0;
 		float m_arc = 0.0f;
 		float m_angle = 0.0f;
 		float m_lifetimeLimit = 0.0f;
@@ -34,6 +35,9 @@ namespace Rogue
 
 		void SetMagnitude(const float magnitude);
 		float GetMagnitude() const;
+
+		void SetParticleZ(const int particleZ);
+		int GetParticleZ() const;
 
 		void SetArc(const float arc);
 		float GetArc() const;
