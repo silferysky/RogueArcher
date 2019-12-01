@@ -3,7 +3,7 @@
 #include "Main.h"
 #include "KeyEvent.h"
 #include "GraphicsEvent.h"
-#include "CameraManager.h"
+
 
 namespace Rogue
 {
@@ -205,16 +205,6 @@ namespace Rogue
 			{
 				UIComponent& ui = g_engine.m_coordinator.GetComponent<UIComponent>(ent);
 				ui.setIsActive(!ui.getIsActive());
-
-				/*if (g_engine.m_coordinator.ComponentExists<TransformComponent>(ent))
-				{
-					glm::vec3 cameraPos = CameraManager::instance().GetCameraPos();
-					TransformComponent& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(ent);
-					if (ui.getIsActive())
-						transform.setPosition(Vec2(transform.GetPosition().x - cameraPos.x, transform.GetPosition().y - cameraPos.y));
-					else
-						transform.setPosition(Vec2(transform.GetPosition().x + cameraPos.x, transform.GetPosition().y + cameraPos.y));
-				}*/
 			}
 		}
 	}
@@ -228,16 +218,6 @@ namespace Rogue
 			{
 				UIComponent& ui = g_engine.m_coordinator.GetComponent<UIComponent>(ent);
 				ui.setIsActive(newActive);
-
-				/*if (g_engine.m_coordinator.ComponentExists<TransformComponent>(ent))
-				{
-					glm::vec3 cameraPos = CameraManager::instance().GetCameraPos();
-					TransformComponent& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(ent);
-					if (ui.getIsActive())
-						transform.setPosition(Vec2(transform.GetPosition().x - cameraPos.x, transform.GetPosition().y - cameraPos.y));
-					else
-						transform.setPosition(Vec2(transform.GetPosition().x + cameraPos.x, transform.GetPosition().y + cameraPos.y));
-				}*/
 			}
 		}
 	}
@@ -250,8 +230,7 @@ namespace Rogue
 	void MenuControllerSystem::ResumeGame()
 	{
 		//ClearMenuObjs();
-		ToggleUIMenuObjs();
-		//SetUIMenuObjs(false);
+		SetUIMenuObjs(false);
 		g_engine.m_coordinator.SetPauseState(false);
 		g_engine.SetTimeScale(1.0f);
 	}

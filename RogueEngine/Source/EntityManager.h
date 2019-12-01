@@ -35,7 +35,7 @@ namespace Rogue
 			// Take an ID from the front of the queue
 			if (REActiveEntityCount > MAX_ENTITIES)
 			{
-				REActiveEntityCount = static_cast<uint32_t>(m_currentActiveObjects.size());
+				REActiveEntityCount = m_currentActiveObjects.size();
 			}
 			RE_ASSERT(REActiveEntityCount < MAX_ENTITIES, "Too many entities in existence.");
 			Entity id = REAvailableEntities.front();
