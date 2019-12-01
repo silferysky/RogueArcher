@@ -51,7 +51,7 @@ namespace Rogue
 		void SystemInits()
 		{
 			GetSystem<AudioSystem>()->TrueInit();
-			GetSystem<AudioSystem>()->InitSounds();
+			//GetSystem<AudioSystem>()->InitSounds();
 
 			GetSystem<AnimationSystem>()->ResetTextures();
 		}
