@@ -55,7 +55,6 @@ namespace Rogue
 		void CreateBallAttack();
 		std::vector<TimedEntity> m_timedEntities;
 		std::vector<TimedEntity> m_teleports;
-		bool m_grounded;
 		float m_isInLight;
 	};
 }
