@@ -33,9 +33,9 @@ namespace Rogue
 		ImGui::Text("Particle Scale    ");
 		ImGui::SameLine();
 		ImGui::PushItemWidth(75);
-		ImGui::DragFloat(" ", &m_scale.x, 1.0f, 0.0f, 100000.0f);
+		ImGui::DragFloat("           ", &m_scale.x, 1.0f, 0.0f, 100000.0f);
 		ImGui::SameLine(0.0f, 36.0f);
-		ImGui::DragFloat("  ", &m_scale.y, 1.0f, 0.0f, 100000.0f);
+		ImGui::DragFloat("            ", &m_scale.y, 1.0f, 0.0f, 100000.0f);
 
 		ImGui::Text("Particle Positional Offset Range");
 		ImGui::SameLine();
