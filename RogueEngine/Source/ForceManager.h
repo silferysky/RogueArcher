@@ -44,8 +44,6 @@ namespace Rogue
 		using ForceVector = std::vector<ForceInfo>;
 	private:
 		ForceVector m_forceInfos;
-		Timer::ChronoTime m_prevTime;
-		Timer::ChronoTime m_currTime;
 	public:
 		static ForceManager& instance()
 		{

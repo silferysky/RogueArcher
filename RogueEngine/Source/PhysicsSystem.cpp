@@ -173,8 +173,8 @@ namespace Rogue
 				force.x = maxForce;
 			}
 #endif	
-			//ForceManager::instance().RegisterForce(player, force, g_fixedDeltaTime);
-			rigidbody.addForce(force);
+			ForceManager::instance().RegisterForce(player, force, g_fixedDeltaTime);
+			//rigidbody.addForce(force);
 
 			return;
 		}
