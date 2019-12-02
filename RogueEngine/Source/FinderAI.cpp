@@ -90,7 +90,7 @@ namespace Rogue
 
 		float distance = Vec2SqDistance(aiTransform.GetPosition(), m_nextPoint.front());
 
-		//if (distance < travelDistance * m_statsComponent->getSpeed() * DT_SPEED_MODIFIER)
+		//if (distance < m_statsComponent->getSpeed() * DT_SPEED_MODIFIER)
 			//aiTransform.setPosition(m_nextPoint.front());
 		//else
 		{
