@@ -71,7 +71,8 @@ namespace Rogue
 //#define RE_FATAL(TFirst, ...)			Logger::instance().GetClientFileLogger()->fatal(TFirst);	Logger::AddStringToConsole(TFirst)
 
 //Assert Logging
-#define RE_ASSERT(args, msg)	if(args == false) { RE_CORE_ERROR(msg);	assert(args && msg); }
+//Uncommented version does not provide a readable message, but commented version will run in both modes
+#define RE_ASSERT(args, msg)	Logger::instance().AssertArgs(args, msg);//if(args == false) { RE_CORE_ERROR(msg);	assert(args && msg); }
 
 #define CLEARSTRING(s) s.clear(); s.str("")
 
