@@ -26,6 +26,8 @@ namespace Rogue
 		: public System, public EventListener
 	{
 		std::vector<Entity> m_menuObjs;
+		bool m_confirmQuit;
+		std::vector<Entity> m_confirmQuitEnt;
 
 	public:
 
@@ -43,6 +45,7 @@ namespace Rogue
 		void ToggleControlHelpMenu();
 		void ToggleUIMenuObjs();
 		void SetUIMenuObjs(bool newActive);
+		void ToggleQuitButtonObj();
 		size_t GetUIMenuObjsSize();
 		void ResumeGame();
 	};
