@@ -257,13 +257,57 @@ namespace Rogue
 							ev->SetSystemReceivers((int)SystemID::id_GRAPHICSSYSTEM);
 							EventDispatcher::instance().AddEvent(ev);
 						}
-						else if (keycode == KeyPress::KeyW)
+
+						// Skip level
+						else if (keycode == KeyPress::KeyI)
 						{
-							//ForceManager::instance().RegisterForce(*iEntity, Vec2::s_unitY * playerX, g_fixedDeltaTime);
+							if (SceneManager::instance().getCurrentFileName() == "Level 8.json")
+							{
+								if (g_engine.m_coordinator.ComponentExists<TransformComponent>(*iEntity))
+								{
+									auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
+
+									trans.setPosition(Vec2(480.0f, -321.0f));
+								}
+							}
+
+							if (SceneManager::instance().getCurrentFileName() == "Level 9.json")
+							{
+								if (g_engine.m_coordinator.ComponentExists<TransformComponent>(*iEntity))
+								{
+									auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
+
+									trans.setPosition(Vec2(1150.0f, 578.0f));
+								}
+							}
+							
 						}
 						else if (keycode == KeyPress::KeyS)
 						{
 							//ForceManager::instance().RegisterForce(*iEntity, -Vec2::s_unitY * playerX, g_fixedDeltaTime);
+						}
+
+						// Reset level
+						else if (keycode == KeyPress::KeyO)
+						{
+							if (SceneManager::instance().getCurrentFileName() == "Level 8.json")
+							{
+								if (g_engine.m_coordinator.ComponentExists<TransformComponent>(*iEntity))
+								{
+									auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
+
+									trans.setPosition(Vec2(-530.0f, 287.0f));
+								}
+							}
+							else if (SceneManager::instance().getCurrentFileName() == "Level 9.json")
+							{
+								if (g_engine.m_coordinator.ComponentExists<TransformComponent>(*iEntity))
+								{
+									auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
+
+									trans.setPosition(Vec2(-1557.0f, 258.0f));
+								}
+							}
 						}
 					}
 					
