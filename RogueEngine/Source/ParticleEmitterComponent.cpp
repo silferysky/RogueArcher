@@ -361,7 +361,7 @@ namespace Rogue
 				SetTexturePath(s1);
 				break;
 			case 12:
-				SetParticleZ(std::stof(s1));
+				SetParticleZ(std::stoi(s1));
 				break;
 			default:
 				break;
