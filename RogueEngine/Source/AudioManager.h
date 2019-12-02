@@ -72,7 +72,10 @@ namespace Rogue
 			//audio = directory + audio;
 			auto itr = audioMap.find(audio);
 			if (itr != audioMap.end())
+			{
+				itr->second.Play(itr->second.m_volume);
 				return itr->second;
+			}
 			else
 			{
 				Sound newSound;
