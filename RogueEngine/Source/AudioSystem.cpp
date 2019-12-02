@@ -113,10 +113,11 @@ namespace Rogue
 		{
 			KeyTriggeredEvent* keytriggeredevent = dynamic_cast<KeyTriggeredEvent*>(ev);
 			KeyPress keycode = keytriggeredevent->GetKeyCode();
-
-			if (keycode == KeyPress::KeyM && g_engine.GetIsFocused())
-				ToggleMute();
-
+			if (g_engine.GetIsFocused())
+			{
+				if (keycode == KeyPress::KeyM)
+					ToggleMute();
+			}
 			return;
 		} //End KeyTriggered
 		}

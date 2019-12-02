@@ -23,41 +23,26 @@ Technology is prohibited.
 namespace Rogue
 {
 	ForceInfo::ForceInfo(Entity entity, const Vec2& force, float lifetime, bool isActive) :
-		m_entity{ entity }, m_age{ 0.0f }, m_lifetime{ lifetime }, m_force{ force }, m_isActive{ isActive }
+		m_entity{ entity }, m_age{ lifetime }, m_lifetime{ lifetime }, m_force{ force }, m_isActive{ isActive }
 	{}
 
 	void ForceManager::Init()
 	{
-		// About 2MB worth of allocation
-		m_forceInfos.reserve(128); // Reserve to an arbitruary good size to minimize simulation-time allocation
-
-		m_currTime = g_engine.m_coordinator.GetCurrTime();
-		m_prevTime = g_engine.m_coordinator.GetCurrTime();
+		m_forceInfos.reserve(32); // Reserve to an arbitruary good size to minimize simulation-time allocation
 	}
 
 	void ForceManager::UpdateAges()
 	{
-		m_currTime = g_engine.m_coordinator.GetCurrTime();
-		Timer::FloatSec delta = m_currTime - m_prevTime;
-		m_prevTime = m_currTime;
+		std::for_each(std::begin(m_forceInfos), std::end(m_forceInfos), [](ForceInfo& forceInfo)
+			{
+				if (!forceInfo.m_isActive)
+					return;
 
-		float duration = static_cast<float>(std::chrono::duration_cast<std::chrono::microseconds>(delta).count()) /
-			Timer::s_microsecondsPerSecond;
+				forceInfo.m_age -= g_fixedDeltaTime;
 
-		ForceVector::iterator i = m_forceInfos.begin();
-
-		while(i != m_forceInfos.cend())
-		{
-			if (!i->m_isActive)
-				continue;
-
-			i->m_age += duration;
-
-			if (i->m_age >= i->m_lifetime)
-				i->m_isActive = false;
-
-			++i;
-		}
+				if (forceInfo.m_age < 0.0f)
+					forceInfo.m_isActive = false;
+			});
 
 		// Remove-erase idiom
 		// Move all safe elements to the front, returning iterator the "new end"

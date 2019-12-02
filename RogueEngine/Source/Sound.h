@@ -29,9 +29,9 @@ namespace Rogue
 		FMOD_RESULT	m_result;		/* allows error checking for FMOD functions */
 		FMOD::Sound* m_fmodSound;	/* holding the actual sound */
 		FMOD::Channel* m_channel;	/* the channel where the sound will be playing from */
-		FMOD::DSP* m_DSPLowPassFilter; 
-		FMOD::DSP* m_DSPHighPassFilter;
-		FMOD::Reverb3D* m_reverb;
+		//FMOD::DSP* m_DSPLowPassFilter; 
+		//FMOD::DSP* m_DSPHighPassFilter;
+		//FMOD::Reverb3D* m_reverb;
 
 		/* Sound Statistics */
 		bool m_isLooping = false;
@@ -40,7 +40,7 @@ namespace Rogue
 		Sound();
 
 		/* FMOD sound/channel/system creation */
-		void Create(const char* filename);
+		void Create(const char* filename, FMOD::System* fmodSystem, FMOD::DSP* DSPLowPassFilter, FMOD::DSP* DSPHighPassFilter);
 		void Set3DLocation(Vec2 pos);
 		void Set3DMaxDistance(float max);
 

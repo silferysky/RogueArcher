@@ -118,8 +118,8 @@ namespace Rogue
 			auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
 			 
 			if (ctrl.GetMoveState() == MoveState::e_stop)
-				//ForceManager::instance().RegisterForce(entity, Vec2(rigidbody.getVelocity().x * -c_stopFactor, 0.0f));
-				rigidbody.addForce(Vec2(rigidbody.getVelocity().x * -c_stopFactor, 0.0f));
+				ForceManager::instance().RegisterForce(entity, Vec2(rigidbody.getVelocity().x * -c_stopFactor, 0.0f));
+				//rigidbody.addForce(Vec2(rigidbody.getVelocity().x * -c_stopFactor, 0.0f));
 
 			player.m_jumpTimer -= g_deltaTime * g_engine.GetTimeScale();
 		}
@@ -150,75 +150,79 @@ namespace Rogue
 			KeyTriggeredEvent* keytriggeredevent = dynamic_cast<KeyTriggeredEvent*>(ev);
 			KeyPress keycode = keytriggeredevent->GetKeyCode();
 
-			if (keycode == KeyPress::KeyF5 && g_engine.GetIsFocused())
-				g_engine.m_coordinator.ToggleEditorIsRunning();
-
-			else if (keycode == KeyPress::KeyF6 && g_engine.GetIsFocused())
-				g_engine.ToggleVSync();
-
-			else if (keycode == KeyPress::MB1 && g_engine.GetIsFocused())
+			if (g_engine.GetIsFocused())
 			{
-				for (Entity entity : m_entities)
-				{
-					auto& PlayerControllable = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity);
-					g_engine.SetTimeScale(PlayerControllable.GetSlowTime());
-				}
-			}
+				if (keycode == KeyPress::KeyF5)
+					g_engine.m_coordinator.ToggleEditorIsRunning();
 
-			else if (keycode == KeyPress::MB2 && g_engine.GetIsFocused())
-			{
-				if (m_entities.size() && m_timedEntities.size() && m_isInLight < 0.0f)
+				else if (keycode == KeyPress::KeyF6)
+					g_engine.ToggleVSync();
+
+				else if (keycode == KeyPress::MB1 && g_engine.GetIsFocused())
 				{
-					TimedEntity ent(g_engine.m_coordinator.cloneArchetypes("TeleportSprite", false), 0.5f);
-					m_teleports.push_back(ent);
-					if (g_engine.m_coordinator.ComponentExists<TransformComponent>(m_teleports.back().m_entity))
+					for (Entity entity : m_entities)
 					{
-						TransformComponent& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(m_teleports.back().m_entity);
-						transform.setPosition(g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).GetPosition());
+						auto& PlayerControllable = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity);
+						g_engine.SetTimeScale(PlayerControllable.GetSlowTime());
 					}
-					//By right correct way of doing this
-					CreateTeleportEvent(g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).GetPosition());
-					/*if (keycode == KeyPress::MB2)
-						g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin()).setPosition(
-							g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).getPosition());*/
+				}
 
+				else if (keycode == KeyPress::MB2)
+				{
+					if (m_entities.size() && m_timedEntities.size() && m_isInLight < 0.0f)
+					{
+						TimedEntity ent(g_engine.m_coordinator.cloneArchetypes("TeleportSprite", false), 0.5f);
+						m_teleports.push_back(ent);
+						if (g_engine.m_coordinator.ComponentExists<TransformComponent>(m_teleports.back().m_entity))
+						{
+							TransformComponent& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(m_teleports.back().m_entity);
+							transform.setPosition(g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).GetPosition());
+						}
+						//By right correct way of doing this
+						CreateTeleportEvent(g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).GetPosition());
+						/*if (keycode == KeyPress::MB2)
+							g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin()).setPosition(
+								g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).getPosition());*/
+
+						ClearTimedEntities();
+					}
+				}
+				else if (keycode == KeyPress::MB3)
+				{
 					ClearTimedEntities();
 				}
-			}
-			else if (keycode == KeyPress::MB3 && g_engine.GetIsFocused())
-			{
-				ClearTimedEntities();
-			}
 
-			else if (keycode == KeyPress::KeySpace && g_engine.GetIsFocused())
-			{
-				for (std::set<Entity>::iterator iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
+				else if (keycode == KeyPress::KeySpace)
 				{
-					auto& player = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(*iEntity);
-					auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
+					for (std::set<Entity>::iterator iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
+					{
+						auto& player = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(*iEntity);
+						auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
 
-					if (!player.m_grounded || player.m_jumpTimer > 0.0f)
-						return;
+						if (!player.m_grounded || player.m_jumpTimer > 0.0f)
+							return;
 
-					//ForceManager::instance().RegisterForce(*iEntity, Vec2(0.0f, 35000.0f));
-					rigidbody.addForce(Vec2(0.0f, 35000.0f));
+						ForceManager::instance().RegisterForce(*iEntity, Vec2(0.0f, 35000.0f));
+						//rigidbody.addForce(Vec2(0.0f, 35000.0f));
 
-					// Reset boolean for grounded
-					player.m_grounded = false;
-					player.m_jumpTimer = m_maxJumpTimer;
+						// Reset boolean for grounded
+						player.m_grounded = false;
+						player.m_jumpTimer = m_maxJumpTimer;
+					}
 				}
+
+				else if (keycode == KeyPress::KeyEsc)
+				{
+					g_engine.m_coordinator.SetPauseState(true);
+					g_engine.m_coordinator.GetSystem<MenuControllerSystem>()->ToggleUIMenuObjs();
+				}
+
+				//if (keycode == KeyPress::Numpad9)
+				//{
+				//	RE_ASSERT(false, "CRASH ON PURPOSE");
+				//}
 			}
 
-			else if (keycode == KeyPress::KeyEsc && g_engine.GetIsFocused())
-			{
-				g_engine.m_coordinator.SetPauseState(true);
-				g_engine.m_coordinator.GetSystem<MenuControllerSystem>()->ToggleUIMenuObjs();
-			}
-
-			//if (keycode == KeyPress::Numpad9)
-			//{
-			//	RE_ASSERT(false, "CRASH ON PURPOSE");
-			//}
 			return;
 
 		} //End KeyTriggered
@@ -231,89 +235,39 @@ namespace Rogue
 				//For 1st entity
 				if (iEntity == m_entities.begin())
 				{
-					if (keycode == KeyPress::KeyA && g_engine.GetIsFocused())
+					if (g_engine.GetIsFocused())
 					{
-						auto& ctrler = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(*iEntity);
-						ctrler.SetMoveState(MoveState::e_left);
+						if (keycode == KeyPress::KeyA)
+						{
+							auto& ctrler = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(*iEntity);
+							ctrler.SetMoveState(MoveState::e_left);
 
-						Event* ev = new EntMoveEvent{ *iEntity, true, -1.0f, 0.0f };
-						ev->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
-						ev->SetSystemReceivers((int)SystemID::id_GRAPHICSSYSTEM);
-						EventDispatcher::instance().AddEvent(ev);
-					}
-					else if (keycode == KeyPress::KeyD && g_engine.GetIsFocused())
-					{
-						auto& ctrler = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(*iEntity);
-						ctrler.SetMoveState(MoveState::e_right);
+							Event* ev = new EntMoveEvent{ *iEntity, true, -1.0f, 0.0f };
+							ev->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
+							ev->SetSystemReceivers((int)SystemID::id_GRAPHICSSYSTEM);
+							EventDispatcher::instance().AddEvent(ev);
+						}
+						else if (keycode == KeyPress::KeyD)
+						{
+							auto& ctrler = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(*iEntity);
+							ctrler.SetMoveState(MoveState::e_right);
 
-						Event* ev = new EntMoveEvent{ *iEntity, true, 1.0f, 0.0f };
-						ev->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
-						ev->SetSystemReceivers((int)SystemID::id_GRAPHICSSYSTEM);
-						EventDispatcher::instance().AddEvent(ev);
+							Event* ev = new EntMoveEvent{ *iEntity, true, 1.0f, 0.0f };
+							ev->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
+							ev->SetSystemReceivers((int)SystemID::id_GRAPHICSSYSTEM);
+							EventDispatcher::instance().AddEvent(ev);
+						}
+						else if (keycode == KeyPress::KeyW)
+						{
+							//ForceManager::instance().RegisterForce(*iEntity, Vec2::s_unitY * playerX, g_fixedDeltaTime);
+						}
+						else if (keycode == KeyPress::KeyS)
+						{
+							//ForceManager::instance().RegisterForce(*iEntity, -Vec2::s_unitY * playerX, g_fixedDeltaTime);
+						}
 					}
-					else if (keycode == KeyPress::KeyW && g_engine.GetIsFocused())
-					{
-						//ForceManager::instance().RegisterForce(*iEntity, Vec2::s_unitY * playerX, g_fixedDeltaTime);
-					}
-					else if (keycode == KeyPress::KeyS && g_engine.GetIsFocused())
-					{
-						//ForceManager::instance().RegisterForce(*iEntity, -Vec2::s_unitY * playerX, g_fixedDeltaTime);
-					}
-
-					auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
-					/*if (keycode == KeyPress::Numpad4)
-					{
-						transform.offSetScale(Vec2(100.0f, 100.0f) * g_deltaTime * 60.0f);
-					}
-					else if (keycode == KeyPress::Numpad5)
-					{
-						transform.offSetScale(Vec2(-100.0f, -100.0f) * g_deltaTime * 60.0f);
-						//RE_INFO("Scaled Down!");
-					}
-					else if (keycode == KeyPress::Numpad6)
-					{
-						transform.offSetRotation(100.0f * g_deltaTime * 60.0f);
-						//RE_INFO("Rotated!");
-					}
-					else if (keycode == KeyPress::Numpad7)
-					{
-						transform.setPosition(Vec2(-200.0f, 0.0f));
-					}*/
+					
 				}
-				//For 2nd Entity
-				//To be deleted in future (Since by right only one entityt should exist here for player
-				else if (iEntity != m_entities.begin())
-				{
-					auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
-					if (keycode == KeyPress::KeyArrowLeft && g_engine.GetIsFocused())
-					{
-						rigidbody.addForce(Vec2(-100.0f, 0.0f) * g_deltaTime * 1000.0f);
-						//RE_INFO("Move B Left!");
-
-					}
-					else if (keycode == KeyPress::KeyArrowRight && g_engine.GetIsFocused())
-					{
-						rigidbody.addForce(Vec2(100.0f, 0.0f) * g_deltaTime * 1000.0f);
-						//RE_INFO("Move B Right!");
-					}
-					else if (keycode == KeyPress::KeyArrowUp && g_engine.GetIsFocused())
-					{
-						rigidbody.addForce(Vec2(0.0f, 100.0f) * g_deltaTime * 1000.0f);
-						//RE_INFO("Move B Up!");
-
-					}
-					else if (keycode == KeyPress::KeyArrowDown && g_engine.GetIsFocused())
-					{
-						rigidbody.addForce(Vec2(0.0f, -100.0f) * g_deltaTime * 1000.0f);
-						//RE_INFO("Move B Down!");
-					}
-
-					auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
-					/*if (keycode == KeyPress::Numpad8)
-					{
-						transform.setPosition(Vec2(200.0f, 0.0f));
-					}*/
-				} // Entity 2 
 			} // End of Entity for-loop
 
 			return;
@@ -325,40 +279,43 @@ namespace Rogue
 
 			if (!g_engine.m_coordinator.GameIsActive())
 				return;
-
-			if (keycode == KeyPress::MB1 && g_engine.GetIsFocused())
+			if (g_engine.GetIsFocused())
 			{
-				if (!m_timedEntities.size() && m_isInLight < 0.0f)
+				if (keycode == KeyPress::MB1)
 				{
-					CreateBallAttack();
-					//m_ballTimer = 1.0f;
-					//m_ballCooldown = 1.0f;
-					//RE_INFO("CLICKCLICK");
+					if (!m_timedEntities.size() && m_isInLight < 0.0f)
+					{
+						CreateBallAttack();
+						//m_ballTimer = 1.0f;
+						//m_ballCooldown = 1.0f;
+						//RE_INFO("CLICKCLICK");
 
-					if (g_engine.m_coordinator.ComponentExists<AnimationComponent>(*m_entities.begin()))
-						g_engine.m_coordinator.GetComponent<AnimationComponent>(*m_entities.begin()).setIsAnimating(true);
+						if (g_engine.m_coordinator.ComponentExists<AnimationComponent>(*m_entities.begin()))
+							g_engine.m_coordinator.GetComponent<AnimationComponent>(*m_entities.begin()).setIsAnimating(true);
 
-					AudioManager::instance().loadSound("Resources/Sounds/[Shoot Projectile]SCI-FI-WHOOSH_GEN-HDF-20864.ogg", 0.86f, false).Play();
-					AudioManager::instance().loadSound("Resources/Sounds/[Ela Appear]SCI-FI-WHOOSH_GEN-HDF-20870.ogg", 0.3f, false).Play();
+						AudioManager::instance().loadSound("Resources/Sounds/[Shoot Projectile]SCI-FI-WHOOSH_GEN-HDF-20864.ogg", 0.86f, false).Play();
+						AudioManager::instance().loadSound("Resources/Sounds/[Ela Appear]SCI-FI-WHOOSH_GEN-HDF-20870.ogg", 0.3f, false).Play();
+					}
+					g_engine.SetTimeScale(1.0f);
 				}
-				g_engine.SetTimeScale(1.0f);
-			}
-			if ((keycode == KeyPress::KeyA && g_engine.GetIsFocused()) || (keycode == KeyPress::KeyD && g_engine.GetIsFocused()))
-			{
-				auto& ctrler = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(*m_entities.begin());
-
-				ctrler.SetMoveState(MoveState::e_stop);
-			}
-
-			else if (keycode == KeyPress::KeySpace && g_engine.GetIsFocused())
-			{
-				for (Entity entity : m_entities)
+				if ((keycode == KeyPress::KeyA ) || (keycode == KeyPress::KeyD))
 				{
-					PlayerControllerComponent& player = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity);
-					
-					player.m_grounded = false;
+					auto& ctrler = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(*m_entities.begin());
+
+					ctrler.SetMoveState(MoveState::e_stop);
+				}
+
+				else if (keycode == KeyPress::KeySpace)
+				{
+					for (Entity entity : m_entities)
+					{
+						PlayerControllerComponent& player = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity);
+
+						player.m_grounded = false;
+					}
 				}
 			}
+			
 			return;
 		}
 		case EventType::EvOnCollisionExit:
@@ -531,8 +488,8 @@ namespace Rogue
 			RigidbodyComponent& rigidbody = g_engine.m_coordinator.CreateComponent<RigidbodyComponent>(ball);
 			rigidbody.Deserialize("0;0;0;0;1;1;0;0.5;0.8;0.01");
 
-			//ForceManager::instance().RegisterForce(ball, Vec2(ballDir.x * FORCE_FACTOR, ballDir.y * FORCE_FACTOR), g_fixedDeltaTime);
-			rigidbody.addForce(Vec2(ballDir.x * FORCE_FACTOR, ballDir.y * FORCE_FACTOR));
+			ForceManager::instance().RegisterForce(ball, ballDir * FORCE_FACTOR);
+			//rigidbody.addForce(Vec2(ballDir.x * FORCE_FACTOR, ballDir.y * FORCE_FACTOR));
 
 			BoxCollider2DComponent& boxCollider = g_engine.m_coordinator.CreateComponent<BoxCollider2DComponent>(ball);
 			boxCollider.Deserialize("0;0;0;0;0");
