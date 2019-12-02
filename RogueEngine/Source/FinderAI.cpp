@@ -90,9 +90,9 @@ namespace Rogue
 
 		float distance = Vec2SqDistance(aiTransform.GetPosition(), m_nextPoint.front());
 
-		if (distance < m_statsComponent->getSpeed() * DT_SPEED_MODIFIER)
-			aiTransform.setPosition(m_nextPoint.front());
-		else
+		//if (distance < m_statsComponent->getSpeed() * DT_SPEED_MODIFIER)
+			//aiTransform.setPosition(m_nextPoint.front());
+		//else
 		{
 			Vec2 travelDistance;
 			Vec2Normalize(travelDistance, m_nextPoint.front() - aiTransform.GetPosition());
