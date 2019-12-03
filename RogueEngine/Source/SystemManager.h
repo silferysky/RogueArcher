@@ -303,7 +303,7 @@ namespace Rogue
 		bool m_editorIsRunning = false;
 		bool m_stepOnce = false;
 		bool m_gameModeChanged = false;
-		bool m_showCursor = true;
+		bool m_showCursor = false;
 
 		size_t m_stepFrames = 1;
 		size_t m_stepCounter = 0;
