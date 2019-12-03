@@ -57,17 +57,17 @@ namespace Rogue
 	//MACROs
 
 	//Core Logger
-#define RE_CORE_TRACE(TFirst, ...)		Logger::instance().GetCoreFileLogger()->trace(TFirst);		Logger::AddStringToConsole(TFirst)
-#define RE_CORE_INFO(TFirst, ...)		Logger::instance().GetCoreFileLogger()->info(TFirst);		Logger::AddStringToConsole(TFirst)
-#define RE_CORE_WARN(TFirst, ...)		Logger::instance().GetCoreFileLogger()->warn(TFirst);		Logger::AddStringToConsole(TFirst)
-#define RE_CORE_ERROR(TFirst, ...)		Logger::instance().GetCoreFileLogger()->error(TFirst);		Logger::AddStringToConsole(TFirst)
+#define RE_CORE_TRACE(TFirst, ...)		//Logger::instance().GetCoreFileLogger()->trace(TFirst);		Logger::AddStringToConsole(TFirst)
+#define RE_CORE_INFO(TFirst, ...)		//Logger::instance().GetCoreFileLogger()->info(TFirst);		Logger::AddStringToConsole(TFirst)
+#define RE_CORE_WARN(TFirst, ...)		//Logger::instance().GetCoreFileLogger()->warn(TFirst);		Logger::AddStringToConsole(TFirst)
+#define RE_CORE_ERROR(TFirst, ...)		//Logger::instance().GetCoreFileLogger()->error(TFirst);		Logger::AddStringToConsole(TFirst)
 //#define RE_CORE_FATAL(TFirst, ...)	Logger::instance().GetCoreFileLogger()->fatal(TFirst);		Logger::AddStringToConsole(TFirst)
 
 //Client Logger
-#define RE_TRACE(TFirst, ...)			Logger::instance().GetClientFileLogger()->trace(TFirst);	Logger::AddStringToConsole(TFirst)
-#define RE_INFO(TFirst, ...)			Logger::instance().GetClientFileLogger()->info(TFirst);		Logger::AddStringToConsole(TFirst)
-#define RE_WARN(TFirst, ...)			Logger::instance().GetClientFileLogger()->warn(TFirst);		Logger::AddStringToConsole(TFirst)
-#define RE_ERROR(TFirst, ...)			Logger::instance().GetClientFileLogger()->error(TFirst);	Logger::AddStringToConsole(TFirst)
+#define RE_TRACE(TFirst, ...)			//Logger::instance().GetClientFileLogger()->trace(TFirst);	Logger::AddStringToConsole(TFirst)
+#define RE_INFO(TFirst, ...)			//Logger::instance().GetClientFileLogger()->info(TFirst);		Logger::AddStringToConsole(TFirst)
+#define RE_WARN(TFirst, ...)			//Logger::instance().GetClientFileLogger()->warn(TFirst);		Logger::AddStringToConsole(TFirst)
+#define RE_ERROR(TFirst, ...)			//Logger::instance().GetClientFileLogger()->error(TFirst);	Logger::AddStringToConsole(TFirst)
 //#define RE_FATAL(TFirst, ...)			Logger::instance().GetClientFileLogger()->fatal(TFirst);	Logger::AddStringToConsole(TFirst)
 
 //Assert Logging
