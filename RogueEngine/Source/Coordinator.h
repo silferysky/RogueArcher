@@ -329,7 +329,7 @@ namespace Rogue
 
 		void ToggleEditorIsRunning()
 		{
-			m_systemManager->ToggleEditorIsRunning();
+			//m_systemManager->ToggleEditorIsRunning();
 		}
 
 		bool GetEditorIsRunning()

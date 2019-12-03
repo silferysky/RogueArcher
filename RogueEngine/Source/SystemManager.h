@@ -300,7 +300,7 @@ namespace Rogue
 		std::vector<std::pair<std::type_index, std::shared_ptr<System>>> m_systems;
 		bool m_gameIsRunning = false;
 		bool m_gameIsPaused = false;
-		bool m_editorIsRunning = true;
+		bool m_editorIsRunning = false;
 		bool m_stepOnce = false;
 		bool m_gameModeChanged = false;
 		bool m_showCursor = true;

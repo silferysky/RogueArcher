@@ -170,8 +170,8 @@ namespace Rogue
 			//if (keycode == KeyPress::Numpad9)
 			//	m_cameraShake.SetShake(13.0f);
 
-			if (keycode == KeyPress::KeyShift && g_engine.GetIsFocused())
-				ToggleWorldCamera();
+			//if (keycode == KeyPress::KeyShift && g_engine.GetIsFocused())
+				//ToggleWorldCamera();
 
 			return;
 		} //End KeyTriggered
