@@ -25,7 +25,7 @@ Technology is prohibited.
 namespace Rogue
 {
 	MenuControllerSystem::MenuControllerSystem()
-		:System(SystemID::id_MENUCONTROLLERSYSTEM), m_menuObjs{std::vector<Entity>()}
+		:System(SystemID::id_MENUCONTROLLERSYSTEM), m_menuObjs{ std::vector<Entity>() }, m_confirmQuitEnt{ std::vector<Entity>() }, m_confirmQuit{ false }
 	{
 	}
 
@@ -115,6 +115,29 @@ namespace Rogue
 						m_menuObjs.pop_back();
 					}*/
 				}
+				//For quit logic
+				else if (hierarchyObj.m_objectName == "Quit") 
+				{
+					if (m_confirmQuit == false)
+					{
+						m_confirmQuit = true;
+						ToggleQuitButtonObj();
+					}
+				}
+				else if (hierarchyObj.m_objectName == "YesBtn")
+				{
+					if (m_confirmQuit)
+						g_engine.SetGameIsRunning(false);
+
+				}
+				else if (hierarchyObj.m_objectName == "NoBtn")
+				{
+					if (m_confirmQuit)
+					{
+						m_confirmQuit = false;
+						ToggleQuitButtonObj();
+					}
+				}
 			}
 
 			return;
@@ -135,34 +158,37 @@ namespace Rogue
 
 			KeyTriggeredEvent* keytriggeredevent = dynamic_cast<KeyTriggeredEvent*>(ev);
 			KeyPress keycode = keytriggeredevent->GetKeyCode();
-
-			if (keycode == KeyPress::KeyEsc && g_engine.GetIsFocused())
+			if (g_engine.GetIsFocused())
 			{
-				//if (g_engine.m_coordinator.GetEditorIsRunning())
-					//g_engine.SetGameIsRunning(false);
-				ResumeGame();
+				if (keycode == KeyPress::KeyEsc)
+				{
+					//if (g_engine.m_coordinator.GetEditorIsRunning())
+						//g_engine.SetGameIsRunning(false);
+					ResumeGame();
+				}
+
+				if (keycode == KeyPress::KeyF5)
+					g_engine.m_coordinator.ToggleEditorIsRunning();
+
+				if (keycode == KeyPress::KeyF6)
+					g_engine.ToggleVSync();
+
+				/*if (keycode == KeyPress::Numpad0 && m_entities.size() > 0)
+					g_engine.m_coordinator.clone(*m_entities.begin());
+
+				if (keycode == KeyPress::Numpad1)
+					g_engine.m_coordinator.cloneArchetypes("Box");
+
+				if (keycode == KeyPress::Numpad2)
+					g_engine.m_coordinator.cloneArchetypes("Circle");*/
+
+				if (keycode == KeyPress::KeyF8)
+				{
+					CameraShakeEvent* cameraShakeEvent = new CameraShakeEvent(220.0f);
+					EventDispatcher::instance().AddEvent(cameraShakeEvent);
+				}
 			}
-
-			if (keycode == KeyPress::KeyF5 && g_engine.GetIsFocused())
-				g_engine.m_coordinator.ToggleEditorIsRunning();
-
-			if (keycode == KeyPress::KeyF6 && g_engine.GetIsFocused())
-				g_engine.ToggleVSync();
-
-			/*if (keycode == KeyPress::Numpad0 && m_entities.size() > 0)
-				g_engine.m_coordinator.clone(*m_entities.begin());
-
-			if (keycode == KeyPress::Numpad1)
-				g_engine.m_coordinator.cloneArchetypes("Box");
-
-			if (keycode == KeyPress::Numpad2)
-				g_engine.m_coordinator.cloneArchetypes("Circle");*/
-
-			if (keycode == KeyPress::KeyF8 && g_engine.GetIsFocused())
-			{
-				CameraShakeEvent* cameraShakeEvent = new CameraShakeEvent(220.0f);
-				EventDispatcher::instance().AddEvent(cameraShakeEvent);
-			}
+			
 
 			if (ev->GetEventCat() & EventCatCombinedInput)
 			{
@@ -193,7 +219,10 @@ namespace Rogue
 		m_menuObjs.push_back(g_engine.m_coordinator.cloneArchetypes("HowToPlayBtn"));
 		m_menuObjs.push_back(g_engine.m_coordinator.cloneArchetypes("MainMenu_Btn"));
 		m_menuObjs.push_back(g_engine.m_coordinator.cloneArchetypes("Resume"));
+		m_menuObjs.push_back(g_engine.m_coordinator.cloneArchetypes("QuitBtn"));
 		m_menuObjs.push_back(g_engine.m_coordinator.cloneArchetypes("HowToPlay"));
+		m_confirmQuitEnt.push_back(g_engine.m_coordinator.cloneArchetypes("YesBtn"));
+		m_confirmQuitEnt.push_back(g_engine.m_coordinator.cloneArchetypes("NoBtn"));
 
 		SetUIMenuObjs(false);
 	}
@@ -205,6 +234,7 @@ namespace Rogue
 		{
 			if (g_engine.m_coordinator.ComponentExists<UIComponent>(m_menuObjs.back()))
 			{
+				m_confirmQuit = false;
 				UIComponent& ui = g_engine.m_coordinator.GetComponent<UIComponent>(m_menuObjs.back());
 				ui.setIsActive(!ui.getIsActive());	
 				if (g_engine.m_coordinator.ComponentExists<TransformComponent>(m_menuObjs.back()))
@@ -267,6 +297,47 @@ namespace Rogue
 				}*/
 			}
 		}
+
+		for (Entity ent : m_confirmQuitEnt)
+		{
+			//Safety check
+			if (g_engine.m_coordinator.ComponentExists<UIComponent>(ent))
+			{
+				UIComponent& ui = g_engine.m_coordinator.GetComponent<UIComponent>(ent);
+				ui.setIsActive(newActive);
+
+				/*if (g_engine.m_coordinator.ComponentExists<TransformComponent>(ent))
+				{
+					glm::vec3 cameraPos = CameraManager::instance().GetCameraPos();
+					TransformComponent& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(ent);
+					if (ui.getIsActive())
+						transform.setPosition(Vec2(transform.GetPosition().x - cameraPos.x, transform.GetPosition().y - cameraPos.y));
+					else
+						transform.setPosition(Vec2(transform.GetPosition().x + cameraPos.x, transform.GetPosition().y + cameraPos.y));
+				}*/
+			}
+		}
+	}
+
+	void MenuControllerSystem::ToggleQuitButtonObj()
+	{
+		for (Entity ent : m_confirmQuitEnt)
+			//Setting Quit button display to true
+			if (g_engine.m_coordinator.ComponentExists<UIComponent>(ent))
+			{
+				UIComponent& ui = g_engine.m_coordinator.GetComponent<UIComponent>(ent);
+				ui.setIsActive(!ui.getIsActive());
+
+				if (g_engine.m_coordinator.ComponentExists<TransformComponent>(ent))
+				{
+					glm::vec3 cameraPos = CameraManager::instance().GetCameraPos();
+					TransformComponent& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(ent);
+					if (!ui.getIsActive())
+						transform.setPosition(Vec2(transform.GetPosition().x - cameraPos.x, transform.GetPosition().y - cameraPos.y));
+					else
+						transform.setPosition(Vec2(transform.GetPosition().x + cameraPos.x, transform.GetPosition().y + cameraPos.y));
+				}
+			}
 	}
 
 	size_t MenuControllerSystem::GetUIMenuObjsSize()
@@ -277,6 +348,11 @@ namespace Rogue
 	void MenuControllerSystem::ResumeGame()
 	{
 		//ClearMenuObjs();
+		if (m_confirmQuit)
+		{
+			ToggleQuitButtonObj();
+			m_confirmQuit = false;
+		}
 		ToggleUIMenuObjs();
 		//SetUIMenuObjs(false);
 		g_engine.m_coordinator.SetPauseState(false);
@@ -298,6 +374,21 @@ namespace Rogue
 			}
 			g_engine.m_coordinator.DestroyEntity(m_menuObjs.back());
 			m_menuObjs.pop_back();
+		}
+
+		while (m_confirmQuitEnt.size())
+		{
+			auto& activeObjects = g_engine.m_coordinator.GetActiveObjects();
+			for (auto iterator = activeObjects.begin(); iterator != activeObjects.end(); ++iterator)
+			{
+				if (*iterator == m_confirmQuitEnt.back())
+				{
+					activeObjects.erase(iterator);
+					break;
+				}
+			}
+			g_engine.m_coordinator.DestroyEntity(m_confirmQuitEnt.back());
+			m_confirmQuitEnt.pop_back();
 		}
 	}
 }

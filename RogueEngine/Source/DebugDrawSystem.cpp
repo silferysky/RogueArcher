@@ -222,9 +222,11 @@ Technology is prohibited.
 			Rogue::KeyTriggeredEvent* keytriggeredevent = dynamic_cast<Rogue::KeyTriggeredEvent*>(ev);
 			Rogue::KeyPress keycode = keytriggeredevent->GetKeyCode();
 		    
-			if (keycode == Rogue::KeyPress::KeyF3 && g_engine.GetIsFocused())
-				m_isActive = !m_isActive;
-
+			if (g_engine.GetIsFocused())
+			{
+				if (keycode == Rogue::KeyPress::KeyF3)
+					m_isActive = !m_isActive;
+			}
 			return;
 		} //End KeyTriggered
 		}

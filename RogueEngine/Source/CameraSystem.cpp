@@ -180,12 +180,14 @@ namespace Rogue
 			KeyPressEvent* EvPressKey = dynamic_cast<KeyPressEvent*>(ev);
 			KeyPress keycode = EvPressKey->GetKeyCode();
 
-			if (keycode == KeyPress::KeyF1 && g_engine.GetIsFocused())
-				CameraManager::instance().ZoomIn();
+			if (g_engine.GetIsFocused())
+			{
+				if (keycode == KeyPress::KeyF1)
+					CameraManager::instance().ZoomIn();
 
-			if (keycode == KeyPress::KeyF2 && g_engine.GetIsFocused())
-				CameraManager::instance().ZoomOut();
-
+				if (keycode == KeyPress::KeyF2)
+					CameraManager::instance().ZoomOut();
+			}
 			return;
 		} //End KeyPressed
 		}

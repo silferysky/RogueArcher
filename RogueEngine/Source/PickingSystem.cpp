@@ -61,17 +61,22 @@ namespace Rogue
 
 		switch (ev->GetEventType())
 		{
-		case EventType::EvMouseButtonTriggered:
+		case EventType::EvKeyTriggered:
 		{
-			MouseTriggeredEvent* mouseClick = dynamic_cast<MouseTriggeredEvent*>(ev);
+			KeyTriggeredEvent* mouseClick = dynamic_cast<KeyTriggeredEvent*>(ev);
+
+			if (mouseClick->GetKeyCode() != KeyPress::MB1)
+				return;
 
 			PickingManager::instance().GenerateViewPortAABB(CameraManager::instance().GetCameraPos(), CameraManager::instance().GetCameraZoom());
+
+			// Get the viewport's AABB
+			const AABB& viewportArea = PickingManager::instance().GetViewPortArea();
 
 			// Get the cursor's world position
 			Vec2 cursor = PickingManager::instance().GetWorldCursor();
 
-			const AABB& viewportArea = PickingManager::instance().GetViewPortArea();
-			
+			// If cursor is in the viewport area, proceed.
 			if (CollisionManager::instance().DiscretePointVsAABB(cursor, viewportArea))
 			{
 				int pickedEntity = -1;
@@ -80,12 +85,12 @@ namespace Rogue
 				// Go through every transform component
 				for (Entity entity : m_entities)
 				{
-					// Skip cursor entities (crosshair)
-					if (g_engine.m_coordinator.ComponentExists<CursorComponent>(entity))
-						continue;
-
-					// Skip inactive UI entities
-					if (g_engine.m_coordinator.ComponentExists<UIComponent>(entity) && !g_engine.m_coordinator.GetComponent<UIComponent>(entity).getIsActive())
+					//Skip all non UI entities
+					//Skip all cursor entities (crosshair)
+					//Skip inactive UI entities
+					if (!g_engine.m_coordinator.ComponentExists<UIComponent>(entity) ||
+						g_engine.m_coordinator.ComponentExists<CursorComponent>(entity) ||
+						!g_engine.m_coordinator.GetComponent<UIComponent>(entity).getIsActive())
 						continue;
 
 					TransformComponent& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
@@ -130,7 +135,7 @@ namespace Rogue
 		{	
 			MouseDoubleClickEvent* keyTriggered = dynamic_cast<MouseDoubleClickEvent*>(ev);
 			
-			 PickingManager::instance().GenerateViewPortAABB(CameraManager::instance().GetCameraPos(), CameraManager::instance().GetCameraZoom());
+			PickingManager::instance().GenerateViewPortAABB(CameraManager::instance().GetCameraPos(), CameraManager::instance().GetCameraZoom());
 
 			// Get the viewport's AABB
 			const AABB& viewportArea = PickingManager::instance().GetViewPortArea();
@@ -184,7 +189,6 @@ namespace Rogue
 
 					if (g_engine.m_coordinator.GetEditorIsRunning() && !g_engine.m_coordinator.GetGameState())
 						event->SetSystemReceivers((int)SystemID::id_EDITOR);
-					event->SetSystemReceivers((int)SystemID::id_MENUCONTROLLERSYSTEM);
 
 					EventDispatcher::instance().AddEvent(event);
 				}
