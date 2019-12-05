@@ -35,6 +35,10 @@ namespace Rogue
 		ImGui::Checkbox("Continuous/Looping?", &m_isContinuous);
 		SetIsContinuous(m_isContinuous);
 
+		ImGui::PushItemWidth(75);
+		ImGui::Checkbox("Fading Particles", &m_isFading);
+		SetIsFading(m_isFading);
+
 		static char m_priorityDraw[128];
 		ImGui::TextWrapped("Particle Z : %d", m_particleZ);
 		ImGui::TextWrapped("Set Z");
