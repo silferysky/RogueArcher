@@ -32,7 +32,7 @@ Technology is prohibited.
 
 		std::shared_ptr<Rogue::CameraSystem> m_pCamera;
 
-		bool m_isActive = true;
+		bool m_isActive = false;
 	public:
 		DebugDrawSystem();
 		~DebugDrawSystem() = default;

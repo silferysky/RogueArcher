@@ -1,4 +1,4 @@
 {
     "Signature": 2053,
-    "Entity": "Name{QuitBtn}|Tag{}|Sprite{Resources\\Assets\\Quit.png;1;1;1;1001}||Transform{-658.621;-316.965;160;80;0;1001}|||||||||UI{0;}|||||||"
+    "Entity": "Name{Quit}|Tag{}|Sprite{Resources\\Assets\\Quit.png;1;1;1;100}||Transform{0;-180;270;100;0;1002}|||||||||UI{0;}|||||||"
 }
