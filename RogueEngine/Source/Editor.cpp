@@ -86,6 +86,28 @@ namespace Rogue
 			return;
 		}
 		}
+		switch (ev->GetEventType())
+		{
+		case Rogue::EventType::EvKeyTriggered:
+		{
+			if (ev->GetEventCat() & EventCatCombinedInput)
+			{
+				KeyTriggeredCombinedEvent* keytriggeredcombinedev = dynamic_cast<KeyTriggeredCombinedEvent*>(ev);
+				KeyPress keycode = keytriggeredcombinedev->GetKeyCode();
+				KeyPressSub keycodeSpecial = keytriggeredcombinedev->GetSubKey();
+
+				if (keycode == KeyPress::KeyS && keycodeSpecial == KeyPressSub::KeyCtrl)
+				{
+					SceneManager& sceneManager = SceneManager::instance();
+					SceneManager::instance().SaveLevel(sceneManager.getCurrentFileName().c_str());
+
+					std::cout << "Saved!"<< std::endl;
+				}
+
+				return;
+			}
+		} //End KeyTriggered
+		}
 	}
 
 	void Editor::Shutdown()
