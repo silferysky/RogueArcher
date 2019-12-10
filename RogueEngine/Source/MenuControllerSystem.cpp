@@ -51,6 +51,10 @@ namespace Rogue
 		{
 		case EventType::EvEntityPicked:
 		{
+			//Prevents entity buttons from being useful when game is inactive, allows for pause tho
+			if (!g_engine.m_coordinator.GetGameState())
+				return;
+
 			EntPickedEvent* entPicked = dynamic_cast<EntPickedEvent*>(ev);
 
 			bool UIPicked = false;
@@ -76,6 +80,7 @@ namespace Rogue
 				else if (hierarchyObj.m_objectName == "StartBtn")
 				{
 					ResumeGame();
+					ClearMenuObjs();
 					SceneManager& sceneManager = SceneManager::instance();
 					sceneManager.LoadLevel("Level 8.json");
 					g_engine.m_coordinator.SetGameState(true);
@@ -342,7 +347,7 @@ namespace Rogue
 
 	size_t MenuControllerSystem::GetUIMenuObjsSize()
 	{
-		return m_menuObjs.size();
+		return m_menuObjs.size() + m_confirmQuitEnt.size();
 	}
 
 	void MenuControllerSystem::ResumeGame()
