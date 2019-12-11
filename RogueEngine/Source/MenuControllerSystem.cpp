@@ -165,6 +165,15 @@ namespace Rogue
 			KeyPress keycode = keytriggeredevent->GetKeyCode();
 			if (g_engine.GetIsFocused())
 			{
+				if (ev->GetEventCat() & EventCatCombinedInput)
+				{
+					KeyTriggeredCombinedEvent* keytriggeredcombinedev = dynamic_cast<KeyTriggeredCombinedEvent*>(ev);
+					KeyPressSub keycodeSpecial = keytriggeredcombinedev->GetSubKey();
+
+					//Do stuff
+					RE_INFO(keytriggeredcombinedev->ToString());
+				}
+
 				if (keycode == KeyPress::KeyEsc)
 				{
 					//if (g_engine.m_coordinator.GetEditorIsRunning())
@@ -194,18 +203,6 @@ namespace Rogue
 				}
 			}
 			
-
-			if (ev->GetEventCat() & EventCatCombinedInput)
-			{
-				KeyTriggeredCombinedEvent* keytriggeredcombinedev = dynamic_cast<KeyTriggeredCombinedEvent*>(ev);
-				KeyPress keycode = keytriggeredcombinedev->GetKeyCode();
-				KeyPressSub keycodeSpecial = keytriggeredcombinedev->GetSubKey();
-
-				//Do stuff
-				//RE_INFO(keytriggeredcombinedev->ToString());
-
-				return;
-			}
 			return;
 		}
 		default:
