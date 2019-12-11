@@ -54,22 +54,18 @@ namespace Rogue
 		//For Entity Count
 		m_maxEntityCount = level["MaxEntityCount"].GetInt();
 		Entity entCount = level["EntityCount"].GetInt();
-
-		/*/For Background
-		Entity backgroundEnt = g_engine.m_coordinator.CreateEntity();
-		std::string_view backgroundStr = level["BackgroundTexture"].GetString();
-		SpriteComponent backgroundSprite = SpriteComponent();
-		backgroundSprite.Deserialize(backgroundStr);
-
-		TransformComponent backgroundTransform = TransformComponent();
-		backgroundTransform.setPosition(Vec2(0.0f, 0.0f));
-		backgroundTransform.setScale(Vec2(GetWindowWidth(g_engine.GetWindowHandler()), GetWindowHeight(g_engine.GetWindowHandler())));
-		backgroundTransform.setRotation(0.0f);
-
-		g_engine.m_coordinator.AddComponent(backgroundEnt, backgroundSprite);
-		g_engine.m_coordinator.AddComponent(backgroundEnt, backgroundTransform);
-		CREATE_HIERARCHY_OBJ(backgroundEnt, "Background");
-		newInfo.m_objectName = std::string_view("Background");*/
+		
+		//For Parent/Child iterator
+		Entity entityIt = 0; //Set default to zero
+		Entity entityEnd = entCount; //Set default to entityCount (can be 0)
+		if (g_engine.m_coordinator.GetActiveObjects().size())
+		{
+			entityIt = *(std::end(g_engine.m_coordinator.GetActiveObjects()) - 1);
+			entityEnd += entityIt;
+		}
+		//std::ostringstream hi;
+		//hi << entityIt << ";" << entityEnd;
+		//RE_INFO(hi.str());
 
 		for (Entity entity = 0; entity < entCount; ++entity)
 		{
@@ -83,8 +79,7 @@ namespace Rogue
 
 			//Setting deserializable string
 			CLEARSTR(ostrstream);
-			stdstr = "Entity";
-			ostrstream << stdstr << static_cast<int>(entity);
+			ostrstream << "Entity" << static_cast<int>(entity);
 			SETSSTOSTR(ostrstream);
 			istrstream.str(level[cstr].GetString());
 
@@ -100,12 +95,31 @@ namespace Rogue
 
 			FactoryLoadComponent(curEnt, currentSignature, stdstr);
 
-			CREATE_HIERARCHY_OBJ_TAG(curEnt, readstr, tagstr);
+			//Setting parent
+			CLEARSTR(ostrstream);
+			ostrstream << "EntityParent" << static_cast<int>(entity);
+			Entity entityParent = level[ostrstream.str().c_str()].GetInt();
+
+			CREATE_HIERARCHY_OBJ(curEnt, readstr, tagstr, entityParent);
+
 
 			debugStr << "Entity " << curEnt << "'s Signature: " << g_engine.m_coordinator.GetEntityManager().GetSignature(curEnt).to_ulong();
 			RE_INFO(debugStr.str());
 			CLEARSTR(debugStr);
 		}
+
+		//Assigning child
+		for (; entityIt != entityEnd; ++entityIt)
+		{
+			Entity parentEnt = g_engine.m_coordinator.GetHierarchyInfo(entityIt).m_parent;
+			//Check if out of bounds (AKA parent is default value)
+			if (parentEnt > g_engine.m_coordinator.GetActiveObjects().size())
+				continue;
+
+			g_engine.m_coordinator.GetHierarchyInfo(parentEnt).m_children.push_back(g_engine.m_coordinator.GetHierarchyInfo(entityIt).m_Entity);
+			RE_INFO("HI");
+		}
+
 		RE_INFO("LEVEL LOADED");
 		debugStr << entCount << " ENTITIES LOADED";
 		RE_INFO(debugStr.str());
@@ -170,14 +184,22 @@ namespace Rogue
 			SETSSTOSTR(strstream);
 			intVar = static_cast<int>(currentSignature.to_ulong());
 			RESerialiser::WriteToFile(fileName, cstr, &intVar);
-			CLEARSTR(strstream);
 
+			CLEARSTR(strstream);
 			strstream << SerializeComponents(curHierarchy);
-
 			SETSSTOSTR(strstream);
-			CLEARSTR(strstream);
+			CLEARSTR(strstream); //Done this way so strstream's string is different from stdstr's string
 			strstream << "Entity" << entCount;
 			RESerialiser::WriteToFile(fileName, strstream.str().c_str(), cstr);
+
+			CLEARSTR(strstream);
+			strstream << "EntityParent" << entCount;
+			SETSSTOSTR(strstream);
+			int parentValue = curHierarchy.m_parent;
+			//if (parentValue == MAX_ENTITIES)
+			//	parentValue = -1;
+			RESerialiser::WriteToFile(fileName, strstream.str().c_str(), &parentValue);
+
 			++entCount;
 		}
 
@@ -467,7 +489,7 @@ namespace Rogue
 
 			if (createHierarchy)
 			{
-				CREATE_HIERARCHY_OBJ_TAG(curEnt, ostrstream.str(), tagDeserialized);
+				CREATE_HIERARCHY_OBJ(curEnt, ostrstream.str(), tagDeserialized, -1);
 			}
 
 			return curEnt;
@@ -493,6 +515,12 @@ namespace Rogue
 	void ObjectFactory::ResetMaxEntity()
 	{
 		m_maxEntityCount = 0;
+	}
+
+	void ObjectFactory::AssignParentChild(HierarchyInfo& parent, HierarchyInfo& child)
+	{
+		parent.m_children.push_back(child.m_Entity);
+		child.m_parent = parent.m_Entity;
 	}
 
 	std::string ObjectFactory::SerializeComponents(HierarchyInfo& hierarchyToSerialize)
@@ -610,6 +638,18 @@ namespace Rogue
 			strstream << "|";
 		} //End of for loop strstream adding
 		//strstream.str().substr(0, strstream.str().size() - 1);
+		return strstream.str();
+	}
+
+	std::string ObjectFactory::SerializeChildren(HierarchyInfo& entityHierarchy)
+	{
+		std::ostringstream strstream;
+		
+		for (Entity& child : entityHierarchy.m_children)
+		{
+			strstream << child << ";";
+		}
+
 		return strstream.str();
 	}
 
