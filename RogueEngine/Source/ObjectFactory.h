@@ -46,8 +46,10 @@ namespace Rogue
 
 		bool CheckFileTooSmall(size_t type, size_t size);
 		void ResetMaxEntity();
+		void AssignParentChild(HierarchyInfo& parent, HierarchyInfo& child);
 
 		std::string SerializeComponents(HierarchyInfo& entityHierarchy);
+		std::string SerializeChildren(HierarchyInfo& entityHierarchy);
 
 		std::map<std::string, std::pair<Signature, std::string>> GetArchetypeMap() const;
 
@@ -72,15 +74,10 @@ namespace Rogue
 #define MIN_SAVE_ENTITY 2
 
 	//MACROS (HIERARCHY)
-#define CREATE_HIERARCHY_OBJ_TAG(entityValue, name, tag)	HierarchyInfo newInfo(entityValue, name, tag); \
-															g_engine.m_coordinator.GetActiveObjects().push_back(entityValue); \
-															g_engine.m_coordinator.GetHierarchyInfo(entityValue) = newInfo; \
-															SceneManager::instance().IncrementObjectIterator();
-	
-#define CREATE_HIERARCHY_OBJ(entityValue, name)				HierarchyInfo newInfo(entityValue, name); \
-															g_engine.m_coordinator.GetActiveObjects().push_back(entityValue); \
-															g_engine.m_coordinator.GetHierarchyInfo(entityValue) = newInfo; \
-															SceneManager::instance().IncrementObjectIterator();
+#define CREATE_HIERARCHY_OBJ(entityValue, name, tag, parent)		HierarchyInfo newInfo(entityValue, name, tag, parent); \
+																	g_engine.m_coordinator.GetActiveObjects().push_back(entityValue); \
+																	g_engine.m_coordinator.GetHierarchyInfo(entityValue) = newInfo; \
+																	SceneManager::instance().IncrementObjectIterator();
 
 //cstr will go out of scope if you choose to do strstream.str().c_str()
 //This is the proper (Non macro) way of setting the string
