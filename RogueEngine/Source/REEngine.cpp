@@ -24,7 +24,7 @@ Technology is prohibited.
 
 #include "Precompiled.h"
 #include "Logger.h"
-#include "EventDispatcher.h" // Is actually a system too. (Probably change to non-singleton)
+#include "EventDispatcher.h" // TODO: Move to Engine::Update() as a singleton.
 #include "REEngine.h"
 #include "GLHelper.hpp"
 #include "ComponentList.h"
