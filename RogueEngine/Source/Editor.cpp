@@ -65,8 +65,6 @@ namespace Rogue
 				{
 					SceneManager& sceneManager = SceneManager::instance();
 					SceneManager::instance().SaveLevel(sceneManager.getCurrentFileName().c_str());
-
-					std::cout << "Saved!" << std::endl;
 				}
 
 				return;
