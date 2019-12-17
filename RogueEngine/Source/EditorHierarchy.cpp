@@ -40,15 +40,20 @@ namespace Rogue
 				}
 			}
 		}
-		DisplayHierarchyChildren(objInfo);
+		DisplayHierarchyChildren(objInfo, 1);
 	}
 
-	void ImGuiEditorHierarchy::DisplayHierarchyChildren(HierarchyInfo& ent)
+	void ImGuiEditorHierarchy::DisplayHierarchyChildren(HierarchyInfo& ent, size_t numOfParents)
 	{
 		for (Entity e : ent.m_children)
 		{
 			HierarchyInfo& childHierarchy = g_engine.m_coordinator.GetHierarchyInfo(e);
-			if (ImGui::Selectable(childHierarchy.m_objectName.c_str(), childHierarchy.m_selected, ImGuiSelectableFlags_AllowDoubleClick))
+			std::ostringstream displayName;
+			size_t curNumOfParents = numOfParents;
+			while (curNumOfParents--)
+				displayName << " ";
+			displayName << "\\" << childHierarchy.m_objectName;
+			if (ImGui::Selectable(displayName.str().c_str(), childHierarchy.m_selected, ImGuiSelectableFlags_AllowDoubleClick))
 			{
 				if (ImGui::IsMouseClicked(0))
 				{
@@ -66,7 +71,7 @@ namespace Rogue
 				}
 			}
 			//Display children of children
-			DisplayHierarchyChildren(childHierarchy);
+			DisplayHierarchyChildren(childHierarchy, numOfParents + 1);
 		}
 	}
 
