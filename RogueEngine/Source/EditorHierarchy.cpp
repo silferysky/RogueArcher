@@ -21,6 +21,54 @@ Technology is prohibited.
 
 namespace Rogue
 {
+	void ImGuiEditorHierarchy::DisplayHierarchyParent(HierarchyInfo& objInfo)
+	{
+		if (ImGui::Selectable(objInfo.m_objectName.c_str(), objInfo.m_selected, ImGuiSelectableFlags_AllowDoubleClick))
+		{
+			if (ImGui::IsMouseClicked(0))
+			{
+				objInfo.m_selected = !objInfo.m_selected;
+				Entity temp = objInfo.m_Entity;
+				for (auto& i : m_currentVector)
+				{
+					if (i == temp)
+						continue;
+					else
+					{
+						g_engine.m_coordinator.GetHierarchyInfo(i).m_selected = false;
+					}
+				}
+			}
+		}
+		DisplayHierarchyChildren(objInfo);
+	}
+
+	void ImGuiEditorHierarchy::DisplayHierarchyChildren(HierarchyInfo& ent)
+	{
+		for (Entity e : ent.m_children)
+		{
+			HierarchyInfo& childHierarchy = g_engine.m_coordinator.GetHierarchyInfo(e);
+			if (ImGui::Selectable(childHierarchy.m_objectName.c_str(), childHierarchy.m_selected, ImGuiSelectableFlags_AllowDoubleClick))
+			{
+				if (ImGui::IsMouseClicked(0))
+				{
+					childHierarchy.m_selected = !childHierarchy.m_selected;
+					Entity temp = childHierarchy.m_Entity;
+					for (auto& i : m_currentVector)
+					{	
+						if (i == temp)
+							continue;
+						else
+						{
+							g_engine.m_coordinator.GetHierarchyInfo(i).m_selected = false;
+						}
+					}
+				}
+			}
+			//Display children of children
+			DisplayHierarchyChildren(childHierarchy);
+		}
+	}
 
 	ImGuiEditorHierarchy::ImGuiEditorHierarchy() :
 		m_currentVector{ g_engine.m_coordinator.GetActiveObjects() }
@@ -106,46 +154,17 @@ namespace Rogue
 					EditorManager::instance().SetPickedEntity(-1);
 				}
 			}
-			if (tagName == search || objectName == search)
-			{
-				if (ImGui::Selectable(objInfo.m_objectName.c_str(), objInfo.m_selected, ImGuiSelectableFlags_AllowDoubleClick))
+
+			//For filtering
+			if (objInfo.m_parent == MAX_ENTITIES || objInfo.m_parent == -1)
+				if (tagName == search || objectName == search)
 				{
-					if (ImGui::IsMouseClicked(0))
-					{
-						objInfo.m_selected = !objInfo.m_selected;
-						Entity temp = objInfo.m_Entity;
-						for (auto& i : m_currentVector)
-						{
-							if (i == temp)
-								continue;
-							else
-							{
-								g_engine.m_coordinator.GetHierarchyInfo(i).m_selected = false;
-							}
-						}
-					}
+					DisplayHierarchyParent(objInfo);
 				}
-			}
-			else if (search == "")
-			{
-				if (ImGui::Selectable(objInfo.m_objectName.c_str(), objInfo.m_selected, ImGuiSelectableFlags_AllowDoubleClick))
+				else if (search == "")
 				{
-					if (ImGui::IsMouseClicked(0))
-					{
-						objInfo.m_selected = !objInfo.m_selected;
-						int temp = i;
-						for (auto& i : m_currentVector)
-						{
-							if (i == temp)
-								continue;
-							else
-							{
-								g_engine.m_coordinator.GetHierarchyInfo(i).m_selected = false;
-							}
-						}
-					}
+					DisplayHierarchyParent(objInfo);
 				}
-			}
 		}
 
 		ImGui::End();

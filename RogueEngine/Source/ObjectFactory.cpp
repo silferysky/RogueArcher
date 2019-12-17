@@ -114,10 +114,13 @@ namespace Rogue
 			Entity parentEnt = g_engine.m_coordinator.GetHierarchyInfo(entityIt).m_parent;
 			//Check if out of bounds (AKA parent is default value)
 			if (parentEnt > g_engine.m_coordinator.GetActiveObjects().size())
+			{
+				parentEnt = -1;
 				continue;
+			}
 
 			g_engine.m_coordinator.GetHierarchyInfo(parentEnt).m_children.push_back(g_engine.m_coordinator.GetHierarchyInfo(entityIt).m_Entity);
-			RE_INFO("HI");
+			//RE_INFO("HI");
 		}
 
 		RE_INFO("LEVEL LOADED");
