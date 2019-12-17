@@ -56,20 +56,12 @@ namespace Rogue
 		Entity entCount = level["EntityCount"].GetInt();
 		
 		//For Parent/Child iterator
-		Entity entityIt = 0; //Set default to zero
-		Entity entityEnd = entCount; //Set default to entityCount (can be 0)
-		if (g_engine.m_coordinator.GetActiveObjects().size())
-		{
-			entityIt = *(std::end(g_engine.m_coordinator.GetActiveObjects()) - 1);
-			entityEnd += entityIt;
-		}
-		//std::ostringstream hi;
-		//hi << entityIt << ";" << entityEnd;
-		//RE_INFO(hi.str());
+		std::queue<Entity> loadedQueue;
 
 		for (Entity entity = 0; entity < entCount; ++entity)
 		{
 			Entity curEnt = g_engine.m_coordinator.CreateEntity();
+			loadedQueue.push(curEnt);
 
 			//Setting signature
 			CLEARSTR(ostrstream);
@@ -100,28 +92,60 @@ namespace Rogue
 			ostrstream << "EntityParent" << static_cast<int>(entity);
 			Entity entityParent = level[ostrstream.str().c_str()].GetInt();
 
-			CREATE_HIERARCHY_OBJ(curEnt, readstr, tagstr, entityParent);
-
+			CREATE_HIERARCHY_OBJ(curEnt, readstr, tagstr, loadedQueue.front() + entityParent);
+			//HierarchyInfo& info = g_engine.m_coordinator.GetHierarchyInfo(curEnt);
+			//debugStr << "Entity " << info.m_Entity << ":" << info.m_objectName << " has parent " << info.m_parent;
+			//RE_INFO(debugStr.str());
+			//CLEARSTR(debugStr);
 
 			debugStr << "Entity " << curEnt << "'s Signature: " << g_engine.m_coordinator.GetEntityManager().GetSignature(curEnt).to_ulong();
 			RE_INFO(debugStr.str());
 			CLEARSTR(debugStr);
 		}
 
+
 		//Assigning child
-		for (; entityIt != entityEnd; ++entityIt)
+		Entity firstLoadedEnt = loadedQueue.front();
+		while (loadedQueue.size())
 		{
-			Entity parentEnt = g_engine.m_coordinator.GetHierarchyInfo(entityIt).m_parent;
-			//Check if out of bounds (AKA parent is default value)
-			if (parentEnt > g_engine.m_coordinator.GetActiveObjects().size())
+			Entity loadedEnt = loadedQueue.front();
+			HierarchyInfo& childInfo = g_engine.m_coordinator.GetHierarchyInfo(loadedEnt);
+			debugStr << "Entity " << childInfo.m_Entity << ":" << childInfo.m_objectName << " has parent " << childInfo.m_parent;
+			RE_INFO(debugStr.str());
+			CLEARSTR(debugStr);
+
+			//Check if parent of itself or  out of bounds (AKA parent is default value)
+			if (childInfo.m_parent == loadedEnt || childInfo.m_parent > loadedEnt + loadedQueue.size() || childInfo.m_parent < firstLoadedEnt)
 			{
-				parentEnt = -1;
+				childInfo.m_parent = -1;
+				loadedQueue.pop();
 				continue;
 			}
 
-			g_engine.m_coordinator.GetHierarchyInfo(parentEnt).m_children.push_back(g_engine.m_coordinator.GetHierarchyInfo(entityIt).m_Entity);
-			//RE_INFO("HI");
+			HierarchyInfo& parentInfo = g_engine.m_coordinator.GetHierarchyInfo(childInfo.m_parent);
+			parentInfo.m_children.push_back(loadedEnt);
+			loadedQueue.pop();
+			debugStr << "Entity " << parentInfo.m_Entity << ":" << parentInfo.m_objectName << " has child " << loadedEnt;
+			RE_INFO(debugStr.str());
+			CLEARSTR(debugStr);
 		}
+		//for (; entityIt != entityEnd; ++entityIt)
+		//{
+		//	HierarchyInfo& childInfo = g_engine.m_coordinator.GetHierarchyInfo(entityIt);
+
+		//	//Check if out of bounds (AKA parent is default value)
+		//	if (childInfo.m_parent > entityEnd || childInfo.m_parent == entityIt)
+		//	{
+		//		childInfo.m_parent = -1;
+		//		continue;
+		//	}
+
+		//	HierarchyInfo& parentInfo = g_engine.m_coordinator.GetHierarchyInfo(childInfo.m_parent);
+		//	parentInfo.m_children.push_back(entityIt);
+		//	debugStr << "Entity " << parentInfo.m_Entity << ":" << parentInfo.m_objectName << " has child " << entityIt;
+		//	RE_INFO(debugStr.str());
+		//	//RE_INFO("HI");
+		//}
 
 		RE_INFO("LEVEL LOADED");
 		debugStr << entCount << " ENTITIES LOADED";
