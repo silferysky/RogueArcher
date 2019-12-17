@@ -110,9 +110,9 @@ namespace Rogue
 		{
 			Entity loadedEnt = loadedQueue.front();
 			HierarchyInfo& childInfo = g_engine.m_coordinator.GetHierarchyInfo(loadedEnt);
-			debugStr << "Entity " << childInfo.m_Entity << ":" << childInfo.m_objectName << " has parent " << childInfo.m_parent;
-			RE_INFO(debugStr.str());
-			CLEARSTR(debugStr);
+			//debugStr << "Entity " << childInfo.m_Entity << ":" << childInfo.m_objectName << " has parent " << childInfo.m_parent;
+			//RE_INFO(debugStr.str());
+			//CLEARSTR(debugStr);
 
 			//Check if parent of itself or  out of bounds (AKA parent is default value)
 			if (childInfo.m_parent == loadedEnt || childInfo.m_parent > loadedEnt + loadedQueue.size() || childInfo.m_parent < firstLoadedEnt)
@@ -125,9 +125,9 @@ namespace Rogue
 			HierarchyInfo& parentInfo = g_engine.m_coordinator.GetHierarchyInfo(childInfo.m_parent);
 			parentInfo.m_children.push_back(loadedEnt);
 			loadedQueue.pop();
-			debugStr << "Entity " << parentInfo.m_Entity << ":" << parentInfo.m_objectName << " has child " << loadedEnt;
-			RE_INFO(debugStr.str());
-			CLEARSTR(debugStr);
+			//debugStr << "Entity " << parentInfo.m_Entity << ":" << parentInfo.m_objectName << " has child " << loadedEnt;
+			//RE_INFO(debugStr.str());
+			//CLEARSTR(debugStr);
 		}
 		//for (; entityIt != entityEnd; ++entityIt)
 		//{
