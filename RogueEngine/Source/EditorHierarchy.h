@@ -31,7 +31,7 @@ namespace Rogue
 		std::vector<Entity>& m_currentVector;
 
 		void DisplayHierarchyParent(HierarchyInfo& ent);
-		void DisplayHierarchyChildren(HierarchyInfo& ent);
+		void DisplayHierarchyChildren(HierarchyInfo& ent, size_t numOfParents = 0);
 
 	public:
 		ImGuiEditorHierarchy();
