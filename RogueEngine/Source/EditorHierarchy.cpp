@@ -63,22 +63,12 @@ namespace Rogue
 				}
 				else
 				{
-					ReassignParentChild(hierarchyPayload.m_Entity, objInfo.m_Entity);
+					ReassignParentChildFlags(hierarchyPayload.m_Entity, objInfo.m_Entity);
 				}
 			}
 			ImGui::EndDragDropTarget();
 		}
 		DisplayHierarchyChildren(objInfo, 1);
-
-		if (m_reassignChild != -1)
-		{
-			HierarchyInfo& oldParent = g_engine.m_coordinator.GetHierarchyInfo(m_reassignOldParent); 
-			//auto it = std::find(oldParent.m_children.begin(), oldParent.m_children.end(), m_reassignChild);
-			//if (it != oldParent.m_children.end())
-				//oldParent.m_children.erase(it);
-
-			m_reassignChild = -1;
-		}
 	}
 
 	void ImGuiEditorHierarchy::DisplayHierarchyChildren(HierarchyInfo& ent, size_t numOfParents)
@@ -132,13 +122,14 @@ namespace Rogue
 					}
 					else
 					{
-						ReassignParentChild(hierarchyPayload.m_Entity, childHierarchy.m_Entity);
+						ReassignParentChildFlags(hierarchyPayload.m_Entity, childHierarchy.m_Entity);
 					}
 				}
 				ImGui::EndDragDropTarget();
 			}
 			//Display children of children
-			DisplayHierarchyChildren(childHierarchy, numOfParents + 1);
+			if (numOfParents < 10)
+				DisplayHierarchyChildren(childHierarchy, numOfParents + 1);
 		}
 	}
 
@@ -146,7 +137,7 @@ namespace Rogue
 	{
 		bool isValid = true;
 		HierarchyInfo& it = g_engine.m_coordinator.GetHierarchyInfo(child);
-		while (it.m_parent != -1)
+		while (it.m_parent != -1 && it.m_parent != MAX_ENTITIES)
 		{
 			if (it.m_parent == child)
 			{
@@ -159,21 +150,15 @@ namespace Rogue
 		return isValid;
 	}
 
-	void ImGuiEditorHierarchy::ReassignParentChild(Entity child, Entity newParent)
+	void ImGuiEditorHierarchy::ReassignParentChildFlags(Entity child, Entity newParent)
 	{
 		//If invalid reassign (loop)
 		if (!CheckValidReassign(child, newParent))
 			return;
 
-		HierarchyInfo& childInfo = g_engine.m_coordinator.GetHierarchyInfo(child);
-		HierarchyInfo& newParentInfo = g_engine.m_coordinator.GetHierarchyInfo(newParent);
-
-		childInfo.m_parent = newParent;
-		newParentInfo.m_children.push_back(child);
-		
 		//This cannot be done directly here, since it is middle of a loop.
-		m_reassignChild = child;
-		m_reassignOldParent = newParent;
+		g_engine.m_coordinator.SetReassignParentFlags(child, newParent);
+
 	}
 
 	ImGuiEditorHierarchy::ImGuiEditorHierarchy() :
@@ -272,6 +257,7 @@ namespace Rogue
 					DisplayHierarchyParent(objInfo);
 				}
 		}
+
 
 		ImGui::End();
 	}
