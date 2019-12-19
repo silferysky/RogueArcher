@@ -40,7 +40,45 @@ namespace Rogue
 				}
 			}
 		}
+		if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
+		{
+			ImGui::SetDragDropPayload("Hierarchy", &objInfo, sizeof(objInfo));
+			ImGui::BeginTooltip();
+			ImGui::Text("%s", objInfo.m_objectName.c_str());
+			ImGui::EndTooltip();
+			ImGui::EndDragDropSource();
+		}
+
+		if (ImGui::BeginDragDropTarget())
+		{
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Hierarchy"))
+			{
+				HierarchyInfo& hierarchyPayload = *(HierarchyInfo*)payload->Data;
+
+				//Hierarchy must not be yourself, but would otherwise work
+				if (hierarchyPayload.m_Entity == objInfo.m_Entity)
+				{
+					//ImGui already prevents us from self-assigning
+					//ImGui::OpenPopup("Invalid Assign");
+				}
+				else
+				{
+					ReassignParentChild(hierarchyPayload.m_Entity, objInfo.m_Entity);
+				}
+			}
+			ImGui::EndDragDropTarget();
+		}
 		DisplayHierarchyChildren(objInfo, 1);
+
+		if (m_reassignChild != -1)
+		{
+			HierarchyInfo& oldParent = g_engine.m_coordinator.GetHierarchyInfo(m_reassignOldParent); 
+			//auto it = std::find(oldParent.m_children.begin(), oldParent.m_children.end(), m_reassignChild);
+			//if (it != oldParent.m_children.end())
+				//oldParent.m_children.erase(it);
+
+			m_reassignChild = -1;
+		}
 	}
 
 	void ImGuiEditorHierarchy::DisplayHierarchyChildren(HierarchyInfo& ent, size_t numOfParents)
@@ -70,9 +108,72 @@ namespace Rogue
 					}
 				}
 			}
+			if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
+			{
+				ImGui::SetDragDropPayload("Hierarchy", &childHierarchy, sizeof(childHierarchy));
+				ImGui::BeginTooltip();
+				ImGui::Text("%s", childHierarchy.m_objectName.c_str());
+				ImGui::EndTooltip();
+				ImGui::EndDragDropSource();
+			}
+
+
+			if (ImGui::BeginDragDropTarget())
+			{
+				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Hierarchy"))
+				{
+					HierarchyInfo& hierarchyPayload = *(HierarchyInfo*)payload->Data;
+
+					//Hierarchy must not be yourself, but would otherwise work
+					if (hierarchyPayload.m_Entity == childHierarchy.m_Entity)
+					{
+						//ImGui already prevents us from self-assigning
+						//ImGui::OpenPopup("Invalid Assign");
+					}
+					else
+					{
+						ReassignParentChild(hierarchyPayload.m_Entity, childHierarchy.m_Entity);
+					}
+				}
+				ImGui::EndDragDropTarget();
+			}
 			//Display children of children
 			DisplayHierarchyChildren(childHierarchy, numOfParents + 1);
 		}
+	}
+
+	bool ImGuiEditorHierarchy::CheckValidReassign(Entity child, Entity newParent)
+	{
+		bool isValid = true;
+		HierarchyInfo& it = g_engine.m_coordinator.GetHierarchyInfo(child);
+		while (it.m_parent != -1)
+		{
+			if (it.m_parent == child)
+			{
+				isValid = false;
+				break;
+			}
+			it = g_engine.m_coordinator.GetHierarchyInfo(it.m_parent);
+		}
+
+		return isValid;
+	}
+
+	void ImGuiEditorHierarchy::ReassignParentChild(Entity child, Entity newParent)
+	{
+		//If invalid reassign (loop)
+		if (!CheckValidReassign(child, newParent))
+			return;
+
+		HierarchyInfo& childInfo = g_engine.m_coordinator.GetHierarchyInfo(child);
+		HierarchyInfo& newParentInfo = g_engine.m_coordinator.GetHierarchyInfo(newParent);
+
+		childInfo.m_parent = newParent;
+		newParentInfo.m_children.push_back(child);
+		
+		//This cannot be done directly here, since it is middle of a loop.
+		m_reassignChild = child;
+		m_reassignOldParent = newParent;
 	}
 
 	ImGuiEditorHierarchy::ImGuiEditorHierarchy() :

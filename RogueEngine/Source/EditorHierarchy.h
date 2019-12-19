@@ -29,9 +29,13 @@ namespace Rogue
 	{
 	private:
 		std::vector<Entity>& m_currentVector;
+		Entity m_reassignChild = -1;
+		Entity m_reassignOldParent = -1;
 
 		void DisplayHierarchyParent(HierarchyInfo& ent);
 		void DisplayHierarchyChildren(HierarchyInfo& ent, size_t numOfParents = 0);
+		bool CheckValidReassign(Entity child, Entity newParent);
+		void ReassignParentChild(Entity child, Entity newParent);
 
 	public:
 		ImGuiEditorHierarchy();
