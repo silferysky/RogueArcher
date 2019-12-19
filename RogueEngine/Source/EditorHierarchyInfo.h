@@ -34,7 +34,7 @@ namespace Rogue
 
 		HierarchyInfo() = default;
 		HierarchyInfo(Entity entity, std::string_view name, std::string_view tag = "", Entity parentEnt = MAX_ENTITIES)
-			: m_Entity{ entity }, m_objectName{ name }, m_tag{ tag }, m_parent{ parentEnt }{}
+			: m_Entity{ entity }, m_objectName{ name }, m_tag{ tag }, m_parent{ parentEnt }, m_children{ std::vector<Entity>{} }{}
 	};
 
 	class DirectoryInfo
