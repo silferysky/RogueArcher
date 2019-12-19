@@ -331,26 +331,26 @@ namespace Rogue
 
 		void ReassignHierarchyParent()
 		{
-			if (m_assignChild != -1 && m_assignChild != MAX_ENTITIES)
+			if (m_assignChild == -1 || m_assignChild == MAX_ENTITIES)
+				return;
+
+			HierarchyInfo& childInfo = GetHierarchyInfo(m_assignChild);
+			HierarchyInfo& newParentInfo = GetHierarchyInfo(m_assignParent);
+
+			if (childInfo.m_parent != -1 && childInfo.m_parent != MAX_ENTITIES)
 			{
-				HierarchyInfo& childInfo = GetHierarchyInfo(m_assignChild);
-				HierarchyInfo& newParentInfo = GetHierarchyInfo(m_assignParent);
+				HierarchyInfo& oldParentInfo = GetHierarchyInfo(childInfo.m_parent);
 
-				if (childInfo.m_parent != -1)
-				{
-					HierarchyInfo& oldParentInfo = GetHierarchyInfo(childInfo.m_parent);
-
-					auto end = std::remove(oldParentInfo.m_children.begin(), oldParentInfo.m_children.end(), m_assignChild);
-					oldParentInfo.m_children.erase(end, oldParentInfo.m_children.end());
-					//oldParentInfo.m_children.erase(std::remove_if(oldParentInfo.m_children.begin(), oldParentInfo.m_children.end(), m_assignChild), oldParentInfo.m_children.end());
-				}
-
-				childInfo.m_parent = m_assignParent;
-				newParentInfo.m_children.push_back(m_assignChild);
-
-				m_assignChild = -1;
-				m_assignParent = -1;
+				auto end = std::remove(oldParentInfo.m_children.begin(), oldParentInfo.m_children.end(), m_assignChild);
+				oldParentInfo.m_children.erase(end, oldParentInfo.m_children.end());
+				//oldParentInfo.m_children.erase(std::remove_if(oldParentInfo.m_children.begin(), oldParentInfo.m_children.end(), m_assignChild), oldParentInfo.m_children.end());
 			}
+
+			childInfo.m_parent = m_assignParent;
+			newParentInfo.m_children.push_back(m_assignChild);
+
+			m_assignChild = -1;
+			m_assignParent = -1;
 		}
 
 		bool GetGameState() const

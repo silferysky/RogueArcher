@@ -56,12 +56,7 @@ namespace Rogue
 				HierarchyInfo& hierarchyPayload = *(HierarchyInfo*)payload->Data;
 
 				//Hierarchy must not be yourself, but would otherwise work
-				if (hierarchyPayload.m_Entity == objInfo.m_Entity)
-				{
-					//ImGui already prevents us from self-assigning
-					//ImGui::OpenPopup("Invalid Assign");
-				}
-				else
+				if (hierarchyPayload.m_Entity != objInfo.m_Entity)
 				{
 					ReassignParentChildFlags(hierarchyPayload.m_Entity, objInfo.m_Entity);
 				}
@@ -115,12 +110,7 @@ namespace Rogue
 					HierarchyInfo& hierarchyPayload = *(HierarchyInfo*)payload->Data;
 
 					//Hierarchy must not be yourself, but would otherwise work
-					if (hierarchyPayload.m_Entity == childHierarchy.m_Entity)
-					{
-						//ImGui already prevents us from self-assigning
-						//ImGui::OpenPopup("Invalid Assign");
-					}
-					else
+					if (hierarchyPayload.m_Entity != childHierarchy.m_Entity)
 					{
 						ReassignParentChildFlags(hierarchyPayload.m_Entity, childHierarchy.m_Entity);
 					}
@@ -136,7 +126,7 @@ namespace Rogue
 	bool ImGuiEditorHierarchy::CheckValidReassign(Entity child, Entity newParent)
 	{
 		bool isValid = true;
-		HierarchyInfo& it = g_engine.m_coordinator.GetHierarchyInfo(child);
+		HierarchyInfo it = g_engine.m_coordinator.GetHierarchyInfo(child);
 		while (it.m_parent != -1 && it.m_parent != MAX_ENTITIES)
 		{
 			if (it.m_parent == child)
