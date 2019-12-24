@@ -22,7 +22,7 @@ Technology is prohibited.
 namespace Rogue
 {
 	PatrolAI::PatrolAI(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent)
-		: BaseAI(entity, logicComponent, statsComponent), m_currentPointIndex{0}
+		: ScriptComponent(entity, logicComponent, statsComponent), m_currentPointIndex{0}
 	{
 		//AddWaypoint(g_engine.m_coordinator.GetComponent<TransformComponent>(entity).getPosition() - Vec2(100, 0));
 		//AddWaypoint(g_engine.m_coordinator.GetComponent<TransformComponent>(entity).getPosition());

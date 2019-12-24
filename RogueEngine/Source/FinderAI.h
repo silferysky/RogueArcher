@@ -16,12 +16,12 @@ Technology is prohibited.
 */
 /* End Header **************************************************************************/
 #pragma once
-#include "BaseAI.h"
+#include "ScriptComponent.h"
 
 namespace Rogue
 {
 	class FinderAI
-		: public BaseAI
+		: public ScriptComponent
 	{
 	public:
 		FinderAI(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent);

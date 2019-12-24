@@ -16,13 +16,13 @@ Technology is prohibited.
 */
 /* End Header **************************************************************************/
 #pragma once
-#include "BaseAI.h"
+#include "ScriptComponent.h"
 #include <string>
 
 namespace Rogue
 {
 	class TransitionObject
-		: public BaseAI
+		: public ScriptComponent
 	{
 	public:
 		TransitionObject(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent, const std::string& levelToLoad = "Level 1.json");

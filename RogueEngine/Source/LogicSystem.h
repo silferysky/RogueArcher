@@ -16,7 +16,7 @@ Technology is prohibited.
 */
 /* End Header **************************************************************************/
 #pragma once
-#include "BaseAI.h"
+#include "ScriptComponent.h"
 #include "EventListener.h"
 #include <memory>
 #include <vector>
@@ -38,7 +38,7 @@ namespace Rogue
 		void Receive(Event* ev) override;
 
 		//For entity logic
-		void AddLogicInterface(Entity entity, std::shared_ptr<BaseAI> logicInterface);
+		void AddLogicInterface(Entity entity, std::shared_ptr<ScriptComponent> logicInterface);
 		void RemoveLogicInterface(Entity);
 		void ClearLogicInterface();
 
@@ -53,7 +53,7 @@ namespace Rogue
 		void CreateMoveEvent(Entity ent, Vec2 vec);
 
 	private:
-		std::map<Entity, std::vector<std::shared_ptr<BaseAI>>> m_entityLogicMap;
+		std::map<Entity, std::vector<std::shared_ptr<ScriptComponent>>> m_entityLogicMap;
 	};
 
 }

@@ -22,7 +22,7 @@ Technology is prohibited.
 namespace Rogue
 {
 	TransitionObject::TransitionObject(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent, const std::string& levelToLoad)
-		: BaseAI(entity, logicComponent, statsComponent), m_levelToLoad{ levelToLoad } {}
+		: ScriptComponent(entity, logicComponent, statsComponent), m_levelToLoad{ levelToLoad } {}
 
 	void TransitionObject::OnTriggerEnter(Entity other)
 	{

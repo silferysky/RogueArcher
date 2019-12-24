@@ -22,7 +22,7 @@ Technology is prohibited.
 namespace Rogue
 {
 	FinderAI::FinderAI(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent)
-		: BaseAI(entity, logicComponent, statsComponent) {}
+		: ScriptComponent(entity, logicComponent, statsComponent) {}
 
 	void FinderAI::AIActiveStateUpdate()
 	{

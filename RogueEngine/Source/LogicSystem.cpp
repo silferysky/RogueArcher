@@ -35,7 +35,7 @@ namespace Rogue
 	LogicSystem::LogicSystem()
 		: System(SystemID::id_LOGICSYSTEM)
 	{
-		m_entityLogicMap = std::map<Entity, std::vector<std::shared_ptr<BaseAI>>>();
+		m_entityLogicMap = std::map<Entity, std::vector<std::shared_ptr<ScriptComponent>>>();
 	}
 
 
@@ -72,9 +72,9 @@ namespace Rogue
 			return;
 		}
 
-		for (std::pair<Entity, std::vector<std::shared_ptr<BaseAI>>> it : m_entityLogicMap)
+		for (std::pair<Entity, std::vector<std::shared_ptr<ScriptComponent>>> it : m_entityLogicMap)
 		{
-			for (std::shared_ptr<BaseAI> ai : it.second)
+			for (std::shared_ptr<ScriptComponent> ai : it.second)
 				ai->LogicUpdate();
 		}
 		g_engine.m_coordinator.EndTimeSystem("Logic System");
@@ -109,7 +109,7 @@ namespace Rogue
 		}
 	}
 
-	void LogicSystem::AddLogicInterface(Entity entity, std::shared_ptr<BaseAI> logicInterface)
+	void LogicSystem::AddLogicInterface(Entity entity, std::shared_ptr<ScriptComponent> logicInterface)
 	{
 		m_entityLogicMap[entity].push_back(logicInterface);
 		//m_entityLogicMap.emplace(std::pair < Entity, std::shared_ptr<BaseAI>>(entity, logicInterface));
@@ -185,8 +185,8 @@ namespace Rogue
 				case AIType::AI_Static:
 				default:
 				{
-					BaseAI newAI(entities, logicComponent, statsComponent);
-					AddLogicInterface(entities, std::make_shared<BaseAI>(newAI));
+					ScriptComponent newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<ScriptComponent>(newAI));
 					break;
 				}
 				}

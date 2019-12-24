@@ -1,11 +1,11 @@
 /* Start Header ************************************************************************/
 /*!
-\file           BaseAi.cpp
+\file           ScriptComponent.cpp
 \project        Exale
 \author         Chan Wai Kit Terence, c.terence, 440005918 (100%)
 \par            c.terence\@digipen.edu
 \date           1 December,2019
-\brief          This file contains the function definitions for BaseAi
+\brief          This file contains the function definitions for ScriptComponent
 
 All content (C) 2019 DigiPen (SINGAPORE) Corporation, all rights
 reserved.
@@ -16,20 +16,20 @@ Technology is prohibited.
 */
 /* End Header **************************************************************************/
 #include "Precompiled.h"
-#include "BaseAI.h"
+#include "ScriptComponent.h"
 #include "Logger.h"
 #include "Main.h"
 
 
 namespace Rogue
 {
-	BaseAI::BaseAI(Entity entity, LogicComponent& logicComp, StatsComponent& statsComp)
+	ScriptComponent::ScriptComponent(Entity entity, LogicComponent& logicComp, StatsComponent& statsComp)
 		: m_entity{entity}, m_logicComponent{std::make_shared<LogicComponent>(logicComp)}, m_statsComponent{std::make_shared<StatsComponent>(statsComp)}
 	{
 		LogicInit();
 	}
 
-	void BaseAI::LogicInit()
+	void ScriptComponent::LogicInit()
 	{
 		//Put in order of importance
 		//Use AddAIState for active states, AddAIStateInactive for inactive states that might turn active
@@ -40,13 +40,13 @@ namespace Rogue
 		//m_logicComponent->SetCurState(AIState::AIState_Idle);
 	}
 
-	void BaseAI::LogicUpdate()
+	void ScriptComponent::LogicUpdate()
 	{
 		//To set all flags of potential behavior
 		m_logicComponent->ResetActiveStateBit();
 		AIActiveStateUpdate();
 
-		//For all possible states BaseAI has
+		//For all possible states ScriptComponent has
 		//This for loop handles the order of importance of each state.
 		auto allStatesVector = m_logicComponent->GetAllAIStates();
 		for (auto& it : allStatesVector)
@@ -76,31 +76,31 @@ namespace Rogue
 		}
 	}
 
-	void BaseAI::AIDetect()
+	void ScriptComponent::AIDetect()
 	{
 	}
 
-	void BaseAI::AIActiveStateUpdate()
+	void ScriptComponent::AIActiveStateUpdate()
 	{
 		m_logicComponent->SetActiveStateBit((size_t)AIState::AIState_Idle);
 	}
 
-	void BaseAI::AIChaseUpdate()
+	void ScriptComponent::AIChaseUpdate()
 	{
 		//RE_INFO("CHASING PLAYER");
 	}
 
-	void BaseAI::AIPatrolUpdate()
+	void ScriptComponent::AIPatrolUpdate()
 	{
 		//RE_INFO("AI PATROLLING");
 	}
 
-	void BaseAI::AIIdleUpdate()
+	void ScriptComponent::AIIdleUpdate()
 	{
 		//RE_INFO("AI IDLE");
 	}
 
-	void BaseAI::HandleCollision(EntCollisionOrTrigger* ev)
+	void ScriptComponent::HandleCollision(EntCollisionOrTrigger* ev)
 	{
 		switch (ev->GetEventType())
 		{
@@ -152,22 +152,22 @@ namespace Rogue
 		}
 	}
 
-	void BaseAI::OnCollisionEnter(Entity otherEnt)
+	void ScriptComponent::OnCollisionEnter(Entity otherEnt)
 	{
 		//RE_INFO("COLLISION ENTER");
 	}
 
-	void BaseAI::OnCollisionStay(Entity otherEnt)
+	void ScriptComponent::OnCollisionStay(Entity otherEnt)
 	{
 		//RE_INFO("COLLISION STAY");
 	}
 
-	void BaseAI::OnCollisionExit(Entity otherEnt)
+	void ScriptComponent::OnCollisionExit(Entity otherEnt)
 	{
 		//RE_INFO("COLLISION EXIT");
 	}
 
-	void BaseAI::OnTriggerEnter(Entity otherEnt)
+	void ScriptComponent::OnTriggerEnter(Entity otherEnt)
 	{
 		//RE_INFO("TRIGGER ENTER");
 		auto& hierarchyObj = g_engine.m_coordinator.GetHierarchyInfo(otherEnt);
@@ -182,52 +182,52 @@ namespace Rogue
 		}
 	}
 
-	void BaseAI::OnTriggerStay(Entity otherEnt)
+	void ScriptComponent::OnTriggerStay(Entity otherEnt)
 	{
 		//RE_INFO("TRIGGER STAY");
 	}
 
-	void BaseAI::OnTriggerExit(Entity otherEnt)
+	void ScriptComponent::OnTriggerExit(Entity otherEnt)
 	{
 		//RE_INFO("TRIGGER EXIT");
 	}
 
-	std::shared_ptr<LogicComponent> BaseAI::GetLogicComponent()
+	std::shared_ptr<LogicComponent> ScriptComponent::GetLogicComponent()
 	{
 		return m_logicComponent;
 	}
 
-	void BaseAI::SetLogicComponent(LogicComponent& logicComp)
+	void ScriptComponent::SetLogicComponent(LogicComponent& logicComp)
 	{
 		m_logicComponent = std::make_shared<LogicComponent>(logicComp);
 	}
 
-	std::shared_ptr<StatsComponent> BaseAI::GetStatsComponent()
+	std::shared_ptr<StatsComponent> ScriptComponent::GetStatsComponent()
 	{
 		return m_statsComponent;
 	}
 
-	void BaseAI::SetStatsComponent(StatsComponent& statsComp)
+	void ScriptComponent::SetStatsComponent(StatsComponent& statsComp)
 	{
 		m_statsComponent = std::make_shared<StatsComponent>(statsComp);
 	}
 
-	void BaseAI::AddNextPoint(Vec2 newPoint)
+	void ScriptComponent::AddNextPoint(Vec2 newPoint)
 	{
 		m_nextPoint.push(newPoint);
 	}
 
-	Vec2 BaseAI::GetNextPoint()
+	Vec2 ScriptComponent::GetNextPoint()
 	{
 		return m_nextPoint.front();
 	}
 
-	void BaseAI::PopNextPoint()
+	void ScriptComponent::PopNextPoint()
 	{
 		m_nextPoint.pop();
 	}
 
-	bool BaseAI::NextPointEmpty()
+	bool ScriptComponent::NextPointEmpty()
 	{
 		return m_nextPoint.empty();
 	}
