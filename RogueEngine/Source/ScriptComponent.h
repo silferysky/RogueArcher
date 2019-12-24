@@ -1,6 +1,6 @@
 /* Start Header ************************************************************************/
 /*!
-\file           BaseAi.h
+\file           ScriptComponent.h
 \project        Exale
 \author         Chan Wai Kit Terence, c.terence, 440005918 (100%)
 \par            c.terence\@digipen.edu
@@ -33,13 +33,13 @@ Technology is prohibited.
 
 namespace Rogue
 {
-	class BaseAI
+	class ScriptComponent
 		: public ILogic
 	{
 	public:
 
-		BaseAI(Entity entValue, LogicComponent& logicComp, StatsComponent& statsComp);
-		virtual ~BaseAI() = default;
+		ScriptComponent(Entity entValue, LogicComponent& logicComp, StatsComponent& statsComp);
+		virtual ~ScriptComponent() = default;
 
 		//From ILogic (Component Related)
 		virtual void LogicInit() override;

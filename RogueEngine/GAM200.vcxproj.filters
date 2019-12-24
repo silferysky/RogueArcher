@@ -325,9 +325,6 @@
     <ClInclude Include="Source\AIType.h">
       <Filter>RogueEngine\Systems\AI\AI Types</Filter>
     </ClInclude>
-    <ClInclude Include="Source\BaseAI.h">
-      <Filter>RogueEngine\Systems\AI\AI Types</Filter>
-    </ClInclude>
     <ClInclude Include="Source\LogicComponent.h">
       <Filter>RogueEngine\Systems\AI\Components</Filter>
     </ClInclude>
@@ -535,6 +532,9 @@
     <ClInclude Include="Source\FMODHelper.h">
       <Filter>RogueEngine\Systems\Audio</Filter>
     </ClInclude>
+    <ClInclude Include="Source\ScriptComponent.h">
+      <Filter>RogueEngine\Systems\AI\AI Types</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -647,9 +647,6 @@
     </ClCompile>
     <ClCompile Include="Source\EditorViewport.cpp">
       <Filter>RogueEditor\EditorFiles</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\BaseAI.cpp">
-      <Filter>RogueEngine\Systems\AI\AI Types</Filter>
     </ClCompile>
     <ClCompile Include="Source\Event.cpp">
       <Filter>RogueEngine\Systems\Events\Events</Filter>
@@ -836,6 +833,9 @@
     </ClCompile>
     <ClCompile Include="Source\UISystem.cpp">
       <Filter>RogueEngine\Systems\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ScriptComponent.cpp">
+      <Filter>RogueEngine\Systems\AI\AI Types</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

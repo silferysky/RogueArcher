@@ -22,7 +22,7 @@ Technology is prohibited.
 namespace Rogue
 {
 	TriggerAI::TriggerAI(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent)
-		: BaseAI(entity, logicComponent, statsComponent), m_isTriggered{ false } {}
+		: ScriptComponent(entity, logicComponent, statsComponent), m_isTriggered{ false } {}
 
 	void TriggerAI::OnTriggerEnter(Entity other)
 	{
@@ -47,7 +47,7 @@ namespace Rogue
 
 		g_engine.m_coordinator.GetSystem<LogicSystem>()->TriggerNextDoor();
 
-		BaseAI::OnTriggerEnter(other);
+		ScriptComponent::OnTriggerEnter(other);
 		/*auto& hierarchyObj = g_engine.m_coordinator.GetHierarchyInfo(other);
 		if (hierarchyObj.m_objectName == "Ball")
 		{

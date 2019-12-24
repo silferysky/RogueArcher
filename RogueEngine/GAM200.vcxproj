@@ -18,7 +18,6 @@
     <ClInclude Include="Source\AudioManager.h" />
     <ClInclude Include="Source\AudioSystem.h" />
     <ClInclude Include="Source\BackgroundComponent.h" />
-    <ClInclude Include="Source\BaseAI.h" />
     <ClInclude Include="Source\BaseCollider.h" />
     <ClInclude Include="Source\BaseComponent.h" />
     <ClInclude Include="Source\BaseSystem.h" />
@@ -101,6 +100,7 @@
     <ClInclude Include="Source\RigidbodyComponent.h" />
     <ClInclude Include="Source\RotatableComponent.h" />
     <ClInclude Include="Source\SceneManager.h" />
+    <ClInclude Include="Source\ScriptComponent.h" />
     <ClInclude Include="Source\Shader.h" />
     <ClInclude Include="Source\ShaderManager.h" />
     <ClInclude Include="Source\Sound.h" />
@@ -153,7 +153,6 @@
     <ClCompile Include="Source\AnimationSystem.cpp" />
     <ClCompile Include="Source\AudioEmitterComponent.cpp" />
     <ClCompile Include="Source\AudioSystem.cpp" />
-    <ClCompile Include="Source\BaseAI.cpp" />
     <ClCompile Include="Source\BoxCollider2DComponent.cpp" />
     <ClCompile Include="Source\CameraComponent.cpp" />
     <ClCompile Include="Source\CameraShake.cpp" />
@@ -221,6 +220,7 @@
     <ClCompile Include="Source\RigidbodyComponent.cpp" />
     <ClCompile Include="Source\RotatableComponent.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
+    <ClCompile Include="Source\ScriptComponent.cpp" />
     <ClCompile Include="Source\Shader.cpp" />
     <ClCompile Include="Source\FontSystem.cpp" />
     <ClCompile Include="Source\Sound.cpp" />
