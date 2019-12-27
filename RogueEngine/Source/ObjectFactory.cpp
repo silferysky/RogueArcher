@@ -170,9 +170,13 @@ namespace Rogue
 		RESerialiser::WriteToFile(fileName, "CameraZoom", &cameraZoom);
 
 		Entity entCount = 0;
-		size_t skipCount = g_engine.m_coordinator.GetSystem<MenuControllerSystem>()->GetUIMenuObjsSize();
+		size_t skipCount = 0; //No need to skip MenuControllerSystem's UI since they are not created as activeobjects
+		entCount = static_cast<Entity>(g_engine.m_coordinator.GetActiveObjects().size() - skipCount);
+
+		/*size_t skipCount = g_engine.m_coordinator.GetSystem<MenuControllerSystem>()->GetUIMenuObjsSize();
 		if (g_engine.m_coordinator.GetActiveObjects().size() - skipCount > 0)
-			entCount = static_cast<Entity>(g_engine.m_coordinator.GetActiveObjects().size() - skipCount);
+			entCount = static_cast<Entity>(g_engine.m_coordinator.GetActiveObjects().size() - skipCount);*/
+
 		EntityManager* em = &g_engine.m_coordinator.GetEntityManager();
 		int intVar = static_cast<int>(entCount);
 		RESerialiser::WriteToFile(fileName, "EntityCount", &intVar);
