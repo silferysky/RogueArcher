@@ -72,6 +72,23 @@ namespace Rogue
 			return;
 		}
 
+		//Pre AI Update
+
+		//Reset all LogicComponent's active state bit
+		for (std::pair<Entity, std::vector<std::shared_ptr<ScriptComponent>>> it : m_entityLogicMap)
+		{
+			for (std::shared_ptr<ScriptComponent> ai : it.second)
+				ai->GetLogicComponent()->ResetActiveStateBit();
+		}
+
+		//Update all active state bits
+		for (std::pair<Entity, std::vector<std::shared_ptr<ScriptComponent>>> it : m_entityLogicMap)
+		{
+			for (std::shared_ptr<ScriptComponent> ai : it.second)
+				ai->AIActiveStateUpdate();
+		}
+
+		//AI Update
 		for (std::pair<Entity, std::vector<std::shared_ptr<ScriptComponent>>> it : m_entityLogicMap)
 		{
 			for (std::shared_ptr<ScriptComponent> ai : it.second)
@@ -92,7 +109,6 @@ namespace Rogue
 			Entity triggered = event->GetOtherEntity();
 			for (Entity m : m_entities)
 			{
-				//TODO since most of the time the AI is not part of LogicSystem's entities, ensure that AI handles it properly.
 				if (m == object || m == triggered)
 					if (m_entityLogicMap[m].size())
 					{
