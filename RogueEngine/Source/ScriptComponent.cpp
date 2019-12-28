@@ -42,10 +42,6 @@ namespace Rogue
 
 	void ScriptComponent::LogicUpdate()
 	{
-		//To set all flags of potential behavior
-		m_logicComponent->ResetActiveStateBit();
-		AIActiveStateUpdate();
-
 		//For all possible states ScriptComponent has
 		//This for loop handles the order of importance of each state.
 		auto allStatesVector = m_logicComponent->GetAllAIStates();

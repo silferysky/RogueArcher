@@ -82,7 +82,7 @@ namespace Rogue
 
 	std::string LogicComponent::Serialize()
 	{
-		//Acceleration, Velocity, Mass, Volume, isStatic
+		//AI Type, AI first state, all different AI states
 		std::ostringstream ss;
 		ss << static_cast<int>(m_AIType) << ";";
 		ss << static_cast<int>(m_currentState) << ";";
