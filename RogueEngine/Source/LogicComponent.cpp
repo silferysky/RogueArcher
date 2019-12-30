@@ -86,6 +86,7 @@ namespace Rogue
 		std::ostringstream ss;
 		ss << static_cast<int>(m_AIType) << ";";
 		ss << static_cast<int>(m_currentState) << ";";
+		ss << static_cast<int>(m_allStates.size()) << ";";
 
 		for (auto it = m_allStates.rbegin(); it != m_allStates.rend();)
 		{
@@ -102,6 +103,7 @@ namespace Rogue
 		std::istringstream ss(toDeserialize.data());
 		std::string s1;
 		int counter = 0;		//Needed to take in for multiple values
+		int numOfStates = 0;
 		//std::vector<AIState> allStates{};
 
 		while (std::getline(ss, s1, ';'))
@@ -118,8 +120,15 @@ namespace Rogue
 				m_currentState = static_cast<AIState>(stoi(s1));
 				break;
 			}
+			case 2:
+			{
+				numOfStates = stoi(s1);
+				break;
+			}
 			default:
-				m_allStates.emplace(m_allStates.begin(),static_cast<AIState>(stoi(s1)));
+				if (numOfStates > 0)
+					m_allStates.emplace(m_allStates.begin(),static_cast<AIState>(stoi(s1)));
+				--numOfStates;
 				break;
 			}
 			++counter;
