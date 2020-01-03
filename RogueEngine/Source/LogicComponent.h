@@ -35,6 +35,9 @@ namespace Rogue
 		void	AddAIState(AIState newState);
 		void	AddAIStateInactive(AIState newState);
 
+		std::vector<std::string>& GetScriptString() const;
+		void	AddScriptString(const std::string& newScript);
+
 		AIState GetCurState() const;
 		void	SetCurState(AIState newState);
 
