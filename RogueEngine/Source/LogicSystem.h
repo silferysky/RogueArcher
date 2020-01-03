@@ -42,8 +42,11 @@ namespace Rogue
 		void RemoveLogicInterface(Entity);
 		void ClearLogicInterface();
 
-		void RemoveExcessAI();
 		void AddExcessAI();
+		void RemoveExcessAI();
+
+		void GenerateScript();
+		void DeleteScript();
 
 		//For Trigger AI
 		void TriggerNextDoor();

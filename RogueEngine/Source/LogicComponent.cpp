@@ -40,6 +40,16 @@ namespace Rogue
 		m_allStates.push_back(newState);
 	}
 
+	std::vector<std::string> LogicComponent::GetScriptString() const
+	{
+		return m_allScripts;
+	}
+
+	 void LogicComponent::AddScriptString(const std::string& newScript)
+	{
+		 m_allScripts.push_back(newScript);
+	}
+
 	void LogicComponent::SetAllAIStates(std::vector<AIState> states)
 	{
 		std::swap(states, m_allStates);
@@ -127,8 +137,15 @@ namespace Rogue
 			}
 			default:
 				if (numOfStates > 0)
-					m_allStates.emplace(m_allStates.begin(),static_cast<AIState>(stoi(s1)));
-				--numOfStates;
+				{
+					m_allStates.emplace(m_allStates.begin(), static_cast<AIState>(stoi(s1)));
+					//m_allStates.push_back(static_cast<AIState>(stoi(s1)));
+					--numOfStates;
+				}
+				else
+				{
+					m_allScripts.push_back(s1);
+				}
 				break;
 			}
 			++counter;

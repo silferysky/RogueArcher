@@ -147,21 +147,6 @@ namespace Rogue
 		m_entityLogicMap.clear();
 	}
 
-	void LogicSystem::RemoveExcessAI()
-	{
-		for (auto entityLogicIt = m_entityLogicMap.begin(); entityLogicIt != m_entityLogicMap.end(); ++entityLogicIt)
-		{
-			auto it = m_entities.find(entityLogicIt->first);
-			if (it == m_entities.end())
-			{
-				entityLogicIt = m_entityLogicMap.erase(entityLogicIt);
-			}
-
-			if (!m_entityLogicMap.size())
-				break;
-		}
-	}
-
 	void LogicSystem::AddExcessAI()
 	{
 		for (auto& entities : m_entities)
@@ -208,6 +193,81 @@ namespace Rogue
 				}
 			}
 		}
+	}
+
+	void LogicSystem::RemoveExcessAI()
+	{
+		for (auto entityLogicIt = m_entityLogicMap.begin(); entityLogicIt != m_entityLogicMap.end(); ++entityLogicIt)
+		{
+			auto it = m_entities.find(entityLogicIt->first);
+			if (it == m_entities.end())
+			{
+				entityLogicIt = m_entityLogicMap.erase(entityLogicIt);
+			}
+
+			if (!m_entityLogicMap.size())
+				break;
+		}
+	}
+
+	void LogicSystem::GenerateScript()
+	{
+		for (auto& entity : m_entities)
+		{
+			auto& logicComponent = g_engine.m_coordinator.GetComponent<LogicComponent>(entity);
+			auto& statsComponent = g_engine.m_coordinator.GetComponent<StatsComponent>(entity);
+			auto& scriptStringVector = logicComponent.GetScriptString();
+
+			if (!scriptStringVector.size())
+				continue;
+
+			for (auto& scriptString : scriptStringVector)
+			{
+				switch (logicComponent.GetLogicType())
+				{
+				case AIType::AI_Finder:
+				{
+					FinderAI newAI(entity, logicComponent, statsComponent);
+					AddLogicInterface(entity, std::make_shared<FinderAI>(newAI));
+					break;
+				}
+				case AIType::AI_Patrol:
+				{
+					PatrolAI newAI(entity, logicComponent, statsComponent);
+					AddLogicInterface(entity, std::make_shared<PatrolAI>(newAI));
+					break;
+				}
+				case AIType::AI_Trigger:
+				{
+					TriggerAI newAI(entity, logicComponent, statsComponent);
+					AddLogicInterface(entity, std::make_shared<TriggerAI>(newAI));
+					break;
+				}
+				case AIType::Obj_Transition:
+				{
+					TransitionObject newAI(entity, logicComponent, statsComponent, statsComponent.GetTransitionLevel());
+					AddLogicInterface(entity, std::make_shared<TransitionObject>(newAI));
+					break;
+				}
+				case AIType::AI_Static:
+				default:
+				{
+					ScriptComponent newAI(entity, logicComponent, statsComponent);
+					AddLogicInterface(entity, std::make_shared<ScriptComponent>(newAI));
+					break;
+				}
+				}
+			}
+		}
+	}
+
+	void LogicSystem::DeleteScript()
+	{
+		for (auto& scripts : m_entityLogicMap)
+		{
+			scripts.second.clear();
+		}
+		m_entityLogicMap.clear();
 	}
 
 	void LogicSystem::TriggerNextDoor()
