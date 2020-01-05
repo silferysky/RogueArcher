@@ -535,6 +535,12 @@
     <ClInclude Include="Source\FMODHelper.h">
       <Filter>RogueEngine\Systems\Audio</Filter>
     </ClInclude>
+    <ClInclude Include="Source\ICommandable.h">
+      <Filter>RogueEditor\EditorFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EditorController.h">
+      <Filter>RogueEditor\EditorFiles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -836,6 +842,9 @@
     </ClCompile>
     <ClCompile Include="Source\UISystem.cpp">
       <Filter>RogueEngine\Systems\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EditorController.cpp">
+      <Filter>RogueEditor\EditorFiles</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
