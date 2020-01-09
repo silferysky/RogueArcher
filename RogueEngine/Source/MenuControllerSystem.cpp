@@ -69,7 +69,52 @@ namespace Rogue
 
 			if (UIPicked)
 			{
-				HierarchyInfo hierarchyObj = g_engine.m_coordinator.GetHierarchyInfo(entPicked->GetEntityID());
+				HierarchyInfo hierarchyObj = HierarchyInfo();
+				
+				for (size_t it = 0; it < m_menuObjs.size() + m_confirmQuitEnt.size(); ++it)
+				{
+					if (entPicked->GetEntityID() == m_menuObjs.front() + it || entPicked->GetEntityID() == m_confirmQuitEnt.front() + it - m_menuObjs.size())
+					{
+						switch (it)
+						{
+						case 0: //Crosshair
+							break;
+						case 1: //MainMenu_Bg
+							hierarchyObj.m_objectName = "MainMenu_Bg";
+							break;
+						case 2: //HowToPlayBtn
+							hierarchyObj.m_objectName = "HowToPlayBtn";
+							break;
+						case 3: //MainMenu_Btn
+							hierarchyObj.m_objectName = "MainMenu_Btn";
+							break;
+						case 4: //Resume
+							hierarchyObj.m_objectName = "Resume";
+							break;
+						case 5: //QuitBtn
+							hierarchyObj.m_objectName = "Quit";
+							break;
+						case 6: //HowToPlay
+							hierarchyObj.m_objectName = "HowToPlay";
+							break;
+						case 7: //YesBtn
+							hierarchyObj.m_objectName = "YesBtn";
+							break;
+						case 8: //NoBtn
+							hierarchyObj.m_objectName = "NoBtn";
+							break;
+						}
+					}
+				}
+
+				if (hierarchyObj.m_objectName == "")
+				{
+					hierarchyObj = g_engine.m_coordinator.GetHierarchyInfo(entPicked->GetEntityID());
+				}
+				else
+				{
+					hierarchyObj.m_Entity = entPicked->GetEntityID();
+				}
 				
 				//For all cases of "How to Play" (Main Menu and Pause Screens)
 				if (hierarchyObj.m_objectName == "HowToPlay" || hierarchyObj.m_objectName == "HowToPlayBtn")
@@ -158,7 +203,7 @@ namespace Rogue
 		case EventType::EvKeyTriggered:
 		{
 			//Statement here to make sure all commands only apply if game is not running
-			if (g_engine.m_coordinator.GameIsActive())
+			if (!g_engine.m_coordinator.GetGameState())
 				return;
 
 			KeyTriggeredEvent* keytriggeredevent = dynamic_cast<KeyTriggeredEvent*>(ev);
@@ -349,7 +394,6 @@ namespace Rogue
 
 	void MenuControllerSystem::ResumeGame()
 	{
-		//ClearMenuObjs();
 		if (m_confirmQuit)
 		{
 			ToggleQuitButtonObj();
