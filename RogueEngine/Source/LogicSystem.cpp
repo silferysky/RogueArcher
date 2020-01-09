@@ -216,7 +216,7 @@ namespace Rogue
 		{
 			auto& logicComponent = g_engine.m_coordinator.GetComponent<LogicComponent>(entity);
 			auto& statsComponent = g_engine.m_coordinator.GetComponent<StatsComponent>(entity);
-			auto& scriptStringVector = logicComponent.GetScriptString();
+			auto scriptStringVector = logicComponent.GetScriptString();
 
 			if (!scriptStringVector.size())
 				continue;
