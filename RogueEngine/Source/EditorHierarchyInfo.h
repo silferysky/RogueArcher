@@ -26,6 +26,7 @@ namespace Rogue
 	public:
 		std::string m_objectName;
 		std::string m_tag;
+		std::string m_archetypeName;
 		bool m_selected = false;
 		Entity m_Entity = 0;
 
@@ -33,8 +34,8 @@ namespace Rogue
 		std::vector<Entity> m_children;
 
 		HierarchyInfo() = default;
-		HierarchyInfo(Entity entity, std::string_view name, std::string_view tag = "", Entity parentEnt = MAX_ENTITIES)
-			: m_Entity{ entity }, m_objectName{ name }, m_tag{ tag }, m_parent{ parentEnt }, m_children{ std::vector<Entity>{} }{}
+		HierarchyInfo(Entity entity, std::string_view name, std::string_view tag = "", std::string_view archetypeName = "", Entity parentEnt = MAX_ENTITIES)
+			: m_Entity{ entity }, m_objectName{ name }, m_tag{ tag }, m_archetypeName{archetypeName}, m_parent{ parentEnt }, m_children{ std::vector<Entity>{} }{}
 	};
 
 	class DirectoryInfo

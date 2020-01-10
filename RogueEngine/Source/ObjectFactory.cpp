@@ -92,7 +92,7 @@ namespace Rogue
 			ostrstream << "EntityParent" << static_cast<int>(entity);
 			Entity entityParent = level[ostrstream.str().c_str()].GetInt();
 
-			CREATE_HIERARCHY_OBJ(curEnt, readstr, tagstr, loadedQueue.front() + entityParent);
+			CREATE_HIERARCHY_OBJ(curEnt, readstr, tagstr, "", loadedQueue.front() + entityParent);
 			//HierarchyInfo& info = g_engine.m_coordinator.GetHierarchyInfo(curEnt);
 			//debugStr << "Entity " << info.m_Entity << ":" << info.m_objectName << " has parent " << info.m_parent;
 			//RE_INFO(debugStr.str());
@@ -102,6 +102,8 @@ namespace Rogue
 			RE_INFO(debugStr.str());
 			CLEARSTR(debugStr);
 		}
+
+		//TODO: Doing archetype loading
 
 
 		//Assigning child
@@ -534,7 +536,7 @@ namespace Rogue
 
 			if (createHierarchy)
 			{
-				CREATE_HIERARCHY_OBJ(curEnt, ostrstream.str(), tagDeserialized, -1);
+				CREATE_HIERARCHY_OBJ(curEnt, ostrstream.str(), tagDeserialized, archetype, -1);
 			}
 
 			return curEnt;
