@@ -37,6 +37,7 @@ namespace Rogue
 		void SaveArchetypeList(const char* fileName);
 		void SaveArchetype(std::string_view file);
 		void AddToArchetypes(std::string_view archetype, Signature signature, std::string_view toDeserialize);
+		void UpdateArchetype(const char* archetype, Entity entityToReplace);
 
 		void LoadLevelFiles(const char* fileName);
 		void SaveLevelFiles(const char* fileName);
@@ -74,10 +75,10 @@ namespace Rogue
 #define MIN_SAVE_ENTITY 2
 
 	//MACROS (HIERARCHY)
-#define CREATE_HIERARCHY_OBJ(entityValue, name, tag, parent)		HierarchyInfo newInfo(entityValue, name, tag, parent); \
-																	g_engine.m_coordinator.GetActiveObjects().push_back(entityValue); \
-																	g_engine.m_coordinator.GetHierarchyInfo(entityValue) = newInfo; \
-																	SceneManager::instance().IncrementObjectIterator();
+#define CREATE_HIERARCHY_OBJ(entityValue, name, tag, archetypeName, parent)		HierarchyInfo newInfo(entityValue, name, tag, archetypeName, parent); \
+																				g_engine.m_coordinator.GetActiveObjects().push_back(entityValue); \
+																				g_engine.m_coordinator.GetHierarchyInfo(entityValue) = newInfo; \
+																				SceneManager::instance().IncrementObjectIterator();
 
 //cstr will go out of scope if you choose to do strstream.str().c_str()
 //This is the proper (Non macro) way of setting the string

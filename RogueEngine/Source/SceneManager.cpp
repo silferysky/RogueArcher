@@ -180,6 +180,11 @@ namespace Rogue
 		m_objectFactory->SaveArchetypeList("Resources/Archetypes/Archetypes.json");
 	}
 
+	void SceneManager::UpdateArchetype(const char* archetypeName, Entity archetypeEntity)
+	{
+		m_objectFactory->UpdateArchetype(archetypeName, archetypeEntity);
+	}
+
 	void SceneManager::Clone(Entity toClone)
 	{
 		m_objectFactory->Clone(toClone);
