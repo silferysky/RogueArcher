@@ -356,6 +356,17 @@ namespace Rogue
 		m_archetypes.insert({ archetypeName.data(), std::pair<Signature, std::string>(signature, toDeserialize.data()) });
 	}
 
+	void ObjectFactory::UpdateArchetype(const char* archetype, Entity entityToReplace)
+	{
+		//If the key exists
+		if (m_archetypes.count(archetype))
+		{
+			Signature updatedSignature = g_engine.m_coordinator.GetEntityManager().GetSignature(entityToReplace);
+			std::string updatedDeserializedString = SerializeComponents(g_engine.m_coordinator.GetHierarchyInfo(entityToReplace));
+			m_archetypes[archetype] = std::pair<Signature, std::string>(updatedSignature, updatedDeserializedString);
+		}
+	}
+
 	void ObjectFactory::LoadLevelFiles(const char* fileName)
 	{
 		rapidjson::Document level = RESerialiser::DeserialiseFromFile(fileName);
