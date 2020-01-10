@@ -81,16 +81,38 @@ namespace Rogue
 						infoObj.m_tag = tagging;
 						memset(tagging, 0, 64);
 					}
-					if (ImGui::Button("Save As Prefab"))
+
+					if (infoObj.m_archetypeName == "")
 					{
-						auto archetypeMap = SceneManager::instance().GetArchetypeMap();
-						auto it = archetypeMap.find(infoObj.m_objectName);
-						if (it != archetypeMap.end())
-							SceneManager::instance().SaveArchetype(infoObj.m_objectName.c_str());
-						else
+						if (ImGui::Button("Save As Prefab"))
 						{
-							SceneManager::instance().AddToArchetypes(i);
-							//SceneManager::instance().SaveArchetype(infoObj.m_objectName.c_str());
+							auto archetypeMap = SceneManager::instance().GetArchetypeMap();
+							auto it = archetypeMap.find(infoObj.m_objectName);
+							if (it != archetypeMap.end())
+								SceneManager::instance().SaveArchetype(infoObj.m_objectName.c_str());
+							else
+							{
+								SceneManager::instance().AddToArchetypes(i);
+								//SceneManager::instance().SaveArchetype(infoObj.m_objectName.c_str());
+							}
+						}
+					}
+					else
+					{
+						if (ImGui::Button("Update Prefab"))
+						{
+							auto archetypeMap = SceneManager::instance().GetArchetypeMap();
+							auto it = archetypeMap.find(infoObj.m_objectName);
+							if (it != archetypeMap.end())
+							{
+								SceneManager::instance().UpdateArchetype(infoObj.m_archetypeName.c_str(), i);
+							}
+							//Only updates, not add new prefab
+							//else
+							//{
+							//	SceneManager::instance().AddToArchetypes(i);
+							//	//SceneManager::instance().SaveArchetype(infoObj.m_objectName.c_str());
+							//}
 						}
 					}
 
