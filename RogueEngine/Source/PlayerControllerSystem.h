@@ -55,6 +55,8 @@ namespace Rogue
 		void CreateBallAttack();
 		std::vector<TimedEntity> m_timedEntities;
 		std::vector<TimedEntity> m_teleports;
+		float m_teleportCharge = 3.0f;
+		float m_maxTeleportCharge = 3.0f;
 		float m_isInLight;
 		const float m_maxJumpTimer;
 	};

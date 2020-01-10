@@ -83,14 +83,10 @@ namespace Rogue
 				ClearTeleportEntities();
 		}
 
-		//if (!m_timedEntities.size())
-		//{
-			//m_ballCooldown -= g_deltaTime * g_engine.GetTimeScale();
-			//if (m_ballCooldown < 0.0f)
-			//{
-			//	ClearTimedEntities();
-			//}
-		//}
+		//Timers 
+		if (m_teleportCharge < m_maxTeleportCharge)
+			m_teleportCharge += g_deltaTime * g_engine.GetTimeScale();
+
 		m_isInLight -= g_deltaTime * g_engine.GetTimeScale();
 
 		//To update all timed entities
@@ -130,7 +126,10 @@ namespace Rogue
 	{
 		//Statement here to make sure all commands only apply if game is not running
 		if (!g_engine.m_coordinator.GameIsActive())
+		{
+			g_engine.SetTimeScale(1.0f);
 			return;
+		}
 
 		if (m_entities.begin() == m_entities.end())
 			return;
@@ -169,7 +168,7 @@ namespace Rogue
 
 				else if (keycode == KeyPress::MB2)
 				{
-					if (m_entities.size() && m_timedEntities.size() && m_isInLight < 0.0f)
+					if (m_entities.size() && m_timedEntities.size() && m_isInLight < 0.0f && m_teleportCharge > 1.0f)
 					{
 						TimedEntity ent(g_engine.m_coordinator.cloneArchetypes("TeleportSprite", false), 0.5f);
 						m_teleports.push_back(ent);
@@ -185,6 +184,7 @@ namespace Rogue
 								g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).getPosition());*/
 
 						ClearTimedEntities();
+						--m_teleportCharge;
 					}
 				}
 				else if (keycode == KeyPress::MB3)
