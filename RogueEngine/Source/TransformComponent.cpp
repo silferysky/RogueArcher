@@ -138,18 +138,7 @@ namespace Rogue
 
 	void TransformComponent::DisplayOnInspector()
 	{
-		ImGui::Text("Scale    ");
-		ImGui::SameLine();
-		ImGui::PushItemWidth(75);
-		ImGui::DragFloat(" ", &m_scale.x, 1.0f, 0.0f, 100000.0f);
-		ImGui::SameLine(0.0f, 36.0f);
-		ImGui::DragFloat("  ", &m_scale.y, 1.0f, 0.0f, 100000.0f);
-
-
-		ImGui::Text("Rotation ");
-		ImGui::SameLine();
-		ImGui::DragFloat("   ", &m_rotation, 0.1f, 0.0f, 6.28f);
-		
+		//If this function is updated, update EditorInspector's TransformDisplay also
 		ImGui::Text("Translate");
 		ImGui::SameLine();
 		ImGui::PushItemWidth(75);
@@ -157,35 +146,44 @@ namespace Rogue
 		ImGui::SameLine();
 		ImGui::PushItemWidth(75);
 		ImGui::DragFloat("      ", &m_position.y);
-		ImGui::PushItemWidth(50);
 
-		static char m_priorityDraw[128];
-		ImGui::TextWrapped("Current Z : %d", m_fakeZ);
-		ImGui::TextWrapped("Set Z");
-		ImGui::InputText("                       ", m_priorityDraw, 128);
-		if (ImGui::Button("Set Z"))
-		{
-			m_fakeZ = atoi(m_priorityDraw);
-			setZ(m_fakeZ);
-			memset(m_priorityDraw, 0, 128);
-		}
+		ImGui::Text("Z Value  ");
+		ImGui::SameLine();
+		ImGui::DragInt("    ", &m_fakeZ, 1.0f, -100000, 100000);
+
 		if (ImGui::IsItemHovered())
 		{
 			ImGui::BeginTooltip();
 			ImGui::Text("Higher number means the object will be drawn infront");
 			ImGui::EndTooltip();
 		}
-		
+
+		ImGui::Text("Scale    ");
+		ImGui::SameLine();
+		ImGui::PushItemWidth(75);
+		ImGui::DragFloat(" ", &m_scale.x, 1.0f, 0.0f, 100000.0f);
+		ImGui::SameLine(0.0f, 36.0f);
+		ImGui::DragFloat("  ", &m_scale.y, 1.0f, 0.0f, 100000.0f);
+
+		ImGui::Text("Rotation ");
+		ImGui::SameLine();
+		ImGui::DragFloat("   ", &m_rotation, 0.1f, 0.0f, 6.28f);
+
+		DisplayOnInspectorWithParent();
+	}
+
+	void TransformComponent::DisplayOnInspectorWithParent()
+	{
 		if (ImGui::Button("Reset Position"))
 		{
 			m_position = Vec2{ 0.0f, 0.0f };
 		}
-		
+
 		if (ImGui::Button("Reset Rotation"))
 		{
 			m_rotation = 0.0f;
 		}
-		
+
 		if (ImGui::Button("Reset Scale"))
 		{
 			m_scale = Vec2{ 100.0f,100.0f };
