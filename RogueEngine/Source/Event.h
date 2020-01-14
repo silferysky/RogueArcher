@@ -70,7 +70,11 @@ namespace Rogue
 
 		EvCameraShake,
 		EvChangeAnimation,
-		EvEntityPicked
+		EvEntityPicked,
+
+		EvParentTransformUpdate,
+		EvParentRotateUpdate,
+		EvParentScaleUpdate
 	};
 
 	enum EventCategory
@@ -94,7 +98,9 @@ namespace Rogue
 		EventCatCollision		= EvCatFlag(12),
 		EventCatTrigger			= EvCatFlag(13),
 
-		EventCatGraphics		= EvCatFlag(14)
+		EventCatGraphics		= EvCatFlag(14),
+
+		EventCatParent			= EvCatFlag(15)
 	};
 
 	/*enum EventMessageType

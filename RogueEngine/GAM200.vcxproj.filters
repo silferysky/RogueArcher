@@ -125,6 +125,9 @@
     <Filter Include="RogueEngine\Systems\Picking\Cursor">
       <UniqueIdentifier>{ce9604b8-0908-4818-aa4a-cae28126becc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="RogueEngine\Systems\ParentChild">
+      <UniqueIdentifier>{a116e54c-8533-45b3-b90b-c50d480be50a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Resource.h">
@@ -541,6 +544,12 @@
     <ClInclude Include="Source\EditorController.h">
       <Filter>RogueEditor\EditorFiles</Filter>
     </ClInclude>
+    <ClInclude Include="Source\ParentEvent.h">
+      <Filter>RogueEngine\Systems\Events\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ParentChildSystem.h">
+      <Filter>RogueEngine\Systems\ParentChild</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -845,6 +854,9 @@
     </ClCompile>
     <ClCompile Include="Source\EditorController.cpp">
       <Filter>RogueEditor\EditorFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ParentChildSystem.cpp">
+      <Filter>RogueEngine\Systems\ParentChild</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
