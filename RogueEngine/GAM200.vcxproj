@@ -39,6 +39,8 @@
     <ClInclude Include="Source\ImGradient.h" />
     <ClInclude Include="Source\ImGuizmo.h" />
     <ClInclude Include="Source\ImSequencer.h" />
+    <ClInclude Include="Source\ParentChildSystem.h" />
+    <ClInclude Include="Source\ParentEvent.h" />
     <ClInclude Include="Source\ParticleComponent.h" />
     <ClInclude Include="Source\ParticleEmitterSystem.h" />
     <ClInclude Include="Source\PickingManager.h" />
@@ -201,6 +203,7 @@
     <ClCompile Include="Source\LogicSystem.cpp" />
     <ClCompile Include="Source\Manifold.cpp" />
     <ClCompile Include="Source\MenuControllerSystem.cpp" />
+    <ClCompile Include="Source\ParentChildSystem.cpp" />
     <ClCompile Include="Source\ParticleComponent.cpp" />
     <ClCompile Include="Source\ParticleEmitterComponent.cpp" />
     <ClCompile Include="Source\ParticleEmitterSystem.cpp" />
