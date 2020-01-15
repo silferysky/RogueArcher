@@ -45,6 +45,7 @@ namespace Rogue
 	{
 		
 	}
+
 	void MenuControllerSystem::Receive(Event* ev)
 	{
 		switch (ev->GetEventType())
@@ -255,9 +256,11 @@ namespace Rogue
 		}
 		}
 	}
+
 	void MenuControllerSystem::Shutdown()
 	{
 	}
+
 	void MenuControllerSystem::InitPauseMenu()
 	{
 		//g_engine.SetTimeScale(0.0f);
