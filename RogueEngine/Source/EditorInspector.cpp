@@ -25,6 +25,8 @@ Technology is prohibited.
 #include "EditorInspector.h"
 #include "REEngine.h"
 #include "CameraManager.h"
+#include "ParentEvent.h"
+#include "EventDispatcher.h"
 #include "Main.h"
 
 namespace Rogue
@@ -158,7 +160,7 @@ namespace Rogue
 								//	parentRotation += tempTransform.GetRotation();
 								//}
 
-								//Current set
+								//Current set (Temporary display values)
 								Vector2D transform = trans.GetPosition() - parentTransform, scale = parentScale;
 								int transformZ = trans.GetZ() - parentTransformZ;
 								float rotation = trans.GetRotation() - parentRotation;
@@ -200,6 +202,24 @@ namespace Rogue
 								//trans.setScale(Vec2(scale.x * parentScale.x, scale.y * parentScale.y));
 								//trans.setRotation(rotation + parentRotation);
 
+								if (trans.GetPosition().x - parentTransform.x != 0.0f ||
+									trans.GetPosition().y - parentTransform.y != 0.0f ||
+									trans.GetZ() - parentTransformZ != 0.0f)
+								{
+									ParentTransformEvent* event = new ParentTransformEvent(i,
+										trans.GetPosition().x - parentTransform.x,
+										trans.GetPosition().y - parentTransform.y,
+										trans.GetZ() - parentTransformZ);
+
+									event->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
+									EventDispatcher::instance().AddEvent(event);
+								}
+
+								if (trans.GetScale().x ||
+									trans.GetScale().y)
+								{
+
+								}
 
 								trans.DisplayOnInspectorWithParent();
 							}
