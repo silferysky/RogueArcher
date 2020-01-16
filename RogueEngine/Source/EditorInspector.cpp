@@ -202,23 +202,37 @@ namespace Rogue
 								//trans.setScale(Vec2(scale.x * parentScale.x, scale.y * parentScale.y));
 								//trans.setRotation(rotation + parentRotation);
 
-								if (trans.GetPosition().x - parentTransform.x != 0.0f ||
-									trans.GetPosition().y - parentTransform.y != 0.0f ||
-									trans.GetZ() - parentTransformZ != 0.0f)
+								if (trans.GetPosition().x - parentTransform.x != transform.x ||
+									trans.GetPosition().y - parentTransform.y != transform.y ||
+									trans.GetZ() - parentTransformZ != transformZ)
 								{
 									ParentTransformEvent* event = new ParentTransformEvent(i,
-										trans.GetPosition().x - parentTransform.x,
-										trans.GetPosition().y - parentTransform.y,
-										trans.GetZ() - parentTransformZ);
+										transform.x - trans.GetPosition().x,
+										transform.y - trans.GetPosition().y,
+										transformZ - trans.GetZ());
 
 									event->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
 									EventDispatcher::instance().AddEvent(event);
 								}
 
-								if (trans.GetScale().x ||
-									trans.GetScale().y)
+								if (trans.GetScale().x / parentScale.x != 1 ||
+									trans.GetScale().y / parentScale.y != 1)
 								{
+									ParentScaleEvent* event = new ParentScaleEvent(i,
+										trans.GetScale().x / parentScale.x,
+										trans.GetScale().y / parentScale.y);
 
+									event->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+									EventDispatcher::instance().AddEvent(event);
+								}
+
+								if (trans.GetRotation() - parentRotation != rotation)
+								{
+									ParentRotateEvent* event = new ParentRotateEvent(i,
+										rotation - trans.GetRotation());
+
+									event->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+									EventDispatcher::instance().AddEvent(event);
 								}
 
 								trans.DisplayOnInspectorWithParent();
