@@ -1,6 +1,8 @@
 #include "Precompiled.h"
 #include "ParentChildSystem.h"
+#include "Main.h"
 #include "ParentEvent.h"
+#include "EditorHierarchyInfo.h"
 
 namespace Rogue
 {
@@ -26,6 +28,7 @@ namespace Rogue
 		case EvParentTransformUpdate:
 		{
 			ParentTransformEvent* parentEvent = dynamic_cast<ParentTransformEvent*>(ev);
+			HierarchyInfo& parentHierarchyInfo = g_engine.m_coordinator.GetHierarchyInfo(parentEvent->GetParentEntity());
 			break;
 		}
 		case EvParentScaleUpdate:
