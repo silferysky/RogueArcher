@@ -10,8 +10,8 @@ namespace Rogue
 		EditorController();
 		~EditorController();
 		void ExecuteCommand(std::shared_ptr<ICommandable> command);
-		void Undo();
-		void Redo();
+		void UndoCommand();
+		void RedoCommand();
 		void ClearUndoRedoStack();
 
 		void InsertUndo(ICommandable* command);

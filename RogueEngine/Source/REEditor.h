@@ -11,4 +11,6 @@
 #include "EditorHierarchy.h"
 #include "EditorViewport.h"
 #include "EditorProfiler.h"
-
+#include "EditorController.h"
+#include "EditorDeleteCommand.h"
+#include "EditorCopyCommand.h"

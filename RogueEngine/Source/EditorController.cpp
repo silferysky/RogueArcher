@@ -12,27 +12,34 @@ namespace Rogue
 	}
 	void EditorController::ExecuteCommand(std::shared_ptr<ICommandable> command)
 	{
-		m_redoStack.clear();
-		command->Execute();
+		
+		if (command->Execute())
+		{
+			m_undoStack.pop_back();
+		}
 		m_undoStack.push_back(command);
+		if (!m_redoStack.size())
+		{
+			m_redoStack.clear();
+		}
 	}
 
-	void EditorController::Undo()
+	void EditorController::UndoCommand()
 	{
 		if (!m_undoStack.size())
 			return;
 
-		m_undoStack.back()->Undo();
-		m_redoStack.push_back(m_undoStack.back());
+		if(m_undoStack.back()->Undo())
+			m_redoStack.push_back(m_undoStack.back());
 		m_undoStack.pop_back();
 	}
 
-	void EditorController::Redo()
+	void EditorController::RedoCommand()
 	{
 		if (!m_redoStack.size())
 			return;
-		m_redoStack.front()->Redo();
-		m_undoStack.push_back(m_redoStack.front());
+		if(m_redoStack.front()->Execute())
+			m_undoStack.push_back(m_redoStack.front());
 		m_redoStack.pop_back();
 	}
 
