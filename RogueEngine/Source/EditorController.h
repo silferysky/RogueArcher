@@ -9,7 +9,7 @@ namespace Rogue
 	public:
 		EditorController();
 		~EditorController();
-		void ExecuteCommand(std::shared_ptr<ICommandable> command);
+		void ExecuteCommand(ICommandable* command);
 		void UndoCommand();
 		void RedoCommand();
 		void ClearUndoRedoStack();
@@ -18,9 +18,9 @@ namespace Rogue
 		void InsertRedo(ICommandable* command);
 
 	private:
-		std::vector<std::shared_ptr<ICommandable>> m_undoStack;
-		std::vector<std::shared_ptr<ICommandable>> m_redoStack;
-		size_t m_undoLimit;
+		std::vector<ICommandable*> m_undoStack;
+		std::vector<ICommandable*> m_redoStack;
+		size_t m_undoLimit = 256;
 
 	};
 }

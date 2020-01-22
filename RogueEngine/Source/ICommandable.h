@@ -9,7 +9,7 @@ namespace Rogue
 
 		virtual bool Execute() = 0;
 		virtual bool Undo() = 0;
-		virtual void Redo() = 0;
+		//virtual void Redo() = 0;
 	};
 
 	/*class Model
