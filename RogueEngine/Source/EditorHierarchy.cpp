@@ -181,6 +181,7 @@ namespace Rogue
 				{
 					g_engine.m_coordinator.GetHierarchyInfo(i).m_selected = false;
 				}
+				//m_controller.ExecuteCommand(new EditorCreateObjectCommand());
 				SceneManager::instance().Create2DSprite();
 			}
 			if (ImGui::IsItemHovered())

@@ -3,20 +3,21 @@
 
 namespace Rogue
 {
-	EditorController::EditorController()
+	EditorController::EditorController():m_undoStack{},m_redoStack{}
 	{
 	}
 	EditorController::~EditorController()
 	{
 		ClearUndoRedoStack();
 	}
-	void EditorController::ExecuteCommand(std::shared_ptr<ICommandable> command)
+	void EditorController::ExecuteCommand(ICommandable* command)
 	{
 		
 		if (command->Execute())
 		{
 			m_undoStack.pop_back();
 		}
+
 		m_undoStack.push_back(command);
 		if (!m_redoStack.size())
 		{
