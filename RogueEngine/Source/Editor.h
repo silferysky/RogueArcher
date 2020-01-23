@@ -20,7 +20,9 @@ Technology is prohibited.
 #include "EditorManager.h"
 #include "REEditor.h"
 #include "REEngine.h"
-
+#include "EditorEvent.h"
+#define DoingUndo true
+#define DoingRedo false
 
 namespace Rogue
 {
@@ -35,8 +37,19 @@ namespace Rogue
 		void Update() override;
 		void Receive(Event* ev) override final;
 		void Shutdown() override;
+
+		//void ExecuteCommand(EditorEvent* command);
+		void UndoCommand();
+		void RedoCommand();
+		void ClearUndoRedoStack();
+		void ExecuteCommand(bool exeUndo = DoingUndo);
+
+		void AddToUndoStack(EditorEvent* ev);
+		void AddToRedoStack(EditorEvent* ev);
+
 	private:
-		EditorController Controller;
+		std::vector<EditorEvent*> m_undoStack;
+		std::vector<EditorEvent*> m_redoStack;
 		std::vector<Entity>& m_currentVector = g_engine.m_coordinator.GetActiveObjects();
 	};
 }

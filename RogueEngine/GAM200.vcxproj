@@ -32,10 +32,7 @@
     <ClInclude Include="Source\ColliderComponent.h" />
     <ClInclude Include="Source\CollisionSystem.h" />
     <ClInclude Include="Source\CursorComponent.h" />
-    <ClInclude Include="Source\EditorCopyCommand.h" />
-    <ClInclude Include="Source\EditorCreateObjectCommand.h" />
-    <ClInclude Include="Source\EditorDeleteCommand.h" />
-    <ClInclude Include="Source\EditorController.h" />
+    <ClInclude Include="Source\EditorEvent.h" />
     <ClInclude Include="Source\FMODHelper.h" />
     <ClInclude Include="Source\ICommandable.h" />
     <ClInclude Include="Source\ImCurveEdit.h" />
@@ -171,12 +168,8 @@
     <ClCompile Include="Source\CursorSystem.cpp" />
     <ClCompile Include="Source\DebugDrawSystem.cpp" />
     <ClCompile Include="Source\Editor.cpp" />
-    <ClCompile Include="Source\EditorCopyCommand.cpp" />
-    <ClCompile Include="Source\EditorCreateObjectCommand.cpp" />
-    <ClCompile Include="Source\EditorDeleteCommand.cpp" />
     <ClCompile Include="Source\EditorComponent.cpp" />
     <ClCompile Include="Source\EditorConsole.cpp" />
-    <ClCompile Include="Source\EditorController.cpp" />
     <ClCompile Include="Source\EditorEdit.cpp" />
     <ClCompile Include="Source\EditorFile.cpp" />
     <ClCompile Include="Source\EditorGameObject.cpp" />
