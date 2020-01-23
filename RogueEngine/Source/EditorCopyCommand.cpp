@@ -4,12 +4,35 @@
 
 namespace Rogue
 {
+	EditorCopyCommand::EditorCopyCommand(Entity entity):m_copyEntity(entity)
+	{
+	}
+	EditorCopyCommand::~EditorCopyCommand()
+	{
+	}
 	bool EditorCopyCommand::Undo()
 	{
-		return false;
+		if (m_copyEntity < 0)
+		{
+			return false;
+		}
+		g_engine.m_coordinator.AddToDeleteQueue(m_copyEntity);
+		return true;
 	}
 	bool EditorCopyCommand::Execute()
 	{
-		return false;
+		if (m_copyEntity < 0)
+		{
+			return false;
+		}
+		g_engine.m_coordinator.clone(m_copyEntity);
+		m_copyEntity = -1;
+		return true;
+	}
+	Entity EditorCopyCommand::GetCopiedEntity() const
+	{
+		return m_copyEntity;
 	}
 }
+
+
