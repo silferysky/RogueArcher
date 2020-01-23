@@ -67,6 +67,15 @@ namespace Rogue
 					SceneManager::instance().SaveLevel(sceneManager.getCurrentFileName().c_str());
 				}
 
+				if (keycode == KeyPress::KeyZ && keycodeSpecial == KeyPressSub::KeyCtrl)
+				{
+					Controller.UndoCommand();
+				}
+
+				if (keycode == KeyPress::KeyY && keycodeSpecial == KeyPressSub::KeyCtrl)
+				{
+					Controller.RedoCommand();
+				}
 				return;
 			}
 			/*if (keytriggeredevent->GetKeyCode() == KeyPress::Numpad8)
