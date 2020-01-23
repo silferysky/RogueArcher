@@ -22,7 +22,7 @@ Technology is prohibited.
 #include "BasicIO.h"
 #include "MenuControllerSystem.h"
 #include "CameraManager.h"
-
+#include "EditorCreateObjectCommand.h"
 namespace Rogue
 {
 	SceneManager::SceneManager()
@@ -309,7 +309,6 @@ namespace Rogue
 		newInfo.m_selected = true;
 		g_engine.m_coordinator.GetActiveObjects().push_back(newEnt);
 		g_engine.m_coordinator.GetHierarchyInfo(newEnt) = newInfo;
-
 		return newEnt;
 	}
 	Entity SceneManager::CreateCamera()

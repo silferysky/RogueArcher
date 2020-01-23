@@ -22,6 +22,7 @@ Technology is prohibited.
 namespace Rogue
 {
 	class ObjectFactory;
+	class EditorCreateObjectCommand;
 	class SceneManager
 	{
 		std::unique_ptr<ObjectFactory> m_objectFactory;
@@ -30,6 +31,7 @@ namespace Rogue
 		unsigned int m_objectIterator = 0;
 		unsigned int m_sceneIterator = 0;
 		unsigned int m_cameraIterator = 0;
+		std::unique_ptr<EditorCreateObjectCommand> m_command;
 
 	public:
 		static SceneManager& instance()
