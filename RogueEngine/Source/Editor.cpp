@@ -18,11 +18,97 @@ Technology is prohibited.
 #include "Precompiled.h"
 #include "Editor.h"
 #include "EventDispatcher.h"
-#include "EventListener.h"
-
 
 namespace Rogue
 {
+	//void Editor::ExecuteCommand(EditorEvent* command)
+	//{
+
+	//	if (command->Execute())
+	//	{
+	//		m_undoStack.pop_back();
+	//	}
+
+	//	m_undoStack.push_back(command);
+	//	if (!m_redoStack.size())
+	//	{
+	//		m_redoStack.clear();
+	//	}
+	//}
+
+	void Editor::UndoCommand()
+	{
+		if (!m_undoStack.size())
+			return;
+
+		if (m_undoStack.back())
+		{
+			ExecuteCommand(DoingUndo);
+			m_redoStack.push_back(m_undoStack.back());
+		}
+		m_undoStack.pop_back();
+	}
+
+	void Editor::RedoCommand()
+	{
+		if (!m_redoStack.size())
+			return;
+		if (m_redoStack.front())
+		{
+			ExecuteCommand(DoingRedo);
+			m_undoStack.push_back(m_redoStack.front());
+		}
+		m_redoStack.pop_back();
+	}
+
+	void Editor::ClearUndoRedoStack()
+	{
+		if (m_undoStack.size() != NULL)
+		{
+			/*for (ICommandable* i : m_undoStack)
+			{
+				delete i;
+			}*/
+			m_undoStack.clear();
+		}
+
+		if (m_redoStack.size() != NULL)
+		{
+			/*for (ICommandable* i : m_redoStack)
+			{
+				delete i;
+			}*/
+			m_redoStack.clear();
+		}
+	}
+
+	void Editor::ExecuteCommand(bool exeUndo)
+	{
+		if (exeUndo)
+		{
+			EditorEvent* editorEv = m_undoStack.back();
+			editorEv->SetIsUndo(true);
+			EventDispatcher::instance().AddEvent(editorEv);
+			AddToRedoStack(editorEv);
+		}
+		else
+		{
+			EditorEvent* editorEv = m_redoStack.front();
+			editorEv->SetIsUndo(false);
+			EventDispatcher::instance().AddEvent(editorEv);
+			AddToUndoStack(editorEv);
+			
+		}
+	}
+
+	void Editor::AddToUndoStack(EditorEvent* ev)
+	{
+	}
+
+	void Editor::AddToRedoStack(EditorEvent* ev)
+	{
+	}
+
 	void Editor::Init()
 	{
 		Signature signature;
@@ -69,12 +155,14 @@ namespace Rogue
 
 				if (keycode == KeyPress::KeyZ && keycodeSpecial == KeyPressSub::KeyCtrl)
 				{
-					Controller.UndoCommand();
+					UndoCommand();
+					//Controller.UndoCommand();
 				}
 
 				if (keycode == KeyPress::KeyY && keycodeSpecial == KeyPressSub::KeyCtrl)
 				{
-					Controller.RedoCommand();
+					RedoCommand();
+					//Controller.RedoCommand();
 				}
 				return;
 			}
@@ -105,6 +193,13 @@ namespace Rogue
 		{
 			EntPickedEvent* pickedEvent = dynamic_cast<EntPickedEvent*>(ev);
 			EditorManager::instance().SetPickedEntity(pickedEvent->GetEntityID());
+
+			return;
+		}
+		case EventType::EvEditorCreateObject:
+		{
+			EditorCreateObjectEvent* createObjEvent = dynamic_cast<EditorCreateObjectEvent*>(ev);
+			SceneManager::instance().Create2DSprite();
 
 			return;
 		}

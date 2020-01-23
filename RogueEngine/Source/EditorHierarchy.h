@@ -22,7 +22,6 @@ Technology is prohibited.
 #include "EditorHierarchyInfo.h"
 #include "EventDispatcher.h"
 #include "KeyEvent.h"
-#include "EditorController.h"
 
 namespace Rogue
 {
@@ -39,7 +38,6 @@ namespace Rogue
 	public:
 		ImGuiEditorHierarchy();
 		~ImGuiEditorHierarchy();
-		EditorController m_controller;
 		virtual void Init() override;
 		virtual void Update() override;
 		virtual void Shutdown() override;
