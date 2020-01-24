@@ -183,7 +183,7 @@ namespace Rogue
 				{
 					g_engine.m_coordinator.GetHierarchyInfo(i).m_selected = false;
 				}
-				//m_controller.ExecuteCommand(new EditorCreateObjectCommand());
+				//ExecuteCommand(new EditorCreateObjectCommand());
 				EditorCreateObjectEvent* event = new EditorCreateObjectEvent();
 				event->SetSystemReceivers((int)SystemID::id_EDITOR);
 				EventDispatcher::instance().AddEvent(event);
