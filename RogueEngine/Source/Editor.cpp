@@ -82,31 +82,40 @@ namespace Rogue
 		}
 	}
 
-	void Editor::ExecuteCommand(bool exeUndo)
+	void Editor::HandleStack(bool exeUndo)
 	{
 		if (exeUndo)
 		{
-			EditorEvent* editorEv = m_undoStack.back();
-			editorEv->SetIsUndo(true);
-			EventDispatcher::instance().AddEvent(editorEv);
-			AddToRedoStack(editorEv);
+			if (!m_undoStack.size())
+				return;
+
+			if (m_undoStack.back())
+			{
+				m_redoStack.push_back(m_undoStack.back());
+			}
+			m_undoStack.pop_back();
 		}
 		else
 		{
-			EditorEvent* editorEv = m_redoStack.front();
-			editorEv->SetIsUndo(false);
-			EventDispatcher::instance().AddEvent(editorEv);
-			AddToUndoStack(editorEv);
+			if (!m_redoStack.size())
+				return;
+			if (m_redoStack.front())
+			{
+				m_undoStack.push_back(m_redoStack.front());
+			}
+			m_redoStack.pop_back();
 			
 		}
 	}
 
 	void Editor::AddToUndoStack(EditorEvent* ev)
 	{
+		m_undoStack.push_back(ev);
 	}
 
 	void Editor::AddToRedoStack(EditorEvent* ev)
 	{
+		m_redoStack.push_back(ev);
 	}
 
 	void Editor::Init()
@@ -200,7 +209,7 @@ namespace Rogue
 		{
 			EditorCreateObjectEvent* createObjEvent = dynamic_cast<EditorCreateObjectEvent*>(ev);
 			SceneManager::instance().Create2DSprite();
-
+			
 			return;
 		}
 		}

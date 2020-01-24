@@ -42,7 +42,7 @@ namespace Rogue
 		void UndoCommand();
 		void RedoCommand();
 		void ClearUndoRedoStack();
-		void ExecuteCommand(bool exeUndo = DoingUndo);
+		void HandleStack(bool exeUndo = DoingUndo);
 
 		void AddToUndoStack(EditorEvent* ev);
 		void AddToRedoStack(EditorEvent* ev);
