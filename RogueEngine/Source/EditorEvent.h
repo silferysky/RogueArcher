@@ -14,6 +14,7 @@ namespace Rogue
 		inline bool GetIsUndo() { return Undo; }
 
 		inline void SetIsUndo(bool undo) { Undo = undo; }
+		inline void SetEntityID(Entity id) { ID = id; }
 
 	protected:
 		EditorEvent(Entity id, bool undo = false)

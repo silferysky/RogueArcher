@@ -183,12 +183,9 @@ namespace Rogue
 				{
 					g_engine.m_coordinator.GetHierarchyInfo(i).m_selected = false;
 				}
-				//ExecuteCommand(new EditorCreateObjectCommand());
 				EditorCreateObjectEvent* event = new EditorCreateObjectEvent();
 				event->SetSystemReceivers((int)SystemID::id_EDITOR);
 				EventDispatcher::instance().AddEvent(event);
-				//g_engine.m_coordinator.AddToUndoStack(event);
-				//SceneManager::instance().Create2DSprite();
 			}
 			if (ImGui::IsItemHovered())
 			{

@@ -39,6 +39,7 @@ namespace Rogue
 		void Shutdown() override;
 
 		//void ExecuteCommand(EditorEvent* command);
+		void ExecuteCommand(bool isUndo = true);
 		void UndoCommand();
 		void RedoCommand();
 		void ClearUndoRedoStack();
