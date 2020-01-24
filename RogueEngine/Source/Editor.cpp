@@ -36,6 +36,24 @@ namespace Rogue
 	//	}
 	//}
 
+	void Editor::ExecuteCommand(bool isUndo)
+	{
+		if (isUndo)
+		{
+			EditorEvent* editorEv = m_undoStack.back();
+			editorEv->SetIsUndo(true);
+			EventDispatcher::instance().AddEvent(editorEv);
+			AddToRedoStack(editorEv);
+		}
+		else
+		{
+			EditorEvent* editorEv = m_redoStack.front();
+			editorEv->SetIsUndo(false);
+			EventDispatcher::instance().AddEvent(editorEv);
+			AddToUndoStack(editorEv);
+		}
+	}
+
 	void Editor::UndoCommand()
 	{
 		if (!m_undoStack.size())
@@ -44,21 +62,19 @@ namespace Rogue
 		if (m_undoStack.back())
 		{
 			ExecuteCommand(DoingUndo);
-			m_redoStack.push_back(m_undoStack.back());
+			HandleStack(DoingUndo);
 		}
-		m_undoStack.pop_back();
 	}
 
 	void Editor::RedoCommand()
 	{
 		if (!m_redoStack.size())
 			return;
-		if (m_redoStack.front())
+		if (m_redoStack.back())
 		{
 			ExecuteCommand(DoingRedo);
-			m_undoStack.push_back(m_redoStack.front());
+			HandleStack(DoingRedo);
 		}
-		m_redoStack.pop_back();
 	}
 
 	void Editor::ClearUndoRedoStack()
@@ -92,18 +108,18 @@ namespace Rogue
 			if (m_undoStack.back())
 			{
 				m_redoStack.push_back(m_undoStack.back());
+				m_undoStack.pop_back();
 			}
-			m_undoStack.pop_back();
 		}
 		else
 		{
 			if (!m_redoStack.size())
 				return;
-			if (m_redoStack.front())
+			if (m_redoStack.back())
 			{
-				m_undoStack.push_back(m_redoStack.front());
+				m_undoStack.push_back(m_redoStack.back());
+				m_redoStack.pop_back();
 			}
-			m_redoStack.pop_back();
 			
 		}
 	}
@@ -208,7 +224,20 @@ namespace Rogue
 		case EventType::EvEditorCreateObject:
 		{
 			EditorCreateObjectEvent* createObjEvent = dynamic_cast<EditorCreateObjectEvent*>(ev);
-			SceneManager::instance().Create2DSprite();
+			if (createObjEvent->GetIsUndo())
+			{
+				m_redoStack.push_back(createObjEvent);
+				RE_INFO("BIG SAD");
+				//g_engine.m_coordinator.GetHierarchyInfo(createObjEvent->GetEntityID());
+				g_engine.m_coordinator.AddToDeleteQueue(createObjEvent->GetEntityID());
+			}
+			else
+			{
+				m_undoStack.push_back(createObjEvent);
+				//AddToUndoStack(createObjEvent);
+				createObjEvent->SetEntityID(SceneManager::instance().Create2DSprite());
+			}
+			
 			
 			return;
 		}
