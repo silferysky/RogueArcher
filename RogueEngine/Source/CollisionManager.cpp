@@ -124,7 +124,6 @@ namespace Rogue
 		if (closestPt == vAB)
 		{
 			circleIsInside = true;
-			std::cout << "circle is inside!" << std::endl;
 
 			// Find closest penetration axis
 			if (REAbs(vAB.x) > REAbs(vAB.y)) // x axis is shorter than y axis
