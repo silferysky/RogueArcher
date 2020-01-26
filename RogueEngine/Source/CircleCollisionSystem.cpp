@@ -95,12 +95,12 @@ namespace Rogue
 
 						continue;
 					}*/
-					CollisionManager::instance().GenerateManifoldCirclevsCircle(*iEntity, *iNextEntity);
+					CollisionManager::instance().InsertCirclePair(*iEntity, *iNextEntity);
 				}
 			}
 
 			// Collision Response (Contact, forces, rest, Impulse, Torque)
-			CollisionManager::instance().ResolveManifolds();
+			//CollisionManager::instance().ResolveManifolds();
 		}
 
 		g_engine.m_coordinator.EndTimeSystem("Circle Collision System");
