@@ -160,7 +160,7 @@ namespace Rogue
 
 		manifold.m_penetration = radius - normalLength;
 
-
+		// Throw into vector of manifolds
 		m_manifolds.emplace_back(manifold);
 
 		return true;
@@ -962,14 +962,44 @@ namespace Rogue
 		return lowerBound <= val && val <= upperBound;
 	}
 
-	void CollisionManager::InsertColliderPair(Entity a, Entity b)
+	void CollisionManager::InsertDiffPair(Entity a, Entity b)
 	{
-		m_collidedPairs.push_back({ a, b });
+		// Always box first, then circle.
+		m_diffPairs.emplace_back(std::make_pair(a, b));
 	}
 
-	void CollisionManager::GenerateManifolds(Entity A, Entity B)
+	void CollisionManager::InsertBoxPair(Entity a, Entity b)
 	{
-		GenerateManifoldAABBvsAABB(A, B);
+		m_boxPairs.emplace_back(std::make_pair(a, b));
+	}
+
+	void CollisionManager::InsertCirclePair(Entity a, Entity b)
+	{
+		m_circlePairs.emplace_back(std::make_pair(a, b));
+	}
+
+	void CollisionManager::GenerateManifolds()
+	{
+		for (std::pair<Entity, Entity> pair : m_diffPairs)
+		{
+			GenerateManifoldAABBvsCircle(pair.first, pair.second);
+		}
+
+		m_diffPairs.clear();
+
+		for (std::pair<Entity, Entity> pair : m_boxPairs)
+		{
+			GenerateManifoldAABBvsAABB(pair.first, pair.second);
+		}
+
+		m_boxPairs.clear();
+
+		for (std::pair<Entity, Entity> pair : m_circlePairs)
+		{
+			GenerateManifoldCirclevsCircle(pair.first, pair.second);
+		}
+	
+		m_circlePairs.clear(); // To be removed when doing collision events!!!
 	}
 
 	void CollisionManager::ResolveManifolds()

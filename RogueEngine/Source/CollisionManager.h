@@ -32,7 +32,9 @@ namespace Rogue
 {
 	class CollisionManager
 	{
-		std::vector<std::pair<Entity, Entity>> m_collidedPairs; // Stored during collision tests
+		std::vector<std::pair<Entity, Entity>> m_diffPairs; // Stored pairs of aabb and circle
+		std::vector<std::pair<Entity, Entity>> m_boxPairs;
+		std::vector<std::pair<Entity, Entity>> m_circlePairs;
 		std::vector<Manifold> m_manifolds; // To generate and resolve after collision tests
 
 		static const float s_correction_factor;
@@ -43,11 +45,6 @@ namespace Rogue
 		{
 			static CollisionManager instance;
 			return instance;
-		}
-
-		std::vector<std::pair<Entity, Entity>>& GetCollidedPairs()
-		{
-			return m_collidedPairs;
 		}
 
 		Mtx33 GetColliderWorldMatrix(const BaseCollider& collider, const TransformComponent& trans) const;
@@ -111,8 +108,10 @@ namespace Rogue
 		inline bool IsBetweenBounds(float val, float lowerBound, float upperBound) const;
 
 		// Manifold
-		void InsertColliderPair(Entity a, Entity b);
-		void GenerateManifolds(Entity A, Entity B);
+		void InsertDiffPair(Entity a, Entity b);
+		void InsertBoxPair(Entity a, Entity b);
+		void InsertCirclePair(Entity a, Entity b);
+		void GenerateManifolds();
 		void ResolveManifolds();
 
 		static float GetCorrectionFactor();
@@ -131,15 +130,18 @@ Iterate through 2 entities
 
 Skip if both are static
 
-Apply filter tests. If can't collide, then skip.
-
 Narrow phase:
 -------------
 
 In the same loop:
-Solve: Dispatch jump table[CirclevsCircle, CirclevsAABB, AABBvsAABB, AABBvsCircle]
+Solve: Dispatch jump table[CirclevsCircle, CirclevsAABB, AABBvsAABB, AABBvsCircle] xxxx
 
-Each function will do discrete tests, and if they collide, generate manifold and emplace_back manifolds.
+Do discrete tests, and if they collide, insert into collided pairs.
+
+Apply filter tests for collided pairs. If can't collide, then remove.
+
+Generate manifold and emplace_back manifolds.
+
 
 Iterate through manifolds, and apply impulse and positional correction.
 

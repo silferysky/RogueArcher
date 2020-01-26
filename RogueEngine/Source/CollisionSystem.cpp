@@ -80,7 +80,8 @@ namespace Rogue
 					auto& boxB = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iNextEntity);
 					
 					if (CollisionManager::instance().DiscreteCircleVsAABB(circleA.m_collider, boxB.m_aabb))
-						CollisionManager::instance().GenerateManifoldCirclevsAABB(*iEntity, *iNextEntity);
+						CollisionManager::instance().InsertDiffPair(*iNextEntity, *iEntity);
+						//CollisionManager::instance().GenerateManifoldCirclevsAABB(*iEntity, *iNextEntity);
 				}
 				else if (currColliderType == Shape::Type::e_box && nextColliderType == Shape::Type::e_circle)
 				{
@@ -88,9 +89,13 @@ namespace Rogue
 					auto& circleB = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(*iNextEntity);
 				
 					if (CollisionManager::instance().DiscreteAABBVsCircle(boxA.m_aabb, circleB.m_collider))
-						CollisionManager::instance().GenerateManifoldAABBvsCircle(*iEntity, *iNextEntity);
+						CollisionManager::instance().InsertDiffPair(*iEntity, *iNextEntity);
+						//CollisionManager::instance().GenerateManifoldAABBvsCircle(*iEntity, *iNextEntity);
 				}
 			}
+
+			// Generate manifolds from collided pairs
+			CollisionManager::instance().GenerateManifolds();
 
 			// Collision Response (Contact, forces, rest, Impulse, Torque)
 			CollisionManager::instance().ResolveManifolds();
