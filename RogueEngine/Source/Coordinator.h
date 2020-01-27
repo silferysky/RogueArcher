@@ -352,7 +352,10 @@ namespace Rogue
 			m_assignChild = -1;
 			m_assignParent = -1;
 		}
+		std::vector<Entity>& getHierarchyVector()
+		{
 
+		}
 		bool GetGameState() const
 		{
 			return m_systemManager->GetGameState();
