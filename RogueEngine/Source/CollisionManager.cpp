@@ -1026,4 +1026,19 @@ namespace Rogue
 	{
 		return m_collisionLayerer.FilterLayers(mask, category);
 	}
+
+	void CollisionManager::AddLayer(std::string_view name, const CollisionLayerer::Bits& layer)
+	{
+		m_collisionLayerer.AddLayer(name, layer);
+	}
+
+	void CollisionManager::RemoveLayer(const CollisionLayerer::Bits& layer)
+	{
+		RemoveLayer(layer);
+	}
+
+	void CollisionManager::RemoveLayer(std::string_view name)
+	{
+		m_collisionLayerer.RemoveLayer(name);
+	}
 }

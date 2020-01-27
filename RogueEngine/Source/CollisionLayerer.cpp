@@ -15,6 +15,17 @@ namespace Rogue
 		m_layers.erase(std::string(name));
 	}
 
+	std::string_view CollisionLayerer::GetName(const Bits& layer)
+	{
+		std::map<std::string, Bits>::iterator iName = std::find_if(std::begin(m_layers), std::end(m_layers),
+			[&](const std::pair<std::string, Bits>& pair)
+			{
+				return pair.second == layer;
+			});
+
+		return (*iName).first;
+	}
+
 	void CollisionLayerer::RemoveLayer(const Bits& layer)
 	{
 		// TODO: Remove by finding layer
