@@ -63,6 +63,7 @@ namespace Rogue
 		EvEntityAttacking,
 		EvEntityDamaged,
 		EvEntityDestroy,
+		EvEntityHitchhike,
 
 		EvOnCollisionEnter,
 		EvOnCollisionStay,
@@ -71,6 +72,7 @@ namespace Rogue
 		EvCameraShake,
 		EvChangeAnimation,
 		EvEntityPicked,
+		EvTransition,
 
 		EvParentTransformUpdate,
 		EvParentRotateUpdate,
