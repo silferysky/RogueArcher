@@ -125,6 +125,7 @@ namespace Rogue
 		void AddLayer(std::string_view name, const CollisionLayerer::Bits& layer);
 		void RemoveLayer(const CollisionLayerer::Bits& layer);
 		void RemoveLayer(std::string_view name);
+		std::string_view GetLayerName(const CollisionLayerer::Bits& layer) const;
 	};
 }
 

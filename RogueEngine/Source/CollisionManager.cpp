@@ -1041,4 +1041,9 @@ namespace Rogue
 	{
 		m_collisionLayerer.RemoveLayer(name);
 	}
+
+	std::string_view CollisionManager::GetLayerName(const CollisionLayerer::Bits& layer) const
+	{
+		return m_collisionLayerer.GetName(layer);
+	}
 }

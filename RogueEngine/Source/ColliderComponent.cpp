@@ -18,6 +18,7 @@ Technology is prohibited.
 #include "Precompiled.h"
 #include "ColliderComponent.h"
 #include "Logger.h"
+#include "CollisionManager.h"
 
 namespace Rogue
 {
@@ -184,7 +185,11 @@ namespace Rogue
 	void ColliderComponent::DisplayOnInspector()
 	{
 		ImGui::BeginTooltip();
-		ImGui::Text("Current Layer: %s", m_collisionCategory);
+		ImGui::Text("Current Layer: %s", CollisionManager::instance().GetLayerName(m_collisionCategory));
+		ImGui::EndTooltip();
+
+		ImGui::BeginTooltip();
+		ImGui::Text("Current Mask: %s", CollisionManager::instance().GetLayerName(m_collisionMask));
 		ImGui::EndTooltip();
 	}
 

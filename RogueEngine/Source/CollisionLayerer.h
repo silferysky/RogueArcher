@@ -13,12 +13,12 @@ namespace Rogue
 	private:
 		std::map<std::string, Bits> m_layers; // Collision masks mapped to its own name
 	public:
-		CollisionLayerer() = default; // Constructor
+		CollisionLayerer(); // Constructor
 
 		void AddLayer(std::string_view name, const Bits& layer);
 		void RemoveLayer(const Bits& layer);
 		void RemoveLayer(std::string_view name);
-		std::string_view GetName(const Bits& layer);
+		std::string_view GetName(const Bits& layer) const;
 		bool FilterLayers(const Bits& maskA, const Bits& maskB) const;
 	};
 
