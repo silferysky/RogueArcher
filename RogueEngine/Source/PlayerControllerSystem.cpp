@@ -108,12 +108,17 @@ namespace Rogue
 		for (Entity entity : m_entities)
 		{
 			auto& player = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity);
-			//std::cout << player.m_grounded << std::endl;
-
-			auto& ctrl = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity);
 			auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
-			 
-			if (ctrl.GetMoveState() == MoveState::e_stop)
+				
+			if (hitchhikedEntity != -1)
+			{
+				auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
+				auto& parentTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(hitchhikedEntity);
+				transform.setPosition(parentTransform.GetPosition());
+				break;
+			}
+
+			if (player.GetMoveState() == MoveState::e_stop)
 				ForceManager::instance().RegisterForce(entity, Vec2(rigidbody.getVelocity().x * -c_stopFactor, 0.0f));
 				//rigidbody.addForce(Vec2(rigidbody.getVelocity().x * -c_stopFactor, 0.0f));
 
@@ -503,6 +508,26 @@ namespace Rogue
 	void PlayerControllerSystem::setInLight(float duration)
 	{
 		m_isInLight = duration;
+	}
+
+	void PlayerControllerSystem::setHitchhikeEntity(Entity hitchhiked)
+	{
+		hitchhikedEntity = hitchhiked;
+	}
+
+	void PlayerControllerSystem::ToggleLightStatus()
+	{
+		inLightMode = !inLightMode;
+	}
+
+	void PlayerControllerSystem::SetLightStatus(bool isLightMode)
+	{
+		inLightMode = isLightMode;
+	}
+
+	bool PlayerControllerSystem::GetLightStatus() const
+	{
+		return inLightMode;
 	}
 
 	void PlayerControllerSystem::CreateBallAttack()

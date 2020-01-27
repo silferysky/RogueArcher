@@ -50,6 +50,12 @@ namespace Rogue
 		void CreateTeleportEvent(Vec2 newPosition);
 
 		void setInLight(float duration = 0.16f);
+		void setHitchhikeEntity(Entity hitchhiked = -1);
+
+		//Light/Dark mode
+		void ToggleLightStatus();
+		void SetLightStatus(bool isLightMode);
+		bool GetLightStatus() const;
 
 	private:
 		void CreateBallAttack();
@@ -59,5 +65,7 @@ namespace Rogue
 		float m_maxTeleportCharge = 3.0f;
 		float m_isInLight;
 		const float m_maxJumpTimer;
+		Entity hitchhikedEntity = -1;
+		bool inLightMode = true;
 	};
 }
