@@ -88,6 +88,7 @@ namespace Rogue
 			m_teleportCharge += g_deltaTime * g_engine.GetTimeScale();
 
 		m_isInLight -= g_deltaTime * g_engine.GetTimeScale();
+		m_teleportDelayTimer -= g_deltaTime * g_engine.GetTimeScale();
 
 		//To update all timed entities
 		/*for (auto timedEntityIt = m_timedEntities.begin(); timedEntityIt != m_timedEntities.end(); ++timedEntityIt)
@@ -164,15 +165,14 @@ namespace Rogue
 
 				else if (keycode == KeyPress::MB1 && g_engine.GetIsFocused())
 				{
+					//For slow mo
 					for (Entity entity : m_entities)
 					{
 						auto& PlayerControllable = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity);
 						g_engine.SetTimeScale(PlayerControllable.GetSlowTime());
 					}
-				}
 
-				else if (keycode == KeyPress::MB2)
-				{
+					//For teleport
 					if (m_entities.size() && m_timedEntities.size() && m_isInLight < 0.0f && m_teleportCharge > 1.0f)
 					{
 						TimedEntity ent(g_engine.m_coordinator.cloneArchetypes("TeleportSprite", false), 0.5f);
@@ -190,7 +190,13 @@ namespace Rogue
 
 						ClearTimedEntities();
 						--m_teleportCharge;
+						m_teleportDelayTimer = TELEPORT_DELAY;
 					}
+				}
+
+				else if (keycode == KeyPress::MB2)
+				{
+					//For Hitchhiking
 				}
 				else if (keycode == KeyPress::MB3)
 				{
@@ -332,7 +338,7 @@ namespace Rogue
 			{
 				if (keycode == KeyPress::MB1)
 				{
-					if (!m_timedEntities.size() && m_isInLight < 0.0f)
+					if (!m_timedEntities.size() && m_isInLight < 0.0f && m_teleportDelayTimer < 0.0f)
 					{
 						CreateBallAttack();
 						//m_ballTimer = 1.0f;
@@ -507,7 +513,7 @@ namespace Rogue
 
 	void PlayerControllerSystem::setInLight(float duration)
 	{
-		m_isInLight = duration;
+		m_isInLight = duration;	
 	}
 
 	void PlayerControllerSystem::setHitchhikeEntity(Entity hitchhiked)
