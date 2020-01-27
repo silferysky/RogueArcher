@@ -204,6 +204,11 @@ namespace Rogue
 					ClearTimedEntities();
 				}
 
+				else if (keycode == KeyPress::KeyQ)
+				{
+					ToggleLightStatus();
+				}
+
 				else if (keycode == KeyPress::KeySpace)
 				{
 					for (std::set<Entity>::iterator iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
