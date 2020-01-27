@@ -43,4 +43,18 @@ namespace Rogue
 
 		ChangeAnimationEvent() = default;
 	};
+
+	class TransitionEvent : public Event
+	{
+	public:
+		SET_EVENT_CATEGORY(EventCatGraphics)
+		SET_EVENT_TYPE(EvTransition)
+
+		TransitionEvent(bool transitingIn)
+			: m_transitingIn{transitingIn} {}
+
+		bool GetTransitionType() const { return m_transitingIn; }
+	private:
+		bool m_transitingIn;
+	};
 }
