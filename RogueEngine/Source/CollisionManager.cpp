@@ -1021,4 +1021,9 @@ namespace Rogue
 	{
 		return s_correction_slop;
 	}
+
+	bool CollisionManager::FilterColliders(const CollisionLayerer::Bits& mask, const CollisionLayerer::Bits& category)
+	{
+		return m_collisionLayerer.FilterLayers(mask, category);
+	}
 }

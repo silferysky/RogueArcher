@@ -27,15 +27,18 @@ Technology is prohibited.
 #include "RigidbodyComponent.h"
 #include "CircleCollider2DComponent.h"
 #include "Manifold.h"
+#include "CollisionLayerer.h"
 
 namespace Rogue
 {
 	class CollisionManager
 	{
 		std::vector<std::pair<Entity, Entity>> m_diffPairs; // Stored pairs of aabb and circle
-		std::vector<std::pair<Entity, Entity>> m_boxPairs;
-		std::vector<std::pair<Entity, Entity>> m_circlePairs;
+		std::vector<std::pair<Entity, Entity>> m_boxPairs; // Stored pairs of aabbs
+		std::vector<std::pair<Entity, Entity>> m_circlePairs; // Stored pairs of circles
 		std::vector<Manifold> m_manifolds; // To generate and resolve after collision tests
+
+		CollisionLayerer m_collisionLayerer; // The manager for collision filters/layers
 
 		static const float s_correction_factor;
 		static const float s_correction_slop; // Penetration threshold
@@ -116,6 +119,9 @@ namespace Rogue
 
 		static float GetCorrectionFactor();
 		static float GetCorrectionSlop();
+
+		// Collision filters
+		bool FilterColliders(const CollisionLayerer::Bits& mask, const CollisionLayerer::Bits& category);
 	};
 }
 
