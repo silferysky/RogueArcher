@@ -35,4 +35,27 @@ namespace Rogue
 	protected:
 	};
 
+	class EditorDeleteObjectEvent : public EditorEvent
+	{
+	public:
+		SET_EVENT_TYPE(EvEditorDeleteObject)
+
+		EditorDeleteObjectEvent(Entity id = 0) : EditorEvent(id){}
+	};
+
+	class EditorCopyObjectEvent : public EditorEvent
+	{
+	public:
+		SET_EVENT_TYPE(EvEditorCopyObject)
+	};
+
+	class EditorCutObjectEvent : public EditorEvent
+	{
+	public:
+
+	};
+	class EditorPasteObjectEvent : public EditorEvent
+	{
+	public:
+	};
 }

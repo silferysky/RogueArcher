@@ -73,6 +73,10 @@ namespace Rogue
 		EvEntityPicked,
 
 		EvEditorCreateObject,
+		EvEditorDeleteObject,
+		EvEditorCutObject,
+		EvEditorCopyObject,
+		EvEditorPasteObject,
 		EvEditorB
 	};
 
