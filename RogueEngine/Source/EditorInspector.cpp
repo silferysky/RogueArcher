@@ -162,6 +162,7 @@ namespace Rogue
 							auto& circle2D = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i);
 							auto& collider = g_engine.m_coordinator.GetComponent<ColliderComponent>(i);
 							circle2D.DisplayOnInspector();
+							collider.DisplayOnInspector();
 
 							if (ImGui::Button("Remove Component"))
 							{
@@ -178,7 +179,9 @@ namespace Rogue
 						if (ImGui::CollapsingHeader("Box2D Collider"))
 						{
 							auto& box2D = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(i);
+							auto& collider = g_engine.m_coordinator.GetComponent<ColliderComponent>(i);
 							box2D.DisplayOnInspector();
+							collider.DisplayOnInspector();
 						
 							if (ImGui::Button("Remove Component"))
 							{
