@@ -283,6 +283,16 @@ namespace Rogue
 			GetSystem<PlayerControllerSystem>()->ClearTimedEntities();
 		}
 
+		void SetHitchhikedEntity(Entity ent)
+		{
+			GetSystem<PlayerControllerSystem>()->setHitchhikeEntity(ent);
+		}
+
+		void ResetHitchhikedEntity()
+		{
+			GetSystem<PlayerControllerSystem>()->setHitchhikeEntity(-1);
+		}
+
 		void AddToDeleteQueue(const Entity& entity)
 		{
 			m_deleteQueue.push_back(entity);
