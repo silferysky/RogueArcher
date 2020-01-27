@@ -122,6 +122,9 @@ namespace Rogue
 
 		// Collision filters
 		bool FilterColliders(const CollisionLayerer::Bits& mask, const CollisionLayerer::Bits& category);
+		void AddLayer(std::string_view name, const CollisionLayerer::Bits& layer);
+		void RemoveLayer(const CollisionLayerer::Bits& layer);
+		void RemoveLayer(std::string_view name);
 	};
 }
 

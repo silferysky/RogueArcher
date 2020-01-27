@@ -70,6 +70,7 @@ namespace Rogue
 		// Loop through entities
 		for (iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
 		{
+			auto& currCollider = g_engine.m_coordinator.GetComponent<ColliderComponent>(*iEntity);
 			auto& currRigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
 			auto& currTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
 			auto& currBoxCollider = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iEntity);
@@ -80,16 +81,26 @@ namespace Rogue
 			// For each entity, the rest of the entities
 			for (iNextEntity++; iNextEntity != m_entities.end(); ++iNextEntity)
 			{
-				auto& nextBoxCollider = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iNextEntity);
-				auto& nextRigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iNextEntity);
-				auto& nextTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iNextEntity);
+				auto& nextCollider = g_engine.m_coordinator.GetComponent<ColliderComponent>(*iNextEntity);
 
-				// Skip asleep or static colliders.
-				if (nextBoxCollider.GetCollisionMode() == CollisionMode::e_asleep)
+				// Filter colliders
+				if (!CollisionManager::instance().FilterColliders(currCollider.GetCollisionMask(), nextCollider.GetCollisionCat()) ||
+					!CollisionManager::instance().FilterColliders(currCollider.GetCollisionCat(), nextCollider.GetCollisionMask()))
 					continue;
 
+				auto& nextRigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iNextEntity);
+				
+				// Skip if both static.
 				if (currRigidbody.getIsStatic() && nextRigidbody.getIsStatic())
 					continue;
+				
+				auto& nextBoxCollider = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iNextEntity);
+				
+				// Skip asleep colliders.
+				if (nextBoxCollider.GetCollisionMode() == CollisionMode::e_asleep)
+					continue;
+				
+				auto& nextTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iNextEntity);
 
 				// Test for AABBs vs AABBs
 				if (CollisionManager::instance().DiscreteAABBvsAABB(currBoxCollider.m_aabb, nextBoxCollider.m_aabb))

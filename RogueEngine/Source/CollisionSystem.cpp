@@ -70,6 +70,11 @@ namespace Rogue
 					continue;
 
 				ColliderComponent& nextCollider = g_engine.m_coordinator.GetComponent<ColliderComponent>(*iNextEntity);
+
+				if (!CollisionManager::instance().FilterColliders(currCollider.GetCollisionMask(), nextCollider.GetCollisionCat()) ||
+					!CollisionManager::instance().FilterColliders(currCollider.GetCollisionCat(), nextCollider.GetCollisionMask()))
+					continue;
+					
 				TransformComponent& nextTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iNextEntity);
 
 				nextColliderType = nextCollider.GetShape()->GetType();
@@ -81,7 +86,6 @@ namespace Rogue
 					
 					if (CollisionManager::instance().DiscreteCircleVsAABB(circleA.m_collider, boxB.m_aabb))
 						CollisionManager::instance().InsertDiffPair(*iNextEntity, *iEntity);
-						//CollisionManager::instance().GenerateManifoldCirclevsAABB(*iEntity, *iNextEntity);
 				}
 				else if (currColliderType == Shape::Type::e_box && nextColliderType == Shape::Type::e_circle)
 				{
@@ -90,7 +94,6 @@ namespace Rogue
 				
 					if (CollisionManager::instance().DiscreteAABBVsCircle(boxA.m_aabb, circleB.m_collider))
 						CollisionManager::instance().InsertDiffPair(*iEntity, *iNextEntity);
-						//CollisionManager::instance().GenerateManifoldAABBvsCircle(*iEntity, *iNextEntity);
 				}
 			}
 

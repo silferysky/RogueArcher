@@ -35,6 +35,7 @@ namespace Rogue
 
 		std::string Serialize() override;
 		void Deserialize(std::string_view toDeserialize) override;
+		void DisplayOnInspector();
 
 		std::shared_ptr<Shape> GetShape() const;
 		const CollisionLayerer::Bits& GetCollisionMask() const;

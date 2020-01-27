@@ -181,6 +181,13 @@ namespace Rogue
 			m_collisionMask = static_cast<CollisionLayerer::Bits>(s1);
 	}
 
+	void ColliderComponent::DisplayOnInspector()
+	{
+		ImGui::BeginTooltip();
+		ImGui::Text("Current Layer: %s", m_collisionCategory);
+		ImGui::EndTooltip();
+	}
+
 
 	std::shared_ptr<Shape> ColliderComponent::GetShape() const
 	{
