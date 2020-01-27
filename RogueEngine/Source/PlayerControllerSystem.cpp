@@ -169,7 +169,8 @@ namespace Rogue
 					for (Entity entity : m_entities)
 					{
 						auto& PlayerControllable = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity);
-						g_engine.SetTimeScale(PlayerControllable.GetSlowTime());
+						if (!PlayerControllable.m_grounded)
+							g_engine.SetTimeScale(PlayerControllable.GetSlowTime());
 					}
 
 					//For teleport
