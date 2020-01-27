@@ -162,6 +162,11 @@ namespace Rogue
 	{
 	}
 
+	std::vector<Entity>& ImGuiEditorHierarchy::GetCurrentHierarchyVector()
+	{
+		return m_currentVector;
+	}
+
 
 	void ImGuiEditorHierarchy::Init()
 	{

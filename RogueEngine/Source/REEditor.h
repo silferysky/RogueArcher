@@ -13,5 +13,4 @@
 #include "EditorProfiler.h"
 #include "EditorController.h"
 #include "EditorDeleteCommand.h"
-#include "EditorCopyCommand.h"
-#include "EditorCreateObjectCommand.h"
+
