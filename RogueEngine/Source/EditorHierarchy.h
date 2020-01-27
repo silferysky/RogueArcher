@@ -34,11 +34,10 @@ namespace Rogue
 		void DisplayHierarchyChildren(HierarchyInfo& ent, size_t numOfParents = 0);
 		bool CheckValidReassign(Entity child, Entity newParent);
 		void ReassignParentChildFlags(Entity child, Entity newParent);
-
+		
 	public:
 		ImGuiEditorHierarchy();
 		~ImGuiEditorHierarchy();
-
 		virtual void Init() override;
 		virtual void Update() override;
 		virtual void Shutdown() override;

@@ -27,13 +27,18 @@ Technology is prohibited.
 #include "RigidbodyComponent.h"
 #include "CircleCollider2DComponent.h"
 #include "Manifold.h"
+#include "CollisionLayerer.h"
 
 namespace Rogue
 {
 	class CollisionManager
 	{
-		std::vector<std::pair<Entity, Entity>> m_collidedPairs; // Stored during collision tests
+		std::vector<std::pair<Entity, Entity>> m_diffPairs; // Stored pairs of aabb and circle
+		std::vector<std::pair<Entity, Entity>> m_boxPairs; // Stored pairs of aabbs
+		std::vector<std::pair<Entity, Entity>> m_circlePairs; // Stored pairs of circles
 		std::vector<Manifold> m_manifolds; // To generate and resolve after collision tests
+
+		CollisionLayerer m_collisionLayerer; // The manager for collision filters/layers
 
 		static const float s_correction_factor;
 		static const float s_correction_slop; // Penetration threshold
@@ -43,11 +48,6 @@ namespace Rogue
 		{
 			static CollisionManager instance;
 			return instance;
-		}
-
-		std::vector<std::pair<Entity, Entity>>& GetCollidedPairs()
-		{
-			return m_collidedPairs;
 		}
 
 		Mtx33 GetColliderWorldMatrix(const BaseCollider& collider, const TransformComponent& trans) const;
@@ -111,12 +111,21 @@ namespace Rogue
 		inline bool IsBetweenBounds(float val, float lowerBound, float upperBound) const;
 
 		// Manifold
-		void InsertColliderPair(Entity a, Entity b);
-		void GenerateManifolds(Entity A, Entity B);
+		void InsertDiffPair(Entity a, Entity b);
+		void InsertBoxPair(Entity a, Entity b);
+		void InsertCirclePair(Entity a, Entity b);
+		void GenerateManifolds();
 		void ResolveManifolds();
 
 		static float GetCorrectionFactor();
 		static float GetCorrectionSlop();
+
+		// Collision filters
+		bool FilterColliders(const CollisionLayerer::Bits& mask, const CollisionLayerer::Bits& category);
+		void AddLayer(std::string_view name, const CollisionLayerer::Bits& layer);
+		void RemoveLayer(const CollisionLayerer::Bits& layer);
+		void RemoveLayer(std::string_view name);
+		std::string_view GetLayerName(const CollisionLayerer::Bits& layer) const;
 	};
 }
 
@@ -131,15 +140,18 @@ Iterate through 2 entities
 
 Skip if both are static
 
-Apply filter tests. If can't collide, then skip.
-
 Narrow phase:
 -------------
 
 In the same loop:
-Solve: Dispatch jump table[CirclevsCircle, CirclevsAABB, AABBvsAABB, AABBvsCircle]
+Solve: Dispatch jump table[CirclevsCircle, CirclevsAABB, AABBvsAABB, AABBvsCircle] xxxx
 
-Each function will do discrete tests, and if they collide, generate manifold and emplace_back manifolds.
+Do discrete tests, and if they collide, insert into collided pairs.
+
+Apply filter tests for collided pairs. If can't collide, then remove.
+
+Generate manifold and emplace_back manifolds.
+
 
 Iterate through manifolds, and apply impulse and positional correction.
 

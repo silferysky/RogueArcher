@@ -7,12 +7,12 @@ namespace Rogue
 		ICommandable() = default;
 		virtual ~ICommandable() = default;
 
-		virtual void Execute() = 0;
-		virtual void Undo() = 0;
-		virtual void Redo() = 0;
+		virtual bool Execute() = 0;
+		virtual bool Undo() = 0;
+		//virtual void Redo() = 0;
 	};
 
-	class Model
+	/*class Model
 	{
 		bool m_On;
 		int m_Count;
@@ -110,5 +110,5 @@ namespace Rogue
 		{
 			m_Model->switchCount(m_newCount);
 		}
-	};
+	};*/
 }

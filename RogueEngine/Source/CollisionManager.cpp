@@ -124,7 +124,6 @@ namespace Rogue
 		if (closestPt == vAB)
 		{
 			circleIsInside = true;
-			std::cout << "circle is inside!" << std::endl;
 
 			// Find closest penetration axis
 			if (REAbs(vAB.x) > REAbs(vAB.y)) // x axis is shorter than y axis
@@ -161,7 +160,7 @@ namespace Rogue
 
 		manifold.m_penetration = radius - normalLength;
 
-
+		// Throw into vector of manifolds
 		m_manifolds.emplace_back(manifold);
 
 		return true;
@@ -963,14 +962,44 @@ namespace Rogue
 		return lowerBound <= val && val <= upperBound;
 	}
 
-	void CollisionManager::InsertColliderPair(Entity a, Entity b)
+	void CollisionManager::InsertDiffPair(Entity a, Entity b)
 	{
-		m_collidedPairs.push_back({ a, b });
+		// Always box first, then circle.
+		m_diffPairs.emplace_back(std::make_pair(a, b));
 	}
 
-	void CollisionManager::GenerateManifolds(Entity A, Entity B)
+	void CollisionManager::InsertBoxPair(Entity a, Entity b)
 	{
-		GenerateManifoldAABBvsAABB(A, B);
+		m_boxPairs.emplace_back(std::make_pair(a, b));
+	}
+
+	void CollisionManager::InsertCirclePair(Entity a, Entity b)
+	{
+		m_circlePairs.emplace_back(std::make_pair(a, b));
+	}
+
+	void CollisionManager::GenerateManifolds()
+	{
+		for (std::pair<Entity, Entity> pair : m_diffPairs)
+		{
+			GenerateManifoldAABBvsCircle(pair.first, pair.second);
+		}
+
+		m_diffPairs.clear();
+
+		for (std::pair<Entity, Entity> pair : m_boxPairs)
+		{
+			GenerateManifoldAABBvsAABB(pair.first, pair.second);
+		}
+
+		m_boxPairs.clear();
+
+		for (std::pair<Entity, Entity> pair : m_circlePairs)
+		{
+			GenerateManifoldCirclevsCircle(pair.first, pair.second);
+		}
+	
+		m_circlePairs.clear(); // To be removed when doing collision events!!!
 	}
 
 	void CollisionManager::ResolveManifolds()
@@ -991,5 +1020,30 @@ namespace Rogue
 	float CollisionManager::GetCorrectionSlop()
 	{
 		return s_correction_slop;
+	}
+
+	bool CollisionManager::FilterColliders(const CollisionLayerer::Bits& mask, const CollisionLayerer::Bits& category)
+	{
+		return m_collisionLayerer.FilterLayers(mask, category);
+	}
+
+	void CollisionManager::AddLayer(std::string_view name, const CollisionLayerer::Bits& layer)
+	{
+		m_collisionLayerer.AddLayer(name, layer);
+	}
+
+	void CollisionManager::RemoveLayer(const CollisionLayerer::Bits& layer)
+	{
+		RemoveLayer(layer);
+	}
+
+	void CollisionManager::RemoveLayer(std::string_view name)
+	{
+		m_collisionLayerer.RemoveLayer(name);
+	}
+
+	std::string_view CollisionManager::GetLayerName(const CollisionLayerer::Bits& layer) const
+	{
+		return m_collisionLayerer.GetName(layer);
 	}
 }
