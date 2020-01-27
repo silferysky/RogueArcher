@@ -18,6 +18,8 @@ Technology is prohibited.
 #include "Precompiled.h"
 #include "EditorHierarchy.h"
 #include "EditorManager.h"
+#include "EventDispatcher.h"
+#include "EditorEvent.h"
 
 namespace Rogue
 {
@@ -181,7 +183,12 @@ namespace Rogue
 				{
 					g_engine.m_coordinator.GetHierarchyInfo(i).m_selected = false;
 				}
-				SceneManager::instance().Create2DSprite();
+				//m_controller.ExecuteCommand(new EditorCreateObjectCommand());
+				EditorCreateObjectEvent* event = new EditorCreateObjectEvent();
+				event->SetSystemReceivers((int)SystemID::id_EDITOR);
+				EventDispatcher::instance().AddEvent(event);
+				//g_engine.m_coordinator.AddToUndoStack(event);
+				//SceneManager::instance().Create2DSprite();
 			}
 			if (ImGui::IsItemHovered())
 			{

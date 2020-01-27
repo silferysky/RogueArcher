@@ -76,7 +76,10 @@ namespace Rogue
 
 		EvParentTransformUpdate,
 		EvParentRotateUpdate,
-		EvParentScaleUpdate
+		EvParentScaleUpdate,
+
+		EvEditorCreateObject,
+		EvEditorB
 	};
 
 	enum EventCategory
@@ -102,7 +105,10 @@ namespace Rogue
 
 		EventCatGraphics		= EvCatFlag(14),
 
-		EventCatParent			= EvCatFlag(15)
+		EventCatParent			= EvCatFlag(15),
+    
+		EventCatEditor			= EvCatFlag(16),
+		EventCatEditorUndo		= EvCatFlag(17)
 	};
 
 	/*enum EventMessageType
