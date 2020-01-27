@@ -24,6 +24,7 @@ Technology is prohibited.
 
 #define FORCE_FACTOR 80000
 #define POSITION_RELATIVITY 10
+#define TELEPORT_DELAY 0.1f
 
 namespace Rogue
 {
@@ -61,11 +62,22 @@ namespace Rogue
 		void CreateBallAttack();
 		std::vector<TimedEntity> m_timedEntities;
 		std::vector<TimedEntity> m_teleports;
+
+		//For teleport
 		float m_teleportCharge = 3.0f;
 		float m_maxTeleportCharge = 3.0f;
+		float m_teleportDelayTimer = 0.0f;
+
+		//For physical state
 		float m_isInLight;
+
+		//For jump
 		const float m_maxJumpTimer;
+
+		//For hitchhiking
 		Entity hitchhikedEntity = -1;
+
+		//For toggling light mode
 		bool inLightMode = true;
 	};
 }
