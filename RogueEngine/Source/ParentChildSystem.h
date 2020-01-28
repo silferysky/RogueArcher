@@ -1,6 +1,7 @@
 #pragma once
 #include "BaseSystem.h"
 #include "EventListener.h"
+#include "ChildComponent.h"
 
 namespace Rogue
 {
@@ -16,5 +17,9 @@ namespace Rogue
 		void Update() override;
 		void Shutdown() override;
 		void Receive(Event* ev) override;
+
+		//Parent/Child Assignment
+		bool CheckValidReassign(Entity child, Entity newParent);
+		void ReassignParentChildFlags(Entity child, Entity newParent);
 	};
 }

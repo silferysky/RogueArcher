@@ -32,8 +32,6 @@ namespace Rogue
 
 		void DisplayHierarchyParent(HierarchyInfo& ent);
 		void DisplayHierarchyChildren(HierarchyInfo& ent, size_t numOfParents = 0);
-		bool CheckValidReassign(Entity child, Entity newParent);
-		void ReassignParentChildFlags(Entity child, Entity newParent);
 		
 	public:
 		ImGuiEditorHierarchy();

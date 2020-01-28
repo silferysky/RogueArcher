@@ -74,6 +74,7 @@ namespace Rogue
 		EvEntityPicked,
 		EvTransition,
 
+		EvParentSet,
 		EvParentTransformUpdate,
 		EvParentRotateUpdate,
 		EvParentScaleUpdate,

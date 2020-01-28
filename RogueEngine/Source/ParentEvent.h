@@ -7,6 +7,7 @@ namespace Rogue
 	class ParentEvent : public Event
 	{
 	public:
+		SET_EVENT_CATEGORY(EventCatParent)
 		inline Entity GetParentEntity() { return parentEntity; }
 	protected:
 		ParentEvent(Entity parentEnt)
@@ -15,10 +16,23 @@ namespace Rogue
 		Entity parentEntity;
 	};
 
+	class ParentSetEvent : public ParentEvent
+	{
+	public:
+		SET_EVENT_TYPE(EvParentSet)
+
+		ParentSetEvent(Entity parentEnt, Entity childEnt)
+			: ParentEvent(parentEnt), childEntity{ childEnt } {}
+
+		inline Entity GetChildEntity() { return childEntity; }
+
+	private:
+		Entity childEntity;
+	};
+
 	class ParentTransformEvent : public ParentEvent
 	{
 	public:
-		SET_EVENT_CATEGORY(EventCatParent)
 		SET_EVENT_TYPE(EvParentTransformUpdate)
 
 		ParentTransformEvent(Entity parentEnt, float xTransform = 0.0f, float yTransform = 0.0f, float zTransform = 0.0f)
@@ -34,7 +48,6 @@ namespace Rogue
 	class ParentScaleEvent : public ParentEvent
 	{
 	public:
-		SET_EVENT_CATEGORY(EventCatParent)
 		SET_EVENT_TYPE(EvParentTransformUpdate)
 
 		ParentScaleEvent(Entity parentEnt, float xTransform = 0.0f, float yTransform = 0.0f)
@@ -49,7 +62,6 @@ namespace Rogue
 	class ParentRotateEvent : public ParentEvent
 	{
 	public:
-		SET_EVENT_CATEGORY(EventCatParent)
 		SET_EVENT_TYPE(EvParentTransformUpdate)
 
 		ParentRotateEvent(Entity parentEnt, float rotate = 0.0f)

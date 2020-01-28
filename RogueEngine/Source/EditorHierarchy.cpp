@@ -20,6 +20,7 @@ Technology is prohibited.
 #include "EditorManager.h"
 #include "EventDispatcher.h"
 #include "EditorEvent.h"
+#include "ParentEvent.h"
 
 namespace Rogue
 {
@@ -60,7 +61,10 @@ namespace Rogue
 				//Hierarchy must not be yourself, but would otherwise work
 				if (hierarchyPayload.m_Entity != objInfo.m_Entity)
 				{
-					ReassignParentChildFlags(hierarchyPayload.m_Entity, objInfo.m_Entity);
+					ParentSetEvent* setParentEv = new ParentSetEvent(hierarchyPayload.m_Entity, objInfo.m_Entity);
+					setParentEv->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+					EventDispatcher::instance().AddEvent(setParentEv);
+					//ReassignParentChildFlags(hierarchyPayload.m_Entity, objInfo.m_Entity);
 				}
 			}
 			ImGui::EndDragDropTarget();
@@ -114,7 +118,9 @@ namespace Rogue
 					//Hierarchy must not be yourself, but would otherwise work
 					if (hierarchyPayload.m_Entity != childHierarchy.m_Entity)
 					{
-						ReassignParentChildFlags(hierarchyPayload.m_Entity, childHierarchy.m_Entity);
+						ParentSetEvent* setParentEv = new ParentSetEvent(hierarchyPayload.m_Entity, childHierarchy.m_Entity);
+						setParentEv->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+						EventDispatcher::instance().AddEvent(setParentEv);
 					}
 				}
 				ImGui::EndDragDropTarget();
@@ -123,34 +129,6 @@ namespace Rogue
 			if (numOfParents < 10)
 				DisplayHierarchyChildren(childHierarchy, numOfParents + 1);
 		}
-	}
-
-	bool ImGuiEditorHierarchy::CheckValidReassign(Entity child, Entity newParent)
-	{
-		bool isValid = true;
-		HierarchyInfo it = g_engine.m_coordinator.GetHierarchyInfo(child);
-		while (it.m_parent != -1 && it.m_parent != MAX_ENTITIES)
-		{
-			if (it.m_parent == child)
-			{
-				isValid = false;
-				break;
-			}
-			it = g_engine.m_coordinator.GetHierarchyInfo(it.m_parent);
-		}
-
-		return isValid;
-	}
-
-	void ImGuiEditorHierarchy::ReassignParentChildFlags(Entity child, Entity newParent)
-	{
-		//If invalid reassign (loop)
-		if (!CheckValidReassign(child, newParent))
-			return;
-
-		//This cannot be done directly here, since it is middle of a loop.
-		g_engine.m_coordinator.SetReassignParentFlags(child, newParent);
-
 	}
 
 	ImGuiEditorHierarchy::ImGuiEditorHierarchy() :
