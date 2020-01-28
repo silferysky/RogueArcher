@@ -40,6 +40,16 @@ namespace Rogue
 		return m_position;
 	}
 
+	void CameraComponent::setOffset(const Vec2& offset)
+	{
+		m_offset = offset;
+	}
+
+	Vec2 CameraComponent::getOffset() const
+	{
+		return m_offset;
+	}
+
 	void CameraComponent::DisplayOnInspector()
 	{
 		bool m_isMain = getIsActive();
@@ -48,6 +58,14 @@ namespace Rogue
 		ImGui::Checkbox("Active?", &m_isMain);
 		ImGui::TextWrapped("There can only be 1 active non-world camera at a time, set others to non-active if you want this to be the main camera.");
 		setIsActive(m_isMain);
+
+		ImGui::Text("Camera Offset");
+		ImGui::SameLine();
+		ImGui::PushItemWidth(75);
+		ImGui::DragFloat("     ", &m_offset.x);
+		ImGui::SameLine();
+		ImGui::PushItemWidth(75);
+		ImGui::DragFloat("      ", &m_offset.y);
 	}
 
 	void CameraComponent::setIsActive(const bool& isActive)
@@ -66,6 +84,7 @@ namespace Rogue
 		std::ostringstream ss;
 		ss << m_position.x << ";" << m_position.y << ";";
 		ss << m_isActive << ";";
+		ss << m_offset.x << ";" << m_offset.y << ";";
 		return ss.str();
 	}
 
@@ -89,6 +108,9 @@ namespace Rogue
 				break;
 			case 1:
 				setIsActive(std::stof(s1));
+				break;
+			case 2:
+				setOffset(Vec2(std::stof(s1), std::stof(s2)));
 				break;
 			default:
 				break;
