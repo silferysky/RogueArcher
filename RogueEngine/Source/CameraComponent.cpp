@@ -83,8 +83,8 @@ namespace Rogue
 		//Position
 		std::ostringstream ss;
 		ss << m_position.x << ";" << m_position.y << ";";
-		ss << m_isActive << ";";
 		ss << m_offset.x << ";" << m_offset.y << ";";
+		ss << m_isActive << ";";
 		return ss.str();
 	}
 
