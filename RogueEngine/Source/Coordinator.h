@@ -293,6 +293,20 @@ namespace Rogue
 			GetSystem<PlayerControllerSystem>()->setHitchhikeEntity(-1);
 		}
 
+		bool GetLightStatus()
+		{
+			return GetSystem<PlayerControllerSystem>()->GetLightStatus();
+		}
+
+		void ToggleLightStatus()
+		{
+			GetSystem<PlayerControllerSystem>()->ToggleLightStatus();
+		}
+
+		void SetLightStatus(bool status)
+		{
+			GetSystem<PlayerControllerSystem>()->SetLightStatus(status);
+		}
 		void AddToDeleteQueue(const Entity& entity)
 		{
 			m_deleteQueue.push_back(entity);
