@@ -28,6 +28,7 @@
     <ClInclude Include="Source\CameraSystem.h" />
     <ClInclude Include="Source\BoundingCircle.h" />
     <ClInclude Include="Source\BoxCollisionSystem.h" />
+    <ClInclude Include="Source\ChildComponent.h" />
     <ClInclude Include="Source\CircleCollisionSystem.h" />
     <ClInclude Include="Source\ColliderComponent.h" />
     <ClInclude Include="Source\CollisionLayerer.h" />
@@ -165,6 +166,7 @@
     <ClCompile Include="Source\CameraSystem.cpp" />
     <ClCompile Include="Source\BoundingCircle.cpp" />
     <ClCompile Include="Source\BoxCollisionSystem.cpp" />
+    <ClCompile Include="Source\ChildComponent.cpp" />
     <ClCompile Include="Source\CircleCollisionSystem.cpp" />
     <ClCompile Include="Source\ColliderComponent.cpp" />
     <ClCompile Include="Source\CollisionLayerer.cpp" />

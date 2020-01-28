@@ -559,6 +559,9 @@
     <ClInclude Include="Source\PlayerStatusManager.h">
       <Filter>RogueEngine\Systems\Player Controller</Filter>
     </ClInclude>
+    <ClInclude Include="Source\ChildComponent.h">
+      <Filter>RogueEngine\Systems\ParentChild</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -869,6 +872,9 @@
     </ClCompile>
     <ClCompile Include="Source\PlayerStatusManager.cpp">
       <Filter>RogueEngine\Systems\Player Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ChildComponent.cpp">
+      <Filter>RogueEngine\Systems\ParentChild</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
