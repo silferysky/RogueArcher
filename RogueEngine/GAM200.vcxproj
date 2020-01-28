@@ -100,6 +100,7 @@
     <ClInclude Include="Source\PickingSystem.h" />
     <ClInclude Include="Source\PlayerControllerComponent.h" />
     <ClInclude Include="Source\PlayerControllerSystem.h" />
+    <ClInclude Include="Source\PlayerStatusManager.h" />
     <ClInclude Include="Source\Polygon.h" />
     <ClInclude Include="Source\Precompiled.h" />
     <ClInclude Include="Source\RigidbodyComponent.h" />
@@ -211,6 +212,7 @@
     <ClCompile Include="Source\ParticleSystem.cpp" />
     <ClCompile Include="Source\PatrolAI.cpp" />
     <ClCompile Include="Source\PickingSystem.cpp" />
+    <ClCompile Include="Source\PlayerStatusManager.cpp" />
     <ClCompile Include="source\Precompiled.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>

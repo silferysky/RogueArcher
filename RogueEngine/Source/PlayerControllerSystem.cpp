@@ -27,11 +27,12 @@ Technology is prohibited.
 #include "GraphicsEvent.h"
 #include "PickingManager.h"
 #include "MenuControllerSystem.h"
+#include "PlayerStatusManager.h"
 
 namespace Rogue
 {
 	PlayerControllerSystem::PlayerControllerSystem()
-		:System(SystemID::id_PLAYERCONTROLLERSYSTEM), m_isInLight{ 0.0f }, m_maxJumpTimer{ 0.5f }
+		:System(SystemID::id_PLAYERCONTROLLERSYSTEM)
 	{
 	}
 
@@ -87,7 +88,7 @@ namespace Rogue
 		if (m_teleportCharge < m_maxTeleportCharge)
 			m_teleportCharge += g_deltaTime * g_engine.GetTimeScale();
 
-		m_isInLight -= g_deltaTime * g_engine.GetTimeScale();
+		PLAYER_STATUS.SetInLightDur(PLAYER_STATUS.GetInLightDur() - g_deltaTime * g_engine.GetTimeScale());
 		m_teleportDelayTimer -= g_deltaTime * g_engine.GetTimeScale();
 
 		//To update all timed entities
@@ -111,10 +112,10 @@ namespace Rogue
 			auto& player = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity);
 			auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
 				
-			if (hitchhikedEntity != -1)
+			if (PLAYER_STATUS.GetHitchhikedEntity() != -1)
 			{
 				auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
-				auto& parentTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(hitchhikedEntity);
+				auto& parentTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetHitchhikedEntity());
 				transform.setPosition(parentTransform.GetPosition());
 				break;
 			}
@@ -174,7 +175,7 @@ namespace Rogue
 					}
 
 					//For teleport
-					if (m_entities.size() && m_timedEntities.size() && m_isInLight < 0.0f && m_teleportCharge > 1.0f)
+					if (m_entities.size() && m_timedEntities.size() && PLAYER_STATUS.GetInLightDur() < 0.0f && m_teleportCharge > 1.0f)
 					{
 						TimedEntity ent(g_engine.m_coordinator.cloneArchetypes("TeleportSprite", false), 0.5f);
 						m_teleports.push_back(ent);
@@ -206,7 +207,7 @@ namespace Rogue
 
 				else if (keycode == KeyPress::KeyQ)
 				{
-					ToggleLightStatus();
+					PLAYER_STATUS.ToggleLightStatus();
 				}
 
 				else if (keycode == KeyPress::KeySpace)
@@ -224,7 +225,7 @@ namespace Rogue
 
 						// Reset boolean for grounded
 						player.m_grounded = false;
-						player.m_jumpTimer = m_maxJumpTimer;
+						player.m_jumpTimer = PLAYER_STATUS.GetJumpMaxTimer();
 					}
 				}
 
@@ -344,7 +345,7 @@ namespace Rogue
 			{
 				if (keycode == KeyPress::MB1)
 				{
-					if (!m_timedEntities.size() && m_isInLight < 0.0f && m_teleportDelayTimer < 0.0f)
+					if (!m_timedEntities.size() && PLAYER_STATUS.GetInLightDur() < 0.0f && m_teleportDelayTimer < 0.0f)
 					{
 						CreateBallAttack();
 						//m_ballTimer = 1.0f;
@@ -515,31 +516,6 @@ namespace Rogue
 		EntTeleportEvent* event = new EntTeleportEvent(*m_entities.begin(), newPosition);
 		event->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
 		EventDispatcher::instance().AddEvent(event);
-	}
-
-	void PlayerControllerSystem::setInLight(float duration)
-	{
-		m_isInLight = duration;	
-	}
-
-	void PlayerControllerSystem::setHitchhikeEntity(Entity hitchhiked)
-	{
-		hitchhikedEntity = hitchhiked;
-	}
-
-	void PlayerControllerSystem::ToggleLightStatus()
-	{
-		inLightMode = !inLightMode;
-	}
-
-	void PlayerControllerSystem::SetLightStatus(bool isLightMode)
-	{
-		inLightMode = isLightMode;
-	}
-
-	bool PlayerControllerSystem::GetLightStatus() const
-	{
-		return inLightMode;
 	}
 
 	void PlayerControllerSystem::CreateBallAttack()
