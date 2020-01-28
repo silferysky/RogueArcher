@@ -63,6 +63,7 @@ namespace Rogue
 		EvEntityAttacking,
 		EvEntityDamaged,
 		EvEntityDestroy,
+		EvEntityHitchhike,
 
 		EvOnCollisionEnter,
 		EvOnCollisionStay,
@@ -71,6 +72,11 @@ namespace Rogue
 		EvCameraShake,
 		EvChangeAnimation,
 		EvEntityPicked,
+		EvTransition,
+
+		EvParentTransformUpdate,
+		EvParentRotateUpdate,
+		EvParentScaleUpdate,
 
 		EvEditorCreateObject,
 		EvEditorDeleteObject,
@@ -103,8 +109,10 @@ namespace Rogue
 
 		EventCatGraphics		= EvCatFlag(14),
 
-		EventCatEditor			= EvCatFlag(15),
-		EventCatEditorUndo		= EvCatFlag(16)
+		EventCatParent			= EvCatFlag(15),
+    
+		EventCatEditor			= EvCatFlag(16),
+		EventCatEditorUndo		= EvCatFlag(17)
 	};
 
 	/*enum EventMessageType

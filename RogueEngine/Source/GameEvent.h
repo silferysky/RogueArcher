@@ -42,7 +42,7 @@ namespace Rogue
 	public:
 
 		SET_EVENT_CATEGORY(EventCatEntChangeState)
-			SET_EVENT_TYPE(EvEntityChangeState)
+		SET_EVENT_TYPE(EvEntityChangeState)
 
 		EntChangeStateEvent(Entity id, int newState)
 			: EntityEvent(id), EnemyState(newState) {}
@@ -246,5 +246,14 @@ namespace Rogue
 		EntPickedEvent(Entity _id) :
 			EntityEvent(_id)
 		{}
+	};
+
+	class EntHitchhikeEvent : public EntityEvent
+	{
+	public:
+		SET_EVENT_TYPE(EvEntityHitchhike)
+
+		EntHitchhikeEvent(Entity _id)
+			: EntityEvent(_id){}
 	};
 }
