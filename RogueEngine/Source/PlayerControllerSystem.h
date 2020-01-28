@@ -55,10 +55,6 @@ namespace Rogue
 		std::vector<TimedEntity> m_timedEntities;
 		std::vector<TimedEntity> m_teleports;
 
-		//For teleport
-		float m_teleportCharge = 3.0f;
-		float m_maxTeleportCharge = 3.0f;
-		float m_teleportDelayTimer = 0.0f;
 
 
 	};

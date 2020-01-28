@@ -85,11 +85,11 @@ namespace Rogue
 		}
 
 		//Timers 
-		if (m_teleportCharge < m_maxTeleportCharge)
-			m_teleportCharge += g_deltaTime * g_engine.GetTimeScale();
+		if (PLAYER_STATUS.GetTeleportCharge() < PLAYER_STATUS.GetMaxTeleportCharge())
+			PLAYER_STATUS.IncrementTeleportCharge(g_deltaTime * g_engine.GetTimeScale());
 
 		PLAYER_STATUS.SetInLightDur(PLAYER_STATUS.GetInLightDur() - g_deltaTime * g_engine.GetTimeScale());
-		m_teleportDelayTimer -= g_deltaTime * g_engine.GetTimeScale();
+		PLAYER_STATUS.DecrementTeleportDelay(g_deltaTime * g_engine.GetTimeScale());
 
 		//To update all timed entities
 		/*for (auto timedEntityIt = m_timedEntities.begin(); timedEntityIt != m_timedEntities.end(); ++timedEntityIt)
@@ -175,7 +175,7 @@ namespace Rogue
 					}
 
 					//For teleport
-					if (m_entities.size() && m_timedEntities.size() && PLAYER_STATUS.GetInLightDur() < 0.0f && m_teleportCharge > 1.0f)
+					if (m_entities.size() && m_timedEntities.size() && PLAYER_STATUS.GetInLightDur() < 0.0f && PLAYER_STATUS.GetTeleportCharge() > 1.0f)
 					{
 						TimedEntity ent(g_engine.m_coordinator.cloneArchetypes("TeleportSprite", false), 0.5f);
 						m_teleports.push_back(ent);
@@ -191,8 +191,8 @@ namespace Rogue
 								g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).getPosition());*/
 
 						ClearTimedEntities();
-						--m_teleportCharge;
-						m_teleportDelayTimer = TELEPORT_DELAY;
+						PLAYER_STATUS.IncrementTeleportCharge(-1.0f);
+						PLAYER_STATUS.SetTeleportDelay(TELEPORT_DELAY);
 					}
 				}
 
@@ -345,7 +345,7 @@ namespace Rogue
 			{
 				if (keycode == KeyPress::MB1)
 				{
-					if (!m_timedEntities.size() && PLAYER_STATUS.GetInLightDur() < 0.0f && m_teleportDelayTimer < 0.0f)
+					if (!m_timedEntities.size() && PLAYER_STATUS.GetInLightDur() < 0.0f && PLAYER_STATUS.GetTeleportDelay() < 0.0f)
 					{
 						CreateBallAttack();
 						//m_ballTimer = 1.0f;

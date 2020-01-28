@@ -23,6 +23,14 @@ namespace Rogue
 		void SetInLightDur(float duration = 0.16f);
 		float GetInLightDur() const;
 
+		//Teleporting
+		float GetTeleportCharge() const;
+		float GetMaxTeleportCharge() const;
+		void IncrementTeleportCharge(float duration);
+		void DecrementTeleportDelay(float duration);
+		void SetTeleportDelay(float duration);
+		float GetTeleportDelay() const;
+
 		//Light/Dark mode
 		void ToggleLightStatus();
 		void SetLightStatus(bool isLight);
@@ -40,6 +48,11 @@ namespace Rogue
 
 		//Physical status
 		float m_inLightDur;
+
+		//Teleporting
+		float m_teleportCharge;
+		float m_maxTeleportCharge;
+		float m_teleportDelayTimer;
 
 		//Timed Entities
 
