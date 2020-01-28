@@ -978,7 +978,7 @@ namespace Rogue
 		m_circlePairs.emplace_back(std::make_pair(a, b));
 	}
 
-	void CollisionManager::GenerateManifolds()
+	void CollisionManager::GenerateDiffManifolds()
 	{
 		for (std::pair<Entity, Entity> pair : m_diffPairs)
 		{
@@ -986,14 +986,20 @@ namespace Rogue
 		}
 
 		m_diffPairs.clear();
+	}
 
+	void CollisionManager::GenerateBoxManifolds()
+	{
 		for (std::pair<Entity, Entity> pair : m_boxPairs)
 		{
 			GenerateManifoldAABBvsAABB(pair.first, pair.second);
 		}
 
 		m_boxPairs.clear();
+	}
 
+	void CollisionManager::GenerateCircleManifolds()
+	{	
 		for (std::pair<Entity, Entity> pair : m_circlePairs)
 		{
 			GenerateManifoldCirclevsCircle(pair.first, pair.second);
@@ -1045,5 +1051,10 @@ namespace Rogue
 	std::string_view CollisionManager::GetLayerName(const CollisionLayerer::Bits& layer) const
 	{
 		return m_collisionLayerer.GetName(layer);
+	}
+
+	void CollisionManager::PrintLayerNames() const
+	{
+		m_collisionLayerer.PrintNames();
 	}
 }

@@ -151,8 +151,11 @@ namespace Rogue
 
 			}
 
+			// Generate manifolds from collided pairs
+			CollisionManager::instance().GenerateBoxManifolds();
+
 			// Collision Impulse and Torque/Contact Resolution (Other resolutionsdone using trigger events: Other weird forces, rest, game logic)
-			//CollisionManager::instance().ResolveManifolds();
+			CollisionManager::instance().ResolveManifolds();
 
 			//auto& collidedPairs = CollisionManager::instance().GetCollidedPairs();
 

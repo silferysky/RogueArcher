@@ -20,6 +20,8 @@ namespace Rogue
 		void RemoveLayer(std::string_view name);
 		std::string_view GetName(const Bits& layer) const;
 		bool FilterLayers(const Bits& maskA, const Bits& maskB) const;
+
+		void PrintNames() const;
 	};
 
 }// namespace Rogue

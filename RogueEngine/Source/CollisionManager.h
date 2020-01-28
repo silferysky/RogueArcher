@@ -114,7 +114,9 @@ namespace Rogue
 		void InsertDiffPair(Entity a, Entity b);
 		void InsertBoxPair(Entity a, Entity b);
 		void InsertCirclePair(Entity a, Entity b);
-		void GenerateManifolds();
+		void GenerateDiffManifolds();
+		void GenerateBoxManifolds();
+		void GenerateCircleManifolds();
 		void ResolveManifolds();
 
 		static float GetCorrectionFactor();
@@ -126,6 +128,7 @@ namespace Rogue
 		void RemoveLayer(const CollisionLayerer::Bits& layer);
 		void RemoveLayer(std::string_view name);
 		std::string_view GetLayerName(const CollisionLayerer::Bits& layer) const;
+		void PrintLayerNames() const;
 	};
 }
 

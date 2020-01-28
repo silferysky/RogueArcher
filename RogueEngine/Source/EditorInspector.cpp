@@ -27,6 +27,7 @@ Technology is prohibited.
 #include "CameraManager.h"
 #include "ParentEvent.h"
 #include "EventDispatcher.h"
+#include "CollisionManager.h"
 #include "Main.h"
 
 namespace Rogue
@@ -689,6 +690,8 @@ namespace Rogue
 
 				}		
 		}
+
+		CollisionManager::instance().PrintLayerNames();
 
 		bool m_worldCamera = g_engine.m_coordinator.GetSystem<CameraSystem>()->GetWorldCamera();
 		ImGui::Checkbox("Toggle World Camera?", &m_worldCamera);
