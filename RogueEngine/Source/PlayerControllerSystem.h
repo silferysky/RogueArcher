@@ -24,7 +24,7 @@ Technology is prohibited.
 
 #define FORCE_FACTOR 80000
 #define POSITION_RELATIVITY 10
-#define TELEPORT_DELAY 0.1f
+#define TELEPORT_DELAY 0.2f
 
 namespace Rogue
 {
