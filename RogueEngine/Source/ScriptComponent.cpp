@@ -19,6 +19,7 @@ Technology is prohibited.
 #include "ScriptComponent.h"
 #include "Logger.h"
 #include "Main.h"
+#include "PlayerStatusManager.h"
 
 
 namespace Rogue
@@ -174,7 +175,7 @@ namespace Rogue
 		}
 		else if (hierarchyObj.m_objectName == "Player")
 		{
-			g_engine.m_coordinator.GetSystem<PlayerControllerSystem>()->setInLight();
+			PLAYER_STATUS.SetInLightDur();
 		}
 	}
 
