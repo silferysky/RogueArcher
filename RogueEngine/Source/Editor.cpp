@@ -285,19 +285,7 @@ namespace Rogue
 				{
 					if (g_engine.m_coordinator.GetHierarchyInfo(i).m_selected)
 					{
-						//TODO : find all components of copiedEntity
 						m_copiedEntity = i;
-						
-						//if (g_engine.m_coordinator.ComponentExists<SpriteComponent>(m_copiedEntity))
-						//{
-						//	m_checkSprite = true;
-						//	g_engine.m_coordinator.RemoveComponent<SpriteComponent>(m_copiedEntity);
-						//}
-						//if (g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(m_copiedEntity))
-						//{
-						//	m_checkCollision = true;
-						//	g_engine.m_coordinator.RemoveComponent<RigidbodyComponent>(m_copiedEntity);
-						//}
 					}
 				}
 			}
