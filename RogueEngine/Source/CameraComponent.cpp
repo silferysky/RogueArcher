@@ -107,10 +107,10 @@ namespace Rogue
 				setPosition(Vec2(std::stof(s1), std::stof(s2)));
 				break;
 			case 1:
-				setIsActive(std::stof(s1));
+				setOffset(Vec2(std::stof(s1), std::stof(s2)));
 				break;
 			case 2:
-				setOffset(Vec2(std::stof(s1), std::stof(s2)));
+				setIsActive(std::stof(s1));
 				break;
 			default:
 				break;
