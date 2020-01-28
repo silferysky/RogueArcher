@@ -41,6 +41,9 @@ namespace Rogue
 			case EventType::EvEditorCutObject:
 				break;
 			case EventType::EvEditorPasteObject:
+				EventDispatcher::instance().AddEvent(editorEv);
+				AddToRedoStack(editorEv);
+				m_hierarchyVector.pop_back();
 				break;
 			default:
 				break;
@@ -306,6 +309,10 @@ namespace Rogue
 			if (pasteObjEvent->GetIsUndo())
 			{
 				g_engine.m_coordinator.AddToDeleteQueue(m_pastedEntitesVector.back());
+				m_pastedEntitesVector.pop_back();
+				AddToRedoStack(m_undoStack.back());
+				m_undoStack.pop_back();
+
 			}
 			else
 			{
