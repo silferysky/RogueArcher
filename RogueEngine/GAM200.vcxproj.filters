@@ -125,6 +125,12 @@
     <Filter Include="RogueEngine\Systems\Picking\Cursor">
       <UniqueIdentifier>{ce9604b8-0908-4818-aa4a-cae28126becc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="RogueEngine\Systems\ParentChild">
+      <UniqueIdentifier>{a116e54c-8533-45b3-b90b-c50d480be50a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RogueEngine\Systems\Collision\Data">
+      <UniqueIdentifier>{225070de-efff-488a-ab77-7bde09866f84}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Resource.h">
@@ -150,9 +156,6 @@
     </ClInclude>
     <ClInclude Include="Source\FileIO.h">
       <Filter>RogueEngine\I/O</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\CollisionManager.h">
-      <Filter>RogueEngine\Systems\Collision</Filter>
     </ClInclude>
     <ClInclude Include="Source\Circle.h">
       <Filter>RogueEngine\Systems\Collision\Shapes</Filter>
@@ -352,9 +355,6 @@
     <ClInclude Include="Source\imgui_internal.h">
       <Filter>RogueEditor\EditorLibrary</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Manifold.h">
-      <Filter>RogueEngine\Systems\Collision</Filter>
-    </ClInclude>
     <ClInclude Include="Source\WindowHelper.h">
       <Filter>RogueEngine\Window</Filter>
     </ClInclude>
@@ -414,9 +414,6 @@
     </ClInclude>
     <ClInclude Include="Source\AudioEmitterComponent.h">
       <Filter>RogueEngine\Systems\Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\PhysicsDataStructures.hpp">
-      <Filter>RogueEngine\Systems\Collision</Filter>
     </ClInclude>
     <ClInclude Include="Source\BoxCollisionSystem.h">
       <Filter>RogueEngine\Systems\Collision\Collision Systems</Filter>
@@ -541,6 +538,24 @@
     <ClInclude Include="Source\EditorEvent.h">
       <Filter>RogueEngine\Systems\Events\Events</Filter>
     </ClInclude>
+    <ClInclude Include="Source\CollisionManager.h">
+      <Filter>RogueEngine\Systems\Collision\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Manifold.h">
+      <Filter>RogueEngine\Systems\Collision\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PhysicsDataStructures.hpp">
+      <Filter>RogueEngine\Systems\Collision\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CollisionLayerer.h">
+      <Filter>RogueEngine\Systems\Collision\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ParentEvent.h">
+      <Filter>RogueEngine\Systems\Events\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ParentChildSystem.h">
+      <Filter>RogueEngine\Systems\ParentChild</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -548,9 +563,6 @@
     </ClCompile>
     <ClCompile Include="Source\FileIO.cpp">
       <Filter>RogueEngine\I/O</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\CollisionManager.cpp">
-      <Filter>RogueEngine\Systems\Collision</Filter>
     </ClCompile>
     <ClCompile Include="Source\Circle.cpp">
       <Filter>RogueEngine\Systems\Collision\Shapes</Filter>
@@ -680,9 +692,6 @@
     </ClCompile>
     <ClCompile Include="Source\imgui_widgets.cpp">
       <Filter>RogueEditor\EditorLibrary</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Manifold.cpp">
-      <Filter>RogueEngine\Systems\Collision</Filter>
     </ClCompile>
     <ClCompile Include="Source\WindowHelper.cpp">
       <Filter>RogueEngine\Window</Filter>
@@ -842,6 +851,18 @@
     </ClCompile>
     <ClCompile Include="Source\ScriptComponent.cpp">
       <Filter>RogueEngine\Systems\AI\AI Types</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CollisionManager.cpp">
+      <Filter>RogueEngine\Systems\Collision\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Manifold.cpp">
+      <Filter>RogueEngine\Systems\Collision\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CollisionLayerer.cpp">
+      <Filter>RogueEngine\Systems\Collision\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ParentChildSystem.cpp">
+      <Filter>RogueEngine\Systems\ParentChild</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

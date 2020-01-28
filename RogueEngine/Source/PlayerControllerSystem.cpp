@@ -88,6 +88,7 @@ namespace Rogue
 			m_teleportCharge += g_deltaTime * g_engine.GetTimeScale();
 
 		m_isInLight -= g_deltaTime * g_engine.GetTimeScale();
+		m_teleportDelayTimer -= g_deltaTime * g_engine.GetTimeScale();
 
 		//To update all timed entities
 		/*for (auto timedEntityIt = m_timedEntities.begin(); timedEntityIt != m_timedEntities.end(); ++timedEntityIt)
@@ -108,12 +109,17 @@ namespace Rogue
 		for (Entity entity : m_entities)
 		{
 			auto& player = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity);
-			//std::cout << player.m_grounded << std::endl;
-
-			auto& ctrl = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity);
 			auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
-			 
-			if (ctrl.GetMoveState() == MoveState::e_stop)
+				
+			if (hitchhikedEntity != -1)
+			{
+				auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
+				auto& parentTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(hitchhikedEntity);
+				transform.setPosition(parentTransform.GetPosition());
+				break;
+			}
+
+			if (player.GetMoveState() == MoveState::e_stop)
 				ForceManager::instance().RegisterForce(entity, Vec2(rigidbody.getVelocity().x * -c_stopFactor, 0.0f));
 				//rigidbody.addForce(Vec2(rigidbody.getVelocity().x * -c_stopFactor, 0.0f));
 
@@ -159,15 +165,15 @@ namespace Rogue
 
 				else if (keycode == KeyPress::MB1 && g_engine.GetIsFocused())
 				{
+					//For slow mo
 					for (Entity entity : m_entities)
 					{
 						auto& PlayerControllable = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity);
-						g_engine.SetTimeScale(PlayerControllable.GetSlowTime());
+						if (!PlayerControllable.m_grounded)
+							g_engine.SetTimeScale(PlayerControllable.GetSlowTime());
 					}
-				}
 
-				else if (keycode == KeyPress::MB2)
-				{
+					//For teleport
 					if (m_entities.size() && m_timedEntities.size() && m_isInLight < 0.0f && m_teleportCharge > 1.0f)
 					{
 						TimedEntity ent(g_engine.m_coordinator.cloneArchetypes("TeleportSprite", false), 0.5f);
@@ -185,11 +191,22 @@ namespace Rogue
 
 						ClearTimedEntities();
 						--m_teleportCharge;
+						m_teleportDelayTimer = TELEPORT_DELAY;
 					}
+				}
+
+				else if (keycode == KeyPress::MB2)
+				{
+					//For Hitchhiking
 				}
 				else if (keycode == KeyPress::MB3)
 				{
 					ClearTimedEntities();
+				}
+
+				else if (keycode == KeyPress::KeyQ)
+				{
+					ToggleLightStatus();
 				}
 
 				else if (keycode == KeyPress::KeySpace)
@@ -327,7 +344,7 @@ namespace Rogue
 			{
 				if (keycode == KeyPress::MB1)
 				{
-					if (!m_timedEntities.size() && m_isInLight < 0.0f)
+					if (!m_timedEntities.size() && m_isInLight < 0.0f && m_teleportDelayTimer < 0.0f)
 					{
 						CreateBallAttack();
 						//m_ballTimer = 1.0f;
@@ -502,7 +519,27 @@ namespace Rogue
 
 	void PlayerControllerSystem::setInLight(float duration)
 	{
-		m_isInLight = duration;
+		m_isInLight = duration;	
+	}
+
+	void PlayerControllerSystem::setHitchhikeEntity(Entity hitchhiked)
+	{
+		hitchhikedEntity = hitchhiked;
+	}
+
+	void PlayerControllerSystem::ToggleLightStatus()
+	{
+		inLightMode = !inLightMode;
+	}
+
+	void PlayerControllerSystem::SetLightStatus(bool isLightMode)
+	{
+		inLightMode = isLightMode;
+	}
+
+	bool PlayerControllerSystem::GetLightStatus() const
+	{
+		return inLightMode;
 	}
 
 	void PlayerControllerSystem::CreateBallAttack()
@@ -536,7 +573,9 @@ namespace Rogue
 			//rigidbody.addForce(Vec2(ballDir.x * FORCE_FACTOR, ballDir.y * FORCE_FACTOR));
 
 			BoxCollider2DComponent& boxCollider = g_engine.m_coordinator.CreateComponent<BoxCollider2DComponent>(ball);
-			boxCollider.Deserialize("0;0;0;0;0");
+
+			ColliderComponent collider = g_engine.m_coordinator.CreateComponent<ColliderComponent>(ball);
+			collider.Deserialize("BOX");
 
 			HierarchyInfo newInfo(ball, "Ball");
 			g_engine.m_coordinator.GetActiveObjects().push_back(ball);

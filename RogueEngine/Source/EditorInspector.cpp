@@ -25,6 +25,9 @@ Technology is prohibited.
 #include "EditorInspector.h"
 #include "REEngine.h"
 #include "CameraManager.h"
+#include "ParentEvent.h"
+#include "EventDispatcher.h"
+#include "CollisionManager.h"
 #include "Main.h"
 
 namespace Rogue
@@ -121,7 +124,120 @@ namespace Rogue
 						if (ImGui::CollapsingHeader("Transform"))
 						{
 							auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(i);
-							trans.DisplayOnInspector();
+							
+							if (infoObj.m_parent == -1 || infoObj.m_parent == MAX_ENTITIES)
+							{
+								trans.DisplayOnInspector();
+							}
+							else
+							{
+								//Needs to calculate values from parent objects
+
+								//Parent set
+								Vector2D parentTransform{}, parentScale = trans.GetScale();
+								int parentTransformZ = 0;
+								float parentRotation = 0.0f;
+
+								if (infoObj.m_parent != -1 && infoObj.m_parent != MAX_ENTITIES)
+								{
+									TransformComponent& tempTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(infoObj.m_parent);
+									parentTransform += tempTransform.GetPosition();
+									parentTransformZ += tempTransform.GetZ();
+									parentScale = Vec2(parentScale.x / tempTransform.GetScale().x, parentScale.y / tempTransform.GetScale().y);
+									parentRotation += tempTransform.GetRotation();
+								}
+
+								//HierarchyInfo tempRef = infoObj;
+
+								//while (tempRef.m_parent != -1 && tempRef.m_parent != MAX_ENTITIES)
+								//{
+								//	//Go to next available object and add the new values
+								//	tempRef = g_engine.m_coordinator.GetHierarchyInfo(tempRef.m_parent);
+
+								//	TransformComponent& tempTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(tempRef.m_Entity);
+								//	parentTransform += tempTransform.GetPosition();
+								//	parentTransformZ += tempTransform.GetZ();
+								//	parentScale = Vec2(parentScale.x / tempTransform.GetScale().x, parentScale.y / tempTransform.GetScale().y);
+								//	parentRotation += tempTransform.GetRotation();
+								//}
+
+								//Current set (Temporary display values)
+								Vector2D transform = trans.GetPosition() - parentTransform, scale = parentScale;
+								int transformZ = trans.GetZ() - parentTransformZ;
+								float rotation = trans.GetRotation() - parentRotation;
+
+								//This section is directly from TransformComponent's DisplayOnInspector with changes. Update this when DisplayOnInspector updates
+								ImGui::Text("Translate");
+								ImGui::SameLine();
+								ImGui::PushItemWidth(75);
+								ImGui::DragFloat("     ", &transform.x);
+								ImGui::SameLine();
+								ImGui::PushItemWidth(75);
+								ImGui::DragFloat("      ", &transform.y);
+
+								ImGui::Text("Z Value  ");
+								ImGui::SameLine();
+								ImGui::DragInt("    ", &transformZ, 1.0f, -100000, 100000);
+
+								if (ImGui::IsItemHovered())
+								{
+									ImGui::BeginTooltip();
+									ImGui::Text("Higher number means the object will be drawn infront");
+									ImGui::EndTooltip();
+								}
+
+								ImGui::Text("Scale    ");
+								ImGui::SameLine();
+								ImGui::PushItemWidth(75);
+								ImGui::DragFloat(" ", &scale.x, 1.0f, 0.0f, 100000.0f);
+								ImGui::SameLine(0.0f, 36.0f);
+								ImGui::DragFloat("  ", &scale.y, 1.0f, 0.0f, 100000.0f);
+
+								ImGui::Text("Rotation ");
+								ImGui::SameLine();
+								ImGui::DragFloat("   ", &rotation, 0.1f, 0.0f, 6.28f);
+
+								//To set values back in
+								//trans.setPosition(transform + parentTransform);
+								//trans.setZ(transformZ + parentTransformZ);
+								//trans.setScale(Vec2(scale.x * parentScale.x, scale.y * parentScale.y));
+								//trans.setRotation(rotation + parentRotation);
+
+								if (trans.GetPosition().x - parentTransform.x != transform.x ||
+									trans.GetPosition().y - parentTransform.y != transform.y ||
+									trans.GetZ() - parentTransformZ != transformZ)
+								{
+									ParentTransformEvent* event = new ParentTransformEvent(i,
+										transform.x - trans.GetPosition().x,
+										transform.y - trans.GetPosition().y,
+										transformZ - trans.GetZ());
+
+									event->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
+									EventDispatcher::instance().AddEvent(event);
+								}
+
+								if (trans.GetScale().x / parentScale.x != 1 ||
+									trans.GetScale().y / parentScale.y != 1)
+								{
+									ParentScaleEvent* event = new ParentScaleEvent(i,
+										trans.GetScale().x / parentScale.x,
+										trans.GetScale().y / parentScale.y);
+
+									event->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+									EventDispatcher::instance().AddEvent(event);
+								}
+
+								if (trans.GetRotation() - parentRotation != rotation)
+								{
+									ParentRotateEvent* event = new ParentRotateEvent(i,
+										rotation - trans.GetRotation());
+
+									event->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+									EventDispatcher::instance().AddEvent(event);
+								}
+
+								trans.DisplayOnInspectorWithParent();
+							}
 							if (ImGui::Button("Remove Component"))
 							{
 								g_engine.m_coordinator.RemoveComponent<TransformComponent>(i);
@@ -160,11 +276,17 @@ namespace Rogue
 						if (ImGui::CollapsingHeader("Circle 2D Collider"))
 						{
 							auto& circle2D = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(i);
+							auto& collider = g_engine.m_coordinator.GetComponent<ColliderComponent>(i);
 							circle2D.DisplayOnInspector();
-							/*if (ImGui::Button("Remove Component"))
+							collider.DisplayOnInspector();
+
+							if (ImGui::Button("Remove Component"))
 							{
 								g_engine.m_coordinator.RemoveComponent<CircleCollider2DComponent>(i);
-							}*/
+
+								if (!g_engine.m_coordinator.ComponentExists<BoxCollider2DComponent>(i))
+									g_engine.m_coordinator.RemoveComponent<ColliderComponent>(i);
+							}
 						}
 					}
 
@@ -173,11 +295,17 @@ namespace Rogue
 						if (ImGui::CollapsingHeader("Box2D Collider"))
 						{
 							auto& box2D = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(i);
+							auto& collider = g_engine.m_coordinator.GetComponent<ColliderComponent>(i);
 							box2D.DisplayOnInspector();
-						/*	if (ImGui::Button("Remove Component"))
+							collider.DisplayOnInspector();
+						
+							if (ImGui::Button("Remove Component"))
 							{
 								g_engine.m_coordinator.RemoveComponent<BoxCollider2DComponent>(i);
-							}*/
+
+								if (!g_engine.m_coordinator.ComponentExists<CircleCollider2DComponent>(i))
+									g_engine.m_coordinator.RemoveComponent<ColliderComponent>(i);
+							}
 						}
 					}
 
@@ -562,6 +690,8 @@ namespace Rogue
 
 				}		
 		}
+
+		CollisionManager::instance().PrintLayerNames();
 
 		bool m_worldCamera = g_engine.m_coordinator.GetSystem<CameraSystem>()->GetWorldCamera();
 		ImGui::Checkbox("Toggle World Camera?", &m_worldCamera);
