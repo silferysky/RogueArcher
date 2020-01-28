@@ -101,7 +101,18 @@ namespace Rogue
 
 	void Editor::CopyCommand()
 	{
+		EditorCopyObjectEvent* event = new EditorCopyObjectEvent();
+		event->SetSystemReceivers((int)SystemID::id_EDITOR);
+		EventDispatcher::instance().AddEvent(event);
+		AddToUndoStack(event);
+	}
 
+	void Editor::PasteCommand()
+	{
+		EditorPasteObjectEvent* event = new EditorPasteObjectEvent();
+		event->SetSystemReceivers((int)SystemID::id_EDITOR);
+		EventDispatcher::instance().AddEvent(event);
+		AddToUndoStack(event);
 	}
 
 	void Editor::HandleStack(bool exeUndo)
@@ -196,9 +207,14 @@ namespace Rogue
 					//Controller.RedoCommand();
 				}
 				
-				if (keycode == KeyPress::KeyCtrl && keycodeSpecial == KeyPressSub::KeyCtrl)
+				if (keycode == KeyPress::KeyC && keycodeSpecial == KeyPressSub::KeyCtrl)
 				{
 					CopyCommand();
+				}
+
+				if (keycode == KeyPress::KeyV && keycodeSpecial == KeyPressSub::KeyCtrl)
+				{
+					PasteCommand();
 				}
 				return;
 			}
@@ -255,20 +271,47 @@ namespace Rogue
 			if (copyObjEvent->GetIsUndo())
 			{
 				m_redoStack.push_back(copyObjEvent);
+				//m_checkSprite = false;
+				//m_checkCollision = false;
+				g_engine.m_coordinator.AddToDeleteQueue(m_copiedEntity);
+			}
+			else
+			{
+				m_undoStack.push_back(copyObjEvent);
 				for (auto& i : m_hierarchyVector)
 				{
 					if (g_engine.m_coordinator.GetHierarchyInfo(i).m_selected)
 					{
 						//TODO : find all components of copiedEntity
 						m_copiedEntity = i;
+						
+						//if (g_engine.m_coordinator.ComponentExists<SpriteComponent>(m_copiedEntity))
+						//{
+						//	m_checkSprite = true;
+						//	g_engine.m_coordinator.RemoveComponent<SpriteComponent>(m_copiedEntity);
+						//}
+						//if (g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(m_copiedEntity))
+						//{
+						//	m_checkCollision = true;
+						//	g_engine.m_coordinator.RemoveComponent<RigidbodyComponent>(m_copiedEntity);
+						//}
 					}
 				}
-
+			}
+			return;
+		}
+		case EvEditorPasteObject:
+		{
+			EditorPasteObjectEvent* pasteObjEvent = dynamic_cast<EditorPasteObjectEvent*>(ev);
+			if (pasteObjEvent->GetIsUndo())
+			{
+				g_engine.m_coordinator.AddToDeleteQueue(m_pastedEntitesVector.back());
 			}
 			else
 			{
-				m_undoStack.push_back(copyObjEvent);
-				
+				m_undoStack.push_back(pasteObjEvent);
+				m_pastedEntity = g_engine.m_coordinator.clone(m_copiedEntity);
+				m_pastedEntitesVector.push_back(m_pastedEntity);
 			}
 			return;
 		}
