@@ -47,6 +47,8 @@ namespace Rogue
 	{
 	public:
 		SET_EVENT_TYPE(EvEditorCopyObject)
+
+		EditorCopyObjectEvent(Entity id = 0) : EditorEvent(id) {}
 	};
 
 	class EditorCutObjectEvent : public EditorEvent
@@ -57,5 +59,7 @@ namespace Rogue
 	class EditorPasteObjectEvent : public EditorEvent
 	{
 	public:
+		SET_EVENT_TYPE(EvEditorPasteObject)
+		EditorPasteObjectEvent(Entity id = 0) : EditorEvent(id) {}
 	};
 }
