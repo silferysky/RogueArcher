@@ -41,4 +41,14 @@ namespace Rogue
 	{
 		return (maskA & maskB) == 1;
 	}
+
+	void CollisionLayerer::PrintNames() const
+	{
+		ImGui::Text("Collision Layers");
+
+		for (auto& pair : m_layers)
+		{
+			ImGui::Text("%s", pair.first.c_str());
+		}
+	}
 }
