@@ -185,7 +185,7 @@ namespace Rogue
 							transform.setPosition(g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).GetPosition());
 						}
 						//By right correct way of doing this
-						CreateTeleportEvent(g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).GetPosition());
+						//CreateTeleportEvent(g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).GetPosition());
 						/*if (keycode == KeyPress::MB2)
 							g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin()).setPosition(
 								g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).getPosition());*/
@@ -564,7 +564,8 @@ namespace Rogue
 	{
 		TransformComponent& playerTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin());
 		Vec2 initialPos = playerTransform.GetPosition();
-		Vec2 cursor = PickingManager::instance().GetWorldCursor();
+		Vec2 endPos = PickingManager::instance().GetWorldCursor();
+		Vec2 cursor = endPos;
 		Vec2 calculatedPos = initialPos;
 
 		//Calculating max cursor distance value
@@ -572,6 +573,10 @@ namespace Rogue
 		Vec2Normalize(cursor, cursor);
 		cursor *= playerTransform.GetScale().x * 3;
 		cursor += initialPos;
+
+		//Prevent going past cursor when clicking close
+		if (Vec2SqDistance(initialPos, endPos) < Vec2SqDistance(initialPos, cursor))
+			cursor = endPos;
 
 		for (size_t checkCount = 0; checkCount < 3; ++checkCount)
 		{
