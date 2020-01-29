@@ -76,6 +76,8 @@ namespace Rogue
 			{
 				system.second->Init();
 			}
+
+			ShowCursor(false);
 		}
 
 		void UpdateSystems()
