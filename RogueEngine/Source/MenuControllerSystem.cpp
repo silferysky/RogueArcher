@@ -133,7 +133,7 @@ namespace Rogue
 					ResumeGame();
 					ClearMenuObjs();
 					SceneManager& sceneManager = SceneManager::instance();
-					sceneManager.LoadLevel("Level 8.json");
+					sceneManager.LoadLevel("Level 12.json");
 					g_engine.m_coordinator.SetGameState(true);
 				}
 				//Exit from Main Menu. Cannot exit from game
