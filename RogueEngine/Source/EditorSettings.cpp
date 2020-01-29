@@ -75,6 +75,28 @@ namespace Rogue
 				show_another_window = false;
 			ImGui::End();
 		}
+		if (ImGui::Button("Keybinds"))
+		{
+			ImGui::OpenPopup("Keybind");
+		}
+		bool open = true;
+		if (ImGui::BeginPopupModal("Keybind", &open))
+		{
+			ImGui::Text("F1 : Zoom In Camera");
+			ImGui::Text("F2 : Zoom Out Camera");
+			ImGui::Text("F3 : On/Off Debug Draw");
+			ImGui::Text("F5 : Toggle Editor Mode in Game");
+			ImGui::Text("F6 : Toggle VSync On/Off");
+			ImGui::Text("F11 : Toggle Full Screen On/Off");
+			ImGui::Text("Shift : Toggle World Camera");
+			ImGui::Text("Ctrl + C : Copy");
+			ImGui::Text("Ctrl + V : Paste");
+			ImGui::Text("Ctrl + Z : Undo");
+			ImGui::Text("Ctrl + Y : Redo");
+			if (ImGui::Button("Close"))
+				ImGui::CloseCurrentPopup();
+			ImGui::EndPopup();
+		}
 		ImGui::End();
 	}
 	void ImGuiEditorSettings::Shutdown()
