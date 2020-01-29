@@ -177,22 +177,22 @@ namespace Rogue
 					//For teleport
 					if (m_entities.size() && m_timedEntities.size() && PLAYER_STATUS.GetInLightDur() < 0.0f && PLAYER_STATUS.GetTeleportCharge() > 1.0f)
 					{
-						TimedEntity ent(g_engine.m_coordinator.cloneArchetypes("TeleportSprite", false), 0.5f);
-						m_teleports.push_back(ent);
-						if (g_engine.m_coordinator.ComponentExists<TransformComponent>(m_teleports.back().m_entity))
-						{
-							TransformComponent& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(m_teleports.back().m_entity);
-							transform.setPosition(g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).GetPosition());
-						}
-						//By right correct way of doing this
-						//CreateTeleportEvent(g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).GetPosition());
-						/*if (keycode == KeyPress::MB2)
-							g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin()).setPosition(
-								g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).getPosition());*/
+						//TimedEntity ent(g_engine.m_coordinator.cloneArchetypes("TeleportSprite", false), 0.5f);
+						//m_teleports.push_back(ent);
+						//if (g_engine.m_coordinator.ComponentExists<TransformComponent>(m_teleports.back().m_entity))
+						//{
+						//	TransformComponent& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(m_teleports.back().m_entity);
+						//	transform.setPosition(g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).GetPosition());
+						//}
+						////By right correct way of doing this
+						////CreateTeleportEvent(g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).GetPosition());
+						///*if (keycode == KeyPress::MB2)
+						//	g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin()).setPosition(
+						//		g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).getPosition());*/
 
-						ClearTimedEntities();
-						PLAYER_STATUS.IncrementTeleportCharge(-1.0f);
-						PLAYER_STATUS.SetTeleportDelay(TELEPORT_DELAY);
+						//ClearTimedEntities();
+						//PLAYER_STATUS.IncrementTeleportCharge(-1.0f);
+						//PLAYER_STATUS.SetTeleportDelay(TELEPORT_DELAY);
 					}
 				}
 
