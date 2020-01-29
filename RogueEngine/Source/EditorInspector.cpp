@@ -43,6 +43,7 @@ namespace Rogue
 	void ImGuiInspector::Update()
 	{
 		ImGui::Begin("Inspector");
+
 		if (ImGui::IsItemHovered())
 		{
 			ImGui::BeginTooltip();

@@ -51,13 +51,13 @@ namespace Rogue
 			ImGui::EndTooltip();
 			ImGui::EndDragDropSource();
 		}
-
+	
 		if (ImGui::BeginDragDropTarget())
 		{
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Hierarchy"))
 			{
 				HierarchyInfo& hierarchyPayload = *(HierarchyInfo*)payload->Data;
-
+	
 				//Hierarchy must not be yourself, but would otherwise work
 				if (hierarchyPayload.m_Entity != objInfo.m_Entity)
 				{
@@ -71,7 +71,7 @@ namespace Rogue
 		}
 		DisplayHierarchyChildren(objInfo, 1);
 	}
-
+	
 	void ImGuiEditorHierarchy::DisplayHierarchyChildren(HierarchyInfo& ent, size_t numOfParents)
 	{
 		for (Entity e : ent.m_children)
@@ -107,14 +107,14 @@ namespace Rogue
 				ImGui::EndTooltip();
 				ImGui::EndDragDropSource();
 			}
-
-
+	
+	
 			if (ImGui::BeginDragDropTarget())
 			{
 				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Hierarchy"))
 				{
 					HierarchyInfo& hierarchyPayload = *(HierarchyInfo*)payload->Data;
-
+	
 					//Hierarchy must not be yourself, but would otherwise work
 					if (hierarchyPayload.m_Entity != childHierarchy.m_Entity)
 					{
@@ -131,9 +131,21 @@ namespace Rogue
 		}
 	}
 
+	bool& ImGuiEditorHierarchy::GetIsHierarchyFocused()
+	{
+		return m_isHierarchyFocused;
+	}
+
+	bool& ImGuiEditorHierarchy::set(bool test)
+	{
+		m_isHierarchyFocused = test;
+		return m_isHierarchyFocused;
+	}
+
 	ImGuiEditorHierarchy::ImGuiEditorHierarchy() :
 		m_currentVector{ g_engine.m_coordinator.GetActiveObjects() }
 	{
+
 	}
 
 	ImGuiEditorHierarchy::~ImGuiEditorHierarchy()
@@ -154,6 +166,15 @@ namespace Rogue
 	void ImGuiEditorHierarchy::Update()
 	{
 		ImGui::Begin("Hierarchy");
+		if (ImGui::IsWindowFocused())
+		{
+			set(true);
+		}
+		else
+		{
+			set(false);
+		}
+		
 		if (ImGui::Button("Create New Object"))
 		{
 			ImGui::OpenPopup("Create");
