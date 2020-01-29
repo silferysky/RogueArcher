@@ -28,16 +28,17 @@ Technology is prohibited.
 #include "EventListener.h"
 #include "KeyEvent.h"
 
-namespace Rogue
-{
+//namespace Rogue
+//{
 	DebugDrawSystem::DebugDrawSystem() :
 		m_EBO{ 0 }, m_VAO{ 0 }, m_VBO{ 0 }, m_shader{ Rogue::Shader() },
-		System(SystemID::id_DEBUGDRAWSYSTEM) {}
+		System(Rogue::SystemID::id_DEBUGDRAWSYSTEM) {}
 
 	// Public member functions
 	void DebugDrawSystem::Init()
 	{
-		REGISTER_LISTENER(SystemID::id_DEBUGDRAWSYSTEM, DebugDrawSystem::Receive);
+		Rogue::LISTENER_HANDLER hand = std::bind(&DebugDrawSystem::Receive, this, std::placeholders::_1);
+		Rogue::EventDispatcher::instance().AddListener(Rogue::SystemID::id_DEBUGDRAWSYSTEM, hand);
 
 		// Add components to signature
 		Rogue::Signature signature;
@@ -233,4 +234,4 @@ namespace Rogue
 
 	void DebugDrawSystem::Shutdown()
 	{}
-}
+//}
