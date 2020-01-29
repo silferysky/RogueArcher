@@ -345,7 +345,7 @@ namespace Rogue
 			{
 				if (keycode == KeyPress::MB1)
 				{
-					if (!m_timedEntities.size() && PLAYER_STATUS.GetInLightDur() < 0.0f && PLAYER_STATUS.GetTeleportDelay() < 0.0f)
+					if (!m_timedEntities.size() && PLAYER_STATUS.GetInLightDur() < 0.0f && PLAYER_STATUS.GetTeleportDelay() < 0.0f && PLAYER_STATUS.GetTeleportCharge() > 0.0f)
 					{
 						//CreateBallAttack();
 						Teleport();
@@ -562,6 +562,8 @@ namespace Rogue
 
 	void PlayerControllerSystem::Teleport()
 	{
+		PLAYER_STATUS.IncrementTeleportCharge(-1.0f);
+
 		TransformComponent& playerTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin());
 		Vec2 initialPos = playerTransform.GetPosition();
 		Vec2 endPos = PickingManager::instance().GetWorldCursor();
