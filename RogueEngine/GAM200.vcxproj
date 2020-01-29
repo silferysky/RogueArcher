@@ -30,7 +30,6 @@
     <ClInclude Include="Source\BoxCollisionSystem.h" />
     <ClInclude Include="Source\CircleCollisionSystem.h" />
     <ClInclude Include="Source\ColliderComponent.h" />
-    <ClInclude Include="Source\CollisionLayerer.h" />
     <ClInclude Include="Source\CollisionSystem.h" />
     <ClInclude Include="Source\CursorComponent.h" />
     <ClInclude Include="Source\EditorEvent.h" />
@@ -40,8 +39,6 @@
     <ClInclude Include="Source\ImGradient.h" />
     <ClInclude Include="Source\ImGuizmo.h" />
     <ClInclude Include="Source\ImSequencer.h" />
-    <ClInclude Include="Source\ParentChildSystem.h" />
-    <ClInclude Include="Source\ParentEvent.h" />
     <ClInclude Include="Source\ParticleComponent.h" />
     <ClInclude Include="Source\ParticleEmitterSystem.h" />
     <ClInclude Include="Source\PickingManager.h" />
@@ -166,7 +163,6 @@
     <ClCompile Include="Source\BoxCollisionSystem.cpp" />
     <ClCompile Include="Source\CircleCollisionSystem.cpp" />
     <ClCompile Include="Source\ColliderComponent.cpp" />
-    <ClCompile Include="Source\CollisionLayerer.cpp" />
     <ClCompile Include="Source\CollisionSystem.cpp" />
     <ClCompile Include="Source\CursorComponent.cpp" />
     <ClCompile Include="Source\CursorSystem.cpp" />
@@ -204,7 +200,6 @@
     <ClCompile Include="Source\LogicSystem.cpp" />
     <ClCompile Include="Source\Manifold.cpp" />
     <ClCompile Include="Source\MenuControllerSystem.cpp" />
-    <ClCompile Include="Source\ParentChildSystem.cpp" />
     <ClCompile Include="Source\ParticleComponent.cpp" />
     <ClCompile Include="Source\ParticleEmitterComponent.cpp" />
     <ClCompile Include="Source\ParticleEmitterSystem.cpp" />

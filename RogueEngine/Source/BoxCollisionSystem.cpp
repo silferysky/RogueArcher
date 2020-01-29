@@ -70,7 +70,6 @@ namespace Rogue
 		// Loop through entities
 		for (iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
 		{
-			auto& currCollider = g_engine.m_coordinator.GetComponent<ColliderComponent>(*iEntity);
 			auto& currRigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
 			auto& currTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
 			auto& currBoxCollider = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iEntity);
@@ -81,30 +80,22 @@ namespace Rogue
 			// For each entity, the rest of the entities
 			for (iNextEntity++; iNextEntity != m_entities.end(); ++iNextEntity)
 			{
-				auto& nextCollider = g_engine.m_coordinator.GetComponent<ColliderComponent>(*iNextEntity);
-
-				// Filter colliders
-				if (!CollisionManager::instance().FilterColliders(currCollider.GetCollisionMask(), nextCollider.GetCollisionCat()) ||
-					!CollisionManager::instance().FilterColliders(currCollider.GetCollisionCat(), nextCollider.GetCollisionMask()))
-					continue;
-
-				auto& nextRigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iNextEntity);
-				
-				// Skip if both static.
-				if (currRigidbody.getIsStatic() && nextRigidbody.getIsStatic())
-					continue;
-				
 				auto& nextBoxCollider = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iNextEntity);
-				
-				// Skip asleep colliders.
+				auto& nextRigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iNextEntity);
+				auto& nextTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iNextEntity);
+
+				// Skip asleep or static colliders.
 				if (nextBoxCollider.GetCollisionMode() == CollisionMode::e_asleep)
 					continue;
-				
-				auto& nextTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iNextEntity);
+
+				if (currRigidbody.getIsStatic() && nextRigidbody.getIsStatic())
+					continue;
 
 				// Test for AABBs vs AABBs
 				if (CollisionManager::instance().DiscreteAABBvsAABB(currBoxCollider.m_aabb, nextBoxCollider.m_aabb))
 				{
+					//CollisionManager::instance().InsertColliderPair(*iEntity, *iNextEntity);
+
 					// If A and/or B is/are a trigger(s), dispatch trigger event(s).
 					if (currBoxCollider.GetCollisionMode() == CollisionMode::e_trigger)
 					{
@@ -123,7 +114,6 @@ namespace Rogue
 						continue;
 					}
 
-					// Hard coded logic to prevent player from jumping mid air :(
 					if (g_engine.m_coordinator.GetHierarchyInfo(*iEntity).m_tag == "Player" && g_engine.m_coordinator.GetHierarchyInfo(*iNextEntity).m_tag == "Ground"
 						|| g_engine.m_coordinator.GetHierarchyInfo(*iNextEntity).m_tag == "Player" && g_engine.m_coordinator.GetHierarchyInfo(*iEntity).m_tag == "Ground")
 					{
@@ -140,7 +130,8 @@ namespace Rogue
 						EventDispatcher::instance().AddEvent(ev);
 					}
 
-					CollisionManager::instance().InsertBoxPair(*iEntity, *iNextEntity);
+
+					CollisionManager::instance().GenerateManifoldAABBvsAABB(*iEntity, *iNextEntity);
 				}
 
 				// Test OBBs vs OBBs collision
@@ -150,9 +141,6 @@ namespace Rogue
 				//}
 
 			}
-
-			// Generate manifolds from collided pairs
-			CollisionManager::instance().GenerateBoxManifolds();
 
 			// Collision Impulse and Torque/Contact Resolution (Other resolutionsdone using trigger events: Other weird forces, rest, game logic)
 			CollisionManager::instance().ResolveManifolds();

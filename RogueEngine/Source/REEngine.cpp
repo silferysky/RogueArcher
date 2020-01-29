@@ -54,7 +54,6 @@ Technology is prohibited.
 #include "ParticleSystem.h"
 #include "ParticleEmitterSystem.h"
 #include "UISystem.h"
-#include "ParentChildSystem.h"
 
 namespace Rogue
 {
@@ -84,7 +83,6 @@ namespace Rogue
 		m_coordinator.RegisterSystem<CameraSystem>();
 		m_coordinator.RegisterSystem<AudioSystem>();
 		m_coordinator.RegisterSystem<UISystem>();
-		m_coordinator.RegisterSystem<ParentChildSystem>();
 		m_coordinator.RegisterSystem<Editor>();
 	}
 

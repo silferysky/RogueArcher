@@ -25,12 +25,7 @@ Technology is prohibited.
 namespace Rogue
 {
 	MenuControllerSystem::MenuControllerSystem()
-		:System(SystemID::id_MENUCONTROLLERSYSTEM), 
-		m_menuObjs{ std::vector<Entity>() }, 
-		m_confirmQuitEnt{ std::vector<Entity>() },
-		m_confirmQuit{ false },
-		m_transitionTimer{ TRANSITION_TIME },
-		m_isTransitingOut{ false }
+		:System(SystemID::id_MENUCONTROLLERSYSTEM), m_menuObjs{ std::vector<Entity>() }, m_confirmQuitEnt{ std::vector<Entity>() }, m_confirmQuit{ false }
 	{
 	}
 
@@ -50,7 +45,6 @@ namespace Rogue
 	{
 		
 	}
-
 	void MenuControllerSystem::Receive(Event* ev)
 	{
 		switch (ev->GetEventType())
@@ -261,11 +255,9 @@ namespace Rogue
 		}
 		}
 	}
-
 	void MenuControllerSystem::Shutdown()
 	{
 	}
-
 	void MenuControllerSystem::InitPauseMenu()
 	{
 		//g_engine.SetTimeScale(0.0f);
@@ -411,22 +403,6 @@ namespace Rogue
 		//SetUIMenuObjs(false);
 		g_engine.m_coordinator.SetPauseState(false);
 		g_engine.SetTimeScale(1.0f);
-	}
-
-	void MenuControllerSystem::Transit()
-	{
-		m_transitionTimer = TRANSITION_TIME;
-		m_isTransitingOut = !m_isTransitingOut;
-	}
-
-	bool MenuControllerSystem::GetTransitType() const
-	{
-		return m_isTransitingOut;
-	}
-
-	float MenuControllerSystem::GetTransitTime() const
-	{
-		return m_transitionTimer;
 	}
 
 	void MenuControllerSystem::ClearMenuObjs()

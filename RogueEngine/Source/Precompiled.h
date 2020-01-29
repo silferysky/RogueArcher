@@ -18,8 +18,6 @@ Technology is prohibited.
 #pragma once
 #define _CRT_SECURE_NO_WARNINGS
 #define NOMINMAX
-
-// STL headers
 #include <stack>
 #include <vector>
 #include <array>
@@ -42,21 +40,16 @@ Technology is prohibited.
 #include <unordered_map>
 #include <typeindex>
 
-// IMGUI headers
 #include "imgui.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_win32.h"
 #include "ImSequencer.h"
+
 #include "ImGradient.h"
 #include "ImCurveEdit.h"
 #include "ImGuizmo.h"
-
-// API headers
 #include <Windows.h>
 
-// FMOD Headers
 #include "fmod.hpp"
 #include "fmod_errors.h"
 
-// Engine headers
-#include "Types.h"

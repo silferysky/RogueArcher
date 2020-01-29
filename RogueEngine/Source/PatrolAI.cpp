@@ -46,8 +46,6 @@ namespace Rogue
 		{
 			g_engine.m_coordinator.GetComponent<RigidbodyComponent>(m_entity).setIsStatic(true);
 		}
-		m_patrolDelay = 2.0f;
-		m_delay = 0.0f;
 	}
 
 	void PatrolAI::AIActiveStateUpdate()
@@ -64,12 +62,6 @@ namespace Rogue
 		//Only can do waypoint patrol if set to Patrolling
 		if (!m_statsComponent->GetIsPatrolling())
 			return;
-
-		if (m_delay > 0.0f)
-		{
-			m_delay -= g_engine.GetTimeScale() * g_deltaTime;
-			return;
-		}
 
 		//Check if Transform component and Rigidbody exist
 		if (!(g_engine.m_coordinator.ComponentExists<TransformComponent>(m_entity) && 
@@ -122,8 +114,6 @@ namespace Rogue
 			{
 				aiTransform.setScale(Vec2(-1 * aiTransform.GetScale().x, aiTransform.GetScale().y));
 			}
-
-			m_delay = m_patrolDelay;
 		}
 
 	}

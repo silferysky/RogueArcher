@@ -26,7 +26,6 @@ namespace Rogue
 	{
 		Vec2 m_position = Vec2(0.0f, 0.0f);
 		bool m_isActive = true;
-		Vec2 m_offset = Vec2(0.0f, 0.0f);
 		// TODO: orthographic size
 		// view matrix
 		// render target 
@@ -39,9 +38,6 @@ namespace Rogue
 
 		void setIsActive(const bool& isActive);
 		bool getIsActive() const;
-
-		void setOffset(const Vec2& offset);
-		Vec2 getOffset() const;
 
 		Vec2 getPosition() const;
 		void DisplayOnInspector();

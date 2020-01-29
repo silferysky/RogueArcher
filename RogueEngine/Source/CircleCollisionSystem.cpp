@@ -60,7 +60,6 @@ namespace Rogue
 
 		for (iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
 		{
-			auto& currCollider = g_engine.m_coordinator.GetComponent<ColliderComponent>(*iEntity);
 			auto& currRigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
 			auto& currTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
 			auto& currBoundingCircle = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(*iEntity);
@@ -70,20 +69,12 @@ namespace Rogue
 
 			for (iNextEntity++; iNextEntity != m_entities.end(); ++iNextEntity)
 			{
-				auto& nextCollider = g_engine.m_coordinator.GetComponent<ColliderComponent>(*iNextEntity);
-
-				// Filter colliders
-				if (!CollisionManager::instance().FilterColliders(currCollider.GetCollisionMask(), nextCollider.GetCollisionCat()) ||
-					!CollisionManager::instance().FilterColliders(currCollider.GetCollisionCat(), nextCollider.GetCollisionMask()))
-					continue;
-
+				auto& nextBoundingCircle = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(*iNextEntity);
 				auto& nextRigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iNextEntity);
+				auto& nextTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iNextEntity);
 
 				if (currRigidbody.getIsStatic() && nextRigidbody.getIsStatic())
 					continue;
-
-				auto& nextTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iNextEntity);
-				auto& nextBoundingCircle = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(*iNextEntity);
 
 				if (CollisionManager::instance().DiscreteCircleVsCircle(currBoundingCircle.m_collider, nextBoundingCircle.m_collider))
 				{
@@ -104,12 +95,9 @@ namespace Rogue
 
 						continue;
 					}*/
-					CollisionManager::instance().InsertCirclePair(*iEntity, *iNextEntity);
+					CollisionManager::instance().GenerateManifoldCirclevsCircle(*iEntity, *iNextEntity);
 				}
 			}
-
-			// Generate manifolds from collided pairs
-			CollisionManager::instance().GenerateCircleManifolds();
 
 			// Collision Response (Contact, forces, rest, Impulse, Torque)
 			CollisionManager::instance().ResolveManifolds();

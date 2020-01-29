@@ -117,7 +117,6 @@ namespace Rogue
 				if (g_engine.m_coordinator.GetComponent<CameraComponent>(entity).getIsActive())
 				{
 					Vec2 transformPos = g_engine.m_coordinator.GetComponent<TransformComponent>(entity).GetPosition();
-					Vec2 cameraOffset = g_engine.m_coordinator.GetComponent<CameraComponent>(entity).getOffset();
 					Vec2 cameraMin = CameraManager::instance().GetCameraMin();
 					Vec2 cameraMax = CameraManager::instance().GetCameraMax();
 
@@ -138,8 +137,8 @@ namespace Rogue
 
 					// For camera panning
 					glm::vec3 position = CameraManager::instance().GetCameraPos();
-					position.x += static_cast<int>((transformPos.x - position.x + shakeOffset.x + cameraOffset.x) * m_cameraLerp * g_deltaTime);
-					position.y += static_cast<int>((transformPos.y - position.y + shakeOffset.y + cameraOffset.y) * m_cameraLerp * g_deltaTime);
+					position.x += static_cast<int>((transformPos.x - position.x + shakeOffset.x) * m_cameraLerp * g_deltaTime);
+					position.y += static_cast<int>((transformPos.y - position.y + shakeOffset.y) * m_cameraLerp * g_deltaTime);
 
 					CameraManager::instance().SetCameraPos(position);
 					//glm::vec3(transformPos.x + shakeOffset.x, transformPos.y + shakeOffset.y, 0.0f);

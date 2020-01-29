@@ -28,12 +28,11 @@ namespace Rogue
 	{
 		std::vector <Entity>& activeObjects;
 		ImVec4 m_color;
-	public:
-		ImGuiInspector();
-		~ImGuiInspector() = default;
-		virtual void Init() override;
-		virtual void Update() override;
-		virtual void Shutdown() override;
-
+		public:
+			ImGuiInspector();
+			~ImGuiInspector() = default;
+			virtual void Init() override;
+			virtual void Update() override;
+			virtual void Shutdown() override;
 	};
 };

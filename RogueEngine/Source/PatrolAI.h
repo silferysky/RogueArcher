@@ -37,7 +37,5 @@ namespace Rogue
 	private:
 		std::vector<Vec2> m_waypoints;
 		size_t m_currentPointIndex;
-		float m_patrolDelay;
-		float m_delay;
 	};
 }

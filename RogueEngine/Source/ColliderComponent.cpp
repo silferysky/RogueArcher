@@ -18,20 +18,15 @@ Technology is prohibited.
 #include "Precompiled.h"
 #include "ColliderComponent.h"
 #include "Logger.h"
-#include "CollisionManager.h"
 
 namespace Rogue
 {
 	ColliderComponent::ColliderComponent(const std::shared_ptr<Shape> ptr) :
-		m_shape{ ptr },
-		m_collisionCategory{ CollisionLayerer::s_layerDefault.second },
-		m_collisionMask{ CollisionLayerer::s_layerDefault.second }
+		m_shape{ ptr }
 	{}
 
 	ColliderComponent::ColliderComponent(const ColliderComponent& rhs) :
-		m_shape{ nullptr },
-		m_collisionCategory{ rhs.m_collisionCategory },
-		m_collisionMask{ rhs.m_collisionMask }
+		m_shape{ nullptr }
 	{
 		if (!rhs.m_shape)
 		{
@@ -64,20 +59,16 @@ namespace Rogue
 	}
 
 	ColliderComponent::ColliderComponent(ColliderComponent&& rhs) noexcept :
-		m_shape{ nullptr },
-		m_collisionCategory{ 0 },
-		m_collisionMask{ 0 }
+		m_shape{ nullptr }
 	{
 		std::swap(m_shape, rhs.m_shape);
-		std::swap(m_collisionCategory, rhs.m_collisionCategory);
-		std::swap(m_collisionMask, rhs.m_collisionMask);
 	}
 
 	ColliderComponent& ColliderComponent::operator=(const ColliderComponent& rhs)
 	{
 		if (!rhs.m_shape)
 		{
-			RE_CORE_ERROR("Copied collider shape is nullptr!");
+			RE_CORE_ERROR("Copied shape is nullptr!");
 			m_shape.reset(new BoxShape);
 			*m_shape = *rhs.m_shape;
 			return *this;
@@ -85,9 +76,6 @@ namespace Rogue
 
 		if (this != &rhs)
 		{
-			m_collisionCategory = rhs.m_collisionCategory;
-			m_collisionMask = rhs.m_collisionMask;
-
 			switch (rhs.m_shape->GetType())
 			{
 			case Shape::Type::e_box:
@@ -118,8 +106,6 @@ namespace Rogue
 		{
 			// Swap with rhs shared ptr.
 			m_shape.swap(rhs.m_shape);
-			std::swap(m_collisionCategory, rhs.m_collisionCategory);
-			std::swap(m_collisionMask, rhs.m_collisionMask);
 		}
 
 		return *this;
@@ -148,15 +134,6 @@ namespace Rogue
 			break;
 		}
 
-		// Divider
-		ss << ";";
-
-		// Collision category
-		ss << m_collisionCategory << ";";
-
-		// Collision mask
-		ss << m_collisionMask << ";";
-
 		return ss.str();
 	}
 
@@ -165,48 +142,20 @@ namespace Rogue
 		std::istringstream ss(toDeserialize.data());
 		std::string s1;
 
-		if (std::getline(ss, s1, ';'))
-		{
-			if (s1 == "BOX")
-				m_shape = std::make_shared<BoxShape>();
-			else if (s1 == "CIRCLE")
-				m_shape = std::make_shared<CircleShape>();
-			else if (s1 == "POLYGON")
-				m_shape = std::make_shared<PolygonShape>();
-		}
-		
-		if(std::getline(ss, s1, ';'))
-			m_collisionCategory = static_cast<CollisionLayerer::Bits>(s1);
+		std::getline(ss, s1, ';');
 
-		if(std::getline(ss, s1, ';'))
-			m_collisionMask = static_cast<CollisionLayerer::Bits>(s1);
-	}
-
-	void ColliderComponent::DisplayOnInspector()
-	{
-		ImGui::BeginTooltip();
-		ImGui::Text("Current Layer: %s", std::string(CollisionManager::instance().GetLayerName(m_collisionCategory)).c_str());
-		ImGui::EndTooltip();
-
-		ImGui::BeginTooltip();
-		ImGui::Text("Current Mask: %s", std::string(CollisionManager::instance().GetLayerName(m_collisionMask)).c_str());
-		ImGui::EndTooltip();
+		if (s1 == "BOX")
+			m_shape = std::make_shared<BoxShape>();
+		else if (s1 == "CIRCLE")
+			m_shape = std::make_shared<CircleShape>();
+		else if (s1 == "POLYGON")
+			m_shape = std::make_shared<PolygonShape>();
 	}
 
 
 	std::shared_ptr<Shape> ColliderComponent::GetShape() const
 	{
 		return m_shape;
-	}
-
-	const CollisionLayerer::Bits& ColliderComponent::GetCollisionMask() const
-	{
-		return m_collisionMask;
-	}
-
-	const CollisionLayerer::Bits& ColliderComponent::GetCollisionCat() const
-	{
-		return m_collisionCategory;
 	}
 
 	void ColliderComponent::SetShape(const std::shared_ptr<Shape>& pShape)
@@ -229,20 +178,5 @@ namespace Rogue
 			break;
 		}
 
-	}
-
-	void ColliderComponent::SetMaskLayer(size_t layerPos, bool state)
-	{
-		m_collisionMask.set(layerPos, state);
-	}
-
-	void ColliderComponent::SetCollisionMask(const CollisionLayerer::Bits& bits)
-	{
-		m_collisionMask = bits;
-	}
-	
-	void ColliderComponent::SetCollisionCat(const CollisionLayerer::Bits& layer)
-	{
-		m_collisionCategory = layer;
 	}
 }
