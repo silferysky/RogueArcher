@@ -159,7 +159,9 @@ namespace Rogue
 			if (g_engine.GetIsFocused())
 			{
 				if (keycode == KeyPress::KeyF5)
-					g_engine.m_coordinator.ToggleEditorIsRunning();
+				{
+					//g_engine.m_coordinator.ToggleEditorIsRunning();
+				}
 
 				else if (keycode == KeyPress::KeyF6)
 					g_engine.ToggleVSync();
@@ -177,22 +179,22 @@ namespace Rogue
 					//For teleport
 					if (m_entities.size() && m_timedEntities.size() && PLAYER_STATUS.GetInLightDur() < 0.0f && PLAYER_STATUS.GetTeleportCharge() > 1.0f)
 					{
-						TimedEntity ent(g_engine.m_coordinator.cloneArchetypes("TeleportSprite", false), 0.5f);
-						m_teleports.push_back(ent);
-						if (g_engine.m_coordinator.ComponentExists<TransformComponent>(m_teleports.back().m_entity))
-						{
-							TransformComponent& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(m_teleports.back().m_entity);
-							transform.setPosition(g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).GetPosition());
-						}
-						//By right correct way of doing this
-						//CreateTeleportEvent(g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).GetPosition());
-						/*if (keycode == KeyPress::MB2)
-							g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin()).setPosition(
-								g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).getPosition());*/
+						//TimedEntity ent(g_engine.m_coordinator.cloneArchetypes("TeleportSprite", false), 0.5f);
+						//m_teleports.push_back(ent);
+						//if (g_engine.m_coordinator.ComponentExists<TransformComponent>(m_teleports.back().m_entity))
+						//{
+						//	TransformComponent& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(m_teleports.back().m_entity);
+						//	transform.setPosition(g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).GetPosition());
+						//}
+						////By right correct way of doing this
+						////CreateTeleportEvent(g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).GetPosition());
+						///*if (keycode == KeyPress::MB2)
+						//	g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin()).setPosition(
+						//		g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).getPosition());*/
 
-						ClearTimedEntities();
-						PLAYER_STATUS.IncrementTeleportCharge(-1.0f);
-						PLAYER_STATUS.SetTeleportDelay(TELEPORT_DELAY);
+						//ClearTimedEntities();
+						//PLAYER_STATUS.IncrementTeleportCharge(-1.0f);
+						//PLAYER_STATUS.SetTeleportDelay(TELEPORT_DELAY);
 					}
 				}
 
@@ -279,7 +281,7 @@ namespace Rogue
 						// Skip level
 						else if (keycode == KeyPress::KeyI)
 						{
-							if (SceneManager::instance().getCurrentFileName() == "Level 8.json")
+							if (SceneManager::instance().getCurrentFileName() == "Level 12.json")
 							{
 								if (g_engine.m_coordinator.ComponentExists<TransformComponent>(*iEntity))
 								{
@@ -308,7 +310,7 @@ namespace Rogue
 						// Reset level
 						else if (keycode == KeyPress::KeyO)
 						{
-							if (SceneManager::instance().getCurrentFileName() == "Level 8.json")
+							if (SceneManager::instance().getCurrentFileName() == "Level 12.json")
 							{
 								if (g_engine.m_coordinator.ComponentExists<TransformComponent>(*iEntity))
 								{
@@ -345,9 +347,12 @@ namespace Rogue
 			{
 				if (keycode == KeyPress::MB1)
 				{
-					if (!m_timedEntities.size() && PLAYER_STATUS.GetInLightDur() < 0.0f && PLAYER_STATUS.GetTeleportDelay() < 0.0f && PLAYER_STATUS.GetTeleportCharge() > 0.0f)
+					if (!m_timedEntities.size() && PLAYER_STATUS.GetInLightDur() < 0.0f && PLAYER_STATUS.GetTeleportDelay() < 0.0f && PLAYER_STATUS.GetTeleportCharge() >= 1.0f)
 					{
 						//CreateBallAttack();
+						auto& player = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(*m_entities.begin());
+						if (player.m_grounded)
+							PLAYER_STATUS.SetTeleportCharge(PLAYER_STATUS.GetMaxTeleportCharge());
 						Teleport();
 
 						if (g_engine.m_coordinator.ComponentExists<AnimationComponent>(*m_entities.begin()))

@@ -44,6 +44,11 @@ namespace Rogue
 		m_teleportCharge += duration;
 	}
 
+	void PlayerStatusManager::SetTeleportCharge(float duration)
+	{
+		m_teleportCharge = duration;
+	}
+
 	void PlayerStatusManager::DecrementTeleportDelay(float duration)
 	{
 		m_teleportDelayTimer -= duration;
