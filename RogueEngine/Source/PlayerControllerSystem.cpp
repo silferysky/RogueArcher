@@ -350,9 +350,9 @@ namespace Rogue
 					if (!m_timedEntities.size() && PLAYER_STATUS.GetInLightDur() < 0.0f && PLAYER_STATUS.GetTeleportDelay() < 0.0f && PLAYER_STATUS.GetTeleportCharge() >= 1.0f)
 					{
 						//CreateBallAttack();
-						auto& player = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(*m_entities.begin());
-						if (player.m_grounded)
-							PLAYER_STATUS.SetTeleportCharge(PLAYER_STATUS.GetMaxTeleportCharge());
+						//auto& player = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(*m_entities.begin());
+						//if (player.m_grounded)
+						//	PLAYER_STATUS.SetTeleportCharge(PLAYER_STATUS.GetMaxTeleportCharge());
 						Teleport();
 
 						if (g_engine.m_coordinator.ComponentExists<AnimationComponent>(*m_entities.begin()))
