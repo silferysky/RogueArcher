@@ -27,6 +27,7 @@ namespace Rogue
 		float GetTeleportCharge() const;
 		float GetMaxTeleportCharge() const;
 		void IncrementTeleportCharge(float duration);
+		void SetTeleportCharge(float duration);
 		void DecrementTeleportDelay(float duration);
 		void SetTeleportDelay(float duration);
 		float GetTeleportDelay() const;
