@@ -562,6 +562,8 @@ namespace Rogue
 
 	void PlayerControllerSystem::Teleport()
 	{
+		PLAYER_STATUS.IncrementTeleportCharge(-1.0f);
+
 		TransformComponent& playerTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin());
 		Vec2 initialPos = playerTransform.GetPosition();
 		Vec2 endPos = PickingManager::instance().GetWorldCursor();
