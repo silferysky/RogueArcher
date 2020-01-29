@@ -395,7 +395,7 @@ namespace Rogue
 
 			HierarchyInfo infoA = g_engine.m_coordinator.GetHierarchyInfo(collisionStay->GetEntityID());
 			HierarchyInfo infoB = g_engine.m_coordinator.GetHierarchyInfo(collisionStay->GetOtherEntity());
-
+			
 			if (infoA.m_tag == "Player")
 			{
 				if (infoB.m_tag == "Ground")

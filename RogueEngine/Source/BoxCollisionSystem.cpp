@@ -124,21 +124,17 @@ namespace Rogue
 					}
 
 					// Hard coded logic to prevent player from jumping mid air :(
-					if (g_engine.m_coordinator.GetHierarchyInfo(*iEntity).m_tag == "Player" && g_engine.m_coordinator.GetHierarchyInfo(*iNextEntity).m_tag == "Ground"
-						|| g_engine.m_coordinator.GetHierarchyInfo(*iNextEntity).m_tag == "Player" && g_engine.m_coordinator.GetHierarchyInfo(*iEntity).m_tag == "Ground")
+					EntCollisionStayEvent* ev =
+						new EntCollisionStayEvent
 					{
-						EntCollisionStayEvent* ev =
-							new EntCollisionStayEvent
-						{
 							*iEntity, *iNextEntity,
 							currTransform.GetPosition(), nextTransform.GetPosition(),
 							CollisionManager::instance().GetColliderScale(currBoxCollider.m_aabb, currTransform),
 							CollisionManager::instance().GetColliderScale(nextBoxCollider.m_aabb, nextTransform)
-						};
+					};
 
-						ev->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
-						EventDispatcher::instance().AddEvent(ev);
-					}
+					ev->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
+					EventDispatcher::instance().AddEvent(ev);
 
 					CollisionManager::instance().InsertBoxPair(*iEntity, *iNextEntity);
 				}
