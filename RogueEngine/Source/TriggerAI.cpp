@@ -28,7 +28,7 @@ namespace Rogue
 	{
 		auto& hierarchyObj = g_engine.m_coordinator.GetHierarchyInfo(other);
 
-		if (hierarchyObj.m_objectName != "Ball" || m_isTriggered)
+		if (hierarchyObj.m_objectName != "Player" || m_isTriggered)
 			return;
 		
 		m_isTriggered = true;
