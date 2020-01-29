@@ -17,8 +17,8 @@ Technology is prohibited.
 /* End Header **************************************************************************/
 #pragma once
 
-//namespace Rogue
-//{
+namespace Rogue
+{
 	class Rogue::Timer;
 	class DebugDrawSystem : public Rogue::System, public Rogue::EventListener
 	{
@@ -49,4 +49,4 @@ Technology is prohibited.
 
 		void Receive(Rogue::Event* ev) override;
 	};
-//}
+}
