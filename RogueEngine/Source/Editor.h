@@ -39,10 +39,13 @@ namespace Rogue
 		void Shutdown() override;
 
 		//void ExecuteCommand(EditorEvent* command);
+		void ExecuteCommand(bool isUndo = true);
 		void UndoCommand();
 		void RedoCommand();
 		void ClearUndoRedoStack();
-		void ExecuteCommand(bool exeUndo = DoingUndo);
+		void CopyCommand();
+		void PasteCommand();
+		void HandleStack(bool exeUndo = DoingUndo);
 
 		void AddToUndoStack(EditorEvent* ev);
 		void AddToRedoStack(EditorEvent* ev);
@@ -51,5 +54,10 @@ namespace Rogue
 		std::vector<EditorEvent*> m_undoStack;
 		std::vector<EditorEvent*> m_redoStack;
 		std::vector<Entity>& m_currentVector = g_engine.m_coordinator.GetActiveObjects();
+		std::vector<Entity>& m_hierarchyVector = ImGuiEditorHierarchy::instance().GetCurrentHierarchyVector();
+		Entity m_copiedEntity;
+		Entity m_pastedEntity;
+		std::vector<Entity> m_pastedEntitesVector;
+		size_t m_pasteCount = 0;
 	};
 }

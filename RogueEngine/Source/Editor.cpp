@@ -21,44 +21,64 @@ Technology is prohibited.
 
 namespace Rogue
 {
-	//void Editor::ExecuteCommand(EditorEvent* command)
-	//{
 
-	//	if (command->Execute())
-	//	{
-	//		m_undoStack.pop_back();
-	//	}
+	void Editor::ExecuteCommand(bool isUndo)
+	{
+		if (isUndo)
+		{
+			EditorEvent* editorEv = m_undoStack.back();
+			editorEv->SetIsUndo(true);
+			
+			switch (editorEv->GetEventType())
+			{
+			case EventType::EvEditorCreateObject:
+				EventDispatcher::instance().AddEvent(editorEv);
+				AddToRedoStack(editorEv);
+				m_hierarchyVector.pop_back();
+				break;
+			case EventType::EvEditorCopyObject:
+				break;
+			case EventType::EvEditorCutObject:
+				break;
+			case EventType::EvEditorPasteObject:
+				EventDispatcher::instance().AddEvent(editorEv);
+				AddToRedoStack(editorEv);
+				m_hierarchyVector.pop_back();
+				break;
+			default:
+				break;
+			}
 
-	//	m_undoStack.push_back(command);
-	//	if (!m_redoStack.size())
-	//	{
-	//		m_redoStack.clear();
-	//	}
-	//}
+		}
+		else
+		{
+			EditorEvent* editorEv = m_redoStack.front();
+			editorEv->SetIsUndo(false);
+			EventDispatcher::instance().AddEvent(editorEv);
+			AddToUndoStack(editorEv);
+		}
+	}
 
 	void Editor::UndoCommand()
 	{
 		if (!m_undoStack.size())
 			return;
-
 		if (m_undoStack.back())
 		{
 			ExecuteCommand(DoingUndo);
-			m_redoStack.push_back(m_undoStack.back());
+			HandleStack(DoingUndo);
 		}
-		m_undoStack.pop_back();
 	}
 
 	void Editor::RedoCommand()
 	{
 		if (!m_redoStack.size())
 			return;
-		if (m_redoStack.front())
+		if (m_redoStack.back())
 		{
 			ExecuteCommand(DoingRedo);
-			m_undoStack.push_back(m_redoStack.front());
+			HandleStack(DoingRedo);
 		}
-		m_redoStack.pop_back();
 	}
 
 	void Editor::ClearUndoRedoStack()
@@ -82,31 +102,56 @@ namespace Rogue
 		}
 	}
 
-	void Editor::ExecuteCommand(bool exeUndo)
+	void Editor::CopyCommand()
+	{
+		EditorCopyObjectEvent* event = new EditorCopyObjectEvent();
+		event->SetSystemReceivers((int)SystemID::id_EDITOR);
+		EventDispatcher::instance().AddEvent(event);
+		AddToUndoStack(event);
+	}
+
+	void Editor::PasteCommand()
+	{
+		EditorPasteObjectEvent* event = new EditorPasteObjectEvent();
+		event->SetSystemReceivers((int)SystemID::id_EDITOR);
+		EventDispatcher::instance().AddEvent(event);
+		AddToUndoStack(event);
+	}
+
+	void Editor::HandleStack(bool exeUndo)
 	{
 		if (exeUndo)
 		{
-			EditorEvent* editorEv = m_undoStack.back();
-			editorEv->SetIsUndo(true);
-			EventDispatcher::instance().AddEvent(editorEv);
-			AddToRedoStack(editorEv);
+			if (!m_undoStack.size())
+				return;
+
+			if (m_undoStack.back())
+			{
+				m_redoStack.push_back(m_undoStack.back());
+				m_undoStack.pop_back();
+			}
 		}
 		else
 		{
-			EditorEvent* editorEv = m_redoStack.front();
-			editorEv->SetIsUndo(false);
-			EventDispatcher::instance().AddEvent(editorEv);
-			AddToUndoStack(editorEv);
+			if (!m_redoStack.size())
+				return;
+			if (m_redoStack.back())
+			{
+				m_undoStack.push_back(m_redoStack.back());
+				m_redoStack.pop_back();
+			}
 			
 		}
 	}
 
 	void Editor::AddToUndoStack(EditorEvent* ev)
 	{
+		m_undoStack.push_back(ev);
 	}
 
 	void Editor::AddToRedoStack(EditorEvent* ev)
 	{
+		m_redoStack.push_back(ev);
 	}
 
 	void Editor::Init()
@@ -164,6 +209,16 @@ namespace Rogue
 					RedoCommand();
 					//Controller.RedoCommand();
 				}
+				
+				if (keycode == KeyPress::KeyC && keycodeSpecial == KeyPressSub::KeyCtrl)
+				{
+					CopyCommand();
+				}
+
+				if (keycode == KeyPress::KeyV && keycodeSpecial == KeyPressSub::KeyCtrl)
+				{
+					PasteCommand();
+				}
 				return;
 			}
 			/*if (keytriggeredevent->GetKeyCode() == KeyPress::Numpad8)
@@ -199,8 +254,60 @@ namespace Rogue
 		case EventType::EvEditorCreateObject:
 		{
 			EditorCreateObjectEvent* createObjEvent = dynamic_cast<EditorCreateObjectEvent*>(ev);
-			SceneManager::instance().Create2DSprite();
+			if (createObjEvent->GetIsUndo())
+			{
+				m_redoStack.push_back(createObjEvent);
+				g_engine.m_coordinator.AddToDeleteQueue(createObjEvent->GetEntityID());
+			}
+			else
+			{
+				m_undoStack.push_back(createObjEvent);
+				createObjEvent->SetEntityID(SceneManager::instance().Create2DSprite());
+			}
+			
+			
+			return;
+		}
+		case EventType::EvEditorCopyObject:
+		{
+			EditorCopyObjectEvent* copyObjEvent = dynamic_cast<EditorCopyObjectEvent*>(ev);
+			if (copyObjEvent->GetIsUndo())
+			{
+				m_redoStack.push_back(copyObjEvent);
+				//m_checkSprite = false;
+				//m_checkCollision = false;
+				g_engine.m_coordinator.AddToDeleteQueue(m_copiedEntity);
+			}
+			else
+			{
+				m_undoStack.push_back(copyObjEvent);
+				for (auto& i : m_hierarchyVector)
+				{
+					if (g_engine.m_coordinator.GetHierarchyInfo(i).m_selected)
+					{
+						m_copiedEntity = i;
+					}
+				}
+			}
+			return;
+		}
+		case EvEditorPasteObject:
+		{
+			EditorPasteObjectEvent* pasteObjEvent = dynamic_cast<EditorPasteObjectEvent*>(ev);
+			if (pasteObjEvent->GetIsUndo())
+			{
+				g_engine.m_coordinator.AddToDeleteQueue(m_pastedEntitesVector.back());
+				m_pastedEntitesVector.pop_back();
+				AddToRedoStack(m_undoStack.back());
+				m_undoStack.pop_back();
 
+			}
+			else
+			{
+				m_undoStack.push_back(pasteObjEvent);
+				m_pastedEntity = g_engine.m_coordinator.clone(m_copiedEntity);
+				m_pastedEntitesVector.push_back(m_pastedEntity);
+			}
 			return;
 		}
 		}

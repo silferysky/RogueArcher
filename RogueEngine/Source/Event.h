@@ -80,6 +80,10 @@ namespace Rogue
 		EvParentScaleUpdate,
 
 		EvEditorCreateObject,
+		EvEditorDeleteObject,
+		EvEditorCutObject,
+		EvEditorCopyObject,
+		EvEditorPasteObject,
 		EvEditorB
 	};
 
