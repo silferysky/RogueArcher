@@ -67,13 +67,18 @@ namespace Rogue
 				RigidbodyComponent& nextRigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iNextEntity);
 
 				if (currRigidbody.getIsStatic() && nextRigidbody.getIsStatic())
+				{
 					continue;
+				}
 
 				ColliderComponent& nextCollider = g_engine.m_coordinator.GetComponent<ColliderComponent>(*iNextEntity);
 
 				if (!CollisionManager::instance().FilterColliders(currCollider.GetCollisionMask(), nextCollider.GetCollisionCat()) ||
 					!CollisionManager::instance().FilterColliders(currCollider.GetCollisionCat(), nextCollider.GetCollisionMask()))
+				{
+					RE_INFO("~~~~~~");
 					continue;
+				}
 					
 				TransformComponent& nextTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iNextEntity);
 
@@ -85,7 +90,11 @@ namespace Rogue
 					auto& boxB = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iNextEntity);
 					
 					if (CollisionManager::instance().DiscreteCircleVsAABB(circleA.m_collider, boxB.m_aabb))
+					{
+						RE_INFO("CircleA BoxB Colliding!");
+
 						CollisionManager::instance().InsertDiffPair(*iNextEntity, *iEntity);
+					}
 				}
 				else if (currColliderType == Shape::Type::e_box && nextColliderType == Shape::Type::e_circle)
 				{
@@ -93,12 +102,16 @@ namespace Rogue
 					auto& circleB = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(*iNextEntity);
 				
 					if (CollisionManager::instance().DiscreteAABBVsCircle(boxA.m_aabb, circleB.m_collider))
+					{
+						RE_INFO("CircleB BoxA Colliding!");
+
 						CollisionManager::instance().InsertDiffPair(*iEntity, *iNextEntity);
+					}
 				}
 			}
 
 			// Generate manifolds from collided pairs
-			CollisionManager::instance().GenerateManifolds();
+			CollisionManager::instance().GenerateDiffManifolds();
 
 			// Collision Response (Contact, forces, rest, Impulse, Torque)
 			CollisionManager::instance().ResolveManifolds();

@@ -549,7 +549,9 @@ namespace Rogue
 			//rigidbody.addForce(Vec2(ballDir.x * FORCE_FACTOR, ballDir.y * FORCE_FACTOR));
 
 			BoxCollider2DComponent& boxCollider = g_engine.m_coordinator.CreateComponent<BoxCollider2DComponent>(ball);
-			boxCollider.Deserialize("0;0;0;0;0");
+
+			ColliderComponent collider = g_engine.m_coordinator.CreateComponent<ColliderComponent>(ball);
+			collider.Deserialize("BOX");
 
 			HierarchyInfo newInfo(ball, "Ball");
 			g_engine.m_coordinator.GetActiveObjects().push_back(ball);

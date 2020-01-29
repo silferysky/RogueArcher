@@ -108,8 +108,11 @@ namespace Rogue
 				}
 			}
 
+			// Generate manifolds from collided pairs
+			CollisionManager::instance().GenerateCircleManifolds();
+
 			// Collision Response (Contact, forces, rest, Impulse, Torque)
-			//CollisionManager::instance().ResolveManifolds();
+			CollisionManager::instance().ResolveManifolds();
 		}
 
 		g_engine.m_coordinator.EndTimeSystem("Circle Collision System");

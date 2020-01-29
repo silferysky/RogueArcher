@@ -185,11 +185,11 @@ namespace Rogue
 	void ColliderComponent::DisplayOnInspector()
 	{
 		ImGui::BeginTooltip();
-		ImGui::Text("Current Layer: %s", CollisionManager::instance().GetLayerName(m_collisionCategory));
+		ImGui::Text("Current Layer: %s", std::string(CollisionManager::instance().GetLayerName(m_collisionCategory)).c_str());
 		ImGui::EndTooltip();
 
 		ImGui::BeginTooltip();
-		ImGui::Text("Current Mask: %s", CollisionManager::instance().GetLayerName(m_collisionMask));
+		ImGui::Text("Current Mask: %s", std::string(CollisionManager::instance().GetLayerName(m_collisionMask)).c_str());
 		ImGui::EndTooltip();
 	}
 
