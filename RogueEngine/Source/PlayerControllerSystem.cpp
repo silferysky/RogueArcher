@@ -159,9 +159,7 @@ namespace Rogue
 			if (g_engine.GetIsFocused())
 			{
 				if (keycode == KeyPress::KeyF5)
-				{
-					//g_engine.m_coordinator.ToggleEditorIsRunning();
-				}
+					g_engine.m_coordinator.ToggleEditorIsRunning();
 
 				else if (keycode == KeyPress::KeyF6)
 					g_engine.ToggleVSync();
