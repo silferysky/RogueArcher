@@ -347,10 +347,8 @@ namespace Rogue
 				{
 					if (!m_timedEntities.size() && PLAYER_STATUS.GetInLightDur() < 0.0f && PLAYER_STATUS.GetTeleportDelay() < 0.0f)
 					{
-						CreateBallAttack();
-						//m_ballTimer = 1.0f;
-						//m_ballCooldown = 1.0f;
-						//RE_INFO("CLICKCLICK");
+						//CreateBallAttack();
+						Teleport();
 
 						if (g_engine.m_coordinator.ComponentExists<AnimationComponent>(*m_entities.begin()))
 							g_engine.m_coordinator.GetComponent<AnimationComponent>(*m_entities.begin()).setIsAnimating(true);
@@ -560,6 +558,27 @@ namespace Rogue
 			AddToTimedEntities(ball, 0.8f);
 			break;
 		}
+	}
+
+	void PlayerControllerSystem::Teleport()
+	{
+		TransformComponent& playerTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin());
+		Vec2 initialPos = playerTransform.GetPosition();
+		Vec2 cursor = PickingManager::instance().GetWorldCursor();
+		Vec2 calculatedPos = initialPos;
+
+		//Calculating max cursor distance value
+		cursor -= initialPos;
+		Vec2Normalize(cursor, cursor);
+		cursor *= playerTransform.GetScale().x * 3;
+		cursor += initialPos;
+
+		for (size_t checkCount = 0; checkCount < 3; ++checkCount)
+		{
+			calculatedPos += ((cursor - initialPos) / 3);
+		}
+
+		CreateTeleportEvent(calculatedPos);
 	}
 
 

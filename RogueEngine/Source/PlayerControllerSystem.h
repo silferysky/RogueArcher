@@ -52,6 +52,7 @@ namespace Rogue
 
 	private:
 		void CreateBallAttack();
+		void Teleport();
 		std::vector<TimedEntity> m_timedEntities;
 		std::vector<TimedEntity> m_teleports;
 
