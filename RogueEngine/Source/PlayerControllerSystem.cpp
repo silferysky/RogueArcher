@@ -154,9 +154,12 @@ namespace Rogue
 		case EventType::EvEntityChangeSprite:
 		{
 			EntChangeSpriteEvent* event = dynamic_cast<EntChangeSpriteEvent*>(ev);
-			SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(*m_entities.begin());
-			sprite.setTexture(event->GetFilePath().c_str());
-			sprite.setTexturePath(event->GetFilePath().c_str());
+			if (g_engine.m_coordinator.ComponentExists<SpriteComponent>(*m_entities.begin()))
+			{
+				SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(*m_entities.begin());
+				sprite.setTexture(event->GetFilePath().c_str());
+				sprite.setTexturePath(event->GetFilePath().c_str());
+			}
 
 			return;
 		}
