@@ -99,23 +99,42 @@ namespace Rogue
 		{
 			//If counter has not cleared all sets yet, read into s2
 			if (counter < sets)
-				std::getline(ss, s2, ';');
-
-			switch (counter)
 			{
-			case 0:
-				setPosition(Vec2(std::stof(s1), std::stof(s2)));
-				break;
-			case 1:
-				setOffset(Vec2(std::stof(s1), std::stof(s2)));
-				break;
-			case 2:
-				setIsActive(std::stof(s1));
-				break;
-			default:
-				break;
+				if (std::getline(ss, s2, ';'))
+				{
+					switch (counter)
+					{
+					case 0:
+						setPosition(Vec2(std::stof(s1), std::stof(s2)));
+						break;
+					case 1:
+						setOffset(Vec2(std::stof(s1), std::stof(s2)));
+						break;
+					case 2:
+						setIsActive(std::stof(s1));
+						break;
+					default:
+						break;
+					}
+				}
 			}
-
+			else
+			{
+				switch (counter)
+				{
+				case 0:
+					setPosition(Vec2(std::stof(s1), std::stof(s2)));
+					break;
+				case 1:
+					setOffset(Vec2(std::stof(s1), std::stof(s2)));
+					break;
+				case 2:
+					setIsActive(std::stof(s1));
+					break;
+				default:
+					break;
+				}
+			}
 			++counter;
 		}
 	}
