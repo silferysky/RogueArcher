@@ -55,6 +55,7 @@ namespace Rogue
 		std::vector<EditorEvent*> m_redoStack;
 		std::vector<Entity>& m_currentVector = g_engine.m_coordinator.GetActiveObjects();
 		std::vector<Entity>& m_hierarchyVector = ImGuiEditorHierarchy::instance().GetCurrentHierarchyVector();
+		bool& m_isHierarchyActive = ImGuiEditorHierarchy::instance().GetIsHierarchyFocused();
 		Entity m_copiedEntity;
 		Entity m_pastedEntity;
 		std::vector<Entity> m_pastedEntitesVector;
