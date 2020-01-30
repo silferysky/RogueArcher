@@ -1,9 +1,12 @@
 #include "Precompiled.h"
 #include "PlayerStatusManager.h"
+#include "GameEvent.h"
+#include "EventDispatcher.h"
 
 namespace Rogue
 {
-	PlayerStatusManager::PlayerStatusManager(): 
+	PlayerStatusManager::PlayerStatusManager():
+		m_entity{ (Entity)-1 },
 		m_isLightMode{ true },
 		m_maxJumpTimer{0.5f},
 		m_hitchhikedEntity{ static_cast<Entity>(-1) },
@@ -67,11 +70,13 @@ namespace Rogue
 	void PlayerStatusManager::ToggleLightStatus()
 	{
 		m_isLightMode = !m_isLightMode;
+		ChangePlayerSprite();
 	}
 
 	void PlayerStatusManager::SetLightStatus(bool isLight)
 	{
 		m_isLightMode = isLight;
+		ChangePlayerSprite();
 	}
 
 	bool PlayerStatusManager::GetLightStatus() const
@@ -87,6 +92,19 @@ namespace Rogue
 	Entity PlayerStatusManager::GetHitchhikedEntity() const
 	{
 		return m_hitchhikedEntity;
+	}
+
+	void PlayerStatusManager::ChangePlayerSprite()
+	{
+		EntChangeSpriteEvent* ev;
+		
+		if (m_isLightMode)
+			ev = new EntChangeSpriteEvent(m_entity, "Resources\\Assets\\ExaIdle.png");
+		else
+			ev = new EntChangeSpriteEvent(m_entity, "Resources\\Assets\\ElaIdle.png");
+
+		ev->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
+		EventDispatcher::instance().AddEvent(ev);
 	}
 
 }

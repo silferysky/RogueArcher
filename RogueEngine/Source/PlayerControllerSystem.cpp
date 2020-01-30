@@ -151,6 +151,15 @@ namespace Rogue
 			return;
 		}
 
+		case EventType::EvEntityChangeSprite:
+		{
+			EntChangeSpriteEvent* event = dynamic_cast<EntChangeSpriteEvent*>(ev);
+			SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(*m_entities.begin());
+			sprite.setTexture(event->GetFilePath().c_str());
+
+			return;
+		}
+
 		case EventType::EvKeyTriggered:
 		{
 			KeyTriggeredEvent* keytriggeredevent = dynamic_cast<KeyTriggeredEvent*>(ev);

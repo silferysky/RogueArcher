@@ -37,6 +37,20 @@ namespace Rogue
 		Entity ID;
 	};
 
+	class EntChangeSpriteEvent : public EntityEvent
+	{
+	public:
+		SET_EVENT_TYPE(EvEntityChangeSprite);
+
+		EntChangeSpriteEvent(Entity ent, std::string path)
+			: EntityEvent(ent), filePath{ path } {}
+
+		inline std::string GetFilePath() { return filePath; }
+
+	private:
+		std::string filePath;
+	};
+
 	class EntChangeStateEvent : public EntityEvent
 	{
 	public:

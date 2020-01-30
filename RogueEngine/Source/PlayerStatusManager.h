@@ -44,6 +44,10 @@ namespace Rogue
 
 	private:
 
+		void ChangePlayerSprite();
+
+		Entity m_entity;
+
 		//Jumping mechanic
 		const float m_maxJumpTimer;
 
