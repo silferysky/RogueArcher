@@ -70,26 +70,24 @@ namespace Rogue
 
 		bool DiscretePointVsAABB(const Vec2& point, const AABB& aabb) const;
 
+		// LINE SEGMENT
+		bool DiscreteLineVsLine(const LineSegment& lineA, const LineSegment& lineB, Vec2* intersection = nullptr) const;
+		bool DiscreteLineVsAABB(const LineSegment& line, const AABB& aabb) const;
+		bool DiscreteLineVsAABB(const LineSegment& line, const AABB& aabb, Vec2& intersection) const;
+
 		// BOUNDING CIRCLE
 		void UpdateBoundingCircle(BoundingCircle& circle, const TransformComponent& trans) const;
-
 		bool DiscreteCircleVsCircle(const BoundingCircle& circleA, const BoundingCircle& circleB);
-
 		int ContinuousCircleVsLineSegment(const CircleCollider2DComponent& circle, const Vec2& ptEnd, const LineSegment& lineSeg,	
 			Vec2& interPt, Vec2& normalAtCollision, float& interTime, bool& checkLineEdges);
-
 		int ContinuousCircleVsLineEdge(bool withinBothLines, const CircleCollider2DComponent& circle, const Vec2& ptEnd,
 			const LineSegment& lineSeg, Vec2& interPt, Vec2& normalAtCollision, float& interTime);
-
 		int ContinuousCircleVsRay(const Ray& ray, const CircleCollider2DComponent& circle, float& interTime);
 		int ContinuousCircleVsCircle(const CircleCollider2DComponent& circleA, const Vec2& velA,
 			const CircleCollider2DComponent& circleB, const Vec2& velB, Vec2& interPtA, Vec2& interPtB, float& interTime);
-
 		void ReflectCircleOnLineSegment(const Vec2& ptInter, const Vec2& normal, Vec2& ptEnd, Vec2& reflected);
-
 		void ReflectCircleOnPillar(const Vec2& normal, const float& interTime, const Vec2& ptStart, const Vec2& ptInter,
 			Vec2& ptEnd, Vec2& reflectedVectorNormalized);
-
 		void ReflectCircleOnCircle(Vec2& normal, const float interTime, Vec2& velA, const float& massA, Vec2& interPtA,
 			Vec2& velB, const float& massB, Vec2& interPtB, Vec2& reflectedVectorA, Vec2& ptEndA, Vec2& reflectedVectorB, Vec2& ptEndB);
 
@@ -97,6 +95,7 @@ namespace Rogue
 		void UpdateAABB(AABB& collider, const TransformComponent& transform);
 		bool DiscreteAABBvsAABB(const AABB& aabb1, const AABB& aabb2);
 		bool ContinuousAABBvsAABB(const AABB& aabb1, const AABB& aabb2, const RigidbodyComponent& body1, const RigidbodyComponent& body2);
+		std::array<LineSegment, 4> GenerateEdges(const AABB& aabb) const;
 
 		// ORIENTED BOUNDING BOX (SAT on n-sided polygons)
 		void InitOBB(OBB& obb, const std::vector<Vec2>& modelVertices) const;
