@@ -14,7 +14,7 @@ namespace Rogue
 		REGISTER_LISTENER(SystemID::id_PARENTCHILDSYSTEM, ParentChildSystem::Receive);
 		Signature signature;
 		signature.set(g_engine.m_coordinator.GetComponentType<TransformComponent>());
-		signature.set(g_engine.m_coordinator.GetComponentType<ChildComponent>());
+		//signature.set(g_engine.m_coordinator.GetComponentType<ChildComponent>());
 
 		g_engine.m_coordinator.SetSystemSignature<ParentChildSystem>(signature);
 	}

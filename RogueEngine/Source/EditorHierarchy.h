@@ -29,7 +29,7 @@ namespace Rogue
 	{
 	private:
 		std::vector<Entity>& m_currentVector;
-
+		bool m_isHierarchyFocused;
 		void DisplayHierarchyParent(HierarchyInfo& ent);
 		void DisplayHierarchyChildren(HierarchyInfo& ent, size_t numOfParents = 0);
 		
@@ -39,6 +39,8 @@ namespace Rogue
 			static ImGuiEditorHierarchy instance;
 			return instance;
 		}
+		bool& GetIsHierarchyFocused();
+		bool& set(bool test);
 		ImGuiEditorHierarchy();
 		~ImGuiEditorHierarchy();
 		std::vector<Entity>& GetCurrentHierarchyVector();
