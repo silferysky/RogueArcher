@@ -156,6 +156,7 @@ namespace Rogue
 			EntChangeSpriteEvent* event = dynamic_cast<EntChangeSpriteEvent*>(ev);
 			SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(*m_entities.begin());
 			sprite.setTexture(event->GetFilePath().c_str());
+			sprite.setTexturePath(event->GetFilePath().c_str());
 
 			return;
 		}
@@ -214,7 +215,7 @@ namespace Rogue
 					ClearTimedEntities();
 				}
 
-				else if (keycode == KeyPress::KeyQ)
+				else if (keycode == KeyPress::KeyE)
 				{
 					PLAYER_STATUS.ToggleLightStatus();
 				}
