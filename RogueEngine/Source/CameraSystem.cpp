@@ -138,8 +138,16 @@ namespace Rogue
 
 					// For camera panning
 					glm::vec3 position = CameraManager::instance().GetCameraPos();
-					position.x += static_cast<int>((transformPos.x - position.x + shakeOffset.x + cameraOffset.x) * m_cameraLerp * g_deltaTime);
-					position.y += static_cast<int>((transformPos.y - position.y + shakeOffset.y + cameraOffset.y) * m_cameraLerp * g_deltaTime);
+
+					int deltaX = static_cast<int>(transformPos.x - position.x + shakeOffset.x + cameraOffset.x);
+					int deltaY = static_cast<int>(transformPos.y - position.y + shakeOffset.y + cameraOffset.y);
+
+					// Do not move the camera for too small distances
+					if (deltaX > 1)
+						position.x += deltaX * m_cameraLerp * g_deltaTime;
+
+					if (deltaY > 1)
+						position.y += deltaY * m_cameraLerp * g_deltaTime;
 
 					CameraManager::instance().SetCameraPos(position);
 					//glm::vec3(transformPos.x + shakeOffset.x, transformPos.y + shakeOffset.y, 0.0f);
