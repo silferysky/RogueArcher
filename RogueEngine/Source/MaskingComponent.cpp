@@ -96,7 +96,7 @@ namespace Rogue
 				setFrameSize(std::stoi(s1));
 				break;
 			case 1:
-				setMaskVelocity(std::stoi(s1));
+				setMaskVelocity(std::stof(s1));
 				break;
 			case 2:
 				setIsLooping(std::stof(s1));

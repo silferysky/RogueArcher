@@ -45,10 +45,10 @@ namespace Rogue
 	{
 		double timer = (double)masking->getTimer();
 		float maskVelocity = masking->getMaskVelocity();
-		int frameSize = masking->getFrameSize();
+		double frameSize = (double)masking->getFrameSize();
 
-		double min = timer * maskVelocity;
-		double max = 1/frameSize + timer + 0.01 * maskVelocity;
+		double min = timer + maskVelocity;
+		double max = 1/frameSize + timer + maskVelocity;
 
 		// reset the frame
 		if (max > 1.0)
@@ -56,9 +56,7 @@ namespace Rogue
 			if (!masking->getIsLooping())
 				masking->setIsActive(false);
 
-			timer = 0.0f;
-
-			masking->setTimer(timer);
+			masking->setTimer(0.0f);
 		}
 
 		sprite->setTexCoordMin(static_cast<float>(min));
