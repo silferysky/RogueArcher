@@ -117,11 +117,11 @@ namespace Rogue
 			//	aiTransform.setScale(Vec2(aiTransform.GetScale().x, aiTransform.GetScale().y));
 
 			//If facing up and moving down or facing down and moving up, flip
-			if ((travelDistance.y < 0.5f && aiTransform.GetScale().y > 0.0f) ||
-				(travelDistance.y > 0.5f && aiTransform.GetScale().y < 0.0f))
-			{
-				aiTransform.setScale(Vec2(-1 * aiTransform.GetScale().x, aiTransform.GetScale().y));
-			}
+			//if ((travelDistance.y < 0.5f && aiTransform.GetScale().y > 0.0f) ||
+			//	(travelDistance.y > 0.5f && aiTransform.GetScale().y < 0.0f))
+			//{
+			//	aiTransform.setScale(Vec2(-1 * aiTransform.GetScale().x, aiTransform.GetScale().y));
+			//}
 
 			m_delay = m_patrolDelay;
 		}
