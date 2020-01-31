@@ -167,7 +167,16 @@ namespace Rogue
 			{
 				HierarchyInfo& objInfo = g_engine.m_coordinator.GetHierarchyInfo(i);
 				if (objInfo.m_selected == true)
-					ShowGizmo(i);
+				{
+					const AABB& viewportArea = PickingManager::instance().GetViewPortArea();
+					TransformComponent& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(i);
+					Vec2 pos = trans.GetPosition();
+					if (CollisionManager::instance().DiscretePointVsAABB(pos, viewportArea))
+					{
+						ShowGizmo(i);
+					}
+				}
+					
 			}
 		}
 		ImVec2 imageSize = ImGui::GetContentRegionAvail();
@@ -290,7 +299,7 @@ namespace Rogue
 			
 			//if (mousePos.x < m_Min.x)
 			//{
-			//	
+			//	return;
 			//}
 			ImGuizmo::Manipulate(glm::value_ptr(g_engine.m_coordinator.GetSystem<CameraSystem>()->GetViewMatrix(1.0f)),glm::value_ptr( g_engine.GetProjMat()), m_CurrentGizmoOperation, ImGuizmo::LOCAL, gizmoMatrix, NULL);
 			ImGuizmo::DecomposeMatrixToComponents(gizmoMatrix, matrixTranslate, matrixRotate, matrixScale);
