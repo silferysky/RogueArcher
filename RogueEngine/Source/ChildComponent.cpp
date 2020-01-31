@@ -1,55 +1,99 @@
-#include "ChildComponent.h"
+#pragma once
 #include "Precompiled.h"
+#include "ChildComponent.h"
 
 namespace Rogue
 {
-	//void ChildComponent::SetTransform(Vec2 transform)
-	//{
-	//	m_transform = transform;
-	//}
+	std::string ChildComponent::Serialize()
+	{
+		return std::string();
+	}
 
-	//void ChildComponent::SetTransform(float x, float y)
-	//{
-	//	m_transform = Vec2(x, y);
-	//}
+	void ChildComponent::Deserialize(std::string_view toDeserialize)
+	{
+	}
 
-	//Vec2 ChildComponent::GetTransform() const
-	//{
-	//	return m_transform;
-	//}
+	void ChildComponent::DisplayOnInspector()
+	{
+	}
 
-	//void ChildComponent::SetTransformZ(float z)
-	//{
-	//	m_transformZ = z;
-	//}
+	void ChildComponent::SetLocalDirty()
+	{
+		m_localDirty = true;
+	}
 
-	//float ChildComponent::GetTransformZ() const
-	//{
-	//	return m_transformZ;
-	//}
+	void ChildComponent::SetGlobalDirty()
+	{
+		m_globalDirty = true;
+	}
 
-	//void ChildComponent::SetScale(Vec2 scale)
-	//{
-	//	m_scale = scale;
-	//}
+	void ChildComponent::ResetLocalDirty()
+	{
+		m_localDirty = false;
+	}
 
-	//void ChildComponent::SetScale(float x, float y)
-	//{
-	//	m_scale = Vec2(x, y);
-	//}
+	void ChildComponent::ResetGlobalDirty()
+	{
+		m_globalDirty = false;
+	}
 
-	//Vec2 ChildComponent::GetScale() const
-	//{
-	//	return m_scale;
-	//}
+	bool ChildComponent::IsLocalDirty() const
+	{
+		return m_localDirty;
+	}
 
-	//void ChildComponent::SetRotate(float rotate)
-	//{
-	//	m_rotate = rotate;
-	//}
+	bool ChildComponent::IsGlobalDirty() const
+	{
+		return m_globalDirty;
+	}
 
-	//float ChildComponent::GetRotate() const
-	//{
-	//	return m_rotate;
-	//}
+	void ChildComponent::SetTransform(Vec2 transform)
+	{
+		m_transform = transform;
+	}
+
+	void ChildComponent::SetTransform(float x, float y)
+	{
+		m_transform = Vec2(x, y);
+	}
+
+	Vec2 ChildComponent::GetTransform() const
+	{
+		return m_transform;
+	}
+
+	void ChildComponent::SetTransformZ(float z)
+	{
+		m_transformZ = z;
+	}
+
+	float ChildComponent::GetTransformZ() const
+	{
+		return m_transformZ;
+	}
+
+	void ChildComponent::SetScale(Vec2 scale)
+	{
+		m_scale = scale;
+	}
+
+	void ChildComponent::SetScale(float x, float y)
+	{
+		m_scale = Vec2(x, y);
+	}
+
+	Vec2 ChildComponent::GetScale() const
+	{
+		return m_scale;
+	}
+
+	void ChildComponent::SetRotate(float rotate)
+	{
+		m_rotate = rotate;
+	}
+
+	float ChildComponent::GetRotate() const
+	{
+		return m_rotate;
+	}
 }
