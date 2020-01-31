@@ -50,6 +50,7 @@ namespace Rogue
 			Vec2 transformChange{};
 			int zChange = 0;
 
+			//Change in value for all objects
 			if (g_engine.m_coordinator.ComponentExists<TransformComponent>(parentEvent->GetParentEntity()))
 			{
 				TransformComponent parentTrans = g_engine.m_coordinator.GetComponent<TransformComponent>(parentEvent->GetParentEntity());
@@ -57,6 +58,7 @@ namespace Rogue
 				zChange = parentEvent->GetZTransform() - parentTrans.GetZ();
 			}
 
+			//Picking all objects that needs updating
 			entityToUpdate.push_back(parentEvent->GetParentEntity());
 			AddChildToVector(entityToUpdate, parentEvent->GetParentEntity());
 
@@ -70,6 +72,13 @@ namespace Rogue
 				}
 			}
 			entityToUpdate.clear();
+
+			//Updating parent of this object
+			if (g_engine.m_coordinator.ComponentExists<ChildComponent>(parentEvent->GetParentEntity()))
+			{
+				ChildComponent& parent = g_engine.m_coordinator.GetComponent<ChildComponent>(parentEvent->GetParentEntity());
+				parent.SetLocalDirty();
+			}
 
 			break;
 		}

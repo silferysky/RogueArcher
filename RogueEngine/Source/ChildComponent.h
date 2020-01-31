@@ -25,30 +25,30 @@ namespace Rogue
 		bool IsLocalDirty() const;
 		bool IsGlobalDirty() const;
 
-		//Transform
-		void SetTransform(Vec2 transform);
-		void SetTransform(float x, float y);
-		Vec2 GetTransform() const;
+		//Position
+		void SetPosition(Vec2 position);
+		void SetPosition(float x, float y);
+		Vec2 GetPosition() const;
 	
-		void SetTransformZ(float z);
-		float GetTransformZ() const;
+		void SetPositionZ(float z);
+		float GetPositionZ() const;
 	
 		//Scale
 		void SetScale(Vec2 scale);
 		void SetScale(float x, float y);
 		Vec2 GetScale() const;
 	
-		//Rotate
-		void SetRotate(float rotate);
-		float GetRotate() const;
+		//Rotation
+		void SetRotation(float rotation);
+		float GetRotation() const;
 	
 	private:
 		bool m_globalDirty;
 		bool m_localDirty;
 
-		Vec2 m_transform;
-		float m_transformZ;
+		Vec2 m_position;
+		int m_positionZ;
 		Vec2 m_scale;
-		float m_rotate;
+		float m_rotation;
 	};
 }
