@@ -593,8 +593,8 @@ namespace Rogue
 		cursor += initialPos;
 
 		//Prevent going past cursor when clicking close
-		if (Vec2SqDistance(initialPos, endPos) < Vec2SqDistance(initialPos, cursor))
-			cursor = endPos;
+		//if (Vec2SqDistance(initialPos, endPos) < Vec2SqDistance(initialPos, cursor))
+		//	cursor = endPos;
 
 		for (size_t checkCount = 0; checkCount < 3; ++checkCount)
 		{
