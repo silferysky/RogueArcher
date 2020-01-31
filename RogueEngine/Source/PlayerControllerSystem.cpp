@@ -607,11 +607,15 @@ namespace Rogue
 			BoxCollider2DComponent& boxCollider = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(entity);
 			if (boxCollider.GetCollisionMode() != CollisionMode::e_awake)
 				continue;
+			TransformComponent& boxTrans = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
+
+			//DebugDrawBall(boxCollider.m_aabb, boxTrans);
+			//DebugDrawArrow(teleportLine);
 
 			if (CollisionManager::instance().DiscreteLineVsAABB(teleportLine, boxCollider.m_aabb))
 			{
-				TransformComponent& boxTrans = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
 				Vec2 boxPos = CollisionManager::instance().GetColliderPosition(boxCollider.m_aabb, boxTrans);
+
 
 				std::array<LineSegment, 4> edges = CollisionManager::instance().GenerateEdges(boxCollider.m_aabb);
 
@@ -637,43 +641,48 @@ namespace Rogue
 		CreateTeleportEvent(calculatedPos);
 	}
 
+	void PlayerControllerSystem::DebugDrawBall(const BaseCollider& box, const TransformComponent& trans) const
+	{
+		std::ostringstream strstream;
+		Entity ball = g_engine.m_coordinator.CreateEntity();
+		strstream
+			<< CollisionManager::instance().GetColliderPosition(box, trans).x << ";"
+			<< CollisionManager::instance().GetColliderPosition(box, trans).y << ";"
+			<< CollisionManager::instance().GetColliderScale(box, trans).x << ";"
+			<< CollisionManager::instance().GetColliderScale(box, trans).y << ";"
+			<< "0;"
+			<< "2";
+
+		TransformComponent& ballTransform = g_engine.m_coordinator.CreateComponent<TransformComponent>(ball);
+
+		ballTransform.Deserialize(strstream.str());
+
+		SpriteComponent& sprite = g_engine.m_coordinator.CreateComponent<SpriteComponent>(ball);
+		sprite.Deserialize("Resources/Assets/Projectile.png;1;1;1;1;0.1");
+
+		HierarchyInfo newInfo(ball, "Ball", "ball");
+		g_engine.m_coordinator.GetActiveObjects().push_back(ball);
+		g_engine.m_coordinator.GetHierarchyInfo(ball) = newInfo;
+
+	}
+
+	void PlayerControllerSystem::DebugDrawArrow(const LineSegment& teleportLine) const
+	{
+		Entity line = g_engine.m_coordinator.CreateEntity();
+		TransformComponent& linetrans = g_engine.m_coordinator.CreateComponent<TransformComponent>(line);
+
+		linetrans.setZ(2);
+		linetrans.setPosition(teleportLine.m_pt0 + (teleportLine.m_pt1 - teleportLine.m_pt0) / 2);
+		linetrans.setScale(Vec2(Vec2Length(teleportLine.m_pt1 - teleportLine.m_pt0), 50.0f));
+		linetrans.setRotation(Vec2Rotation(teleportLine.m_pt1 - teleportLine.m_pt0));
+
+		SpriteComponent& lsprite = g_engine.m_coordinator.CreateComponent<SpriteComponent>(line);
+		lsprite.Deserialize("Resources/Assets/Arrow.png;1;1;1;1;1");
+
+		HierarchyInfo nnewInfo(line, "Line", "line");
+		g_engine.m_coordinator.GetActiveObjects().push_back(line);
+		g_engine.m_coordinator.GetHierarchyInfo(line) = nnewInfo;
+	}
+
 
 }
-
-#if 0
-
-	std::ostringstream strstream;
-	Entity ball = g_engine.m_coordinator.CreateEntity();
-	strstream
-	<< CollisionManager::instance().GetColliderPosition(boxCollider.m_aabb, boxTrans).x << ";"
-	<< CollisionManager::instance().GetColliderPosition(boxCollider.m_aabb, boxTrans).y << ";"
-	<< "10;10;0;"
-	<< "2";
-
-	TransformComponent& ballTransform = g_engine.m_coordinator.CreateComponent<TransformComponent>(ball);
-
-	ballTransform.Deserialize(strstream.str());
-
-	SpriteComponent& sprite = g_engine.m_coordinator.CreateComponent<SpriteComponent>(ball);
-	sprite.Deserialize("Resources/Assets/Projectile.png;1;1;1;1;1");
-
-	HierarchyInfo newInfo(ball, "Ball");
-	g_engine.m_coordinator.GetActiveObjects().push_back(ball);
-	g_engine.m_coordinator.GetHierarchyInfo(ball) = newInfo;
-
-	Entity line = g_engine.m_coordinator.CreateEntity();
-	TransformComponent& linetrans = g_engine.m_coordinator.CreateComponent<TransformComponent>(line);
-
-	linetrans.setZ(2);
-	linetrans.setPosition(teleportLine.m_pt0 + (teleportLine.m_pt1 - teleportLine.m_pt0) / 2);
-	linetrans.setScale(Vec2(Vec2Length(teleportLine.m_pt1 - teleportLine.m_pt0), 50.0f));
-	linetrans.setRotation(Vec2Rotation(teleportLine.m_pt1 - teleportLine.m_pt0));
-
-	SpriteComponent& lsprite = g_engine.m_coordinator.CreateComponent<SpriteComponent>(line);
-	lsprite.Deserialize("Resources/Assets/Arrow.png;1;1;1;1;1");
-
-	HierarchyInfo nnewInfo(line, "Line");
-	g_engine.m_coordinator.GetActiveObjects().push_back(line);
-	g_engine.m_coordinator.GetHierarchyInfo(line) = nnewInfo;
-
-#endif

@@ -20,6 +20,9 @@ Technology is prohibited.
 #include "BaseSystem.h"
 #include "Vector2D.h"
 #include "SpecialEntity.h"
+#include "AABB.h"
+#include "TransformComponent.h"
+#include "REMath.h"
 #include <memory>
 
 #define FORCE_FACTOR 80000
@@ -53,10 +56,11 @@ namespace Rogue
 	private:
 		void CreateBallAttack();
 		void Teleport();
+
+		void DebugDrawBall(const BaseCollider& box, const TransformComponent& trans) const;
+		void DebugDrawArrow(const LineSegment& line) const;
+
 		std::vector<TimedEntity> m_timedEntities;
 		std::vector<TimedEntity> m_teleports;
-
-
-
 	};
 }
