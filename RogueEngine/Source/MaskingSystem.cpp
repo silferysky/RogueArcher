@@ -48,7 +48,7 @@ namespace Rogue
 		int frameSize = masking->getFrameSize();
 
 		double min = timer * maskVelocity;
-		double max = 1/frameSize + timer + 0.01f * maskVelocity;
+		double max = 1/frameSize + timer + 0.01 * maskVelocity;
 
 		// reset the frame
 		if (max > 1.0)
