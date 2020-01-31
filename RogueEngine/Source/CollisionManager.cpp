@@ -272,7 +272,7 @@ namespace Rogue
 		if (t < 0.0f || t > 1.0f)
 			return false;
 
-		float u = (vecC.x * vecA.y - vecC.y * vecB.x) / crossAB;
+		float u = (vecC.x * vecA.y - vecC.y * vecA.x) / crossAB;
 
 		if (u < 0.0f || u > 1.0f)
 			return false;
