@@ -454,7 +454,7 @@ namespace Rogue
 						}
 					}
 
-					/* if (g_engine.m_coordinator.ComponentExists<MaskingComponent>(i))
+					if (g_engine.m_coordinator.ComponentExists<MaskingComponent>(i))
 					{
 						if (ImGui::CollapsingHeader("Masking"))
 						{
@@ -466,7 +466,7 @@ namespace Rogue
 								g_engine.m_coordinator.RemoveComponent<MaskingComponent>(i);
 							}
 						}
-					} */
+					} 
 
 					ImGui::Separator();
 
@@ -524,6 +524,11 @@ namespace Rogue
 							if (ImGui::MenuItem("Background Component", nullptr, false, !g_engine.m_coordinator.ComponentExists<BackgroundComponent>(i)))
 							{
 								g_engine.m_coordinator.AddComponent(i, BackgroundComponent());
+							}
+
+							if (ImGui::MenuItem("Masking Component", nullptr, false, !g_engine.m_coordinator.ComponentExists<MaskingComponent>(i)))
+							{
+								g_engine.m_coordinator.AddComponent(i, MaskingComponent());
 							}
 
 							ImGui::EndMenu();

@@ -108,6 +108,7 @@ namespace Rogue
 		m_coordinator.RegisterComponent<BackgroundComponent>();
 		m_coordinator.RegisterComponent<ParticleEmitterComponent>();
 		m_coordinator.RegisterComponent<ParticleComponent>();
+		m_coordinator.RegisterComponent<MaskingComponent>();
 		//m_coordinator.RegisterComponent<ChildComponent>();
 	}
 
