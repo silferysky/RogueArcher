@@ -256,6 +256,33 @@ namespace Rogue
 		return true;
 	}
 
+	bool CollisionManager::DiscreteLineVsLine(const LineSegment& lineA, const LineSegment& lineB, Vec2* intersection) const
+	{
+		Vec2 vecA = lineA.m_pt1 - lineA.m_pt0;
+		Vec2 vecB = lineB.m_pt1 - lineB.m_pt0;
+
+		float crossAB = vecA.x * vecB.y - vecA.y * vecB.x;
+
+		if (!crossAB)
+			return false;
+
+		Vec2 vecC = lineB.m_pt0 - lineA.m_pt0;
+		float t = (vecC.x * vecB.y - vecC.y * vecB.x) / crossAB;
+
+		if (t < 0.0f || t > 1.0f)
+			return false;
+
+		float u = (vecC.x * vecA.y - vecC.y * vecA.x) / crossAB;
+
+		if (u < 0.0f || u > 1.0f)
+			return false;
+
+		if (intersection)
+			*intersection = lineA.m_pt0 + t * vecA;
+
+		return true;
+	}
+
 	void CollisionManager::UpdateBoundingCircle(BoundingCircle& circle, const TransformComponent& trans) const
 	{
 		circle.SetCenter(circle.getCenterOffSet() + trans.GetPosition());
@@ -844,6 +871,42 @@ namespace Rogue
 			return false;
 
 		// No more possibilities, the rectangles intersect
+		return true;
+	}
+
+	std::array<LineSegment, 4> CollisionManager::GenerateEdges(const AABB& aabb) const
+	{
+		std::array<LineSegment, 4> edges{ LineSegment(Vec2(aabb.getMin().x, aabb.getMin().y), Vec2(aabb.getMin().x, aabb.getMax().y)),
+										LineSegment(Vec2(aabb.getMin().x, aabb.getMax().y), Vec2(aabb.getMax().x, aabb.getMax().y)),
+										LineSegment(Vec2(aabb.getMax().x, aabb.getMax().y), Vec2(aabb.getMax().x, aabb.getMin().y)),
+										LineSegment(Vec2(aabb.getMax().x, aabb.getMin().y), Vec2(aabb.getMin().x, aabb.getMin().y)) };
+
+		return edges;
+	}
+
+	bool CollisionManager::DiscreteLineVsAABB(const LineSegment& line, const AABB& aabb) const
+	{
+		std::array<LineSegment, 4> edges = GenerateEdges(aabb);
+
+		for (LineSegment edge : edges)
+		{
+			if (DiscreteLineVsLine(line, edge))
+				return true;
+		}
+
+		return false;
+	}
+
+	bool CollisionManager::DiscreteLineVsAABB(const LineSegment& line, const AABB& aabb, Vec2& intersection) const
+	{
+		std::array<LineSegment, 4> edges = GenerateEdges(aabb);
+
+		for (LineSegment edge : edges)
+		{
+			if (!DiscreteLineVsLine(line, edge, &intersection))
+				return false;
+		}
+
 		return true;
 	}
 

@@ -28,6 +28,8 @@ Technology is prohibited.
 #include "PickingManager.h"
 #include "MenuControllerSystem.h"
 #include "PlayerStatusManager.h"
+#include "BoxCollisionSystem.h"
+#include "CollisionManager.h"
 
 namespace Rogue
 {
@@ -580,6 +582,10 @@ namespace Rogue
 	{
 		PLAYER_STATUS.IncrementTeleportCharge(-1.0f);
 
+		// In case player doesn't have a box collider
+		if (!g_engine.m_coordinator.ComponentExists<BoxCollider2DComponent>(*m_entities.begin()))
+			return;
+
 		TransformComponent& playerTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin());
 		Vec2 initialPos = playerTransform.GetPosition();
 		Vec2 endPos = PickingManager::instance().GetWorldCursor();
@@ -601,7 +607,94 @@ namespace Rogue
 			calculatedPos += ((cursor - initialPos) / 3);
 		}
 
+		const std::set<Entity>& boxEntities = g_engine.m_coordinator.GetSystem<BoxCollisionSystem>()->GetEntitySet();	
+		BoxCollider2DComponent& playerCollider = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(*m_entities.begin());
+		LineSegment teleportLine = LineSegment(playerTransform.GetPosition(), calculatedPos);
+		Vec2 teleportVec = calculatedPos - playerTransform.GetPosition();
+
+		for (Entity entity : boxEntities)
+		{
+			if (entity == *m_entities.begin())
+				continue;
+
+			BoxCollider2DComponent& boxCollider = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(entity);
+			if (boxCollider.GetCollisionMode() != CollisionMode::e_awake)
+				continue;
+			TransformComponent& boxTrans = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
+
+			//DebugDrawBall(boxCollider.m_aabb, boxTrans);
+			//DebugDrawArrow(teleportLine);
+
+			if (CollisionManager::instance().DiscreteLineVsAABB(teleportLine, boxCollider.m_aabb))
+			{
+				Vec2 boxPos = CollisionManager::instance().GetColliderPosition(boxCollider.m_aabb, boxTrans);
+
+
+				std::array<LineSegment, 4> edges = CollisionManager::instance().GenerateEdges(boxCollider.m_aabb);
+
+				float smallestT = 1.0f;
+				float t = smallestT;
+
+				for (LineSegment edge : edges)
+				{
+					t = Vec2DotProduct(Vec2(edge.m_pt0 - playerTransform.GetPosition()), edge.m_normal) /
+						Vec2DotProduct(teleportVec, edge.m_normal);
+
+					if (t > 0.0f && t < smallestT)
+						smallestT = t;
+				}
+
+				calculatedPos = playerTransform.GetPosition() + smallestT * teleportVec; 
+				
+				teleportLine = LineSegment(playerTransform.GetPosition(), calculatedPos);
+				teleportVec = calculatedPos - playerTransform.GetPosition();
+			}
+		}
+
 		CreateTeleportEvent(calculatedPos);
+	}
+
+	void PlayerControllerSystem::DebugDrawBall(const BaseCollider& box, const TransformComponent& trans) const
+	{
+		std::ostringstream strstream;
+		Entity ball = g_engine.m_coordinator.CreateEntity();
+		strstream
+			<< CollisionManager::instance().GetColliderPosition(box, trans).x << ";"
+			<< CollisionManager::instance().GetColliderPosition(box, trans).y << ";"
+			<< CollisionManager::instance().GetColliderScale(box, trans).x << ";"
+			<< CollisionManager::instance().GetColliderScale(box, trans).y << ";"
+			<< "0;"
+			<< "2";
+
+		TransformComponent& ballTransform = g_engine.m_coordinator.CreateComponent<TransformComponent>(ball);
+
+		ballTransform.Deserialize(strstream.str());
+
+		SpriteComponent& sprite = g_engine.m_coordinator.CreateComponent<SpriteComponent>(ball);
+		sprite.Deserialize("Resources/Assets/Projectile.png;1;1;1;1;0.1");
+
+		HierarchyInfo newInfo(ball, "Ball", "ball");
+		g_engine.m_coordinator.GetActiveObjects().push_back(ball);
+		g_engine.m_coordinator.GetHierarchyInfo(ball) = newInfo;
+
+	}
+
+	void PlayerControllerSystem::DebugDrawArrow(const LineSegment& teleportLine) const
+	{
+		Entity line = g_engine.m_coordinator.CreateEntity();
+		TransformComponent& linetrans = g_engine.m_coordinator.CreateComponent<TransformComponent>(line);
+
+		linetrans.setZ(2);
+		linetrans.setPosition(teleportLine.m_pt0 + (teleportLine.m_pt1 - teleportLine.m_pt0) / 2);
+		linetrans.setScale(Vec2(Vec2Length(teleportLine.m_pt1 - teleportLine.m_pt0), 50.0f));
+		linetrans.setRotation(Vec2Rotation(teleportLine.m_pt1 - teleportLine.m_pt0));
+
+		SpriteComponent& lsprite = g_engine.m_coordinator.CreateComponent<SpriteComponent>(line);
+		lsprite.Deserialize("Resources/Assets/Arrow.png;1;1;1;1;1");
+
+		HierarchyInfo nnewInfo(line, "Line", "line");
+		g_engine.m_coordinator.GetActiveObjects().push_back(line);
+		g_engine.m_coordinator.GetHierarchyInfo(line) = nnewInfo;
 	}
 
 
