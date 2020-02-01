@@ -46,17 +46,13 @@ namespace Rogue
 		std::unique_ptr<EntityManager> m_entityManager;
 		std::unique_ptr<SystemManager> m_systemManager;
 		std::vector<Entity> m_deleteQueue;
-		Entity m_assignChild;
-		Entity m_assignParent;
 
 	public:
 		Coordinator() :
 			m_entityManager{ std::make_unique<EntityManager>() },
 			m_componentManager{ std::make_unique<ComponentManager>() },
 			m_systemManager{ std::make_unique<SystemManager>() },
-			m_deleteQueue{},
-			m_assignChild{MAX_ENTITIES},
-			m_assignParent{MAX_ENTITIES}
+			m_deleteQueue{}
 		{}
 
 		void Init()
@@ -89,7 +85,6 @@ namespace Rogue
 			// If placed before ^, will cause memory leak.
 			EventDispatcher::instance().Update();
 
-			ReassignHierarchyParent();
 			DeleteEntities();
 
 		}
@@ -321,36 +316,6 @@ namespace Rogue
 		std::array<HierarchyInfo, MAX_ENTITIES>& GetHierarchyInfoArray()
 		{
 			return m_entityManager->GetHierarchyInfoArray();
-		}
-		
-		void SetReassignParentFlags(Entity child, Entity newParent)
-		{
-			m_assignChild = child;
-			m_assignParent = newParent;
-		}
-
-		void ReassignHierarchyParent()
-		{
-			if (m_assignChild == -1 || m_assignChild == MAX_ENTITIES)
-				return;
-
-			HierarchyInfo& childInfo = GetHierarchyInfo(m_assignChild);
-			HierarchyInfo& newParentInfo = GetHierarchyInfo(m_assignParent);
-
-			if (childInfo.m_parent != -1 && childInfo.m_parent != MAX_ENTITIES)
-			{
-				HierarchyInfo& oldParentInfo = GetHierarchyInfo(childInfo.m_parent);
-
-				auto end = std::remove(oldParentInfo.m_children.begin(), oldParentInfo.m_children.end(), m_assignChild);
-				oldParentInfo.m_children.erase(end, oldParentInfo.m_children.end());
-				//oldParentInfo.m_children.erase(std::remove_if(oldParentInfo.m_children.begin(), oldParentInfo.m_children.end(), m_assignChild), oldParentInfo.m_children.end());
-			}
-
-			childInfo.m_parent = m_assignParent;
-			newParentInfo.m_children.push_back(m_assignChild);
-
-			m_assignChild = -1;
-			m_assignParent = -1;
 		}
 
 		bool GetGameState() const

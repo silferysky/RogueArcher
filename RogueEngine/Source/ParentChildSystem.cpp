@@ -61,7 +61,7 @@ namespace Rogue
 		case EvParentSet:
 		{
 			ParentSetEvent* parentEvent = dynamic_cast<ParentSetEvent*>(ev);
-			ReassignParentChildFlags(parentEvent->GetChildEntity(), parentEvent->GetParentEntity());
+			ReassignParentChildFlags(parentEvent->GetParentEntity(), parentEvent->GetChildEntity());
 
 			break;
 		}
@@ -187,7 +187,7 @@ namespace Rogue
 		newVector.clear();
 	}
 
-	bool ParentChildSystem::CheckValidReassign(Entity child, Entity newParent)
+	bool ParentChildSystem::CheckValidReassign(Entity newParent, Entity child)
 	{
 		bool isValid = true;
 		HierarchyInfo it = g_engine.m_coordinator.GetHierarchyInfo(child);
@@ -204,7 +204,7 @@ namespace Rogue
 		return isValid;
 	}
 
-	void ParentChildSystem::ReassignParentChildFlags(Entity child, Entity newParent)
+	void ParentChildSystem::ReassignParentChildFlags(Entity newParent, Entity child)
 	{
 		//If invalid reassign (loop)
 		if (!CheckValidReassign(child, newParent))
@@ -216,11 +216,26 @@ namespace Rogue
 			g_engine.m_coordinator.CreateComponent<ChildComponent>(child);
 		}
 
-		//This cannot be done directly here, since it is middle of a loop.
-		g_engine.m_coordinator.SetReassignParentFlags(child, newParent);
 		ChildComponent& childComp = g_engine.m_coordinator.GetComponent<ChildComponent>(child);
 		childComp.SetLocalDirty();
 		childComp.SetParent(newParent);
+
+		//Reassigning in Hierarchy Objects
+
+		HierarchyInfo& childInfo = g_engine.m_coordinator.GetHierarchyInfo(child);
+		HierarchyInfo& newParentInfo = g_engine.m_coordinator.GetHierarchyInfo(newParent);
+
+		if (childInfo.m_parent != -1 && childInfo.m_parent != MAX_ENTITIES)
+		{
+			HierarchyInfo& oldParentInfo = g_engine.m_coordinator.GetHierarchyInfo(childInfo.m_parent);
+
+			auto end = std::remove(oldParentInfo.m_children.begin(), oldParentInfo.m_children.end(), child);
+			oldParentInfo.m_children.erase(end, oldParentInfo.m_children.end());
+			//oldParentInfo.m_children.erase(std::remove_if(oldParentInfo.m_children.begin(), oldParentInfo.m_children.end(), m_assignChild), oldParentInfo.m_children.end());
+		}
+
+		childInfo.m_parent = newParent;
+		newParentInfo.m_children.push_back(child);
 	}
 
 	void ParentChildSystem::ResetParentChildFlags(Entity child)

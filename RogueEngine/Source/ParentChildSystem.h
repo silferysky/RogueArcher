@@ -22,8 +22,8 @@ namespace Rogue
 		void AddChildToVector(std::vector<Entity>& entityVector, Entity ParentEntity);
 
 		//Parent/Child Assignment
-		bool CheckValidReassign(Entity child, Entity newParent);
-		void ReassignParentChildFlags(Entity child, Entity newParent);
+		bool CheckValidReassign(Entity newParent, Entity child);
+		void ReassignParentChildFlags(Entity newParent, Entity child);
 		void ResetParentChildFlags(Entity child);
 	};
 }
