@@ -24,5 +24,6 @@ namespace Rogue
 		//Parent/Child Assignment
 		bool CheckValidReassign(Entity child, Entity newParent);
 		void ReassignParentChildFlags(Entity child, Entity newParent);
+		void ResetParentChildFlags(Entity child);
 	};
 }

@@ -9,7 +9,7 @@ namespace Rogue
 	{
 	public:
 	
-		ChildComponent() = default;
+		ChildComponent();
 		~ChildComponent() = default;
 
 		//From BaseComponent
@@ -24,6 +24,10 @@ namespace Rogue
 		void ResetGlobalDirty();
 		bool IsLocalDirty() const;
 		bool IsGlobalDirty() const;
+
+		void SetParent(Entity ent);
+		void ResetParent();
+		Entity GetParent() const;
 
 		//Position
 		void SetPosition(Vec2 position);
@@ -45,6 +49,8 @@ namespace Rogue
 	private:
 		bool m_globalDirty;
 		bool m_localDirty;
+
+		Entity m_parent;
 
 		Vec2 m_position;
 		int m_positionZ;
