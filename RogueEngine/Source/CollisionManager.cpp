@@ -1091,33 +1091,49 @@ namespace Rogue
 		return s_correction_slop;
 	}
 
-	bool CollisionManager::FilterColliders(const CollisionLayerer::Bits& mask, const CollisionLayerer::Bits& category)
+	bool CollisionManager::FilterColliders(const LayerManager::Bits& mask, const LayerManager::Bits& category)
 	{
-		return m_collisionLayerer.FilterLayers(mask, category);
+		return m_layerManager.FilterLayers(mask, category);
 	}
 
-	void CollisionManager::AddLayer(std::string_view name, const CollisionLayerer::Bits& layer)
+	void CollisionManager::AddLayer(std::string_view name)
 	{
-		m_collisionLayerer.AddLayer(name, layer);
+		m_layerManager.AddLayer(name);
 	}
 
-	void CollisionManager::RemoveLayer(const CollisionLayerer::Bits& layer)
+	void CollisionManager::RemoveLayer(size_t layer)
 	{
-		RemoveLayer(layer);
+		m_layerManager.RemoveLayer(layer);
 	}
 
 	void CollisionManager::RemoveLayer(std::string_view name)
 	{
-		m_collisionLayerer.RemoveLayer(name);
+		m_layerManager.RemoveLayer(name);
 	}
 
-	std::string_view CollisionManager::GetLayerName(const CollisionLayerer::Bits& layer) const
+	std::string_view CollisionManager::GetLayerName(size_t layer) const
 	{
-		return m_collisionLayerer.GetName(layer);
+		return m_layerManager.GetName(layer);
 	}
 
 	void CollisionManager::PrintLayerNames() const
 	{
-		m_collisionLayerer.PrintNames();
+		ImGui::Text("Available Layers:");
+		m_layerManager.PrintNames();
+	}
+
+	void CollisionManager::PrintCollisionMask(const LayerManager::Bits& mask) const
+	{
+		m_layerManager.PrintMask(mask);
+	}
+
+	size_t CollisionManager::GetNumberOfLayers() const
+	{
+		return m_layerManager.GetLayerSize();
+	}
+
+	size_t CollisionManager::GetLayerCategory(const LayerManager::Bits& cat) const
+	{
+		return m_layerManager.GetLayerCategory(cat);
 	}
 }
