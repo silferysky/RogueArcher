@@ -34,18 +34,38 @@ namespace Rogue
 			//Global values is "corrupted", need to fix
 			if (childComponent.IsGlobalDirty())
 			{
-				transComponent.setPosition(parentTransformComponent.GetPosition() - childComponent.GetPosition());
-				transComponent.setZ(parentTransformComponent.GetZ() - childComponent.GetPositionZ());
-				transComponent.setScale(Vec2(parentTransformComponent.GetScale().x / childComponent.GetScale().x, parentTransformComponent.GetScale().y / childComponent.GetScale().y));
-				transComponent.setRotation(parentTransformComponent.GetRotation() - childComponent.GetRotation());
+				transComponent.setPosition(childComponent.GetPosition() + parentTransformComponent.GetPosition());
+				transComponent.setZ(childComponent.GetPositionZ() + parentTransformComponent.GetZ());
+				transComponent.setScale(Vec2(childComponent.GetScale().x * parentTransformComponent.GetScale().x, childComponent.GetScale().y * parentTransformComponent.GetScale().y));
+				transComponent.setRotation(childComponent.GetRotation() + parentTransformComponent.GetRotation());
+				childComponent.ResetGlobalDirty();
 			}
 			//Local values is "corrupted", need to fix
 			else if (childComponent.IsLocalDirty())
 			{
-				childComponent.SetPosition(parentTransformComponent.GetPosition() + transComponent.GetPosition());
-				childComponent.SetPositionZ(parentTransformComponent.GetZ() + transComponent.GetZ());
-				childComponent.SetScale(Vec2(parentTransformComponent.GetScale().x * transComponent.GetScale().x, parentTransformComponent.GetScale().y * transComponent.GetScale().y));
-				childComponent.SetRotation(parentTransformComponent.GetRotation() + transComponent.GetRotation());
+				childComponent.SetPosition(transComponent.GetPosition() - parentTransformComponent.GetPosition());
+				childComponent.SetPositionZ(transComponent.GetZ() - parentTransformComponent.GetZ());
+				childComponent.SetScale(Vec2(transComponent.GetScale().x / parentTransformComponent.GetScale().x, transComponent.GetScale().y / parentTransformComponent.GetScale().y));
+				childComponent.SetRotation(transComponent.GetRotation() - parentTransformComponent.GetRotation());
+				//If grandparent don't exists
+				// g_engine.m_coordinator.GetComponent<ChildComponent>(childComponent.GetParent()).GetParent() == MAX_ENTITIES
+				//if (!g_engine.m_coordinator.ComponentExists<ChildComponent>(childComponent.GetParent()))
+				//{
+				//	//Calculate position based on global transform
+				//	//No need to do in depth value change because no extra parent to calculate
+				//	childComponent.SetPosition(transComponent.GetPosition() - parentTransformComponent.GetPosition());
+				//	childComponent.SetPositionZ(transComponent.GetZ() - parentTransformComponent.GetZ());
+				//	childComponent.SetScale(Vec2(transComponent.GetScale().x / parentTransformComponent.GetScale().x, transComponent.GetScale().y / parentTransformComponent.GetScale().y));
+				//	childComponent.SetRotation(transComponent.GetRotation() - parentTransformComponent.GetRotation());
+				//}
+				//else
+				//{
+				//	childComponent.SetPosition(transComponent.GetPosition() - parentTransformComponent.GetPosition());
+				//	childComponent.SetPositionZ(transComponent.GetZ() - parentTransformComponent.GetZ());
+				//	childComponent.SetScale(Vec2(transComponent.GetScale().x / parentTransformComponent.GetScale().x, transComponent.GetScale().y / parentTransformComponent.GetScale().y));
+				//	childComponent.SetRotation(transComponent.GetRotation() - parentTransformComponent.GetRotation());
+				//}
+				childComponent.ResetLocalDirty();
 			}
 		}
 	}
@@ -238,7 +258,6 @@ namespace Rogue
 			{
 				isValid = false;
 			}
-
 			it = g_engine.m_coordinator.GetHierarchyInfo(it.m_parent);
 		}
 

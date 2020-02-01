@@ -26,6 +26,7 @@ Technology is prohibited.
 #include "FileIO.h"
 #include "EditorHierarchyInfo.h"
 #include "CameraManager.h"
+#include "ChildComponent.h"
 
 namespace Rogue
 {
@@ -127,6 +128,11 @@ namespace Rogue
 					childInfo.m_parent = MAX_ENTITIES;
 					loadedQueue.pop();
 					continue;
+				}
+				//Create ChildComponent if it doesn't exist
+				else if (!g_engine.m_coordinator.ComponentExists<ChildComponent>(loadedEnt))
+				{
+					g_engine.m_coordinator.CreateComponent<ChildComponent>(loadedEnt).SetParent(childInfo.m_parent);
 				}
 
 				HierarchyInfo& parentInfo = g_engine.m_coordinator.GetHierarchyInfo(childInfo.m_parent);
