@@ -210,7 +210,6 @@ namespace Rogue
 		if (!CheckValidReassign(child, newParent))
 			return;
 
-
 		if (!g_engine.m_coordinator.ComponentExists<ChildComponent>(child))
 		{
 			g_engine.m_coordinator.CreateComponent<ChildComponent>(child);
@@ -240,11 +239,20 @@ namespace Rogue
 
 	void ParentChildSystem::ResetParentChildFlags(Entity child)
 	{
-		if (!g_engine.m_coordinator.ComponentExists<ChildComponent>(child))
+		if (g_engine.m_coordinator.ComponentExists<ChildComponent>(child))
 		{
-			return;
+			g_engine.m_coordinator.RemoveComponent<ChildComponent>(child);
 		}
 		
-		g_engine.m_coordinator.RemoveComponent<ChildComponent>(child);
+		//Now doing the same for hierarchyinfo
+		HierarchyInfo& childHierarchy = g_engine.m_coordinator.GetHierarchyInfo(child);
+
+		if (childHierarchy.m_parent != -1 && childHierarchy.m_parent != MAX_ENTITIES)
+		{
+			HierarchyInfo& parentHierarchy = g_engine.m_coordinator.GetHierarchyInfo(childHierarchy.m_parent);
+			auto end = std::remove(parentHierarchy.m_children.begin(), parentHierarchy.m_children.end(), child);
+			parentHierarchy.m_children.erase(end, parentHierarchy.m_children.end());
+		}
+		childHierarchy.m_parent = (Entity)-1;
 	}
 }
