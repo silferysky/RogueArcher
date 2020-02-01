@@ -190,13 +190,18 @@ namespace Rogue
 	bool ParentChildSystem::CheckValidReassign(Entity newParent, Entity child)
 	{
 		bool isValid = true;
-		HierarchyInfo it = g_engine.m_coordinator.GetHierarchyInfo(child);
-		while (it.m_parent != -1 && it.m_parent != MAX_ENTITIES)
+		HierarchyInfo it = g_engine.m_coordinator.GetHierarchyInfo(newParent);
+
+		//If newParent is child, or assigning to self, it is invalid
+		if (it.m_Entity == child || child == newParent)
+			isValid = false;
+
+		//Doing a check if any of parent's parents is the child value
+		while (isValid && it.m_parent != MAX_ENTITIES)
 		{
 			if (it.m_parent == child)
 			{
 				isValid = false;
-				break;
 			}
 			it = g_engine.m_coordinator.GetHierarchyInfo(it.m_parent);
 		}
@@ -206,28 +211,41 @@ namespace Rogue
 
 	void ParentChildSystem::ReassignParentChildFlags(Entity newParent, Entity child)
 	{
-		//If invalid reassign (loop)
-		if (!CheckValidReassign(child, newParent))
+		if (!CheckValidReassign(newParent, child))
 			return;
 
+		//Ensures that ChildComponent exists
 		if (!g_engine.m_coordinator.ComponentExists<ChildComponent>(child))
 		{
 			g_engine.m_coordinator.CreateComponent<ChildComponent>(child);
 		}
 
+		//Local data has to change
 		ChildComponent& childComp = g_engine.m_coordinator.GetComponent<ChildComponent>(child);
 		childComp.SetLocalDirty();
 		childComp.SetParent(newParent);
 
 		//Reassigning in Hierarchy Objects
-
 		HierarchyInfo& childInfo = g_engine.m_coordinator.GetHierarchyInfo(child);
 		HierarchyInfo& newParentInfo = g_engine.m_coordinator.GetHierarchyInfo(newParent);
+
+		//Safety check to make sure that child isn't a parent of parent before reassignment
+		bool isValid = true;
+		HierarchyInfo it = g_engine.m_coordinator.GetHierarchyInfo(newParent);
+		while (isValid && it.m_parent != MAX_ENTITIES)
+		{
+			if (it.m_parent == child)
+			{
+				isValid = false;
+			}
+
+			it = g_engine.m_coordinator.GetHierarchyInfo(it.m_parent);
+		}
+
 
 		if (childInfo.m_parent != -1 && childInfo.m_parent != MAX_ENTITIES)
 		{
 			HierarchyInfo& oldParentInfo = g_engine.m_coordinator.GetHierarchyInfo(childInfo.m_parent);
-
 			auto end = std::remove(oldParentInfo.m_children.begin(), oldParentInfo.m_children.end(), child);
 			oldParentInfo.m_children.erase(end, oldParentInfo.m_children.end());
 			//oldParentInfo.m_children.erase(std::remove_if(oldParentInfo.m_children.begin(), oldParentInfo.m_children.end(), m_assignChild), oldParentInfo.m_children.end());
@@ -253,6 +271,6 @@ namespace Rogue
 			auto end = std::remove(parentHierarchy.m_children.begin(), parentHierarchy.m_children.end(), child);
 			parentHierarchy.m_children.erase(end, parentHierarchy.m_children.end());
 		}
-		childHierarchy.m_parent = (Entity)-1;
+		childHierarchy.m_parent = MAX_ENTITIES;
 	}
 }

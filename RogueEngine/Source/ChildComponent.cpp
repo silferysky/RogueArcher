@@ -5,7 +5,7 @@
 namespace Rogue
 {
 	ChildComponent::ChildComponent()
-		: m_globalDirty{ false }, m_localDirty{ false }, m_parent{ (Entity)-1 }, m_position{ Vec2() }, m_scale{ Vec2() }, m_positionZ{ 0 }, m_rotation{ 0 }
+		: m_globalDirty{ false }, m_localDirty{ false }, m_parent{ MAX_ENTITIES }, m_position{ Vec2() }, m_scale{ Vec2() }, m_positionZ{ 0 }, m_rotation{ 0 }
 	{}
 
 	void ChildComponent::SetLocalDirty()

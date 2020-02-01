@@ -91,6 +91,9 @@ namespace Rogue
 			CLEARSTR(ostrstream);
 			ostrstream << "EntityParent" << static_cast<int>(entity);
 			Entity entityParent = level[ostrstream.str().c_str()].GetInt();
+			
+			if (entityParent == -1)
+				entityParent = MAX_ENTITIES;
 
 			CREATE_HIERARCHY_OBJ(curEnt, readstr, tagstr, "", loadedQueue.front() + entityParent);
 			//HierarchyInfo& info = g_engine.m_coordinator.GetHierarchyInfo(curEnt);
@@ -121,7 +124,7 @@ namespace Rogue
 				//Check if parent of itself or  out of bounds (AKA parent is default value)
 				if (childInfo.m_parent == loadedEnt || childInfo.m_parent > loadedEnt + loadedQueue.size() || childInfo.m_parent < firstLoadedEnt)
 				{
-					childInfo.m_parent = -1;
+					childInfo.m_parent = MAX_ENTITIES;
 					loadedQueue.pop();
 					continue;
 				}
