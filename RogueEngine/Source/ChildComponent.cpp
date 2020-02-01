@@ -114,6 +114,8 @@ namespace Rogue
 
 	void ChildComponent::DisplayOnInspector()
 	{
+		bool isDirtyCheck = false;
+
 		//If this function is updated, update EditorInspector's PositionDisplay also
 		ImGui::Text("Translate");
 		ImGui::SameLine();
@@ -121,27 +123,21 @@ namespace Rogue
 		ImGui::DragFloat("     ", &m_position.x);
 
 		if (ImGui::IsItemDeactivated())
-		{
-			SetGlobalDirty();
-		}
+			isDirtyCheck = true;
 
 		ImGui::SameLine();
 		ImGui::PushItemWidth(75);
 		ImGui::DragFloat("      ", &m_position.y);
 
 		if (ImGui::IsItemDeactivated())
-		{
-			SetGlobalDirty();
-		}
+			isDirtyCheck = true;
 
 		ImGui::Text("Z Value  ");
 		ImGui::SameLine();
 		ImGui::DragInt("    ", &m_positionZ, 1.0f, -100000, 100000);
 
 		if (ImGui::IsItemDeactivated())
-		{
-			SetGlobalDirty();
-		}
+			isDirtyCheck = true;
 
 		if (ImGui::IsItemHovered())
 		{
@@ -156,48 +152,47 @@ namespace Rogue
 		ImGui::DragFloat(" ", &m_scale.x, 1.0f, 0.0f, 100000.0f);
 
 		if (ImGui::IsItemDeactivated())
-		{
-			SetGlobalDirty();
-		}
+			isDirtyCheck = true;
 
 		ImGui::SameLine(0.0f, 36.0f);
 		ImGui::DragFloat("  ", &m_scale.y, 1.0f, 0.0f, 100000.0f);
 
 		if (ImGui::IsItemDeactivated())
-		{
-			SetGlobalDirty();
-		}
+			isDirtyCheck = true;
 
 		ImGui::Text("Rotation ");
 		ImGui::SameLine();
 		ImGui::DragFloat("   ", &m_rotation, 0.1f, 0.0f, 6.28f);
 
 		if (ImGui::IsItemDeactivated())
-		{
-			SetGlobalDirty();
-		}
+			isDirtyCheck = true;
 
 		if (ImGui::Button("Reset Position"))
 		{
 			m_position = Vec2{ 0.0f, 0.0f };
-			SetGlobalDirty();
+			isDirtyCheck = true;
 		}
 
 		if (ImGui::Button("Reset Z"))
 		{
 			m_positionZ = 0;
-			SetGlobalDirty();
+			isDirtyCheck = true;
 		}
 
 		if (ImGui::Button("Reset Rotation"))
 		{
 			m_rotation = 0.0f;
-			SetGlobalDirty();
+			isDirtyCheck = true;
 		}
 
 		if (ImGui::Button("Reset Scale"))
 		{
 			m_scale = Vec2{ 1.0f, 1.0f };
+			isDirtyCheck = true;
+		}
+
+		if (isDirtyCheck)
+		{
 			SetGlobalDirty();
 		}
 	}

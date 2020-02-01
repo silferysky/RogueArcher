@@ -34,10 +34,25 @@ namespace Rogue
 			//Global values is "corrupted", need to fix
 			if (childComponent.IsGlobalDirty())
 			{
-				transComponent.setPosition(childComponent.GetPosition() + parentTransformComponent.GetPosition());
-				transComponent.setZ(childComponent.GetPositionZ() + parentTransformComponent.GetZ());
-				transComponent.setScale(Vec2(childComponent.GetScale().x * parentTransformComponent.GetScale().x, childComponent.GetScale().y * parentTransformComponent.GetScale().y));
-				transComponent.setRotation(childComponent.GetRotation() + parentTransformComponent.GetRotation());
+				Vec2 posChange(childComponent.GetPosition() + parentTransformComponent.GetPosition() - transComponent.GetPosition());
+				int zChange(childComponent.GetPositionZ() + parentTransformComponent.GetZ() - transComponent.GetZ());
+				Vec2 scaleChange(childComponent.GetScale().x * parentTransformComponent.GetScale().x / transComponent.GetScale().x, childComponent.GetScale().y * parentTransformComponent.GetScale().y / transComponent.GetScale().y);
+				float rotChange(childComponent.GetRotation() + parentTransformComponent.GetRotation() - transComponent.GetRotation());
+
+				std::vector<Entity> toUpdate;
+				toUpdate.push_back(entity);
+				AddChildToVector(toUpdate, entity);
+
+				for (auto& ent : toUpdate)
+				{
+					auto transformIterator = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
+
+					transformIterator.setPosition(transformIterator.GetPosition() + posChange);
+					transformIterator.setZ(transformIterator.GetZ()+ zChange);
+					transformIterator.setScale(Vec2(transformIterator.GetScale().x * scaleChange.x, transformIterator.GetScale().y * scaleChange.y));
+					transformIterator.setRotation(transformIterator.GetRotation() + rotChange);
+				}
+
 				childComponent.ResetGlobalDirty();
 			}
 			//Local values is "corrupted", need to fix
@@ -88,100 +103,145 @@ namespace Rogue
 		case EvParentTransformUpdate:
 		{
 			ParentTransformEvent* parentEvent = dynamic_cast<ParentTransformEvent*>(ev);
-			HierarchyInfo parentHierarchyInfo = g_engine.m_coordinator.GetHierarchyInfo(parentEvent->GetParentEntity());
-			std::vector<Entity> entityToUpdate{};
-
-			Vec2 transformChange{};
-			int zChange = 0;
-
-			//Change in value for all objects
-			if (g_engine.m_coordinator.ComponentExists<TransformComponent>(parentEvent->GetParentEntity()))
+			
+			if (g_engine.m_coordinator.GetHierarchyInfo(parentEvent->GetParentEntity()).m_children.size() > 0)
 			{
-				TransformComponent parentTrans = g_engine.m_coordinator.GetComponent<TransformComponent>(parentEvent->GetParentEntity());
-				transformChange = Vec2(parentEvent->GetXTransform() - parentTrans.GetPosition().x, parentEvent->GetYTransform() - parentTrans.GetPosition().y);
-				zChange = parentEvent->GetZTransform() - parentTrans.GetZ();
-			}
+				std::vector<Entity> temp;
+				
+				//By right Parent don't need, since it will be set via Transform (AKA no need change since no child), or via ChildComponent
+				temp.push_back(parentEvent->GetParentEntity());
+				AddChildToVector(temp, parentEvent->GetParentEntity());
 
-			//Picking all objects that needs updating
-			entityToUpdate.push_back(parentEvent->GetParentEntity());
-			AddChildToVector(entityToUpdate, parentEvent->GetParentEntity());
-
-			for (auto& entity : entityToUpdate)
-			{
-				if (g_engine.m_coordinator.ComponentExists<TransformComponent>(entity))
+				for (auto it : temp)
 				{
-					TransformComponent& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
-					trans.setPosition(trans.GetPosition() + transformChange);
-					trans.setZ(trans.GetZ() + zChange);
+					if (g_engine.m_coordinator.ComponentExists<ChildComponent>(it))
+						g_engine.m_coordinator.GetComponent<ChildComponent>(it).SetGlobalDirty();
 				}
 			}
-			entityToUpdate.clear();
+			//HierarchyInfo parentHierarchyInfo = g_engine.m_coordinator.GetHierarchyInfo(parentEvent->GetParentEntity());
+			//std::vector<Entity> entityToUpdate{};
 
-			//Updating parent of this object
-			if (g_engine.m_coordinator.ComponentExists<ChildComponent>(parentEvent->GetParentEntity()))
-			{
-				ChildComponent& parent = g_engine.m_coordinator.GetComponent<ChildComponent>(parentEvent->GetParentEntity());
-				parent.SetLocalDirty();
-			}
+			//Vec2 transformChange{};
+			//int zChange = 0;
+
+			////Change in value for all objects
+			//if (g_engine.m_coordinator.ComponentExists<TransformComponent>(parentEvent->GetParentEntity()))
+			//{
+			//	TransformComponent parentTrans = g_engine.m_coordinator.GetComponent<TransformComponent>(parentEvent->GetParentEntity());
+			//	transformChange = Vec2(parentEvent->GetXTransform() - parentTrans.GetPosition().x, parentEvent->GetYTransform() - parentTrans.GetPosition().y);
+			//	zChange = parentEvent->GetZTransform() - parentTrans.GetZ();
+			//}
+
+			////Picking all objects that needs updating
+			//entityToUpdate.push_back(parentEvent->GetParentEntity());
+			//AddChildToVector(entityToUpdate, parentEvent->GetParentEntity());
+
+			//for (auto& entity : entityToUpdate)
+			//{
+			//	if (g_engine.m_coordinator.ComponentExists<TransformComponent>(entity))
+			//	{
+			//		TransformComponent& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
+			//		trans.setPosition(trans.GetPosition() + transformChange);
+			//		trans.setZ(trans.GetZ() + zChange);
+			//	}
+			//}
+			//entityToUpdate.clear();
+
+			////Updating parent of this object
+			//if (g_engine.m_coordinator.ComponentExists<ChildComponent>(parentEvent->GetParentEntity()))
+			//{
+			//	ChildComponent& parent = g_engine.m_coordinator.GetComponent<ChildComponent>(parentEvent->GetParentEntity());
+			//	parent.SetLocalDirty();
+			//}
 
 			break;
 		}
 		case EvParentScaleUpdate:
 		{
 			ParentScaleEvent* parentEvent = dynamic_cast<ParentScaleEvent*>(ev);
-			HierarchyInfo parentHierarchyInfo = g_engine.m_coordinator.GetHierarchyInfo(parentEvent->GetParentEntity());
-			std::vector<Entity> entityToUpdate{};
-			Vec2 scaleChange{};
 
-			if (g_engine.m_coordinator.ComponentExists<TransformComponent>(parentEvent->GetParentEntity()))
+			if (g_engine.m_coordinator.GetHierarchyInfo(parentEvent->GetParentEntity()).m_children.size() > 0)
 			{
-				TransformComponent parentTrans = g_engine.m_coordinator.GetComponent<TransformComponent>(parentEvent->GetParentEntity());
-				scaleChange = Vec2(parentEvent->GetXScale() / parentTrans.GetScale().x, parentEvent->GetYScale() / parentTrans.GetScale().y);
-			}
+				std::vector<Entity> temp;
 
-			if (scaleChange.x == 0.0f && scaleChange.y == 0.0f)
-				break;
+				//By right Parent don't need, since it will be set via Transform (AKA no need change since no child), or via ChildComponent
+				temp.push_back(parentEvent->GetParentEntity());
+				AddChildToVector(temp, parentEvent->GetParentEntity());
 
-			entityToUpdate.push_back(parentEvent->GetParentEntity());
-			AddChildToVector(entityToUpdate, parentEvent->GetParentEntity());
-
-			for (auto& entity : entityToUpdate)
-			{
-				if (g_engine.m_coordinator.ComponentExists<TransformComponent>(entity))
+				for (auto it : temp)
 				{
-					TransformComponent& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
-					trans.setScale(Vec2(trans.GetScale().x * scaleChange.x, trans.GetScale().y * scaleChange.y));
+					if (g_engine.m_coordinator.ComponentExists<ChildComponent>(it))
+						g_engine.m_coordinator.GetComponent<ChildComponent>(it).SetGlobalDirty();
 				}
 			}
-			entityToUpdate.clear();
+			//HierarchyInfo parentHierarchyInfo = g_engine.m_coordinator.GetHierarchyInfo(parentEvent->GetParentEntity());
+			//std::vector<Entity> entityToUpdate{};
+			//Vec2 scaleChange{};
+
+			//if (g_engine.m_coordinator.ComponentExists<TransformComponent>(parentEvent->GetParentEntity()))
+			//{
+			//	TransformComponent parentTrans = g_engine.m_coordinator.GetComponent<TransformComponent>(parentEvent->GetParentEntity());
+			//	scaleChange = Vec2(parentEvent->GetXScale() / parentTrans.GetScale().x, parentEvent->GetYScale() / parentTrans.GetScale().y);
+			//}
+
+			//if (scaleChange.x == 0.0f && scaleChange.y == 0.0f)
+			//	break;
+
+			//entityToUpdate.push_back(parentEvent->GetParentEntity());
+			//AddChildToVector(entityToUpdate, parentEvent->GetParentEntity());
+
+			//for (auto& entity : entityToUpdate)
+			//{
+			//	if (g_engine.m_coordinator.ComponentExists<TransformComponent>(entity))
+			//	{
+			//		TransformComponent& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
+			//		trans.setScale(Vec2(trans.GetScale().x * scaleChange.x, trans.GetScale().y * scaleChange.y));
+			//	}
+			//}
+			//entityToUpdate.clear();
 			break;
 		}
 		case EvParentRotateUpdate:
 		{
 			ParentRotateEvent* parentEvent = dynamic_cast<ParentRotateEvent*>(ev);
-			HierarchyInfo parentHierarchyInfo = g_engine.m_coordinator.GetHierarchyInfo(parentEvent->GetParentEntity());
-			std::vector<Entity> entityToUpdate{};
 
-			float rotateChange = 0.0f;
-
-			if (g_engine.m_coordinator.ComponentExists<TransformComponent>(parentEvent->GetParentEntity()))
+			if (g_engine.m_coordinator.GetHierarchyInfo(parentEvent->GetParentEntity()).m_children.size() > 0)
 			{
-				TransformComponent parentTrans = g_engine.m_coordinator.GetComponent<TransformComponent>(parentEvent->GetParentEntity());
-				rotateChange = parentEvent->GetRotateScale() - parentTrans.GetRotation();
-			}
+				std::vector<Entity> temp;
 
-			entityToUpdate.push_back(parentEvent->GetParentEntity());
-			AddChildToVector(entityToUpdate, parentEvent->GetParentEntity());
+				//By right Parent don't need, since it will be set via Transform (AKA no need change since no child), or via ChildComponent
+				temp.push_back(parentEvent->GetParentEntity());
+				AddChildToVector(temp, parentEvent->GetParentEntity());
 
-			for (auto& entity : entityToUpdate)
-			{
-				if (g_engine.m_coordinator.ComponentExists<TransformComponent>(entity))
+				for (auto it : temp)
 				{
-					TransformComponent& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
-					trans.setRotation(trans.GetRotation() + rotateChange);
+					if (g_engine.m_coordinator.ComponentExists<ChildComponent>(it))
+						g_engine.m_coordinator.GetComponent<ChildComponent>(it).SetGlobalDirty();
 				}
 			}
-			entityToUpdate.clear();
+			//HierarchyInfo parentHierarchyInfo = g_engine.m_coordinator.GetHierarchyInfo(parentEvent->GetParentEntity());
+			//std::vector<Entity> entityToUpdate{};
+
+			//float rotateChange = 0.0f;
+
+			//if (g_engine.m_coordinator.ComponentExists<TransformComponent>(parentEvent->GetParentEntity()))
+			//{
+			//	TransformComponent parentTrans = g_engine.m_coordinator.GetComponent<TransformComponent>(parentEvent->GetParentEntity());
+			//	rotateChange = parentEvent->GetRotateScale() - parentTrans.GetRotation();
+			//}
+
+			//entityToUpdate.push_back(parentEvent->GetParentEntity());
+			//AddChildToVector(entityToUpdate, parentEvent->GetParentEntity());
+
+			//for (auto& entity : entityToUpdate)
+			//{
+			//	if (g_engine.m_coordinator.ComponentExists<TransformComponent>(entity))
+			//	{
+			//		TransformComponent& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
+			//		trans.setRotation(trans.GetRotation() + rotateChange);
+			//	}
+			//}
+			//entityToUpdate.clear();
 
 			break;
 		}
