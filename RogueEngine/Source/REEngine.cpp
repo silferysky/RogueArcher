@@ -55,6 +55,7 @@ Technology is prohibited.
 #include "ParticleEmitterSystem.h"
 #include "UISystem.h"
 #include "ParentChildSystem.h"
+#include "MaskingSystem.h"
 
 namespace Rogue
 {
@@ -78,6 +79,7 @@ namespace Rogue
 		m_coordinator.RegisterSystem<BoxCollisionSystem>();
 		m_coordinator.RegisterSystem<CollisionSystem>(); // Must be after circle and box collision systems
 		m_coordinator.RegisterSystem<GraphicsSystem>();
+		m_coordinator.RegisterSystem<MaskingSystem>();
 		m_coordinator.RegisterSystem<AnimationSystem>();
 		m_coordinator.RegisterSystem<DebugDrawSystem>();
 		m_coordinator.RegisterSystem<FontSystem>();
@@ -108,6 +110,7 @@ namespace Rogue
 		m_coordinator.RegisterComponent<BackgroundComponent>();
 		m_coordinator.RegisterComponent<ParticleEmitterComponent>();
 		m_coordinator.RegisterComponent<ParticleComponent>();
+		m_coordinator.RegisterComponent<MaskingComponent>();
 		//m_coordinator.RegisterComponent<ChildComponent>();
 	}
 
