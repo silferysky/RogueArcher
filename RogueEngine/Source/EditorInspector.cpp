@@ -454,6 +454,20 @@ namespace Rogue
 						}
 					}
 
+					if (g_engine.m_coordinator.ComponentExists<MaskingComponent>(i))
+					{
+						if (ImGui::CollapsingHeader("Masking"))
+						{
+							auto& masking = g_engine.m_coordinator.GetComponent<MaskingComponent>(i);
+							masking.DisplayOnInspector();
+
+							if (ImGui::Button("Remove Component"))
+							{
+								g_engine.m_coordinator.RemoveComponent<MaskingComponent>(i);
+							}
+						}
+					} 
+
 					ImGui::Separator();
 
 					if (ImGui::Button("Add Component"))
@@ -507,9 +521,14 @@ namespace Rogue
 								g_engine.m_coordinator.AddComponent(i, ParticleEmitterComponent());
 							}
 
-							if (ImGui::MenuItem("Background Component", nullptr, false, !g_engine.m_coordinator.ComponentExists<ParticleEmitterComponent>(i)))
+							if (ImGui::MenuItem("Background Component", nullptr, false, !g_engine.m_coordinator.ComponentExists<BackgroundComponent>(i)))
 							{
 								g_engine.m_coordinator.AddComponent(i, BackgroundComponent());
+							}
+
+							if (ImGui::MenuItem("Masking Component", nullptr, false, !g_engine.m_coordinator.ComponentExists<MaskingComponent>(i)))
+							{
+								g_engine.m_coordinator.AddComponent(i, MaskingComponent());
 							}
 
 							ImGui::EndMenu();

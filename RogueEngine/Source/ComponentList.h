@@ -36,6 +36,7 @@ Technology is prohibited.
 #include "BackgroundComponent.h"
 #include "ParticleComponent.h"
 #include "ParticleEmitterComponent.h"
+#include "MaskingComponent.h"
 
 namespace Rogue
 {
@@ -59,6 +60,7 @@ namespace Rogue
 		BACKGROUND,
 		PARTICLEEMITTER,
 		PARTICLE,
+		MASKING,
 		LASTCOMP
 	};
 }
