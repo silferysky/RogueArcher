@@ -188,7 +188,7 @@ namespace Rogue
 		for (size_t i = 0; i < numOfEnt; ++i)
 		{
 			//Header
-			strstream << ",\n  \"EntityParent" << i << "\": -1" ;
+			strstream << ",\n  \"EntityParent" << i << "\": " << MAX_ENTITIES;
 		}
 
 		return strstream.str();

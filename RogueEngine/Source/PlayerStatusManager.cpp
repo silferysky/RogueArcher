@@ -6,7 +6,7 @@
 namespace Rogue
 {
 	PlayerStatusManager::PlayerStatusManager():
-		m_entity{ (Entity)-1 },
+		m_entity{ MAX_ENTITIES },
 		m_isLightMode{ true },
 		m_maxJumpTimer{0.5f},
 		m_hitchhikedEntity{ static_cast<Entity>(-1) },
