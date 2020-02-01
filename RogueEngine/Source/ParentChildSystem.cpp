@@ -23,7 +23,30 @@ namespace Rogue
 	{
 		for (Entity entity : m_entities)
 		{
-			
+			auto& childComponent = g_engine.m_coordinator.GetComponent<ChildComponent>(entity);
+
+			if (childComponent.GetParent() == -1 || !g_engine.m_coordinator.ComponentExists<TransformComponent>(childComponent.GetParent()))
+				return;
+
+			auto& transComponent = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
+			auto& parentTransformComponent = g_engine.m_coordinator.GetComponent<TransformComponent>(childComponent.GetParent());
+
+			//Global values is "corrupted", need to fix
+			if (childComponent.IsGlobalDirty())
+			{
+				transComponent.setPosition(parentTransformComponent.GetPosition() - childComponent.GetPosition());
+				transComponent.setZ(parentTransformComponent.GetZ() - childComponent.GetPositionZ());
+				transComponent.setScale(Vec2(parentTransformComponent.GetScale().x / childComponent.GetScale().x, parentTransformComponent.GetScale().y / childComponent.GetScale().y));
+				transComponent.setRotation(parentTransformComponent.GetRotation() - childComponent.GetRotation());
+			}
+			//Local values is "corrupted", need to fix
+			else if (childComponent.IsLocalDirty())
+			{
+				childComponent.SetPosition(parentTransformComponent.GetPosition() + transComponent.GetPosition());
+				childComponent.SetPositionZ(parentTransformComponent.GetZ() + transComponent.GetZ());
+				childComponent.SetScale(Vec2(parentTransformComponent.GetScale().x * transComponent.GetScale().x, parentTransformComponent.GetScale().y * transComponent.GetScale().y));
+				childComponent.SetRotation(parentTransformComponent.GetRotation() + transComponent.GetRotation());
+			}
 		}
 	}
 
@@ -39,6 +62,7 @@ namespace Rogue
 		{
 			ParentSetEvent* parentEvent = dynamic_cast<ParentSetEvent*>(ev);
 			ReassignParentChildFlags(parentEvent->GetChildEntity(), parentEvent->GetParentEntity());
+
 			break;
 		}
 		case EvParentTransformUpdate:
@@ -186,7 +210,26 @@ namespace Rogue
 		if (!CheckValidReassign(child, newParent))
 			return;
 
+
+		if (!g_engine.m_coordinator.ComponentExists<ChildComponent>(child))
+		{
+			g_engine.m_coordinator.CreateComponent<ChildComponent>(child);
+		}
+
 		//This cannot be done directly here, since it is middle of a loop.
 		g_engine.m_coordinator.SetReassignParentFlags(child, newParent);
+		ChildComponent& childComp = g_engine.m_coordinator.GetComponent<ChildComponent>(child);
+		childComp.SetLocalDirty();
+		childComp.SetParent(newParent);
+	}
+
+	void ParentChildSystem::ResetParentChildFlags(Entity child)
+	{
+		if (!g_engine.m_coordinator.ComponentExists<ChildComponent>(child))
+		{
+			return;
+		}
+		
+		g_engine.m_coordinator.RemoveComponent<ChildComponent>(child);
 	}
 }

@@ -4,63 +4,9 @@
 
 namespace Rogue
 {
-	std::string ChildComponent::Serialize()
-	{
-		return std::string();
-	}
-
-	void ChildComponent::Deserialize(std::string_view toDeserialize)
-	{
-	}
-
-	void ChildComponent::DisplayOnInspector()
-	{
-		//If this function is updated, update EditorInspector's PositionDisplay also
-		ImGui::Text("Translate");
-		ImGui::SameLine();
-		ImGui::PushItemWidth(75);
-		ImGui::DragFloat("     ", &m_position.x);
-		ImGui::SameLine();
-		ImGui::PushItemWidth(75);
-		ImGui::DragFloat("      ", &m_position.y);
-
-		ImGui::Text("Z Value  ");
-		ImGui::SameLine();
-		ImGui::DragInt("    ", &m_positionZ, 1.0f, -100000, 100000);
-
-		if (ImGui::IsItemHovered())
-		{
-			ImGui::BeginTooltip();
-			ImGui::Text("Higher number means the object will be drawn infront");
-			ImGui::EndTooltip();
-		}
-
-		ImGui::Text("Scale    ");
-		ImGui::SameLine();
-		ImGui::PushItemWidth(75);
-		ImGui::DragFloat(" ", &m_scale.x, 1.0f, 0.0f, 100000.0f);
-		ImGui::SameLine(0.0f, 36.0f);
-		ImGui::DragFloat("  ", &m_scale.y, 1.0f, 0.0f, 100000.0f);
-
-		ImGui::Text("Rotation ");
-		ImGui::SameLine();
-		ImGui::DragFloat("   ", &m_rotation, 0.1f, 0.0f, 6.28f);
-
-		if (ImGui::Button("Reset Position"))
-		{
-			m_position = Vec2{ 0.0f, 0.0f };
-		}
-
-		if (ImGui::Button("Reset Rotation"))
-		{
-			m_rotation = 0.0f;
-		}
-
-		if (ImGui::Button("Reset Scale"))
-		{
-			m_scale = Vec2{ 100.0f,100.0f };
-		}
-	}
+	ChildComponent::ChildComponent()
+		: m_globalDirty{ false }, m_localDirty{ false }, m_parent{ (Entity)-1 }, m_position{ Vec2() }, m_scale{ Vec2() }, m_positionZ{ 0 }, m_rotation{ 0 }
+	{}
 
 	void ChildComponent::SetLocalDirty()
 	{
@@ -90,6 +36,21 @@ namespace Rogue
 	bool ChildComponent::IsGlobalDirty() const
 	{
 		return m_globalDirty;
+	}
+
+	void ChildComponent::SetParent(Entity ent)
+	{
+		m_parent = ent;
+	}
+
+	void ChildComponent::ResetParent()
+	{
+		m_parent = -1;
+	}
+
+	Entity ChildComponent::GetParent() const
+	{
+		return m_parent;
 	}
 
 	void ChildComponent::SetPosition(Vec2 position)
@@ -140,5 +101,104 @@ namespace Rogue
 	float ChildComponent::GetRotation() const
 	{
 		return m_rotation;
+	}
+
+	std::string ChildComponent::Serialize()
+	{
+		return std::string();
+	}
+
+	void ChildComponent::Deserialize(std::string_view toDeserialize)
+	{
+	}
+
+	void ChildComponent::DisplayOnInspector()
+	{
+		//If this function is updated, update EditorInspector's PositionDisplay also
+		ImGui::Text("Translate");
+		ImGui::SameLine();
+		ImGui::PushItemWidth(75);
+		ImGui::DragFloat("     ", &m_position.x);
+
+		if (ImGui::IsItemDeactivated())
+		{
+			SetGlobalDirty();
+		}
+
+		ImGui::SameLine();
+		ImGui::PushItemWidth(75);
+		ImGui::DragFloat("      ", &m_position.y);
+
+		if (ImGui::IsItemDeactivated())
+		{
+			SetGlobalDirty();
+		}
+
+		ImGui::Text("Z Value  ");
+		ImGui::SameLine();
+		ImGui::DragInt("    ", &m_positionZ, 1.0f, -100000, 100000);
+
+		if (ImGui::IsItemDeactivated())
+		{
+			SetGlobalDirty();
+		}
+
+		if (ImGui::IsItemHovered())
+		{
+			ImGui::BeginTooltip();
+			ImGui::Text("Higher number means the object will be drawn infront");
+			ImGui::EndTooltip();
+		}
+
+		ImGui::Text("Scale    ");
+		ImGui::SameLine();
+		ImGui::PushItemWidth(75);
+		ImGui::DragFloat(" ", &m_scale.x, 1.0f, 0.0f, 100000.0f);
+
+		if (ImGui::IsItemDeactivated())
+		{
+			SetGlobalDirty();
+		}
+
+		ImGui::SameLine(0.0f, 36.0f);
+		ImGui::DragFloat("  ", &m_scale.y, 1.0f, 0.0f, 100000.0f);
+
+		if (ImGui::IsItemDeactivated())
+		{
+			SetGlobalDirty();
+		}
+
+		ImGui::Text("Rotation ");
+		ImGui::SameLine();
+		ImGui::DragFloat("   ", &m_rotation, 0.1f, 0.0f, 6.28f);
+
+		if (ImGui::IsItemDeactivated())
+		{
+			SetGlobalDirty();
+		}
+
+		if (ImGui::Button("Reset Position"))
+		{
+			m_position = Vec2{ 0.0f, 0.0f };
+			SetGlobalDirty();
+		}
+
+		if (ImGui::Button("Reset Z"))
+		{
+			m_positionZ = 0;
+			SetGlobalDirty();
+		}
+
+		if (ImGui::Button("Reset Rotation"))
+		{
+			m_rotation = 0.0f;
+			SetGlobalDirty();
+		}
+
+		if (ImGui::Button("Reset Scale"))
+		{
+			m_scale = Vec2{ 1.0f, 1.0f };
+			SetGlobalDirty();
+		}
 	}
 }
