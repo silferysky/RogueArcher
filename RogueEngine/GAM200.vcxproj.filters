@@ -134,6 +134,9 @@
     <Filter Include="RogueEngine\Systems\Graphics\Masking">
       <UniqueIdentifier>{5b852215-22bd-4938-adf6-ddb7e7efb081}</UniqueIdentifier>
     </Filter>
+    <Filter Include="RogueEngine\Systems\Graphics\Fading">
+      <UniqueIdentifier>{766b1b40-7c35-4801-bfce-958539f5cead}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Resource.h">
@@ -571,8 +574,11 @@
     <ClInclude Include="Source\MaskingComponent.h">
       <Filter>RogueEngine\Systems\Graphics\Masking</Filter>
     </ClInclude>
+    <ClInclude Include="Source\FadeComponent.h">
+      <Filter>RogueEngine\Systems\Graphics\Fading</Filter>
+    </ClInclude>
     <ClInclude Include="Source\FadeSystem.h">
-      <Filter>RogueEngine\Systems\Graphics</Filter>
+      <Filter>RogueEngine\Systems\Graphics\Fading</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -895,7 +901,10 @@
       <Filter>RogueEngine\Systems\Graphics\Masking</Filter>
     </ClCompile>
     <ClCompile Include="Source\FadeSystem.cpp">
-      <Filter>RogueEngine\Systems\Graphics</Filter>
+      <Filter>RogueEngine\Systems\Graphics\Fading</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\FadeComponent.cpp">
+      <Filter>RogueEngine\Systems\Graphics\Fading</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
