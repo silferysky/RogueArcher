@@ -33,7 +33,6 @@ namespace Rogue
 		float m_texCoordMax = 1.0f;
 
 		glm::vec4 m_filter = { 1.0f, 1.0f, 1.0f, 1.0f };
-		bool m_isNotFading = false;
 	public:
 		SpriteComponent() = default;
 		~SpriteComponent() = default;
@@ -52,9 +51,6 @@ namespace Rogue
 
 		glm::vec4& getFilter();
 		void setFilter(const glm::vec4& filter);
-
-		void setIsNotFading(const bool& isFading);
-		bool getIsNotFading() const;
 
 		void DisplayOnInspector();
 

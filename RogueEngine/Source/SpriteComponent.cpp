@@ -73,24 +73,11 @@ namespace Rogue
 		m_filter = filter;
 	}
 
-	void SpriteComponent::setIsNotFading(const bool& isNotFading)
-	{
-		m_isNotFading = isNotFading;
-	}
-
-	bool SpriteComponent::getIsNotFading() const
-	{
-		return m_isNotFading;
-	}
-
 	void SpriteComponent::DisplayOnInspector()
 	{
 		const std::string m_constSpritePath = "Resources/Assets/";
 		static char m_newSpritePath[128];
 		static char m_priorityDraw[128];
-
-		ImGui::Checkbox("Not Fading?", &m_isNotFading);
-		setIsNotFading(m_isNotFading);
 
 		ImGui::PushItemWidth(75);
 		ImGui::TextWrapped("Current File Path");
@@ -154,7 +141,6 @@ namespace Rogue
 		
 		strstream << getTexturePath() << ";";
 		strstream << m_filter.r << ";" << m_filter.g << ";" << m_filter.b << ";" << m_filter.a << ";";
-		strstream << m_isNotFading << ";";
 
 		return strstream.str();
 		//Cannot use find because need use value to find key
@@ -188,9 +174,6 @@ namespace Rogue
 
 		if (std::getline(strstream, stdstr, ';'));
 			m_filter.a = std::stof(stdstr);
-
-		if (std::getline(strstream, stdstr, ';'));
-			m_isNotFading = std::stoi(stdstr);
 	}
 
 	/*void SpriteComponent::operator=(SpriteComponent sprite)
