@@ -22,12 +22,12 @@
     "Entity5": "Name{BGM_SFX}|Tag{}|||Transform{0;0;100;100;0;0}||||||||Audio{Resources\\Sounds\\[BGM]ANCIENT RUINS - NewAge MSCNEW2_33.ogg;1;0.8;1;0;}|||||||||",
     "Entity6": "Name{Cursor}|Tag{}|Sprite{Resources/Assets/crosshair.png;1;1;1;1}||Transform{-827.888;513.717;100;100;0;0}||||||||||Cursor{0;0}||||||",
     "Entity7": "Name{ControlHelp7}|Tag{}|Sprite{Resources/Assets/HowToPlay.png;1;1;1;0.862745}||Transform{0;0;2000;1200;0;0}|||||||||UI{1;}|||||||",
-    "EntityParent0": -1,
-    "EntityParent1": -1,
-    "EntityParent2": -1,
-    "EntityParent3": -1,
-    "EntityParent4": -1,
-    "EntityParent5": -1,
+    "EntityParent0": 65536,
+    "EntityParent1": 65536,
+    "EntityParent2": 65536,
+    "EntityParent3": 65536,
+    "EntityParent4": 65536,
+    "EntityParent5": 65536,
     "EntityParent6": -1,
     "EntityParent7": -1
 }

@@ -194,11 +194,11 @@ namespace Rogue
 
 	void ColliderComponent::DisplayOnInspector()
 	{
-		ImGui::BeginTooltip();
 		size_t cat = CollisionManager::instance().GetLayerCategory(m_collisionCategory);
 		std::string name = std::string(CollisionManager::instance().GetLayerName(cat));
+	
 		ImGui::Text("Current Layer: %s", name.c_str());
-		ImGui::EndTooltip();
+		
 		size_t numLayers = CollisionManager::instance().GetNumberOfLayers();
 		std::stringstream ss;
 
