@@ -50,6 +50,7 @@ namespace Rogue
 		void AddToTimedEntities(Entity entity, float duration = 1.0f);
 		void ClearTimedEntities();
 		void ClearTeleportEntities();
+		void ClearTeleportEntities(Entity ent);
 
 		void CreateTeleportEvent(Vec2 newPosition);
 
