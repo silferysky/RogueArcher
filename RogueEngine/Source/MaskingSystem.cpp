@@ -63,7 +63,7 @@ namespace Rogue
 		sprite->setTexCoordMax(static_cast<float>(max));
 
 		if (masking->getIsActive())
-			masking->setTimer(timer);
+			masking->setTimer(static_cast<float>(timer));
 	}
 
 	void MaskingSystem::ResetTextures()

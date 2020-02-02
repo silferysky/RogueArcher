@@ -9,6 +9,12 @@ namespace Rogue
 	public:
 		using Bits = std::bitset<MAX_COLLISION_LAYERS>;
 
+		static LayerManager& instance()
+		{
+			static LayerManager instance;
+			return instance;
+		}
+
 		static const std::pair<size_t, std::string> s_layerDefault;
 	private:
 		std::map<size_t, std::string> m_layers; // Collision masks mapped to its own name
@@ -27,6 +33,7 @@ namespace Rogue
 		void PrintMask(const Bits& mask) const;
 		size_t GetLayerSize() const;
 		size_t GetLayerCategory(const Bits& category) const;
+		int GetLayerCategory(std::string_view name) const;
 	};
 
 }// namespace Rogue

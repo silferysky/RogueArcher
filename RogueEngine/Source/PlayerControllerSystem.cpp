@@ -204,7 +204,7 @@ namespace Rogue
 
 				else if (keycode == KeyPress::KeyE)
 				{
-					PLAYER_STATUS.ToggleLightStatus();
+					ToggleMode();
 				}
 
 				else if (keycode == KeyPress::KeySpace)
@@ -575,13 +575,20 @@ namespace Rogue
 
 	void PlayerControllerSystem::Teleport()
 	{
+		// In case player doesn't even exist lmao
+		if (m_entities.begin() == m_entities.end())
+			return;
+    
+		// In case player doesn't have a box collider
+		if (!g_engine.m_coordinator.ComponentExists<BoxCollider2DComponent>(*m_entities.begin()) ||
+			!g_engine.m_coordinator.ComponentExists<ColliderComponent>(*m_entities.begin()))
+			return;
+
 		PLAYER_STATUS.IncrementTeleportCharge(-1.0f);
 		if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(*m_entities.begin()))
 			g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(*m_entities.begin()).m_grounded = false;
 
-		// In case player doesn't have a box collider
-		if (!g_engine.m_coordinator.ComponentExists<BoxCollider2DComponent>(*m_entities.begin()))
-			return;
+		PLAYER_STATUS.IncrementTeleportCharge(-1.0f);
 
 		TransformComponent& playerTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin());
 		Vec2 initialPos = playerTransform.GetPosition();
@@ -606,6 +613,7 @@ namespace Rogue
 
 		const std::set<Entity>& boxEntities = g_engine.m_coordinator.GetSystem<BoxCollisionSystem>()->GetEntitySet();	
 		BoxCollider2DComponent& playerCollider = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(*m_entities.begin());
+		ColliderComponent& playerGCollider = g_engine.m_coordinator.GetComponent<ColliderComponent>(*m_entities.begin());
 		LineSegment teleportLine = LineSegment(playerTransform.GetPosition(), calculatedPos);
 		Vec2 teleportVec = calculatedPos - playerTransform.GetPosition();
 
@@ -617,6 +625,13 @@ namespace Rogue
 			BoxCollider2DComponent& boxCollider = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(entity);
 			if (boxCollider.GetCollisionMode() != CollisionMode::e_awake)
 				continue;
+
+			ColliderComponent& boxGCollider = g_engine.m_coordinator.GetComponent<ColliderComponent>(entity);
+			
+			if(!CollisionManager::instance().FilterColliders(playerGCollider.GetCollisionMask(), boxGCollider.GetCollisionCat()) ||
+				!CollisionManager::instance().FilterColliders(boxGCollider.GetCollisionMask(), playerGCollider.GetCollisionCat()))
+				continue;
+
 			TransformComponent& boxTrans = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
 
 			//DebugDrawBall(boxCollider.m_aabb, boxTrans);
@@ -625,7 +640,6 @@ namespace Rogue
 			if (CollisionManager::instance().DiscreteLineVsAABB(teleportLine, boxCollider.m_aabb))
 			{
 				Vec2 boxPos = CollisionManager::instance().GetColliderPosition(boxCollider.m_aabb, boxTrans);
-
 
 				std::array<LineSegment, 4> edges = CollisionManager::instance().GenerateEdges(boxCollider.m_aabb);
 
@@ -657,6 +671,37 @@ namespace Rogue
 		{
 			TransformComponent& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(m_teleports.back().m_entity);
 			transform.setPosition(g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin()).GetPosition() + calculatedPos / 2);
+		}
+	}
+
+	void PlayerControllerSystem::ToggleMode()
+	{
+		PLAYER_STATUS.ToggleLightStatus();
+		for (Entity player : m_entities)
+		{
+			if (g_engine.m_coordinator.ComponentExists<ColliderComponent>(player))
+			{
+				ColliderComponent& playerCollider = g_engine.m_coordinator.GetComponent<ColliderComponent>(player);
+				int lightPos = -1;
+				int darkPos = -1;
+
+				lightPos = LayerManager::instance().GetLayerCategory("Light");
+				darkPos = LayerManager::instance().GetLayerCategory("Dark");
+
+				// True means in light mode.
+				if (PlayerStatusManager::instance().GetLightStatus())
+				{
+					playerCollider.ChangeLayer(lightPos);
+					playerCollider.SetMask(darkPos);
+					playerCollider.SetMask(lightPos, false);
+				}
+				else
+				{
+					playerCollider.ChangeLayer(darkPos);
+					playerCollider.SetMask(lightPos);
+					playerCollider.SetMask(darkPos, false);
+				}
+			}
 		}
 	}
 
