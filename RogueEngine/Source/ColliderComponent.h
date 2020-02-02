@@ -42,9 +42,11 @@ namespace Rogue
 		const LayerManager::Bits& GetCollisionCat() const;
 
 		void SetShape(const std::shared_ptr<Shape>& pShape);
-		void SetMaskLayer(size_t layerPos, bool set);
+		void SetMask(size_t layerPos, bool set = true);
 		void SetCollisionMask(const LayerManager::Bits& bits);
 		void SetCollisionCat(const LayerManager::Bits& layer);
+		void ChangeLayer(size_t pos);
+		void ChangeLayer(std::string_view name);
 	};
 
 }

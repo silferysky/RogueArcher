@@ -38,8 +38,6 @@ namespace Rogue
 		std::vector<std::pair<Entity, Entity>> m_circlePairs; // Stored pairs of circles
 		std::vector<Manifold> m_manifolds; // To generate and resolve after collision tests
 
-		LayerManager m_layerManager; // The manager for collision filters/layers
-
 		static const float s_correction_factor;
 		static const float s_correction_slop; // Penetration threshold
 

@@ -56,6 +56,7 @@ namespace Rogue
 	private:
 		void CreateBallAttack();
 		void Teleport();
+		void ToggleMode();
 
 		void DebugDrawBall(const BaseCollider& box, const TransformComponent& trans) const;
 		void DebugDrawArrow(const LineSegment& line) const;

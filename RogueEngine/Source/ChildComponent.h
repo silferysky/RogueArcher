@@ -34,8 +34,8 @@ namespace Rogue
 		void SetPosition(float x, float y);
 		Vec2 GetPosition() const;
 	
-		void SetPositionZ(float z);
-		float GetPositionZ() const;
+		void SetPositionZ(int z);
+		int GetPositionZ() const;
 	
 		//Scale
 		void SetScale(Vec2 scale);

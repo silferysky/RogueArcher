@@ -96,4 +96,17 @@ namespace Rogue
 		}
 		return pos;
 	}
+
+	int LayerManager::GetLayerCategory(std::string_view name) const
+	{
+		auto it = std::find_if(std::begin(m_layers), std::end(m_layers), [&](const std::pair<size_t, std::string>& pair)
+			{
+				return pair.second == name;
+			});
+
+		if (it != m_layers.end())
+			return it->first;
+		else
+			return -1;
+	}
 }

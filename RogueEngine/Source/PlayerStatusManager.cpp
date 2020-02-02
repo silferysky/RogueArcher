@@ -71,6 +71,7 @@ namespace Rogue
 	{
 		m_isLightMode = !m_isLightMode;
 		ChangePlayerSprite();
+
 	}
 
 	void PlayerStatusManager::SetLightStatus(bool isLight)
