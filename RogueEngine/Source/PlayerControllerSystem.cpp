@@ -588,8 +588,6 @@ namespace Rogue
 		if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(*m_entities.begin()))
 			g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(*m_entities.begin()).m_grounded = false;
 
-		PLAYER_STATUS.IncrementTeleportCharge(-1.0f);
-
 		TransformComponent& playerTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin());
 		Vec2 initialPos = playerTransform.GetPosition();
 		Vec2 endPos = PickingManager::instance().GetWorldCursor();
