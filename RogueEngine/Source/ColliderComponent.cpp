@@ -193,9 +193,39 @@ namespace Rogue
 		std::string name = std::string(CollisionManager::instance().GetLayerName(cat));
 		ImGui::Text("Current Layer: %s", name.c_str());
 		ImGui::EndTooltip();
-
 		size_t numLayers = CollisionManager::instance().GetNumberOfLayers();
 		std::stringstream ss;
+
+		if (ImGui::Button("Change Current Category"))
+		{
+			ImGui::OpenPopup("Change Layer");
+		}
+		
+		if (ImGui::BeginPopup("Change Layer"))
+		{
+			if (ImGui::BeginMenu("Layers"))
+			{
+				for (unsigned pos = 0; pos < numLayers; pos++)
+				{
+					ss << CollisionManager::instance().GetLayerName(pos);
+					bool ownLayer = m_collisionCategory.test(pos);
+					
+					if (ImGui::MenuItem(ss.str().c_str(), nullptr, false, !ownLayer))
+					{
+						if (pos)
+							m_collisionCategory = LayerManager::Bits(1L << pos);
+						else
+							m_collisionCategory = 0;
+					}
+					CLEARSTRING(ss);
+				}
+
+				ImGui::EndMenu();
+			}
+
+			ImGui::EndPopup();
+		}
+
 		bool checked;
 
 		ImGui::NewLine();

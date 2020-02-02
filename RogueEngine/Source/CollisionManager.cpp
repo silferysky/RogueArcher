@@ -1118,7 +1118,6 @@ namespace Rogue
 
 	void CollisionManager::PrintLayerNames() const
 	{
-		ImGui::Text("Available Layers:");
 		m_layerManager.PrintNames();
 	}
 
