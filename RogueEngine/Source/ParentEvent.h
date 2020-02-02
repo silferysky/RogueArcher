@@ -19,6 +19,21 @@ namespace Rogue
 		bool dirtyGlobal;
 	};
 
+	class ChildEvent : public Event
+	{
+	public:
+		SET_EVENT_CATEGORY(EventCatChild)
+		inline Entity GetChildEntity() { return childEntity; }
+		inline bool GetDirtyGlobal() { return dirtyGlobal; }
+
+	protected:
+		ChildEvent(Entity childEnt, bool isGlobal)
+			: childEntity{ childEnt }, dirtyGlobal{ isGlobal } {}
+	private:
+		Entity childEntity;
+		bool dirtyGlobal;
+	};
+
 	class ParentSetEvent : public ParentEvent
 	{
 	public:
@@ -26,6 +41,20 @@ namespace Rogue
 
 		ParentSetEvent(Entity parentEnt, Entity childEnt)
 			: ParentEvent(parentEnt, false), childEntity{ childEnt } {}
+
+		inline Entity GetChildEntity() { return childEntity; }
+
+	private:
+		Entity childEntity;
+	};
+
+	class ParentResetEvent : public ChildEvent
+	{
+	public:
+		SET_EVENT_TYPE(EvParentReset)
+
+		ParentResetEvent(Entity childEnt)
+			: ChildEvent(childEnt, false), childEntity{ childEnt } {}
 
 		inline Entity GetChildEntity() { return childEntity; }
 

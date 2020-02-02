@@ -25,6 +25,10 @@ namespace Rogue
 		bool IsLocalDirty() const;
 		bool IsGlobalDirty() const;
 
+		//For Following
+		void SetIsFollowing(bool follow);
+		bool IsFollowing() const;
+
 		void SetParent(Entity ent);
 		void ResetParent();
 		Entity GetParent() const;
@@ -49,6 +53,7 @@ namespace Rogue
 	private:
 		bool m_globalDirty;
 		bool m_localDirty;
+		bool m_isFollowing;
 
 		Entity m_parent;
 
