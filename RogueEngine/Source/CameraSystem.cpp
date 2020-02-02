@@ -143,10 +143,10 @@ namespace Rogue
 					float deltaY = transformPos.y - position.y + shakeOffset.y + cameraOffset.y;
 
 					// Do not move the camera for too small distances
-					if (deltaX > 1 || deltaX < -1)
+					if (deltaX > 0.5 || deltaX < -0.5)
 						position.x += static_cast<int>(deltaX) * m_cameraLerp * g_deltaTime;
 
-					if (deltaY > 1 || deltaY < -1)
+					if (deltaY > 0.5 || deltaY < -0.5)
 						position.y += static_cast<int>(deltaY) * m_cameraLerp * g_deltaTime;
 
 					CameraManager::instance().SetCameraPos(position);

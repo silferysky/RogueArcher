@@ -36,6 +36,8 @@
     <ClInclude Include="Source\CursorComponent.h" />
     <ClInclude Include="Source\EditorEvent.h" />
     <ClInclude Include="Source\FMODHelper.h" />
+    <ClInclude Include="Source\MaskingComponent.h" />
+    <ClInclude Include="Source\MaskingSystem.h" />
     <ClInclude Include="Source\ICommandable.h" />
     <ClInclude Include="Source\ImCurveEdit.h" />
     <ClInclude Include="Source\ImGradient.h" />
@@ -206,6 +208,8 @@
     <ClCompile Include="Source\LogicComponent.cpp" />
     <ClCompile Include="Source\LogicSystem.cpp" />
     <ClCompile Include="Source\Manifold.cpp" />
+    <ClCompile Include="Source\MaskingComponent.cpp" />
+    <ClCompile Include="Source\MaskingSystem.cpp" />
     <ClCompile Include="Source\MenuControllerSystem.cpp" />
     <ClCompile Include="Source\ParentChildSystem.cpp" />
     <ClCompile Include="Source\ParticleComponent.cpp" />

@@ -684,6 +684,11 @@ namespace Rogue
 						//strstream << "Particle{" << g_engine.m_coordinator.GetComponent<ParticleComponent>(entityToSerialize).Serialize() << "}";
 						break;
 					}
+					case static_cast<int>(MASKING) :
+					{
+						strstream << "Masking{" << g_engine.m_coordinator.GetComponent<MaskingComponent>(entityToSerialize).Serialize() << "}";
+						break;
+					}
 					default:
 					{
 						RE_CORE_WARN("OUT OF BOUNDS OBJECT COMPONENT SAVING");
@@ -817,6 +822,11 @@ namespace Rogue
 					case static_cast<int>(PARTICLE) :
 					{
 						g_engine.m_coordinator.LoadComponent<ParticleComponent>(curEnt, readstr);
+						break;
+					}
+					case static_cast<int>(MASKING) :
+					{
+						g_engine.m_coordinator.LoadComponent<MaskingComponent>(curEnt, readstr);
 						break;
 					}
 					default:
