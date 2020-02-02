@@ -15,6 +15,7 @@ namespace Rogue
 		// Add components to signature
 		Signature signature;
 		signature.set(g_engine.m_coordinator.GetComponentType<SpriteComponent>());
+		signature.set(g_engine.m_coordinator.GetComponentType<FadeComponent>());
 
 		// Set graphics system signature
 		g_engine.m_coordinator.SetSystemSignature<FadeSystem>(signature);
@@ -27,19 +28,26 @@ namespace Rogue
 		// For all entities
 		for (auto entity : m_entities)
 		{
-			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(entity);
+			auto& fade = g_engine.m_coordinator.GetComponent<FadeComponent>(entity);
 
-
-			if (sprite.getIsNotFading())
+			if (!fade.getIsActive())
 				continue;
+
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(entity);
 
 			glm::vec4 colourFilter = sprite.getFilter();
 
-			if (colourFilter.a)
+			if (fade.getIsFadingIn() && colourFilter.a < 255)
 			{
-				--colourFilter.a;
+				colourFilter.a += 0.01f * fade.getFadeVelocity();
 				sprite.setFilter(colourFilter);
 			}
+			else if (colourFilter.a)
+			{
+				colourFilter.a -= 0.01f * fade.getFadeVelocity();
+				sprite.setFilter(colourFilter);
+			}
+
 		}
 
 		g_engine.m_coordinator.EndTimeSystem("Fade System");
