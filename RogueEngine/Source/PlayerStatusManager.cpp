@@ -34,7 +34,7 @@ namespace Rogue
 
 	float PlayerStatusManager::GetTeleportCharge() const
 	{
-		return static_cast<int>(m_teleportCharge);
+		return m_teleportCharge;
 	}
 
 	float PlayerStatusManager::GetMaxTeleportCharge() const

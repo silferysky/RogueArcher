@@ -35,7 +35,7 @@ namespace Rogue
 			if (childComponent.IsGlobalDirty())
 			{
 				transComponent.setPosition(childComponent.GetPosition() + parentTransformComponent.GetPosition());
-				transComponent.setZ(childComponent.GetPositionZ()+ parentTransformComponent.GetZ());
+				transComponent.setZ(childComponent.GetPositionZ() + parentTransformComponent.GetZ());
 				transComponent.setScale(Vec2(childComponent.GetScale().x * parentTransformComponent.GetScale().x, childComponent.GetScale().y * parentTransformComponent.GetScale().y));
 				transComponent.setRotation(childComponent.GetRotation() + parentTransformComponent.GetRotation());
 
