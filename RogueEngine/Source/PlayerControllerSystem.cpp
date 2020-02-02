@@ -311,7 +311,7 @@ namespace Rogue
 								{
 									auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
 
-									trans.setPosition(Vec2(-530.0f, 287.0f));
+									trans.setPosition(Vec2(155.0f, 55.0f));
 								}
 							}
 							else if (SceneManager::instance().getCurrentFileName() == "Level 9.json")
@@ -398,7 +398,7 @@ namespace Rogue
 			
 			if (infoA.m_tag == "Player")
 			{
-				if (infoB.m_tag == "Ground")
+				if (infoB.m_tag == "Ground" || infoB.m_tag == "Platform")
 				{
 					player = collisionStay->GetEntityID();
 					playerTrans = collisionStay->GetAPos();
@@ -411,7 +411,7 @@ namespace Rogue
 			}
 			else if (infoB.m_tag == "Player")
 			{
-				if (infoA.m_tag == "Ground")
+				if (infoA.m_tag == "Ground" || infoB.m_tag == "Platform")
 				{
 					ground = collisionStay->GetEntityID();
 					groundTrans = collisionStay->GetAPos();
@@ -431,7 +431,9 @@ namespace Rogue
 			{
 				auto& player = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity);
 
-				if (playerTrans.y - playerScale.y < groundTrans.y + groundScale.y)
+				//Bottom of player is lower than top of ground (Standing on top)
+				//Bottom of player is above bottom of ground (Player is above ground)
+				if (playerTrans.y - playerScale.y/2 < groundTrans.y + groundScale.y/2 && playerTrans.y - playerScale.y /2 > groundTrans.y - groundScale.y /2)
 					player.m_grounded = true;
 				else
 					player.m_grounded = false;
