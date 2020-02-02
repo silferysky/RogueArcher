@@ -21,6 +21,7 @@ namespace Rogue
 
 	void ParentChildSystem::Update()
 	{
+		g_engine.m_coordinator.InitTimeSystem("Parent Child System");
 		for (Entity entity : m_entities)
 		{
 			auto& childComponent = g_engine.m_coordinator.GetComponent<ChildComponent>(entity);
@@ -91,6 +92,8 @@ namespace Rogue
 				toUpdate.clear();
 			}
 		}
+
+		g_engine.m_coordinator.EndTimeSystem("Parent Child System");
 	}
 
 	void ParentChildSystem::Shutdown()
