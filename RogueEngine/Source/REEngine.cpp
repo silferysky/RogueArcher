@@ -111,6 +111,9 @@ namespace Rogue
 		m_coordinator.RegisterComponent<ParticleEmitterComponent>();
 		m_coordinator.RegisterComponent<ParticleComponent>();
 		m_coordinator.RegisterComponent<MaskingComponent>();
+
+
+		//This is a component that isn't directly serialized/deserialized
 		m_coordinator.RegisterComponent<ChildComponent>();
 	}
 
