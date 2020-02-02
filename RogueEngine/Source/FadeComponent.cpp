@@ -24,6 +24,16 @@ namespace Rogue
 		return m_isActive;
 	}
 
+	void FadeComponent::setIsFadingIn(const bool& isFadingIn)
+	{
+		m_isFadingIn = isFadingIn;
+	}
+
+	bool FadeComponent::getIsFadingIn() const
+	{
+		return m_isFadingIn;
+	}
+
 	void FadeComponent::DisplayOnInspector()
 	{
 		ImVec2 imageSize{ ImGui::GetWindowWidth() / 2, ImGui::GetWindowHeight() / 8 };
@@ -32,6 +42,9 @@ namespace Rogue
 
 		ImGui::Checkbox("Active?", &m_isActive);
 		setIsActive(m_isActive);
+
+		ImGui::Checkbox("Fading In?", &m_isFadingIn);
+		setIsFadingIn(m_isFadingIn);
 
 		ImGui::DragFloat("Fade Velocity", &m_fadeVelocity, 0.1f, 0.0f, 20.0f);
 		setFadeVelocity(m_fadeVelocity);

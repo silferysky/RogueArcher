@@ -26,6 +26,7 @@ namespace Rogue
 {
 	class Timer;
 	class SpriteComponent;
+	class FadeComponent;
 
 	class FadeSystem : public System, public EventListener
 	{

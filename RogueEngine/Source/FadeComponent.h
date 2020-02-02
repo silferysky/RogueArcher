@@ -10,6 +10,7 @@ namespace Rogue
 	{
 		float m_fadeVelocity = 1.0f; // how quickly the sprite fades
 		bool m_isActive = true;
+		bool m_isFadingIn = true;
 	public:
 		FadeComponent() = default;
 		~FadeComponent() = default;
@@ -19,6 +20,9 @@ namespace Rogue
 
 		void setIsActive(const bool& isActive);
 		bool getIsActive() const;
+
+		void setIsFadingIn(const bool& isFadingIn);
+		bool getIsFadingIn() const;
 
 		void DisplayOnInspector();
 		//Serialize
