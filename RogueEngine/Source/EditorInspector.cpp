@@ -615,8 +615,6 @@ namespace Rogue
 				}		
 		}
 
-		CollisionManager::instance().PrintLayerNames();
-
 		bool m_worldCamera = g_engine.m_coordinator.GetSystem<CameraSystem>()->GetWorldCamera();
 		ImGui::Checkbox("Toggle World Camera?", &m_worldCamera);
 		g_engine.m_coordinator.GetSystem<CameraSystem>()->SetWorldCamera(m_worldCamera);
