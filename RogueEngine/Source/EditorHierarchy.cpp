@@ -85,7 +85,7 @@ namespace Rogue
 			}
 			if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
 			{
-				ImGui::SetDragDropPayload("Hierarchy", &childHierarchy, sizeof(childHierarchy));
+				ImGui::SetDragDropPayload("Child Hierarchy", &childHierarchy, sizeof(childHierarchy));
 				ImGui::BeginTooltip();
 				ImGui::Text("%s", childHierarchy.m_objectName.c_str());
 				ImGui::EndTooltip();
@@ -156,6 +156,29 @@ namespace Rogue
 	void ImGuiEditorHierarchy::Update()
 	{
 		ImGui::Begin("Hierarchy");
+		if (ImGui::BeginDragDropTarget())
+		{
+			if (const ImGuiPayload * payload = ImGui::AcceptDragDropPayload("Child Hierarchy"))
+			{
+				HierarchyInfo& hierarchyPayload = *(HierarchyInfo*)payload->Data;
+				
+				for (auto& i : m_currentVector)
+				{
+					for (auto& j : g_engine.m_coordinator.GetHierarchyInfo(i).m_children)
+					{	
+						if (hierarchyPayload.m_Entity == j)
+						{
+							//g_engine.m_coordinator.GetHierarchyInfo(i).m_children.clear();
+							//m_currentVector.emplace_back(hierarchyPayload.m_Entity);
+							ParentSetEvent* setParentEv = new ParentSetEvent(hierarchyPayload.m_parent, hierarchyPayload.m_Entity);
+							setParentEv->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+							EventDispatcher::instance().AddEvent(setParentEv);
+						}
+					}
+				}
+			}
+			ImGui::EndDragDropTarget();
+		}
 		if (ImGui::IsWindowFocused())
 		{
 			set(true);
@@ -245,6 +268,9 @@ namespace Rogue
 					DisplayHierarchyParent(objInfo);
 				}
 		}
+		
+
+
 
 
 		ImGui::End();
