@@ -87,8 +87,8 @@ namespace Rogue
 		}
 
 		//Timers 
-		if (PLAYER_STATUS.GetTeleportCharge() < PLAYER_STATUS.GetMaxTeleportCharge())
-			PLAYER_STATUS.IncrementTeleportCharge(g_deltaTime * g_engine.GetTimeScale());
+		//if (PLAYER_STATUS.GetTeleportCharge() < PLAYER_STATUS.GetMaxTeleportCharge())
+			//PLAYER_STATUS.IncrementTeleportCharge(g_deltaTime * g_engine.GetTimeScale());
 
 		PLAYER_STATUS.SetInLightDur(PLAYER_STATUS.GetInLightDur() - g_deltaTime * g_engine.GetTimeScale());
 		PLAYER_STATUS.DecrementTeleportDelay(g_deltaTime * g_engine.GetTimeScale());
@@ -125,6 +125,9 @@ namespace Rogue
 			if (player.GetMoveState() == MoveState::e_stop)
 				ForceManager::instance().RegisterForce(entity, Vec2(rigidbody.getVelocity().x * -c_stopFactor, 0.0f));
 				//rigidbody.addForce(Vec2(rigidbody.getVelocity().x * -c_stopFactor, 0.0f));
+
+			if (player.m_grounded)
+				PLAYER_STATUS.SetTeleportCharge(3.0f);
 
 			player.m_jumpTimer -= g_deltaTime * g_engine.GetTimeScale();
 		}
@@ -581,6 +584,8 @@ namespace Rogue
 	void PlayerControllerSystem::Teleport()
 	{
 		PLAYER_STATUS.IncrementTeleportCharge(-1.0f);
+		if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(*m_entities.begin()))
+			g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(*m_entities.begin()).m_grounded = false;
 
 		// In case player doesn't have a box collider
 		if (!g_engine.m_coordinator.ComponentExists<BoxCollider2DComponent>(*m_entities.begin()))
