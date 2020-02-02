@@ -40,7 +40,7 @@ namespace Rogue
 
 	bool LayerManager::FilterLayers(const Bits& maskA, const Bits& maskB) const
 	{
-		return (maskA & maskB) == 1;
+		return (maskA & maskB) != 0;
 	}
 
 	void LayerManager::PrintNames() const
@@ -58,7 +58,6 @@ namespace Rogue
 
 	void LayerManager::PrintMask(const Bits& mask) const
 	{
-		ImGui::Text("Current Mask:");
 		ImGui::Text("Collides with:");
 
 		for (auto& pair : m_layers)
