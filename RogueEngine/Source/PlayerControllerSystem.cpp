@@ -670,7 +670,9 @@ namespace Rogue
 		if (g_engine.m_coordinator.ComponentExists<TransformComponent>(m_teleports.back().m_entity))
 		{
 			TransformComponent& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(m_teleports.back().m_entity);
-			transform.setPosition(g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin()).GetPosition() + calculatedPos / 2);
+			Vec2 vecOfChange = Vec2(g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin()).GetPosition() - calculatedPos);
+			transform.setPosition(calculatedPos + vecOfChange/ 2);
+			transform.setRotation(atan(vecOfChange.y / vecOfChange.x));
 		}
 	}
 
