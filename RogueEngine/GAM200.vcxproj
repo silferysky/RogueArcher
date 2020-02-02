@@ -31,6 +31,7 @@
     <ClInclude Include="Source\ChildComponent.h" />
     <ClInclude Include="Source\CircleCollisionSystem.h" />
     <ClInclude Include="Source\ColliderComponent.h" />
+    <ClInclude Include="Source\FadeComponent.h" />
     <ClInclude Include="Source\FadeSystem.h" />
     <ClInclude Include="Source\LayerManager.h" />
     <ClInclude Include="Source\CollisionSystem.h" />
@@ -243,6 +244,7 @@
     <ClCompile Include="Source\Sound.cpp" />
     <ClCompile Include="Source\BackgroundComponent.cpp" />
     <ClCompile Include="Source\PickingManager.cpp" />
+    <ClCompile Include="Source\FadeComponent.cpp" />
     <ClCompile Include="Source\StatsComponent.cpp" />
     <ClCompile Include="Source\TextComponent.cpp" />
     <ClCompile Include="Source\TextureManager.cpp" />
