@@ -68,12 +68,12 @@ namespace Rogue
 		return m_position;
 	}
 
-	void ChildComponent::SetPositionZ(float z)
+	void ChildComponent::SetPositionZ(int z)
 	{
 		m_positionZ = z;
 	}
 
-	float ChildComponent::GetPositionZ() const
+	int ChildComponent::GetPositionZ() const
 	{
 		return m_positionZ;
 	}
