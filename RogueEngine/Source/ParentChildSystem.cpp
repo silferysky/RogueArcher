@@ -75,6 +75,21 @@ namespace Rogue
 				//}
 				childComponent.ResetLocalDirty();
 			}
+			//Following only happens if no local or global changes, but you just want to update it
+			else if (childComponent.IsFollowing())
+			{
+				transComponent.setPosition(childComponent.GetPosition() + parentTransformComponent.GetPosition());
+				transComponent.setZ(childComponent.GetPositionZ() + parentTransformComponent.GetZ());
+				transComponent.setScale(Vec2(childComponent.GetScale().x * parentTransformComponent.GetScale().x, childComponent.GetScale().y * parentTransformComponent.GetScale().y));
+				transComponent.setRotation(childComponent.GetRotation() + parentTransformComponent.GetRotation());
+
+				std::vector<Entity> toUpdate;
+				AddChildToVector(toUpdate, entity);
+				for (auto& ent : toUpdate)
+					g_engine.m_coordinator.GetComponent<ChildComponent>(ent).SetGlobalDirty();
+
+				toUpdate.clear();
+			}
 		}
 	}
 
@@ -91,6 +106,21 @@ namespace Rogue
 			ParentSetEvent* parentEvent = dynamic_cast<ParentSetEvent*>(ev);
 			ReassignParentChildFlags(parentEvent->GetParentEntity(), parentEvent->GetChildEntity());
 
+			break;
+		}
+		case EvParentReset:
+		{
+			ParentResetEvent* parentEvent = dynamic_cast<ParentResetEvent*>(ev);
+			HierarchyInfo& child = g_engine.m_coordinator.GetHierarchyInfo(parentEvent->GetChildEntity());
+
+			if (child.m_parent != MAX_ENTITIES && child.m_parent != -1)
+			{
+				HierarchyInfo& oldParentInfo = g_engine.m_coordinator.GetHierarchyInfo(child.m_parent);
+				auto end = std::remove(oldParentInfo.m_children.begin(), oldParentInfo.m_children.end(), parentEvent->GetChildEntity());
+				oldParentInfo.m_children.erase(end, oldParentInfo.m_children.end());
+			}
+
+			child.m_parent = MAX_ENTITIES;
 			break;
 		}
 		case EvParentTransformUpdate:

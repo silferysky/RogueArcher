@@ -156,6 +156,19 @@ namespace Rogue
 	void ImGuiEditorHierarchy::Update()
 	{
 		ImGui::Begin("Hierarchy");
+		if (ImGui::BeginDragDropTarget())
+		{
+			if (const ImGuiPayload * payload = ImGui::AcceptDragDropPayload("Hierarchy"))
+			{
+				HierarchyInfo& hierarchyPayload = *(HierarchyInfo*)payload->Data;
+				//g_engine.m_coordinator.GetHierarchyInfo(i).m_children.clear();
+				//m_currentVector.emplace_back(hierarchyPayload.m_Entity);
+				ParentResetEvent* setParentEv = new ParentResetEvent(hierarchyPayload.m_Entity);
+				setParentEv->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+				EventDispatcher::instance().AddEvent(setParentEv);
+			}
+			ImGui::EndDragDropTarget();
+		}
 		if (ImGui::IsWindowFocused())
 		{
 			set(true);

@@ -5,7 +5,7 @@
 namespace Rogue
 {
 	ChildComponent::ChildComponent()
-		: m_globalDirty{ false }, m_localDirty{ false }, m_parent{ MAX_ENTITIES }, m_position{ Vec2() }, m_scale{ Vec2() }, m_positionZ{ 0 }, m_rotation{ 0 }
+		: m_globalDirty{ false }, m_localDirty{ false }, m_isFollowing{ true }, m_parent{ MAX_ENTITIES }, m_position{ Vec2() }, m_scale{ Vec2() }, m_positionZ{ 0 }, m_rotation{ 0 }
 	{}
 
 	void ChildComponent::SetLocalDirty()
@@ -36,6 +36,16 @@ namespace Rogue
 	bool ChildComponent::IsGlobalDirty() const
 	{
 		return m_globalDirty;
+	}
+
+	void ChildComponent::SetIsFollowing(bool follow)
+	{
+		m_isFollowing = follow;
+	}
+
+	bool ChildComponent::IsFollowing() const
+	{
+		return m_isFollowing;
 	}
 
 	void ChildComponent::SetParent(Entity ent)
@@ -106,10 +116,18 @@ namespace Rogue
 	std::string ChildComponent::Serialize()
 	{
 		return std::string();
+		//std::ostringstream oss;
+		//oss << m_isFollowing << ";";
+		//return oss.str();
 	}
 
 	void ChildComponent::Deserialize(std::string_view toDeserialize)
 	{
+		//std::istringstream ss(toDeserialize.data());
+		//std::string s1;
+
+		//if (std::getline(ss, s1, ';'))
+		//	m_isFollowing = std::stoi(s1);
 	}
 
 	void ChildComponent::DisplayOnInspector()
