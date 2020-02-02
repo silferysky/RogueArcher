@@ -80,10 +80,10 @@ namespace Rogue
 			for (TimedEntity& ent : m_teleports)
 			{
 				ent.m_durationLeft -= g_deltaTime * g_engine.GetTimeScale();
-			}
 
-			if (m_teleports.back().m_durationLeft < 0.0f)
-				ClearTeleportEntities();
+				if (ent.m_durationLeft < 0.0f)
+					ClearTeleportEntities(ent.m_entity);
+			}
 		}
 
 		//Timers 
@@ -190,27 +190,6 @@ namespace Rogue
 						auto& PlayerControllable = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity);
 						if (!PlayerControllable.m_grounded)
 							g_engine.SetTimeScale(PlayerControllable.GetSlowTime());
-					}
-
-					//For teleport
-					if (m_entities.size() && m_timedEntities.size() && PLAYER_STATUS.GetInLightDur() < 0.0f && PLAYER_STATUS.GetTeleportCharge() > 1.0f)
-					{
-						//TimedEntity ent(g_engine.m_coordinator.cloneArchetypes("TeleportSprite", false), 0.5f);
-						//m_teleports.push_back(ent);
-						//if (g_engine.m_coordinator.ComponentExists<TransformComponent>(m_teleports.back().m_entity))
-						//{
-						//	TransformComponent& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(m_teleports.back().m_entity);
-						//	transform.setPosition(g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).GetPosition());
-						//}
-						////By right correct way of doing this
-						////CreateTeleportEvent(g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).GetPosition());
-						///*if (keycode == KeyPress::MB2)
-						//	g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin()).setPosition(
-						//		g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).getPosition());*/
-
-						//ClearTimedEntities();
-						//PLAYER_STATUS.IncrementTeleportCharge(-1.0f);
-						//PLAYER_STATUS.SetTeleportDelay(TELEPORT_DELAY);
 					}
 				}
 
@@ -515,7 +494,8 @@ namespace Rogue
 		auto& activeObjects = g_engine.m_coordinator.GetActiveObjects();
 		for (TimedEntity& entity : m_teleports)
 		{
-			g_engine.m_coordinator.DestroyEntity(entity.m_entity);
+			if (entity.m_durationLeft < 0.0f)
+				g_engine.m_coordinator.DestroyEntity(entity.m_entity);
 
 			//for (auto iterator = activeObjects.begin(); iterator != activeObjects.end(); ++iterator)
 			//{
@@ -528,6 +508,18 @@ namespace Rogue
 		}
 
 		m_teleports.clear();
+	}
+
+	void PlayerControllerSystem::ClearTeleportEntities(Entity ent)
+	{
+		for (auto it = m_teleports.begin(); it != m_teleports.end(); ++it)
+		{
+			if (it->m_entity == ent)
+			{
+				m_teleports.erase(it);
+				return;
+			}
+		}
 	}
 
 	void PlayerControllerSystem::CreateTeleportEvent(Vec2 newPosition)
@@ -657,6 +649,15 @@ namespace Rogue
 		}
 
 		CreateTeleportEvent(calculatedPos);
+
+		//For teleport VFX
+		TimedEntity ent(g_engine.m_coordinator.cloneArchetypes("TeleportSprite", false), 1.0f);
+		m_teleports.push_back(ent);
+		if (g_engine.m_coordinator.ComponentExists<TransformComponent>(m_teleports.back().m_entity))
+		{
+			TransformComponent& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(m_teleports.back().m_entity);
+			transform.setPosition(g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin()).GetPosition() + calculatedPos / 2);
+		}
 	}
 
 	void PlayerControllerSystem::DebugDrawBall(const BaseCollider& box, const TransformComponent& trans) const
