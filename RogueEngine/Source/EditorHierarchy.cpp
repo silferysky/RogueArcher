@@ -258,9 +258,6 @@ namespace Rogue
 					DisplayHierarchyParent(objInfo);
 				}
 		}
-		
-
-
 
 
 		ImGui::End();
