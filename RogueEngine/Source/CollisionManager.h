@@ -27,7 +27,7 @@ Technology is prohibited.
 #include "RigidbodyComponent.h"
 #include "CircleCollider2DComponent.h"
 #include "Manifold.h"
-#include "CollisionLayerer.h"
+#include "LayerManager.h"
 
 namespace Rogue
 {
@@ -38,7 +38,7 @@ namespace Rogue
 		std::vector<std::pair<Entity, Entity>> m_circlePairs; // Stored pairs of circles
 		std::vector<Manifold> m_manifolds; // To generate and resolve after collision tests
 
-		CollisionLayerer m_collisionLayerer; // The manager for collision filters/layers
+		LayerManager m_layerManager; // The manager for collision filters/layers
 
 		static const float s_correction_factor;
 		static const float s_correction_slop; // Penetration threshold
@@ -122,12 +122,15 @@ namespace Rogue
 		static float GetCorrectionSlop();
 
 		// Collision filters
-		bool FilterColliders(const CollisionLayerer::Bits& mask, const CollisionLayerer::Bits& category);
-		void AddLayer(std::string_view name, const CollisionLayerer::Bits& layer);
-		void RemoveLayer(const CollisionLayerer::Bits& layer);
+		bool FilterColliders(const LayerManager::Bits& mask, const LayerManager::Bits& category);
+		void AddLayer(std::string_view name);
+		void RemoveLayer(size_t layer);
 		void RemoveLayer(std::string_view name);
-		std::string_view GetLayerName(const CollisionLayerer::Bits& layer) const;
+		std::string_view GetLayerName(size_t layer) const;
 		void PrintLayerNames() const;
+		void PrintCollisionMask(const LayerManager::Bits& mask) const;
+		size_t GetNumberOfLayers() const;
+		size_t GetLayerCategory(const LayerManager::Bits& cat) const;
 	};
 }
 

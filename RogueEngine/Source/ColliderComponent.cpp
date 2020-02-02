@@ -24,9 +24,13 @@ namespace Rogue
 {
 	ColliderComponent::ColliderComponent(const std::shared_ptr<Shape> ptr) :
 		m_shape{ ptr },
-		m_collisionCategory{ CollisionLayerer::s_layerDefault.second },
-		m_collisionMask{ CollisionLayerer::s_layerDefault.second }
-	{}
+		m_collisionCategory{ 0 },
+		m_collisionMask{ 4294967296 }
+	{
+		size_t layer = LayerManager::s_layerDefault.first;
+		m_collisionCategory.set(layer);
+		m_collisionMask.set(layer);
+	}
 
 	ColliderComponent::ColliderComponent(const ColliderComponent& rhs) :
 		m_shape{ nullptr },
@@ -176,21 +180,40 @@ namespace Rogue
 		}
 		
 		if(std::getline(ss, s1, ';'))
-			m_collisionCategory = static_cast<CollisionLayerer::Bits>(s1);
+			m_collisionCategory = static_cast<LayerManager::Bits>(s1);
 
 		if(std::getline(ss, s1, ';'))
-			m_collisionMask = static_cast<CollisionLayerer::Bits>(s1);
+			m_collisionMask = static_cast<LayerManager::Bits>(s1);
 	}
 
 	void ColliderComponent::DisplayOnInspector()
 	{
 		ImGui::BeginTooltip();
-		ImGui::Text("Current Layer: %s", std::string(CollisionManager::instance().GetLayerName(m_collisionCategory)).c_str());
+		size_t cat = CollisionManager::instance().GetLayerCategory(m_collisionCategory);
+		std::string name = std::string(CollisionManager::instance().GetLayerName(cat));
+		ImGui::Text("Current Layer: %s", name.c_str());
 		ImGui::EndTooltip();
 
-		ImGui::BeginTooltip();
-		ImGui::Text("Current Mask: %s", std::string(CollisionManager::instance().GetLayerName(m_collisionMask)).c_str());
-		ImGui::EndTooltip();
+		size_t numLayers = CollisionManager::instance().GetNumberOfLayers();
+		std::stringstream ss;
+		bool checked;
+
+		ImGui::NewLine();
+		CollisionManager::instance().PrintLayerNames();
+		ImGui::NewLine();
+		ImGui::Text("Collides With:");
+
+		for(unsigned pos = 0; pos < numLayers; pos++)
+		{
+			checked = m_collisionMask[pos];
+			ss << CollisionManager::instance().GetLayerName(pos);
+			ImGui::Checkbox(ss.str().c_str(), &checked);
+			CLEARSTRING(ss);
+
+			m_collisionMask.set(pos, checked);
+		}
+		ImGui::NewLine();
+		CollisionManager::instance().PrintCollisionMask(m_collisionMask);
 	}
 
 
@@ -199,12 +222,12 @@ namespace Rogue
 		return m_shape;
 	}
 
-	const CollisionLayerer::Bits& ColliderComponent::GetCollisionMask() const
+	const LayerManager::Bits& ColliderComponent::GetCollisionMask() const
 	{
 		return m_collisionMask;
 	}
 
-	const CollisionLayerer::Bits& ColliderComponent::GetCollisionCat() const
+	const LayerManager::Bits& ColliderComponent::GetCollisionCat() const
 	{
 		return m_collisionCategory;
 	}
@@ -236,12 +259,12 @@ namespace Rogue
 		m_collisionMask.set(layerPos, state);
 	}
 
-	void ColliderComponent::SetCollisionMask(const CollisionLayerer::Bits& bits)
+	void ColliderComponent::SetCollisionMask(const LayerManager::Bits& bits)
 	{
 		m_collisionMask = bits;
 	}
 	
-	void ColliderComponent::SetCollisionCat(const CollisionLayerer::Bits& layer)
+	void ColliderComponent::SetCollisionCat(const LayerManager::Bits& layer)
 	{
 		m_collisionCategory = layer;
 	}
