@@ -1,11 +1,11 @@
 /* Start Header ************************************************************************/
 /*!
-\file           MaskingSystem.h
+\file           FadeSystem.h
 \project        Exale
 \author         Javier Foo, javier.foo, 440002318 (100%)
 \par            javier.foo\@digipen.edu
 \date           1 Decembe, 2019
-\brief          This file contains the function declarations for MaskingSystem
+\brief          This file contains the function declarations for FadeSystem
 
 All content (C) 2020 DigiPen (SINGAPORE) Corporation, all rights
 reserved.
@@ -26,20 +26,17 @@ namespace Rogue
 {
 	class Timer;
 	class SpriteComponent;
-	class MaskingComponent;
-	
-	class MaskingSystem : public System, public EventListener
+	class FadeComponent;
+
+	class FadeSystem : public System, public EventListener
 	{
-		void UpdateTexture(MaskingComponent* masking, SpriteComponent* sprite);
 	public:
-		MaskingSystem();
-		~MaskingSystem() = default;
+		FadeSystem();
+		~FadeSystem() = default;
 
 		void Init() override;
 		void Update() override;
 		void Shutdown() override;
-
-		void ResetTextures();
 
 		void Receive(Event* ev);
 	};

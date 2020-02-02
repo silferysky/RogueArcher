@@ -176,6 +176,19 @@ namespace Rogue
 						}
 					}
 
+					if (g_engine.m_coordinator.ComponentExists<FadeComponent>(i))
+					{
+						if (ImGui::CollapsingHeader("Fade"))
+						{
+							auto& fade = g_engine.m_coordinator.GetComponent<FadeComponent>(i);
+							fade.DisplayOnInspector();
+							if (ImGui::Button("Remove Component"))
+							{
+								g_engine.m_coordinator.RemoveComponent<FadeComponent>(i);
+							}
+						}
+					}
+
 					if (g_engine.m_coordinator.ComponentExists<CircleCollider2DComponent>(i))
 					{
 						if (ImGui::CollapsingHeader("Circle 2D Collider"))
@@ -396,7 +409,12 @@ namespace Rogue
 
 							if (ImGui::MenuItem("Animation Component", nullptr, false, !g_engine.m_coordinator.ComponentExists<AnimationComponent>(i)))
 							{
-								g_engine.m_coordinator.AddComponent(i,AnimationComponent());
+								g_engine.m_coordinator.AddComponent(i, AnimationComponent());
+							}
+
+							if (ImGui::MenuItem("Fade Component", nullptr, false, !g_engine.m_coordinator.ComponentExists<FadeComponent>(i)))
+							{
+								g_engine.m_coordinator.AddComponent(i, FadeComponent());
 							}
 
 							if (ImGui::MenuItem("Transform Component",nullptr,false, !g_engine.m_coordinator.ComponentExists<TransformComponent>(i)))
@@ -515,6 +533,11 @@ namespace Rogue
 								g_engine.m_coordinator.RemoveComponent<AnimationComponent>(i);
 							}
 
+							if (ImGui::MenuItem("Fade Component", nullptr, false, g_engine.m_coordinator.ComponentExists<FadeComponent>(i)))
+							{
+								g_engine.m_coordinator.RemoveComponent<FadeComponent>(i);
+							}
+
 							if (ImGui::MenuItem("Transform Component", nullptr, false, g_engine.m_coordinator.ComponentExists<TransformComponent>(i)))
 							{
 								g_engine.m_coordinator.RemoveComponent<TransformComponent>(i);
@@ -614,8 +637,6 @@ namespace Rogue
 
 				}		
 		}
-
-		CollisionManager::instance().PrintLayerNames();
 
 		bool m_worldCamera = g_engine.m_coordinator.GetSystem<CameraSystem>()->GetWorldCamera();
 		ImGui::Checkbox("Toggle World Camera?", &m_worldCamera);

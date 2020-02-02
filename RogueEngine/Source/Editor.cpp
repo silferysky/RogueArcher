@@ -44,6 +44,11 @@ namespace Rogue
 				AddToRedoStack(editorEv);
 				m_hierarchyVector.pop_back();
 				break;
+			case EventType::EvEditorDeleteObject:
+				EventDispatcher::instance().AddEvent(editorEv);
+				AddToRedoStack(editorEv);
+				m_hierarchyVector.pop_back();
+				break;
 			default:
 				break;
 			}
@@ -80,23 +85,17 @@ namespace Rogue
 		}
 	}
 
+
+
 	void Editor::ClearUndoRedoStack()
 	{
 		if (m_undoStack.size() != NULL)
 		{
-			/*for (ICommandable* i : m_undoStack)
-			{
-				delete i;
-			}*/
 			m_undoStack.clear();
 		}
 
 		if (m_redoStack.size() != NULL)
 		{
-			/*for (ICommandable* i : m_redoStack)
-			{
-				delete i;
-			}*/
 			m_redoStack.clear();
 		}
 	}
@@ -117,6 +116,13 @@ namespace Rogue
 		AddToUndoStack(event);
 	}
 
+	void Editor::DeleteCommand()
+	{
+		EditorDeleteObjectEvent* event = new EditorDeleteObjectEvent();
+		event->SetSystemReceivers((int)SystemID::id_EDITOR);
+		EventDispatcher::instance().AddEvent(event);
+		AddToUndoStack(event);
+	}
 	void Editor::HandleStack(bool exeUndo)
 	{
 		if (exeUndo)
@@ -309,8 +315,8 @@ namespace Rogue
 						{
 							if (pasteObjEvent->GetIsUndo())
 							{
-								g_engine.m_coordinator.AddToDeleteQueue(m_pastedEntitesVector.back());
-								m_pastedEntitesVector.pop_back();
+								g_engine.m_coordinator.AddToDeleteQueue(m_pastedEntitiesVector.back());
+								m_pastedEntitiesVector.pop_back();
 								AddToRedoStack(m_undoStack.back());
 								m_undoStack.pop_back();
 
@@ -319,12 +325,37 @@ namespace Rogue
 							{
 								m_undoStack.push_back(pasteObjEvent);
 								m_pastedEntity = g_engine.m_coordinator.clone(m_copiedEntity);
-								m_pastedEntitesVector.push_back(m_pastedEntity);
+								m_pastedEntitiesVector.push_back(m_pastedEntity);
 							}
 						}
 					}
 					return;
 				}
+				case EvEditorDeleteObject:
+				{
+					EditorDeleteObjectEvent* deleteObjEvent = dynamic_cast<EditorDeleteObjectEvent*>(ev);
+					for (auto& i : m_hierarchyVector)
+					{
+						if (g_engine.m_coordinator.GetHierarchyInfo(i).m_selected)
+						{
+							if (deleteObjEvent->GetIsUndo())
+							{
+								g_engine.m_coordinator.clone(m_deletedEntitiesVector.back());
+								m_deletedEntitiesVector.pop_back();
+								AddToRedoStack(m_undoStack.back());
+								m_undoStack.pop_back();
+							}
+							else
+							{
+								m_deletedEntitiesVector.push_back(i);
+								g_engine.m_coordinator.AddToDeleteQueue(i);
+								m_undoStack.push_back(deleteObjEvent);
+								
+							}
+						}
+					}
+				}
+					return;
 			}
 		}
 		
