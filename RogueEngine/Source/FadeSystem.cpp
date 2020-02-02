@@ -37,11 +37,17 @@ namespace Rogue
 
 			glm::vec4 colourFilter = sprite.getFilter();
 
-			if (colourFilter.a)
+			if (fade.getIsFadingIn() && colourFilter.a < 255)
+			{
+				colourFilter.a += 0.01f * fade.getFadeVelocity();
+				sprite.setFilter(colourFilter);
+			}
+			else if (colourFilter.a)
 			{
 				colourFilter.a -= 0.01f * fade.getFadeVelocity();
 				sprite.setFilter(colourFilter);
 			}
+
 		}
 
 		g_engine.m_coordinator.EndTimeSystem("Fade System");
