@@ -140,7 +140,7 @@ namespace Rogue
 		std::ostringstream strstream;
 		
 		strstream << getTexturePath() << ";";
-		strstream << m_filter.r << ";" << m_filter.g << ";" << m_filter.b << ";" << m_filter.a;
+		strstream << m_filter.r << ";" << m_filter.g << ";" << m_filter.b << ";" << m_filter.a << ";";
 
 		return strstream.str();
 		//Cannot use find because need use value to find key
@@ -163,17 +163,17 @@ namespace Rogue
 		setTexturePath(stdstr);
 		setTexture(m_texturePath.c_str());
 
-		std::getline(strstream, stdstr, ';');
-		m_filter.r = std::stof(stdstr);
+		if (std::getline(strstream, stdstr, ';'));
+			m_filter.r = std::stof(stdstr);
 
-		std::getline(strstream, stdstr, ';');
-		m_filter.g = std::stof(stdstr);
+		if (std::getline(strstream, stdstr, ';'));
+			m_filter.g = std::stof(stdstr);
 
-		std::getline(strstream, stdstr, ';');
-		m_filter.b = std::stof(stdstr);
+		if (std::getline(strstream, stdstr, ';'));
+			m_filter.b = std::stof(stdstr);
 
-		std::getline(strstream, stdstr, ';');
-		m_filter.a = std::stof(stdstr);
+		if (std::getline(strstream, stdstr, ';'));
+			m_filter.a = std::stof(stdstr);
 	}
 
 	/*void SpriteComponent::operator=(SpriteComponent sprite)
