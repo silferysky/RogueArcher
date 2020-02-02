@@ -32,9 +32,11 @@ namespace Rogue
 		int m_fakeZ;
 
 		AABB m_pickArea;
+
+		bool m_modified;
 	public:
 		TransformComponent(const Vec2& pos = { 0.0f, 0.0f }, const Vec2& scale = { 1.0f, 1.0f },
-			float rot = 0.0f, int Z = 0, const AABB& aabb = AABB{});
+			float rot = 0.0f, int Z = 0, const AABB& aabb = AABB{}, bool modified = false);
 
 		void setPosition(const Vec2& pos);
 		void offSetPosition(const Vec2& pos);
@@ -44,12 +46,14 @@ namespace Rogue
 		void offSetRotation(float rot);
 		void setPickArea(const AABB& aabb);
 		void setZ(int z);
+		void setModified(bool isMod);
 
 		Vec2 GetPosition() const;
 		Vec2 GetScale() const;
 		float GetRotation() const;
 		const AABB& GetPickArea() const;
 		int GetZ() const;
+		bool GetIsModified() const;
 
 		std::string Serialize() override;
 		void Deserialize(std::string_view toDeserialize) override;

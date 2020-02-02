@@ -21,8 +21,8 @@ Technology is prohibited.
 
 namespace Rogue
 {
-	TransformComponent::TransformComponent(const Vec2& pos, const Vec2& scale, float rot, int Z, const AABB& aabb) :
-		m_position{ pos }, m_scale{ scale }, m_rotation{ rot }, m_fakeZ{ Z }, m_pickArea{ aabb }
+	TransformComponent::TransformComponent(const Vec2& pos, const Vec2& scale, float rot, int Z, const AABB& aabb, bool modified) :
+		m_position{ pos }, m_scale{ scale }, m_rotation{ rot }, m_fakeZ{ Z }, m_pickArea{ aabb }, m_modified{ modified }
 	{}
 
 	void TransformComponent::setPosition(const Vec2& pos)
@@ -65,6 +65,11 @@ namespace Rogue
 		m_fakeZ = z;
 	}
 
+	void TransformComponent::setModified(bool isMod)
+	{
+		m_modified = isMod;
+	}
+
 	Vec2 TransformComponent::GetPosition() const
 	{
 		return m_position;
@@ -88,6 +93,11 @@ namespace Rogue
 	int TransformComponent::GetZ() const
 	{
 		return m_fakeZ;
+	}
+
+	bool TransformComponent::GetIsModified() const
+	{
+		return m_modified;
 	}
 
 	std::string TransformComponent::Serialize()
@@ -143,13 +153,19 @@ namespace Rogue
 		ImGui::SameLine();
 		ImGui::PushItemWidth(75);
 		ImGui::DragFloat("     ", &m_position.x);
+		if (ImGui::IsItemDeactivated())
+			m_modified = true;
 		ImGui::SameLine();
 		ImGui::PushItemWidth(75);
 		ImGui::DragFloat("      ", &m_position.y);
+		if (ImGui::IsItemDeactivated())
+			m_modified = true;
 
 		ImGui::Text("Z Value  ");
 		ImGui::SameLine();
 		ImGui::DragInt("    ", &m_fakeZ, 1.0f, -100000, 100000);
+		if (ImGui::IsItemDeactivated())
+			m_modified = true;
 
 		if (ImGui::IsItemHovered())
 		{
@@ -162,12 +178,18 @@ namespace Rogue
 		ImGui::SameLine();
 		ImGui::PushItemWidth(75);
 		ImGui::DragFloat(" ", &m_scale.x, 1.0f, 0.0f, 100000.0f);
+		if (ImGui::IsItemDeactivated())
+			m_modified = true;
 		ImGui::SameLine(0.0f, 36.0f);
 		ImGui::DragFloat("  ", &m_scale.y, 1.0f, 0.0f, 100000.0f);
+		if (ImGui::IsItemDeactivated())
+			m_modified = true;
 
 		ImGui::Text("Rotation ");
 		ImGui::SameLine();
 		ImGui::DragFloat("   ", &m_rotation, 0.1f, 0.0f, 6.28f);
+		if (ImGui::IsItemDeactivated())
+			m_modified = true;
 
 		DisplayOnInspectorWithParent();
 	}
@@ -177,16 +199,19 @@ namespace Rogue
 		if (ImGui::Button("Reset Position"))
 		{
 			m_position = Vec2{ 0.0f, 0.0f };
+			m_modified = true;
 		}
 
 		if (ImGui::Button("Reset Rotation"))
 		{
 			m_rotation = 0.0f;
+			m_modified = true;
 		}
 
 		if (ImGui::Button("Reset Scale"))
 		{
 			m_scale = Vec2{ 100.0f,100.0f };
+			m_modified = true;
 		}
 	}
 }

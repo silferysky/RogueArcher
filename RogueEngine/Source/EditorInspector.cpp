@@ -130,9 +130,13 @@ namespace Rogue
 							if (infoObj.m_parent == -1 || infoObj.m_parent == MAX_ENTITIES)
 							{
 								trans.DisplayOnInspector();
-								ParentTransformEvent* setParentEv = new ParentTransformEvent(i, MAX_ENTITIES);
-								setParentEv->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
-								EventDispatcher::instance().AddEvent(setParentEv);
+								if (trans.GetIsModified())
+								{
+									ParentTransformEvent* setParentEv = new ParentTransformEvent(i, MAX_ENTITIES);
+									setParentEv->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+									EventDispatcher::instance().AddEvent(setParentEv);
+									trans.setModified(false);
+								}
 							}
 							else
 							{
