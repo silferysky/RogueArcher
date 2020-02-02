@@ -671,6 +671,7 @@ namespace Rogue
 			Vec2 vecOfChange = Vec2(g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin()).GetPosition() - calculatedPos);
 			transform.setPosition(calculatedPos + vecOfChange/ 2);
 			transform.setRotation(atan(vecOfChange.y / vecOfChange.x));
+			transform.setScale(Vec2(vecOfChange.x, vecOfChange.y));
 		}
 	}
 

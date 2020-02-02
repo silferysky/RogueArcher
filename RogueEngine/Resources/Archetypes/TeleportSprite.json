@@ -1,4 +1,4 @@
 {
     "Signature": 261,
-    "Entity": "Name{Game Object 60}|Tag{}|Sprite{Resources\\Assets\\Telestreak1.png;1;1;1;1}||Transform{-1000;302.61;200;200;0;0}||||||Animation{9;10;0.025;0;}||||||||||"
+    "Entity": "Name{Game Object 60}|Tag{}|Sprite{Resources\\Assets\\Telestreak1.png;1;1;1;1}||Transform{-1000;302.61;200;200;0;12}||||||Animation{9;10;0.025;0;}||||||||||"
 }
