@@ -34,24 +34,17 @@ namespace Rogue
 			//Global values is "corrupted", need to fix
 			if (childComponent.IsGlobalDirty())
 			{
-				Vec2 posChange(childComponent.GetPosition() + parentTransformComponent.GetPosition() - transComponent.GetPosition());
-				int zChange(childComponent.GetPositionZ() + parentTransformComponent.GetZ() - transComponent.GetZ());
-				Vec2 scaleChange(childComponent.GetScale().x * parentTransformComponent.GetScale().x / transComponent.GetScale().x, childComponent.GetScale().y * parentTransformComponent.GetScale().y / transComponent.GetScale().y);
-				float rotChange(childComponent.GetRotation() + parentTransformComponent.GetRotation() - transComponent.GetRotation());
+				transComponent.setPosition(childComponent.GetPosition() + parentTransformComponent.GetPosition());
+				transComponent.setZ(childComponent.GetPositionZ()+ parentTransformComponent.GetZ());
+				transComponent.setScale(Vec2(childComponent.GetScale().x * parentTransformComponent.GetScale().x, childComponent.GetScale().y * parentTransformComponent.GetScale().y));
+				transComponent.setRotation(childComponent.GetRotation() + parentTransformComponent.GetRotation());
 
 				std::vector<Entity> toUpdate;
-				toUpdate.push_back(entity);
 				AddChildToVector(toUpdate, entity);
-
 				for (auto& ent : toUpdate)
-				{
-					auto transformIterator = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
+					g_engine.m_coordinator.GetComponent<ChildComponent>(ent).SetGlobalDirty();
 
-					transformIterator.setPosition(transformIterator.GetPosition() + posChange);
-					transformIterator.setZ(transformIterator.GetZ()+ zChange);
-					transformIterator.setScale(Vec2(transformIterator.GetScale().x * scaleChange.x, transformIterator.GetScale().y * scaleChange.y));
-					transformIterator.setRotation(transformIterator.GetRotation() + rotChange);
-				}
+				toUpdate.clear();
 
 				childComponent.ResetGlobalDirty();
 			}
@@ -63,7 +56,7 @@ namespace Rogue
 				childComponent.SetScale(Vec2(transComponent.GetScale().x / parentTransformComponent.GetScale().x, transComponent.GetScale().y / parentTransformComponent.GetScale().y));
 				childComponent.SetRotation(transComponent.GetRotation() - parentTransformComponent.GetRotation());
 				//If grandparent don't exists
-				// g_engine.m_coordinator.GetComponent<ChildComponent>(childComponent.GetParent()).GetParent() == MAX_ENTITIES
+				//g_engine.m_coordinator.GetComponent<ChildComponent>(childComponent.GetParent()).GetParent() == MAX_ENTITIES;
 				//if (!g_engine.m_coordinator.ComponentExists<ChildComponent>(childComponent.GetParent()))
 				//{
 				//	//Calculate position based on global transform
@@ -255,8 +248,11 @@ namespace Rogue
 		//Marking all entities that needs to be updated
 		for (auto& entity : parentHierarchyInfo.m_children)
 		{
-			entityVector.push_back(entity);
-			newVector.push_back(entity);
+			if (g_engine.m_coordinator.ComponentExists<ChildComponent>(entity))
+			{
+				entityVector.push_back(entity);
+				newVector.push_back(entity);
+			}
 		}
 
 		for (auto& entity : newVector)
