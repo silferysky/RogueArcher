@@ -75,6 +75,21 @@ namespace Rogue
 				//}
 				childComponent.ResetLocalDirty();
 			}
+			//Following only happens if no local or global changes, but you just want to update it
+			else if (childComponent.IsFollowing())
+			{
+				transComponent.setPosition(childComponent.GetPosition() + parentTransformComponent.GetPosition());
+				transComponent.setZ(childComponent.GetPositionZ() + parentTransformComponent.GetZ());
+				transComponent.setScale(Vec2(childComponent.GetScale().x * parentTransformComponent.GetScale().x, childComponent.GetScale().y * parentTransformComponent.GetScale().y));
+				transComponent.setRotation(childComponent.GetRotation() + parentTransformComponent.GetRotation());
+
+				std::vector<Entity> toUpdate;
+				AddChildToVector(toUpdate, entity);
+				for (auto& ent : toUpdate)
+					g_engine.m_coordinator.GetComponent<ChildComponent>(ent).SetGlobalDirty();
+
+				toUpdate.clear();
+			}
 		}
 	}
 
