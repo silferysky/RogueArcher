@@ -98,14 +98,15 @@ namespace Rogue
 			ParentResetEvent* parentEvent = dynamic_cast<ParentResetEvent*>(ev);
 			HierarchyInfo& child = g_engine.m_coordinator.GetHierarchyInfo(parentEvent->GetChildEntity());
 
-			//if (child.m_parent != MAX_ENTITIES)
-			//{
-			//	HierarchyInfo& oldParentInfo = g_engine.m_coordinator.GetHierarchyInfo(child.m_parent);
-			//	auto end = std::remove(oldParentInfo.m_children.begin(), oldParentInfo.m_children.end(), child);
-			//	oldParentInfo.m_children.erase(end, oldParentInfo.m_children.end());
-			//}
+			if (child.m_parent != MAX_ENTITIES && child.m_parent != -1)
+			{
+				HierarchyInfo& oldParentInfo = g_engine.m_coordinator.GetHierarchyInfo(child.m_parent);
+				auto end = std::remove(oldParentInfo.m_children.begin(), oldParentInfo.m_children.end(), parentEvent->GetChildEntity());
+				oldParentInfo.m_children.erase(end, oldParentInfo.m_children.end());
+			}
 
-			//child.m_parent = MAX_ENTITIES;
+			child.m_parent = MAX_ENTITIES;
+			break;
 		}
 		case EvParentTransformUpdate:
 		{
