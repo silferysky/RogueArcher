@@ -42,6 +42,7 @@ namespace Rogue
 		void ExecuteCommand(bool isUndo = true);
 		void UndoCommand();
 		void RedoCommand();
+		void DeleteCommand();
 		void ClearUndoRedoStack();
 		void CopyCommand();
 		void PasteCommand();
@@ -58,7 +59,8 @@ namespace Rogue
 		bool& m_isHierarchyActive = ImGuiEditorHierarchy::instance().GetIsHierarchyFocused();
 		Entity m_copiedEntity;
 		Entity m_pastedEntity;
-		std::vector<Entity> m_pastedEntitesVector;
+		std::vector<Entity> m_pastedEntitiesVector;
+		std::vector<Entity> m_deletedEntitiesVector;
 		size_t m_pasteCount = 0;
 	};
 }
