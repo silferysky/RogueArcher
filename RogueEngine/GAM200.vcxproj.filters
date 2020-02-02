@@ -571,6 +571,9 @@
     <ClInclude Include="Source\MaskingComponent.h">
       <Filter>RogueEngine\Systems\Graphics\Masking</Filter>
     </ClInclude>
+    <ClInclude Include="Source\FadeSystem.h">
+      <Filter>RogueEngine\Systems\Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -890,6 +893,9 @@
     </ClCompile>
     <ClCompile Include="Source\MaskingComponent.cpp">
       <Filter>RogueEngine\Systems\Graphics\Masking</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\FadeSystem.cpp">
+      <Filter>RogueEngine\Systems\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
