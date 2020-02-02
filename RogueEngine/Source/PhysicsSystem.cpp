@@ -23,7 +23,6 @@ Technology is prohibited.
 #include "Timer.h"
 #include "KeyEvent.h"
 #include "GameEvent.h"
-#include "ParentEvent.h"
 #include "EventDispatcher.h"
 #include "Logger.h"
 #include "REEngine.h"
@@ -110,13 +109,6 @@ namespace Rogue
 
 				// Reset accForce
 				rigidbody.setAccForce(Vec2());
-
-				if (g_engine.m_coordinator.GetHierarchyInfo(*iEntity).m_children.size())
-				{
-					ParentTransformEvent* parentEv = new ParentTransformEvent(*iEntity, MAX_ENTITIES);
-					parentEv->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
-					EventDispatcher::instance().AddEvent(parentEv);
-				}
 			}
 
 			ForceManager::instance().UpdateAges();
