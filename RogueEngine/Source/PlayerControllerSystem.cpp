@@ -435,6 +435,11 @@ namespace Rogue
 					player.m_grounded = true;
 					PLAYER_STATUS.SetHasJumped(false);
 				}
+				else if (infoA.m_tag == "Platform" || infoB.m_tag == "Platform")
+				{
+					player.m_grounded = true;
+					PLAYER_STATUS.SetHasJumped(false);
+				}
 				else
 					player.m_grounded = false;
 			}
