@@ -1,3 +1,4 @@
+#include "Precompiled.h"
 #include "FadeObject.h"
 #include "GraphicsEvent.h"
 #include "EventDispatcher.h"
