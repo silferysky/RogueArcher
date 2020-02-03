@@ -158,21 +158,22 @@ namespace Rogue
 		std::istringstream strstream(toDeserialize.data());
 		std::string stdstr;
 
-		std::getline(strstream, stdstr, ';');
+		if (std::getline(strstream, stdstr, ';'))
+		{
+			setTexturePath(stdstr);
+			setTexture(m_texturePath.c_str());
+		}
 
-		setTexturePath(stdstr);
-		setTexture(m_texturePath.c_str());
-
-		if (std::getline(strstream, stdstr, ';'));
+		if (std::getline(strstream, stdstr, ';'))
 			m_filter.r = std::stof(stdstr);
 
-		if (std::getline(strstream, stdstr, ';'));
+		if (std::getline(strstream, stdstr, ';'))
 			m_filter.g = std::stof(stdstr);
 
-		if (std::getline(strstream, stdstr, ';'));
+		if (std::getline(strstream, stdstr, ';'))
 			m_filter.b = std::stof(stdstr);
 
-		if (std::getline(strstream, stdstr, ';'));
+		if (std::getline(strstream, stdstr, ';'))
 			m_filter.a = std::stof(stdstr);
 	}
 
