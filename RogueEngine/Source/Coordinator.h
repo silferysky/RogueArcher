@@ -74,7 +74,7 @@ namespace Rogue
 			GetSystem<AudioSystem>()->TrueInit();
 			//GetSystem<AudioSystem>()->InitSounds();
 
-			GetSystem<AnimationSystem>()->ResetTextures();
+			GetSystem<AnimationSystem>()->InitAnimations();
 		}
 
 		void Update()
