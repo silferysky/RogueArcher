@@ -53,6 +53,8 @@ namespace Rogue
 			}
 			ev->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
 			EventDispatcher::instance().AddEvent(ev);
+
+			//Manually preventing second occurance of this event
 			m_delay += 0.001f;
 		}
 		else if (m_delay == 0.0f)
@@ -61,10 +63,38 @@ namespace Rogue
 			if ((m_currentPointIndex && firstPos.y > secondPos.y) || (!m_currentPointIndex && firstPos.y < secondPos.y))
 			{
 				ev = new EntChangeSpriteEvent(m_entity, "Resources\\Assets\\FlowerDown.png");
+
+				if (g_engine.m_coordinator.ComponentExists<ColliderComponent>(m_entity))
+				{
+					ColliderComponent& collider = g_engine.m_coordinator.GetComponent<ColliderComponent>(m_entity);
+					int lightPos = -1;
+					int darkPos = -1;
+
+					lightPos = LayerManager::instance().GetLayerCategory("Light");
+					darkPos = LayerManager::instance().GetLayerCategory("Dark");
+
+					collider.ChangeLayer(darkPos);
+					collider.SetMask(lightPos);
+					collider.SetMask(darkPos, false);
+				}
 			}
 			else
 			{
 				ev = new EntChangeSpriteEvent(m_entity, "Resources\\Assets\\FlowerUp.png");
+
+				if (g_engine.m_coordinator.ComponentExists<ColliderComponent>(m_entity))
+				{
+					ColliderComponent& collider = g_engine.m_coordinator.GetComponent<ColliderComponent>(m_entity);
+					int lightPos = -1;
+					int darkPos = -1;
+
+					lightPos = LayerManager::instance().GetLayerCategory("Light");
+					darkPos = LayerManager::instance().GetLayerCategory("Dark");
+
+					collider.ChangeLayer(lightPos);
+					collider.SetMask(darkPos);
+					collider.SetMask(lightPos, false);
+				}
 			}
 			ev->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
 			EventDispatcher::instance().AddEvent(ev);
