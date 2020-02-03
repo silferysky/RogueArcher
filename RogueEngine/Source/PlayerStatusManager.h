@@ -16,6 +16,10 @@ namespace Rogue
 
 		PlayerStatusManager();
 
+		//Player Entity
+		void SetPlayerEntity(Entity ent);
+		Entity GetPlayerEntity() const;
+
 		//Jump
 		void SetHasJumped(bool jumped);
 		bool HasJumped() const;

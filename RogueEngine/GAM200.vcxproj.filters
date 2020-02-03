@@ -586,6 +586,9 @@
     <ClInclude Include="Source\FadeObject.h">
       <Filter>RogueEngine\Systems\AI\Script Types</Filter>
     </ClInclude>
+    <ClInclude Include="Source\PlatformAI.h">
+      <Filter>RogueEngine\Systems\AI\AI Types</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -914,6 +917,9 @@
     </ClCompile>
     <ClCompile Include="Source\FadeObject.cpp">
       <Filter>RogueEngine\Systems\AI\Script Types</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PlatformAI.cpp">
+      <Filter>RogueEngine\Systems\AI\AI Types</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
