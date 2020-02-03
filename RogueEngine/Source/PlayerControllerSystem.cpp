@@ -34,7 +34,7 @@ Technology is prohibited.
 namespace Rogue
 {
 	PlayerControllerSystem::PlayerControllerSystem()
-		:System(SystemID::id_PLAYERCONTROLLERSYSTEM)
+		:System(SystemID::id_PLAYERCONTROLLERSYSTEM), m_ignoreFrameEvent{ false }
 	{
 	}
 
@@ -53,6 +53,7 @@ namespace Rogue
 	void PlayerControllerSystem::Update()
 	{
 		//For PlayerControllerSystem Timer
+		m_ignoreFrameEvent = false;
 		/*if (m_ballTimer > 0.0f)
 		{
 			m_ballTimer -= g_deltaTime * g_engine.GetTimeScale();
@@ -214,7 +215,7 @@ namespace Rogue
 						auto& player = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(*iEntity);
 						auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
 
-						if (!player.m_grounded || player.m_jumpTimer > 0.0f)
+						if (!player.m_grounded || player.m_jumpTimer > 0.0f || PLAYER_STATUS.HasJumped())
 							return;
 
 						ForceManager::instance().RegisterForce(*iEntity, Vec2(0.0f, 35000.0f));
@@ -222,6 +223,7 @@ namespace Rogue
 
 						// Reset boolean for grounded
 						player.m_grounded = false;
+						PLAYER_STATUS.SetHasJumped(true);
 						player.m_jumpTimer = PLAYER_STATUS.GetJumpMaxTimer();
 					}
 				}
@@ -349,12 +351,7 @@ namespace Rogue
 						//if (player.m_grounded)
 						//	PLAYER_STATUS.SetTeleportCharge(PLAYER_STATUS.GetMaxTeleportCharge());
 						Teleport();
-
-						if (g_engine.m_coordinator.ComponentExists<AnimationComponent>(*m_entities.begin()))
-							g_engine.m_coordinator.GetComponent<AnimationComponent>(*m_entities.begin()).setIsAnimating(true);
-
-						AudioManager::instance().loadSound("Resources/Sounds/[Shoot Projectile]SCI-FI-WHOOSH_GEN-HDF-20864.ogg", 0.86f, false).Play();
-						AudioManager::instance().loadSound("Resources/Sounds/[Ela Appear]SCI-FI-WHOOSH_GEN-HDF-20870.ogg", 0.3f, false).Play();
+						m_ignoreFrameEvent = true;
 					}
 					g_engine.SetTimeScale(1.0f);
 				}
@@ -367,12 +364,12 @@ namespace Rogue
 
 				else if (keycode == KeyPress::KeySpace)
 				{
-					for (Entity entity : m_entities)
-					{
-						PlayerControllerComponent& player = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity);
+					//for (Entity entity : m_entities)
+					//{
+					//	PlayerControllerComponent& player = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity);
 
-						player.m_grounded = false;
-					}
+					//	player.m_grounded = false;
+					//}
 				}
 			}
 			
@@ -433,8 +430,11 @@ namespace Rogue
 
 				//Bottom of player is lower than top of ground (Standing on top)
 				//Bottom of player is above bottom of ground (Player is above ground)
-				if (playerTrans.y - playerScale.y/2 < groundTrans.y + groundScale.y/2 && playerTrans.y - playerScale.y /2 > groundTrans.y - groundScale.y /2)
+				if (playerTrans.y - playerScale.y < groundTrans.y + groundScale.y /*&& playerTrans.y - playerScale.y / 2 > groundTrans.y - groundScale.y / 2*/ && !m_ignoreFrameEvent)
+				{
 					player.m_grounded = true;
+					PLAYER_STATUS.SetHasJumped(false);
+				}
 				else
 					player.m_grounded = false;
 			}
@@ -675,6 +675,13 @@ namespace Rogue
 			transform.setRotation(atan(vecOfChange.y / vecOfChange.x));
 			transform.setScale(Vec2(vecOfChange.x, vecOfChange.y));
 		}
+
+		//For teleport SFX
+		if (g_engine.m_coordinator.ComponentExists<AnimationComponent>(*m_entities.begin()))
+			g_engine.m_coordinator.GetComponent<AnimationComponent>(*m_entities.begin()).setIsAnimating(true);
+
+		AudioManager::instance().loadSound("Resources/Sounds/[Shoot Projectile]SCI-FI-WHOOSH_GEN-HDF-20864.ogg", 0.86f, false).Play();
+		AudioManager::instance().loadSound("Resources/Sounds/[Ela Appear]SCI-FI-WHOOSH_GEN-HDF-20870.ogg", 0.3f, false).Play();
 	}
 
 	void PlayerControllerSystem::ToggleMode()
