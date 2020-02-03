@@ -43,7 +43,7 @@ namespace Rogue
 
 			//Changing buds
 			EntChangeSpriteEvent* ev;
-			if (m_currentPointIndex)
+			if ((m_currentPointIndex && firstPos.y > secondPos.y) || (!m_currentPointIndex && firstPos.y < secondPos.y))
 			{
 				ev = new EntChangeSpriteEvent(toChangeSprite, "Resources\\Assets\\FlowerPlatformOpen.png");
 			}
@@ -53,10 +53,24 @@ namespace Rogue
 			}
 			ev->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
 			EventDispatcher::instance().AddEvent(ev);
+			m_delay += 0.001f;
 		}
-		else if (m_delay > 0.0f)
+		else if (m_delay == 0.0f)
 		{
+			EntChangeSpriteEvent* ev;
+			if ((m_currentPointIndex && firstPos.y > secondPos.y) || (!m_currentPointIndex && firstPos.y < secondPos.y))
+			{
+				ev = new EntChangeSpriteEvent(m_entity, "Resources\\Assets\\FlowerDown.png");
+			}
+			else
+			{
+				ev = new EntChangeSpriteEvent(m_entity, "Resources\\Assets\\FlowerUp.png");
+			}
+			ev->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
+			EventDispatcher::instance().AddEvent(ev);
 
+			//Manually preventing second occurance of this event
+			m_delay -= 0.001f;
 		}
 
 	}
