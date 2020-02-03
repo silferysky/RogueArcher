@@ -26,7 +26,7 @@ Technology is prohibited.
 
 //AI Types
 #include "FinderAI.h"
-#include "PatrolAI.h"
+#include "PlatformAI.h" //Also includes PatrolAI
 #include "TriggerAI.h"
 #include "TransitionObject.h"
 
@@ -177,6 +177,12 @@ namespace Rogue
 					AddLogicInterface(entities, std::make_shared<TriggerAI>(newAI));
 					break;
 				}
+				case AIType::AI_Platform:
+				{
+					PlatformAI newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<PlatformAI>(newAI));
+					break;
+				}
 				case AIType::Obj_Transition:
 				{
 					TransitionObject newAI(entities, logicComponent, statsComponent, statsComponent.GetTransitionLevel());
@@ -241,6 +247,12 @@ namespace Rogue
 				{
 					TriggerAI newAI(entity, logicComponent, statsComponent);
 					AddLogicInterface(entity, std::make_shared<TriggerAI>(newAI));
+					break;
+				}
+				case AIType::AI_Platform:
+				{
+					PlatformAI newAI(entity, logicComponent, statsComponent);
+					AddLogicInterface(entity, std::make_shared<PlatformAI>(newAI));
 					break;
 				}
 				case AIType::Obj_Transition:

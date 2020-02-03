@@ -55,18 +55,11 @@ namespace Rogue
 	{
 		//For PlayerControllerSystem Timer
 		m_ignoreFrameEvent = false;
-		/*if (m_ballTimer > 0.0f)
+
+		if (PLAYER_STATUS.GetPlayerEntity() == MAX_ENTITIES && m_entities.size())
 		{
-			m_ballTimer -= g_deltaTime * g_engine.GetTimeScale();
-			if (m_ballTimer < 0.0f)
-				CreateBallAttack();
-			//RE_INFO("BALL TIMER UPDATE");
+			PLAYER_STATUS.SetPlayerEntity(*m_entities.begin());
 		}
-		else
-		{
-			m_ballCooldown -= g_deltaTime * g_engine.GetTimeScale();
-			//RE_INFO("BALL COOLDOWN UPDATE");
-		}*/
 
 		if (!g_engine.m_coordinator.GameIsActive())
 		{
@@ -161,9 +154,9 @@ namespace Rogue
 		case EventType::EvEntityChangeSprite:
 		{
 			EntChangeSpriteEvent* event = dynamic_cast<EntChangeSpriteEvent*>(ev);
-			if (g_engine.m_coordinator.ComponentExists<SpriteComponent>(*m_entities.begin()))
+			if (g_engine.m_coordinator.ComponentExists<SpriteComponent>(event->GetEntityID()))
 			{
-				SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(*m_entities.begin());
+				SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(event->GetEntityID());
 				sprite.setTexture(event->GetFilePath().c_str());
 				sprite.setTexturePath(event->GetFilePath().c_str());
 			}
