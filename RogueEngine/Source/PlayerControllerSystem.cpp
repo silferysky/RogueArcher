@@ -116,7 +116,7 @@ namespace Rogue
 			auto& player = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity);
 			auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
 				
-			if (PLAYER_STATUS.GetHitchhikedEntity() != -1)
+			if (PLAYER_STATUS.GetHitchhikedEntity() != MAX_ENTITIES)
 			{
 				auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
 				auto& parentTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetHitchhikedEntity());
@@ -227,13 +227,7 @@ namespace Rogue
 						PLAYER_STATUS.SetHasJumped(true);
 						player.m_jumpTimer = PLAYER_STATUS.GetJumpMaxTimer();
 
-						if (PLAYER_STATUS.GetHitchhikedEntity() != MAX_ENTITIES)
-						{
-							//ParentResetEvent* parentReset = new ParentResetEvent(*iEntity);
-							//parentReset->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
-							//EventDispatcher::instance().AddEvent(parentReset);
-							//PLAYER_STATUS.SetHitchhikeEntity(MAX_ENTITIES);
-						}
+						ResetPlayerParent();
 					}
 				}
 
@@ -272,6 +266,8 @@ namespace Rogue
 							ev->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
 							ev->SetSystemReceivers((int)SystemID::id_GRAPHICSSYSTEM);
 							EventDispatcher::instance().AddEvent(ev);
+
+							MovingPlayer();
 						}
 						else if (keycode == KeyPress::KeyD)
 						{
@@ -282,6 +278,8 @@ namespace Rogue
 							ev->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
 							ev->SetSystemReceivers((int)SystemID::id_GRAPHICSSYSTEM);
 							EventDispatcher::instance().AddEvent(ev);
+
+							MovingPlayer();
 						}
 
 						// Skip level
@@ -448,20 +446,17 @@ namespace Rogue
 				{
 					player.m_grounded = true;
 					PLAYER_STATUS.SetHasJumped(false);
-					//if (infoA.m_tag == "Platform")
-					//{
-					//	ParentSetEvent* parent = new ParentSetEvent(infoA.m_Entity, entity);
-					//	parent->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
-					//	EventDispatcher::instance().AddEvent(parent);
-					//	PLAYER_STATUS.SetHitchhikeEntity(infoA.m_Entity);
-					//}
-					//else //if (infoB.m_tag == "Platform")
-					//{
-					//	ParentSetEvent* parent = new ParentSetEvent(infoB.m_Entity, entity);
-					//	parent->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
-					//	EventDispatcher::instance().AddEvent(parent);
-					//	PLAYER_STATUS.SetHitchhikeEntity(infoB.m_Entity);
-					//}
+					if (infoA.m_tag == "Platform")
+					{
+						ParentSetEvent* parent = new ParentSetEvent(infoA.m_Entity, entity);
+						parent->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+						EventDispatcher::instance().AddEvent(parent);
+						PLAYER_STATUS.SetHitchhikeEntity(infoA.m_Entity);
+						m_ignoreFrameEvent = true;
+					}
+					else //if (infoB.m_tag == "Platform")
+					{
+					}
 				}
 				else
 					player.m_grounded = false;
@@ -694,10 +689,10 @@ namespace Rogue
 
 		if (PLAYER_STATUS.GetHitchhikedEntity() != MAX_ENTITIES)
 		{
-			//ParentResetEvent* parentReset = new ParentResetEvent(*m_entities.begin());
-			//parentReset->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
-			//EventDispatcher::instance().AddEvent(parentReset);
-			//PLAYER_STATUS.SetHitchhikeEntity(MAX_ENTITIES);
+			ParentResetEvent* parentReset = new ParentResetEvent(*m_entities.begin());
+			parentReset->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+			EventDispatcher::instance().AddEvent(parentReset);
+			PLAYER_STATUS.SetHitchhikeEntity(MAX_ENTITIES);
 		}
 
 		//For teleport VFX
@@ -748,6 +743,37 @@ namespace Rogue
 					playerCollider.SetMask(darkPos, false);
 				}
 			}
+		}
+	}
+
+	void PlayerControllerSystem::SetPlayerParent(Entity newParent)
+	{
+		if (!m_entities.size())
+			return;
+		ParentSetEvent* parent = new ParentSetEvent(newParent, *m_entities.begin());
+		parent->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+		EventDispatcher::instance().AddEvent(parent);
+		PLAYER_STATUS.SetHitchhikeEntity(newParent);
+	}
+
+	void PlayerControllerSystem::ResetPlayerParent()
+	{
+		if (PLAYER_STATUS.GetHitchhikedEntity() != MAX_ENTITIES)
+		{
+			ParentResetEvent* parentReset = new ParentResetEvent(*m_entities.begin());
+			parentReset->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+			EventDispatcher::instance().AddEvent(parentReset);
+			PLAYER_STATUS.SetHitchhikeEntity(MAX_ENTITIES);
+		}
+	}
+
+	void PlayerControllerSystem::MovingPlayer()
+	{
+		if (PLAYER_STATUS.GetHitchhikedEntity() != MAX_ENTITIES)
+		{
+			ChildTransformEvent* setParentEv = new ChildTransformEvent(*m_entities.begin(), false);
+			setParentEv->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+			EventDispatcher::instance().AddEvent(setParentEv);
 		}
 	}
 

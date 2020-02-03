@@ -271,6 +271,36 @@ namespace Rogue
 
 			break;
 		}
+		case EvChildTransformUpdate:
+		{
+			ChildTransformEvent* childEvent = dynamic_cast<ChildTransformEvent*>(ev);
+
+			if (g_engine.m_coordinator.ComponentExists<ChildComponent>(childEvent->GetChildEntity()))
+			{
+				if (childEvent->GetDirtyGlobal())
+					g_engine.m_coordinator.GetComponent<ChildComponent>(childEvent->GetChildEntity()).SetGlobalDirty();
+				else
+					g_engine.m_coordinator.GetComponent<ChildComponent>(childEvent->GetChildEntity()).SetLocalDirty();
+
+			}
+
+			//To modify all children
+			if (g_engine.m_coordinator.GetHierarchyInfo(childEvent->GetChildEntity()).m_children.size() > 0)
+			{
+				std::vector<Entity> temp;
+
+				//By right Parent don't need, since it will be set via Transform (AKA no need change since no child), or via ChildComponent
+				temp.push_back(childEvent->GetChildEntity());
+				AddChildToVector(temp, childEvent->GetChildEntity());
+
+				for (auto it : temp)
+				{
+					if (g_engine.m_coordinator.ComponentExists<ChildComponent>(it))
+						g_engine.m_coordinator.GetComponent<ChildComponent>(it).SetGlobalDirty();
+				}
+			}
+			break;
+		}
 		}
 	}
 
@@ -361,6 +391,10 @@ namespace Rogue
 
 		childInfo.m_parent = newParent;
 		newParentInfo.m_children.push_back(child);
+		if (childInfo.m_tag == "Player")
+		{
+			childComp.SetIsFollowing(false);
+		}
 	}
 
 	void ParentChildSystem::ResetParentChildFlags(Entity child)
