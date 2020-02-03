@@ -16,7 +16,7 @@
     "Signature7": 2053,
     "Entity0": "Name{MainMenu_Bg}|Tag{}|Sprite{Resources\\Assets\\MainMenu_Sprite.png;1;1;1;1;}||Transform{0;0;2000;2000;0;0}|||||||||UI{1;}|||||||||",
     "Entity1": "Name{Title}|Tag{}|Sprite{Resources\\Assets\\Exale.png;1;1;1;1;}||Transform{377.911;246.93;912;513;0;0}||||||||||||||||||",
-    "Entity2": "Name{StartBtn}|Tag{}|Sprite{Resources\\Assets\\Start.png;1;1;1;1;}||Transform{-585.96;-98.1619;300;200;0;0}|||||||||UI{1;}||||||||FADE{1;1;}|",
+    "Entity2": "Name{StartBtn}|Tag{}|Sprite{Resources\\Assets\\Start.png;1;1;1;1;}||Transform{-585.96;-98.1619;300;200;0;0}|||||||||UI{1;}||||||||FADE{0;1;}|",
     "Entity3": "Name{HowToPlay}|Tag{}|Sprite{Resources\\Assets\\How to play.png;1;1;1;1;}||Transform{-570.72;-232.615;300;60;0;0}|||||||||UI{1;}|||||||||",
     "Entity4": "Name{QuitBtn}|Tag{}|Sprite{Resources\\Assets\\Quit.png;1;1;1;1;}||Transform{-658.621;-300.965;160;80;0;0}|||||||||UI{1;}|||||||||",
     "Entity5": "Name{BGM_SFX}|Tag{}|||Transform{0;0;100;100;0;0}||||||||Audio{Resources\\Sounds\\[BGM]ANCIENT RUINS - NewAge MSCNEW2_33.ogg;1;0.8;1;0;}||||||||||",
