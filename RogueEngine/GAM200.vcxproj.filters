@@ -137,6 +137,9 @@
     <Filter Include="RogueEngine\Systems\Graphics\Fading">
       <UniqueIdentifier>{766b1b40-7c35-4801-bfce-958539f5cead}</UniqueIdentifier>
     </Filter>
+    <Filter Include="RogueEngine\Systems\AI\Script Types">
+      <UniqueIdentifier>{9962feaa-96d2-48da-8db6-9f62213c0786}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Resource.h">
@@ -508,9 +511,6 @@
     <ClInclude Include="Source\PickingManager.h">
       <Filter>RogueEngine\Systems\Picking</Filter>
     </ClInclude>
-    <ClInclude Include="Source\TransitionObject.h">
-      <Filter>RogueEngine\Systems\AI\AI Types</Filter>
-    </ClInclude>
     <ClInclude Include="Source\ParticleComponent.h">
       <Filter>RogueEngine\Systems\Particle System</Filter>
     </ClInclude>
@@ -534,9 +534,6 @@
     </ClInclude>
     <ClInclude Include="Source\FMODHelper.h">
       <Filter>RogueEngine\Systems\Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ScriptComponent.h">
-      <Filter>RogueEngine\Systems\AI\AI Types</Filter>
     </ClInclude>
     <ClInclude Include="Source\ICommandable.h">
       <Filter>RogueEditor\EditorFiles</Filter>
@@ -579,6 +576,15 @@
     </ClInclude>
     <ClInclude Include="Source\FadeSystem.h">
       <Filter>RogueEngine\Systems\Graphics\Fading</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ScriptComponent.h">
+      <Filter>RogueEngine\Systems\AI\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TransitionObject.h">
+      <Filter>RogueEngine\Systems\AI\Script Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FadeObject.h">
+      <Filter>RogueEngine\Systems\AI\Script Types</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -849,9 +855,6 @@
     <ClCompile Include="Source\PickingManager.cpp">
       <Filter>RogueEngine\Systems\Picking</Filter>
     </ClCompile>
-    <ClCompile Include="Source\TransitionObject.cpp">
-      <Filter>RogueEngine\Systems\AI\AI Types</Filter>
-    </ClCompile>
     <ClCompile Include="Source\ParticleComponent.cpp">
       <Filter>RogueEngine\Systems\Particle System</Filter>
     </ClCompile>
@@ -872,9 +875,6 @@
     </ClCompile>
     <ClCompile Include="Source\UISystem.cpp">
       <Filter>RogueEngine\Systems\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ScriptComponent.cpp">
-      <Filter>RogueEngine\Systems\AI\AI Types</Filter>
     </ClCompile>
     <ClCompile Include="Source\CollisionManager.cpp">
       <Filter>RogueEngine\Systems\Collision\Data</Filter>
@@ -905,6 +905,15 @@
     </ClCompile>
     <ClCompile Include="Source\FadeComponent.cpp">
       <Filter>RogueEngine\Systems\Graphics\Fading</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ScriptComponent.cpp">
+      <Filter>RogueEngine\Systems\AI\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TransitionObject.cpp">
+      <Filter>RogueEngine\Systems\AI\Script Types</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\FadeObject.cpp">
+      <Filter>RogueEngine\Systems\AI\Script Types</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
