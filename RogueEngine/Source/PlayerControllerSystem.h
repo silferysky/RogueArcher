@@ -59,6 +59,11 @@ namespace Rogue
 		void Teleport();
 		void ToggleMode();
 
+		//Macros to help Player do call events faster
+		void SetPlayerParent(Entity newParent);
+		void ResetPlayerParent();
+		void MovingPlayer();
+
 		void DebugDrawBall(const BaseCollider& box, const TransformComponent& trans) const;
 		void DebugDrawArrow(const LineSegment& line) const;
 

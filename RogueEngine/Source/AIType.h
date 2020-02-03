@@ -26,6 +26,7 @@ namespace Rogue
 		AI_Patrol,
 		AI_Finder,
 		AI_Trigger,
+		AI_Platform,
 		Obj_Transition,
 		Obj_Fade,
 		AI_Last
