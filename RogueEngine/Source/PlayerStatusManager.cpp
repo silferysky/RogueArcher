@@ -18,6 +18,16 @@ namespace Rogue
 	{
 	}
 
+	void PlayerStatusManager::SetPlayerEntity(Entity ent)
+	{
+		m_entity = ent;
+	}
+
+	Entity PlayerStatusManager::GetPlayerEntity() const
+	{
+		return m_entity;
+	}
+
 	void PlayerStatusManager::SetHasJumped(bool jumped)
 	{
 		m_hasJumped = jumped;
