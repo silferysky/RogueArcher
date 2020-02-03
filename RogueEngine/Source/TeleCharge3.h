@@ -3,11 +3,11 @@
 
 namespace Rogue
 {
-	class TeleCharge
+	class TeleCharge3
 		: public ScriptComponent
 	{
 	public:
-		TeleCharge(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent, float teleCharge = 0.0f);
+		TeleCharge3(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent, float teleCharge = 0.0f);
 
 		virtual void AIActiveStateUpdate() override;
 		virtual void AIIdleUpdate() override;
