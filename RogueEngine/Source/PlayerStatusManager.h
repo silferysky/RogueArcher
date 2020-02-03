@@ -17,6 +17,8 @@ namespace Rogue
 		PlayerStatusManager();
 
 		//Jump
+		void SetHasJumped(bool jumped);
+		bool HasJumped() const;
 		float GetJumpMaxTimer() const;
 
 		//Physical Status
@@ -49,6 +51,7 @@ namespace Rogue
 		Entity m_entity;
 
 		//Jumping mechanic
+		bool m_hasJumped;
 		const float m_maxJumpTimer;
 
 		//Physical status
