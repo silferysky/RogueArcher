@@ -40,11 +40,11 @@ namespace Rogue
 
 			if (fade.getIsFadingIn())
 			{
-				if (colourFilter.a <= 255)
+				if (colourFilter.a <= 1)
 					colourFilter.a += 0.01f * fade.getFadeVelocity();
 				else
 				{
-					colourFilter.a = 255.0f;
+					colourFilter.a = 1.0f;
 					fade.setIsActive(false);
 				}
 			}
