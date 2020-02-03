@@ -34,6 +34,15 @@ namespace Rogue
 		bool dirtyGlobal;
 	};
 
+	class ChildTransformEvent : public ChildEvent
+	{
+	public:
+		SET_EVENT_TYPE(EvChildTransformUpdate);
+
+		ChildTransformEvent(Entity childEnt, bool isGlobal)
+			: ChildEvent(childEnt, isGlobal) {}
+	};
+
 	class ParentSetEvent : public ParentEvent
 	{
 	public:
