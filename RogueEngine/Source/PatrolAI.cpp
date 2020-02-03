@@ -69,6 +69,8 @@ namespace Rogue
 		if (m_delay > 0.0f)
 		{
 			m_delay -= g_engine.GetTimeScale() * g_deltaTime;
+			if (m_delay < 0.0f)
+				m_delay = 0.0f;
 			return;
 		}
 
