@@ -10,12 +10,22 @@ namespace Rogue
 		m_isLightMode{ true },
 		m_hasJumped{ false },
 		m_maxJumpTimer{0.5f},
-		m_hitchhikedEntity{ static_cast<Entity>(-1) },
+		m_hitchhikedEntity{ MAX_ENTITIES },
 		m_inLightDur{0.0f},
 		m_maxTeleportCharge {3.0f},
 		m_teleportCharge{ 3.0f },
 		m_teleportDelayTimer {0.0f}
 	{
+	}
+
+	void PlayerStatusManager::SetPlayerEntity(Entity ent)
+	{
+		m_entity = ent;
+	}
+
+	Entity PlayerStatusManager::GetPlayerEntity() const
+	{
+		return m_entity;
 	}
 
 	void PlayerStatusManager::SetHasJumped(bool jumped)

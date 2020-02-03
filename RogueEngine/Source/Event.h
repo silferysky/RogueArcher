@@ -81,6 +81,7 @@ namespace Rogue
 		EvParentTransformUpdate,
 		EvParentRotateUpdate,
 		EvParentScaleUpdate,
+		EvChildTransformUpdate,
 
 		EvEditorCreateObject,
 		EvEditorDeleteObject,
