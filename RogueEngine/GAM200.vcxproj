@@ -119,6 +119,7 @@
     <ClInclude Include="Source\Sound.h" />
     <ClInclude Include="Source\SpecialEntity.h" />
     <ClInclude Include="Source\StatsComponent.h" />
+    <ClInclude Include="Source\TeleCharge.h" />
     <ClInclude Include="Source\TextComponent.h" />
     <ClInclude Include="Source\TextureManager.h" />
     <ClInclude Include="Source\TransformComponent.h" />
@@ -250,6 +251,7 @@
     <ClCompile Include="Source\PickingManager.cpp" />
     <ClCompile Include="Source\FadeComponent.cpp" />
     <ClCompile Include="Source\StatsComponent.cpp" />
+    <ClCompile Include="Source\TeleCharge.cpp" />
     <ClCompile Include="Source\TextComponent.cpp" />
     <ClCompile Include="Source\TextureManager.cpp" />
     <ClCompile Include="Source\TransformComponent.cpp" />

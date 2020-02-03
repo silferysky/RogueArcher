@@ -589,6 +589,9 @@
     <ClInclude Include="Source\PlatformAI.h">
       <Filter>RogueEngine\Systems\AI\AI Types</Filter>
     </ClInclude>
+    <ClInclude Include="Source\TeleCharge.h">
+      <Filter>RogueEngine\Systems\AI\Script Types</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -920,6 +923,9 @@
     </ClCompile>
     <ClCompile Include="Source\PlatformAI.cpp">
       <Filter>RogueEngine\Systems\AI\AI Types</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TeleCharge.cpp">
+      <Filter>RogueEngine\Systems\AI\Script Types</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
