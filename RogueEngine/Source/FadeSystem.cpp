@@ -1,5 +1,6 @@
 #include "Precompiled.h"
 #include "FadeSystem.h"
+#include "GraphicsEvent.h"
 #include "Main.h"
 
 namespace Rogue
@@ -57,5 +58,22 @@ namespace Rogue
 	{}
 
 	void FadeSystem::Receive(Event* ev)
-	{}
+	{
+		switch (ev->GetEventType())
+		{
+		case EvFade:
+		{
+			FadeEvent* event = dynamic_cast<FadeEvent*>(ev);
+			for (auto& entity : m_entities)
+			{
+				if (entity == event->GetEntityToFade())
+				{
+					g_engine.m_coordinator.GetComponent<FadeComponent>(entity).setIsActive(true);
+					break;
+				}
+			}
+			break;
+		}
+		}
+	}
 }

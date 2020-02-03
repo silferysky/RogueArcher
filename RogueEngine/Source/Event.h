@@ -74,6 +74,7 @@ namespace Rogue
 		EvChangeAnimation,
 		EvEntityPicked,
 		EvTransition,
+		EvFade,
 
 		EvParentSet,
 		EvParentReset,
