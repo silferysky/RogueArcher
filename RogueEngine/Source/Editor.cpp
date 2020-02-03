@@ -45,9 +45,9 @@ namespace Rogue
 				m_hierarchyVector.pop_back();
 				break;
 			case EventType::EvEditorDeleteObject:
-				EventDispatcher::instance().AddEvent(editorEv);
-				AddToRedoStack(editorEv);
-				m_hierarchyVector.pop_back();
+				//EventDispatcher::instance().AddEvent(editorEv);
+				//AddToRedoStack(editorEv);
+				//m_hierarchyVector.pop_back();
 				break;
 			default:
 				break;
@@ -193,6 +193,10 @@ namespace Rogue
 				{
 					KeyTriggeredEvent* keytriggeredevent = dynamic_cast<KeyTriggeredEvent*>(ev);
 					KeyPress keycode = keytriggeredevent->GetKeyCode();
+					if (keycode == KeyPress::KeyDelete)
+					{
+						DeleteCommand();
+					}
 					if (ev->GetEventCat() & EventCatCombinedInput)
 					{
 						KeyTriggeredCombinedEvent* keytriggeredcombinedev = dynamic_cast<KeyTriggeredCombinedEvent*>(ev);
@@ -216,6 +220,7 @@ namespace Rogue
 							RedoCommand();
 							//Controller.RedoCommand();
 						}
+
 						//if (ImGuiEditorHierarchy::instance().GetIsHierarchyFocused())
 						//{
 						for (auto& i : m_currentVector)
