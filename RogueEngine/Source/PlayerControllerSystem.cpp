@@ -25,6 +25,7 @@ Technology is prohibited.
 #include "KeyEvent.h"
 #include "GameEvent.h"
 #include "GraphicsEvent.h"
+#include "ParentEvent.h"
 #include "PickingManager.h"
 #include "MenuControllerSystem.h"
 #include "PlayerStatusManager.h"
@@ -225,6 +226,14 @@ namespace Rogue
 						player.m_grounded = false;
 						PLAYER_STATUS.SetHasJumped(true);
 						player.m_jumpTimer = PLAYER_STATUS.GetJumpMaxTimer();
+
+						if (PLAYER_STATUS.GetHitchhikedEntity() != MAX_ENTITIES)
+						{
+							//ParentResetEvent* parentReset = new ParentResetEvent(*iEntity);
+							//parentReset->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+							//EventDispatcher::instance().AddEvent(parentReset);
+							//PLAYER_STATUS.SetHitchhikeEntity(MAX_ENTITIES);
+						}
 					}
 				}
 
@@ -439,6 +448,20 @@ namespace Rogue
 				{
 					player.m_grounded = true;
 					PLAYER_STATUS.SetHasJumped(false);
+					//if (infoA.m_tag == "Platform")
+					//{
+					//	ParentSetEvent* parent = new ParentSetEvent(infoA.m_Entity, entity);
+					//	parent->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+					//	EventDispatcher::instance().AddEvent(parent);
+					//	PLAYER_STATUS.SetHitchhikeEntity(infoA.m_Entity);
+					//}
+					//else //if (infoB.m_tag == "Platform")
+					//{
+					//	ParentSetEvent* parent = new ParentSetEvent(infoB.m_Entity, entity);
+					//	parent->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+					//	EventDispatcher::instance().AddEvent(parent);
+					//	PLAYER_STATUS.SetHitchhikeEntity(infoB.m_Entity);
+					//}
 				}
 				else
 					player.m_grounded = false;
@@ -668,6 +691,14 @@ namespace Rogue
 		}
 
 		CreateTeleportEvent(calculatedPos);
+
+		if (PLAYER_STATUS.GetHitchhikedEntity() != MAX_ENTITIES)
+		{
+			//ParentResetEvent* parentReset = new ParentResetEvent(*m_entities.begin());
+			//parentReset->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+			//EventDispatcher::instance().AddEvent(parentReset);
+			//PLAYER_STATUS.SetHitchhikeEntity(MAX_ENTITIES);
+		}
 
 		//For teleport VFX
 		TimedEntity ent(g_engine.m_coordinator.cloneArchetypes("TeleportSprite", false), 1.0f);
