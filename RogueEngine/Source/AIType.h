@@ -29,6 +29,7 @@ namespace Rogue
 		AI_Platform,
 		Obj_Transition,
 		Obj_Fade,
+		UI_TeleCharge,
 		AI_Last
 	};
 

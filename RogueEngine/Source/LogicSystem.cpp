@@ -29,6 +29,7 @@ Technology is prohibited.
 #include "PlatformAI.h" //Also includes PatrolAI
 #include "TriggerAI.h"
 #include "TransitionObject.h"
+#include "TeleCharge.h"
 
 namespace Rogue
 {
@@ -189,6 +190,12 @@ namespace Rogue
 					AddLogicInterface(entities, std::make_shared<TransitionObject>(newAI));
 					break;
 				}
+				case AIType::UI_TeleCharge:
+				{
+					TeleCharge newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<TeleCharge>(newAI));
+					break;
+				}
 				case AIType::AI_Static:
 				default:
 				{
@@ -259,6 +266,12 @@ namespace Rogue
 				{
 					TransitionObject newAI(entity, logicComponent, statsComponent, statsComponent.GetTransitionLevel());
 					AddLogicInterface(entity, std::make_shared<TransitionObject>(newAI));
+					break;
+				}
+				case AIType::UI_TeleCharge:
+				{
+					TeleCharge newAI(entity, logicComponent, statsComponent);
+					AddLogicInterface(entity, std::make_shared<TeleCharge>(newAI));
 					break;
 				}
 				case AIType::AI_Static:
