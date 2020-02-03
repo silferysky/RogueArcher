@@ -27,6 +27,7 @@ namespace Rogue
 		AI_Finder,
 		AI_Trigger,
 		Obj_Transition,
+		Obj_Fade,
 		AI_Last
 	};
 
