@@ -64,5 +64,6 @@ namespace Rogue
 
 		std::vector<TimedEntity> m_timedEntities;
 		std::vector<TimedEntity> m_teleports;
+		bool m_ignoreFrameEvent;
 	};
 }
