@@ -231,7 +231,7 @@
     "Entity94": "Name{CaveWindSFX}|Tag{}|||Transform{2448.62;428.294;100;100;0;0}||||||||Audio{Resources\\Sounds\\[Cave Ambience]WIND-HOWL_GEN-HDF-25929.ogg;2600;0.4;1;1;}||||||||||",
     "Entity95": "Name{Tut_Sprite1}|Tag{}|Sprite{Resources\\Assets\\TutorialMove.png;0.45098;0.45098;0.45098;1;}||Transform{-2504.7;762.753;100;100;0;4}||||||||||||||||||",
     "Entity96": "Name{Tut_Sprite2}|Tag{}|Sprite{Resources\\Assets\\TutorialJump.png;0.45098;0.45098;0.45098;1;}||Transform{-2278.65;806.066;112;112;0;4}||||||||||||||||||",
-    "Entity97": "Name{TeleCharge1}|Tag{}|Sprite{Resources\\Assets\\TeleChargeIndicator.png;1;1;1;1;}||Transform{154.659;4.66139;25;25;0;100}||||LogicComponent{6;0;0;}|StatsComponent{0;0;0;0;0;;0;}|Animation{4;2;0.1;1;0;}|||||||||||FADE{0;1;}|",
+    "Entity97": "Name{TeleCharge1}|Tag{}|Sprite{Resources\\Assets\\TeleChargeIndicator.png;1;1;1;1;}||Transform{154.659;4.66139;25;25;0;100}||||LogicComponent{6;0;1;0}|StatsComponent{0;0;0;0;0;;0;}|Animation{4;2;0.1;1;0;}|||||||||||FADE{0;1;}|",
     "Entity98": "Name{Tut_Sprite3}|Tag{}|Sprite{Resources\\Assets\\TutorialTele.png;0.45098;0.45098;0.45098;1;}||Transform{-1202.92;-202.958;468;452;0;4}||||||||||||||||||",
     "Entity99": "Name{Tut_Sprite4}|Tag{}|Sprite{Resources\\Assets\\TutorialToggle.png;0.45098;0.45098;0.45098;1;}||Transform{-706.069;-2.53522;102;61;0;4}||||||||||||||||||",
     "Entity100": "Name{FlowerVine1-1}|Tag{}|Sprite{Resources\\Assets\\FlowerVine2.png;1;1;1;1;}||Transform{624.41;-398.842;384;244;0;3}||||||||||||||||||",
