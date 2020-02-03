@@ -76,7 +76,7 @@ namespace Rogue
 				if (!CollisionManager::instance().FilterColliders(currCollider.GetCollisionMask(), nextCollider.GetCollisionCat()) ||
 					!CollisionManager::instance().FilterColliders(currCollider.GetCollisionCat(), nextCollider.GetCollisionMask()))
 				{
-					RE_INFO("~~~~~~");
+					//RE_INFO("~~~~~~");
 					continue;
 				}
 					

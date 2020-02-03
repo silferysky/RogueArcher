@@ -25,6 +25,7 @@ Technology is prohibited.
 #include "KeyEvent.h"
 #include "GameEvent.h"
 #include "GraphicsEvent.h"
+#include "ParentEvent.h"
 #include "PickingManager.h"
 #include "MenuControllerSystem.h"
 #include "PlayerStatusManager.h"
@@ -54,18 +55,11 @@ namespace Rogue
 	{
 		//For PlayerControllerSystem Timer
 		m_ignoreFrameEvent = false;
-		/*if (m_ballTimer > 0.0f)
+
+		if (PLAYER_STATUS.GetPlayerEntity() == MAX_ENTITIES && m_entities.size())
 		{
-			m_ballTimer -= g_deltaTime * g_engine.GetTimeScale();
-			if (m_ballTimer < 0.0f)
-				CreateBallAttack();
-			//RE_INFO("BALL TIMER UPDATE");
+			PLAYER_STATUS.SetPlayerEntity(*m_entities.begin());
 		}
-		else
-		{
-			m_ballCooldown -= g_deltaTime * g_engine.GetTimeScale();
-			//RE_INFO("BALL COOLDOWN UPDATE");
-		}*/
 
 		if (!g_engine.m_coordinator.GameIsActive())
 		{
@@ -115,7 +109,7 @@ namespace Rogue
 			auto& player = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity);
 			auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
 				
-			if (PLAYER_STATUS.GetHitchhikedEntity() != -1)
+			if (PLAYER_STATUS.GetHitchhikedEntity() != MAX_ENTITIES)
 			{
 				auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
 				auto& parentTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetHitchhikedEntity());
@@ -160,9 +154,9 @@ namespace Rogue
 		case EventType::EvEntityChangeSprite:
 		{
 			EntChangeSpriteEvent* event = dynamic_cast<EntChangeSpriteEvent*>(ev);
-			if (g_engine.m_coordinator.ComponentExists<SpriteComponent>(*m_entities.begin()))
+			if (g_engine.m_coordinator.ComponentExists<SpriteComponent>(event->GetEntityID()))
 			{
-				SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(*m_entities.begin());
+				SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(event->GetEntityID());
 				sprite.setTexture(event->GetFilePath().c_str());
 				sprite.setTexturePath(event->GetFilePath().c_str());
 			}
@@ -225,6 +219,8 @@ namespace Rogue
 						player.m_grounded = false;
 						PLAYER_STATUS.SetHasJumped(true);
 						player.m_jumpTimer = PLAYER_STATUS.GetJumpMaxTimer();
+
+						ResetPlayerParent();
 					}
 				}
 
@@ -263,6 +259,8 @@ namespace Rogue
 							ev->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
 							ev->SetSystemReceivers((int)SystemID::id_GRAPHICSSYSTEM);
 							EventDispatcher::instance().AddEvent(ev);
+
+							MovingPlayer();
 						}
 						else if (keycode == KeyPress::KeyD)
 						{
@@ -273,6 +271,8 @@ namespace Rogue
 							ev->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
 							ev->SetSystemReceivers((int)SystemID::id_GRAPHICSSYSTEM);
 							EventDispatcher::instance().AddEvent(ev);
+
+							MovingPlayer();
 						}
 
 						// Skip level
@@ -434,6 +434,22 @@ namespace Rogue
 				{
 					player.m_grounded = true;
 					PLAYER_STATUS.SetHasJumped(false);
+				}
+				else if (infoA.m_tag == "Platform" || infoB.m_tag == "Platform")
+				{
+					player.m_grounded = true;
+					PLAYER_STATUS.SetHasJumped(false);
+					if (infoA.m_tag == "Platform")
+					{
+						ParentSetEvent* parent = new ParentSetEvent(infoA.m_Entity, entity);
+						parent->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+						EventDispatcher::instance().AddEvent(parent);
+						PLAYER_STATUS.SetHitchhikeEntity(infoA.m_Entity);
+						m_ignoreFrameEvent = true;
+					}
+					else //if (infoB.m_tag == "Platform")
+					{
+					}
 				}
 				else
 					player.m_grounded = false;
@@ -664,6 +680,14 @@ namespace Rogue
 
 		CreateTeleportEvent(calculatedPos);
 
+		if (PLAYER_STATUS.GetHitchhikedEntity() != MAX_ENTITIES)
+		{
+			ParentResetEvent* parentReset = new ParentResetEvent(*m_entities.begin());
+			parentReset->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+			EventDispatcher::instance().AddEvent(parentReset);
+			PLAYER_STATUS.SetHitchhikeEntity(MAX_ENTITIES);
+		}
+
 		//For teleport VFX
 		TimedEntity ent(g_engine.m_coordinator.cloneArchetypes("TeleportSprite", false), 1.0f);
 		m_teleports.push_back(ent);
@@ -712,6 +736,37 @@ namespace Rogue
 					playerCollider.SetMask(darkPos, false);
 				}
 			}
+		}
+	}
+
+	void PlayerControllerSystem::SetPlayerParent(Entity newParent)
+	{
+		if (!m_entities.size())
+			return;
+		ParentSetEvent* parent = new ParentSetEvent(newParent, *m_entities.begin());
+		parent->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+		EventDispatcher::instance().AddEvent(parent);
+		PLAYER_STATUS.SetHitchhikeEntity(newParent);
+	}
+
+	void PlayerControllerSystem::ResetPlayerParent()
+	{
+		if (PLAYER_STATUS.GetHitchhikedEntity() != MAX_ENTITIES)
+		{
+			ParentResetEvent* parentReset = new ParentResetEvent(*m_entities.begin());
+			parentReset->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+			EventDispatcher::instance().AddEvent(parentReset);
+			PLAYER_STATUS.SetHitchhikeEntity(MAX_ENTITIES);
+		}
+	}
+
+	void PlayerControllerSystem::MovingPlayer()
+	{
+		if (PLAYER_STATUS.GetHitchhikedEntity() != MAX_ENTITIES)
+		{
+			ChildTransformEvent* setParentEv = new ChildTransformEvent(*m_entities.begin(), false);
+			setParentEv->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+			EventDispatcher::instance().AddEvent(setParentEv);
 		}
 	}
 

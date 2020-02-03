@@ -232,7 +232,7 @@ namespace Rogue
 									CopyCommand();
 								}
 
-								if (keycode == KeyPress::KeyV && keycodeSpecial == KeyPressSub::KeyCtrl)
+								if (keycode == KeyPress::KeyH && keycodeSpecial == KeyPressSub::KeyCtrl)
 								{
 									PasteCommand();
 								}
