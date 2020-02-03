@@ -8,6 +8,7 @@ namespace Rogue
 	PlayerStatusManager::PlayerStatusManager():
 		m_entity{ MAX_ENTITIES },
 		m_isLightMode{ true },
+		m_hasJumped{ false },
 		m_maxJumpTimer{0.5f},
 		m_hitchhikedEntity{ static_cast<Entity>(-1) },
 		m_inLightDur{0.0f},
@@ -15,6 +16,16 @@ namespace Rogue
 		m_teleportCharge{ 3.0f },
 		m_teleportDelayTimer {0.0f}
 	{
+	}
+
+	void PlayerStatusManager::SetHasJumped(bool jumped)
+	{
+		m_hasJumped = jumped;
+	}
+
+	bool PlayerStatusManager::HasJumped() const
+	{
+		return m_hasJumped;
 	}
 
 	float PlayerStatusManager::GetJumpMaxTimer() const
