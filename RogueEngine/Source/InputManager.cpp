@@ -239,6 +239,8 @@ namespace Rogue
 			++CurKeyboardState.Key[(int)KeyPress::KeyEnter];
 		if (GetAsyncKeyState(VK_SPACE))
 			++CurKeyboardState.Key[(int)KeyPress::KeySpace];
+		if (GetAsyncKeyState(VK_DELETE))
+			++CurKeyboardState.Key[(int)KeyPress::KeyDelete];
 
 		//For special keyboard
 		if (GetAsyncKeyState(VK_CONTROL))

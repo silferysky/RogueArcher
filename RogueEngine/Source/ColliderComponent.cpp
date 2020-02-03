@@ -202,7 +202,7 @@ namespace Rogue
 		size_t numLayers = CollisionManager::instance().GetNumberOfLayers();
 		std::stringstream ss;
 
-		if (ImGui::Button("Change Current Category"))
+		if (ImGui::Button("Change Layer"))
 		{
 			ImGui::OpenPopup("Change Layer");
 		}
