@@ -270,6 +270,11 @@ namespace Rogue
 		return m_isFocused;
 	}
 
+	bool REEngine::GetGameIsRunning() const
+	{
+		return m_gameIsRunning;
+	}
+
 	void REEngine::SetGameIsRunning(bool set)
 	{
 		m_gameIsRunning = set;
