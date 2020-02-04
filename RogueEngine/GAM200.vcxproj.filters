@@ -140,6 +140,9 @@
     <Filter Include="RogueEngine\Systems\AI\Script Types">
       <UniqueIdentifier>{9962feaa-96d2-48da-8db6-9f62213c0786}</UniqueIdentifier>
     </Filter>
+    <Filter Include="RogueEngine\Systems\AI\Script Types\TeleCharge">
+      <UniqueIdentifier>{9aa52bf9-5118-4c68-8892-e1179bb330fd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Resource.h">
@@ -589,6 +592,15 @@
     <ClInclude Include="Source\PlatformAI.h">
       <Filter>RogueEngine\Systems\AI\AI Types</Filter>
     </ClInclude>
+    <ClInclude Include="Source\TeleCharge1.h">
+      <Filter>RogueEngine\Systems\AI\Script Types\TeleCharge</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TeleCharge2.h">
+      <Filter>RogueEngine\Systems\AI\Script Types\TeleCharge</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TeleCharge3.h">
+      <Filter>RogueEngine\Systems\AI\Script Types\TeleCharge</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -920,6 +932,15 @@
     </ClCompile>
     <ClCompile Include="Source\PlatformAI.cpp">
       <Filter>RogueEngine\Systems\AI\AI Types</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TeleCharge1.cpp">
+      <Filter>RogueEngine\Systems\AI\Script Types\TeleCharge</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TeleCharge2.cpp">
+      <Filter>RogueEngine\Systems\AI\Script Types\TeleCharge</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TeleCharge3.cpp">
+      <Filter>RogueEngine\Systems\AI\Script Types\TeleCharge</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

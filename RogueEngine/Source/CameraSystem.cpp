@@ -22,6 +22,7 @@ Technology is prohibited.
 #include "KeyEvent.h"
 #include "GraphicsEvent.h"
 #include "CameraManager.h"
+#include "PickingManager.h"
 
 namespace Rogue
 {
@@ -192,13 +193,59 @@ namespace Rogue
 			KeyPressEvent* EvPressKey = dynamic_cast<KeyPressEvent*>(ev);
 			KeyPress keycode = EvPressKey->GetKeyCode();
 
-			if (g_engine.GetIsFocused())
+			if (g_engine.GetIsFocused() && g_engine.m_coordinator.GetEditorIsRunning())
 			{
+				if (keycode == KeyPress::MB1 && PickingManager::instance().isCursorinViewPort())
+				{
+					glm::vec3 cursorPos{ PickingManager::instance().GetWorldCursor().x, PickingManager::instance().GetWorldCursor().y, 0 };
+					CameraManager::instance().SetCameraPos(cursorPos);
+				}
+
 				if (keycode == KeyPress::KeyF1)
 					CameraManager::instance().ZoomIn();
 
 				if (keycode == KeyPress::KeyF2)
 					CameraManager::instance().ZoomOut();
+
+				if (keycode == KeyPress::KeyArrowLeft)
+				{
+					auto& cameraManager = CameraManager::instance();
+					auto cameraPos = cameraManager.GetCameraPos();
+
+					cameraPos.x -= 10.0f;
+
+					cameraManager.SetCameraPos(cameraPos);
+				}
+
+				if (keycode == KeyPress::KeyArrowRight)
+				{
+					auto& cameraManager = CameraManager::instance();
+					auto cameraPos = cameraManager.GetCameraPos();
+
+					cameraPos.x += 10.0f;
+
+					cameraManager.SetCameraPos(cameraPos);
+				}
+
+				if (keycode == KeyPress::KeyArrowUp)
+				{
+					auto& cameraManager = CameraManager::instance();
+					auto cameraPos = cameraManager.GetCameraPos();
+
+					cameraPos.y += 10.0f;
+
+					cameraManager.SetCameraPos(cameraPos);
+				}
+
+				if (keycode == KeyPress::KeyArrowDown)
+				{
+					auto& cameraManager = CameraManager::instance();
+					auto cameraPos = cameraManager.GetCameraPos();
+
+					cameraPos.y -= 10.0f;
+
+					cameraManager.SetCameraPos(cameraPos);
+				}
 			}
 			return;
 		} //End KeyPressed

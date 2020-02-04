@@ -38,16 +38,25 @@ namespace Rogue
 
 			glm::vec4 colourFilter = sprite.getFilter();
 
-			if (fade.getIsFadingIn() && colourFilter.a < 255)
+			if (fade.getIsFadingIn())
 			{
-				colourFilter.a += 0.01f * fade.getFadeVelocity();
-				sprite.setFilter(colourFilter);
+				if (colourFilter.a <= 1)
+					colourFilter.a += 0.01f * fade.getFadeVelocity();
+				else
+				{
+					colourFilter.a = 1.0f;
+					fade.setIsActive(false);
+				}
 			}
-			else if (colourFilter.a)
-			{
+			else if (colourFilter.a > 0)
 				colourFilter.a -= 0.01f * fade.getFadeVelocity();
-				sprite.setFilter(colourFilter);
+			else
+			{
+				colourFilter.a = 0.0f;
+				fade.setIsActive(false);
 			}
+
+			sprite.setFilter(colourFilter);
 
 		}
 
