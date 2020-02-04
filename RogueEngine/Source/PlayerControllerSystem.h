@@ -57,6 +57,7 @@ namespace Rogue
 	private:
 		void CreateBallAttack();
 		void Teleport();
+		Vec2 GetTeleportRaycast();
 		void ToggleMode();
 
 		//Macros to help Player do call events faster
