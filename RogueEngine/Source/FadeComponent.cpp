@@ -68,10 +68,10 @@ namespace Rogue
 		{
 			switch (counter)
 			{
-			case 1:
+			case 0:
 				setFadeVelocity(std::stof(s1));
 				break;
-			case 2:
+			case 1:
 				setIsActive(std::stof(s1));
 				break;
 			default:

@@ -284,10 +284,7 @@ namespace Rogue
 						if (ImGui::CollapsingHeader("UI"))
 						{
 							auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(i);
-							bool isActive = UI.getIsActive();
-							ImGui::TextWrapped("Check this box to show the UI element.");
-							if (g_engine.m_coordinator.ComponentExists<CameraComponent>(i))
-								g_engine.m_coordinator.GetComponent<CameraComponent>(i).setIsActive(isActive);
+							UI.DisplayOnInspector();
 
 							if (ImGui::Button("Remove Component"))
 							{
