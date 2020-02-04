@@ -84,21 +84,26 @@ namespace Rogue
 			}
 
 			//If it reaches here, that means indicator exists already
-			if (g_engine.m_coordinator.ComponentExists<ChildComponent>(PLAYER_STATUS.GetIndicator()))
+			if (g_engine.m_coordinator.ComponentExists<ChildComponent>(PLAYER_STATUS.GetIndicator()) &&
+				g_engine.m_coordinator.ComponentExists<TransformComponent>(PLAYER_STATUS.GetIndicator()))
 			{
-				ChildComponent& comp = g_engine.m_coordinator.GetComponent <ChildComponent>(PLAYER_STATUS.GetIndicator());
-				comp.SetIsFollowing(true);
-
 				Vec2 calculatedPos = GetTeleportRaycast();
+				TransformComponent& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetIndicator());
+				Vec2 vecOfChange = Vec2(g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin()).GetPosition() - calculatedPos);
 
-				if (g_engine.m_coordinator.ComponentExists<TransformComponent>(PLAYER_STATUS.GetIndicator()))
+				//For Position
+				transform.setPosition(calculatedPos + vecOfChange / 2);
+
+				//For Scale
+				//Vec2Normalize(vecOfChange, vecOfChange);
+				//vecOfChange = vecOfChange * transform.GetScale().x * 3 + transform.GetPosition();
+				//transform.setScale(Vec2(vecOfChange.x / calculatedPos.x, transform.GetScale().y));
+
+				//For Rotation
+				transform.setRotation(atan(vecOfChange.y / vecOfChange.x));
+				if (vecOfChange.x < 0.0f)
 				{
-					TransformComponent& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetIndicator());
-					Vec2 vecOfChange = Vec2(g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin()).GetPosition() - calculatedPos);
-					transform.setPosition(calculatedPos + vecOfChange / 2);
-					transform.setRotation(atan(vecOfChange.y / vecOfChange.x));
-					//No need to set scale
-					//transform.setScale(Vec2(vecOfChange.x, vecOfChange.y));
+					transform.setScale(transform.GetScale() * -1);
 				}
 			}
 		}
@@ -216,7 +221,7 @@ namespace Rogue
 					for (Entity entity : m_entities)
 					{
 						auto& PlayerControllable = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity);
-						if (!PlayerControllable.m_grounded)
+						if (!PlayerControllable.m_grounded /*&& !PLAYER_STATUS.InSlowMo()*/)
 						{
 							g_engine.SetTimeScale(PlayerControllable.GetSlowTime());
 							PLAYER_STATUS.SetSlowMo();
@@ -229,7 +234,7 @@ namespace Rogue
 						SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(PLAYER_STATUS.GetIndicator());
 						comp.SetIsFollowing(true);
 						auto filter = sprite.getFilter();
-						sprite.setFilter(glm::vec4(filter.r, filter.g, filter.b, 255));
+						sprite.setFilter(glm::vec4(filter.r, filter.g, filter.b, 1));
 					}
 				}
 
@@ -406,6 +411,7 @@ namespace Rogue
 						Teleport();
 						m_ignoreFrameEvent = true;
 					}
+					//if (PLAYER_STATUS.InSlowMo())
 					g_engine.SetTimeScale(1.0f);
 					PLAYER_STATUS.SetSlowMo(false);
 
@@ -518,14 +524,19 @@ namespace Rogue
 					PLAYER_STATUS.SetHasJumped(false);
 					if (infoA.m_tag == "Platform")
 					{
-						ParentSetEvent* parent = new ParentSetEvent(infoA.m_Entity, entity);
-						parent->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
-						EventDispatcher::instance().AddEvent(parent);
-						PLAYER_STATUS.SetHitchhikeEntity(infoA.m_Entity);
-						m_ignoreFrameEvent = true;
+						//ParentSetEvent* parent = new ParentSetEvent(infoA.m_Entity, entity);
+						//parent->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+						//EventDispatcher::instance().AddEvent(parent);
+						//PLAYER_STATUS.SetHitchhikeEntity(infoA.m_Entity);
+						//m_ignoreFrameEvent = true;
 					}
 					else //if (infoB.m_tag == "Platform")
 					{
+						//ParentSetEvent* parent = new ParentSetEvent(infoB.m_Entity, entity);
+						//parent->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+						//EventDispatcher::instance().AddEvent(parent);
+						//PLAYER_STATUS.SetHitchhikeEntity(infoB.m_Entity);
+						//m_ignoreFrameEvent = true;
 					}
 				}
 				else
