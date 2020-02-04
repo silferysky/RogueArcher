@@ -191,6 +191,14 @@ namespace Rogue
 				else if (keycode == KeyPress::MB2)
 				{
 					//For Hitchhiking
+					ToggleMode();
+					// for testing
+				}
+				else if (keycode == KeyPress::KeyShift)
+				{
+					//For Hitchhiking
+					ToggleMode();
+					// for testing
 				}
 				else if (keycode == KeyPress::MB3)
 				{
