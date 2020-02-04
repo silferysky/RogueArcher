@@ -222,6 +222,15 @@ namespace Rogue
 							PLAYER_STATUS.SetSlowMo();
 						}
 					}
+
+					if (PLAYER_STATUS.GetIndicator() != MAX_ENTITIES)
+					{
+						ChildComponent& comp = g_engine.m_coordinator.GetComponent<ChildComponent>(PLAYER_STATUS.GetIndicator());
+						SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(PLAYER_STATUS.GetIndicator());
+						comp.SetIsFollowing(true);
+						auto filter = sprite.getFilter();
+						sprite.setFilter(glm::vec4(filter.r, filter.g, filter.b, 255));
+					}
 				}
 
 				else if (keycode == KeyPress::MB2)
@@ -403,8 +412,11 @@ namespace Rogue
 					//To reduce calculations
 					if (PLAYER_STATUS.GetIndicator() != MAX_ENTITIES && g_engine.m_coordinator.ComponentExists<ChildComponent>(PLAYER_STATUS.GetIndicator()))
 					{
-						ChildComponent& comp = g_engine.m_coordinator.GetComponent <ChildComponent>(PLAYER_STATUS.GetIndicator());
+						ChildComponent& comp = g_engine.m_coordinator.GetComponent<ChildComponent>(PLAYER_STATUS.GetIndicator());
+						SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(PLAYER_STATUS.GetIndicator());
 						comp.SetIsFollowing(false);
+						auto filter = sprite.getFilter();
+						sprite.setFilter(glm::vec4(filter.r, filter.g, filter.b, 0));
 					}
 				}
 				if ((keycode == KeyPress::KeyA ) || (keycode == KeyPress::KeyD))

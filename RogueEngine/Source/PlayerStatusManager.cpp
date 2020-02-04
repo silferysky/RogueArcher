@@ -32,11 +32,12 @@ namespace Rogue
 
 	void PlayerStatusManager::SetIndicator(Entity ent)
 	{
+		m_indicator = ent;
 	}
 
 	Entity PlayerStatusManager::GetIndicator() const
 	{
-		return Entity();
+		return m_indicator;
 	}
 
 	void PlayerStatusManager::SetHasJumped(bool jumped)
