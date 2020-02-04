@@ -389,8 +389,10 @@ namespace Rogue
 		if (g_engine.m_coordinator.GameIsActive())
 			event->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
 		else if (!g_engine.m_coordinator.GetGameState())
+		{
 			event->SetSystemReceivers((int)SystemID::id_MENUCONTROLLERSYSTEM);
-		event->SetSystemReceivers((int)SystemID::id_CAMERASYSTEM);
+			event->SetSystemReceivers((int)SystemID::id_CAMERASYSTEM);
+		}
 		EventDispatcher::instance().AddEvent(event);
 	}
 
@@ -406,7 +408,10 @@ namespace Rogue
 		if (g_engine.m_coordinator.GameIsActive())
 			event->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
 		else if (!g_engine.m_coordinator.GetGameState())
+		{
 			event->SetSystemReceivers((int)SystemID::id_MENUCONTROLLERSYSTEM);
+			event->SetSystemReceivers((int)SystemID::id_CAMERASYSTEM);
+		}
 		EventDispatcher::instance().AddEvent(event);
 	}
 
@@ -421,10 +426,12 @@ namespace Rogue
 		if (g_engine.m_coordinator.GameIsActive())
 			event->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
 		else
+		{
 			event->SetSystemReceivers((int)SystemID::id_MENUCONTROLLERSYSTEM);
+			event->SetSystemReceivers((int)SystemID::id_CAMERASYSTEM);
+		}
 
 		event->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
-		event->SetSystemReceivers((int)SystemID::id_CAMERASYSTEM);
 		event->SetSystemReceivers((int)SystemID::id_AUDIOSYSTEM);
 		event->SetSystemReceivers((int)SystemID::id_GRAPHICSSYSTEM);
 		event->SetSystemReceivers((int)SystemID::id_DEBUGDRAWSYSTEM);
