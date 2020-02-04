@@ -469,6 +469,8 @@ namespace Rogue
 					groundTrans = collisionStay->GetBPos();
 					groundScale = collisionStay->GetScaleB();
 				}
+				else
+					return;
 			}
 			else if (infoB.m_tag == "Player")
 			{
@@ -494,7 +496,18 @@ namespace Rogue
 
 				//Bottom of player is lower than top of ground (Standing on top)
 				//Bottom of player is above bottom of ground (Player is above ground)
-				if (playerTrans.y - playerScale.y / 2 < groundTrans.y + groundScale.y / 2 /*&& playerTrans.y - playerScale.y / 2 > groundTrans.y - groundScale.y / 2*/ && !m_ignoreFrameEvent)
+				//if (playerTrans.y - playerScale.y / 2 < groundTrans.y + groundScale.y / 2 /*&& playerTrans.y - playerScale.y / 2 > groundTrans.y - groundScale.y / 2*/ && !m_ignoreFrameEvent)
+				//{
+				//}
+
+				LineSegment finiteRay(playerTrans, Vec2(playerTrans.x, playerTrans.x - playerScale.y / 2.0f));
+				
+				if (!g_engine.m_coordinator.ComponentExists<BoxCollider2DComponent>(ground))
+					return;
+
+				BoxCollider2DComponent& groundCollider = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(ground);
+
+				if (CollisionManager::instance().DiscreteLineVsAABB(finiteRay, groundCollider.m_aabb))
 				{
 					player.m_grounded = true;
 					PLAYER_STATUS.SetHasJumped(false);
