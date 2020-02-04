@@ -70,6 +70,39 @@ namespace Rogue
 			return;
 		}
 
+		if (PLAYER_STATUS.InSlowMo())
+		{
+			if (PLAYER_STATUS.GetIndicator() == MAX_ENTITIES && PLAYER_STATUS.GetPlayerEntity() != MAX_ENTITIES)
+			{
+				PLAYER_STATUS.SetIndicator(g_engine.m_coordinator.cloneArchetypes("Indicator", false));
+
+				ParentSetEvent* parent = new ParentSetEvent(*m_entities.begin(), PLAYER_STATUS.GetIndicator());
+				parent->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+				EventDispatcher::instance().AddEvent(parent);
+
+				return;
+			}
+
+			//If it reaches here, that means indicator exists already
+			if (g_engine.m_coordinator.ComponentExists<ChildComponent>(PLAYER_STATUS.GetIndicator()))
+			{
+				ChildComponent& comp = g_engine.m_coordinator.GetComponent <ChildComponent>(PLAYER_STATUS.GetIndicator());
+				comp.SetIsFollowing(true);
+
+				Vec2 calculatedPos = GetTeleportRaycast();
+
+				if (g_engine.m_coordinator.ComponentExists<TransformComponent>(PLAYER_STATUS.GetIndicator()))
+				{
+					TransformComponent& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetIndicator());
+					Vec2 vecOfChange = Vec2(g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin()).GetPosition() - calculatedPos);
+					transform.setPosition(calculatedPos + vecOfChange / 2);
+					transform.setRotation(atan(vecOfChange.y / vecOfChange.x));
+					//No need to set scale
+					//transform.setScale(Vec2(vecOfChange.x, vecOfChange.y));
+				}
+			}
+		}
+
 		if (m_teleports.size())
 		{
 			for (TimedEntity& ent : m_teleports)
@@ -184,7 +217,19 @@ namespace Rogue
 					{
 						auto& PlayerControllable = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity);
 						if (!PlayerControllable.m_grounded)
+						{
 							g_engine.SetTimeScale(PlayerControllable.GetSlowTime());
+							PLAYER_STATUS.SetSlowMo();
+						}
+					}
+
+					if (PLAYER_STATUS.GetIndicator() != MAX_ENTITIES)
+					{
+						ChildComponent& comp = g_engine.m_coordinator.GetComponent<ChildComponent>(PLAYER_STATUS.GetIndicator());
+						SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(PLAYER_STATUS.GetIndicator());
+						comp.SetIsFollowing(true);
+						auto filter = sprite.getFilter();
+						sprite.setFilter(glm::vec4(filter.r, filter.g, filter.b, 255));
 					}
 				}
 
@@ -362,6 +407,17 @@ namespace Rogue
 						m_ignoreFrameEvent = true;
 					}
 					g_engine.SetTimeScale(1.0f);
+					PLAYER_STATUS.SetSlowMo(false);
+
+					//To reduce calculations
+					if (PLAYER_STATUS.GetIndicator() != MAX_ENTITIES && g_engine.m_coordinator.ComponentExists<ChildComponent>(PLAYER_STATUS.GetIndicator()))
+					{
+						ChildComponent& comp = g_engine.m_coordinator.GetComponent<ChildComponent>(PLAYER_STATUS.GetIndicator());
+						SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(PLAYER_STATUS.GetIndicator());
+						comp.SetIsFollowing(false);
+						auto filter = sprite.getFilter();
+						sprite.setFilter(glm::vec4(filter.r, filter.g, filter.b, 0));
+					}
 				}
 				if ((keycode == KeyPress::KeyA ) || (keycode == KeyPress::KeyD))
 				{
@@ -614,6 +670,41 @@ namespace Rogue
 		if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(*m_entities.begin()))
 			g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(*m_entities.begin()).m_grounded = false;
 
+		Vec2 calculatedPos = GetTeleportRaycast();
+
+		CreateTeleportEvent(calculatedPos);
+
+		if (PLAYER_STATUS.GetHitchhikedEntity() != MAX_ENTITIES)
+		{
+			ParentResetEvent* parentReset = new ParentResetEvent(*m_entities.begin());
+			parentReset->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+			EventDispatcher::instance().AddEvent(parentReset);
+			PLAYER_STATUS.SetHitchhikeEntity(MAX_ENTITIES);
+		}
+
+		//For teleport VFX
+		TimedEntity ent(g_engine.m_coordinator.cloneArchetypes("TeleportSprite", false), 1.0f);
+		m_teleports.push_back(ent);
+		if (g_engine.m_coordinator.ComponentExists<TransformComponent>(m_teleports.back().m_entity))
+		{
+			TransformComponent& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(m_teleports.back().m_entity);
+			Vec2 vecOfChange = Vec2(g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin()).GetPosition() - calculatedPos);
+			transform.setPosition(calculatedPos + vecOfChange/ 2);
+			transform.setRotation(atan(vecOfChange.y / vecOfChange.x));
+			//No need to set scale
+			//transform.setScale(Vec2(vecOfChange.x, vecOfChange.y));
+		}
+
+		//For teleport SFX
+		if (g_engine.m_coordinator.ComponentExists<AnimationComponent>(*m_entities.begin()))
+			g_engine.m_coordinator.GetComponent<AnimationComponent>(*m_entities.begin()).setIsAnimating(true);
+
+		AudioManager::instance().loadSound("Resources/Sounds/[Shoot Projectile]SCI-FI-WHOOSH_GEN-HDF-20864.ogg", 0.86f, false).Play();
+		AudioManager::instance().loadSound("Resources/Sounds/[Ela Appear]SCI-FI-WHOOSH_GEN-HDF-20870.ogg", 0.3f, false).Play();
+	}
+
+	Vec2 PlayerControllerSystem::GetTeleportRaycast()
+	{
 		TransformComponent& playerTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin());
 		Vec2 initialPos = playerTransform.GetPosition();
 		Vec2 endPos = PickingManager::instance().GetWorldCursor();
@@ -635,7 +726,7 @@ namespace Rogue
 			calculatedPos += ((cursor - initialPos) / 3);
 		}
 
-		const std::set<Entity>& boxEntities = g_engine.m_coordinator.GetSystem<BoxCollisionSystem>()->GetEntitySet();	
+		const std::set<Entity>& boxEntities = g_engine.m_coordinator.GetSystem<BoxCollisionSystem>()->GetEntitySet();
 		BoxCollider2DComponent& playerCollider = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(*m_entities.begin());
 		ColliderComponent& playerGCollider = g_engine.m_coordinator.GetComponent<ColliderComponent>(*m_entities.begin());
 		LineSegment teleportLine = LineSegment(playerTransform.GetPosition(), calculatedPos);
@@ -651,8 +742,8 @@ namespace Rogue
 				continue;
 
 			ColliderComponent& boxGCollider = g_engine.m_coordinator.GetComponent<ColliderComponent>(entity);
-			
-			if(!CollisionManager::instance().FilterColliders(playerGCollider.GetCollisionMask(), boxGCollider.GetCollisionCat()) ||
+
+			if (!CollisionManager::instance().FilterColliders(playerGCollider.GetCollisionMask(), boxGCollider.GetCollisionCat()) ||
 				!CollisionManager::instance().FilterColliders(boxGCollider.GetCollisionMask(), playerGCollider.GetCollisionCat()))
 				continue;
 
@@ -679,41 +770,13 @@ namespace Rogue
 						smallestT = t;
 				}
 
-				calculatedPos = playerTransform.GetPosition() + smallestT * teleportVec; 
-				
+				calculatedPos = playerTransform.GetPosition() + smallestT * teleportVec;
+
 				teleportLine = LineSegment(playerTransform.GetPosition(), calculatedPos);
 				teleportVec = calculatedPos - playerTransform.GetPosition();
 			}
 		}
-
-		CreateTeleportEvent(calculatedPos);
-
-		if (PLAYER_STATUS.GetHitchhikedEntity() != MAX_ENTITIES)
-		{
-			ParentResetEvent* parentReset = new ParentResetEvent(*m_entities.begin());
-			parentReset->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
-			EventDispatcher::instance().AddEvent(parentReset);
-			PLAYER_STATUS.SetHitchhikeEntity(MAX_ENTITIES);
-		}
-
-		//For teleport VFX
-		TimedEntity ent(g_engine.m_coordinator.cloneArchetypes("TeleportSprite", false), 1.0f);
-		m_teleports.push_back(ent);
-		if (g_engine.m_coordinator.ComponentExists<TransformComponent>(m_teleports.back().m_entity))
-		{
-			TransformComponent& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(m_teleports.back().m_entity);
-			Vec2 vecOfChange = Vec2(g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin()).GetPosition() - calculatedPos);
-			transform.setPosition(calculatedPos + vecOfChange/ 2);
-			transform.setRotation(atan(vecOfChange.y / vecOfChange.x));
-			transform.setScale(Vec2(vecOfChange.x, vecOfChange.y));
-		}
-
-		//For teleport SFX
-		if (g_engine.m_coordinator.ComponentExists<AnimationComponent>(*m_entities.begin()))
-			g_engine.m_coordinator.GetComponent<AnimationComponent>(*m_entities.begin()).setIsAnimating(true);
-
-		AudioManager::instance().loadSound("Resources/Sounds/[Shoot Projectile]SCI-FI-WHOOSH_GEN-HDF-20864.ogg", 0.86f, false).Play();
-		AudioManager::instance().loadSound("Resources/Sounds/[Ela Appear]SCI-FI-WHOOSH_GEN-HDF-20870.ogg", 0.3f, false).Play();
+		return calculatedPos;
 	}
 
 	void PlayerControllerSystem::ToggleMode()
