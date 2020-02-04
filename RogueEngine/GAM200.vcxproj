@@ -157,6 +157,7 @@
     <ClInclude Include="Source\Timer.h" />
     <ClInclude Include="Source\TransitionObject.h" />
     <ClInclude Include="Source\TriggerAI.h" />
+    <ClInclude Include="Source\AppearOnCollide.h" />
     <ClInclude Include="Source\Types.h" />
     <ClInclude Include="Source\UIComponent.h" />
     <ClInclude Include="Source\UISystem.h" />
@@ -275,6 +276,7 @@
     <ClCompile Include="Source\Timer.cpp" />
     <ClCompile Include="Source\TransitionObject.cpp" />
     <ClCompile Include="Source\TriggerAI.cpp" />
+    <ClCompile Include="Source\AppearOnCollide.cpp" />
     <ClCompile Include="Source\UIComponent.cpp" />
     <ClCompile Include="Source\UISystem.cpp" />
     <ClCompile Include="Source\Vector2D.cpp" />
