@@ -14,7 +14,9 @@ namespace Rogue
 
 		void SetTeleCharge(float max);
 		float GetTeleCharge() const;
+
 	private:
 		float m_teleCharge;
+		float m_timer;
 	};
 }
