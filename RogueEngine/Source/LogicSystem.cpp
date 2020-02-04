@@ -32,6 +32,7 @@ Technology is prohibited.
 #include "TeleCharge1.h"
 #include "TeleCharge2.h"
 #include "TeleCharge3.h"
+#include "AppearOnCollide.h"
 
 namespace Rogue
 {
@@ -192,6 +193,12 @@ namespace Rogue
 					AddLogicInterface(entities, std::make_shared<TransitionObject>(newAI));
 					break;
 				}
+				case AIType::Obj_AppearOnCollide:
+				{
+					AppearOnCollide newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<AppearOnCollide>(newAI));
+					break;
+				}
 				case AIType::UI_TeleCharge1:
 				{
 					TeleCharge1 newAI(entities, logicComponent, statsComponent);
@@ -280,6 +287,12 @@ namespace Rogue
 				{
 					TransitionObject newAI(entity, logicComponent, statsComponent, statsComponent.GetTransitionLevel());
 					AddLogicInterface(entity, std::make_shared<TransitionObject>(newAI));
+					break;
+				}
+				case AIType::Obj_AppearOnCollide:
+				{
+					AppearOnCollide newAI(entity, logicComponent, statsComponent);
+					AddLogicInterface(entity, std::make_shared<AppearOnCollide>(newAI));
 					break;
 				}
 				case AIType::UI_TeleCharge1:

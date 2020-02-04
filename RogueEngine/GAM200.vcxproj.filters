@@ -140,7 +140,10 @@
     <Filter Include="RogueEngine\Systems\AI\Script Types">
       <UniqueIdentifier>{9962feaa-96d2-48da-8db6-9f62213c0786}</UniqueIdentifier>
     </Filter>
-    <Filter Include="RogueEngine\Systems\AI\Script Types\TeleCharge">
+    <Filter Include="RogueEngine\Systems\AI\Script Types\UI">
+      <UniqueIdentifier>{66e7949b-47f6-4812-9066-5a83b59e0d43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RogueEngine\Systems\AI\Script Types\UI\TeleCharge">
       <UniqueIdentifier>{9aa52bf9-5118-4c68-8892-e1179bb330fd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -593,13 +596,16 @@
       <Filter>RogueEngine\Systems\AI\AI Types</Filter>
     </ClInclude>
     <ClInclude Include="Source\TeleCharge1.h">
-      <Filter>RogueEngine\Systems\AI\Script Types\TeleCharge</Filter>
+      <Filter>RogueEngine\Systems\AI\Script Types\UI\TeleCharge</Filter>
     </ClInclude>
     <ClInclude Include="Source\TeleCharge2.h">
-      <Filter>RogueEngine\Systems\AI\Script Types\TeleCharge</Filter>
+      <Filter>RogueEngine\Systems\AI\Script Types\UI\TeleCharge</Filter>
     </ClInclude>
     <ClInclude Include="Source\TeleCharge3.h">
-      <Filter>RogueEngine\Systems\AI\Script Types\TeleCharge</Filter>
+      <Filter>RogueEngine\Systems\AI\Script Types\UI\TeleCharge</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AppearOnCollide.h">
+      <Filter>RogueEngine\Systems\AI\Script Types\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -934,13 +940,16 @@
       <Filter>RogueEngine\Systems\AI\AI Types</Filter>
     </ClCompile>
     <ClCompile Include="Source\TeleCharge1.cpp">
-      <Filter>RogueEngine\Systems\AI\Script Types\TeleCharge</Filter>
+      <Filter>RogueEngine\Systems\AI\Script Types\UI\TeleCharge</Filter>
     </ClCompile>
     <ClCompile Include="Source\TeleCharge2.cpp">
-      <Filter>RogueEngine\Systems\AI\Script Types\TeleCharge</Filter>
+      <Filter>RogueEngine\Systems\AI\Script Types\UI\TeleCharge</Filter>
     </ClCompile>
     <ClCompile Include="Source\TeleCharge3.cpp">
-      <Filter>RogueEngine\Systems\AI\Script Types\TeleCharge</Filter>
+      <Filter>RogueEngine\Systems\AI\Script Types\UI\TeleCharge</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AppearOnCollide.cpp">
+      <Filter>RogueEngine\Systems\AI\Script Types\UI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
