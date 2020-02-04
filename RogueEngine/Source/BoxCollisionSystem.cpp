@@ -124,8 +124,7 @@ namespace Rogue
 					}
 
 					// Hard coded logic to prevent player from jumping mid air :(
-					EntCollisionStayEvent* ev =
-						new EntCollisionStayEvent
+					EntCollisionStayEvent* ev = new EntCollisionStayEvent
 					{
 							*iEntity, *iNextEntity,
 							currTransform.GetPosition(), nextTransform.GetPosition(),
