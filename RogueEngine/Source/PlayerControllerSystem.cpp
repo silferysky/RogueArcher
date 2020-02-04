@@ -438,7 +438,7 @@ namespace Rogue
 
 				//Bottom of player is lower than top of ground (Standing on top)
 				//Bottom of player is above bottom of ground (Player is above ground)
-				if (playerTrans.y - playerScale.y < groundTrans.y + groundScale.y /*&& playerTrans.y - playerScale.y / 2 > groundTrans.y - groundScale.y / 2*/ && !m_ignoreFrameEvent)
+				if (playerTrans.y - playerScale.y / 2 < groundTrans.y + groundScale.y / 2 /*&& playerTrans.y - playerScale.y / 2 > groundTrans.y - groundScale.y / 2*/ && !m_ignoreFrameEvent)
 				{
 					player.m_grounded = true;
 					PLAYER_STATUS.SetHasJumped(false);
