@@ -18,7 +18,22 @@ namespace Rogue
 	void TeleCharge2::AIIdleUpdate()
 	{
 		if (m_teleCharge == PlayerStatusManager::instance().GetTeleportCharge())
-			return;
+		{
+			if (m_timer < 5.0f)
+			{
+				m_timer += g_deltaTime * g_engine.GetTimeScale();
+				return;
+			}
+			else
+			{
+				m_timer = 0.0f;
+				g_engine.m_coordinator.GetComponent<FadeComponent>(m_entity).setIsActive(true);
+				g_engine.m_coordinator.GetComponent<FadeComponent>(m_entity).setIsFadingIn(false);
+				return;
+			}
+		}
+
+		m_timer = 0.0f;
 
 		m_teleCharge = PlayerStatusManager::instance().GetTeleportCharge();
 
