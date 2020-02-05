@@ -35,6 +35,7 @@ namespace Rogue
 	{
 		ImGui::PushItemWidth(75);
 		ImGui::Checkbox("Active?", &m_isActive);
+		setIsActive(m_isActive);
 	}
 
 	std::string UIComponent::Serialize()

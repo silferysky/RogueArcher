@@ -17,15 +17,15 @@ Technology is prohibited.
 /* End Header **************************************************************************/
 #include "PhysicsDataStructures.hpp"
 #include "BaseComponent.h"
-#include "CollisionLayerer.h"
+#include "LayerManager.h"
 
 namespace Rogue
 {
 	class ColliderComponent : public BaseComponent
 	{
 		std::shared_ptr<Shape> m_shape;
-		CollisionLayerer::Bits m_collisionMask;
-		CollisionLayerer::Bits m_collisionCategory;
+		LayerManager::Bits m_collisionMask;
+		LayerManager::Bits m_collisionCategory;
 	public:
 		ColliderComponent(const std::shared_ptr<Shape> ptr = nullptr);
 		ColliderComponent(const ColliderComponent& rhs); // Copy constructor
@@ -38,13 +38,15 @@ namespace Rogue
 		void DisplayOnInspector();
 
 		std::shared_ptr<Shape> GetShape() const;
-		const CollisionLayerer::Bits& GetCollisionMask() const;
-		const CollisionLayerer::Bits& GetCollisionCat() const;
+		const LayerManager::Bits& GetCollisionMask() const;
+		const LayerManager::Bits& GetCollisionCat() const;
 
 		void SetShape(const std::shared_ptr<Shape>& pShape);
-		void SetMaskLayer(size_t layerPos, bool set);
-		void SetCollisionMask(const CollisionLayerer::Bits& bits);
-		void SetCollisionCat(const CollisionLayerer::Bits& layer);
+		void SetMask(size_t layerPos, bool set = true);
+		void SetCollisionMask(const LayerManager::Bits& bits);
+		void SetCollisionCat(const LayerManager::Bits& layer);
+		void ChangeLayer(size_t pos);
+		void ChangeLayer(std::string_view name);
 	};
 
 }

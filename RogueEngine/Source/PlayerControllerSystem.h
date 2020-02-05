@@ -20,6 +20,9 @@ Technology is prohibited.
 #include "BaseSystem.h"
 #include "Vector2D.h"
 #include "SpecialEntity.h"
+#include "AABB.h"
+#include "TransformComponent.h"
+#include "REMath.h"
 #include <memory>
 
 #define FORCE_FACTOR 80000
@@ -47,16 +50,26 @@ namespace Rogue
 		void AddToTimedEntities(Entity entity, float duration = 1.0f);
 		void ClearTimedEntities();
 		void ClearTeleportEntities();
+		void ClearTeleportEntities(Entity ent);
 
 		void CreateTeleportEvent(Vec2 newPosition);
 
 	private:
 		void CreateBallAttack();
 		void Teleport();
+		Vec2 GetTeleportRaycast();
+		void ToggleMode();
+
+		//Macros to help Player do call events faster
+		void SetPlayerParent(Entity newParent);
+		void ResetPlayerParent();
+		void MovingPlayer();
+
+		void DebugDrawBall(const BaseCollider& box, const TransformComponent& trans) const;
+		void DebugDrawArrow(const LineSegment& line) const;
+
 		std::vector<TimedEntity> m_timedEntities;
 		std::vector<TimedEntity> m_teleports;
-
-
-
+		bool m_ignoreFrameEvent;
 	};
 }

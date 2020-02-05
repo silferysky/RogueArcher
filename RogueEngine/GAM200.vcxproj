@@ -31,11 +31,16 @@
     <ClInclude Include="Source\ChildComponent.h" />
     <ClInclude Include="Source\CircleCollisionSystem.h" />
     <ClInclude Include="Source\ColliderComponent.h" />
-    <ClInclude Include="Source\CollisionLayerer.h" />
+    <ClInclude Include="Source\FadeComponent.h" />
+    <ClInclude Include="Source\FadeObject.h" />
+    <ClInclude Include="Source\FadeSystem.h" />
+    <ClInclude Include="Source\LayerManager.h" />
     <ClInclude Include="Source\CollisionSystem.h" />
     <ClInclude Include="Source\CursorComponent.h" />
     <ClInclude Include="Source\EditorEvent.h" />
     <ClInclude Include="Source\FMODHelper.h" />
+    <ClInclude Include="Source\MaskingComponent.h" />
+    <ClInclude Include="Source\MaskingSystem.h" />
     <ClInclude Include="Source\ICommandable.h" />
     <ClInclude Include="Source\ImCurveEdit.h" />
     <ClInclude Include="Source\ImGradient.h" />
@@ -99,6 +104,7 @@
     <ClInclude Include="Source\OBB.h" />
     <ClInclude Include="Source\PhysicsDataStructures.hpp" />
     <ClInclude Include="Source\PickingSystem.h" />
+    <ClInclude Include="Source\PlatformAI.h" />
     <ClInclude Include="Source\PlayerControllerComponent.h" />
     <ClInclude Include="Source\PlayerControllerSystem.h" />
     <ClInclude Include="Source\PlayerStatusManager.h" />
@@ -113,6 +119,9 @@
     <ClInclude Include="Source\Sound.h" />
     <ClInclude Include="Source\SpecialEntity.h" />
     <ClInclude Include="Source\StatsComponent.h" />
+    <ClInclude Include="Source\TeleCharge1.h" />
+    <ClInclude Include="Source\TeleCharge2.h" />
+    <ClInclude Include="Source\TeleCharge3.h" />
     <ClInclude Include="Source\TextComponent.h" />
     <ClInclude Include="Source\TextureManager.h" />
     <ClInclude Include="Source\TransformComponent.h" />
@@ -148,6 +157,7 @@
     <ClInclude Include="Source\Timer.h" />
     <ClInclude Include="Source\TransitionObject.h" />
     <ClInclude Include="Source\TriggerAI.h" />
+    <ClInclude Include="Source\AppearOnCollide.h" />
     <ClInclude Include="Source\Types.h" />
     <ClInclude Include="Source\UIComponent.h" />
     <ClInclude Include="Source\UISystem.h" />
@@ -169,7 +179,9 @@
     <ClCompile Include="Source\ChildComponent.cpp" />
     <ClCompile Include="Source\CircleCollisionSystem.cpp" />
     <ClCompile Include="Source\ColliderComponent.cpp" />
-    <ClCompile Include="Source\CollisionLayerer.cpp" />
+    <ClCompile Include="Source\FadeObject.cpp" />
+    <ClCompile Include="Source\FadeSystem.cpp" />
+    <ClCompile Include="Source\LayerManager.cpp" />
     <ClCompile Include="Source\CollisionSystem.cpp" />
     <ClCompile Include="Source\CursorComponent.cpp" />
     <ClCompile Include="Source\CursorSystem.cpp" />
@@ -206,6 +218,8 @@
     <ClCompile Include="Source\LogicComponent.cpp" />
     <ClCompile Include="Source\LogicSystem.cpp" />
     <ClCompile Include="Source\Manifold.cpp" />
+    <ClCompile Include="Source\MaskingComponent.cpp" />
+    <ClCompile Include="Source\MaskingSystem.cpp" />
     <ClCompile Include="Source\MenuControllerSystem.cpp" />
     <ClCompile Include="Source\ParentChildSystem.cpp" />
     <ClCompile Include="Source\ParticleComponent.cpp" />
@@ -214,6 +228,7 @@
     <ClCompile Include="Source\ParticleSystem.cpp" />
     <ClCompile Include="Source\PatrolAI.cpp" />
     <ClCompile Include="Source\PickingSystem.cpp" />
+    <ClCompile Include="Source\PlatformAI.cpp" />
     <ClCompile Include="Source\PlayerStatusManager.cpp" />
     <ClCompile Include="source\Precompiled.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -237,7 +252,11 @@
     <ClCompile Include="Source\Sound.cpp" />
     <ClCompile Include="Source\BackgroundComponent.cpp" />
     <ClCompile Include="Source\PickingManager.cpp" />
+    <ClCompile Include="Source\FadeComponent.cpp" />
     <ClCompile Include="Source\StatsComponent.cpp" />
+    <ClCompile Include="Source\TeleCharge1.cpp" />
+    <ClCompile Include="Source\TeleCharge2.cpp" />
+    <ClCompile Include="Source\TeleCharge3.cpp" />
     <ClCompile Include="Source\TextComponent.cpp" />
     <ClCompile Include="Source\TextureManager.cpp" />
     <ClCompile Include="Source\TransformComponent.cpp" />
@@ -257,6 +276,7 @@
     <ClCompile Include="Source\Timer.cpp" />
     <ClCompile Include="Source\TransitionObject.cpp" />
     <ClCompile Include="Source\TriggerAI.cpp" />
+    <ClCompile Include="Source\AppearOnCollide.cpp" />
     <ClCompile Include="Source\UIComponent.cpp" />
     <ClCompile Include="Source\UISystem.cpp" />
     <ClCompile Include="Source\Vector2D.cpp" />

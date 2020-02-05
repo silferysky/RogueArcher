@@ -16,12 +16,27 @@ namespace Rogue
 
 		PlayerStatusManager();
 
+		void Reset();
+		void SetRunCount(size_t count);
+		size_t GetRunCount();
+
+		//Player Entity
+		void SetPlayerEntity(Entity ent);
+		Entity GetPlayerEntity() const;
+
+		void SetIndicator(Entity ent);
+		Entity GetIndicator() const;
+
 		//Jump
+		void SetHasJumped(bool jumped);
+		bool HasJumped() const;
 		float GetJumpMaxTimer() const;
 
 		//Physical Status
 		void SetInLightDur(float duration = 0.16f);
 		float GetInLightDur() const;
+		void SetSlowMo(bool slowMo = true);
+		bool InSlowMo() const;
 
 		//Teleporting
 		float GetTeleportCharge() const;
@@ -44,18 +59,25 @@ namespace Rogue
 
 	private:
 
+		void ChangePlayerSprite();
+
+		size_t m_runCount;
+
+		Entity m_entity;
+		Entity m_indicator;
+
 		//Jumping mechanic
+		bool m_hasJumped;
 		const float m_maxJumpTimer;
 
 		//Physical status
 		float m_inLightDur;
+		bool m_inSlowMo;
 
 		//Teleporting
 		float m_teleportCharge;
 		float m_maxTeleportCharge;
 		float m_teleportDelayTimer;
-
-		//Timed Entities
 
 
 		//Light/Dark mode mechanic

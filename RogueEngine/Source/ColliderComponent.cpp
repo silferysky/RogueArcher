@@ -20,13 +20,19 @@ Technology is prohibited.
 #include "Logger.h"
 #include "CollisionManager.h"
 
+#define MAX_32BIT_NUMBER 0xFFFFFFFF
+
 namespace Rogue
 {
 	ColliderComponent::ColliderComponent(const std::shared_ptr<Shape> ptr) :
 		m_shape{ ptr },
-		m_collisionCategory{ CollisionLayerer::s_layerDefault.second },
-		m_collisionMask{ CollisionLayerer::s_layerDefault.second }
-	{}
+		m_collisionCategory{ 0 },
+		m_collisionMask{ MAX_32BIT_NUMBER }
+	{
+		size_t layer = LayerManager::s_layerDefault.first;
+		m_collisionCategory.set(layer);
+		m_collisionMask.set(layer);
+	}
 
 	ColliderComponent::ColliderComponent(const ColliderComponent& rhs) :
 		m_shape{ nullptr },
@@ -175,22 +181,68 @@ namespace Rogue
 				m_shape = std::make_shared<PolygonShape>();
 		}
 		
-		if(std::getline(ss, s1, ';'))
-			m_collisionCategory = static_cast<CollisionLayerer::Bits>(s1);
+		if (std::getline(ss, s1, ';'))
+			m_collisionCategory = LayerManager::Bits(s1);
+		else
+			m_collisionCategory = LayerManager::s_layerDefault.first;
 
-		if(std::getline(ss, s1, ';'))
-			m_collisionMask = static_cast<CollisionLayerer::Bits>(s1);
+		if (std::getline(ss, s1, ';'))
+			m_collisionMask = LayerManager::Bits(s1);
+		else
+			m_collisionMask = LayerManager::Bits(MAX_32BIT_NUMBER);
 	}
 
 	void ColliderComponent::DisplayOnInspector()
 	{
-		ImGui::BeginTooltip();
-		ImGui::Text("Current Layer: %s", std::string(CollisionManager::instance().GetLayerName(m_collisionCategory)).c_str());
-		ImGui::EndTooltip();
+		size_t cat = CollisionManager::instance().GetLayerCategory(m_collisionCategory);
+		std::string name = std::string(CollisionManager::instance().GetLayerName(cat));
+	
+		ImGui::Text("Current Layer: %s", name.c_str());
+		
+		size_t numLayers = CollisionManager::instance().GetNumberOfLayers();
+		std::stringstream ss;
 
-		ImGui::BeginTooltip();
-		ImGui::Text("Current Mask: %s", std::string(CollisionManager::instance().GetLayerName(m_collisionMask)).c_str());
-		ImGui::EndTooltip();
+		if (ImGui::Button("Change Layer"))
+		{
+			ImGui::OpenPopup("Change Layer");
+		}
+		
+		if (ImGui::BeginPopup("Change Layer"))
+		{
+			if (ImGui::BeginMenu("Layers"))
+			{
+				for (unsigned pos = 0; pos < numLayers; pos++)
+				{
+					ss << CollisionManager::instance().GetLayerName(pos);
+					bool ownLayer = m_collisionCategory.test(pos);
+					
+					if (ImGui::MenuItem(ss.str().c_str(), nullptr, false, !ownLayer))
+					{
+						ChangeLayer(pos);
+					}
+					CLEARSTRING(ss);
+				}
+
+				ImGui::EndMenu();
+			}
+
+			ImGui::EndPopup();
+		}
+
+		bool checked;
+		ImGui::NewLine();
+		ImGui::Text("Collides With:");
+
+		for(unsigned pos = 0; pos < numLayers; pos++)
+		{
+			checked = m_collisionMask[pos];
+			ss << CollisionManager::instance().GetLayerName(pos);
+			ImGui::Checkbox(ss.str().c_str(), &checked);
+			CLEARSTRING(ss);
+
+			m_collisionMask.set(pos, checked);
+		}
+		ImGui::NewLine();
 	}
 
 
@@ -199,12 +251,12 @@ namespace Rogue
 		return m_shape;
 	}
 
-	const CollisionLayerer::Bits& ColliderComponent::GetCollisionMask() const
+	const LayerManager::Bits& ColliderComponent::GetCollisionMask() const
 	{
 		return m_collisionMask;
 	}
 
-	const CollisionLayerer::Bits& ColliderComponent::GetCollisionCat() const
+	const LayerManager::Bits& ColliderComponent::GetCollisionCat() const
 	{
 		return m_collisionCategory;
 	}
@@ -231,18 +283,40 @@ namespace Rogue
 
 	}
 
-	void ColliderComponent::SetMaskLayer(size_t layerPos, bool state)
+	void ColliderComponent::SetMask(size_t layerPos, bool set)
 	{
-		m_collisionMask.set(layerPos, state);
+		m_collisionMask.set(layerPos, set);
 	}
 
-	void ColliderComponent::SetCollisionMask(const CollisionLayerer::Bits& bits)
+	void ColliderComponent::SetCollisionMask(const LayerManager::Bits& bits)
 	{
 		m_collisionMask = bits;
 	}
 	
-	void ColliderComponent::SetCollisionCat(const CollisionLayerer::Bits& layer)
+	void ColliderComponent::SetCollisionCat(const LayerManager::Bits& layer)
 	{
 		m_collisionCategory = layer;
+	}
+
+
+	void ColliderComponent::ChangeLayer(size_t pos)
+	{
+		if (pos)
+			m_collisionCategory = LayerManager::Bits(1ULL << pos);
+		else
+			m_collisionCategory = 0;
+	}
+
+	void ColliderComponent::ChangeLayer(std::string_view name)
+	{
+		int pos = LayerManager::instance().GetLayerCategory(name);
+		
+		if (pos != -1)
+		{
+			if (pos)
+				m_collisionCategory = LayerManager::Bits(1ULL << pos);
+			else
+				m_collisionCategory = 0;;
+		}
 	}
 }

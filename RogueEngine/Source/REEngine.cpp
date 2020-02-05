@@ -55,6 +55,8 @@ Technology is prohibited.
 #include "ParticleEmitterSystem.h"
 #include "UISystem.h"
 #include "ParentChildSystem.h"
+#include "MaskingSystem.h"
+#include "FadeSystem.h"
 
 namespace Rogue
 {
@@ -78,6 +80,8 @@ namespace Rogue
 		m_coordinator.RegisterSystem<BoxCollisionSystem>();
 		m_coordinator.RegisterSystem<CollisionSystem>(); // Must be after circle and box collision systems
 		m_coordinator.RegisterSystem<GraphicsSystem>();
+		m_coordinator.RegisterSystem<FadeSystem>();
+		m_coordinator.RegisterSystem<MaskingSystem>();
 		m_coordinator.RegisterSystem<AnimationSystem>();
 		m_coordinator.RegisterSystem<DebugDrawSystem>();
 		m_coordinator.RegisterSystem<FontSystem>();
@@ -108,7 +112,11 @@ namespace Rogue
 		m_coordinator.RegisterComponent<BackgroundComponent>();
 		m_coordinator.RegisterComponent<ParticleEmitterComponent>();
 		m_coordinator.RegisterComponent<ParticleComponent>();
-		//m_coordinator.RegisterComponent<ChildComponent>();
+		m_coordinator.RegisterComponent<MaskingComponent>();
+		m_coordinator.RegisterComponent<FadeComponent>();
+
+		//This is a component that isn't directly serialized/deserialized
+		m_coordinator.RegisterComponent<ChildComponent>();
 	}
 
 	void REEngine::Init()
@@ -260,6 +268,11 @@ namespace Rogue
 	bool REEngine::GetIsFocused() const
 	{
 		return m_isFocused;
+	}
+
+	bool REEngine::GetGameIsRunning() const
+	{
+		return m_gameIsRunning;
 	}
 
 	void REEngine::SetGameIsRunning(bool set)

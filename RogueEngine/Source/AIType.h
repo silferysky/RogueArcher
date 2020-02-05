@@ -26,7 +26,13 @@ namespace Rogue
 		AI_Patrol,
 		AI_Finder,
 		AI_Trigger,
+		AI_Platform,
 		Obj_Transition,
+		Obj_AppearOnCollide,
+		UI_TeleCharge1,
+		UI_TeleCharge2,
+		UI_TeleCharge3,
+		Obj_Fade,
 		AI_Last
 	};
 

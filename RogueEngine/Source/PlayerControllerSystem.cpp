@@ -25,14 +25,17 @@ Technology is prohibited.
 #include "KeyEvent.h"
 #include "GameEvent.h"
 #include "GraphicsEvent.h"
+#include "ParentEvent.h"
 #include "PickingManager.h"
 #include "MenuControllerSystem.h"
 #include "PlayerStatusManager.h"
+#include "BoxCollisionSystem.h"
+#include "CollisionManager.h"
 
 namespace Rogue
 {
 	PlayerControllerSystem::PlayerControllerSystem()
-		:System(SystemID::id_PLAYERCONTROLLERSYSTEM)
+		:System(SystemID::id_PLAYERCONTROLLERSYSTEM), m_ignoreFrameEvent{ false }
 	{
 	}
 
@@ -51,18 +54,12 @@ namespace Rogue
 	void PlayerControllerSystem::Update()
 	{
 		//For PlayerControllerSystem Timer
-		/*if (m_ballTimer > 0.0f)
+		m_ignoreFrameEvent = false;
+
+		if (PLAYER_STATUS.GetPlayerEntity() == MAX_ENTITIES && m_entities.size())
 		{
-			m_ballTimer -= g_deltaTime * g_engine.GetTimeScale();
-			if (m_ballTimer < 0.0f)
-				CreateBallAttack();
-			//RE_INFO("BALL TIMER UPDATE");
+			PLAYER_STATUS.SetPlayerEntity(*m_entities.begin());
 		}
-		else
-		{
-			m_ballCooldown -= g_deltaTime * g_engine.GetTimeScale();
-			//RE_INFO("BALL COOLDOWN UPDATE");
-		}*/
 
 		if (!g_engine.m_coordinator.GameIsActive())
 		{
@@ -73,20 +70,58 @@ namespace Rogue
 			return;
 		}
 
+		if (PLAYER_STATUS.InSlowMo())
+		{
+			if (PLAYER_STATUS.GetIndicator() == MAX_ENTITIES && PLAYER_STATUS.GetPlayerEntity() != MAX_ENTITIES)
+			{
+				PLAYER_STATUS.SetIndicator(g_engine.m_coordinator.cloneArchetypes("Indicator", false));
+
+				ParentSetEvent* parent = new ParentSetEvent(*m_entities.begin(), PLAYER_STATUS.GetIndicator());
+				parent->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+				EventDispatcher::instance().AddEvent(parent);
+
+				return;
+			}
+
+			//If it reaches here, that means indicator exists already
+			if (g_engine.m_coordinator.ComponentExists<ChildComponent>(PLAYER_STATUS.GetIndicator()) &&
+				g_engine.m_coordinator.ComponentExists<TransformComponent>(PLAYER_STATUS.GetIndicator()))
+			{
+				Vec2 calculatedPos = GetTeleportRaycast();
+				TransformComponent& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetIndicator());
+				Vec2 vecOfChange = Vec2(g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin()).GetPosition() - calculatedPos);
+
+				//For Position
+				transform.setPosition(calculatedPos + vecOfChange / 2);
+
+				//For Scale
+				//Vec2Normalize(vecOfChange, vecOfChange);
+				//vecOfChange = vecOfChange * transform.GetScale().x * 3 + transform.GetPosition();
+				//transform.setScale(Vec2(vecOfChange.x / calculatedPos.x, transform.GetScale().y));
+
+				//For Rotation
+				transform.setRotation(atan(vecOfChange.y / vecOfChange.x));
+				if (vecOfChange.x < 0.0f)
+				{
+					transform.setScale(transform.GetScale() * -1);
+				}
+			}
+		}
+
 		if (m_teleports.size())
 		{
 			for (TimedEntity& ent : m_teleports)
 			{
 				ent.m_durationLeft -= g_deltaTime * g_engine.GetTimeScale();
-			}
 
-			if (m_teleports.back().m_durationLeft < 0.0f)
-				ClearTeleportEntities();
+				if (ent.m_durationLeft < 0.0f)
+					ClearTeleportEntities(ent.m_entity);
+			}
 		}
 
 		//Timers 
-		if (PLAYER_STATUS.GetTeleportCharge() < PLAYER_STATUS.GetMaxTeleportCharge())
-			PLAYER_STATUS.IncrementTeleportCharge(g_deltaTime * g_engine.GetTimeScale());
+		//if (PLAYER_STATUS.GetTeleportCharge() < PLAYER_STATUS.GetMaxTeleportCharge())
+			//PLAYER_STATUS.IncrementTeleportCharge(g_deltaTime * g_engine.GetTimeScale());
 
 		PLAYER_STATUS.SetInLightDur(PLAYER_STATUS.GetInLightDur() - g_deltaTime * g_engine.GetTimeScale());
 		PLAYER_STATUS.DecrementTeleportDelay(g_deltaTime * g_engine.GetTimeScale());
@@ -112,7 +147,7 @@ namespace Rogue
 			auto& player = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity);
 			auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
 				
-			if (PLAYER_STATUS.GetHitchhikedEntity() != -1)
+			if (PLAYER_STATUS.GetHitchhikedEntity() != MAX_ENTITIES)
 			{
 				auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
 				auto& parentTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetHitchhikedEntity());
@@ -124,6 +159,9 @@ namespace Rogue
 				ForceManager::instance().RegisterForce(entity, Vec2(rigidbody.getVelocity().x * -c_stopFactor, 0.0f));
 				//rigidbody.addForce(Vec2(rigidbody.getVelocity().x * -c_stopFactor, 0.0f));
 
+			if (player.m_grounded)
+				PLAYER_STATUS.SetTeleportCharge(3.0f);
+
 			player.m_jumpTimer -= g_deltaTime * g_engine.GetTimeScale();
 		}
 
@@ -132,21 +170,59 @@ namespace Rogue
 	void PlayerControllerSystem::Receive(Event* ev)
 	{
 		//Statement here to make sure all commands only apply if game is not running
-		if (!g_engine.m_coordinator.GameIsActive())
-		{
-			g_engine.SetTimeScale(1.0f);
-			return;
-		}
+		//if (!g_engine.m_coordinator.GameIsActive())
+		//{
+		//	g_engine.SetTimeScale(1.0f);
+		//	return;
+		//}
 
 		if (m_entities.begin() == m_entities.end())
 			return;
 
 		switch (ev->GetEventType())
 		{
+		case EventType::EvResetGame:
+		{
+			//Safety check to make sure level exists
+			if (!PLAYER_STATUS.GetRunCount())
+			{
+				PLAYER_STATUS.Reset();
+				return;
+			}
+
+			//Deleting entity
+			//for (auto entity : m_entities)
+			//	g_engine.m_coordinator.AddToDeleteQueue(entity);
+			
+			//Deleting teleport entities
+			ClearTeleportEntities();
+
+			//Deleting Indicator entity
+			if (PLAYER_STATUS.GetIndicator() != MAX_ENTITIES)
+			{
+				g_engine.m_coordinator.AddToDeleteQueue(PLAYER_STATUS.GetIndicator());
+			}
+
+			PLAYER_STATUS.Reset();
+			break;
+		}
 		case EventType::EvMouseMoved:
 		{
 			MouseMoveEvent* mouseMove = dynamic_cast<MouseMoveEvent*>(ev);
 			KeyPress keycode = mouseMove->GetKeyCode();
+
+			return;
+		}
+
+		case EventType::EvEntityChangeSprite:
+		{
+			EntChangeSpriteEvent* event = dynamic_cast<EntChangeSpriteEvent*>(ev);
+			if (g_engine.m_coordinator.ComponentExists<SpriteComponent>(event->GetEntityID()))
+			{
+				SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(event->GetEntityID());
+				sprite.setTexture(event->GetFilePath().c_str());
+				sprite.setTexturePath(event->GetFilePath().c_str());
+			}
 
 			return;
 		}
@@ -172,44 +248,32 @@ namespace Rogue
 					for (Entity entity : m_entities)
 					{
 						auto& PlayerControllable = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity);
-						if (!PlayerControllable.m_grounded)
+						if (!PlayerControllable.m_grounded /*&& !PLAYER_STATUS.InSlowMo()*/)
+						{
 							g_engine.SetTimeScale(PlayerControllable.GetSlowTime());
+							PLAYER_STATUS.SetSlowMo();
+						}
 					}
 
-					//For teleport
-					if (m_entities.size() && m_timedEntities.size() && PLAYER_STATUS.GetInLightDur() < 0.0f && PLAYER_STATUS.GetTeleportCharge() > 1.0f)
+					if (PLAYER_STATUS.GetIndicator() != MAX_ENTITIES)
 					{
-						//TimedEntity ent(g_engine.m_coordinator.cloneArchetypes("TeleportSprite", false), 0.5f);
-						//m_teleports.push_back(ent);
-						//if (g_engine.m_coordinator.ComponentExists<TransformComponent>(m_teleports.back().m_entity))
-						//{
-						//	TransformComponent& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(m_teleports.back().m_entity);
-						//	transform.setPosition(g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).GetPosition());
-						//}
-						////By right correct way of doing this
-						////CreateTeleportEvent(g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).GetPosition());
-						///*if (keycode == KeyPress::MB2)
-						//	g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin()).setPosition(
-						//		g_engine.m_coordinator.GetComponent<TransformComponent>(m_timedEntities.begin()->m_entity).getPosition());*/
-
-						//ClearTimedEntities();
-						//PLAYER_STATUS.IncrementTeleportCharge(-1.0f);
-						//PLAYER_STATUS.SetTeleportDelay(TELEPORT_DELAY);
+						ChildComponent& comp = g_engine.m_coordinator.GetComponent<ChildComponent>(PLAYER_STATUS.GetIndicator());
+						SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(PLAYER_STATUS.GetIndicator());
+						comp.SetIsFollowing(true);
+						auto filter = sprite.getFilter();
+						sprite.setFilter(glm::vec4(filter.r, filter.g, filter.b, 1));
 					}
 				}
 
-				else if (keycode == KeyPress::MB2)
+				else if (keycode == KeyPress::MB2 || keycode == KeyPress::KeyShift || keycode == KeyPress::KeyE)
 				{
-					//For Hitchhiking
+					ToggleMode();
+
 				}
+
 				else if (keycode == KeyPress::MB3)
 				{
 					ClearTimedEntities();
-				}
-
-				else if (keycode == KeyPress::KeyQ)
-				{
-					PLAYER_STATUS.ToggleLightStatus();
 				}
 
 				else if (keycode == KeyPress::KeySpace)
@@ -219,7 +283,7 @@ namespace Rogue
 						auto& player = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(*iEntity);
 						auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
 
-						if (!player.m_grounded || player.m_jumpTimer > 0.0f)
+						if (!player.m_grounded || player.m_jumpTimer > 0.0f || PLAYER_STATUS.HasJumped())
 							return;
 
 						ForceManager::instance().RegisterForce(*iEntity, Vec2(0.0f, 35000.0f));
@@ -227,7 +291,10 @@ namespace Rogue
 
 						// Reset boolean for grounded
 						player.m_grounded = false;
+						PLAYER_STATUS.SetHasJumped(true);
 						player.m_jumpTimer = PLAYER_STATUS.GetJumpMaxTimer();
+
+						ResetPlayerParent();
 					}
 				}
 
@@ -266,6 +333,8 @@ namespace Rogue
 							ev->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
 							ev->SetSystemReceivers((int)SystemID::id_GRAPHICSSYSTEM);
 							EventDispatcher::instance().AddEvent(ev);
+
+							MovingPlayer();
 						}
 						else if (keycode == KeyPress::KeyD)
 						{
@@ -276,6 +345,8 @@ namespace Rogue
 							ev->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
 							ev->SetSystemReceivers((int)SystemID::id_GRAPHICSSYSTEM);
 							EventDispatcher::instance().AddEvent(ev);
+
+							MovingPlayer();
 						}
 
 						// Skip level
@@ -316,7 +387,7 @@ namespace Rogue
 								{
 									auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
 
-									trans.setPosition(Vec2(-530.0f, 287.0f));
+									trans.setPosition(Vec2(155.0f, 55.0f));
 								}
 							}
 							else if (SceneManager::instance().getCurrentFileName() == "Level 9.json")
@@ -354,14 +425,21 @@ namespace Rogue
 						//if (player.m_grounded)
 						//	PLAYER_STATUS.SetTeleportCharge(PLAYER_STATUS.GetMaxTeleportCharge());
 						Teleport();
-
-						if (g_engine.m_coordinator.ComponentExists<AnimationComponent>(*m_entities.begin()))
-							g_engine.m_coordinator.GetComponent<AnimationComponent>(*m_entities.begin()).setIsAnimating(true);
-
-						AudioManager::instance().loadSound("Resources/Sounds/[Shoot Projectile]SCI-FI-WHOOSH_GEN-HDF-20864.ogg", 0.86f, false).Play();
-						AudioManager::instance().loadSound("Resources/Sounds/[Ela Appear]SCI-FI-WHOOSH_GEN-HDF-20870.ogg", 0.3f, false).Play();
+						m_ignoreFrameEvent = true;
 					}
+					//if (PLAYER_STATUS.InSlowMo())
 					g_engine.SetTimeScale(1.0f);
+					PLAYER_STATUS.SetSlowMo(false);
+
+					//To reduce calculations
+					if (PLAYER_STATUS.GetIndicator() != MAX_ENTITIES && g_engine.m_coordinator.ComponentExists<ChildComponent>(PLAYER_STATUS.GetIndicator()))
+					{
+						ChildComponent& comp = g_engine.m_coordinator.GetComponent<ChildComponent>(PLAYER_STATUS.GetIndicator());
+						SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(PLAYER_STATUS.GetIndicator());
+						comp.SetIsFollowing(false);
+						auto filter = sprite.getFilter();
+						sprite.setFilter(glm::vec4(filter.r, filter.g, filter.b, 0));
+					}
 				}
 				if ((keycode == KeyPress::KeyA ) || (keycode == KeyPress::KeyD))
 				{
@@ -372,12 +450,12 @@ namespace Rogue
 
 				else if (keycode == KeyPress::KeySpace)
 				{
-					for (Entity entity : m_entities)
-					{
-						PlayerControllerComponent& player = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity);
+					//for (Entity entity : m_entities)
+					//{
+					//	PlayerControllerComponent& player = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity);
 
-						player.m_grounded = false;
-					}
+					//	player.m_grounded = false;
+					//}
 				}
 			}
 			
@@ -403,7 +481,7 @@ namespace Rogue
 			
 			if (infoA.m_tag == "Player")
 			{
-				if (infoB.m_tag == "Ground")
+				if (infoB.m_tag == "Ground" || infoB.m_tag == "Platform")
 				{
 					player = collisionStay->GetEntityID();
 					playerTrans = collisionStay->GetAPos();
@@ -413,10 +491,12 @@ namespace Rogue
 					groundTrans = collisionStay->GetBPos();
 					groundScale = collisionStay->GetScaleB();
 				}
+				else
+					return;
 			}
 			else if (infoB.m_tag == "Player")
 			{
-				if (infoA.m_tag == "Ground")
+				if (infoA.m_tag == "Ground" || infoB.m_tag == "Platform")
 				{
 					ground = collisionStay->GetEntityID();
 					groundTrans = collisionStay->GetAPos();
@@ -436,8 +516,45 @@ namespace Rogue
 			{
 				auto& player = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity);
 
-				if (playerTrans.y - playerScale.y < groundTrans.y + groundScale.y)
+				//Bottom of player is lower than top of ground (Standing on top)
+				//Bottom of player is above bottom of ground (Player is above ground)
+				//if (playerTrans.y - playerScale.y / 2 < groundTrans.y + groundScale.y / 2 /*&& playerTrans.y - playerScale.y / 2 > groundTrans.y - groundScale.y / 2*/ && !m_ignoreFrameEvent)
+				//{
+				//}
+
+				LineSegment finiteRay(playerTrans, Vec2(playerTrans.x, playerTrans.x - playerScale.y / 2.0f));
+				
+				if (!g_engine.m_coordinator.ComponentExists<BoxCollider2DComponent>(ground))
+					return;
+
+				BoxCollider2DComponent& groundCollider = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(ground);
+
+				if (CollisionManager::instance().DiscreteLineVsAABB(finiteRay, groundCollider.m_aabb))
+				{
 					player.m_grounded = true;
+					PLAYER_STATUS.SetHasJumped(false);
+				}
+				else if (infoA.m_tag == "Platform" || infoB.m_tag == "Platform")
+				{
+					player.m_grounded = true;
+					PLAYER_STATUS.SetHasJumped(false);
+					if (infoA.m_tag == "Platform")
+					{
+						//ParentSetEvent* parent = new ParentSetEvent(infoA.m_Entity, entity);
+						//parent->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+						//EventDispatcher::instance().AddEvent(parent);
+						//PLAYER_STATUS.SetHitchhikeEntity(infoA.m_Entity);
+						//m_ignoreFrameEvent = true;
+					}
+					else //if (infoB.m_tag == "Platform")
+					{
+						//ParentSetEvent* parent = new ParentSetEvent(infoB.m_Entity, entity);
+						//parent->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+						//EventDispatcher::instance().AddEvent(parent);
+						//PLAYER_STATUS.SetHitchhikeEntity(infoB.m_Entity);
+						//m_ignoreFrameEvent = true;
+					}
+				}
 				else
 					player.m_grounded = false;
 			}
@@ -499,7 +616,8 @@ namespace Rogue
 		auto& activeObjects = g_engine.m_coordinator.GetActiveObjects();
 		for (TimedEntity& entity : m_teleports)
 		{
-			g_engine.m_coordinator.DestroyEntity(entity.m_entity);
+			if (entity.m_durationLeft < 0.0f)
+				g_engine.m_coordinator.DestroyEntity(entity.m_entity);
 
 			//for (auto iterator = activeObjects.begin(); iterator != activeObjects.end(); ++iterator)
 			//{
@@ -512,6 +630,18 @@ namespace Rogue
 		}
 
 		m_teleports.clear();
+	}
+
+	void PlayerControllerSystem::ClearTeleportEntities(Entity ent)
+	{
+		for (auto it = m_teleports.begin(); it != m_teleports.end(); ++it)
+		{
+			if (it->m_entity == ent)
+			{
+				m_teleports.erase(it);
+				return;
+			}
+		}
 	}
 
 	void PlayerControllerSystem::CreateTeleportEvent(Vec2 newPosition)
@@ -567,8 +697,54 @@ namespace Rogue
 
 	void PlayerControllerSystem::Teleport()
 	{
-		PLAYER_STATUS.IncrementTeleportCharge(-1.0f);
+		// In case player doesn't even exist lmao
+		if (m_entities.begin() == m_entities.end())
+			return;
+    
+		// In case player doesn't have a box collider
+		if (!g_engine.m_coordinator.ComponentExists<BoxCollider2DComponent>(*m_entities.begin()) ||
+			!g_engine.m_coordinator.ComponentExists<ColliderComponent>(*m_entities.begin()))
+			return;
 
+		PLAYER_STATUS.IncrementTeleportCharge(-1.0f);
+		if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(*m_entities.begin()))
+			g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(*m_entities.begin()).m_grounded = false;
+
+		Vec2 calculatedPos = GetTeleportRaycast();
+
+		CreateTeleportEvent(calculatedPos);
+
+		if (PLAYER_STATUS.GetHitchhikedEntity() != MAX_ENTITIES)
+		{
+			ParentResetEvent* parentReset = new ParentResetEvent(*m_entities.begin());
+			parentReset->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+			EventDispatcher::instance().AddEvent(parentReset);
+			PLAYER_STATUS.SetHitchhikeEntity(MAX_ENTITIES);
+		}
+
+		//For teleport VFX
+		TimedEntity ent(g_engine.m_coordinator.cloneArchetypes("TeleportSprite", false), 1.0f);
+		m_teleports.push_back(ent);
+		if (g_engine.m_coordinator.ComponentExists<TransformComponent>(m_teleports.back().m_entity))
+		{
+			TransformComponent& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(m_teleports.back().m_entity);
+			Vec2 vecOfChange = Vec2(g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin()).GetPosition() - calculatedPos);
+			transform.setPosition(calculatedPos + vecOfChange/ 2);
+			transform.setRotation(atan(vecOfChange.y / vecOfChange.x));
+			//No need to set scale
+			//transform.setScale(Vec2(vecOfChange.x, vecOfChange.y));
+		}
+
+		//For teleport SFX
+		if (g_engine.m_coordinator.ComponentExists<AnimationComponent>(*m_entities.begin()))
+			g_engine.m_coordinator.GetComponent<AnimationComponent>(*m_entities.begin()).setIsAnimating(true);
+
+		AudioManager::instance().loadSound("Resources/Sounds/[Shoot Projectile]SCI-FI-WHOOSH_GEN-HDF-20864.ogg", 0.86f, false).Play();
+		AudioManager::instance().loadSound("Resources/Sounds/[Ela Appear]SCI-FI-WHOOSH_GEN-HDF-20870.ogg", 0.3f, false).Play();
+	}
+
+	Vec2 PlayerControllerSystem::GetTeleportRaycast()
+	{
 		TransformComponent& playerTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin());
 		Vec2 initialPos = playerTransform.GetPosition();
 		Vec2 endPos = PickingManager::instance().GetWorldCursor();
@@ -582,15 +758,170 @@ namespace Rogue
 		cursor += initialPos;
 
 		//Prevent going past cursor when clicking close
-		if (Vec2SqDistance(initialPos, endPos) < Vec2SqDistance(initialPos, cursor))
-			cursor = endPos;
+		//if (Vec2SqDistance(initialPos, endPos) < Vec2SqDistance(initialPos, cursor))
+		//	cursor = endPos;
 
 		for (size_t checkCount = 0; checkCount < 3; ++checkCount)
 		{
 			calculatedPos += ((cursor - initialPos) / 3);
 		}
 
-		CreateTeleportEvent(calculatedPos);
+		const std::set<Entity>& boxEntities = g_engine.m_coordinator.GetSystem<BoxCollisionSystem>()->GetEntitySet();
+		BoxCollider2DComponent& playerCollider = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(*m_entities.begin());
+		ColliderComponent& playerGCollider = g_engine.m_coordinator.GetComponent<ColliderComponent>(*m_entities.begin());
+		LineSegment teleportLine = LineSegment(playerTransform.GetPosition(), calculatedPos);
+		Vec2 teleportVec = calculatedPos - playerTransform.GetPosition();
+
+		for (Entity entity : boxEntities)
+		{
+			if (entity == *m_entities.begin())
+				continue;
+
+			BoxCollider2DComponent& boxCollider = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(entity);
+			if (boxCollider.GetCollisionMode() != CollisionMode::e_awake)
+				continue;
+
+			ColliderComponent& boxGCollider = g_engine.m_coordinator.GetComponent<ColliderComponent>(entity);
+
+			if (!CollisionManager::instance().FilterColliders(playerGCollider.GetCollisionMask(), boxGCollider.GetCollisionCat()) ||
+				!CollisionManager::instance().FilterColliders(boxGCollider.GetCollisionMask(), playerGCollider.GetCollisionCat()))
+				continue;
+
+			TransformComponent& boxTrans = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
+
+			//DebugDrawBall(boxCollider.m_aabb, boxTrans);
+			//DebugDrawArrow(teleportLine);
+
+			if (CollisionManager::instance().DiscreteLineVsAABB(teleportLine, boxCollider.m_aabb))
+			{
+				Vec2 boxPos = CollisionManager::instance().GetColliderPosition(boxCollider.m_aabb, boxTrans);
+
+				std::array<LineSegment, 4> edges = CollisionManager::instance().GenerateEdges(boxCollider.m_aabb);
+
+				float smallestT = 1.0f;
+				float t = smallestT;
+
+				for (LineSegment edge : edges)
+				{
+					t = Vec2DotProduct(Vec2(edge.m_pt0 - playerTransform.GetPosition()), edge.m_normal) /
+						Vec2DotProduct(teleportVec, edge.m_normal);
+
+					if (t > 0.0f && t < smallestT)
+						smallestT = t;
+				}
+
+				calculatedPos = playerTransform.GetPosition() + smallestT * teleportVec;
+
+				teleportLine = LineSegment(playerTransform.GetPosition(), calculatedPos);
+				teleportVec = calculatedPos - playerTransform.GetPosition();
+			}
+		}
+		return calculatedPos;
+	}
+
+	void PlayerControllerSystem::ToggleMode()
+	{
+		PLAYER_STATUS.ToggleLightStatus();
+		for (Entity player : m_entities)
+		{
+			if (g_engine.m_coordinator.ComponentExists<ColliderComponent>(player))
+			{
+				ColliderComponent& playerCollider = g_engine.m_coordinator.GetComponent<ColliderComponent>(player);
+				int lightPos = -1;
+				int darkPos = -1;
+
+				lightPos = LayerManager::instance().GetLayerCategory("Light");
+				darkPos = LayerManager::instance().GetLayerCategory("Dark");
+
+				// True means in light mode.
+				if (PlayerStatusManager::instance().GetLightStatus())
+				{
+					playerCollider.ChangeLayer(lightPos);
+					playerCollider.SetMask(darkPos);
+					playerCollider.SetMask(lightPos, false);
+				}
+				else
+				{
+					playerCollider.ChangeLayer(darkPos);
+					playerCollider.SetMask(lightPos);
+					playerCollider.SetMask(darkPos, false);
+				}
+			}
+		}
+	}
+
+	void PlayerControllerSystem::SetPlayerParent(Entity newParent)
+	{
+		if (!m_entities.size())
+			return;
+		ParentSetEvent* parent = new ParentSetEvent(newParent, *m_entities.begin());
+		parent->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+		EventDispatcher::instance().AddEvent(parent);
+		PLAYER_STATUS.SetHitchhikeEntity(newParent);
+	}
+
+	void PlayerControllerSystem::ResetPlayerParent()
+	{
+		if (PLAYER_STATUS.GetHitchhikedEntity() != MAX_ENTITIES)
+		{
+			ParentResetEvent* parentReset = new ParentResetEvent(*m_entities.begin());
+			parentReset->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+			EventDispatcher::instance().AddEvent(parentReset);
+			PLAYER_STATUS.SetHitchhikeEntity(MAX_ENTITIES);
+		}
+	}
+
+	void PlayerControllerSystem::MovingPlayer()
+	{
+		if (PLAYER_STATUS.GetHitchhikedEntity() != MAX_ENTITIES)
+		{
+			ChildTransformEvent* setParentEv = new ChildTransformEvent(*m_entities.begin(), false);
+			setParentEv->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+			EventDispatcher::instance().AddEvent(setParentEv);
+		}
+	}
+
+	void PlayerControllerSystem::DebugDrawBall(const BaseCollider& box, const TransformComponent& trans) const
+	{
+		std::ostringstream strstream;
+		Entity ball = g_engine.m_coordinator.CreateEntity();
+		strstream
+			<< CollisionManager::instance().GetColliderPosition(box, trans).x << ";"
+			<< CollisionManager::instance().GetColliderPosition(box, trans).y << ";"
+			<< CollisionManager::instance().GetColliderScale(box, trans).x << ";"
+			<< CollisionManager::instance().GetColliderScale(box, trans).y << ";"
+			<< "0;"
+			<< "2";
+
+		TransformComponent& ballTransform = g_engine.m_coordinator.CreateComponent<TransformComponent>(ball);
+
+		ballTransform.Deserialize(strstream.str());
+
+		SpriteComponent& sprite = g_engine.m_coordinator.CreateComponent<SpriteComponent>(ball);
+		sprite.Deserialize("Resources/Assets/Projectile.png;1;1;1;1;0.1");
+
+		HierarchyInfo newInfo(ball, "Ball", "ball");
+		g_engine.m_coordinator.GetActiveObjects().push_back(ball);
+		g_engine.m_coordinator.GetHierarchyInfo(ball) = newInfo;
+
+	}
+
+	void PlayerControllerSystem::DebugDrawArrow(const LineSegment& teleportLine) const
+	{
+		Entity line = g_engine.m_coordinator.CreateEntity();
+		TransformComponent& linetrans = g_engine.m_coordinator.CreateComponent<TransformComponent>(line);
+
+		linetrans.setZ(2);
+		linetrans.setPosition(teleportLine.m_pt0 + (teleportLine.m_pt1 - teleportLine.m_pt0) / 2);
+		linetrans.setScale(Vec2(Vec2Length(teleportLine.m_pt1 - teleportLine.m_pt0), 50.0f));
+		linetrans.setRotation(Vec2Rotation(teleportLine.m_pt1 - teleportLine.m_pt0));
+
+		SpriteComponent& lsprite = g_engine.m_coordinator.CreateComponent<SpriteComponent>(line);
+		lsprite.Deserialize("Resources/Assets/Arrow.png;1;1;1;1;1");
+
+		HierarchyInfo nnewInfo(line, "Line", "line");
+		g_engine.m_coordinator.GetActiveObjects().push_back(line);
+		g_engine.m_coordinator.GetHierarchyInfo(line) = nnewInfo;
 	}
 
 

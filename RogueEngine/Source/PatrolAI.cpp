@@ -18,6 +18,7 @@ Technology is prohibited.
 #include "Precompiled.h"
 #include "PatrolAI.h"
 #include "Main.h"
+//#include "ParentEvent.h"
 
 namespace Rogue
 {
@@ -68,6 +69,8 @@ namespace Rogue
 		if (m_delay > 0.0f)
 		{
 			m_delay -= g_engine.GetTimeScale() * g_deltaTime;
+			if (m_delay < 0.0f)
+				m_delay = 0.0f;
 			return;
 		}
 
@@ -125,6 +128,13 @@ namespace Rogue
 
 			m_delay = m_patrolDelay;
 		}
+		//if (g_engine.m_coordinator.GetHierarchyInfo(m_entity).m_children.size())
+		//{
+		//	ParentTransformEvent* parentEv = new ParentTransformEvent(m_entity, MAX_ENTITIES);
+		//	parentEv->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+		//	EventDispatcher::instance().AddEvent(parentEv);
+		//}
+
 
 	}
 

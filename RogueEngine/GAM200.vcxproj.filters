@@ -131,6 +131,21 @@
     <Filter Include="RogueEngine\Systems\Collision\Data">
       <UniqueIdentifier>{225070de-efff-488a-ab77-7bde09866f84}</UniqueIdentifier>
     </Filter>
+    <Filter Include="RogueEngine\Systems\Graphics\Masking">
+      <UniqueIdentifier>{5b852215-22bd-4938-adf6-ddb7e7efb081}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RogueEngine\Systems\Graphics\Fading">
+      <UniqueIdentifier>{766b1b40-7c35-4801-bfce-958539f5cead}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RogueEngine\Systems\AI\Script Types">
+      <UniqueIdentifier>{9962feaa-96d2-48da-8db6-9f62213c0786}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RogueEngine\Systems\AI\Script Types\UI">
+      <UniqueIdentifier>{66e7949b-47f6-4812-9066-5a83b59e0d43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RogueEngine\Systems\AI\Script Types\UI\TeleCharge">
+      <UniqueIdentifier>{9aa52bf9-5118-4c68-8892-e1179bb330fd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Resource.h">
@@ -502,9 +517,6 @@
     <ClInclude Include="Source\PickingManager.h">
       <Filter>RogueEngine\Systems\Picking</Filter>
     </ClInclude>
-    <ClInclude Include="Source\TransitionObject.h">
-      <Filter>RogueEngine\Systems\AI\AI Types</Filter>
-    </ClInclude>
     <ClInclude Include="Source\ParticleComponent.h">
       <Filter>RogueEngine\Systems\Particle System</Filter>
     </ClInclude>
@@ -529,9 +541,6 @@
     <ClInclude Include="Source\FMODHelper.h">
       <Filter>RogueEngine\Systems\Audio</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ScriptComponent.h">
-      <Filter>RogueEngine\Systems\AI\AI Types</Filter>
-    </ClInclude>
     <ClInclude Include="Source\ICommandable.h">
       <Filter>RogueEditor\EditorFiles</Filter>
     </ClInclude>
@@ -547,7 +556,7 @@
     <ClInclude Include="Source\PhysicsDataStructures.hpp">
       <Filter>RogueEngine\Systems\Collision\Data</Filter>
     </ClInclude>
-    <ClInclude Include="Source\CollisionLayerer.h">
+    <ClInclude Include="Source\LayerManager.h">
       <Filter>RogueEngine\Systems\Collision\Data</Filter>
     </ClInclude>
     <ClInclude Include="Source\ParentEvent.h">
@@ -561,6 +570,42 @@
     </ClInclude>
     <ClInclude Include="Source\ChildComponent.h">
       <Filter>RogueEngine\Systems\ParentChild</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MaskingSystem.h">
+      <Filter>RogueEngine\Systems\Graphics\Masking</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MaskingComponent.h">
+      <Filter>RogueEngine\Systems\Graphics\Masking</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FadeComponent.h">
+      <Filter>RogueEngine\Systems\Graphics\Fading</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FadeSystem.h">
+      <Filter>RogueEngine\Systems\Graphics\Fading</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ScriptComponent.h">
+      <Filter>RogueEngine\Systems\AI\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TransitionObject.h">
+      <Filter>RogueEngine\Systems\AI\Script Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FadeObject.h">
+      <Filter>RogueEngine\Systems\AI\Script Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PlatformAI.h">
+      <Filter>RogueEngine\Systems\AI\AI Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TeleCharge1.h">
+      <Filter>RogueEngine\Systems\AI\Script Types\UI\TeleCharge</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TeleCharge2.h">
+      <Filter>RogueEngine\Systems\AI\Script Types\UI\TeleCharge</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TeleCharge3.h">
+      <Filter>RogueEngine\Systems\AI\Script Types\UI\TeleCharge</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AppearOnCollide.h">
+      <Filter>RogueEngine\Systems\AI\Script Types\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -831,9 +876,6 @@
     <ClCompile Include="Source\PickingManager.cpp">
       <Filter>RogueEngine\Systems\Picking</Filter>
     </ClCompile>
-    <ClCompile Include="Source\TransitionObject.cpp">
-      <Filter>RogueEngine\Systems\AI\AI Types</Filter>
-    </ClCompile>
     <ClCompile Include="Source\ParticleComponent.cpp">
       <Filter>RogueEngine\Systems\Particle System</Filter>
     </ClCompile>
@@ -855,16 +897,13 @@
     <ClCompile Include="Source\UISystem.cpp">
       <Filter>RogueEngine\Systems\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ScriptComponent.cpp">
-      <Filter>RogueEngine\Systems\AI\AI Types</Filter>
-    </ClCompile>
     <ClCompile Include="Source\CollisionManager.cpp">
       <Filter>RogueEngine\Systems\Collision\Data</Filter>
     </ClCompile>
     <ClCompile Include="Source\Manifold.cpp">
       <Filter>RogueEngine\Systems\Collision\Data</Filter>
     </ClCompile>
-    <ClCompile Include="Source\CollisionLayerer.cpp">
+    <ClCompile Include="Source\LayerManager.cpp">
       <Filter>RogueEngine\Systems\Collision\Data</Filter>
     </ClCompile>
     <ClCompile Include="Source\ParentChildSystem.cpp">
@@ -875,6 +914,42 @@
     </ClCompile>
     <ClCompile Include="Source\ChildComponent.cpp">
       <Filter>RogueEngine\Systems\ParentChild</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MaskingSystem.cpp">
+      <Filter>RogueEngine\Systems\Graphics\Masking</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MaskingComponent.cpp">
+      <Filter>RogueEngine\Systems\Graphics\Masking</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\FadeSystem.cpp">
+      <Filter>RogueEngine\Systems\Graphics\Fading</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\FadeComponent.cpp">
+      <Filter>RogueEngine\Systems\Graphics\Fading</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ScriptComponent.cpp">
+      <Filter>RogueEngine\Systems\AI\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TransitionObject.cpp">
+      <Filter>RogueEngine\Systems\AI\Script Types</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\FadeObject.cpp">
+      <Filter>RogueEngine\Systems\AI\Script Types</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PlatformAI.cpp">
+      <Filter>RogueEngine\Systems\AI\AI Types</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TeleCharge1.cpp">
+      <Filter>RogueEngine\Systems\AI\Script Types\UI\TeleCharge</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TeleCharge2.cpp">
+      <Filter>RogueEngine\Systems\AI\Script Types\UI\TeleCharge</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TeleCharge3.cpp">
+      <Filter>RogueEngine\Systems\AI\Script Types\UI\TeleCharge</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AppearOnCollide.cpp">
+      <Filter>RogueEngine\Systems\AI\Script Types\UI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

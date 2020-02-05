@@ -52,23 +52,7 @@ namespace Rogue
 			ImGui::EndDragDropSource();
 		}
 	
-		if (ImGui::BeginDragDropTarget())
-		{
-			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Hierarchy"))
-			{
-				HierarchyInfo& hierarchyPayload = *(HierarchyInfo*)payload->Data;
-	
-				//Hierarchy must not be yourself, but would otherwise work
-				if (hierarchyPayload.m_Entity != objInfo.m_Entity)
-				{
-					ParentSetEvent* setParentEv = new ParentSetEvent(hierarchyPayload.m_Entity, objInfo.m_Entity);
-					setParentEv->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
-					EventDispatcher::instance().AddEvent(setParentEv);
-					//ReassignParentChildFlags(hierarchyPayload.m_Entity, objInfo.m_Entity);
-				}
-			}
-			ImGui::EndDragDropTarget();
-		}
+		AcceptHierarchyPayload(objInfo);
 		DisplayHierarchyChildren(objInfo, 1);
 	}
 	
@@ -108,26 +92,32 @@ namespace Rogue
 				ImGui::EndDragDropSource();
 			}
 	
-	
-			if (ImGui::BeginDragDropTarget())
-			{
-				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Hierarchy"))
-				{
-					HierarchyInfo& hierarchyPayload = *(HierarchyInfo*)payload->Data;
-	
-					//Hierarchy must not be yourself, but would otherwise work
-					if (hierarchyPayload.m_Entity != childHierarchy.m_Entity)
-					{
-						ParentSetEvent* setParentEv = new ParentSetEvent(hierarchyPayload.m_Entity, childHierarchy.m_Entity);
-						setParentEv->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
-						EventDispatcher::instance().AddEvent(setParentEv);
-					}
-				}
-				ImGui::EndDragDropTarget();
-			}
+			AcceptHierarchyPayload(childHierarchy);
+
 			//Display children of children
-			if (numOfParents < 10)
-				DisplayHierarchyChildren(childHierarchy, numOfParents + 1);
+			//if (numOfParents < 10)
+			DisplayHierarchyChildren(childHierarchy, numOfParents + 1);
+		}
+	}
+
+	void ImGuiEditorHierarchy::AcceptHierarchyPayload(HierarchyInfo& objInfo)
+	{
+		if (ImGui::BeginDragDropTarget())
+		{
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Hierarchy"))
+			{
+				HierarchyInfo& hierarchyPayload = *(HierarchyInfo*)payload->Data;
+
+				//Hierarchy must not be yourself, but would otherwise work
+				if (hierarchyPayload.m_Entity != objInfo.m_Entity)
+				{
+					ParentSetEvent* setParentEv = new ParentSetEvent(objInfo.m_Entity, hierarchyPayload.m_Entity);
+					setParentEv->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+					EventDispatcher::instance().AddEvent(setParentEv);
+					//ReassignParentChildFlags(hierarchyPayload.m_Entity, objInfo.m_Entity);
+				}
+			}
+			ImGui::EndDragDropTarget();
 		}
 	}
 
@@ -166,6 +156,19 @@ namespace Rogue
 	void ImGuiEditorHierarchy::Update()
 	{
 		ImGui::Begin("Hierarchy");
+		if (ImGui::BeginDragDropTarget())
+		{
+			if (const ImGuiPayload * payload = ImGui::AcceptDragDropPayload("Hierarchy"))
+			{
+				HierarchyInfo& hierarchyPayload = *(HierarchyInfo*)payload->Data;
+				//g_engine.m_coordinator.GetHierarchyInfo(i).m_children.clear();
+				//m_currentVector.emplace_back(hierarchyPayload.m_Entity);
+				ParentResetEvent* setParentEv = new ParentResetEvent(hierarchyPayload.m_Entity);
+				setParentEv->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+				EventDispatcher::instance().AddEvent(setParentEv);
+			}
+			ImGui::EndDragDropTarget();
+		}
 		if (ImGui::IsWindowFocused())
 		{
 			set(true);

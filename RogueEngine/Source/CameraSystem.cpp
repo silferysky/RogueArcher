@@ -22,6 +22,7 @@ Technology is prohibited.
 #include "KeyEvent.h"
 #include "GraphicsEvent.h"
 #include "CameraManager.h"
+#include "PickingManager.h"
 
 namespace Rogue
 {
@@ -138,8 +139,19 @@ namespace Rogue
 
 					// For camera panning
 					glm::vec3 position = CameraManager::instance().GetCameraPos();
-					position.x += static_cast<int>((transformPos.x - position.x + shakeOffset.x + cameraOffset.x) * m_cameraLerp * g_deltaTime);
-					position.y += static_cast<int>((transformPos.y - position.y + shakeOffset.y + cameraOffset.y) * m_cameraLerp * g_deltaTime);
+
+					float deltaX = transformPos.x - position.x + shakeOffset.x + cameraOffset.x;
+					float deltaY = transformPos.y - position.y + shakeOffset.y + cameraOffset.y;
+
+					//if (g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity).m_grounded)
+					//{
+						// Do not move the camera for too small distances
+						if (deltaX > 0.5 || deltaX < -0.5)
+							position.x += static_cast<int>(deltaX)* m_cameraLerp* g_deltaTime;
+
+						if (deltaY > 0.5 || deltaY < -0.5)
+							position.y += static_cast<int>(deltaY)* m_cameraLerp* g_deltaTime;
+					//}
 
 					CameraManager::instance().SetCameraPos(position);
 					//glm::vec3(transformPos.x + shakeOffset.x, transformPos.y + shakeOffset.y, 0.0f);
@@ -171,8 +183,8 @@ namespace Rogue
 			//if (keycode == KeyPress::Numpad9)
 			//	m_cameraShake.SetShake(13.0f);
 
-			if (keycode == KeyPress::KeyShift && g_engine.GetIsFocused())
-				ToggleWorldCamera();
+			//if (keycode == KeyPress::KeyShift && g_engine.GetIsFocused())
+				//ToggleWorldCamera();
 
 			return;
 		} //End KeyTriggered
@@ -181,13 +193,59 @@ namespace Rogue
 			KeyPressEvent* EvPressKey = dynamic_cast<KeyPressEvent*>(ev);
 			KeyPress keycode = EvPressKey->GetKeyCode();
 
-			if (g_engine.GetIsFocused())
+			if (g_engine.GetIsFocused() && g_engine.m_coordinator.GetEditorIsRunning())
 			{
+				/* if (keycode == KeyPress::MB1 && PickingManager::instance().isCursorinViewPort())
+				{
+					glm::vec3 cursorPos{ PickingManager::instance().GetWorldCursor().x, PickingManager::instance().GetWorldCursor().y, 0 };
+					CameraManager::instance().SetCameraPos(cursorPos);
+				} */
+
 				if (keycode == KeyPress::KeyF1)
 					CameraManager::instance().ZoomIn();
 
 				if (keycode == KeyPress::KeyF2)
 					CameraManager::instance().ZoomOut();
+
+				if (keycode == KeyPress::KeyArrowLeft)
+				{
+					auto& cameraManager = CameraManager::instance();
+					auto cameraPos = cameraManager.GetCameraPos();
+
+					cameraPos.x -= 10.0f;
+
+					cameraManager.SetCameraPos(cameraPos);
+				}
+
+				if (keycode == KeyPress::KeyArrowRight)
+				{
+					auto& cameraManager = CameraManager::instance();
+					auto cameraPos = cameraManager.GetCameraPos();
+
+					cameraPos.x += 10.0f;
+
+					cameraManager.SetCameraPos(cameraPos);
+				}
+
+				if (keycode == KeyPress::KeyArrowUp)
+				{
+					auto& cameraManager = CameraManager::instance();
+					auto cameraPos = cameraManager.GetCameraPos();
+
+					cameraPos.y += 10.0f;
+
+					cameraManager.SetCameraPos(cameraPos);
+				}
+
+				if (keycode == KeyPress::KeyArrowDown)
+				{
+					auto& cameraManager = CameraManager::instance();
+					auto cameraPos = cameraManager.GetCameraPos();
+
+					cameraPos.y -= 10.0f;
+
+					cameraManager.SetCameraPos(cameraPos);
+				}
 			}
 			return;
 		} //End KeyPressed

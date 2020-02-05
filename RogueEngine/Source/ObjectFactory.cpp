@@ -26,6 +26,9 @@ Technology is prohibited.
 #include "FileIO.h"
 #include "EditorHierarchyInfo.h"
 #include "CameraManager.h"
+#include "ChildComponent.h"
+#include "ParentEvent.h"
+#include "EditorHierarchy.h"
 
 namespace Rogue
 {
@@ -91,12 +94,13 @@ namespace Rogue
 			CLEARSTR(ostrstream);
 			ostrstream << "EntityParent" << static_cast<int>(entity);
 			Entity entityParent = level[ostrstream.str().c_str()].GetInt();
+			
+			if (entityParent == -1)
+			{
+				entityParent = MAX_ENTITIES;
+			}
 
 			CREATE_HIERARCHY_OBJ(curEnt, readstr, tagstr, "", loadedQueue.front() + entityParent);
-			//HierarchyInfo& info = g_engine.m_coordinator.GetHierarchyInfo(curEnt);
-			//debugStr << "Entity " << info.m_Entity << ":" << info.m_objectName << " has parent " << info.m_parent;
-			//RE_INFO(debugStr.str());
-			//CLEARSTR(debugStr);
 
 			debugStr << "Entity " << curEnt << "'s Signature: " << g_engine.m_coordinator.GetEntityManager().GetSignature(curEnt).to_ulong();
 			RE_INFO(debugStr.str());
@@ -119,11 +123,19 @@ namespace Rogue
 				//CLEARSTR(debugStr);
 
 				//Check if parent of itself or  out of bounds (AKA parent is default value)
-				if (childInfo.m_parent == loadedEnt || childInfo.m_parent > loadedEnt + loadedQueue.size() || childInfo.m_parent < firstLoadedEnt)
+				if (childInfo.m_parent == loadedEnt || childInfo.m_parent > loadedEnt + loadedQueue.size() || childInfo.m_parent < firstLoadedEnt || childInfo.m_parent == MAX_ENTITIES)
 				{
-					childInfo.m_parent = -1;
+					childInfo.m_parent = MAX_ENTITIES;
 					loadedQueue.pop();
 					continue;
+				}
+				//Create ChildComponent if it doesn't exist
+				else if (!g_engine.m_coordinator.ComponentExists<ChildComponent>(loadedEnt))
+				{
+					ParentSetEvent* setParentEv = new ParentSetEvent(childInfo.m_parent, childInfo.m_Entity);
+					setParentEv->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+					EventDispatcher::instance().AddEvent(setParentEv);
+					//g_engine.m_coordinator.CreateComponent<ChildComponent>(loadedEnt).SetParent(childInfo.m_parent);
 				}
 
 				HierarchyInfo& parentInfo = g_engine.m_coordinator.GetHierarchyInfo(childInfo.m_parent);
@@ -189,6 +201,7 @@ namespace Rogue
 		bool writingBackground = true;
 		entCount = 0; //Reset entCount for saving loop
 
+		Entity firstEnt = g_engine.m_coordinator.GetActiveObjects().front();
 		for (Entity& curEntity : g_engine.m_coordinator.GetActiveObjects())
 		{
 			if (skipCount)
@@ -232,8 +245,9 @@ namespace Rogue
 			strstream << "EntityParent" << entCount;
 			SETSSTOSTR(strstream);
 			int parentValue = curHierarchy.m_parent;
-			//if (parentValue == MAX_ENTITIES)
-			//	parentValue = -1;
+			if (parentValue != MAX_ENTITIES)
+				parentValue -= firstEnt;
+
 			RESerialiser::WriteToFile(fileName, strstream.str().c_str(), &parentValue);
 
 			++entCount;
@@ -675,6 +689,16 @@ namespace Rogue
 						//strstream << "Particle{" << g_engine.m_coordinator.GetComponent<ParticleComponent>(entityToSerialize).Serialize() << "}";
 						break;
 					}
+					case static_cast<int>(MASKING) :
+					{
+						strstream << "Masking{" << g_engine.m_coordinator.GetComponent<MaskingComponent>(entityToSerialize).Serialize() << "}";
+						break;
+					}
+					case static_cast<int>(FADE) :
+					{
+						strstream << "FADE{" << g_engine.m_coordinator.GetComponent<FadeComponent>(entityToSerialize).Serialize() << "}";
+						break;
+					}
 					default:
 					{
 						RE_CORE_WARN("OUT OF BOUNDS OBJECT COMPONENT SAVING");
@@ -808,6 +832,16 @@ namespace Rogue
 					case static_cast<int>(PARTICLE) :
 					{
 						g_engine.m_coordinator.LoadComponent<ParticleComponent>(curEnt, readstr);
+						break;
+					}
+					case static_cast<int>(MASKING) :
+					{
+						g_engine.m_coordinator.LoadComponent<MaskingComponent>(curEnt, readstr);
+						break;
+					}
+					case static_cast<int>(FADE) :
+					{
+						g_engine.m_coordinator.LoadComponent<FadeComponent>(curEnt, readstr);
 						break;
 					}
 					default:

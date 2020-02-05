@@ -95,6 +95,7 @@ namespace Rogue
 		int GetEngineWindowHeight() const;
 		Vec2 GetWorldDimensions() const;
 		bool GetIsFocused() const;
+		bool GetGameIsRunning() const;
 
 		void SetGameIsRunning(bool set);
 		void SetTimeScale(float timeScale);
