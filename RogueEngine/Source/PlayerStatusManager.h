@@ -24,9 +24,11 @@ namespace Rogue
 		//Player Entity
 		void SetPlayerEntity(Entity ent);
 		Entity GetPlayerEntity() const;
-
 		void SetIndicator(Entity ent);
 		Entity GetIndicator() const;
+
+		void SetPlayerStartingPosition(const Vec2& pos);
+		Vec2 GetPlayerStartingPosition() const;
 
 		//Jump
 		void SetHasJumped(bool jumped);
@@ -71,6 +73,7 @@ namespace Rogue
 
 		Entity m_entity;
 		Entity m_indicator;
+		Vec2 m_playerStartPos;
 
 		//Jumping mechanic
 		bool m_hasJumped;
