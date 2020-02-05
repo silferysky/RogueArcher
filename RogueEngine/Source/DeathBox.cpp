@@ -20,7 +20,12 @@ namespace Rogue
 		if (m_isDead)
 		{
 			m_timer += g_deltaTime * g_engine.GetTimeScale();
-			if (m_timer >= 3.0f)
+			if (m_timer >= 0.5f && m_timer < 3.0f)
+			{
+				g_engine.m_coordinator.GetSystem<CameraSystem>()->setIsActive(false);
+				g_engine.m_coordinator.GetComponent<TransformComponent>(m_other).setPosition(PlayerStatusManager::instance().GetCheckpoint());
+			}
+			else if (m_timer >= 3.0f)
 			{
 				m_timer = 0.0f;
 				m_isDead = false;
@@ -33,9 +38,9 @@ namespace Rogue
 	{
 		if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(other))
 		{
-			g_engine.m_coordinator.GetSystem<CameraSystem>()->setIsActive(false);
-			g_engine.m_coordinator.GetComponent<TransformComponent>(other).setPosition(PlayerStatusManager::instance().GetCheckpoint());
+			//g_engine.m_coordinator.GetSystem<CameraSystem>()->setIsActive(false);
 			m_isDead = true;
+			m_other = other;
 		}
 	}
 }

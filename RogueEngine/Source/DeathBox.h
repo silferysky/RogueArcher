@@ -16,5 +16,6 @@ namespace Rogue
 	private:
 		float m_timer;
 		bool m_isDead;
+		Entity m_other;
 	};
 }
