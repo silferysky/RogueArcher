@@ -61,6 +61,19 @@ namespace Rogue
 			PLAYER_STATUS.SetPlayerEntity(*m_entities.begin());
 		}
 
+		//PlayerControllerComponent& player = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(PLAYER_STATUS.GetPlayerEntity());
+
+		//if (player.m_grounded)
+		//{
+		//	RE_INFO("Grounded!");
+		//	player;
+		//}
+		//else
+		//{
+		//	RE_INFO("Not grounded!");
+		//	player;
+		//}
+
 		if (!g_engine.m_coordinator.GameIsActive())
 		{
 			if (m_timedEntities.size())
@@ -70,7 +83,7 @@ namespace Rogue
 			return;
 		}
 
-		if (PLAYER_STATUS.InSlowMo())
+		if (PLAYER_STATUS.ShowIndicator())
 		{
 			if (PLAYER_STATUS.GetIndicator() == MAX_ENTITIES && PLAYER_STATUS.GetPlayerEntity() != MAX_ENTITIES)
 			{
@@ -79,26 +92,54 @@ namespace Rogue
 				ParentSetEvent* parent = new ParentSetEvent(*m_entities.begin(), PLAYER_STATUS.GetIndicator());
 				parent->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
 				EventDispatcher::instance().AddEvent(parent);
-
-				return;
 			}
-
-			//If it reaches here, that means indicator exists already
-			if (g_engine.m_coordinator.ComponentExists<ChildComponent>(PLAYER_STATUS.GetIndicator()))
+			else
 			{
-				ChildComponent& comp = g_engine.m_coordinator.GetComponent <ChildComponent>(PLAYER_STATUS.GetIndicator());
-				comp.SetIsFollowing(true);
-
-				Vec2 calculatedPos = GetTeleportRaycast();
-
-				if (g_engine.m_coordinator.ComponentExists<TransformComponent>(PLAYER_STATUS.GetIndicator()))
+				//If it reaches here, that means indicator exists already
+				if (g_engine.m_coordinator.ComponentExists<ChildComponent>(PLAYER_STATUS.GetIndicator()) &&
+					g_engine.m_coordinator.ComponentExists<TransformComponent>(PLAYER_STATUS.GetIndicator()))
 				{
+					Vec2 calculatedPos = GetTeleportRaycast();
 					TransformComponent& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetIndicator());
 					Vec2 vecOfChange = Vec2(g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin()).GetPosition() - calculatedPos);
-					transform.setPosition(calculatedPos + vecOfChange / 2);
+
+					//For Position
+					if (Vec2Length(vecOfChange) > 200.0f)
+					{
+						transform.setPosition(calculatedPos + vecOfChange / 2);
+					}
+					else
+					{
+						Vec2 length;
+						Vec2Normalize(length, vecOfChange);
+						length *= 200;
+						transform.setPosition(calculatedPos + length / 2);
+					}
+
+					int dir = 1;
+					if (vecOfChange.x < 0)
+						dir *= -1;
+					if (transform.GetScale().x > 0)
+						dir *= -1;
+
+					transform.setScale(Vec2(dir * transform.GetScale().x, transform.GetScale().y));
+
+					//For Scale
+					//if (/*vecOfChange.x < 200.0f &&*/ vecOfChange.x > 0.0f)
+					//{
+					//	transform.setScale(Vec2(-1 * transform.GetScale().x, transform.GetScale().y));
+					//}
+					//else// if (/*vecOfChange.x > -200.0f && */vecOfChange.x < 0.0f)
+					//{
+					//	//transform.setScale(Vec2(transform.GetScale().x, transform.GetScale().y));
+					//}
+
+					//For Rotation
 					transform.setRotation(atan(vecOfChange.y / vecOfChange.x));
-					//No need to set scale
-					//transform.setScale(Vec2(vecOfChange.x, vecOfChange.y));
+					//if (vecOfChange.x < 0.0f)
+					//{
+					//	transform.setScale(transform.GetScale() * -1);
+					//}
 				}
 			}
 		}
@@ -134,7 +175,6 @@ namespace Rogue
 			}
 		}*/
 
-
 		const float c_stopFactor = 10.0f;
 
 		for (Entity entity : m_entities)
@@ -165,17 +205,42 @@ namespace Rogue
 	void PlayerControllerSystem::Receive(Event* ev)
 	{
 		//Statement here to make sure all commands only apply if game is not running
-		if (!g_engine.m_coordinator.GameIsActive())
-		{
-			g_engine.SetTimeScale(1.0f);
-			return;
-		}
+		//if (!g_engine.m_coordinator.GameIsActive())
+		//{
+		//	g_engine.SetTimeScale(1.0f);
+		//	return;
+		//}
 
 		if (m_entities.begin() == m_entities.end())
 			return;
 
 		switch (ev->GetEventType())
 		{
+		case EventType::EvResetGame:
+		{
+			//Safety check to make sure level exists
+			if (!PLAYER_STATUS.GetRunCount())
+			{
+				PLAYER_STATUS.Reset();
+				return;
+			}
+
+			//Deleting entity
+			//for (auto entity : m_entities)
+			//	g_engine.m_coordinator.AddToDeleteQueue(entity);
+			
+			//Deleting teleport entities
+			ClearTeleportEntities();
+
+			//Deleting Indicator entity
+			if (PLAYER_STATUS.GetIndicator() != MAX_ENTITIES)
+			{
+				g_engine.m_coordinator.AddToDeleteQueue(PLAYER_STATUS.GetIndicator());
+			}
+
+			PLAYER_STATUS.Reset();
+			break;
+		}
 		case EventType::EvMouseMoved:
 		{
 			MouseMoveEvent* mouseMove = dynamic_cast<MouseMoveEvent*>(ev);
@@ -216,11 +281,11 @@ namespace Rogue
 					for (Entity entity : m_entities)
 					{
 						auto& PlayerControllable = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity);
-						if (!PlayerControllable.m_grounded)
+						if (!PlayerControllable.m_grounded /*&& !PLAYER_STATUS.ShowIndicator()*/)
 						{
 							g_engine.SetTimeScale(PlayerControllable.GetSlowTime());
-							PLAYER_STATUS.SetSlowMo();
 						}
+						PLAYER_STATUS.SetIndicatorStatus();
 					}
 
 					if (PLAYER_STATUS.GetIndicator() != MAX_ENTITIES)
@@ -229,30 +294,19 @@ namespace Rogue
 						SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(PLAYER_STATUS.GetIndicator());
 						comp.SetIsFollowing(true);
 						auto filter = sprite.getFilter();
-						sprite.setFilter(glm::vec4(filter.r, filter.g, filter.b, 255));
+						sprite.setFilter(glm::vec4(filter.r, filter.g, filter.b, 1));
 					}
 				}
 
-				else if (keycode == KeyPress::MB2)
+				else if (keycode == KeyPress::MB2 || keycode == KeyPress::KeyShift || keycode == KeyPress::KeyE)
 				{
-					//For Hitchhiking
 					ToggleMode();
-					// for testing
+
 				}
-				else if (keycode == KeyPress::KeyShift)
-				{
-					//For Hitchhiking
-					ToggleMode();
-					// for testing
-				}
+
 				else if (keycode == KeyPress::MB3)
 				{
 					ClearTimedEntities();
-				}
-
-				else if (keycode == KeyPress::KeyE)
-				{
-					ToggleMode();
 				}
 
 				else if (keycode == KeyPress::KeySpace)
@@ -269,9 +323,12 @@ namespace Rogue
 						//rigidbody.addForce(Vec2(0.0f, 35000.0f));
 
 						// Reset boolean for grounded
-						player.m_grounded = false;
-						PLAYER_STATUS.SetHasJumped(true);
-						player.m_jumpTimer = PLAYER_STATUS.GetJumpMaxTimer();
+						if (!PLAYER_STATUS.HasJumped())
+						{
+							player.m_grounded = false;
+							PLAYER_STATUS.SetHasJumped(true);
+							player.m_jumpTimer = PLAYER_STATUS.GetJumpMaxTimer();
+						}
 
 						ResetPlayerParent();
 					}
@@ -406,8 +463,9 @@ namespace Rogue
 						Teleport();
 						m_ignoreFrameEvent = true;
 					}
+					//if (PLAYER_STATUS.ShowIndicator())
 					g_engine.SetTimeScale(1.0f);
-					PLAYER_STATUS.SetSlowMo(false);
+					PLAYER_STATUS.SetIndicatorStatus(false);
 
 					//To reduce calculations
 					if (PLAYER_STATUS.GetIndicator() != MAX_ENTITIES && g_engine.m_coordinator.ComponentExists<ChildComponent>(PLAYER_STATUS.GetIndicator()))
@@ -428,12 +486,12 @@ namespace Rogue
 
 				else if (keycode == KeyPress::KeySpace)
 				{
-					//for (Entity entity : m_entities)
-					//{
-					//	PlayerControllerComponent& player = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity);
+					for (Entity entity : m_entities)
+					{
+						PlayerControllerComponent& player = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity);
 
-					//	player.m_grounded = false;
-					//}
+						player.m_grounded = false;
+					}
 				}
 			}
 			
@@ -448,6 +506,12 @@ namespace Rogue
 		case EventType::EvOnCollisionStay:
 		{
 			EntCollisionStayEvent* collisionStay = dynamic_cast<EntCollisionStayEvent*>(ev);
+
+			if (m_ignoreFrameEvent)
+			{
+				m_ignoreFrameEvent = !m_ignoreFrameEvent;
+				return;
+			}
 
 			Entity player;
 			Entity ground;
@@ -469,6 +533,8 @@ namespace Rogue
 					groundTrans = collisionStay->GetBPos();
 					groundScale = collisionStay->GetScaleB();
 				}
+				else
+					return;
 			}
 			else if (infoB.m_tag == "Player")
 			{
@@ -492,31 +558,44 @@ namespace Rogue
 			{
 				auto& player = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity);
 
-				//Bottom of player is lower than top of ground (Standing on top)
-				//Bottom of player is above bottom of ground (Player is above ground)
-				if (playerTrans.y - playerScale.y / 2 < groundTrans.y + groundScale.y / 2 /*&& playerTrans.y - playerScale.y / 2 > groundTrans.y - groundScale.y / 2*/ && !m_ignoreFrameEvent)
+				const float buffer = 10.0f;
+
+				LineSegment finiteRay(playerTrans, Vec2(playerTrans.x, playerTrans.y - playerScale.y / 2.0f - buffer));
+				
+				if (!g_engine.m_coordinator.ComponentExists<BoxCollider2DComponent>(ground))
+					return;
+
+				BoxCollider2DComponent& groundCollider = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(ground);
+
+				LineSegment colliderEdge(Vec2(groundCollider.m_aabb.getMin().x, groundCollider.m_aabb.getMax().y), groundCollider.m_aabb.getMax());
+
+				if (CollisionManager::instance().DiscreteLineVsLine(finiteRay, colliderEdge))
 				{
+					RE_INFO("Ray Collided With Ground!");
 					player.m_grounded = true;
-					PLAYER_STATUS.SetHasJumped(false);
+					PLAYER_STATUS.SetHasJumped(false);	
 				}
-				else if (infoA.m_tag == "Platform" || infoB.m_tag == "Platform")
-				{
-					player.m_grounded = true;
-					PLAYER_STATUS.SetHasJumped(false);
-					if (infoA.m_tag == "Platform")
-					{
-						ParentSetEvent* parent = new ParentSetEvent(infoA.m_Entity, entity);
-						parent->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
-						EventDispatcher::instance().AddEvent(parent);
-						PLAYER_STATUS.SetHitchhikeEntity(infoA.m_Entity);
-						m_ignoreFrameEvent = true;
-					}
-					else //if (infoB.m_tag == "Platform")
-					{
-					}
-				}
-				else
-					player.m_grounded = false;
+				//else if (infoA.m_tag == "Platform" || infoB.m_tag == "Platform")
+				//{
+				//	player.m_grounded = true;
+				//	PLAYER_STATUS.SetHasJumped(false);
+				//	if (infoA.m_tag == "Platform")
+				//	{
+				//		//ParentSetEvent* parent = new ParentSetEvent(infoA.m_Entity, entity);
+				//		//parent->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+				//		//EventDispatcher::instance().AddEvent(parent);
+				//		//PLAYER_STATUS.SetHitchhikeEntity(infoA.m_Entity);
+				//		//m_ignoreFrameEvent = true;
+				//	}
+				//	else //if (infoB.m_tag == "Platform")
+				//	{
+				//		//ParentSetEvent* parent = new ParentSetEvent(infoB.m_Entity, entity);
+				//		//parent->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+				//		//EventDispatcher::instance().AddEvent(parent);
+				//		//PLAYER_STATUS.SetHitchhikeEntity(infoB.m_Entity);
+				//		//m_ignoreFrameEvent = true;
+				//	}
+				//}
 			}
 			return;
 		} // switch (ev->GetEventType())
@@ -667,8 +746,7 @@ namespace Rogue
 			return;
 
 		PLAYER_STATUS.IncrementTeleportCharge(-1.0f);
-		if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(*m_entities.begin()))
-			g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(*m_entities.begin()).m_grounded = false;
+		g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(*m_entities.begin()).m_grounded = false;
 
 		Vec2 calculatedPos = GetTeleportRaycast();
 

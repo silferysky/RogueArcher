@@ -28,9 +28,12 @@ namespace Rogue
 		AI_Trigger,
 		AI_Platform,
 		Obj_Transition,
+		Obj_AppearOnCollide,
+		Obj_DisappearOnCollide,
 		UI_TeleCharge1,
 		UI_TeleCharge2,
 		UI_TeleCharge3,
+		Gameplay_DeathBox,
 		Obj_Fade,
 		AI_Last
 	};
