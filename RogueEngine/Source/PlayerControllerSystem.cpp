@@ -83,7 +83,7 @@ namespace Rogue
 			return;
 		}
 
-		if (PLAYER_STATUS.InSlowMo())
+		if (PLAYER_STATUS.ShowIndicator())
 		{
 			if (PLAYER_STATUS.GetIndicator() == MAX_ENTITIES && PLAYER_STATUS.GetPlayerEntity() != MAX_ENTITIES)
 			{
@@ -104,19 +104,40 @@ namespace Rogue
 					Vec2 vecOfChange = Vec2(g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin()).GetPosition() - calculatedPos);
 
 					//For Position
-					transform.setPosition(calculatedPos + vecOfChange / 2);
+					if (Vec2Length(vecOfChange) > 200.0f)
+					{
+						transform.setPosition(calculatedPos + vecOfChange / 2);
+					}
+					else
+					{
+						Vec2 length;
+						Vec2Normalize(length, vecOfChange);
+						length *= 200;
+						transform.setPosition(calculatedPos + length / 2);
+					}
+
+					int dir = 1;
+					if (vecOfChange.x > 0)
+						dir = -1;
+
+					transform.setScale(Vec2(dir * transform.GetScale().x, transform.GetScale().y));
 
 					//For Scale
-					//Vec2Normalize(vecOfChange, vecOfChange);
-					//vecOfChange = vecOfChange * transform.GetScale().x * 3 + transform.GetPosition();
-					//transform.setScale(Vec2(vecOfChange.x / calculatedPos.x, transform.GetScale().y));
+					//if (/*vecOfChange.x < 200.0f &&*/ vecOfChange.x > 0.0f)
+					//{
+					//	transform.setScale(Vec2(-1 * transform.GetScale().x, transform.GetScale().y));
+					//}
+					//else// if (/*vecOfChange.x > -200.0f && */vecOfChange.x < 0.0f)
+					//{
+					//	//transform.setScale(Vec2(transform.GetScale().x, transform.GetScale().y));
+					//}
 
 					//For Rotation
 					transform.setRotation(atan(vecOfChange.y / vecOfChange.x));
-					if (vecOfChange.x < 0.0f)
-					{
-						transform.setScale(transform.GetScale() * -1);
-					}
+					//if (vecOfChange.x < 0.0f)
+					//{
+					//	transform.setScale(transform.GetScale() * -1);
+					//}
 				}
 			}
 		}
@@ -151,7 +172,6 @@ namespace Rogue
 					break;
 			}
 		}*/
-
 
 		const float c_stopFactor = 10.0f;
 
@@ -259,11 +279,11 @@ namespace Rogue
 					for (Entity entity : m_entities)
 					{
 						auto& PlayerControllable = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity);
-						if (!PlayerControllable.m_grounded /*&& !PLAYER_STATUS.InSlowMo()*/)
+						if (!PlayerControllable.m_grounded /*&& !PLAYER_STATUS.ShowIndicator()*/)
 						{
 							g_engine.SetTimeScale(PlayerControllable.GetSlowTime());
-							PLAYER_STATUS.SetSlowMo();
 						}
+						PLAYER_STATUS.SetIndicatorStatus();
 					}
 
 					if (PLAYER_STATUS.GetIndicator() != MAX_ENTITIES)
@@ -441,9 +461,9 @@ namespace Rogue
 						Teleport();
 						m_ignoreFrameEvent = true;
 					}
-					//if (PLAYER_STATUS.InSlowMo())
+					//if (PLAYER_STATUS.ShowIndicator())
 					g_engine.SetTimeScale(1.0f);
-					PLAYER_STATUS.SetSlowMo(false);
+					PLAYER_STATUS.SetIndicatorStatus(false);
 
 					//To reduce calculations
 					if (PLAYER_STATUS.GetIndicator() != MAX_ENTITIES && g_engine.m_coordinator.ComponentExists<ChildComponent>(PLAYER_STATUS.GetIndicator()))
@@ -490,7 +510,6 @@ namespace Rogue
 				m_ignoreFrameEvent = !m_ignoreFrameEvent;
 				return;
 			}
-
 
 			Entity player;
 			Entity ground;
