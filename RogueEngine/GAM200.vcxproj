@@ -126,6 +126,7 @@
     <ClInclude Include="Source\TeleCharge1.h" />
     <ClInclude Include="Source\TeleCharge2.h" />
     <ClInclude Include="Source\TeleCharge3.h" />
+    <ClInclude Include="Source\TeleAnimation.h" />
     <ClInclude Include="Source\TextComponent.h" />
     <ClInclude Include="Source\TextureManager.h" />
     <ClInclude Include="Source\TransformComponent.h" />
@@ -265,6 +266,7 @@
     <ClCompile Include="Source\TeleCharge1.cpp" />
     <ClCompile Include="Source\TeleCharge2.cpp" />
     <ClCompile Include="Source\TeleCharge3.cpp" />
+    <ClCompile Include="Source\TeleAnimation.cpp" />
     <ClCompile Include="Source\TextComponent.cpp" />
     <ClCompile Include="Source\TextureManager.cpp" />
     <ClCompile Include="Source\TransformComponent.cpp" />

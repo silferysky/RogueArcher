@@ -36,6 +36,7 @@ namespace Rogue
 		Gameplay_DeathBox,
 		Gameplay_Checkpoint,
 		Gameplay_SoulCollectible,
+		Gameplay_TeleAnimation,
 		Obj_Fade,
 		AI_Last
 	};
