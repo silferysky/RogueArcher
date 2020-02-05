@@ -221,7 +221,8 @@ namespace Rogue
 			//Safety check to make sure level exists
 			if (!PLAYER_STATUS.GetRunCount())
 			{
-				PLAYER_STATUS.Reset();
+				PLAYER_STATUS.SetRunCount(1);
+				//PLAYER_STATUS.Reset();
 				return;
 			}
 
@@ -768,6 +769,10 @@ namespace Rogue
 			PLAYER_STATUS.SetHitchhikeEntity(MAX_ENTITIES);
 		}
 
+		//ParentTransformEvent* parentTransform = new ParentTransformEvent(*m_entities.begin(), true);
+		//parentTransform->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+		//EventDispatcher::instance().AddEvent(parentTransform);
+
 		//For teleport VFX
 		TimedEntity ent(g_engine.m_coordinator.cloneArchetypes("TeleportSprite", false), 1.0f);
 		m_teleports.push_back(ent);
@@ -790,7 +795,9 @@ namespace Rogue
 		else if (PLAYER_STATUS.GetTeleportCharge() == 2)
 			AudioManager::instance().loadSound("Resources/Sounds/teleport2.ogg", 0.3f, false).Play();
 		else
-			AudioManager::instance().loadSound("Resources/Sounds/teleport3.ogg", 0.3f, false).Play();
+			AudioManager::instance().loadSound("Resources/Sounds/teleport3.ogg", 0.3f, false).Play();		
+		AudioManager::instance().loadSound("Resources/Sounds/[Shoot Projectile]SCI-FI-WHOOSH_GEN-HDF-20864.ogg", 0.86f, false).Play();
+		AudioManager::instance().loadSound("Resources/Sounds/[Ela Appear]SCI-FI-WHOOSH_GEN-HDF-20870.ogg", 0.3f, false).Play();
 
 		//AudioManager::instance().loadSound("Resources/Sounds/[Shoot Projectile]SCI-FI-WHOOSH_GEN-HDF-20864.ogg", 0.86f, false).Play();
 		//AudioManager::instance().loadSound("Resources/Sounds/[Ela Appear]SCI-FI-WHOOSH_GEN-HDF-20870.ogg", 0.3f, false).Play();
