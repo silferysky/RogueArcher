@@ -1,11 +1,6 @@
 {
-<<<<<<< HEAD
-    "MaxEntityCount": 168,
-    "EntityCount": 157,
-=======
     "MaxEntityCount": 169,
-    "EntityCount": 169,
->>>>>>> 62428ec530243d9a5021ba4c42bbfafc09b7f371
+    "EntityCount": 157,
     "CameraMinX": -3392.0,
     "CameraMinY": -933.0,
     "CameraMaxX": 2388.0,
