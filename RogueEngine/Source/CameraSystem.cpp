@@ -195,11 +195,11 @@ namespace Rogue
 
 			if (g_engine.GetIsFocused() && g_engine.m_coordinator.GetEditorIsRunning())
 			{
-				if (keycode == KeyPress::MB1 && PickingManager::instance().isCursorinViewPort())
+				/* if (keycode == KeyPress::MB1 && PickingManager::instance().isCursorinViewPort())
 				{
 					glm::vec3 cursorPos{ PickingManager::instance().GetWorldCursor().x, PickingManager::instance().GetWorldCursor().y, 0 };
 					CameraManager::instance().SetCameraPos(cursorPos);
-				}
+				} */
 
 				if (keycode == KeyPress::KeyF1)
 					CameraManager::instance().ZoomIn();
