@@ -103,6 +103,16 @@ namespace Rogue
 		m_worldCamera = camera;
 	}
 
+	void CameraSystem::setIsActive(const bool& isActive)
+	{
+		m_isActive = isActive;
+	}
+
+	bool CameraSystem::getIsActive() const
+	{
+		return m_isActive;
+	}
+
 	void CameraSystem::Update()
 	{
 		g_engine.m_coordinator.InitTimeSystem("Camera System");
@@ -110,7 +120,7 @@ namespace Rogue
 		m_cameraShake.Update();
 		auto shakeOffset = m_cameraShake.getOffset();
 		
-		if (!m_worldCamera && g_engine.m_coordinator.GameIsActive())
+		if (m_isActive && !m_worldCamera && g_engine.m_coordinator.GameIsActive())
 		{
 			// For all entities
 			for (auto entity : m_entities)
@@ -195,11 +205,11 @@ namespace Rogue
 
 			if (g_engine.GetIsFocused() && g_engine.m_coordinator.GetEditorIsRunning())
 			{
-				if (keycode == KeyPress::MB1 && PickingManager::instance().isCursorinViewPort())
+				/* if (keycode == KeyPress::MB1 && PickingManager::instance().isCursorinViewPort())
 				{
 					glm::vec3 cursorPos{ PickingManager::instance().GetWorldCursor().x, PickingManager::instance().GetWorldCursor().y, 0 };
 					CameraManager::instance().SetCameraPos(cursorPos);
-				}
+				} */
 
 				if (keycode == KeyPress::KeyF1)
 					CameraManager::instance().ZoomIn();

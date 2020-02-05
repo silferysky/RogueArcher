@@ -1,5 +1,6 @@
 #pragma once
 #include "Types.h"
+#include "Vector2D.h"
 #define PLAYER_STATUS PlayerStatusManager::instance()
 
 namespace Rogue
@@ -15,6 +16,10 @@ namespace Rogue
 		}
 
 		PlayerStatusManager();
+
+		void Reset();
+		void SetRunCount(size_t count);
+		size_t GetRunCount();
 
 		//Player Entity
 		void SetPlayerEntity(Entity ent);
@@ -33,8 +38,8 @@ namespace Rogue
 		//Physical Status
 		void SetInLightDur(float duration = 0.16f);
 		float GetInLightDur() const;
-		void SetSlowMo(bool slowMo = true);
-		bool InSlowMo() const;
+		void SetIndicatorStatus(bool showIndicator = true);
+		bool ShowIndicator() const;
 
 		//Teleporting
 		float GetTeleportCharge() const;
@@ -54,10 +59,17 @@ namespace Rogue
 		void SetHitchhikeEntity(Entity ent);
 		Entity GetHitchhikedEntity() const;
 
+		//Checkpoint
+		void SetCheckpoint(Vec2 checkpoint);
+		Vec2 GetCheckpoint() const;
+		void SetStartingPos(Vec2 startingPos);
+		Vec2 GetStartingPos() const;
 
 	private:
 
 		void ChangePlayerSprite();
+
+		size_t m_runCount;
 
 		Entity m_entity;
 		Entity m_indicator;
@@ -69,7 +81,7 @@ namespace Rogue
 
 		//Physical status
 		float m_inLightDur;
-		bool m_inSlowMo;
+		bool m_indicatorShown;
 
 		//Teleporting
 		float m_teleportCharge;
@@ -82,5 +94,9 @@ namespace Rogue
 
 		//Hitchhiking mechanic
 		Entity m_hitchhikedEntity;
+
+		//Checkpoint
+		Vec2 m_checkpoint;
+		Vec2 m_startingPos;
 	};
 }
