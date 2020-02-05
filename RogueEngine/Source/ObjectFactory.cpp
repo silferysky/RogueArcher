@@ -249,7 +249,7 @@ namespace Rogue
 			if (parentValue != MAX_ENTITIES)
 			{
 				parentValue -= firstEnt;
-				int parent = static_cast<int>(parentValue);
+				parent = static_cast<int>(parentValue);
 			}
 			RESerialiser::WriteToFile(fileName, strstream.str().c_str(), &parent);
 
