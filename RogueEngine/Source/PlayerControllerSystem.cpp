@@ -257,6 +257,14 @@ namespace Rogue
 				SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(event->GetEntityID());
 				sprite.setTexture(event->GetFilePath().c_str());
 				sprite.setTexturePath(event->GetFilePath().c_str());
+
+				if (event->GetEntityID() == PLAYER_STATUS.GetPlayerEntity())
+				{
+					if (PLAYER_STATUS.GetLightStatus())
+						AudioManager::instance().loadSound("Resources/Sounds/LightChange.ogg", 0.3f, false).Play();
+					else
+						AudioManager::instance().loadSound("Resources/Sounds/DarkChange.ogg", 0.3f, false).Play();
+				}
 			}
 
 			return;
@@ -777,8 +785,15 @@ namespace Rogue
 		if (g_engine.m_coordinator.ComponentExists<AnimationComponent>(*m_entities.begin()))
 			g_engine.m_coordinator.GetComponent<AnimationComponent>(*m_entities.begin()).setIsAnimating(true);
 
-		AudioManager::instance().loadSound("Resources/Sounds/[Shoot Projectile]SCI-FI-WHOOSH_GEN-HDF-20864.ogg", 0.86f, false).Play();
-		AudioManager::instance().loadSound("Resources/Sounds/[Ela Appear]SCI-FI-WHOOSH_GEN-HDF-20870.ogg", 0.3f, false).Play();
+		if (PLAYER_STATUS.GetTeleportCharge() == 3)
+			AudioManager::instance().loadSound("Resources/Sounds/teleport1.ogg", 0.3f, false).Play();
+		else if (PLAYER_STATUS.GetTeleportCharge() == 2)
+			AudioManager::instance().loadSound("Resources/Sounds/teleport2.ogg", 0.3f, false).Play();
+		else
+			AudioManager::instance().loadSound("Resources/Sounds/teleport3.ogg", 0.3f, false).Play();
+
+		//AudioManager::instance().loadSound("Resources/Sounds/[Shoot Projectile]SCI-FI-WHOOSH_GEN-HDF-20864.ogg", 0.86f, false).Play();
+		//AudioManager::instance().loadSound("Resources/Sounds/[Ela Appear]SCI-FI-WHOOSH_GEN-HDF-20870.ogg", 0.3f, false).Play();
 	}
 
 	Vec2 PlayerControllerSystem::GetTeleportRaycast()
