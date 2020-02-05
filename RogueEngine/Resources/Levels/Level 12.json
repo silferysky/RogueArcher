@@ -336,7 +336,7 @@
     "Entity161": "Name{Game Object 162}|Tag{}|Sprite{Resources\\Assets\\Plants2.png;0.887255;0.799757;0.391436;1;}||Transform{-2329.93;-406.671;113.435;127.073;0;14}|||||||||||||||||||",
     "Entity162": "Name{Game Object 164}|Tag{}|Sprite{Resources\\Assets\\Shroom2.png;0.455882;1;0.935986;1;}||Transform{-1151.44;-71.7713;71.6463;99.957;0;7}|||||||||||||||||||",
     "Entity163": "Name{Game Object 165}|Tag{}|Sprite{Resources\\Assets\\Snail.png;1;0.99999;0.99999;1;}||Transform{-1143.13;-82.3301;21;12;0;11}|||||||||||||||||||",
-    "Entity164": "Name{DeathBox}|Tag{}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{1143.3;-771.769;100;100;0;0}||BoxCollider{0;-20;-24;1688;32;TRIGGER}||LogicComponent{10;0;1;0}|StatsComponent{0;0;0;0;0;;0;}||||||Collider{BOX;00000000000000000000000000000001;11111111111111111111111111111111;}||||||||",
+    "Entity164": "Name{DeathBox}|Tag{}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{1143.3;-771.769;100;100;0;0}||BoxCollider{0;-20;-24;1688;32;TRIGGER}||LogicComponent{11;0;1;0}|StatsComponent{0;0;0;0;0;;0;}||||||Collider{BOX;00000000000000000000000000000001;11111111111111111111111111111111;}||||||||",
     "Entity165": "Name{Game Object 165}|Tag{}|Sprite{Resources\\Assets\\Crystal_New.png;0.00783355;0.333616;0.79902;1;}||Transform{-1522.18;-419.316;134.437;110.903;6.28;7}||||||||||||||||||",
     "EntityParent0": 65536,
     "EntityParent1": 65536,
