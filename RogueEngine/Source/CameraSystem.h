@@ -39,6 +39,7 @@ namespace Rogue
 		CameraShake m_cameraShake;
 
 		bool m_worldCamera;
+		bool m_isActive = true;
 	public:
 		CameraSystem();
 		~CameraSystem() = default;
@@ -55,6 +56,9 @@ namespace Rogue
 
 		glm::vec3 GetCameraFront() const;
 		glm::vec3 GetCameraUp() const;
+
+		void setIsActive(const bool& isActive);
+		bool getIsActive() const;
 
 		void Init() override;
 		void Update() override;
