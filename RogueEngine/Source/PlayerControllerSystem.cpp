@@ -117,8 +117,10 @@ namespace Rogue
 					}
 
 					int dir = 1;
-					if (vecOfChange.x > 0)
-						dir = -1;
+					if (vecOfChange.x < 0)
+						dir *= -1;
+					if (transform.GetScale().x > 0)
+						dir *= -1;
 
 					transform.setScale(Vec2(dir * transform.GetScale().x, transform.GetScale().y));
 
