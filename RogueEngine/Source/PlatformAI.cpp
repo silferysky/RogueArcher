@@ -31,8 +31,7 @@ namespace Rogue
 
 			for (auto child : info.m_children)
 			{
-				HierarchyInfo& hInfo = g_engine.m_coordinator.GetHierarchyInfo(child);
-				if (hInfo.m_tag == "Change")
+				if (g_engine.m_coordinator.GetHierarchyInfo(child).m_tag == "Change")
 				{
 					toChangeSprite = child;
 					break;
