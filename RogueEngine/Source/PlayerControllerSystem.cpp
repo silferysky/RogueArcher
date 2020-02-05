@@ -186,14 +186,13 @@ namespace Rogue
 			//Safety check to make sure level exists
 			if (!PLAYER_STATUS.GetRunCount())
 			{
-				PLAYER_STATUS.SetRunCount(1);
-				PLAYER_STATUS.SetPlayerEntity(MAX_ENTITIES);
+				PLAYER_STATUS.Reset();
 				return;
 			}
 
 			//Deleting entity
-			for (auto entity : m_entities)
-				g_engine.m_coordinator.AddToDeleteQueue(entity);
+			//for (auto entity : m_entities)
+			//	g_engine.m_coordinator.AddToDeleteQueue(entity);
 			
 			//Deleting teleport entities
 			ClearTeleportEntities();
