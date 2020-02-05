@@ -1,5 +1,6 @@
 #pragma once
 #include "Types.h"
+#include "Vector2D.h"
 #define PLAYER_STATUS PlayerStatusManager::instance()
 
 namespace Rogue
@@ -56,6 +57,11 @@ namespace Rogue
 		void SetHitchhikeEntity(Entity ent);
 		Entity GetHitchhikedEntity() const;
 
+		//Checkpoint
+		void SetCheckpoint(Vec2 checkpoint);
+		Vec2 GetCheckpoint() const;
+		void SetStartingPos(Vec2 startingPos);
+		Vec2 GetStartingPos() const;
 
 	private:
 
@@ -85,5 +91,9 @@ namespace Rogue
 
 		//Hitchhiking mechanic
 		Entity m_hitchhikedEntity;
+
+		//Checkpoint
+		Vec2 m_checkpoint;
+		Vec2 m_startingPos;
 	};
 }
