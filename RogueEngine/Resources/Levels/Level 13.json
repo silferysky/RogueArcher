@@ -6,6 +6,8 @@
     "CameraMaxX": 0.0,
     "CameraMaxY": 0.0,
     "CameraZoom": 0.8600000143051148,
+    "StartPosX": 0,
+    "StartPosY": 0,
     "Signature0": 8215,
     "Entity0": "Name{Game Object 0}|Tag{}|Sprite{Resources\\Assets\\Arrow.png;1;1;1;1}|Rigidbody{0;0;0;0;1;1;0;1;0.5;0.1;0.01;}|Transform{-493.114;-38.1906;100;100;0;0}||BoxCollider{0;0;0;0;0;AWAKE}|||||||||Collider{BOX}|||||",
     "EntityParent0": -1
