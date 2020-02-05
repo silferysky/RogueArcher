@@ -36,9 +36,9 @@ namespace Rogue
 		m_system = fmodSystem;
 
 		if (m_isLooping)
-			m_result = m_system->createStream(filename, FMOD_3D | FMOD_3D_INVERSEROLLOFF | FMOD_LOOP_NORMAL, 0, &m_fmodSound);
+			m_result = m_system->createStream(filename, FMOD_3D | FMOD_3D_LINEARROLLOFF | FMOD_LOOP_NORMAL, 0, &m_fmodSound);
 		else
-			m_result = m_system->createSound(filename, FMOD_3D | FMOD_3D_INVERSEROLLOFF |FMOD_LOOP_OFF | FMOD_CREATESTREAM, 0, &m_fmodSound);
+			m_result = m_system->createSound(filename, FMOD_3D | FMOD_3D_LINEARROLLOFF |FMOD_LOOP_OFF | FMOD_CREATESTREAM, 0, &m_fmodSound);
 
 		FmodErrorCheck(m_result);
 		m_result = m_fmodSound->setMusicChannelVolume(0, 0);
