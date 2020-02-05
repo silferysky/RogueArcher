@@ -61,6 +61,9 @@ namespace Rogue
 		//For Parent/Child iterator
 		std::queue<Entity> loadedQueue;
 
+		//For Player character
+
+
 		for (Entity entity = 0; entity < entCount; ++entity)
 		{
 			Entity curEnt = g_engine.m_coordinator.CreateEntity();
