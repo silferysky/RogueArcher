@@ -64,6 +64,8 @@ namespace Rogue
 		PARTICLE,
 		MASKING,
 		FADE,
+
+		CHILD,
 		LASTCOMP
 	};
 }

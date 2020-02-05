@@ -223,8 +223,8 @@ namespace Rogue
 				continue;
 			}*/
 
-			//Entity value acts as the value to store (-1 because of background)
 			Signature currentSignature = em->GetSignature(curEntity);
+			currentSignature.reset(COMPONENTID::CHILD);
 
 			//cstr will go out of scope if you choose to do strstream.str().c_str()
 			//This is the proper (Non macro) way of setting the string
@@ -244,11 +244,14 @@ namespace Rogue
 			CLEARSTR(strstream);
 			strstream << "EntityParent" << entCount;
 			SETSSTOSTR(strstream);
-			int parentValue = curHierarchy.m_parent;
+			Entity parentValue = curHierarchy.m_parent;
+			int parent = static_cast<int>(parentValue);
 			if (parentValue != MAX_ENTITIES)
+			{
 				parentValue -= firstEnt;
-
-			RESerialiser::WriteToFile(fileName, strstream.str().c_str(), &parentValue);
+				int parent = static_cast<int>(parentValue);
+			}
+			RESerialiser::WriteToFile(fileName, strstream.str().c_str(), &parent);
 
 			++entCount;
 		}
