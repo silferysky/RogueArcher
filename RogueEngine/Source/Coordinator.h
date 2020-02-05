@@ -303,6 +303,18 @@ namespace Rogue
 			return *m_entityManager;
 		}
 
+		bool CheckActiveObjects() 
+		{
+			for (auto& i : GetActiveObjects())
+			{
+				const HierarchyInfo objInfo = GetHierarchyInfo(i);
+				if (objInfo.m_selected)
+				{
+					return true;
+				}
+			}
+			return false;
+		}
 		std::vector <Entity>& GetActiveObjects() const
 		{
 			return m_entityManager->m_getActiveObjects();
