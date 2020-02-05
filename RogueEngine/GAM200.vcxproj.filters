@@ -616,6 +616,12 @@
     <ClInclude Include="Source\DisappearOnCollide.h">
       <Filter>RogueEngine\Systems\AI\Script Types\UI</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Checkpoint.h">
+      <Filter>RogueEngine\Systems\AI\Script Types\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SoulCollectible.h">
+      <Filter>RogueEngine\Systems\AI\Script Types\Gameplay</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -965,6 +971,12 @@
     </ClCompile>
     <ClCompile Include="Source\DisappearOnCollide.cpp">
       <Filter>RogueEngine\Systems\AI\Script Types\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Checkpoint.cpp">
+      <Filter>RogueEngine\Systems\AI\Script Types\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SoulCollectible.cpp">
+      <Filter>RogueEngine\Systems\AI\Script Types\Gameplay</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
