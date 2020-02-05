@@ -147,7 +147,7 @@ namespace Rogue
 
 			std::stringstream output;
 			output << typeName << " registered!";
-			RE_CORE_INFO(output.str());
+			//RE_CORE_INFO(output.str());
 		}
 
 		template<typename T>
