@@ -51,8 +51,6 @@ namespace Rogue
 		void SetViewPortArea(const AABB& aabb);
 		void SetWorldCursor(const Vec2& pos);
 		void SetViewPortCursor(const ImVec2& pos);
-
-		bool isCursorinViewPort() const;
 	};
 
 }

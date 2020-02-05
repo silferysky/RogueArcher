@@ -35,10 +35,5 @@ namespace Rogue
 		virtual void Init() = 0;
 		virtual void Update() = 0;
 		virtual void Shutdown() = 0;
-
-		const std::set<Entity>& GetEntitySet() const
-		{
-			return m_entities;
-		}
 	};
 }

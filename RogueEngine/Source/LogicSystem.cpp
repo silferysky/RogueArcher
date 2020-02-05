@@ -26,13 +26,9 @@ Technology is prohibited.
 
 //AI Types
 #include "FinderAI.h"
-#include "PlatformAI.h" //Also includes PatrolAI
+#include "PatrolAI.h"
 #include "TriggerAI.h"
 #include "TransitionObject.h"
-#include "TeleCharge1.h"
-#include "TeleCharge2.h"
-#include "TeleCharge3.h"
-#include "AppearOnCollide.h"
 
 namespace Rogue
 {
@@ -181,40 +177,10 @@ namespace Rogue
 					AddLogicInterface(entities, std::make_shared<TriggerAI>(newAI));
 					break;
 				}
-				case AIType::AI_Platform:
-				{
-					PlatformAI newAI(entities, logicComponent, statsComponent);
-					AddLogicInterface(entities, std::make_shared<PlatformAI>(newAI));
-					break;
-				}
 				case AIType::Obj_Transition:
 				{
 					TransitionObject newAI(entities, logicComponent, statsComponent, statsComponent.GetTransitionLevel());
 					AddLogicInterface(entities, std::make_shared<TransitionObject>(newAI));
-					break;
-				}
-				case AIType::Obj_AppearOnCollide:
-				{
-					AppearOnCollide newAI(entities, logicComponent, statsComponent);
-					AddLogicInterface(entities, std::make_shared<AppearOnCollide>(newAI));
-					break;
-				}
-				case AIType::UI_TeleCharge1:
-				{
-					TeleCharge1 newAI(entities, logicComponent, statsComponent);
-					AddLogicInterface(entities, std::make_shared<TeleCharge1>(newAI));
-					break;
-				}
-				case AIType::UI_TeleCharge2:
-				{
-					TeleCharge2 newAI(entities, logicComponent, statsComponent);
-					AddLogicInterface(entities, std::make_shared<TeleCharge2>(newAI));
-					break;
-				}
-				case AIType::UI_TeleCharge3:
-				{
-					TeleCharge3 newAI(entities, logicComponent, statsComponent);
-					AddLogicInterface(entities, std::make_shared<TeleCharge3>(newAI));
 					break;
 				}
 				case AIType::AI_Static:
@@ -277,40 +243,10 @@ namespace Rogue
 					AddLogicInterface(entity, std::make_shared<TriggerAI>(newAI));
 					break;
 				}
-				case AIType::AI_Platform:
-				{
-					PlatformAI newAI(entity, logicComponent, statsComponent);
-					AddLogicInterface(entity, std::make_shared<PlatformAI>(newAI));
-					break;
-				}
 				case AIType::Obj_Transition:
 				{
 					TransitionObject newAI(entity, logicComponent, statsComponent, statsComponent.GetTransitionLevel());
 					AddLogicInterface(entity, std::make_shared<TransitionObject>(newAI));
-					break;
-				}
-				case AIType::Obj_AppearOnCollide:
-				{
-					AppearOnCollide newAI(entity, logicComponent, statsComponent);
-					AddLogicInterface(entity, std::make_shared<AppearOnCollide>(newAI));
-					break;
-				}
-				case AIType::UI_TeleCharge1:
-				{
-					TeleCharge1 newAI(entity, logicComponent, statsComponent);
-					AddLogicInterface(entity, std::make_shared<TeleCharge1>(newAI));
-					break;
-				}
-				case AIType::UI_TeleCharge2:
-				{
-					TeleCharge2 newAI(entity, logicComponent, statsComponent);
-					AddLogicInterface(entity, std::make_shared<TeleCharge2>(newAI));
-					break;
-				}
-				case AIType::UI_TeleCharge3:
-				{
-					TeleCharge3 newAI(entity, logicComponent, statsComponent);
-					AddLogicInterface(entity, std::make_shared<TeleCharge3>(newAI));
 					break;
 				}
 				case AIType::AI_Static:

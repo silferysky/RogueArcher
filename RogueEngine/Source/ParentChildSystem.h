@@ -18,12 +18,8 @@ namespace Rogue
 		void Shutdown() override;
 		void Receive(Event* ev) override;
 
-		//Accessing all entities that are children. Assume they all have ChildComponents
-		void AddChildToVector(std::vector<Entity>& entityVector, Entity ParentEntity);
-
 		//Parent/Child Assignment
-		bool CheckValidReassign(Entity newParent, Entity child);
-		void ReassignParentChildFlags(Entity newParent, Entity child);
-		void ResetParentChildFlags(Entity child);
+		bool CheckValidReassign(Entity child, Entity newParent);
+		void ReassignParentChildFlags(Entity child, Entity newParent);
 	};
 }

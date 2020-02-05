@@ -63,7 +63,6 @@ namespace Rogue
 		KeyArrowDown,
 		KeyEsc,
 		KeyBackspace,
-		KeyDelete,
 		KeyTab,
 		KeyCtrl,
 		KeyShift,

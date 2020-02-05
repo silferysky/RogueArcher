@@ -27,8 +27,7 @@ namespace Rogue
 	{
 		int m_frames = 0;
 		int m_currentFrame = 0;
-		int m_startFrame = 0;
-		int m_endFrame = 0;
+		int m_endFrame = 0; 
 		int m_offSet; // each frame in pixels
 		float m_secondsPerFrame = 0.1f;
 		float m_timer = 0.0f;
@@ -43,9 +42,6 @@ namespace Rogue
 
 		void setCurrentFrame(const int& frame);
 		int getCurrentFrame() const;
-
-		void setStartFrame(const int& frame);
-		int getStartFrame() const;
 
 		void setEndFrame(const int& frame);
 		int getEndFrame() const;

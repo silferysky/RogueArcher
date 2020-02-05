@@ -41,16 +41,6 @@ namespace Rogue
 		return m_currentFrame;
 	}
 
-	void AnimationComponent::setStartFrame(const int& frame)
-	{
-		m_startFrame = frame;
-	}
-
-	int AnimationComponent::getStartFrame() const
-	{
-		return m_startFrame;
-	}
-
 	void AnimationComponent::setEndFrame(const int& frame)
 	{
 		m_endFrame = frame;
@@ -124,9 +114,6 @@ namespace Rogue
 		ImGui::DragInt("Frames", &m_frames, 1.0f, 0, 60);
 		setFrames(m_frames);
 
-		ImGui::DragInt("Starting Frame", &m_startFrame, 1.0f, 0, 60);
-		setStartFrame(m_startFrame);
-
 		ImGui::DragInt("Final Frame", &m_endFrame, 1.0f, 0, 60);
 		setEndFrame(m_endFrame);
 
@@ -144,7 +131,6 @@ namespace Rogue
 		ss << m_endFrame << ";";
 		ss << m_secondsPerFrame << ";";
 		ss << m_isLooping << ";";
-		ss << m_startFrame << ";";
 		return ss.str();
 	}
 
@@ -169,9 +155,6 @@ namespace Rogue
 				break;
 			case 3:
 				setIsLooping(std::stof(s1));
-				break;
-			case 4:
-				setStartFrame(std::stoi(s1));
 				break;
 			default:
 				break;

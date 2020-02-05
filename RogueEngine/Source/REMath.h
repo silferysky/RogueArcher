@@ -27,11 +27,6 @@ namespace Rogue
 	
 	struct LineSegment
 	{
-		LineSegment(const Vec2& p0 = Vec2{}, const Vec2& p1 = Vec2{}) :
-			m_pt0{ p0 }, m_pt1{ p1 },
-			m_normal{ Vec2NormalOf(p1 - p0) }
-		{}
-
 		Vec2 m_pt0;
 		Vec2 m_pt1;
 		Vec2 m_normal;

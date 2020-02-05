@@ -137,9 +137,7 @@ namespace Rogue
 						system.second->m_systemID == SystemID::id_ANIMATIONSYSTEM ||
 						system.second->m_systemID == SystemID::id_PHYSICSSYSTEM ||
 						system.second->m_systemID == SystemID::id_PARTICLEEMITTERSYSTEM ||
-						system.second->m_systemID == SystemID::id_PARTICLESYSTEM ||
-						system.second->m_systemID == SystemID::id_FADESYSTEM ||
-						system.second->m_systemID == SystemID::id_PLAYERCONTROLLERSYSTEM
+						system.second->m_systemID == SystemID::id_PARTICLESYSTEM
 						)
 						continue;
 				}

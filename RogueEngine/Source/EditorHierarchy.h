@@ -32,7 +32,6 @@ namespace Rogue
 		bool m_isHierarchyFocused;
 		void DisplayHierarchyParent(HierarchyInfo& ent);
 		void DisplayHierarchyChildren(HierarchyInfo& ent, size_t numOfParents = 0);
-		void AcceptHierarchyPayload(HierarchyInfo& objInfo);
 		
 	public:
 		static ImGuiEditorHierarchy& instance()

@@ -17,7 +17,6 @@ Technology is prohibited.
 /* End Header **************************************************************************/
 #include "Precompiled.h"
 #include "PickingManager.h"
-#include "CollisionManager.h"
 
 namespace Rogue
 {
@@ -92,13 +91,5 @@ namespace Rogue
 	void PickingManager::SetViewPortCursor(const ImVec2& pos)
 	{
 		m_viewportCursorPos = pos;
-	}
-
-	bool PickingManager::isCursorinViewPort() const
-	{
-		if (CollisionManager::instance().DiscretePointVsAABB(m_cursorPos, m_viewportArea))
-			return true;
-		else
-			return false;
 	}
 }

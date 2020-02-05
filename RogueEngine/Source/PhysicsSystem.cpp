@@ -23,7 +23,6 @@ Technology is prohibited.
 #include "Timer.h"
 #include "KeyEvent.h"
 #include "GameEvent.h"
-//#include "ParentEvent.h"
 #include "EventDispatcher.h"
 #include "Logger.h"
 #include "REEngine.h"
@@ -110,13 +109,6 @@ namespace Rogue
 
 				// Reset accForce
 				rigidbody.setAccForce(Vec2());
-
-				//if (g_engine.m_coordinator.GetHierarchyInfo(*iEntity).m_children.size())
-				//{
-				//	ParentTransformEvent* parentEv = new ParentTransformEvent(*iEntity, MAX_ENTITIES);
-				//	parentEv->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
-				//	EventDispatcher::instance().AddEvent(parentEv);
-				//}
 			}
 
 			ForceManager::instance().UpdateAges();
@@ -190,25 +182,14 @@ namespace Rogue
 		case EventType::EvEntityTeleport:
 		{
 			EntTeleportEvent* EvEntTeleport = dynamic_cast<EntTeleportEvent*>(ev);
-			Vec2 oldPos{};
 			if (g_engine.m_coordinator.ComponentExists<TransformComponent>(EvEntTeleport->GetEntityID()))
-			{
-				oldPos = g_engine.m_coordinator.GetComponent<TransformComponent>(EvEntTeleport->GetEntityID()).GetPosition();
 				g_engine.m_coordinator.GetComponent<TransformComponent>(EvEntTeleport->GetEntityID()).
 					setPosition(EvEntTeleport->GetVecMovement());
-			}
 
 			if (g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(EvEntTeleport->GetEntityID()))
 			{
-				RigidbodyComponent& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(EvEntTeleport->GetEntityID());
-				rigidbody.setVelocity(Vec2());
-				rigidbody.setAcceleration(Vec2());
-				ForceManager::instance().RemoveForce(EvEntTeleport->GetEntityID());
-
-				oldPos = EvEntTeleport->GetVecMovement() - oldPos;
-				Vec2Normalize(oldPos, oldPos);
-				ForceManager::instance().RegisterForce(EvEntTeleport->GetEntityID(), oldPos * 2000, 0.1f);
-				//ForceManager::instance().AddForce(EvEntTeleport->GetEntityID(), rigidbody);
+				g_engine.m_coordinator.GetComponent<RigidbodyComponent>(EvEntTeleport->GetEntityID()).setVelocity(Vec2());
+				g_engine.m_coordinator.GetComponent<RigidbodyComponent>(EvEntTeleport->GetEntityID()).setAcceleration(Vec2());
 			}
 
 			return;

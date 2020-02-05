@@ -256,33 +256,6 @@ namespace Rogue
 		return true;
 	}
 
-	bool CollisionManager::DiscreteLineVsLine(const LineSegment& lineA, const LineSegment& lineB, Vec2* intersection) const
-	{
-		Vec2 vecA = lineA.m_pt1 - lineA.m_pt0;
-		Vec2 vecB = lineB.m_pt1 - lineB.m_pt0;
-
-		float crossAB = vecA.x * vecB.y - vecA.y * vecB.x;
-
-		if (!crossAB)
-			return false;
-
-		Vec2 vecC = lineB.m_pt0 - lineA.m_pt0;
-		float t = (vecC.x * vecB.y - vecC.y * vecB.x) / crossAB;
-
-		if (t < 0.0f || t > 1.0f)
-			return false;
-
-		float u = (vecC.x * vecA.y - vecC.y * vecA.x) / crossAB;
-
-		if (u < 0.0f || u > 1.0f)
-			return false;
-
-		if (intersection)
-			*intersection = lineA.m_pt0 + t * vecA;
-
-		return true;
-	}
-
 	void CollisionManager::UpdateBoundingCircle(BoundingCircle& circle, const TransformComponent& trans) const
 	{
 		circle.SetCenter(circle.getCenterOffSet() + trans.GetPosition());
@@ -874,42 +847,6 @@ namespace Rogue
 		return true;
 	}
 
-	std::array<LineSegment, 4> CollisionManager::GenerateEdges(const AABB& aabb) const
-	{
-		std::array<LineSegment, 4> edges{ LineSegment(Vec2(aabb.getMin().x, aabb.getMin().y), Vec2(aabb.getMin().x, aabb.getMax().y)),
-										LineSegment(Vec2(aabb.getMin().x, aabb.getMax().y), Vec2(aabb.getMax().x, aabb.getMax().y)),
-										LineSegment(Vec2(aabb.getMax().x, aabb.getMax().y), Vec2(aabb.getMax().x, aabb.getMin().y)),
-										LineSegment(Vec2(aabb.getMax().x, aabb.getMin().y), Vec2(aabb.getMin().x, aabb.getMin().y)) };
-
-		return edges;
-	}
-
-	bool CollisionManager::DiscreteLineVsAABB(const LineSegment& line, const AABB& aabb) const
-	{
-		std::array<LineSegment, 4> edges = GenerateEdges(aabb);
-
-		for (LineSegment edge : edges)
-		{
-			if (DiscreteLineVsLine(line, edge))
-				return true;
-		}
-
-		return false;
-	}
-
-	bool CollisionManager::DiscreteLineVsAABB(const LineSegment& line, const AABB& aabb, Vec2& intersection) const
-	{
-		std::array<LineSegment, 4> edges = GenerateEdges(aabb);
-
-		for (LineSegment edge : edges)
-		{
-			if (!DiscreteLineVsLine(line, edge, &intersection))
-				return false;
-		}
-
-		return true;
-	}
-
 
 	//_________________________________________________________________________
 	//_________________________________________________________________________|
@@ -1091,48 +1028,33 @@ namespace Rogue
 		return s_correction_slop;
 	}
 
-	bool CollisionManager::FilterColliders(const LayerManager::Bits& mask, const LayerManager::Bits& category)
+	bool CollisionManager::FilterColliders(const CollisionLayerer::Bits& mask, const CollisionLayerer::Bits& category)
 	{
-		return LayerManager::instance().FilterLayers(mask, category);
+		return m_collisionLayerer.FilterLayers(mask, category);
 	}
 
-	void CollisionManager::AddLayer(std::string_view name)
+	void CollisionManager::AddLayer(std::string_view name, const CollisionLayerer::Bits& layer)
 	{
-		LayerManager::instance().AddLayer(name);
+		m_collisionLayerer.AddLayer(name, layer);
 	}
 
-	void CollisionManager::RemoveLayer(size_t layer)
+	void CollisionManager::RemoveLayer(const CollisionLayerer::Bits& layer)
 	{
-		LayerManager::instance().RemoveLayer(layer);
+		RemoveLayer(layer);
 	}
 
 	void CollisionManager::RemoveLayer(std::string_view name)
 	{
-		LayerManager::instance().RemoveLayer(name);
+		m_collisionLayerer.RemoveLayer(name);
 	}
 
-	std::string_view CollisionManager::GetLayerName(size_t layer) const
+	std::string_view CollisionManager::GetLayerName(const CollisionLayerer::Bits& layer) const
 	{
-		return LayerManager::instance().GetName(layer);
+		return m_collisionLayerer.GetName(layer);
 	}
 
 	void CollisionManager::PrintLayerNames() const
 	{
-		LayerManager::instance().PrintNames();
-	}
-
-	void CollisionManager::PrintCollisionMask(const LayerManager::Bits& mask) const
-	{
-		LayerManager::instance().PrintMask(mask);
-	}
-
-	size_t CollisionManager::GetNumberOfLayers() const
-	{
-		return LayerManager::instance().GetLayerSize();
-	}
-
-	size_t CollisionManager::GetLayerCategory(const LayerManager::Bits& cat) const
-	{
-		return LayerManager::instance().GetLayerCategory(cat);
+		m_collisionLayerer.PrintNames();
 	}
 }

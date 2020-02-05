@@ -53,23 +53,8 @@ namespace Rogue
 		TransitionEvent(bool transitingIn)
 			: m_transitingIn{transitingIn} {}
 
-		inline bool GetTransitionType() const { return m_transitingIn; }
+		bool GetTransitionType() const { return m_transitingIn; }
 	private:
 		bool m_transitingIn;
-	};
-
-	class FadeEvent : public Event
-	{
-	public:
-		SET_EVENT_CATEGORY(EventCatGraphics);
-		SET_EVENT_TYPE(EvFade);
-
-		FadeEvent(Entity ent) : 
-			m_entity{ ent } {}
-
-		inline Entity GetEntityToFade() const { return m_entity; }
-
-	private:
-		Entity m_entity;
 	};
 }

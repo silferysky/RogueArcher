@@ -94,16 +94,7 @@ namespace Rogue
 			animate->setCurrentFrame(static_cast<int>(currentFrame));
 	}
 
-	//void AnimationSystem::ResetTextures()
-	//{
-		//for (auto entity : m_entities)
-		//{
-			//auto& animate = g_engine.m_coordinator.GetComponent<AnimationComponent>(entity);
-			
-		//}
-	//}
-
-	void AnimationSystem::InitAnimations()
+	void AnimationSystem::ResetTextures()
 	{
 		for (auto entity : m_entities)
 		{
@@ -111,11 +102,11 @@ namespace Rogue
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(entity);
 
 			sprite.setTexCoordMin(0.0f);
-			sprite.setTexCoordMax(1.0f / animate.getFrames());
-
-			animate.setCurrentFrame(animate.getStartFrame());
+			sprite.setTexCoordMax(1.0f/animate.getFrames());
 		}
 	}
+
+
 
 	void AnimationSystem::Shutdown()
 	{}

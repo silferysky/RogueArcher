@@ -34,7 +34,7 @@ namespace Rogue
 		void ClearWaypoints();
 		std::vector<Vec2> GetWaypoints();
 		
-	protected:
+	private:
 		std::vector<Vec2> m_waypoints;
 		size_t m_currentPointIndex;
 		float m_patrolDelay;
