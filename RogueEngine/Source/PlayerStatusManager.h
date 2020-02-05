@@ -36,8 +36,8 @@ namespace Rogue
 		//Physical Status
 		void SetInLightDur(float duration = 0.16f);
 		float GetInLightDur() const;
-		void SetSlowMo(bool slowMo = true);
-		bool InSlowMo() const;
+		void SetIndicatorStatus(bool showIndicator = true);
+		bool ShowIndicator() const;
 
 		//Teleporting
 		float GetTeleportCharge() const;
@@ -78,7 +78,7 @@ namespace Rogue
 
 		//Physical status
 		float m_inLightDur;
-		bool m_inSlowMo;
+		bool m_indicatorShown;
 
 		//Teleporting
 		float m_teleportCharge;
