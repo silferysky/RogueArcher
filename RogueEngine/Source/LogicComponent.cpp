@@ -156,7 +156,7 @@ namespace Rogue
 
 	void LogicComponent::DisplayOnInspector()
 	{
-		const char* aiType[] = { "Static", "Patrol", "Finder", "Trigger",  "Platform", "Transition", "Appear on Collide", "UI Tele Charge 1", "UI Tele Charge 2", "UI Tele Charge 3"};
+		const char* aiType[] = { "Static", "Patrol", "Finder", "Trigger",  "Platform", "Transition", "Appear on Collide", "UI Tele Charge 1", "UI Tele Charge 2", "UI Tele Charge 3", "Death"};
 		const char* aiState[] = { "Idle", "Chase", "Patrol"};
 		int tempInt = (int)m_AIType;
 

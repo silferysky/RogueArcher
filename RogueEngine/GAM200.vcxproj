@@ -31,6 +31,7 @@
     <ClInclude Include="Source\ChildComponent.h" />
     <ClInclude Include="Source\CircleCollisionSystem.h" />
     <ClInclude Include="Source\ColliderComponent.h" />
+    <ClInclude Include="Source\DeathBox.h" />
     <ClInclude Include="Source\FadeComponent.h" />
     <ClInclude Include="Source\FadeObject.h" />
     <ClInclude Include="Source\FadeSystem.h" />
@@ -179,6 +180,7 @@
     <ClCompile Include="Source\ChildComponent.cpp" />
     <ClCompile Include="Source\CircleCollisionSystem.cpp" />
     <ClCompile Include="Source\ColliderComponent.cpp" />
+    <ClCompile Include="Source\DeathBox.cpp" />
     <ClCompile Include="Source\FadeObject.cpp" />
     <ClCompile Include="Source\FadeSystem.cpp" />
     <ClCompile Include="Source\LayerManager.cpp" />
