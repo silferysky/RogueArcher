@@ -33,6 +33,7 @@ Technology is prohibited.
 #include "TeleCharge2.h"
 #include "TeleCharge3.h"
 #include "AppearOnCollide.h"
+#include "DeathBox.h"
 
 namespace Rogue
 {
@@ -217,6 +218,12 @@ namespace Rogue
 					AddLogicInterface(entities, std::make_shared<TeleCharge3>(newAI));
 					break;
 				}
+				case AIType::Gameplay_DeathBox:
+				{
+					DeathBox newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<DeathBox>(newAI));
+					break;
+				}
 				case AIType::AI_Static:
 				default:
 				{
@@ -311,6 +318,12 @@ namespace Rogue
 				{
 					TeleCharge3 newAI(entity, logicComponent, statsComponent);
 					AddLogicInterface(entity, std::make_shared<TeleCharge3>(newAI));
+					break;
+				}
+				case AIType::Gameplay_DeathBox:
+				{
+					ScriptComponent newAI(entity, logicComponent, statsComponent);
+					AddLogicInterface(entity, std::make_shared<ScriptComponent>(newAI));
 					break;
 				}
 				case AIType::AI_Static:

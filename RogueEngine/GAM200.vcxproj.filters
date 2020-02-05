@@ -146,6 +146,9 @@
     <Filter Include="RogueEngine\Systems\AI\Script Types\UI\TeleCharge">
       <UniqueIdentifier>{9aa52bf9-5118-4c68-8892-e1179bb330fd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="RogueEngine\Systems\AI\Script Types\Gameplay">
+      <UniqueIdentifier>{34f57ff7-c234-4e04-acdc-e548db4bc778}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Resource.h">
@@ -607,6 +610,9 @@
     <ClInclude Include="Source\AppearOnCollide.h">
       <Filter>RogueEngine\Systems\AI\Script Types\UI</Filter>
     </ClInclude>
+    <ClInclude Include="Source\DeathBox.h">
+      <Filter>RogueEngine\Systems\AI\Script Types\Gameplay</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -950,6 +956,9 @@
     </ClCompile>
     <ClCompile Include="Source\AppearOnCollide.cpp">
       <Filter>RogueEngine\Systems\AI\Script Types\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DeathBox.cpp">
+      <Filter>RogueEngine\Systems\AI\Script Types\Gameplay</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

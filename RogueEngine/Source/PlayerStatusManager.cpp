@@ -17,7 +17,9 @@ namespace Rogue
 		m_inLightDur{0.0f},
 		m_maxTeleportCharge {3.0f},
 		m_teleportCharge{ 3.0f },
-		m_teleportDelayTimer {0.0f}
+		m_teleportDelayTimer {0.0f},
+		m_startingPos{0.0f, 0.0f},
+		m_checkpoint{-978.727f, -51.6237f}
 	{
 	}
 
@@ -162,6 +164,26 @@ namespace Rogue
 	Entity PlayerStatusManager::GetHitchhikedEntity() const
 	{
 		return m_hitchhikedEntity;
+	}
+
+	void PlayerStatusManager::SetCheckpoint(Vec2 checkpoint)
+	{
+		m_checkpoint = checkpoint;
+	}
+
+	Vec2 PlayerStatusManager::GetCheckpoint() const
+	{
+		return m_checkpoint;
+	}
+
+	void PlayerStatusManager::SetStartingPos(Vec2 startingPos)
+	{
+		m_startingPos = startingPos;
+	}
+
+	Vec2 PlayerStatusManager::GetStartingPos() const
+	{
+		return m_startingPos;
 	}
 
 	void PlayerStatusManager::ChangePlayerSprite()
