@@ -9,6 +9,7 @@ namespace Rogue
 		m_runCount{ 0 },
 		m_entity{ MAX_ENTITIES },
 		m_indicator{MAX_ENTITIES},
+		m_playerStartPos{Vec2(0,0)},
 		m_isLightMode{ true },
 		m_hasJumped{ false },
 		m_indicatorShown{false},

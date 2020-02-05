@@ -29,6 +29,7 @@ Technology is prohibited.
 #include "ChildComponent.h"
 #include "ParentEvent.h"
 #include "EditorHierarchy.h"
+#include "PlayerStatusManager.h"
 
 namespace Rogue
 {
@@ -60,6 +61,9 @@ namespace Rogue
 		
 		//For Parent/Child iterator
 		std::queue<Entity> loadedQueue;
+
+		//For Player character
+		PLAYER_STATUS.SetStartingPos(Vec2(level["StartPosX"].GetFloat(), level["StartPosY"].GetFloat()));
 
 		for (Entity entity = 0; entity < entCount; ++entity)
 		{
