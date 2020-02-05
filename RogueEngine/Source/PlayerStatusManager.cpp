@@ -20,6 +20,19 @@ namespace Rogue
 	{
 	}
 
+	void PlayerStatusManager::Reset()
+	{
+		m_entity = MAX_ENTITIES;
+		m_indicator = MAX_ENTITIES;
+		m_isLightMode = true;
+		m_hasJumped = false;
+		m_inSlowMo = false;
+		m_hitchhikedEntity = MAX_ENTITIES;
+		m_inLightDur = 0.0f;
+		m_teleportCharge = 3.0f;
+		m_teleportDelayTimer = 0.0f;
+	}
+
 	void PlayerStatusManager::SetPlayerEntity(Entity ent)
 	{
 		m_entity = ent;

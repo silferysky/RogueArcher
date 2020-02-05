@@ -23,6 +23,8 @@ Technology is prohibited.
 #include "MenuControllerSystem.h"
 #include "CameraManager.h"
 #include "EditorCreateObjectCommand.h"
+#include "PlayerStatusManager.h"
+
 namespace Rogue
 {
 	SceneManager::SceneManager()
@@ -82,6 +84,7 @@ namespace Rogue
 
 	void SceneManager::LoadLevel(const std::string& fileName)
 	{
+		PLAYER_STATUS.Reset();
 		//Setting up
 		setCurrentFileName(fileName);
 		ClearAllEntities();
