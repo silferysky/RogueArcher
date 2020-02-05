@@ -51,6 +51,7 @@ namespace Rogue
 		m_channel->addDSP(0, DSPLowPassFilter);
 		m_channel->addDSP(0, DSPHighPassFilter);
 
+		m_counter = 0;
 		m_limit = limit;
 	}
 
