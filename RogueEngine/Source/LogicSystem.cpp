@@ -33,6 +33,7 @@ Technology is prohibited.
 #include "TeleCharge2.h"
 #include "TeleCharge3.h"
 #include "AppearOnCollide.h"
+#include "DisappearOnCollide.h"
 #include "DeathBox.h"
 
 namespace Rogue
@@ -200,6 +201,12 @@ namespace Rogue
 					AddLogicInterface(entities, std::make_shared<AppearOnCollide>(newAI));
 					break;
 				}
+				case AIType::Obj_DisappearOnCollide:
+				{
+					DisappearOnCollide newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<DisappearOnCollide>(newAI));
+					break;
+				}
 				case AIType::UI_TeleCharge1:
 				{
 					TeleCharge1 newAI(entities, logicComponent, statsComponent);
@@ -300,6 +307,12 @@ namespace Rogue
 				{
 					AppearOnCollide newAI(entity, logicComponent, statsComponent);
 					AddLogicInterface(entity, std::make_shared<AppearOnCollide>(newAI));
+					break;
+				}
+				case AIType::Obj_DisappearOnCollide:
+				{
+					DisappearOnCollide newAI(entity, logicComponent, statsComponent);
+					AddLogicInterface(entity, std::make_shared<DisappearOnCollide>(newAI));
 					break;
 				}
 				case AIType::UI_TeleCharge1:
