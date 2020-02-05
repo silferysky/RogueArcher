@@ -24,6 +24,8 @@ Technology is prohibited.
 #include "CameraManager.h"
 #include "EditorCreateObjectCommand.h"
 #include "PlayerStatusManager.h"
+#include "GameEvent.h"
+#include "PlayerStatusManager.h"
 
 namespace Rogue
 {
@@ -84,7 +86,14 @@ namespace Rogue
 
 	void SceneManager::LoadLevel(const std::string& fileName)
 	{
-		PLAYER_STATUS.Reset();
+		if (PLAYER_STATUS.GetPlayerEntity() != MAX_ENTITIES)
+		{
+			//Telling PlayerControllerSystem to do full reset
+			ResetGameEvent* ev = new ResetGameEvent();
+			ev->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
+			EventDispatcher::instance().AddEvent(ev);
+		}
+
 		//Setting up
 		setCurrentFileName(fileName);
 		ClearAllEntities();

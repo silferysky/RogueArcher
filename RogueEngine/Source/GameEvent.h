@@ -23,6 +23,15 @@ Technology is prohibited.
 
 namespace Rogue
 {
+	class ResetGameEvent : public Event
+	{
+	public:
+		SET_EVENT_CATEGORY(EventCatEntity);
+		SET_EVENT_TYPE(EvResetGame);
+
+		ResetGameEvent() {}
+	};
+
 	class EntityEvent : public Event
 	{
 	public:

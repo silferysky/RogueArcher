@@ -66,6 +66,8 @@ namespace Rogue
 		EvEntityHitchhike,
 		EvEntityChangeSprite,
 
+		EvResetGame,
+
 		EvOnCollisionEnter,
 		EvOnCollisionStay,
 		EvOnCollisionExit,
