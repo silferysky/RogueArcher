@@ -170,17 +170,43 @@ namespace Rogue
 	void PlayerControllerSystem::Receive(Event* ev)
 	{
 		//Statement here to make sure all commands only apply if game is not running
-		if (!g_engine.m_coordinator.GameIsActive())
-		{
-			g_engine.SetTimeScale(1.0f);
-			return;
-		}
+		//if (!g_engine.m_coordinator.GameIsActive())
+		//{
+		//	g_engine.SetTimeScale(1.0f);
+		//	return;
+		//}
 
 		if (m_entities.begin() == m_entities.end())
 			return;
 
 		switch (ev->GetEventType())
 		{
+		case EventType::EvResetGame:
+		{
+			//Safety check to make sure level exists
+			if (!PLAYER_STATUS.GetRunCount())
+			{
+				PLAYER_STATUS.SetRunCount(1);
+				PLAYER_STATUS.SetPlayerEntity(MAX_ENTITIES);
+				return;
+			}
+
+			//Deleting entity
+			for (auto entity : m_entities)
+				g_engine.m_coordinator.AddToDeleteQueue(entity);
+			
+			//Deleting teleport entities
+			ClearTeleportEntities();
+
+			//Deleting Indicator entity
+			if (PLAYER_STATUS.GetIndicator() != MAX_ENTITIES)
+			{
+				g_engine.m_coordinator.AddToDeleteQueue(PLAYER_STATUS.GetIndicator());
+			}
+
+			PLAYER_STATUS.Reset();
+			break;
+		}
 		case EventType::EvMouseMoved:
 		{
 			MouseMoveEvent* mouseMove = dynamic_cast<MouseMoveEvent*>(ev);
@@ -238,26 +264,15 @@ namespace Rogue
 					}
 				}
 
-				else if (keycode == KeyPress::MB2)
+				else if (keycode == KeyPress::MB2 || keycode == KeyPress::KeyShift || keycode == KeyPress::KeyE)
 				{
-					//For Hitchhiking
 					ToggleMode();
-					// for testing
+
 				}
-				else if (keycode == KeyPress::KeyShift)
-				{
-					//For Hitchhiking
-					ToggleMode();
-					// for testing
-				}
+
 				else if (keycode == KeyPress::MB3)
 				{
 					ClearTimedEntities();
-				}
-
-				else if (keycode == KeyPress::KeyE)
-				{
-					ToggleMode();
 				}
 
 				else if (keycode == KeyPress::KeySpace)

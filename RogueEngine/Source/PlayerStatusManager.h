@@ -17,6 +17,8 @@ namespace Rogue
 		PlayerStatusManager();
 
 		void Reset();
+		void SetRunCount(size_t count);
+		size_t GetRunCount();
 
 		//Player Entity
 		void SetPlayerEntity(Entity ent);
@@ -58,6 +60,8 @@ namespace Rogue
 	private:
 
 		void ChangePlayerSprite();
+
+		size_t m_runCount;
 
 		Entity m_entity;
 		Entity m_indicator;

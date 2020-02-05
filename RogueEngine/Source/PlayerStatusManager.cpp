@@ -5,7 +5,8 @@
 
 namespace Rogue
 {
-	PlayerStatusManager::PlayerStatusManager():
+	PlayerStatusManager::PlayerStatusManager() :
+		m_runCount{ 0 },
 		m_entity{ MAX_ENTITIES },
 		m_indicator{MAX_ENTITIES},
 		m_isLightMode{ true },
@@ -31,6 +32,18 @@ namespace Rogue
 		m_inLightDur = 0.0f;
 		m_teleportCharge = 3.0f;
 		m_teleportDelayTimer = 0.0f;
+
+		++m_runCount;
+	}
+
+	void PlayerStatusManager::SetRunCount(size_t count)
+	{
+		m_runCount = count;
+	}
+
+	size_t PlayerStatusManager::GetRunCount()
+	{
+		return m_runCount;
 	}
 
 	void PlayerStatusManager::SetPlayerEntity(Entity ent)
