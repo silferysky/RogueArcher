@@ -1,6 +1,6 @@
 {
-    "MaxEntityCount": 166,
-    "EntityCount": 165,
+    "MaxEntityCount": 168,
+    "EntityCount": 168,
     "CameraMinX": -3392.0,
     "CameraMinY": -933.0,
     "CameraMaxX": 2388.0,
@@ -339,9 +339,9 @@
     "Entity162": "Name{Game Object 165}|Tag{}|Sprite{Resources\\Assets\\Snail.png;1;0.99999;0.99999;1;}||Transform{-1143.13;-82.3301;21;12;0;11}|||||||||||||||||||",
     "Entity163": "Name{ClearTransition}|Tag{}|Sprite{Resources\\Assets\\DarkFog.png;1;1;1;1;}|Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{2450.6;844.163;328;449;3.14;0}||BoxCollider{0;0;0;18;-297;TRIGGER}||LogicComponent{5;0;0;}|StatsComponent{0;0;0;0;0;Level 11.json;0;}||||||Collider{BOX;00000000000000000000000000000001;11111111111111111111111111111111;}||||||||",
     "Entity164": "Name{Hum_SFX1}|Tag{}|||Transform{-2748;-639.549;100;100;0;0}||||||||Audio{Resources\\Sounds\\soul_hum.ogg;750;0.3;1;1;}|||||||||||",
-    "Entity165": "Name{Game Object 165}|Tag{}|Sprite{Resources\\Assets\\Crystal_New.png;0.00783355;0.333616;0.79902;1;}||Transform{-1522.18;-419.316;134.437;110.903;6.28;7}||||||||||||||||||",
-	"Entity166": "Name{Game Object 165}|Tag{}|Sprite{Resources\\Assets\\Snail.png;1;0.99999;0.99999;1;}||Transform{-1143.13;-82.3301;21;12;0;11}|||||||||||||||||||",
-    "Entity167": "Name{DeathBox}|Tag{}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{1143.3;-771.769;100;100;0;0}||BoxCollider{0;-20;-24;1688;32;TRIGGER}||LogicComponent{10;0;1;0}|StatsComponent{0;0;0;0;0;;0;}||||||Collider{BOX;00000000000000000000000000000001;11111111111111111111111111111111;}||||||||",
+    "Entity165": "Name{Game Object 165}|Tag{}|Sprite{Resources\\Assets\\Crystal_New.png;0.00783355;0.333616;0.79902;1;}||Transform{-1522.18;-419.316;134.437;110.903;6.28;7}|||||||||||||||||||",
+    "Entity166": "Name{Game Object 165}|Tag{}|Sprite{Resources\\Assets\\Snail.png;1;0.99999;0.99999;1;}||Transform{-1143.13;-82.3301;21;12;0;11}|||||||||||||||||||",
+    "Entity167": "Name{DeathBox}|Tag{}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{1143.3;-771.769;100;100;0;0}||BoxCollider{0;-20;-24;1688;32;TRIGGER}||LogicComponent{11;0;1;0}|StatsComponent{0;0;0;0;0;;0;}||||||Collider{BOX;00000000000000000000000000000001;11111111111111111111111111111111;}||||||||",
     "EntityParent0": 65536,
     "EntityParent1": 65536,
     "EntityParent2": 65536,
@@ -507,5 +507,7 @@
     "EntityParent162": 65536,
     "EntityParent163": 65536,
     "EntityParent164": 65536,
-    "EntityParent165": 65536
+    "EntityParent165": 65536,
+    "EntityParent166": 65536,
+    "EntityParent167": 65536
 }
