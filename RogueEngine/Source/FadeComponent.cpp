@@ -40,11 +40,18 @@ namespace Rogue
 		//ImGui::Image((void*)(intptr_t)(g_engine.m_coordinator.GetSystem<GraphicsSystem>()->getFBO()), ImVec2(imageSize.x, imageSize.y), ImVec2(0, 1), ImVec2(1, 0));
 		ImGui::PushItemWidth(75);
 
-		ImGui::Checkbox("Active?", &m_isActive);
+		ImGui::Checkbox("Is Fading?", &m_isActive);
 		setIsActive(m_isActive);
 
 		ImGui::Checkbox("Fading In?", &m_isFadingIn);
 		setIsFadingIn(m_isFadingIn);
+
+		if (ImGui::IsItemHovered())
+		{
+			ImGui::BeginTooltip();
+			ImGui::Text("Checked means Fading In, Unchecked means Fading Out");
+			ImGui::EndTooltip();
+		}
 
 		ImGui::DragFloat("Fade Velocity", &m_fadeVelocity, 0.1f, 0.0f, 20.0f);
 		setFadeVelocity(m_fadeVelocity);

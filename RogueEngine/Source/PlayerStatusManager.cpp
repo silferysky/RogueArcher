@@ -11,13 +11,15 @@ namespace Rogue
 		m_indicator{MAX_ENTITIES},
 		m_isLightMode{ true },
 		m_hasJumped{ false },
-		m_inSlowMo{false},
+		m_indicatorShown{false},
 		m_maxJumpTimer{0.5f},
 		m_hitchhikedEntity{ MAX_ENTITIES },
 		m_inLightDur{0.0f},
 		m_maxTeleportCharge {3.0f},
 		m_teleportCharge{ 3.0f },
-		m_teleportDelayTimer {0.0f}
+		m_teleportDelayTimer {0.0f},
+		m_startingPos{0.0f, 0.0f},
+		m_checkpoint{-978.727f, -51.6237f}
 	{
 	}
 
@@ -27,7 +29,7 @@ namespace Rogue
 		m_indicator = MAX_ENTITIES;
 		m_isLightMode = true;
 		m_hasJumped = false;
-		m_inSlowMo = false;
+		m_indicatorShown = false;
 		m_hitchhikedEntity = MAX_ENTITIES;
 		m_inLightDur = 0.0f;
 		m_teleportCharge = 3.0f;
@@ -91,14 +93,14 @@ namespace Rogue
 		return m_inLightDur;
 	}
 
-	void PlayerStatusManager::SetSlowMo(bool slowMo)
+	void PlayerStatusManager::SetIndicatorStatus(bool showIndicator)
 	{
-		m_inSlowMo = slowMo;
+		m_indicatorShown = showIndicator;
 	}
 
-	bool PlayerStatusManager::InSlowMo() const
+	bool PlayerStatusManager::ShowIndicator() const
 	{
-		return m_inSlowMo;
+		return m_indicatorShown;
 	}
 
 	float PlayerStatusManager::GetTeleportCharge() const
@@ -162,6 +164,26 @@ namespace Rogue
 	Entity PlayerStatusManager::GetHitchhikedEntity() const
 	{
 		return m_hitchhikedEntity;
+	}
+
+	void PlayerStatusManager::SetCheckpoint(Vec2 checkpoint)
+	{
+		m_checkpoint = checkpoint;
+	}
+
+	Vec2 PlayerStatusManager::GetCheckpoint() const
+	{
+		return m_checkpoint;
+	}
+
+	void PlayerStatusManager::SetStartingPos(Vec2 startingPos)
+	{
+		m_startingPos = startingPos;
+	}
+
+	Vec2 PlayerStatusManager::GetStartingPos() const
+	{
+		return m_startingPos;
 	}
 
 	void PlayerStatusManager::ChangePlayerSprite()
