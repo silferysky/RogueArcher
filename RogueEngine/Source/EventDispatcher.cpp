@@ -56,7 +56,7 @@ namespace Rogue
 	void EventDispatcher::AddListener(SystemID ID, LISTENER_HANDLER handler)
 	{
 		ListenerMap.insert(std::pair<SystemID, LISTENER_HANDLER>(ID, handler));
-		RE_CORE_INFO("Added new key to ListenerMap");
+		//RE_CORE_INFO("Added new key to ListenerMap");
 	}
 
 	void EventDispatcher::RemoveAllListener()

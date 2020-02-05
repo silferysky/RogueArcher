@@ -302,7 +302,7 @@ namespace Rogue
 			}
 		}
 
-		RE_CORE_INFO("Object to delete not found");
+		//RE_CORE_INFO("Object to delete not found");
 	}
 
 	Entity SceneManager::Create2DSprite()

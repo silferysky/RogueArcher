@@ -136,8 +136,8 @@ namespace Rogue
 						system.second->m_systemID == SystemID::id_PHYSICSSYSTEM ||
 						system.second->m_systemID == SystemID::id_PARTICLEEMITTERSYSTEM ||
 						system.second->m_systemID == SystemID::id_PARTICLESYSTEM ||
-						system.second->m_systemID == SystemID::id_FADESYSTEM ||
-						system.second->m_systemID == SystemID::id_PLAYERCONTROLLERSYSTEM
+						system.second->m_systemID == SystemID::id_FADESYSTEM //||
+						//system.second->m_systemID == SystemID::id_PLAYERCONTROLLERSYSTEM
 						)
 						continue;
 				}
@@ -174,7 +174,7 @@ namespace Rogue
 
 				std::stringstream str;
 				str << "Entity " << entity << " Removed from " << pair.first.name();
-				RE_CORE_INFO(str.str());
+				//RE_CORE_INFO(str.str());
 			}
 		}
 
@@ -199,13 +199,13 @@ namespace Rogue
 					{
 						CLEARSTRING(out);
 						out << "Entity " << entity << " added to " << type.name();
-						RE_CORE_INFO(out.str());
+						//RE_CORE_INFO(out.str());
 					}
 					else
 					{
 						CLEARSTRING(out);
 						out << "Entity " << entity << " exists in " << type.name();
-						RE_CORE_INFO(out.str());
+						//RE_CORE_INFO(out.str());
 					}
 				}
 				// Entity signature does not match system signature - erase from set/don't add
@@ -215,13 +215,13 @@ namespace Rogue
 					{
 						CLEARSTRING(out);
 						out << "Entity " << entity << " removed from " << type.name();
-						RE_CORE_INFO(out.str());
+						//RE_CORE_INFO(out.str());
 					}
 					else
 					{
 						CLEARSTRING(out);
 						out << "Entity " << entity << " not added to " << type.name();
-						RE_CORE_INFO(out.str());
+						//RE_CORE_INFO(out.str());
 					}
 					system->m_entities.erase(entity);
 				}
