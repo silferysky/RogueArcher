@@ -16,6 +16,8 @@ namespace Rogue
 
 		PlayerStatusManager();
 
+		void Reset();
+
 		//Player Entity
 		void SetPlayerEntity(Entity ent);
 		Entity GetPlayerEntity() const;
