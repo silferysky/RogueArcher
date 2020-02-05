@@ -59,9 +59,9 @@ namespace Rogue
 			REAvailableEntities.pop();
 			++REActiveEntityCount;
 
-			std::stringstream out;
-			out << "Entities created. Current active entities: " << REActiveEntityCount;
-			RE_CORE_INFO(out.str());
+			//std::stringstream out;
+			//out << "Entities created. Current active entities: " << REActiveEntityCount;
+			//////RE_CORE_INFO(out.str());
 
 			return id;
 		}
@@ -79,7 +79,7 @@ namespace Rogue
 
 			std::stringstream out;
 			out << "Entities Destroyed. Current active entities: " << REActiveEntityCount;
-			RE_CORE_INFO(out.str());
+			//////RE_CORE_INFO(out.str());
 		}
 
 		void SetSignature(Entity entity, Signature signature)

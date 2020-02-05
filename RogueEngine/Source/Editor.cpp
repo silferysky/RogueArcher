@@ -195,7 +195,7 @@ namespace Rogue
 					KeyPress keycode = keytriggeredevent->GetKeyCode();
 					if (keycode == KeyPress::KeyDelete)
 					{
-						DeleteCommand();
+						//DeleteCommand();
 					}
 					if (ev->GetEventCat() & EventCatCombinedInput)
 					{

@@ -39,7 +39,7 @@ namespace Rogue
 			out.clear();
 			out.str("");
 			out << "Creating " << typeName << "s...";
-			RE_CORE_INFO(out.str());
+			//RE_CORE_INFO(out.str());
 
 			// Create a ComponentArray pointer and add it to the component arrays map
 			m_componentArrays.insert({ typeName, std::make_shared<ComponentArray<T>>() });
@@ -48,7 +48,7 @@ namespace Rogue
 			out.clear();
 			out.str("");
 			out << "Array of " << MAX_ENTITIES << " " << typeName << "s created!";
-			RE_CORE_INFO(out.str());
+			//RE_CORE_INFO(out.str());
 
 			// Increment the value so that the next component registered will be different
 			++m_nextComponentType;
@@ -67,7 +67,7 @@ namespace Rogue
 		{
 			std::stringstream out;
 			out << "Added " << typeid(T).name() << " to Entity " << entity;
-			RE_CORE_INFO(out.str());
+			//RE_CORE_INFO(out.str());
 			GetComponentArray<T>()->InsertData(entity, component);
 		}
 
@@ -92,7 +92,7 @@ namespace Rogue
 				auto const& component = pair.second;
 
 				component->EntityDestroyed(entity);
-				RE_CORE_INFO("Components Removed\n");
+				//RE_CORE_INFO("Components Removed\n");
 			}
 		}
 		
