@@ -11,7 +11,7 @@ namespace Rogue
 		m_indicator{MAX_ENTITIES},
 		m_isLightMode{ true },
 		m_hasJumped{ false },
-		m_inSlowMo{false},
+		m_indicatorShown{false},
 		m_maxJumpTimer{0.5f},
 		m_hitchhikedEntity{ MAX_ENTITIES },
 		m_inLightDur{0.0f},
@@ -27,7 +27,7 @@ namespace Rogue
 		m_indicator = MAX_ENTITIES;
 		m_isLightMode = true;
 		m_hasJumped = false;
-		m_inSlowMo = false;
+		m_indicatorShown = false;
 		m_hitchhikedEntity = MAX_ENTITIES;
 		m_inLightDur = 0.0f;
 		m_teleportCharge = 3.0f;
@@ -91,14 +91,14 @@ namespace Rogue
 		return m_inLightDur;
 	}
 
-	void PlayerStatusManager::SetSlowMo(bool slowMo)
+	void PlayerStatusManager::SetIndicatorStatus(bool showIndicator)
 	{
-		m_inSlowMo = slowMo;
+		m_indicatorShown = showIndicator;
 	}
 
-	bool PlayerStatusManager::InSlowMo() const
+	bool PlayerStatusManager::ShowIndicator() const
 	{
-		return m_inSlowMo;
+		return m_indicatorShown;
 	}
 
 	float PlayerStatusManager::GetTeleportCharge() const
