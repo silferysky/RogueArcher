@@ -221,14 +221,17 @@ namespace Rogue
 			//Safety check to make sure level exists
 			if (!PLAYER_STATUS.GetRunCount())
 			{
-				PLAYER_STATUS.SetRunCount(1);
-				//PLAYER_STATUS.Reset();
+				//PLAYER_STATUS.SetRunCount(1);
+				PLAYER_STATUS.Reset();
 				return;
 			}
 
 			//Deleting entity
 			//for (auto entity : m_entities)
 			//	g_engine.m_coordinator.AddToDeleteQueue(entity);
+
+			if (m_entities.size() > 1)
+				g_engine.m_coordinator.AddToDeleteQueue(*m_entities.begin());
 			
 			//Deleting teleport entities
 			ClearTeleportEntities();
