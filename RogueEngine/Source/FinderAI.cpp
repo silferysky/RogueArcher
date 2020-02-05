@@ -57,7 +57,7 @@ namespace Rogue
 
 					if (distance < DEF_DETECT_RANGE * DEF_DETECT_RANGE)
 					{
-						//RE_CORE_INFO("IN RANGE");
+						////RE_CORE_INFO("IN RANGE");
 						m_nextPoint.push(playerTransform.GetPosition());
 					}
 				}

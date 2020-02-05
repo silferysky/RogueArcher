@@ -299,7 +299,7 @@ namespace Rogue
 			//Leftover '|' character will be ignored based on the getlines
 			SetArchetype(stdstr, readstr, curSignature);
 		}
-		RE_CORE_INFO("Archetypes loaded");*/
+		//RE_CORE_INFO("Archetypes loaded");*/
 	}
 
 	void ObjectFactory::SaveArchetypeList(const char* fileName)
