@@ -622,6 +622,9 @@
     <ClInclude Include="Source\SoulCollectible.h">
       <Filter>RogueEngine\Systems\AI\Script Types\Gameplay</Filter>
     </ClInclude>
+    <ClInclude Include="Source\TeleAnimation.h">
+      <Filter>RogueEngine\Systems\AI\Script Types\Gameplay</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -976,6 +979,9 @@
       <Filter>RogueEngine\Systems\AI\Script Types\Gameplay</Filter>
     </ClCompile>
     <ClCompile Include="Source\SoulCollectible.cpp">
+      <Filter>RogueEngine\Systems\AI\Script Types\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TeleAnimation.cpp">
       <Filter>RogueEngine\Systems\AI\Script Types\Gameplay</Filter>
     </ClCompile>
   </ItemGroup>
