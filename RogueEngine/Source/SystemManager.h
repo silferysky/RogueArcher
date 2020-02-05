@@ -300,12 +300,12 @@ namespace Rogue
 	private:
 		std::unordered_map<std::type_index, Signature> m_signatures;
 		std::vector<std::pair<std::type_index, std::shared_ptr<System>>> m_systems;
-		bool m_gameIsRunning = false;
+		bool m_gameIsRunning = true;
 		bool m_gameIsPaused = false;
-		bool m_editorIsRunning = true;
+		bool m_editorIsRunning = false;
 		bool m_stepOnce = false;
 		bool m_gameModeChanged = false;
-		bool m_showCursor = true;
+		bool m_showCursor = false;
 
 		size_t m_stepFrames = 1;
 		size_t m_stepCounter = 0;
