@@ -61,18 +61,18 @@ namespace Rogue
 			PLAYER_STATUS.SetPlayerEntity(*m_entities.begin());
 		}
 
-		PlayerControllerComponent& player = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(PLAYER_STATUS.GetPlayerEntity());
+		//PlayerControllerComponent& player = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(PLAYER_STATUS.GetPlayerEntity());
 
-		if (player.m_grounded)
-		{
-			RE_INFO("Grounded!");
-			player;
-		}
-		else
-		{
-			RE_INFO("Not grounded!");
-			player;
-		}
+		//if (player.m_grounded)
+		//{
+		//	RE_INFO("Grounded!");
+		//	player;
+		//}
+		//else
+		//{
+		//	RE_INFO("Not grounded!");
+		//	player;
+		//}
 
 		if (!g_engine.m_coordinator.GameIsActive())
 		{
@@ -92,31 +92,31 @@ namespace Rogue
 				ParentSetEvent* parent = new ParentSetEvent(*m_entities.begin(), PLAYER_STATUS.GetIndicator());
 				parent->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
 				EventDispatcher::instance().AddEvent(parent);
-
-				return;
 			}
-
-			//If it reaches here, that means indicator exists already
-			if (g_engine.m_coordinator.ComponentExists<ChildComponent>(PLAYER_STATUS.GetIndicator()) &&
-				g_engine.m_coordinator.ComponentExists<TransformComponent>(PLAYER_STATUS.GetIndicator()))
+			else
 			{
-				Vec2 calculatedPos = GetTeleportRaycast();
-				TransformComponent& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetIndicator());
-				Vec2 vecOfChange = Vec2(g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin()).GetPosition() - calculatedPos);
-
-				//For Position
-				transform.setPosition(calculatedPos + vecOfChange / 2);
-
-				//For Scale
-				//Vec2Normalize(vecOfChange, vecOfChange);
-				//vecOfChange = vecOfChange * transform.GetScale().x * 3 + transform.GetPosition();
-				//transform.setScale(Vec2(vecOfChange.x / calculatedPos.x, transform.GetScale().y));
-
-				//For Rotation
-				transform.setRotation(atan(vecOfChange.y / vecOfChange.x));
-				if (vecOfChange.x < 0.0f)
+				//If it reaches here, that means indicator exists already
+				if (g_engine.m_coordinator.ComponentExists<ChildComponent>(PLAYER_STATUS.GetIndicator()) &&
+					g_engine.m_coordinator.ComponentExists<TransformComponent>(PLAYER_STATUS.GetIndicator()))
 				{
-					transform.setScale(transform.GetScale() * -1);
+					Vec2 calculatedPos = GetTeleportRaycast();
+					TransformComponent& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetIndicator());
+					Vec2 vecOfChange = Vec2(g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin()).GetPosition() - calculatedPos);
+
+					//For Position
+					transform.setPosition(calculatedPos + vecOfChange / 2);
+
+					//For Scale
+					//Vec2Normalize(vecOfChange, vecOfChange);
+					//vecOfChange = vecOfChange * transform.GetScale().x * 3 + transform.GetPosition();
+					//transform.setScale(Vec2(vecOfChange.x / calculatedPos.x, transform.GetScale().y));
+
+					//For Rotation
+					transform.setRotation(atan(vecOfChange.y / vecOfChange.x));
+					if (vecOfChange.x < 0.0f)
+					{
+						transform.setScale(transform.GetScale() * -1);
+					}
 				}
 			}
 		}
@@ -485,8 +485,11 @@ namespace Rogue
 		{
 			EntCollisionStayEvent* collisionStay = dynamic_cast<EntCollisionStayEvent*>(ev);
 
-			//if (m_ignoreFrameEvent)
-			//	return;
+			if (m_ignoreFrameEvent)
+			{
+				m_ignoreFrameEvent = !m_ignoreFrameEvent;
+				return;
+			}
 
 
 			Entity player;
