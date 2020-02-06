@@ -37,6 +37,8 @@ namespace Rogue
 		float GetInLightDur() const;
 		void SetIndicatorStatus(bool showIndicator = true);
 		bool ShowIndicator() const;
+		void SetDeath(bool death);
+		bool GetDeath() const;
 
 		//Teleporting
 		float GetTeleportCharge() const;
@@ -66,7 +68,6 @@ namespace Rogue
 		void SetSoulsCollected(unsigned soulsCollected);
 		unsigned GetSoulsCollected() const;
 		void IncrementSoulsCollected();
-
 	private:
 
 		void ChangePlayerSprite();
@@ -84,6 +85,7 @@ namespace Rogue
 		//Physical status
 		float m_inLightDur;
 		bool m_indicatorShown;
+		bool m_death;
 
 		//Teleporting
 		float m_teleportCharge;

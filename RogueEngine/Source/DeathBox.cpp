@@ -17,19 +17,18 @@ namespace Rogue
 
 	void DeathBox::AIIdleUpdate()
 	{
-		if (m_isDead)
+		if (PlayerStatusManager::instance().GetDeath())
 		{
 			m_timer += g_deltaTime * g_engine.GetTimeScale();
 			if (m_timer >= 0.65f && m_timer < 3.0f)
 			{
-				g_engine.m_coordinator.GetSystem<CameraSystem>()->GetShake().SetShake(13.0f);
 				g_engine.m_coordinator.GetSystem<CameraSystem>()->setIsActive(false);
 				g_engine.m_coordinator.GetComponent<TransformComponent>(m_other).setPosition(PlayerStatusManager::instance().GetCheckpoint());
 			}
 			else if (m_timer >= 3.0f)
 			{
 				m_timer = 0.0f;
-				m_isDead = false;
+				PlayerStatusManager::instance().SetDeath(false);
 				g_engine.m_coordinator.GetSystem<CameraSystem>()->setIsActive(true);
 			}
 		}
@@ -40,7 +39,7 @@ namespace Rogue
 		if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(other))
 		{
 			//g_engine.m_coordinator.GetSystem<CameraSystem>()->setIsActive(false);
-			m_isDead = true;
+			PlayerStatusManager::instance().SetDeath(true);
 			m_other = other;
 		}
 	}
