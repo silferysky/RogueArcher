@@ -477,7 +477,7 @@ namespace Rogue
 					}
 					//if (PLAYER_STATUS.ShowIndicator())
 					g_engine.SetTimeScale(1.0f);
-					PLAYER_STATUS.SetIndicatorStatus(false);
+					PLAYER_STATUS.SetIndicatorStatus(true);
 
 					//To reduce calculations
 					if (PLAYER_STATUS.GetIndicator() != MAX_ENTITIES && g_engine.m_coordinator.ComponentExists<ChildComponent>(PLAYER_STATUS.GetIndicator()))
@@ -486,7 +486,7 @@ namespace Rogue
 						SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(PLAYER_STATUS.GetIndicator());
 						comp.SetIsFollowing(false);
 						auto filter = sprite.getFilter();
-						sprite.setFilter(glm::vec4(filter.r, filter.g, filter.b, 0));
+						//sprite.setFilter(glm::vec4(filter.r, filter.g, filter.b, 0));
 					}
 				}
 				if ((keycode == KeyPress::KeyA ) || (keycode == KeyPress::KeyD))

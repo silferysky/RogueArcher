@@ -12,7 +12,7 @@ namespace Rogue
 		m_playerStartPos{Vec2(0,0)},
 		m_isLightMode{ true },
 		m_hasJumped{ false },
-		m_indicatorShown{false},
+		m_indicatorShown{true},
 		m_death{false},
 		m_maxJumpTimer{0.5f},
 		m_hitchhikedEntity{ MAX_ENTITIES },

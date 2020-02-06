@@ -18,6 +18,7 @@ Technology is prohibited.
 #include "Precompiled.h"
 #include "TransitionObject.h"
 #include "Main.h"
+#include "PlayerStatusManager.h"
 
 namespace Rogue
 {
@@ -31,6 +32,7 @@ namespace Rogue
 			SceneManager& sceneManager = SceneManager::instance();
 
 			sceneManager.LoadLevel(m_levelToLoad.c_str());
+			PLAYER_STATUS.SetIndicatorStatus(false);
 		}
 	}
 	std::string& TransitionObject::GetTransitionLevelName()
