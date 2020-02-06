@@ -12,6 +12,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\AIType.h" />
+    <ClInclude Include="Source\AnimateOnEla.h" />
+    <ClInclude Include="Source\AnimateOnExa.h" />
     <ClInclude Include="Source\AnimationComponent.h" />
     <ClInclude Include="Source\AnimationSystem.h" />
     <ClInclude Include="Source\AudioEmitterComponent.h" />
@@ -171,6 +173,7 @@
     <ClInclude Include="Source\WindowHelper.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\AnimateOnExa.cpp" />
     <ClCompile Include="Source\AnimationComponent.cpp" />
     <ClCompile Include="Source\AnimationSystem.cpp" />
     <ClCompile Include="Source\AudioEmitterComponent.cpp" />
@@ -262,6 +265,7 @@
     <ClCompile Include="Source\PickingManager.cpp" />
     <ClCompile Include="Source\FadeComponent.cpp" />
     <ClCompile Include="Source\SoulCollectible.cpp" />
+    <ClCompile Include="Source\AnimateOnEla.cpp" />
     <ClCompile Include="Source\StatsComponent.cpp" />
     <ClCompile Include="Source\TeleCharge1.cpp" />
     <ClCompile Include="Source\TeleCharge2.cpp" />

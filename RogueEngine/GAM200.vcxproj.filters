@@ -625,6 +625,12 @@
     <ClInclude Include="Source\TeleAnimation.h">
       <Filter>RogueEngine\Systems\AI\Script Types\Gameplay</Filter>
     </ClInclude>
+    <ClInclude Include="Source\AnimateOnExa.h">
+      <Filter>RogueEngine\Systems\AI\Script Types\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AnimateOnEla.h">
+      <Filter>RogueEngine\Systems\AI\Script Types\Gameplay</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -982,6 +988,12 @@
       <Filter>RogueEngine\Systems\AI\Script Types\Gameplay</Filter>
     </ClCompile>
     <ClCompile Include="Source\TeleAnimation.cpp">
+      <Filter>RogueEngine\Systems\AI\Script Types\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AnimateOnExa.cpp">
+      <Filter>RogueEngine\Systems\AI\Script Types\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AnimateOnEla.cpp">
       <Filter>RogueEngine\Systems\AI\Script Types\Gameplay</Filter>
     </ClCompile>
   </ItemGroup>
