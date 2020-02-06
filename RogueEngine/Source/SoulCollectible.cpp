@@ -1,7 +1,6 @@
 #include "Precompiled.h"
 #include "SoulCollectible.h"
 #include "PlayerStatusManager.h"
-//#include "AudioManager.h"
 #include "Main.h"	//For g_deltaTime and coordinator
 
 namespace Rogue
@@ -15,6 +14,12 @@ namespace Rogue
 	{
 		if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(other))
 		{
+			if (!g_engine.m_coordinator.GetComponent<SpriteComponent>(m_entity).getFilter().a)
+			{
+				g_engine.m_coordinator.AddToDeleteQueue(m_entity);
+				return;
+			}
+
 			g_engine.m_coordinator.GetComponent<FadeComponent>(m_entity).setIsActive(true);
 			g_engine.m_coordinator.GetComponent<FadeComponent>(m_entity).setIsFadingIn(false);
 
