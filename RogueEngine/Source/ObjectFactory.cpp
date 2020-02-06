@@ -103,7 +103,7 @@ namespace Rogue
 			CREATE_HIERARCHY_OBJ(curEnt, readstr, tagstr, "", loadedQueue.front() + entityParent);
 
 			debugStr << "Entity " << curEnt << "'s Signature: " << g_engine.m_coordinator.GetEntityManager().GetSignature(curEnt).to_ulong();
-			RE_INFO(debugStr.str());
+			//RE_INFO(debugStr.str());
 			CLEARSTR(debugStr);
 		}
 
@@ -164,9 +164,9 @@ namespace Rogue
 		//	//RE_INFO("HI");
 		//}
 
-		RE_INFO("LEVEL LOADED");
-		debugStr << entCount << " ENTITIES LOADED";
-		RE_INFO(debugStr.str());
+		//RE_INFO("LEVEL LOADED");
+		//debugStr << entCount << " ENTITIES LOADED";
+		//RE_INFO(debugStr.str());
 
 	}
 
@@ -256,7 +256,7 @@ namespace Rogue
 			++entCount;
 		}
 
-		RE_INFO("LEVEL SAVED");
+		//RE_INFO("LEVEL SAVED");
 	}
 
 	void ObjectFactory::LoadArchetypes(const char* fileName)

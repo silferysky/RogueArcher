@@ -222,7 +222,7 @@ namespace Rogue
 					KeyPressSub keycodeSpecial = keytriggeredcombinedev->GetSubKey();
 
 					//Do stuff
-					RE_INFO(keytriggeredcombinedev->ToString());
+					//RE_INFO(keytriggeredcombinedev->ToString());
 				}
 
 				if (keycode == KeyPress::KeyEsc)

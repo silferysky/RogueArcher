@@ -37,7 +37,7 @@ namespace Rogue
 
 	MemoryManager::MemoryManager()
 	{
-		RE_INFO("INIT MEMORY MANAGER");
+		//RE_INFO("INIT MEMORY MANAGER");
 
 		MemoryStart = (int*)malloc(MEM_SPACE);
 		MemoryCurrent = MemoryStart;
@@ -46,7 +46,7 @@ namespace Rogue
 	MemoryManager::~MemoryManager()
 	{
 		free(MemoryStart);
-		RE_INFO("CLOSE MEMORY MANAGER");
+		//RE_INFO("CLOSE MEMORY MANAGER");
 	}
 
 	void* MemoryManager::Allocate(const size_t size)
