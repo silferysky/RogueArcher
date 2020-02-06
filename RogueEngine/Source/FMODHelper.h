@@ -28,7 +28,7 @@ namespace Rogue
 		{
 			std::ostringstream ss;
 			ss << "FMOD error: " << resultCheck << FMOD_ErrorString(resultCheck);
-			//RE_INFO(ss.str());
+			RE_INFO(ss.str());
 		}
 	}
 

@@ -583,7 +583,7 @@ namespace Rogue
 
 				if (CollisionManager::instance().DiscreteLineVsLine(finiteRay, colliderEdge))
 				{
-					//RE_INFO("Ray Collided With Ground!");
+					RE_INFO("Ray Collided With Ground!");
 					player.m_grounded = true;
 					PLAYER_STATUS.SetHasJumped(false);	
 				}

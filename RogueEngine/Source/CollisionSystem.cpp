@@ -91,7 +91,7 @@ namespace Rogue
 					
 					if (CollisionManager::instance().DiscreteCircleVsAABB(circleA.m_collider, boxB.m_aabb))
 					{
-						//RE_INFO("CircleA BoxB Colliding!");
+						RE_INFO("CircleA BoxB Colliding!");
 
 						CollisionManager::instance().InsertDiffPair(*iNextEntity, *iEntity);
 					}
@@ -103,7 +103,7 @@ namespace Rogue
 				
 					if (CollisionManager::instance().DiscreteAABBVsCircle(boxA.m_aabb, circleB.m_collider))
 					{
-						//RE_INFO("CircleB BoxA Colliding!");
+						RE_INFO("CircleB BoxA Colliding!");
 
 						CollisionManager::instance().InsertDiffPair(*iEntity, *iNextEntity);
 					}
