@@ -17,15 +17,20 @@ namespace Rogue
 
 	void AnimateOnExa::AIIdleUpdate()
 	{
-		if (m_isLightMode == PlayerStatusManager::instance().GetLightStatus())
+		if (m_isLightMode != PlayerStatusManager::instance().GetLightStatus())
 		{
-			g_engine.m_coordinator.GetComponent<AnimationComponent>(m_entity).setIsAnimating(true);
+			m_isLightMode = PlayerStatusManager::instance().GetLightStatus();
 
-			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_entity);
+			if (m_isLightMode)
+			{
+				g_engine.m_coordinator.GetComponent<AnimationComponent>(m_entity).setIsAnimating(true);
 
-			glm::vec4 colourFilter = sprite.getFilter();
-			colourFilter.a = 1.0f;
-			g_engine.m_coordinator.GetComponent<SpriteComponent>(m_entity).setFilter(colourFilter);
+				auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_entity);
+
+				glm::vec4 colourFilter = sprite.getFilter();
+				colourFilter.a = 1.0f;
+				g_engine.m_coordinator.GetComponent<SpriteComponent>(m_entity).setFilter(colourFilter);
+			}
 		}
 		else if (!g_engine.m_coordinator.GetComponent<AnimationComponent>(m_entity).getIsAnimating() && g_engine.m_coordinator.GetComponent<SpriteComponent>(m_entity).getFilter().a)
 			// not animating and not transparent
@@ -34,7 +39,5 @@ namespace Rogue
 			colourFilter.a = 0.0f;
 			g_engine.m_coordinator.GetComponent<SpriteComponent>(m_entity).setFilter(colourFilter);
 		}
-
-		m_isLightMode = PlayerStatusManager::instance().GetLightStatus();
 	}
 }
