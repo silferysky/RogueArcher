@@ -218,6 +218,23 @@ namespace Rogue
 		{
 		case EventType::EvResetGame:
 		{
+			ResetGameEvent* reset = dynamic_cast<ResetGameEvent*>(ev);
+
+			PLAYER_STATUS.SetPlayerEntity(MAX_ENTITIES);
+			PLAYER_STATUS.SetHitchhikeEntity(MAX_ENTITIES);
+
+			//Deleting teleport entities
+			ClearTeleportEntities();
+
+			//Deleting Indicator entity
+			if (PLAYER_STATUS.GetIndicator() != MAX_ENTITIES)
+			{
+				g_engine.m_coordinator.AddToDeleteQueue(PLAYER_STATUS.GetIndicator());
+				PLAYER_STATUS.SetIndicator(MAX_ENTITIES);
+			}
+
+			PLAYER_STATUS.SetIndicatorStatus();
+
 			//Safety check to make sure level exists
 			if (!PLAYER_STATUS.GetRunCount())
 			{
@@ -228,15 +245,9 @@ namespace Rogue
 			//Deleting entity
 			//for (auto entity : m_entities)
 			//	g_engine.m_coordinator.AddToDeleteQueue(entity);
-			
-			//Deleting teleport entities
-			ClearTeleportEntities();
 
-			//Deleting Indicator entity
-			if (PLAYER_STATUS.GetIndicator() != MAX_ENTITIES)
-			{
-				g_engine.m_coordinator.AddToDeleteQueue(PLAYER_STATUS.GetIndicator());
-			}
+			if (m_entities.size() > 1)
+				g_engine.m_coordinator.AddToDeleteQueue(*m_entities.begin());
 
 			PLAYER_STATUS.Reset();
 			break;
@@ -285,7 +296,7 @@ namespace Rogue
 						{
 							g_engine.SetTimeScale(PlayerControllable.GetSlowTime());
 						}
-						PLAYER_STATUS.SetIndicatorStatus();
+						//PLAYER_STATUS.SetIndicatorStatus();
 					}
 
 					if (PLAYER_STATUS.GetIndicator() != MAX_ENTITIES)
@@ -338,6 +349,13 @@ namespace Rogue
 				{
 					g_engine.m_coordinator.SetPauseState(true);
 					g_engine.m_coordinator.GetSystem<MenuControllerSystem>()->ToggleUIMenuObjs();
+					PLAYER_STATUS.SetIndicatorStatus(PLAYER_STATUS.ShowIndicator());
+					//If Indicator is no longer hidden
+					if (!PLAYER_STATUS.ShowIndicator())
+					{
+						g_engine.m_coordinator.AddToDeleteQueue(PLAYER_STATUS.GetIndicator());
+						
+					}
 				}
 
 				//if (keycode == KeyPress::Numpad9)
@@ -465,16 +483,16 @@ namespace Rogue
 					}
 					//if (PLAYER_STATUS.ShowIndicator())
 					g_engine.SetTimeScale(1.0f);
-					PLAYER_STATUS.SetIndicatorStatus(false);
+					//PLAYER_STATUS.SetIndicatorStatus(false);
 
 					//To reduce calculations
 					if (PLAYER_STATUS.GetIndicator() != MAX_ENTITIES && g_engine.m_coordinator.ComponentExists<ChildComponent>(PLAYER_STATUS.GetIndicator()))
 					{
 						ChildComponent& comp = g_engine.m_coordinator.GetComponent<ChildComponent>(PLAYER_STATUS.GetIndicator());
-						SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(PLAYER_STATUS.GetIndicator());
+						//SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(PLAYER_STATUS.GetIndicator());
 						comp.SetIsFollowing(false);
-						auto filter = sprite.getFilter();
-						sprite.setFilter(glm::vec4(filter.r, filter.g, filter.b, 0));
+						//auto filter = sprite.getFilter();
+						//sprite.setFilter(glm::vec4(filter.r, filter.g, filter.b, 0));
 					}
 				}
 				if ((keycode == KeyPress::KeyA ) || (keycode == KeyPress::KeyD))
@@ -598,6 +616,7 @@ namespace Rogue
 				//}
 			}
 			return;
+
 		} // switch (ev->GetEventType())
 		} // Receive
 	}
@@ -655,8 +674,7 @@ namespace Rogue
 		auto& activeObjects = g_engine.m_coordinator.GetActiveObjects();
 		for (TimedEntity& entity : m_teleports)
 		{
-			if (entity.m_durationLeft < 0.0f)
-				g_engine.m_coordinator.DestroyEntity(entity.m_entity);
+			g_engine.m_coordinator.DestroyEntity(entity.m_entity);
 
 			//for (auto iterator = activeObjects.begin(); iterator != activeObjects.end(); ++iterator)
 			//{
