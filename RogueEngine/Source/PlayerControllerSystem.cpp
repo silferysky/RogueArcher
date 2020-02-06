@@ -89,7 +89,7 @@ namespace Rogue
 			{
 				PLAYER_STATUS.SetIndicator(g_engine.m_coordinator.cloneArchetypes("Indicator", false));
 
-				ParentSetEvent* parent = new ParentSetEvent(*m_entities.begin(), PLAYER_STATUS.GetIndicator());
+				ParentSetEvent* parent = new ParentSetEvent(PLAYER_STATUS.GetPlayerEntity(), PLAYER_STATUS.GetIndicator());
 				parent->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
 				EventDispatcher::instance().AddEvent(parent);
 			}
@@ -303,10 +303,10 @@ namespace Rogue
 					if (PLAYER_STATUS.GetIndicator() != MAX_ENTITIES)
 					{
 						ChildComponent& comp = g_engine.m_coordinator.GetComponent<ChildComponent>(PLAYER_STATUS.GetIndicator());
-						SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(PLAYER_STATUS.GetIndicator());
+						//SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(PLAYER_STATUS.GetIndicator());
 						comp.SetIsFollowing(true);
-						auto filter = sprite.getFilter();
-						sprite.setFilter(glm::vec4(filter.r, filter.g, filter.b, 1));
+						//auto filter = sprite.getFilter();
+						//sprite.setFilter(glm::vec4(filter.r, filter.g, filter.b, 1));
 					}
 				}
 
@@ -477,7 +477,6 @@ namespace Rogue
 					}
 					//if (PLAYER_STATUS.ShowIndicator())
 					g_engine.SetTimeScale(1.0f);
-					PLAYER_STATUS.SetIndicatorStatus(false);
 
 					//To reduce calculations
 					if (PLAYER_STATUS.GetIndicator() != MAX_ENTITIES && g_engine.m_coordinator.ComponentExists<ChildComponent>(PLAYER_STATUS.GetIndicator()))
