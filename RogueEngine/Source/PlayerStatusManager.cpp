@@ -12,7 +12,7 @@ namespace Rogue
 		m_playerStartPos{Vec2(0,0)},
 		m_isLightMode{ true },
 		m_hasJumped{ false },
-		m_indicatorShown{true},
+		m_indicatorShown{false},
 		m_death{false},
 		m_maxJumpTimer{0.5f},
 		m_hitchhikedEntity{ MAX_ENTITIES },
@@ -32,7 +32,7 @@ namespace Rogue
 		m_indicator = MAX_ENTITIES;
 		m_isLightMode = true;
 		m_hasJumped = false;
-		m_indicatorShown = true;
+		m_indicatorShown = false;
 		m_death = false;
 		m_hitchhikedEntity = MAX_ENTITIES;
 		m_inLightDur = 0.0f;
