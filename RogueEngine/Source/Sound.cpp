@@ -70,15 +70,11 @@ namespace Rogue
 
 	void Sound::Play(float volume)
 	{
-		if (m_counter < m_limit)
-		{
-			m_soundOn = true;
-			m_result = m_system->playSound(m_fmodSound, 0, false, &m_channel);
-			FmodErrorCheck(m_result);
-			m_result = m_channel->setVolume(volume);
-			FmodErrorCheck(m_result);
-			++m_counter;
-		}
+		m_soundOn = true;
+		m_result = m_system->playSound(m_fmodSound, 0, false, &m_channel);
+		FmodErrorCheck(m_result);
+		m_result = m_channel->setVolume(volume);
+		FmodErrorCheck(m_result);
 	}
 
 	void Sound::Update()
@@ -91,7 +87,6 @@ namespace Rogue
 	{
 		m_channel->setPaused(pause);
 		FmodErrorCheck(m_result);
-		--m_counter;
 	}
 
 	void Sound::Unload()
