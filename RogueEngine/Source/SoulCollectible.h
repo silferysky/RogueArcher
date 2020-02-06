@@ -10,5 +10,7 @@ namespace Rogue
 		SoulCollectible(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent);
 
 		virtual void OnTriggerEnter(Entity other) override;
+	private:
+		bool m_collected = false;
 	};
 }
