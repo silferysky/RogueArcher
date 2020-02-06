@@ -302,10 +302,10 @@ namespace Rogue
 					if (PLAYER_STATUS.GetIndicator() != MAX_ENTITIES)
 					{
 						ChildComponent& comp = g_engine.m_coordinator.GetComponent<ChildComponent>(PLAYER_STATUS.GetIndicator());
-						SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(PLAYER_STATUS.GetIndicator());
+						//SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(PLAYER_STATUS.GetIndicator());
 						comp.SetIsFollowing(true);
-						auto filter = sprite.getFilter();
-						sprite.setFilter(glm::vec4(filter.r, filter.g, filter.b, 1));
+						//auto filter = sprite.getFilter();
+						//sprite.setFilter(glm::vec4(filter.r, filter.g, filter.b, 1));
 					}
 				}
 
