@@ -21,6 +21,7 @@ Technology is prohibited.
 #include "KeyEvent.h"
 #include "GraphicsEvent.h"
 #include "CameraManager.h"
+#include "PlayerStatusManager.h"
 
 namespace Rogue
 {
@@ -135,6 +136,7 @@ namespace Rogue
 					SceneManager& sceneManager = SceneManager::instance();
 					sceneManager.LoadLevel("Level 12.json");
 					g_engine.m_coordinator.SetGameState(true);
+					PLAYER_STATUS.SetIndicatorStatus(true);
 				}
 				//Exit from Main Menu. Cannot exit from game
 				else if (hierarchyObj.m_objectName == "QuitBtn")
@@ -145,6 +147,7 @@ namespace Rogue
 				else if (hierarchyObj.m_objectName == "Resume")
 				{
 					ResumeGame();
+					PLAYER_STATUS.SetIndicatorStatus(true);
 				}
 				//Exit to Main menu
 				else if (hierarchyObj.m_objectName == "MainMenu_Btn")
@@ -152,6 +155,7 @@ namespace Rogue
 					ResumeGame();
 					SceneManager& sceneManager = SceneManager::instance();
 					sceneManager.LoadLevel("Level 1.json");
+					PLAYER_STATUS.SetIndicatorStatus(false);
 				}
 				else if (hierarchyObj.m_objectName == "ControlHelp")
 				{

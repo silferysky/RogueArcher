@@ -82,6 +82,7 @@ namespace Rogue
 		//Physical status
 		float m_inLightDur;
 		bool m_indicatorShown;
+		bool m_death;
 
 		//Teleporting
 		float m_teleportCharge;

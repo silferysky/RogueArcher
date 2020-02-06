@@ -21,6 +21,7 @@ Technology is prohibited.
 #include "StatsComponent.h"
 #include "Vector2D.h"
 #include "Types.h"
+#include "PlayerStatusManager.h"
 #include "GameEvent.h"
 
 //Default values
