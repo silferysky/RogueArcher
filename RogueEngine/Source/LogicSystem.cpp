@@ -38,6 +38,8 @@ Technology is prohibited.
 #include "Checkpoint.h"
 #include "SoulCollectible.h"
 #include "TeleAnimation.h"
+#include "AnimateOnEla.h"
+#include "AnimateOnExa.h"
 
 namespace Rogue
 {
@@ -252,6 +254,18 @@ namespace Rogue
 					AddLogicInterface(entities, std::make_shared<TeleAnimation>(newAI));
 					break;
 				}
+				case AIType::Gameplay_AnimateOnExa:
+				{
+					AnimateOnExa newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<AnimateOnExa>(newAI));
+					break;
+				}
+				case AIType::Gameplay_AnimateOnEla:
+				{
+					AnimateOnEla newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<AnimateOnEla>(newAI));
+					break;
+				}
 				case AIType::AI_Static:
 				default:
 				{
@@ -373,6 +387,18 @@ namespace Rogue
 					break;
 				}
 				case AIType::Gameplay_TeleAnimation:
+				{
+					ScriptComponent newAI(entity, logicComponent, statsComponent);
+					AddLogicInterface(entity, std::make_shared<ScriptComponent>(newAI));
+					break;
+				}
+				case AIType::Gameplay_AnimateOnExa:
+				{
+					ScriptComponent newAI(entity, logicComponent, statsComponent);
+					AddLogicInterface(entity, std::make_shared<ScriptComponent>(newAI));
+					break;
+				}
+				case AIType::Gameplay_AnimateOnEla:
 				{
 					ScriptComponent newAI(entity, logicComponent, statsComponent);
 					AddLogicInterface(entity, std::make_shared<ScriptComponent>(newAI));
