@@ -161,7 +161,7 @@ namespace Rogue
 		if (std::getline(strstream, stdstr, ';'))
 		{
 			setTexturePath(stdstr);
-			setTexture(m_texturePath.c_str());
+			//setTexture(m_texturePath.c_str());
 		}
 
 		if (std::getline(strstream, stdstr, ';'))

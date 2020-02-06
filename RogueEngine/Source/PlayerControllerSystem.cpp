@@ -267,8 +267,9 @@ namespace Rogue
 			if (g_engine.m_coordinator.ComponentExists<SpriteComponent>(event->GetEntityID()))
 			{
 				SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(event->GetEntityID());
-				sprite.setTexture(event->GetFilePath().c_str());
-				sprite.setTexturePath(event->GetFilePath().c_str());
+				//sprite.setTexture(event->GetFile().c_str());
+				sprite.setTexturePath(event->GetPath().c_str());
+
 
 				if (event->GetEntityID() == PLAYER_STATUS.GetPlayerEntity())
 				{
@@ -598,7 +599,7 @@ namespace Rogue
 
 				if (CollisionManager::instance().DiscreteLineVsLine(finiteRay, colliderEdge))
 				{
-					RE_INFO("Ray Collided With Ground!");
+					//RE_INFO("Ray Collided With Ground!");
 					player.m_grounded = true;
 					PLAYER_STATUS.SetHasJumped(false);	
 				}
