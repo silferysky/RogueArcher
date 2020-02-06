@@ -22,6 +22,7 @@ Technology is prohibited.
 #include "Vector2D.h"
 #include "Types.h"
 #include "GameEvent.h"
+#include "PlayerStatusManager.h"
 
 //Default values
 #define DEF_PATROL_RANGE 10
