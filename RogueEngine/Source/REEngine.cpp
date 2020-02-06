@@ -135,6 +135,7 @@ namespace Rogue
 		//SetWindowLongPtr(hWnd, GWL_STYLE, WS_VISIBLE | WS_POPUP);
 		//SetWindowPos(hWnd, HWND_TOP, 0, 0, GetSystemMetrics(SM_CXSCREEN),
 		//	GetSystemMetrics(SM_CYSCREEN), SWP_FRAMECHANGED);
+		ShowCursor(false);
 
 		if (hWnd == NULL)
 			exit(1);
