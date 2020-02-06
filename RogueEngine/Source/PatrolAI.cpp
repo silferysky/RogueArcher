@@ -80,7 +80,7 @@ namespace Rogue
 			m_statsComponent != nullptr))
 			return;
 
-		ParentTransformEvent* event = new ParentTransformEvent(m_entity, false);
+		ParentTransformEvent* event = new ParentTransformEvent(m_entity, true);
 		event->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
 		EventDispatcher::instance().AddEvent(event);
 
