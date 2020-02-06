@@ -21,6 +21,9 @@ namespace Rogue
 
 	void PlatformAI::AIPatrolUpdate()
 	{
+		if (PLAYER_STATUS.GetPlayerEntity() == MAX_ENTITIES)
+			return;
+
 		PatrolAI::AIPatrolUpdate();
 
 		//Since new waypoint just selected, it means now it is going opposite way
