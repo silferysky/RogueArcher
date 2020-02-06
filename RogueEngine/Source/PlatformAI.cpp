@@ -9,6 +9,14 @@ namespace Rogue
 	PlatformAI::PlatformAI(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent)
 		: PatrolAI(entity, logicComponent, statsComponent)
 	{
+		//HierarchyInfo& info = g_engine.m_coordinator.GetHierarchyInfo(entity);
+		//for (auto child : info.m_children)
+		//{
+		//	if (g_engine.m_coordinator.ComponentExists<ChildComponent>(child))
+		//	{
+		//		g_engine.m_coordinator.GetComponent<ChildComponent>(child).SetIsFollowing(false);
+		//	}
+		//}
 	}
 
 	void PlatformAI::AIPatrolUpdate()
@@ -19,11 +27,15 @@ namespace Rogue
 		Vec2 firstPos = *m_waypoints.begin();
 		Vec2 secondPos = *(m_waypoints.begin() + 1);
 
+		HierarchyInfo& info = g_engine.m_coordinator.GetHierarchyInfo(m_entity);
+		if (info.m_children.size())
+		{
+
+		}
+
 		//If m_delay == m_patrolDelay, it means a new waypoint is just selected
 		if (m_delay == m_patrolDelay)
 		{
-			HierarchyInfo& info = g_engine.m_coordinator.GetHierarchyInfo(m_entity);
-
 			if (!info.m_children.size())
 				return;
 
@@ -55,7 +67,7 @@ namespace Rogue
 			EventDispatcher::instance().AddEvent(ev);
 
 			//Manually preventing second occurance of this event
-			m_delay += 0.001f;
+			m_delay -= 0.001f;
 		}
 		else if (m_delay == 0.0f)
 		{

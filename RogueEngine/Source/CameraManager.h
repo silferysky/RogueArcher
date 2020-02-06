@@ -17,6 +17,7 @@ Technology is prohibited.
 /* End Header **************************************************************************/
 #pragma once
 #include "Vector2D.h"
+#define CAMERA_MANAGER CameraManager::instance()
 
 namespace Rogue
 {

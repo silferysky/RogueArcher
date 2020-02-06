@@ -81,6 +81,7 @@ namespace Rogue
 				{
 					if (entPicked->GetEntityID() == m_menuObjs.front() + it || entPicked->GetEntityID() == m_confirmQuitEnt.front() + it - m_menuObjs.size())
 					{
+						AudioManager::instance().loadSound("Resources/Sounds/button.ogg", 0.3f, false).Play();
 						switch (it)
 						{
 						case 0: //Crosshair
@@ -126,6 +127,7 @@ namespace Rogue
 				if (hierarchyObj.m_objectName == "HowToPlay" || hierarchyObj.m_objectName == "HowToPlayBtn")
 				{
 					ToggleControlHelpMenu();
+					AudioManager::instance().loadSound("Resources/Sounds/button.ogg", 0.3f, false).Play();
 				}
 				//Main Menu Start
 				else if (hierarchyObj.m_objectName == "StartBtn")

@@ -25,20 +25,20 @@ Technology is prohibited.
 namespace Rogue
 {
 	Sound::Sound() : m_soundOn{ false }, m_result{ FMOD_OK },
-		m_system{ 0 }, m_fmodSound{ 0 }, m_channel{ 0 }
+		m_system{ 0 }, m_fmodSound{ 0 }, m_channel{ 0 }, m_counter{ 0 }, m_limit { 1 }
 	{
 	}
 
 	/* Sound Creation */
 
-	void Sound::Create(const char* filename, FMOD::System* fmodSystem, FMOD::DSP* DSPLowPassFilter, FMOD::DSP* DSPHighPassFilter)
+	void Sound::Create(const char* filename, FMOD::System* fmodSystem, FMOD::DSP* DSPLowPassFilter, FMOD::DSP* DSPHighPassFilter, unsigned limit)
 	{
 		m_system = fmodSystem;
 
 		if (m_isLooping)
-			m_result = m_system->createStream(filename, FMOD_3D | FMOD_3D_INVERSEROLLOFF | FMOD_LOOP_NORMAL, 0, &m_fmodSound);
+			m_result = m_system->createStream(filename, FMOD_3D | FMOD_3D_LINEARROLLOFF | FMOD_LOOP_NORMAL, 0, &m_fmodSound);
 		else
-			m_result = m_system->createSound(filename, FMOD_3D | FMOD_3D_INVERSEROLLOFF |FMOD_LOOP_OFF | FMOD_CREATESTREAM, 0, &m_fmodSound);
+			m_result = m_system->createSound(filename, FMOD_3D | FMOD_3D_LINEARROLLOFF |FMOD_LOOP_OFF | FMOD_CREATESTREAM, 0, &m_fmodSound);
 
 		FmodErrorCheck(m_result);
 		m_result = m_fmodSound->setMusicChannelVolume(0, 0);
@@ -50,6 +50,9 @@ namespace Rogue
 		
 		m_channel->addDSP(0, DSPLowPassFilter);
 		m_channel->addDSP(0, DSPHighPassFilter);
+
+		m_counter = 0;
+		m_limit = limit;
 	}
 
 	void Sound::Set3DLocation(Vec2 pos)
