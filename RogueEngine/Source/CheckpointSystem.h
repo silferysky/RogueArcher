@@ -1,11 +1,11 @@
 /* Start Header ************************************************************************/
 /*!
-\file           FadeSystem.h
+\file           CheckpointSystem.h
 \project        Exale
 \author         Javier Foo, javier.foo, 440002318 (100%)
 \par            javier.foo\@digipen.edu
 \date           1 Decembe, 2019
-\brief          This file contains the function declarations for FadeSystem
+\brief          This file contains the function declarations for CheckpointSystem
 
 All content (C) 2020 DigiPen (SINGAPORE) Corporation, all rights
 reserved.
@@ -23,14 +23,12 @@ Technology is prohibited.
 namespace Rogue
 {
 	class Timer;
-	class SpriteComponent;
-	class FadeComponent;
 
-	class FadeSystem : public System, public EventListener
+	class CheckpointSystem : public System, public EventListener
 	{
 	public:
-		FadeSystem();
-		~FadeSystem() = default;
+		CheckpointSystem();
+		~CheckpointSystem() = default;
 
 		void Init() override;
 		void Update() override;

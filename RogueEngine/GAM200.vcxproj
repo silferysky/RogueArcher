@@ -12,6 +12,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\AIType.h" />
+    <ClInclude Include="Source\AnimateOnEla.h" />
+    <ClInclude Include="Source\AnimateOnExa.h" />
     <ClInclude Include="Source\AnimationComponent.h" />
     <ClInclude Include="Source\AnimationSystem.h" />
     <ClInclude Include="Source\AudioEmitterComponent.h" />
@@ -28,6 +30,7 @@
     <ClInclude Include="Source\CameraSystem.h" />
     <ClInclude Include="Source\BoundingCircle.h" />
     <ClInclude Include="Source\BoxCollisionSystem.h" />
+    <ClInclude Include="Source\Checkpoint.h" />
     <ClInclude Include="Source\ChildComponent.h" />
     <ClInclude Include="Source\CircleCollisionSystem.h" />
     <ClInclude Include="Source\ColliderComponent.h" />
@@ -36,6 +39,7 @@
     <ClInclude Include="Source\FadeComponent.h" />
     <ClInclude Include="Source\FadeObject.h" />
     <ClInclude Include="Source\FadeSystem.h" />
+    <ClInclude Include="Source\SoulCollectible.h" />
     <ClInclude Include="Source\LayerManager.h" />
     <ClInclude Include="Source\CollisionSystem.h" />
     <ClInclude Include="Source\CursorComponent.h" />
@@ -124,6 +128,7 @@
     <ClInclude Include="Source\TeleCharge1.h" />
     <ClInclude Include="Source\TeleCharge2.h" />
     <ClInclude Include="Source\TeleCharge3.h" />
+    <ClInclude Include="Source\TeleAnimation.h" />
     <ClInclude Include="Source\TextComponent.h" />
     <ClInclude Include="Source\TextureManager.h" />
     <ClInclude Include="Source\TransformComponent.h" />
@@ -168,6 +173,7 @@
     <ClInclude Include="Source\WindowHelper.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\AnimateOnExa.cpp" />
     <ClCompile Include="Source\AnimationComponent.cpp" />
     <ClCompile Include="Source\AnimationSystem.cpp" />
     <ClCompile Include="Source\AudioEmitterComponent.cpp" />
@@ -178,6 +184,7 @@
     <ClCompile Include="Source\CameraSystem.cpp" />
     <ClCompile Include="Source\BoundingCircle.cpp" />
     <ClCompile Include="Source\BoxCollisionSystem.cpp" />
+    <ClCompile Include="Source\Checkpoint.cpp" />
     <ClCompile Include="Source\ChildComponent.cpp" />
     <ClCompile Include="Source\CircleCollisionSystem.cpp" />
     <ClCompile Include="Source\ColliderComponent.cpp" />
@@ -257,10 +264,13 @@
     <ClCompile Include="Source\BackgroundComponent.cpp" />
     <ClCompile Include="Source\PickingManager.cpp" />
     <ClCompile Include="Source\FadeComponent.cpp" />
+    <ClCompile Include="Source\SoulCollectible.cpp" />
+    <ClCompile Include="Source\AnimateOnEla.cpp" />
     <ClCompile Include="Source\StatsComponent.cpp" />
     <ClCompile Include="Source\TeleCharge1.cpp" />
     <ClCompile Include="Source\TeleCharge2.cpp" />
     <ClCompile Include="Source\TeleCharge3.cpp" />
+    <ClCompile Include="Source\TeleAnimation.cpp" />
     <ClCompile Include="Source\TextComponent.cpp" />
     <ClCompile Include="Source\TextureManager.cpp" />
     <ClCompile Include="Source\TransformComponent.cpp" />

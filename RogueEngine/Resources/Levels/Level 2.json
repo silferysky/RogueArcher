@@ -6,6 +6,8 @@
     "CameraMaxX": 0.0,
     "CameraMaxY": 0.0,
     "CameraZoom": 0.8600000143051148,
+    "StartPosX": 0,
+    "StartPosY": 0,
     "Signature0": 2053,
     "Signature1": 2053,
     "Entity0": "Name{HowtoPlay}|Tag{}|Sprite{Resources\\Assets\\HowToPlay.png;1;1;1;1}||Transform{0;0;1600;900;0;0}|||||||||UI{1;}|||||||",

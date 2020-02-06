@@ -34,7 +34,7 @@ namespace Rogue
 
 		// Camera panning
 		Vec2 m_target;
-		float m_cameraLerp = 1.4f;
+		float m_cameraLerp = 1.6f;
 
 		CameraShake m_cameraShake;
 

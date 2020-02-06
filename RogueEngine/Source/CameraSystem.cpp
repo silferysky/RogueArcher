@@ -120,7 +120,7 @@ namespace Rogue
 		m_cameraShake.Update();
 		auto shakeOffset = m_cameraShake.getOffset();
 		
-		if (m_isActive && !m_worldCamera && g_engine.m_coordinator.GameIsActive())
+		if (!m_worldCamera && g_engine.m_coordinator.GameIsActive())
 		{
 			// For all entities
 			for (auto entity : m_entities)
@@ -150,18 +150,25 @@ namespace Rogue
 					// For camera panning
 					glm::vec3 position = CameraManager::instance().GetCameraPos();
 
-					float deltaX = transformPos.x - position.x + shakeOffset.x + cameraOffset.x;
-					float deltaY = transformPos.y - position.y + shakeOffset.y + cameraOffset.y;
+					if (m_isActive)
+					{
+						float deltaX = transformPos.x - position.x + cameraOffset.x;
+						float deltaY = transformPos.y - position.y + cameraOffset.y;
 
-					//if (g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity).m_grounded)
-					//{
-						// Do not move the camera for too small distances
+						//if (g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity).m_grounded)
+						//{
+							// Do not move the camera for too small distances
 						if (deltaX > 0.5 || deltaX < -0.5)
 							position.x += static_cast<int>(deltaX)* m_cameraLerp* g_deltaTime;
 
 						if (deltaY > 0.5 || deltaY < -0.5)
 							position.y += static_cast<int>(deltaY)* m_cameraLerp* g_deltaTime;
-					//}
+						//}
+					}
+					else
+					{
+						position = glm::vec3(position.x + shakeOffset.x, position.y + shakeOffset.y, 0.0f);
+					}
 
 					CameraManager::instance().SetCameraPos(position);
 					//glm::vec3(transformPos.x + shakeOffset.x, transformPos.y + shakeOffset.y, 0.0f);
@@ -189,9 +196,6 @@ namespace Rogue
 		{
 			KeyTriggeredEvent* keytriggeredevent = dynamic_cast<KeyTriggeredEvent*>(ev);
 			KeyPress keycode = keytriggeredevent->GetKeyCode();
-
-			//if (keycode == KeyPress::Numpad9)
-			//	m_cameraShake.SetShake(13.0f);
 
 			//if (keycode == KeyPress::KeyShift && g_engine.GetIsFocused())
 				//ToggleWorldCamera();

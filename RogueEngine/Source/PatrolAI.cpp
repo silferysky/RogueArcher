@@ -18,7 +18,7 @@ Technology is prohibited.
 #include "Precompiled.h"
 #include "PatrolAI.h"
 #include "Main.h"
-//#include "ParentEvent.h"
+#include "ParentEvent.h"
 
 namespace Rogue
 {
@@ -79,6 +79,10 @@ namespace Rogue
 			g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(m_entity) &&
 			m_statsComponent != nullptr))
 			return;
+
+		ParentTransformEvent* event = new ParentTransformEvent(m_entity, true);
+		event->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+		EventDispatcher::instance().AddEvent(event);
 
 		TransformComponent& aiTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(m_entity);
 

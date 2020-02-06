@@ -36,11 +36,13 @@ namespace Rogue
 		/* Sound Statistics */
 		bool m_isLooping = false;
 		float m_volume = 0.0f;
+		unsigned m_counter = 0;
+		unsigned m_limit = 1;
 
 		Sound();
 
 		/* FMOD sound/channel/system creation */
-		void Create(const char* filename, FMOD::System* fmodSystem, FMOD::DSP* DSPLowPassFilter, FMOD::DSP* DSPHighPassFilter);
+		void Create(const char* filename, FMOD::System* fmodSystem, FMOD::DSP* DSPLowPassFilter, FMOD::DSP* DSPHighPassFilter, unsigned limit = 1);
 		void Set3DLocation(Vec2 pos);
 		void Set3DMaxDistance(float max);
 

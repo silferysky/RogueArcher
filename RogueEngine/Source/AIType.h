@@ -34,6 +34,11 @@ namespace Rogue
 		UI_TeleCharge2,
 		UI_TeleCharge3,
 		Gameplay_DeathBox,
+		Gameplay_Checkpoint,
+		Gameplay_SoulCollectible,
+		Gameplay_TeleAnimation,
+		Gameplay_AnimateOnExa,
+		Gameplay_AnimateOnEla,
 		Obj_Fade,
 		AI_Last
 	};
