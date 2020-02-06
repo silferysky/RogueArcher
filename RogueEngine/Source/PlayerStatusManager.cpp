@@ -21,7 +21,8 @@ namespace Rogue
 		m_teleportCharge{ 3.0f },
 		m_teleportDelayTimer {0.0f},
 		m_startingPos{0.0f, 0.0f},
-		m_checkpoint{-978.727f, -51.6237f}
+		m_checkpoint{0.0f, 0.0f},
+		m_soulsCollected{0}
 	{
 	}
 
@@ -37,6 +38,9 @@ namespace Rogue
 		m_inLightDur = 0.0f;
 		m_teleportCharge = 3.0f;
 		m_teleportDelayTimer = 0.0f;
+		m_startingPos = { 0.0f, 0.0f };
+		m_checkpoint = { 0.0f, 0.0f };
+		m_soulsCollected = 0;
 
 		++m_runCount;
 	}
@@ -104,6 +108,16 @@ namespace Rogue
 	bool PlayerStatusManager::ShowIndicator() const
 	{
 		return m_indicatorShown;
+	}
+
+	void PlayerStatusManager::SetDeath(bool death)
+	{
+		m_death = death;
+	}
+
+	bool PlayerStatusManager::GetDeath() const
+	{
+		return m_death;
 	}
 
 	float PlayerStatusManager::GetTeleportCharge() const
@@ -187,6 +201,21 @@ namespace Rogue
 	Vec2 PlayerStatusManager::GetStartingPos() const
 	{
 		return m_startingPos;
+	}
+
+	void PlayerStatusManager::SetSoulsCollected(unsigned soulsCollected)
+	{
+		m_soulsCollected = soulsCollected;
+	}
+
+	unsigned PlayerStatusManager::GetSoulsCollected() const
+	{
+		return m_soulsCollected;
+	}
+
+	void PlayerStatusManager::IncrementSoulsCollected()
+	{
+		++m_soulsCollected;
 	}
 
 	void PlayerStatusManager::ChangePlayerSprite()

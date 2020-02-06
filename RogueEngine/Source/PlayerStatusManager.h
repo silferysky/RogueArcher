@@ -27,9 +27,6 @@ namespace Rogue
 		void SetIndicator(Entity ent);
 		Entity GetIndicator() const;
 
-		void SetPlayerStartingPosition(const Vec2& pos);
-		Vec2 GetPlayerStartingPosition() const;
-
 		//Jump
 		void SetHasJumped(bool jumped);
 		bool HasJumped() const;
@@ -40,6 +37,8 @@ namespace Rogue
 		float GetInLightDur() const;
 		void SetIndicatorStatus(bool showIndicator = true);
 		bool ShowIndicator() const;
+		void SetDeath(bool death);
+		bool GetDeath() const;
 
 		//Teleporting
 		float GetTeleportCharge() const;
@@ -65,6 +64,10 @@ namespace Rogue
 		void SetStartingPos(Vec2 startingPos);
 		Vec2 GetStartingPos() const;
 
+		//Collectibles
+		void SetSoulsCollected(unsigned soulsCollected);
+		unsigned GetSoulsCollected() const;
+		void IncrementSoulsCollected();
 	private:
 
 		void ChangePlayerSprite();
@@ -99,5 +102,8 @@ namespace Rogue
 		//Checkpoint
 		Vec2 m_checkpoint;
 		Vec2 m_startingPos;
+
+		// Collectibles
+		unsigned m_soulsCollected;
 	};
 }

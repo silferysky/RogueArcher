@@ -35,6 +35,9 @@ Technology is prohibited.
 #include "AppearOnCollide.h"
 #include "DisappearOnCollide.h"
 #include "DeathBox.h"
+#include "Checkpoint.h"
+#include "SoulCollectible.h"
+#include "TeleAnimation.h"
 
 namespace Rogue
 {
@@ -231,6 +234,24 @@ namespace Rogue
 					AddLogicInterface(entities, std::make_shared<DeathBox>(newAI));
 					break;
 				}
+				case AIType::Gameplay_Checkpoint:
+				{
+					Checkpoint newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<Checkpoint>(newAI));
+					break;
+				}
+				case AIType::Gameplay_SoulCollectible:
+				{
+					SoulCollectible newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<SoulCollectible>(newAI));
+					break;
+				}
+				case AIType::Gameplay_TeleAnimation:
+				{
+					TeleAnimation newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<TeleAnimation>(newAI));
+					break;
+				}
 				case AIType::AI_Static:
 				default:
 				{
@@ -334,6 +355,24 @@ namespace Rogue
 					break;
 				}
 				case AIType::Gameplay_DeathBox:
+				{
+					ScriptComponent newAI(entity, logicComponent, statsComponent);
+					AddLogicInterface(entity, std::make_shared<ScriptComponent>(newAI));
+					break;
+				}
+				case AIType::Gameplay_Checkpoint:
+				{
+					ScriptComponent newAI(entity, logicComponent, statsComponent);
+					AddLogicInterface(entity, std::make_shared<ScriptComponent>(newAI));
+					break;
+				}
+				case AIType::Gameplay_SoulCollectible:
+				{
+					ScriptComponent newAI(entity, logicComponent, statsComponent);
+					AddLogicInterface(entity, std::make_shared<ScriptComponent>(newAI));
+					break;
+				}
+				case AIType::Gameplay_TeleAnimation:
 				{
 					ScriptComponent newAI(entity, logicComponent, statsComponent);
 					AddLogicInterface(entity, std::make_shared<ScriptComponent>(newAI));

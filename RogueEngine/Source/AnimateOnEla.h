@@ -3,18 +3,15 @@
 
 namespace Rogue
 {
-	class DeathBox
+	class AnimateOnEla
 		: public ScriptComponent
 	{
 	public:
-		DeathBox(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent);
+		AnimateOnEla(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent);
 
 		virtual void AIActiveStateUpdate() override;
 		virtual void AIIdleUpdate() override;
-
-		virtual void OnTriggerEnter(Entity other) override;
 	private:
-		float m_timer;
-		Entity m_other;
+		bool m_isLightMode = true;
 	};
 }
