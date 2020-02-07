@@ -48,7 +48,9 @@ namespace Rogue
 		void SetSlowTime(float slowTime);
 		void SetMoveSpeed(float speed);
 		void SetMoveState(MoveState state);
+		void SetIsActive(const bool& isActive);
 
+		bool GetIsActive() const;
 		float GetSlowTime() const;
 		float GetMoveSpeed() const;
 		MoveState GetMoveState() const;

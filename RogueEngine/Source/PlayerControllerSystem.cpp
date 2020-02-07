@@ -92,6 +92,9 @@ namespace Rogue
 				ParentSetEvent* parent = new ParentSetEvent(*m_entities.begin(), PLAYER_STATUS.GetIndicator());
 				parent->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
 				EventDispatcher::instance().AddEvent(parent);
+
+				//Resetting some values
+				PLAYER_STATUS.SetInfiniteJumps(false);
 			}
 			else
 			{
@@ -218,6 +221,23 @@ namespace Rogue
 		{
 		case EventType::EvResetGame:
 		{
+			ResetGameEvent* reset = dynamic_cast<ResetGameEvent*>(ev);
+
+			PLAYER_STATUS.SetPlayerEntity(MAX_ENTITIES);
+			PLAYER_STATUS.SetHitchhikeEntity(MAX_ENTITIES);
+
+			//Deleting teleport entities
+			ClearTeleportEntities();
+
+			//Deleting Indicator entity
+			if (PLAYER_STATUS.GetIndicator() != MAX_ENTITIES)
+			{
+				g_engine.m_coordinator.AddToDeleteQueue(PLAYER_STATUS.GetIndicator());
+				PLAYER_STATUS.SetIndicator(MAX_ENTITIES);
+			}
+
+			PLAYER_STATUS.SetIndicatorStatus();
+
 			//Safety check to make sure level exists
 			if (!PLAYER_STATUS.GetRunCount())
 			{
@@ -232,23 +252,18 @@ namespace Rogue
 
 			if (m_entities.size() > 1)
 				g_engine.m_coordinator.AddToDeleteQueue(*m_entities.begin());
-			
-			//Deleting teleport entities
-			ClearTeleportEntities();
-
-			//Deleting Indicator entity
-			if (PLAYER_STATUS.GetIndicator() != MAX_ENTITIES)
-			{
-				g_engine.m_coordinator.AddToDeleteQueue(PLAYER_STATUS.GetIndicator());
-			}
 
 			PLAYER_STATUS.Reset();
 			break;
 		}
-		case EventType::EvMouseMoved:
+		case EventType::EvEntityChangeRGBA:
 		{
-			MouseMoveEvent* mouseMove = dynamic_cast<MouseMoveEvent*>(ev);
-			KeyPress keycode = mouseMove->GetKeyCode();
+			EntChangeRGBAEvent* event = dynamic_cast<EntChangeRGBAEvent*>(ev);
+			if (g_engine.m_coordinator.ComponentExists<SpriteComponent>(event->GetEntityID()))
+			{
+				auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(event->GetEntityID());
+				sprite.setFilter(glm::vec4(event->R(), event->G(), event->B(), event->A()));
+			}
 
 			return;
 		}
@@ -259,8 +274,8 @@ namespace Rogue
 			if (g_engine.m_coordinator.ComponentExists<SpriteComponent>(event->GetEntityID()))
 			{
 				SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(event->GetEntityID());
-				sprite.setTexture(event->GetFilePath().c_str());
-				sprite.setTexturePath(event->GetFilePath().c_str());
+				//sprite.setTexture(event->GetFile().c_str());
+				sprite.setTexturePath(event->GetPath().c_str());
 
 				if (event->GetEntityID() == PLAYER_STATUS.GetPlayerEntity())
 				{
@@ -287,6 +302,11 @@ namespace Rogue
 				else if (keycode == KeyPress::KeyF6)
 					g_engine.ToggleVSync();
 
+				else if (keycode == KeyPress::Key0)
+				{
+					PLAYER_STATUS.SetInfiniteJumps(!PLAYER_STATUS.GetInfiniteJumps());
+				}
+
 				else if (keycode == KeyPress::MB1 && g_engine.GetIsFocused())
 				{
 					//For slow mo
@@ -297,16 +317,16 @@ namespace Rogue
 						{
 							g_engine.SetTimeScale(PlayerControllable.GetSlowTime());
 						}
-						PLAYER_STATUS.SetIndicatorStatus();
+						//PLAYER_STATUS.SetIndicatorStatus();
 					}
 
 					if (PLAYER_STATUS.GetIndicator() != MAX_ENTITIES)
 					{
 						ChildComponent& comp = g_engine.m_coordinator.GetComponent<ChildComponent>(PLAYER_STATUS.GetIndicator());
-						SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(PLAYER_STATUS.GetIndicator());
+						//SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(PLAYER_STATUS.GetIndicator());
 						comp.SetIsFollowing(true);
-						auto filter = sprite.getFilter();
-						sprite.setFilter(glm::vec4(filter.r, filter.g, filter.b, 1));
+						//auto filter = sprite.getFilter();
+						//sprite.setFilter(glm::vec4(filter.r, filter.g, filter.b, 1));
 					}
 				}
 
@@ -350,6 +370,13 @@ namespace Rogue
 				{
 					g_engine.m_coordinator.SetPauseState(true);
 					g_engine.m_coordinator.GetSystem<MenuControllerSystem>()->ToggleUIMenuObjs();
+					PLAYER_STATUS.SetIndicatorStatus(PLAYER_STATUS.ShowIndicator());
+					//If Indicator is no longer hidden
+					if (!PLAYER_STATUS.ShowIndicator())
+					{
+						g_engine.m_coordinator.AddToDeleteQueue(PLAYER_STATUS.GetIndicator());
+						
+					}
 				}
 
 				//if (keycode == KeyPress::Numpad9)
@@ -372,7 +399,7 @@ namespace Rogue
 				{
 					if (g_engine.GetIsFocused())
 					{
-						if (keycode == KeyPress::KeyA)
+						if (keycode == KeyPress::KeyA && PLAYER_STATUS.IsPlayerActive())
 						{
 							auto& ctrler = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(*iEntity);
 							ctrler.SetMoveState(MoveState::e_left);
@@ -381,10 +408,10 @@ namespace Rogue
 							ev->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
 							ev->SetSystemReceivers((int)SystemID::id_GRAPHICSSYSTEM);
 							EventDispatcher::instance().AddEvent(ev);
-
+							PLAYER_STATUS.SetMoveLeft(true);
 							MovingPlayer();
 						}
-						else if (keycode == KeyPress::KeyD)
+						else if (keycode == KeyPress::KeyD && PLAYER_STATUS.IsPlayerActive())
 						{
 							auto& ctrler = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(*iEntity);
 							ctrler.SetMoveState(MoveState::e_right);
@@ -393,7 +420,7 @@ namespace Rogue
 							ev->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
 							ev->SetSystemReceivers((int)SystemID::id_GRAPHICSSYSTEM);
 							EventDispatcher::instance().AddEvent(ev);
-
+							PLAYER_STATUS.SetMoveLeft(false);
 							MovingPlayer();
 						}
 
@@ -406,20 +433,9 @@ namespace Rogue
 								{
 									auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
 
-									trans.setPosition(Vec2(480.0f, -321.0f));
+									trans.setPosition(Vec2(2300.0f, 350.0f));
 								}
 							}
-
-							if (SceneManager::instance().getCurrentFileName() == "Level 9.json")
-							{
-								if (g_engine.m_coordinator.ComponentExists<TransformComponent>(*iEntity))
-								{
-									auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
-
-									trans.setPosition(Vec2(1150.0f, 578.0f));
-								}
-							}
-							
 						}
 						else if (keycode == KeyPress::KeyS)
 						{
@@ -435,16 +451,7 @@ namespace Rogue
 								{
 									auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
 
-									trans.setPosition(Vec2(155.0f, 55.0f));
-								}
-							}
-							else if (SceneManager::instance().getCurrentFileName() == "Level 9.json")
-							{
-								if (g_engine.m_coordinator.ComponentExists<TransformComponent>(*iEntity))
-								{
-									auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
-
-									trans.setPosition(Vec2(-1557.0f, 258.0f));
+									trans.setPosition(Vec2(-2813.04f, 1103.46f));
 								}
 							}
 						}
@@ -466,26 +473,29 @@ namespace Rogue
 			{
 				if (keycode == KeyPress::MB1)
 				{
-					if (!m_timedEntities.size() && PLAYER_STATUS.GetInLightDur() < 0.0f && PLAYER_STATUS.GetTeleportDelay() < 0.0f && PLAYER_STATUS.GetTeleportCharge() >= 1.0f)
+					if (!m_timedEntities.size() && PLAYER_STATUS.GetInLightDur() < 0.0f && 
+						PLAYER_STATUS.GetTeleportDelay() < 0.0f && 
+						(PLAYER_STATUS.GetTeleportCharge() >= 1.0f || PLAYER_STATUS.GetInfiniteJumps()))
 					{
 						//CreateBallAttack();
 						//auto& player = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(*m_entities.begin());
 						//if (player.m_grounded)
 						//	PLAYER_STATUS.SetTeleportCharge(PLAYER_STATUS.GetMaxTeleportCharge());
-						Teleport();
+						if (PLAYER_STATUS.IsPlayerActive())
+							Teleport();
 						m_ignoreFrameEvent = true;
 					}
 					//if (PLAYER_STATUS.ShowIndicator())
 					g_engine.SetTimeScale(1.0f);
-					PLAYER_STATUS.SetIndicatorStatus(true);
+					//PLAYER_STATUS.SetIndicatorStatus(false);
 
 					//To reduce calculations
 					if (PLAYER_STATUS.GetIndicator() != MAX_ENTITIES && g_engine.m_coordinator.ComponentExists<ChildComponent>(PLAYER_STATUS.GetIndicator()))
 					{
 						ChildComponent& comp = g_engine.m_coordinator.GetComponent<ChildComponent>(PLAYER_STATUS.GetIndicator());
-						SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(PLAYER_STATUS.GetIndicator());
+						//SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(PLAYER_STATUS.GetIndicator());
 						comp.SetIsFollowing(false);
-						auto filter = sprite.getFilter();
+						//auto filter = sprite.getFilter();
 						//sprite.setFilter(glm::vec4(filter.r, filter.g, filter.b, 0));
 					}
 				}
@@ -583,7 +593,7 @@ namespace Rogue
 
 				if (CollisionManager::instance().DiscreteLineVsLine(finiteRay, colliderEdge))
 				{
-					RE_INFO("Ray Collided With Ground!");
+					//RE_INFO("Ray Collided With Ground!");
 					player.m_grounded = true;
 					PLAYER_STATUS.SetHasJumped(false);	
 				}
@@ -610,6 +620,7 @@ namespace Rogue
 				//}
 			}
 			return;
+
 		} // switch (ev->GetEventType())
 		} // Receive
 	}
@@ -667,8 +678,7 @@ namespace Rogue
 		auto& activeObjects = g_engine.m_coordinator.GetActiveObjects();
 		for (TimedEntity& entity : m_teleports)
 		{
-			if (entity.m_durationLeft < 0.0f)
-				g_engine.m_coordinator.DestroyEntity(entity.m_entity);
+			g_engine.m_coordinator.DestroyEntity(entity.m_entity);
 
 			//for (auto iterator = activeObjects.begin(); iterator != activeObjects.end(); ++iterator)
 			//{

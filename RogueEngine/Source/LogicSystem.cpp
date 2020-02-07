@@ -38,6 +38,12 @@ Technology is prohibited.
 #include "Checkpoint.h"
 #include "SoulCollectible.h"
 #include "TeleAnimation.h"
+#include "AnimateOnEla.h"
+#include "AnimateOnExa.h"
+#include "ActivateOnEla.h"
+#include "ActivateOnExa.h"
+#include "ActivateOnDeathEla.h"
+#include "ActivateOnDeathExa.h"
 
 namespace Rogue
 {
@@ -252,6 +258,42 @@ namespace Rogue
 					AddLogicInterface(entities, std::make_shared<TeleAnimation>(newAI));
 					break;
 				}
+				case AIType::Gameplay_AnimateOnExa:
+				{
+					AnimateOnExa newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<AnimateOnExa>(newAI));
+					break;
+				}
+				case AIType::Gameplay_AnimateOnEla:
+				{
+					AnimateOnEla newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<AnimateOnEla>(newAI));
+					break;
+				}
+				case AIType::Gameplay_ActivateOnExa:
+				{
+					ActivateOnExa newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<ActivateOnExa>(newAI));
+					break;
+				}
+				case AIType::Gameplay_ActivateOnEla:
+				{
+					ActivateOnEla newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<ActivateOnEla>(newAI));
+					break;
+				}
+				case AIType::Gameplay_ActivateOnDeathExa:
+				{
+					ActivateOnDeathExa newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<ActivateOnDeathExa>(newAI));
+					break;
+				}
+				case AIType::Gameplay_ActivateOnDeathEla:
+				{
+					ActivateOnDeathEla newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<ActivateOnDeathEla>(newAI));
+					break;
+				}
 				case AIType::AI_Static:
 				default:
 				{
@@ -373,6 +415,42 @@ namespace Rogue
 					break;
 				}
 				case AIType::Gameplay_TeleAnimation:
+				{
+					ScriptComponent newAI(entity, logicComponent, statsComponent);
+					AddLogicInterface(entity, std::make_shared<ScriptComponent>(newAI));
+					break;
+				}
+				case AIType::Gameplay_AnimateOnExa:
+				{
+					ScriptComponent newAI(entity, logicComponent, statsComponent);
+					AddLogicInterface(entity, std::make_shared<ScriptComponent>(newAI));
+					break;
+				}
+				case AIType::Gameplay_AnimateOnEla:
+				{
+					ScriptComponent newAI(entity, logicComponent, statsComponent);
+					AddLogicInterface(entity, std::make_shared<ScriptComponent>(newAI));
+					break;
+				}
+				case AIType::Gameplay_ActivateOnExa:
+				{
+					ScriptComponent newAI(entity, logicComponent, statsComponent);
+					AddLogicInterface(entity, std::make_shared<ScriptComponent>(newAI));
+					break;
+				}
+				case AIType::Gameplay_ActivateOnEla:
+				{
+					ScriptComponent newAI(entity, logicComponent, statsComponent);
+					AddLogicInterface(entity, std::make_shared<ScriptComponent>(newAI));
+					break;
+				}
+				case AIType::Gameplay_ActivateOnDeathExa:
+				{
+					ScriptComponent newAI(entity, logicComponent, statsComponent);
+					AddLogicInterface(entity, std::make_shared<ScriptComponent>(newAI));
+					break;
+				}
+				case AIType::Gameplay_ActivateOnDeathEla:
 				{
 					ScriptComponent newAI(entity, logicComponent, statsComponent);
 					AddLogicInterface(entity, std::make_shared<ScriptComponent>(newAI));

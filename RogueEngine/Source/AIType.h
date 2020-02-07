@@ -37,6 +37,12 @@ namespace Rogue
 		Gameplay_Checkpoint,
 		Gameplay_SoulCollectible,
 		Gameplay_TeleAnimation,
+		Gameplay_AnimateOnExa,
+		Gameplay_AnimateOnEla,
+		Gameplay_ActivateOnExa,
+		Gameplay_ActivateOnEla,
+		Gameplay_ActivateOnDeathExa,
+		Gameplay_ActivateOnDeathEla,
 		Obj_Fade,
 		AI_Last
 	};

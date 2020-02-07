@@ -10,8 +10,10 @@ namespace Rogue
 		m_entity{ MAX_ENTITIES },
 		m_indicator{MAX_ENTITIES},
 		m_playerStartPos{Vec2(0,0)},
+		m_isActive{ true },
 		m_isLightMode{ true },
 		m_hasJumped{ false },
+		m_moveLeft {false},
 		m_indicatorShown{true},
 		m_death{false},
 		m_maxJumpTimer{0.5f},
@@ -22,7 +24,8 @@ namespace Rogue
 		m_teleportDelayTimer {0.0f},
 		m_startingPos{0.0f, 0.0f},
 		m_checkpoint{0.0f, 0.0f},
-		m_soulsCollected{0}
+		m_soulsCollected{0},
+		m_infiniteJumps{ false }
 	{
 	}
 
@@ -32,7 +35,7 @@ namespace Rogue
 		m_indicator = MAX_ENTITIES;
 		m_isLightMode = true;
 		m_hasJumped = false;
-		m_indicatorShown = false;
+		m_indicatorShown = true;
 		m_death = false;
 		m_hitchhikedEntity = MAX_ENTITIES;
 		m_inLightDur = 0.0f;
@@ -73,6 +76,16 @@ namespace Rogue
 	Entity PlayerStatusManager::GetIndicator() const
 	{
 		return m_indicator;
+	}
+
+	void PlayerStatusManager::SetPlayerActive(bool active)
+	{
+		m_isActive = active;
+	}
+
+	bool PlayerStatusManager::IsPlayerActive() const
+	{
+		return m_isActive;
 	}
 
 	void PlayerStatusManager::SetHasJumped(bool jumped)
@@ -118,6 +131,16 @@ namespace Rogue
 	bool PlayerStatusManager::GetDeath() const
 	{
 		return m_death;
+	}
+
+	void PlayerStatusManager::SetMoveLeft(bool isLeft)
+	{
+		m_moveLeft = isLeft;
+	}
+
+	bool PlayerStatusManager::GetMoveLeft() const
+	{
+		return m_moveLeft;
 	}
 
 	float PlayerStatusManager::GetTeleportCharge() const
@@ -216,6 +239,16 @@ namespace Rogue
 	void PlayerStatusManager::IncrementSoulsCollected()
 	{
 		++m_soulsCollected;
+	}
+
+	void PlayerStatusManager::SetInfiniteJumps(bool infinite)
+	{
+		m_infiniteJumps = infinite;
+	}
+
+	bool PlayerStatusManager::GetInfiniteJumps() const
+	{
+		return m_infiniteJumps;
 	}
 
 	void PlayerStatusManager::ChangePlayerSprite()

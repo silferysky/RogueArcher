@@ -18,6 +18,7 @@ Technology is prohibited.
 #include "Precompiled.h"
 #include "CameraShake.h"
 #include "Main.h"
+#define PI 3.141592
 
 namespace Rogue
 {
@@ -26,7 +27,7 @@ namespace Rogue
 
 	void CameraShake::Update()
 	{
-		m_duration += g_deltaTime;
+		m_duration += g_deltaTime; //* g_engine.GetTimeScale();
 
 		//Updates the angle and shake magnitude when time every ShakeInterval seconds
 		if (m_duration > m_shakeInterval && m_currentShakeMagnitude > 0) 
@@ -40,7 +41,7 @@ namespace Rogue
 			m_shakeOffset.y = static_cast<float>(cos(m_currentShakeAngle) * m_currentShakeMagnitude);
 
 			//Don't micro shake the screen, also returns the screen back to centre after shaking is done
-			if (m_currentShakeMagnitude < 50.0f) 
+			if (m_currentShakeMagnitude < 0.2f) 
 			{
 				m_currentShakeMagnitude = 0;
 				m_shakeOffset = { 0,0 };

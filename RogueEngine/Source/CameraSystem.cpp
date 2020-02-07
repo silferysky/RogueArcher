@@ -32,7 +32,7 @@ namespace Rogue
 
 	CameraSystem::CameraSystem()
 		: System(SystemID::id_CAMERASYSTEM), m_worldCamera{ false }, m_worldUp{ 0.0f, 1.0f, 0.0f },
-		m_cameraFront{ 0.0f, 0.0f, -1.0f }, m_cameraUp{}, m_cameraRight{},
+		m_centerPosition{ Vec2(0.0f, 0.0f) }, m_cameraFront{ 0.0f, 0.0f, -1.0f }, m_cameraUp{}, m_cameraRight{},
 		m_cameraShake{}
 	{}
 
@@ -116,6 +116,10 @@ namespace Rogue
 	void CameraSystem::Update()
 	{
 		g_engine.m_coordinator.InitTimeSystem("Camera System");
+		//m_cameraShake.SetShake(13.0f);
+
+		if (m_isActive)
+			m_centerPosition = Vec2(CameraManager::instance().GetCameraPos().x, CameraManager::instance().GetCameraPos().y);
 
 		m_cameraShake.Update();
 		auto shakeOffset = m_cameraShake.getOffset();
@@ -132,19 +136,6 @@ namespace Rogue
 					Vec2 cameraMin = CameraManager::instance().GetCameraMin();
 					Vec2 cameraMax = CameraManager::instance().GetCameraMax();
 
-					// ensure camera doesnt go out of bounds
-					if (transformPos.x > cameraMax.x)
-						transformPos.x = cameraMax.x;
-
-					if (transformPos.x < cameraMin.x)
-						transformPos.x = cameraMin.x;
-
-					if (transformPos.y > cameraMax.y)
-						transformPos.y = cameraMax.y;
-
-					if (transformPos.y < cameraMin.y)
-						transformPos.y = cameraMin.y;
-
 					//m_target = transformPos;
 
 					// For camera panning
@@ -152,6 +143,19 @@ namespace Rogue
 
 					if (m_isActive)
 					{
+						// ensure camera doesnt go out of bounds
+						if (transformPos.x > cameraMax.x)
+							transformPos.x = cameraMax.x;
+
+						if (transformPos.x < cameraMin.x)
+							transformPos.x = cameraMin.x;
+
+						if (transformPos.y > cameraMax.y)
+							transformPos.y = cameraMax.y;
+
+						if (transformPos.y < cameraMin.y)
+							transformPos.y = cameraMin.y;
+
 						float deltaX = transformPos.x - position.x + cameraOffset.x;
 						float deltaY = transformPos.y - position.y + cameraOffset.y;
 
@@ -167,7 +171,7 @@ namespace Rogue
 					}
 					else
 					{
-						position = glm::vec3(position.x + shakeOffset.x, position.y + shakeOffset.y, 0.0f);
+						position = glm::vec3(m_centerPosition.x + m_cameraShake.getOffset().x, m_centerPosition.y + m_cameraShake.getOffset().y, 0.0f);
 					}
 
 					CameraManager::instance().SetCameraPos(position);
@@ -209,11 +213,11 @@ namespace Rogue
 
 			if (g_engine.GetIsFocused() && g_engine.m_coordinator.GetEditorIsRunning())
 			{
-				/* if (keycode == KeyPress::MB1 && PickingManager::instance().isCursorinViewPort())
+				if (keycode == KeyPress::MB3 && PickingManager::instance().isCursorinViewPort())
 				{
 					glm::vec3 cursorPos{ PickingManager::instance().GetWorldCursor().x, PickingManager::instance().GetWorldCursor().y, 0 };
 					CameraManager::instance().SetCameraPos(cursorPos);
-				} */
+				}
 
 				if (keycode == KeyPress::KeyF1)
 					CameraManager::instance().ZoomIn();

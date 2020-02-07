@@ -33,6 +33,7 @@ namespace Rogue
 		glm::vec3 m_worldUp;
 
 		// Camera panning
+		Vec2 m_centerPosition;
 		Vec2 m_target;
 		float m_cameraLerp = 1.6f;
 

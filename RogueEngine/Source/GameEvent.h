@@ -51,13 +51,32 @@ namespace Rogue
 	public:
 		SET_EVENT_TYPE(EvEntityChangeSprite);
 
-		EntChangeSpriteEvent(Entity ent, std::string path)
-			: EntityEvent(ent), filePath{ path } {}
+		EntChangeSpriteEvent(Entity ent, std::string tex, std::string path = "")
+			: EntityEvent(ent), file{ tex } {}
 
-		inline std::string GetFilePath() { return filePath; }
+		inline std::string GetFile() { return file; }
+		inline std::string GetPath() { return path + file; }
 
 	private:
-		std::string filePath;
+		std::string file;
+		std::string path;
+	};
+
+	class EntChangeRGBAEvent : public EntityEvent
+	{
+	public:
+		SET_EVENT_TYPE(EvEntityChangeRGBA);
+
+		EntChangeRGBAEvent(Entity ent, float R, float G, float B, float A = 1.0f)
+			: EntityEvent(ent), r{ R }, g{ G }, b{ B }, a{ A }{}
+
+		inline float R() const { return r; }
+		inline float G() const { return g; }
+		inline float B() const { return b; }
+		inline float A() const { return a; }
+
+	private:
+		float r, g, b, a;
 	};
 
 	class EntChangeStateEvent : public EntityEvent

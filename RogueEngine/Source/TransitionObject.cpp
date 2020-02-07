@@ -29,6 +29,7 @@ namespace Rogue
 	{
 		if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(other))
 		{
+			PLAYER_STATUS.SetIndicatorStatus(false);
 			SceneManager& sceneManager = SceneManager::instance();
 
 			sceneManager.LoadLevel(m_levelToLoad.c_str());
