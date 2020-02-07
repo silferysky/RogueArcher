@@ -25,11 +25,11 @@ namespace Rogue
 			{
 				g_engine.m_coordinator.GetComponent<ParticleEmitterComponent>(m_entity).SetIsActive(true);
 			}
-		}
-		else if (g_engine.m_coordinator.GetComponent<ParticleEmitterComponent>(m_entity).GetIsActive())
-			// active
-		{
-			g_engine.m_coordinator.GetComponent<ParticleEmitterComponent>(m_entity).SetIsActive(false);
+			else if (g_engine.m_coordinator.GetComponent<ParticleEmitterComponent>(m_entity).GetIsActive())
+				// active
+			{
+				g_engine.m_coordinator.GetComponent<ParticleEmitterComponent>(m_entity).SetIsActive(false);
+			}
 		}
 	}
 }
