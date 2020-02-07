@@ -22,18 +22,14 @@ namespace Rogue
 		if (PlayerStatusManager::instance().GetDeath())
 		{
 			m_timer += g_deltaTime * g_engine.GetTimeScale();
-			if (m_timer >= 0.35f && m_timer < 3.0f)
+			if (m_timer >= 0.65f && m_timer < 3.0f)
 			{
 				g_engine.m_coordinator.GetSystem<CameraSystem>()->setIsActive(false);
 				g_engine.m_coordinator.GetComponent<TransformComponent>(m_other).setPosition(PlayerStatusManager::instance().GetCheckpoint());
 				
-				CameraShakeEvent* shake = new CameraShakeEvent(8.0f);
-				shake->SetSystemReceivers(static_cast<int>(SystemID::id_CAMERASYSTEM));
-				EventDispatcher::instance().AddEvent(shake);
-
 				if (PLAYER_STATUS.GetPlayerEntity() != MAX_ENTITIES && g_engine.m_coordinator.ComponentExists<SpriteComponent>(PlayerStatusManager::instance().GetPlayerEntity()))
 				{
-					SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(PLAYER_STATUS.GetPlayerEntity());
+					SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_other);
 					sprite.setFilter(glm::vec4(sprite.getFilter().r, sprite.getFilter().g, sprite.getFilter().b, 0.0f));
 				}
 
@@ -48,6 +44,7 @@ namespace Rogue
 			{
 				m_timer = 0.0f;
 				PlayerStatusManager::instance().SetDeath(false);
+				g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(m_other).SetIsActive(true);
 				g_engine.m_coordinator.GetSystem<CameraSystem>()->setIsActive(true);
 
 				if (PLAYER_STATUS.GetPlayerEntity() != MAX_ENTITIES && g_engine.m_coordinator.ComponentExists<SpriteComponent>(PlayerStatusManager::instance().GetPlayerEntity()))
@@ -66,8 +63,13 @@ namespace Rogue
 		if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(other))
 		{
 			//g_engine.m_coordinator.GetSystem<CameraSystem>()->setIsActive(false);
+			CameraShakeEvent* shake = new CameraShakeEvent(20.0f);
+			shake->SetSystemReceivers(static_cast<int>(SystemID::id_CAMERASYSTEM));
+			EventDispatcher::instance().AddEvent(shake);
+
 			PlayerStatusManager::instance().SetDeath(true);
 			m_other = other;
+			g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(m_other).SetIsActive(false);
 		}
 	}
 }

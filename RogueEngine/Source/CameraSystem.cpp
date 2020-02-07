@@ -118,7 +118,8 @@ namespace Rogue
 		g_engine.m_coordinator.InitTimeSystem("Camera System");
 		//m_cameraShake.SetShake(13.0f);
 
-		m_centerPosition = Vec2(CameraManager::instance().GetCameraPos().x, CameraManager::instance().GetCameraPos().y);
+		if (m_isActive)
+			m_centerPosition = Vec2(CameraManager::instance().GetCameraPos().x, CameraManager::instance().GetCameraPos().y);
 
 		m_cameraShake.Update();
 		auto shakeOffset = m_cameraShake.getOffset();
@@ -135,19 +136,6 @@ namespace Rogue
 					Vec2 cameraMin = CameraManager::instance().GetCameraMin();
 					Vec2 cameraMax = CameraManager::instance().GetCameraMax();
 
-					// ensure camera doesnt go out of bounds
-					if (transformPos.x > cameraMax.x)
-						transformPos.x = cameraMax.x;
-
-					if (transformPos.x < cameraMin.x)
-						transformPos.x = cameraMin.x;
-
-					if (transformPos.y > cameraMax.y)
-						transformPos.y = cameraMax.y;
-
-					if (transformPos.y < cameraMin.y)
-						transformPos.y = cameraMin.y;
-
 					//m_target = transformPos;
 
 					// For camera panning
@@ -155,6 +143,19 @@ namespace Rogue
 
 					if (m_isActive)
 					{
+						// ensure camera doesnt go out of bounds
+						if (transformPos.x > cameraMax.x)
+							transformPos.x = cameraMax.x;
+
+						if (transformPos.x < cameraMin.x)
+							transformPos.x = cameraMin.x;
+
+						if (transformPos.y > cameraMax.y)
+							transformPos.y = cameraMax.y;
+
+						if (transformPos.y < cameraMin.y)
+							transformPos.y = cameraMin.y;
+
 						float deltaX = transformPos.x - position.x + cameraOffset.x;
 						float deltaY = transformPos.y - position.y + cameraOffset.y;
 
