@@ -105,6 +105,22 @@ namespace Rogue
 			}
 		}
 
+
+		Entity toChangeSprite = MAX_ENTITIES;
+		for (auto child : info.m_children)
+		{
+			if (g_engine.m_coordinator.GetHierarchyInfo(child).m_tag == "Change")
+			{
+				toChangeSprite = child;
+				break;
+			}
+		}
+
+		std::ostringstream oss;
+		if (g_engine.m_coordinator.ComponentExists<AnimationComponent>(toChangeSprite) && toChangeSprite != MAX_ENTITIES)
+		{
+			oss << "ANIM: " << g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).getCurrentFrame();
+		}
 		RE_INFO(oss.str());
 
 		//If m_delay == m_patrolDelay, it means a new waypoint is just selected
