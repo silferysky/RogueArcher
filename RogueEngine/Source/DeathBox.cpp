@@ -22,11 +22,10 @@ namespace Rogue
 		if (PlayerStatusManager::instance().GetDeath())
 		{
 			m_timer += g_deltaTime * g_engine.GetTimeScale();
-			if (m_timer >= 0.65f && m_timer < 3.0f)
+			if (m_timer >= 0.4592f && m_timer < 3.0f)
 			{
 				g_engine.m_coordinator.GetSystem<CameraSystem>()->setIsActive(false);
 				g_engine.m_coordinator.GetComponent<TransformComponent>(m_other).setPosition(PlayerStatusManager::instance().GetCheckpoint());
-				g_engine.m_coordinator.loadSound("Resources/Sounds/soul_pickup.ogg", 0.3f, false).Play();
 				
 				if (PLAYER_STATUS.GetPlayerEntity() != MAX_ENTITIES && g_engine.m_coordinator.ComponentExists<SpriteComponent>(PlayerStatusManager::instance().GetPlayerEntity()))
 				{
@@ -69,6 +68,7 @@ namespace Rogue
 			EventDispatcher::instance().AddEvent(shake);
 
 			PlayerStatusManager::instance().SetDeath(true);
+			g_engine.m_coordinator.loadSound("Resources/Sounds/die3.ogg", 0.3f, false).Play();
 			m_other = other;
 			g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(m_other).SetIsActive(false);
 		}
