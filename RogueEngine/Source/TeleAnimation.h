@@ -16,6 +16,6 @@ namespace Rogue
 		float GetTeleCharge() const;
 
 	private:
-		float m_teleCharge;
+		float m_teleCharge = 3;
 	};
 }
