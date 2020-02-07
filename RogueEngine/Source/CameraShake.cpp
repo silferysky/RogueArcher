@@ -18,15 +18,16 @@ Technology is prohibited.
 #include "Precompiled.h"
 #include "CameraShake.h"
 #include "Main.h"
+#define PI 3.141592
 
 namespace Rogue
 {
-	CameraShake::CameraShake() : m_shakeAngleMagnitude{ 180 }, m_shakeInterval{ 0.05f }, m_currentShakeMagnitude{ 0.0f }, m_currentShakeAngle{ rand() % 360 }, m_duration{ 0 }, m_shakeOffset{ 0, 0 }
+	CameraShake::CameraShake() : m_shakeAngleMagnitude{ 180 }, m_shakeInterval{ 0.05f }, m_currentShakeMagnitude{ 0.0f }, m_currentShakeAngle{ static_cast<float>(rand() % 360) }, m_duration{ 0 }, m_shakeOffset{ 0, 0 }
 	{}
 
 	void CameraShake::Update()
 	{
-		m_duration += g_deltaTime;
+		m_duration += g_deltaTime * g_engine.GetTimeScale();
 
 		//Updates the angle and shake magnitude when time every ShakeInterval seconds
 		if (m_duration > m_shakeInterval && m_currentShakeMagnitude > 0) 

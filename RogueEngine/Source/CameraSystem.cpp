@@ -147,6 +147,8 @@ namespace Rogue
 
 					//m_target = transformPos;
 
+					m_cameraShake.SetShake(13.0f);
+
 					// For camera panning
 					glm::vec3 position = CameraManager::instance().GetCameraPos();
 
@@ -167,6 +169,7 @@ namespace Rogue
 					}
 					else
 					{
+						auto& shake = shakeOffset;
 						position = glm::vec3(position.x + shakeOffset.x, position.y + shakeOffset.y, 0.0f);
 					}
 
@@ -209,11 +212,11 @@ namespace Rogue
 
 			if (g_engine.GetIsFocused() && g_engine.m_coordinator.GetEditorIsRunning())
 			{
-				/* if (keycode == KeyPress::MB1 && PickingManager::instance().isCursorinViewPort())
+				if (keycode == KeyPress::MB3 && PickingManager::instance().isCursorinViewPort())
 				{
 					glm::vec3 cursorPos{ PickingManager::instance().GetWorldCursor().x, PickingManager::instance().GetWorldCursor().y, 0 };
 					CameraManager::instance().SetCameraPos(cursorPos);
-				} */
+				}
 
 				if (keycode == KeyPress::KeyF1)
 					CameraManager::instance().ZoomIn();
