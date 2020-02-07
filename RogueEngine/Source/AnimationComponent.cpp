@@ -116,6 +116,16 @@ namespace Rogue
 		return m_isLooping;
 	}
 
+	void AnimationComponent::setIsNotReversed(const bool& isNotReversed)
+	{
+		m_isNotReversed = isNotReversed;
+	}
+
+	bool AnimationComponent::getIsNotReversed() const
+	{
+		return m_isNotReversed;
+	}
+
 	void AnimationComponent::DisplayOnInspector()
 	{
 		ImVec2 imageSize{ ImGui::GetWindowWidth() / 2, ImGui::GetWindowHeight() / 8 };
@@ -135,6 +145,9 @@ namespace Rogue
 
 		ImGui::Checkbox("Looping?", &m_isLooping);
 		setIsLooping(m_isLooping);
+
+		ImGui::Checkbox("Not Reversed?", &m_isNotReversed);
+		setIsNotReversed(m_isNotReversed);
 	}
 
 	std::string AnimationComponent::Serialize()
@@ -145,6 +158,7 @@ namespace Rogue
 		ss << m_secondsPerFrame << ";";
 		ss << m_isLooping << ";";
 		ss << m_startFrame << ";";
+		ss << m_isNotReversed << ";";
 		return ss.str();
 	}
 
@@ -172,6 +186,9 @@ namespace Rogue
 				break;
 			case 4:
 				setStartFrame(std::stoi(s1));
+				break;
+			case 5:
+				setIsNotReversed(std::stoi(s1));
 				break;
 			default:
 				break;
