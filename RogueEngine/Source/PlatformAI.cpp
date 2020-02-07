@@ -34,10 +34,6 @@ namespace Rogue
 		Vec2 secondPos = *(m_waypoints.begin() + 1);
 
 		HierarchyInfo& info = g_engine.m_coordinator.GetHierarchyInfo(m_entity);
-		if (info.m_children.size())
-		{
-
-		}
 
 		//oss << "\nIsTransiting " << transiting;
 		//Transitioning colours
@@ -82,27 +78,8 @@ namespace Rogue
 				Entity toChangeSprite = MAX_ENTITIES;
 				for (auto child : info.m_children)
 				{
-					g_engine.m_coordinator.GetComponent<SpriteComponent>(toChangeSprite).setFilter(glm::vec4(localR, localG, localB, localA));
-					//if (g_engine.m_coordinator.GetHierarchyInfo(child).m_tag == "Change")
-					//{
-					//	toChangeSprite = child;
-					//	break;
-					//}
+					g_engine.m_coordinator.GetComponent<SpriteComponent>(child).setFilter(glm::vec4(localR, localG, localB, localA));
 				}
-
-				//if (toChangeSprite != MAX_ENTITIES)
-				//{
-				//	if (g_engine.m_coordinator.ComponentExists<SpriteComponent>(toChangeSprite))
-				//	{
-				//		g_engine.m_coordinator.GetComponent<SpriteComponent>(toChangeSprite).setFilter(glm::vec4(localR, localG, localB, localA));
-				//	}
-				//}
-
-				//if (sprite.getFilter().r == localR &&
-				//	sprite.getFilter().g == localG &&
-				//	sprite.getFilter().b == localB &&
-				//	sprite.getFilter().a == localA)
-				//	transiting = false;
 			}
 		}
 
@@ -122,7 +99,7 @@ namespace Rogue
 		{
 			oss << "ANIM: " << g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).getCurrentFrame();
 		}
-		RE_INFO(oss.str());
+		//RE_INFO(oss.str());
 
 		//If m_delay == m_patrolDelay, it means a new waypoint is just selected
 		if (m_delay == m_patrolDelay)

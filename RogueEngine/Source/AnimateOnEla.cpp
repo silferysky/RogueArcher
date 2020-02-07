@@ -17,6 +17,25 @@ namespace Rogue
 
 	void AnimateOnEla::AIIdleUpdate()
 	{
+		if (g_engine.m_coordinator.ComponentExists<ChildComponent>(m_entity))
+		{
+			auto& child = g_engine.m_coordinator.GetComponent<ChildComponent>(m_entity);
+			if (g_engine.m_coordinator.ComponentExists<TransformComponent>(child.GetParent()))
+			{
+				if (PLAYER_STATUS.GetMoveLeft())
+				{
+					child.SetScale(Vec2(-1.0f, 1.0f));
+				}
+				else
+				{
+					child.SetScale(Vec2(1.0f, 1.0f));
+				}
+
+				child.SetPosition(0.0f, 0.0f);
+				child.SetGlobalDirty();
+			}
+		}
+
 		if (m_isLightMode != PlayerStatusManager::instance().GetLightStatus())
 		{
 			m_isLightMode = PlayerStatusManager::instance().GetLightStatus();
@@ -35,7 +54,8 @@ namespace Rogue
 				auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_entity);
 				glm::vec4 colourFilter = sprite.getFilter();
 				colourFilter.a = 1.0f;
-				sprite.setFilter(colourFilter); 
+				sprite.setFilter(colourFilter);
+
 			}
 		}
 		else if (!g_engine.m_coordinator.GetComponent<AnimationComponent>(m_entity).getIsAnimating() && g_engine.m_coordinator.GetComponent<SpriteComponent>(m_entity).getFilter().a)
@@ -51,21 +71,6 @@ namespace Rogue
 			glm::vec4 colourFilter = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_entity).getFilter();
 			colourFilter.a = 0.0f;
 			g_engine.m_coordinator.GetComponent<SpriteComponent>(m_entity).setFilter(colourFilter);
-
-			if (g_engine.m_coordinator.ComponentExists<ChildComponent>(m_entity))
-			{
-				auto& child = g_engine.m_coordinator.GetComponent<ChildComponent>(m_entity);
-				child.SetPosition(Vec2());
-				child.SetGlobalDirty();
-
-				if (g_engine.m_coordinator.ComponentExists<TransformComponent>(child.GetParent()))
-				{
-					if (g_engine.m_coordinator.GetComponent<TransformComponent>(child.GetParent()).GetScale().x < 0.0f)
-					{
-						child.SetScale(Vec2(-1.0f, 1.0f));
-					}
-				}
-			}
 		}
 	}
 }
