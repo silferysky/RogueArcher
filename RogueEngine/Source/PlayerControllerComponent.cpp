@@ -65,6 +65,16 @@ namespace Rogue
 		return m_moveState;
 	}
 
+	void PlayerControllerComponent::SetIsActive(const bool& isActive)
+	{
+		m_isActive = isActive;
+	}
+
+	bool PlayerControllerComponent::GetIsActive() const
+	{
+		return m_isActive;
+	}
+
 	std::string PlayerControllerComponent::Serialize()
 	{
 		std::ostringstream ss;
