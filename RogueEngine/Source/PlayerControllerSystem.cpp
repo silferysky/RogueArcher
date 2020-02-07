@@ -400,7 +400,7 @@ namespace Rogue
 							ev->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
 							ev->SetSystemReceivers((int)SystemID::id_GRAPHICSSYSTEM);
 							EventDispatcher::instance().AddEvent(ev);
-
+							PLAYER_STATUS.SetMoveLeft(true);
 							MovingPlayer();
 						}
 						else if (keycode == KeyPress::KeyD)
@@ -412,7 +412,7 @@ namespace Rogue
 							ev->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
 							ev->SetSystemReceivers((int)SystemID::id_GRAPHICSSYSTEM);
 							EventDispatcher::instance().AddEvent(ev);
-
+							PLAYER_STATUS.SetMoveLeft(false);
 							MovingPlayer();
 						}
 
