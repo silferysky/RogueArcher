@@ -274,7 +274,6 @@ namespace Rogue
 				//sprite.setTexture(event->GetFile().c_str());
 				sprite.setTexturePath(event->GetPath().c_str());
 
-
 				if (event->GetEntityID() == PLAYER_STATUS.GetPlayerEntity())
 				{
 					if (PLAYER_STATUS.GetLightStatus())

@@ -112,6 +112,7 @@ namespace Rogue
 		//If m_delay == m_patrolDelay, it means a new waypoint is just selected
 		if (m_delay == m_patrolDelay)
 		{
+
 			if (!info.m_children.size())
 				return;
 
@@ -134,13 +135,40 @@ namespace Rogue
 			//EntChangeRGBAEvent* rgbaEv;
 			if ((m_currentPointIndex && firstPos.y > secondPos.y) || (!m_currentPointIndex && firstPos.y < secondPos.y))
 			{
-				ev = new EntChangeSpriteEvent(toChangeSprite, "Resources\\Assets\\FlowerPlatformOpen.png");
-				//rgbaEv = new EntChangeRGBAEvent(toChangeSprite, 0.71f, 0.62f, 1.0f);
+				//ev = new EntChangeRGBAEvent(m_entity, 1.0f, 0.0f, 1.0f, a);
+				r = 0.71f;
+				g = 0.62f;
+				b = 1.0f;
+				//a = 1.0f;
+				transiting = true;
+
+				ev = new EntChangeSpriteEvent(toChangeSprite, "Resources\\Assets\\FlowerBud.png");
+				if (!g_engine.m_coordinator.ComponentExists<AnimationComponent>(toChangeSprite))
+				{
+					AnimationComponent animation{};
+					animation.Deserialize("4;3;0.3f;0;0;");
+					g_engine.m_coordinator.AddComponent(toChangeSprite, animation);
+				}
+				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setCurrentFrame(0);
+				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setIsAnimating(true);
 			}
 			else
 			{
-				ev = new EntChangeSpriteEvent(toChangeSprite, "Resources\\Assets\\FlowerPlatformClose.png");
-				//rgbaEv = new EntChangeRGBAEvent(toChangeSprite, 1.0f, 0.99f, 0.62f);
+				//ev = new EntChangeRGBAEvent(m_entity, 1.0f, 1.0f, 0.0f, a);
+				r = 1.0f;
+				g = 0.99f;
+				b = 0.62f;
+				//a = 1.0f;
+				transiting = true;
+				ev = new EntChangeSpriteEvent(toChangeSprite, "Resources\\Assets\\FlowerBud.png");
+				if (!g_engine.m_coordinator.ComponentExists<AnimationComponent>(toChangeSprite))
+				{
+					AnimationComponent animation{};
+					animation.Deserialize("4;3;0.3f;0;0;");
+					g_engine.m_coordinator.AddComponent(toChangeSprite, animation);
+				}
+				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setCurrentFrame(0);
+				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setIsAnimating(true);
 			}
 			ev->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
 			//rgbaEv->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
@@ -152,15 +180,8 @@ namespace Rogue
 		}
 		else if (m_delay == 0.0f)
 		{
-			//EntChangeRGBAEvent* ev;
 			if ((m_currentPointIndex && firstPos.y > secondPos.y) || (!m_currentPointIndex && firstPos.y < secondPos.y))
 			{
-				//ev = new EntChangeRGBAEvent(m_entity, 1.0f, 0.0f, 1.0f, a);
-				r = 0.71f;
-				g = 0.62f;
-				b = 1.0f;
-				//a = 1.0f;
-				transiting = true;
 
 				if (g_engine.m_coordinator.ComponentExists<ColliderComponent>(m_entity))
 				{
@@ -178,12 +199,6 @@ namespace Rogue
 			}
 			else
 			{
-				//ev = new EntChangeRGBAEvent(m_entity, 1.0f, 1.0f, 0.0f, a);
-				r = 1.0f;
-				g = 0.99f;
-				b = 0.62f;
-				//a = 1.0f;
-				transiting = true;
 
 				if (g_engine.m_coordinator.ComponentExists<ColliderComponent>(m_entity))
 				{
