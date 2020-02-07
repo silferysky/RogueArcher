@@ -42,6 +42,8 @@ Technology is prohibited.
 #include "AnimateOnExa.h"
 #include "ActivateOnEla.h"
 #include "ActivateOnExa.h"
+#include "ActivateOnDeathEla.h"
+#include "ActivateOnDeathExa.h"
 
 namespace Rogue
 {
@@ -280,6 +282,18 @@ namespace Rogue
 					AddLogicInterface(entities, std::make_shared<ActivateOnEla>(newAI));
 					break;
 				}
+				case AIType::Gameplay_ActivateOnDeathExa:
+				{
+					ActivateOnDeathExa newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<ActivateOnDeathExa>(newAI));
+					break;
+				}
+				case AIType::Gameplay_ActivateOnDeathEla:
+				{
+					ActivateOnDeathEla newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<ActivateOnDeathEla>(newAI));
+					break;
+				}
 				case AIType::AI_Static:
 				default:
 				{
@@ -425,6 +439,18 @@ namespace Rogue
 					break;
 				}
 				case AIType::Gameplay_ActivateOnEla:
+				{
+					ScriptComponent newAI(entity, logicComponent, statsComponent);
+					AddLogicInterface(entity, std::make_shared<ScriptComponent>(newAI));
+					break;
+				}
+				case AIType::Gameplay_ActivateOnDeathExa:
+				{
+					ScriptComponent newAI(entity, logicComponent, statsComponent);
+					AddLogicInterface(entity, std::make_shared<ScriptComponent>(newAI));
+					break;
+				}
+				case AIType::Gameplay_ActivateOnDeathEla:
 				{
 					ScriptComponent newAI(entity, logicComponent, statsComponent);
 					AddLogicInterface(entity, std::make_shared<ScriptComponent>(newAI));

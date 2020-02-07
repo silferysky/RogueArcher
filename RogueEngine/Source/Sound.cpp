@@ -101,8 +101,8 @@ namespace Rogue
 		m_result = m_fmodSound->release();
 		FmodErrorCheck(m_result);
 
-		m_result = m_system->release();
-		FmodErrorCheck(m_result);
+		//m_result = m_system->release();
+		//FmodErrorCheck(m_result);
 	}
 
 	/* Getters/Setters */
