@@ -122,6 +122,8 @@ namespace Rogue
 				currentFrame = animate->getFrames();
 			animate->setCurrentFrame(static_cast<int>(currentFrame));
 		}
+		if (currentFrame == -1)
+			currentFrame = 1;
 
 		double min = (currentFrame - 1) / totalFrames;
 		double max = currentFrame-- / totalFrames;
