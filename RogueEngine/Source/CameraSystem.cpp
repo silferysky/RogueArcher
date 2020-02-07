@@ -32,7 +32,7 @@ namespace Rogue
 
 	CameraSystem::CameraSystem()
 		: System(SystemID::id_CAMERASYSTEM), m_worldCamera{ false }, m_worldUp{ 0.0f, 1.0f, 0.0f },
-		m_cameraFront{ 0.0f, 0.0f, -1.0f }, m_cameraUp{}, m_cameraRight{},
+		m_centerPosition{ Vec2(0.0f, 0.0f) }, m_cameraFront{ 0.0f, 0.0f, -1.0f }, m_cameraUp{}, m_cameraRight{},
 		m_cameraShake{}
 	{}
 
@@ -116,6 +116,9 @@ namespace Rogue
 	void CameraSystem::Update()
 	{
 		g_engine.m_coordinator.InitTimeSystem("Camera System");
+		//m_cameraShake.SetShake(13.0f);
+
+		m_centerPosition = Vec2(CameraManager::instance().GetCameraPos().x, CameraManager::instance().GetCameraPos().y);
 
 		m_cameraShake.Update();
 		auto shakeOffset = m_cameraShake.getOffset();
@@ -150,7 +153,7 @@ namespace Rogue
 					// For camera panning
 					glm::vec3 position = CameraManager::instance().GetCameraPos();
 
-					if (!m_isActive)
+					if (m_isActive)
 					{
 						float deltaX = transformPos.x - position.x + cameraOffset.x;
 						float deltaY = transformPos.y - position.y + cameraOffset.y;
@@ -167,7 +170,7 @@ namespace Rogue
 					}
 					else
 					{
-						position = glm::vec3(position.x + shakeOffset.x, position.y + shakeOffset.y, 0.0f);
+						position = glm::vec3(m_centerPosition.x + m_cameraShake.getOffset().x, m_centerPosition.y + m_cameraShake.getOffset().y, 0.0f);
 					}
 
 					CameraManager::instance().SetCameraPos(position);
