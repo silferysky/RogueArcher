@@ -11,6 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\ActivateOnEla.h" />
+    <ClInclude Include="Source\ActivateOnExa.h" />
     <ClInclude Include="Source\AIType.h" />
     <ClInclude Include="Source\AnimateOnEla.h" />
     <ClInclude Include="Source\AnimateOnExa.h" />
@@ -173,6 +175,8 @@
     <ClInclude Include="Source\WindowHelper.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\ActivateOnEla.cpp" />
+    <ClCompile Include="Source\ActivateOnExa.cpp" />
     <ClCompile Include="Source\AnimateOnExa.cpp" />
     <ClCompile Include="Source\AnimationComponent.cpp" />
     <ClCompile Include="Source\AnimationSystem.cpp" />

@@ -52,7 +52,10 @@ namespace Rogue
 
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(entity);
 			
-			UpdateTexture(&animate, &sprite);
+			if (animate.getIsNotReversed())
+				UpdateTexture(&animate, &sprite);
+			else
+				UpdateTextureReversed(&animate, &sprite);
 		}
 
 		g_engine.m_coordinator.EndTimeSystem("Animation System");
@@ -94,14 +97,41 @@ namespace Rogue
 			animate->setCurrentFrame(static_cast<int>(currentFrame));
 	}
 
-	//void AnimationSystem::ResetTextures()
-	//{
-		//for (auto entity : m_entities)
-		//{
-			//auto& animate = g_engine.m_coordinator.GetComponent<AnimationComponent>(entity);
-			
-		//}
-	//}
+	void AnimationSystem::UpdateTextureReversed(AnimationComponent* animate, SpriteComponent* sprite)
+	{
+		animate->updateTimer();
+
+		// have not yet reached next frame
+		if (animate->getTimer() < animate->getSecondsPerFrame())
+			return;
+
+		animate->setTimer(0);
+
+		double currentFrame = (double)animate->getCurrentFrame();
+		int totalFrames = animate->getFrames();
+
+		// reset the frame number
+		if (currentFrame < 0)
+		{
+			if (!animate->getIsLooping())
+			{
+				animate->setIsAnimating(false);
+				currentFrame = animate->getStartFrame();
+			}
+			else
+				currentFrame = animate->getFrames();
+			animate->setCurrentFrame(static_cast<int>(currentFrame));
+		}
+
+		double min = (currentFrame - 1) / totalFrames;
+		double max = currentFrame-- / totalFrames;
+
+		sprite->setTexCoordMin(static_cast<float>(min));
+		sprite->setTexCoordMax(static_cast<float>(max));
+
+		if (animate->getIsAnimating())
+			animate->setCurrentFrame(static_cast<int>(currentFrame));
+	}
 
 	void AnimationSystem::InitAnimations()
 	{
@@ -110,10 +140,18 @@ namespace Rogue
 			auto& animate = g_engine.m_coordinator.GetComponent<AnimationComponent>(entity);
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(entity);
 
-			sprite.setTexCoordMin(0.0f);
-			sprite.setTexCoordMax(1.0f / animate.getFrames());
-
-			animate.setCurrentFrame(animate.getStartFrame());
+			if (animate.getIsNotReversed())
+			{
+				sprite.setTexCoordMin(0.0f);
+				sprite.setTexCoordMax(1.0f / animate.getFrames());
+				animate.setCurrentFrame(animate.getStartFrame());
+			}
+			else
+			{
+				sprite.setTexCoordMin(animate.getFrames() - 1 / animate.getFrames());
+				sprite.setTexCoordMax(1.0f);
+				animate.setCurrentFrame(animate.getFrames());
+			}
 		}
 	}
 
