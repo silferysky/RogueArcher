@@ -41,7 +41,7 @@ namespace Rogue
 
 		std::ostringstream oss;
 
-		oss << "\nIsTransiting " << transiting;
+		//oss << "\nIsTransiting " << transiting;
 		//Transitioning colours
 		if (transiting)
 		{
@@ -79,8 +79,25 @@ namespace Rogue
 						localA += transitionSpeed * g_deltaTime * g_engine.GetTimeScale();
 				}
 				sprite.setFilter(glm::vec4(localR, localG, localB, localA));
-				oss << "\nR: " << localR << "\nG: " << localG << "\nB: " << localB << "\nA: " << localA;
+				//oss << "\nR: " << localR << "\nG: " << localG << "\nB: " << localB << "\nA: " << localA;
 
+				Entity toChangeSprite = MAX_ENTITIES;
+				for (auto child : info.m_children)
+				{
+					if (g_engine.m_coordinator.GetHierarchyInfo(child).m_tag == "Change")
+					{
+						toChangeSprite = child;
+						break;
+					}
+				}
+
+				if (toChangeSprite != MAX_ENTITIES)
+				{
+					if (g_engine.m_coordinator.ComponentExists<SpriteComponent>(toChangeSprite))
+					{
+						g_engine.m_coordinator.GetComponent<SpriteComponent>(toChangeSprite).setFilter(glm::vec4(localR, localG, localB, localA));
+					}
+				}
 
 				//if (sprite.getFilter().r == localR &&
 				//	sprite.getFilter().g == localG &&
@@ -114,21 +131,21 @@ namespace Rogue
 
 			//Changing buds
 			EntChangeSpriteEvent* ev;
-			EntChangeRGBAEvent* rgbaEv;
+			//EntChangeRGBAEvent* rgbaEv;
 			if ((m_currentPointIndex && firstPos.y > secondPos.y) || (!m_currentPointIndex && firstPos.y < secondPos.y))
 			{
 				ev = new EntChangeSpriteEvent(toChangeSprite, "Resources\\Assets\\FlowerPlatformOpen.png");
-				rgbaEv = new EntChangeRGBAEvent(toChangeSprite, 0.71f, 0.62f, 1.0f);
+				//rgbaEv = new EntChangeRGBAEvent(toChangeSprite, 0.71f, 0.62f, 1.0f);
 			}
 			else
 			{
 				ev = new EntChangeSpriteEvent(toChangeSprite, "Resources\\Assets\\FlowerPlatformClose.png");
-				rgbaEv = new EntChangeRGBAEvent(toChangeSprite, 1.0f, 0.99f, 0.62f);
+				//rgbaEv = new EntChangeRGBAEvent(toChangeSprite, 1.0f, 0.99f, 0.62f);
 			}
 			ev->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
-			rgbaEv->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
+			//rgbaEv->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
 			EventDispatcher::instance().AddEvent(ev);
-			EventDispatcher::instance().AddEvent(rgbaEv);
+			//EventDispatcher::instance().AddEvent(rgbaEv);
 
 			//Manually preventing second occurance of this event
 			m_delay -= 0.001f;
