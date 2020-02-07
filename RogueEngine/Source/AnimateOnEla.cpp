@@ -35,7 +35,14 @@ namespace Rogue
 				auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_entity);
 				glm::vec4 colourFilter = sprite.getFilter();
 				colourFilter.a = 1.0f;
-				sprite.setFilter(colourFilter);
+				sprite.setFilter(colourFilter); 
+				
+				if (g_engine.m_coordinator.ComponentExists<ChildComponent>(m_entity))
+				{
+					auto& child = g_engine.m_coordinator.GetComponent<ChildComponent>(m_entity);
+					child.SetPosition(Vec2());
+					child.SetGlobalDirty();
+				}
 			}
 		}
 		else if (!g_engine.m_coordinator.GetComponent<AnimationComponent>(m_entity).getIsAnimating() && g_engine.m_coordinator.GetComponent<SpriteComponent>(m_entity).getFilter().a)
