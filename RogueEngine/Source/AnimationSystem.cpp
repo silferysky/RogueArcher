@@ -148,7 +148,7 @@ namespace Rogue
 			}
 			else
 			{
-				sprite.setTexCoordMin(animate.getFrames() - 1 / animate.getFrames());
+				sprite.setTexCoordMin(animate.getFrames() - 1.0f / animate.getFrames());
 				sprite.setTexCoordMax(1.0f);
 				animate.setCurrentFrame(animate.getFrames());
 			}
