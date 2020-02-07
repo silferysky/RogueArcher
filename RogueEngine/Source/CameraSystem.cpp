@@ -150,7 +150,7 @@ namespace Rogue
 					// For camera panning
 					glm::vec3 position = CameraManager::instance().GetCameraPos();
 
-					if (!m_isActive)
+					if (m_isActive)
 					{
 						float deltaX = transformPos.x - position.x + cameraOffset.x;
 						float deltaY = transformPos.y - position.y + cameraOffset.y;
