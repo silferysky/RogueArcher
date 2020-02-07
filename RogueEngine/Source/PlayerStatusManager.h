@@ -26,6 +26,9 @@ namespace Rogue
 		Entity GetPlayerEntity() const;
 		void SetIndicator(Entity ent);
 		Entity GetIndicator() const;
+		void SetPlayerActive(bool active);
+		bool IsPlayerActive() const;
+
 
 		//Jump
 		void SetHasJumped(bool jumped);
@@ -71,6 +74,10 @@ namespace Rogue
 		unsigned GetSoulsCollected() const;
 		void IncrementSoulsCollected();
 
+		//Cheats
+		void SetInfiniteJumps(bool infinite = true);
+		bool GetInfiniteJumps() const;
+
 	private:
 
 		void ChangePlayerSprite();
@@ -81,6 +88,7 @@ namespace Rogue
 		Entity m_indicator;
 		Vec2 m_playerStartPos;
 		bool m_moveLeft;
+		bool m_isActive;
 
 		//Jumping mechanic
 		bool m_hasJumped;
@@ -109,5 +117,7 @@ namespace Rogue
 
 		// Collectibles
 		unsigned m_soulsCollected;
+
+		bool m_infiniteJumps;
 	};
 }
