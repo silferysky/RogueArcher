@@ -93,8 +93,8 @@ namespace Rogue
 					}
 					else
 					{
-						//m_showCursor = true;
-						//ShowCursor(true);
+						m_showCursor = true;
+						ShowCursor(true);
 					}
 					m_gameModeChanged = false;
 				}
