@@ -11,6 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\ActivateOnDeathEla.h" />
+    <ClInclude Include="Source\ActivateOnDeathExa.h" />
     <ClInclude Include="Source\ActivateOnEla.h" />
     <ClInclude Include="Source\ActivateOnExa.h" />
     <ClInclude Include="Source\AIType.h" />
@@ -175,6 +177,8 @@
     <ClInclude Include="Source\WindowHelper.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\ActivateOnDeathEla.cpp" />
+    <ClCompile Include="Source\ActivateOnDeathExa.cpp" />
     <ClCompile Include="Source\ActivateOnEla.cpp" />
     <ClCompile Include="Source\ActivateOnExa.cpp" />
     <ClCompile Include="Source\AnimateOnExa.cpp" />
