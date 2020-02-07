@@ -637,6 +637,12 @@
     <ClInclude Include="Source\ActivateOnExa.h">
       <Filter>RogueEngine\Systems\AI\Script Types\Gameplay</Filter>
     </ClInclude>
+    <ClInclude Include="Source\ActivateOnDeathEla.h">
+      <Filter>RogueEngine\Systems\AI\Script Types\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ActivateOnDeathExa.h">
+      <Filter>RogueEngine\Systems\AI\Script Types\Gameplay</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -1006,6 +1012,12 @@
       <Filter>RogueEngine\Systems\AI\Script Types\Gameplay</Filter>
     </ClCompile>
     <ClCompile Include="Source\ActivateOnExa.cpp">
+      <Filter>RogueEngine\Systems\AI\Script Types\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ActivateOnDeathEla.cpp">
+      <Filter>RogueEngine\Systems\AI\Script Types\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ActivateOnDeathExa.cpp">
       <Filter>RogueEngine\Systems\AI\Script Types\Gameplay</Filter>
     </ClCompile>
   </ItemGroup>

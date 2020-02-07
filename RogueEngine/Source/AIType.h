@@ -41,6 +41,8 @@ namespace Rogue
 		Gameplay_AnimateOnEla,
 		Gameplay_ActivateOnExa,
 		Gameplay_ActivateOnEla,
+		Gameplay_ActivateOnDeathExa,
+		Gameplay_ActivateOnDeathEla,
 		Obj_Fade,
 		AI_Last
 	};
