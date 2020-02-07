@@ -41,7 +41,7 @@ namespace Rogue
 			m_shakeOffset.y = static_cast<float>(cos(m_currentShakeAngle) * m_currentShakeMagnitude);
 
 			//Don't micro shake the screen, also returns the screen back to centre after shaking is done
-			if (m_currentShakeMagnitude < 50.0f) 
+			if (m_currentShakeMagnitude < 5.0f) 
 			{
 				m_currentShakeMagnitude = 0;
 				m_shakeOffset = { 0,0 };
