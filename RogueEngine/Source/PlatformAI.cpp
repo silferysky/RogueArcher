@@ -82,20 +82,21 @@ namespace Rogue
 				Entity toChangeSprite = MAX_ENTITIES;
 				for (auto child : info.m_children)
 				{
-					if (g_engine.m_coordinator.GetHierarchyInfo(child).m_tag == "Change")
-					{
-						toChangeSprite = child;
-						break;
-					}
+					g_engine.m_coordinator.GetComponent<SpriteComponent>(toChangeSprite).setFilter(glm::vec4(localR, localG, localB, localA));
+					//if (g_engine.m_coordinator.GetHierarchyInfo(child).m_tag == "Change")
+					//{
+					//	toChangeSprite = child;
+					//	break;
+					//}
 				}
 
-				if (toChangeSprite != MAX_ENTITIES)
-				{
-					if (g_engine.m_coordinator.ComponentExists<SpriteComponent>(toChangeSprite))
-					{
-						g_engine.m_coordinator.GetComponent<SpriteComponent>(toChangeSprite).setFilter(glm::vec4(localR, localG, localB, localA));
-					}
-				}
+				//if (toChangeSprite != MAX_ENTITIES)
+				//{
+				//	if (g_engine.m_coordinator.ComponentExists<SpriteComponent>(toChangeSprite))
+				//	{
+				//		g_engine.m_coordinator.GetComponent<SpriteComponent>(toChangeSprite).setFilter(glm::vec4(localR, localG, localB, localA));
+				//	}
+				//}
 
 				//if (sprite.getFilter().r == localR &&
 				//	sprite.getFilter().g == localG &&

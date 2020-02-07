@@ -36,6 +36,13 @@ namespace Rogue
 					SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(PLAYER_STATUS.GetPlayerEntity());
 					sprite.setFilter(glm::vec4(sprite.getFilter().r, sprite.getFilter().g, sprite.getFilter().b, 0.0f));
 				}
+
+				if (PLAYER_STATUS.GetIndicator() != MAX_ENTITIES)
+				{
+					PLAYER_STATUS.SetIndicatorStatus(false);
+					g_engine.m_coordinator.AddToDeleteQueue(PLAYER_STATUS.GetIndicator());
+					PLAYER_STATUS.SetIndicator(MAX_ENTITIES);
+				}
 			}
 			else if (m_timer >= 3.0f)
 			{
@@ -48,6 +55,8 @@ namespace Rogue
 					SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(PLAYER_STATUS.GetPlayerEntity());
 					sprite.setFilter(glm::vec4(sprite.getFilter().r, sprite.getFilter().g, sprite.getFilter().b, 1.0f));
 				}
+
+				PLAYER_STATUS.SetIndicatorStatus(true);
 			}
 		}
 	}
