@@ -1,6 +1,6 @@
 {
     "MaxEntityCount": 169,
-    "EntityCount": 164,
+    "EntityCount": 165,
     "CameraMinX": -3392.0,
     "CameraMinY": -933.0,
     "CameraMaxX": 2388.0,
@@ -341,7 +341,7 @@
     "Entity161": "Name{Ela Particle Emitter}|Tag{}|||Transform{-2813.04;1103.46;61;61;0;13}||||LogicComponent{18;0;1;0}|StatsComponent{0;0;0;0;0;;0;}|||||||||Particle Emitter{-11;-24;18;23;10;10;0;0;0.001;0;0;0.5;1;0;1;Resources/Assets/ParticleEla.png;12;}|||||",
     "Entity162": "Name{Exa Death Particle}|Tag{}|||Transform{-2813.04;1103.46;100;100;0;0}||||LogicComponent{19;0;1;0}|StatsComponent{0;0;0;0;0;;0;}|||||||||Particle Emitter{0;0;25;60;10;10;7;11;1;129;86;1;1;0;0;Resources/Assets/ParticleExa.png;13;}|||||",
     "Entity163": "Name{Ela Death Particle}|Tag{}|||Transform{-2813.04;1103.46;100;100;0;0}||||LogicComponent{20;0;1;0}|StatsComponent{0;0;0;0;0;;0;}|||||||||Particle Emitter{0;0;25;60;10;10;7;11;1;129;86;1;1;0;0;Resources/Assets/ParticleEla.png;13;}|||||",
-    "Entity164": "Name{Hum_SFX1}|Tag{}|||Transform{-2748;-639.549;100;100;0;0}||||||||Audio{Resources\\Sounds\\soul_hum.ogg;750;0.3;1;1;}|||||||||||",
+    "Entity164": "Name{Death_SFX}|Tag{}|||Transform{0;0;100;100;0;0}||||||||Audio{Resources\\Sounds\\soul_pickup.ogg;1;0.2;0;0;}|||||||||||",
     "Entity165": "Name{Game Object 165}|Tag{}|Sprite{Resources\\Assets\\Crystal_New.png;0.00783355;0.333616;0.79902;1;}||Transform{-1522.18;-419.316;134.437;110.903;6.28;7}|||||||||||||||||||",
     "Entity166": "Name{Game Object 165}|Tag{}|Sprite{Resources\\Assets\\Snail.png;1;0.99999;0.99999;1;}||Transform{-1143.13;-82.3301;21;12;0;11}|||||||||||||||||||",
     "Entity167": "Name{DeathBox}|Tag{}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{1143.3;-771.769;100;100;0;0}||BoxCollider{0;-20;-24;1688;32;TRIGGER}||LogicComponent{11;0;1;0}|StatsComponent{0;0;0;0;0;;0;}||||||Collider{BOX;00000000000000000000000000000001;11111111111111111111111111111111;}||||||||",
