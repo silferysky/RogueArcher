@@ -92,6 +92,9 @@ namespace Rogue
 				ParentSetEvent* parent = new ParentSetEvent(*m_entities.begin(), PLAYER_STATUS.GetIndicator());
 				parent->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
 				EventDispatcher::instance().AddEvent(parent);
+
+				//Resetting some values
+				PLAYER_STATUS.SetInfiniteJumps(false);
 			}
 			else
 			{
