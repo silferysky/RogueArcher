@@ -39,8 +39,6 @@ namespace Rogue
 
 		}
 
-		std::ostringstream oss;
-
 		//oss << "\nIsTransiting " << transiting;
 		//Transitioning colours
 		if (transiting)
@@ -107,6 +105,22 @@ namespace Rogue
 			}
 		}
 
+
+		Entity toChangeSprite = MAX_ENTITIES;
+		for (auto child : info.m_children)
+		{
+			if (g_engine.m_coordinator.GetHierarchyInfo(child).m_tag == "Change")
+			{
+				toChangeSprite = child;
+				break;
+			}
+		}
+
+		std::ostringstream oss;
+		if (g_engine.m_coordinator.ComponentExists<AnimationComponent>(toChangeSprite) && toChangeSprite != MAX_ENTITIES)
+		{
+			oss << "ANIM: " << g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).getCurrentFrame();
+		}
 		RE_INFO(oss.str());
 
 		//If m_delay == m_patrolDelay, it means a new waypoint is just selected
@@ -149,8 +163,10 @@ namespace Rogue
 					animation.Deserialize("4;3;0.3f;0;0;");
 					g_engine.m_coordinator.AddComponent(toChangeSprite, animation);
 				}
-				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setCurrentFrame(0);
+				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setCurrentFrame(3);
+				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setEndFrame(1);
 				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setIsAnimating(true);
+				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setIsNotReversed(false);
 			}
 			else
 			{
@@ -168,7 +184,9 @@ namespace Rogue
 					g_engine.m_coordinator.AddComponent(toChangeSprite, animation);
 				}
 				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setCurrentFrame(0);
+				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setEndFrame(3);
 				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setIsAnimating(true);
+				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setIsNotReversed(true);
 			}
 			ev->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
 			//rgbaEv->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
