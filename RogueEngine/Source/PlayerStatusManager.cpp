@@ -12,6 +12,7 @@ namespace Rogue
 		m_playerStartPos{Vec2(0,0)},
 		m_isLightMode{ true },
 		m_hasJumped{ false },
+		m_moveLeft {false},
 		m_indicatorShown{true},
 		m_death{false},
 		m_maxJumpTimer{0.5f},
@@ -118,6 +119,16 @@ namespace Rogue
 	bool PlayerStatusManager::GetDeath() const
 	{
 		return m_death;
+	}
+
+	void PlayerStatusManager::SetMoveLeft(bool isLeft)
+	{
+		m_moveLeft = isLeft;
+	}
+
+	bool PlayerStatusManager::GetMoveLeft() const
+	{
+		return m_moveLeft;
 	}
 
 	float PlayerStatusManager::GetTeleportCharge() const

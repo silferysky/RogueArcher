@@ -39,6 +39,8 @@ namespace Rogue
 		bool ShowIndicator() const;
 		void SetDeath(bool death);
 		bool GetDeath() const;
+		void SetMoveLeft(bool isLeft);
+		bool GetMoveLeft() const;
 
 		//Teleporting
 		float GetTeleportCharge() const;
@@ -68,6 +70,7 @@ namespace Rogue
 		void SetSoulsCollected(unsigned soulsCollected);
 		unsigned GetSoulsCollected() const;
 		void IncrementSoulsCollected();
+
 	private:
 
 		void ChangePlayerSprite();
@@ -77,6 +80,7 @@ namespace Rogue
 		Entity m_entity;
 		Entity m_indicator;
 		Vec2 m_playerStartPos;
+		bool m_moveLeft;
 
 		//Jumping mechanic
 		bool m_hasJumped;
