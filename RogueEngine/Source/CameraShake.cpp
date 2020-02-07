@@ -22,7 +22,7 @@ Technology is prohibited.
 
 namespace Rogue
 {
-	CameraShake::CameraShake() : m_shakeAngleMagnitude{ 180 }, m_shakeInterval{ 0.05f }, m_currentShakeMagnitude{ 0.0f }, m_currentShakeAngle{ static_cast<float>(rand() % 360) }, m_duration{ 0 }, m_shakeOffset{ 0, 0 }
+	CameraShake::CameraShake() : m_shakeAngleMagnitude{ 180 }, m_shakeInterval{ 0.05f }, m_currentShakeMagnitude{ 0.0f }, m_currentShakeAngle{ rand() % 360 }, m_duration{ 0 }, m_shakeOffset{ 0, 0 }
 	{}
 
 	void CameraShake::Update()

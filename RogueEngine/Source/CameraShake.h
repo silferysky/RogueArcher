@@ -24,7 +24,7 @@ namespace Rogue
 	class CameraShake
 	{
 		int m_shakeAngleMagnitude;
-		float m_currentShakeAngle;
+		int m_currentShakeAngle;
 
 		float m_shakeInterval; //If dt > m_i_ShakeInterval, then update screenshake magnitude
 		float m_currentShakeMagnitude;
