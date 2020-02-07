@@ -92,6 +92,9 @@ namespace Rogue
 				ParentSetEvent* parent = new ParentSetEvent(*m_entities.begin(), PLAYER_STATUS.GetIndicator());
 				parent->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
 				EventDispatcher::instance().AddEvent(parent);
+
+				//Resetting some values
+				PLAYER_STATUS.SetInfiniteJumps(false);
 			}
 			else
 			{
@@ -299,6 +302,11 @@ namespace Rogue
 				else if (keycode == KeyPress::KeyF6)
 					g_engine.ToggleVSync();
 
+				else if (keycode == KeyPress::Key0)
+				{
+					PLAYER_STATUS.SetInfiniteJumps(!PLAYER_STATUS.GetInfiniteJumps());
+				}
+
 				else if (keycode == KeyPress::MB1 && g_engine.GetIsFocused())
 				{
 					//For slow mo
@@ -391,7 +399,7 @@ namespace Rogue
 				{
 					if (g_engine.GetIsFocused())
 					{
-						if (keycode == KeyPress::KeyA)
+						if (keycode == KeyPress::KeyA && PLAYER_STATUS.IsPlayerActive())
 						{
 							auto& ctrler = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(*iEntity);
 							ctrler.SetMoveState(MoveState::e_left);
@@ -403,7 +411,7 @@ namespace Rogue
 							PLAYER_STATUS.SetMoveLeft(true);
 							MovingPlayer();
 						}
-						else if (keycode == KeyPress::KeyD)
+						else if (keycode == KeyPress::KeyD && PLAYER_STATUS.IsPlayerActive())
 						{
 							auto& ctrler = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(*iEntity);
 							ctrler.SetMoveState(MoveState::e_right);
@@ -425,20 +433,9 @@ namespace Rogue
 								{
 									auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
 
-									trans.setPosition(Vec2(480.0f, -321.0f));
+									trans.setPosition(Vec2(2300.0f, 350.0f));
 								}
 							}
-
-							if (SceneManager::instance().getCurrentFileName() == "Level 9.json")
-							{
-								if (g_engine.m_coordinator.ComponentExists<TransformComponent>(*iEntity))
-								{
-									auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
-
-									trans.setPosition(Vec2(1150.0f, 578.0f));
-								}
-							}
-							
 						}
 						else if (keycode == KeyPress::KeyS)
 						{
@@ -454,16 +451,7 @@ namespace Rogue
 								{
 									auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
 
-									trans.setPosition(Vec2(155.0f, 55.0f));
-								}
-							}
-							else if (SceneManager::instance().getCurrentFileName() == "Level 9.json")
-							{
-								if (g_engine.m_coordinator.ComponentExists<TransformComponent>(*iEntity))
-								{
-									auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
-
-									trans.setPosition(Vec2(-1557.0f, 258.0f));
+									trans.setPosition(Vec2(-2813.04f, 1103.46f));
 								}
 							}
 						}
@@ -485,13 +473,16 @@ namespace Rogue
 			{
 				if (keycode == KeyPress::MB1)
 				{
-					if (!m_timedEntities.size() && PLAYER_STATUS.GetInLightDur() < 0.0f && PLAYER_STATUS.GetTeleportDelay() < 0.0f && PLAYER_STATUS.GetTeleportCharge() >= 1.0f)
+					if (!m_timedEntities.size() && PLAYER_STATUS.GetInLightDur() < 0.0f && 
+						PLAYER_STATUS.GetTeleportDelay() < 0.0f && 
+						(PLAYER_STATUS.GetTeleportCharge() >= 1.0f || PLAYER_STATUS.GetInfiniteJumps()))
 					{
 						//CreateBallAttack();
 						//auto& player = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(*m_entities.begin());
 						//if (player.m_grounded)
 						//	PLAYER_STATUS.SetTeleportCharge(PLAYER_STATUS.GetMaxTeleportCharge());
-						Teleport();
+						if (PLAYER_STATUS.IsPlayerActive())
+							Teleport();
 						m_ignoreFrameEvent = true;
 					}
 					//if (PLAYER_STATUS.ShowIndicator())
