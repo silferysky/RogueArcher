@@ -39,8 +39,6 @@ namespace Rogue
 
 		}
 
-		std::ostringstream oss;
-
 		//oss << "\nIsTransiting " << transiting;
 		//Transitioning colours
 		if (transiting)
@@ -149,8 +147,10 @@ namespace Rogue
 					animation.Deserialize("4;3;0.3f;0;0;");
 					g_engine.m_coordinator.AddComponent(toChangeSprite, animation);
 				}
-				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setCurrentFrame(0);
+				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setCurrentFrame(3);
+				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setEndFrame(1);
 				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setIsAnimating(true);
+				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setIsNotReversed(false);
 			}
 			else
 			{
@@ -168,7 +168,9 @@ namespace Rogue
 					g_engine.m_coordinator.AddComponent(toChangeSprite, animation);
 				}
 				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setCurrentFrame(0);
+				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setEndFrame(3);
 				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setIsAnimating(true);
+				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setIsNotReversed(true);
 			}
 			ev->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
 			//rgbaEv->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
