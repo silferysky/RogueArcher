@@ -64,7 +64,6 @@ namespace Rogue
 		EvEntityDamaged,
 		EvEntityDestroy,
 		EvEntityHitchhike,
-		EvEntityChangeSprite,
 
 		EvResetGame,
 
@@ -77,6 +76,8 @@ namespace Rogue
 		EvEntityPicked,
 		EvTransition,
 		EvFade,
+		EvEntityChangeSprite,
+		EvEntityChangeRGBA,
 
 		EvParentSet,
 		EvParentReset,
