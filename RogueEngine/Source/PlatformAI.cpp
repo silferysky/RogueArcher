@@ -7,7 +7,10 @@
 namespace Rogue
 {
 	PlatformAI::PlatformAI(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent)
-		: PatrolAI(entity, logicComponent, statsComponent)
+		: PatrolAI(entity, logicComponent, statsComponent),
+		r{ 1.0f }, g{ 1.0f }, b{ 1.0f }, a{ 1.0f },
+		transitionSpeed{0.2f}, 
+		transiting{ false }
 	{
 		//HierarchyInfo& info = g_engine.m_coordinator.GetHierarchyInfo(entity);
 		//for (auto child : info.m_children)
@@ -36,6 +39,76 @@ namespace Rogue
 
 		}
 
+		std::ostringstream oss;
+
+		//oss << "\nIsTransiting " << transiting;
+		//Transitioning colours
+		if (transiting)
+		{
+			if (g_engine.m_coordinator.ComponentExists<SpriteComponent>(m_entity))
+			{
+				SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_entity);
+				float localR = sprite.getFilter().r, localG = sprite.getFilter().g, localB = sprite.getFilter().b, localA = sprite.getFilter().a;
+
+				if (sprite.getFilter().r - r > 0.001f || sprite.getFilter().r - r < -0.001f)
+				{
+					if (sprite.getFilter().r > r)
+						localR -= transitionSpeed * g_deltaTime * g_engine.GetTimeScale();
+					else
+						localR += transitionSpeed * g_deltaTime * g_engine.GetTimeScale();
+				}
+				if (sprite.getFilter().g - g > 0.001f || sprite.getFilter().g - g < -0.001f)
+				{
+					if (sprite.getFilter().g > g)
+						localG -= transitionSpeed * g_deltaTime * g_engine.GetTimeScale();
+					else
+						localG += transitionSpeed * g_deltaTime * g_engine.GetTimeScale();
+				}
+				if (sprite.getFilter().b - b > 0.001f || sprite.getFilter().b - b < -0.001f)
+				{
+					if (sprite.getFilter().b > b)
+						localB -= transitionSpeed * g_deltaTime * g_engine.GetTimeScale();
+					else
+						localB += transitionSpeed * g_deltaTime * g_engine.GetTimeScale();
+				}
+				if (sprite.getFilter().a - a > 0.001f || sprite.getFilter().a - a < -0.001f)
+				{
+					if (sprite.getFilter().a > a)
+						localA -= transitionSpeed * g_deltaTime * g_engine.GetTimeScale();
+					else
+						localA += transitionSpeed * g_deltaTime * g_engine.GetTimeScale();
+				}
+				sprite.setFilter(glm::vec4(localR, localG, localB, localA));
+				//oss << "\nR: " << localR << "\nG: " << localG << "\nB: " << localB << "\nA: " << localA;
+
+				Entity toChangeSprite = MAX_ENTITIES;
+				for (auto child : info.m_children)
+				{
+					if (g_engine.m_coordinator.GetHierarchyInfo(child).m_tag == "Change")
+					{
+						toChangeSprite = child;
+						break;
+					}
+				}
+
+				if (toChangeSprite != MAX_ENTITIES)
+				{
+					if (g_engine.m_coordinator.ComponentExists<SpriteComponent>(toChangeSprite))
+					{
+						g_engine.m_coordinator.GetComponent<SpriteComponent>(toChangeSprite).setFilter(glm::vec4(localR, localG, localB, localA));
+					}
+				}
+
+				//if (sprite.getFilter().r == localR &&
+				//	sprite.getFilter().g == localG &&
+				//	sprite.getFilter().b == localB &&
+				//	sprite.getFilter().a == localA)
+				//	transiting = false;
+			}
+		}
+
+		RE_INFO(oss.str());
+
 		//If m_delay == m_patrolDelay, it means a new waypoint is just selected
 		if (m_delay == m_patrolDelay)
 		{
@@ -58,26 +131,36 @@ namespace Rogue
 
 			//Changing buds
 			EntChangeSpriteEvent* ev;
+			//EntChangeRGBAEvent* rgbaEv;
 			if ((m_currentPointIndex && firstPos.y > secondPos.y) || (!m_currentPointIndex && firstPos.y < secondPos.y))
 			{
 				ev = new EntChangeSpriteEvent(toChangeSprite, "Resources\\Assets\\FlowerPlatformOpen.png");
+				//rgbaEv = new EntChangeRGBAEvent(toChangeSprite, 0.71f, 0.62f, 1.0f);
 			}
 			else
 			{
 				ev = new EntChangeSpriteEvent(toChangeSprite, "Resources\\Assets\\FlowerPlatformClose.png");
+				//rgbaEv = new EntChangeRGBAEvent(toChangeSprite, 1.0f, 0.99f, 0.62f);
 			}
 			ev->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
+			//rgbaEv->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
 			EventDispatcher::instance().AddEvent(ev);
+			//EventDispatcher::instance().AddEvent(rgbaEv);
 
 			//Manually preventing second occurance of this event
 			m_delay -= 0.001f;
 		}
 		else if (m_delay == 0.0f)
 		{
-			EntChangeSpriteEvent* ev;
+			//EntChangeRGBAEvent* ev;
 			if ((m_currentPointIndex && firstPos.y > secondPos.y) || (!m_currentPointIndex && firstPos.y < secondPos.y))
 			{
-				ev = new EntChangeSpriteEvent(m_entity, "Resources\\Assets\\FlowerDown.png");
+				//ev = new EntChangeRGBAEvent(m_entity, 1.0f, 0.0f, 1.0f, a);
+				r = 0.71f;
+				g = 0.62f;
+				b = 1.0f;
+				//a = 1.0f;
+				transiting = true;
 
 				if (g_engine.m_coordinator.ComponentExists<ColliderComponent>(m_entity))
 				{
@@ -95,7 +178,12 @@ namespace Rogue
 			}
 			else
 			{
-				ev = new EntChangeSpriteEvent(m_entity, "Resources\\Assets\\FlowerUp.png");
+				//ev = new EntChangeRGBAEvent(m_entity, 1.0f, 1.0f, 0.0f, a);
+				r = 1.0f;
+				g = 0.99f;
+				b = 0.62f;
+				//a = 1.0f;
+				transiting = true;
 
 				if (g_engine.m_coordinator.ComponentExists<ColliderComponent>(m_entity))
 				{
@@ -111,12 +199,11 @@ namespace Rogue
 					collider.SetMask(lightPos, false);
 				}
 			}
-			ev->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
-			EventDispatcher::instance().AddEvent(ev);
+			//ev->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
+			//EventDispatcher::instance().AddEvent(ev);
 
 			//Manually preventing second occurance of this event
 			m_delay -= 0.001f;
 		}
-
 	}
 }

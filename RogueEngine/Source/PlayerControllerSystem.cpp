@@ -253,10 +253,14 @@ namespace Rogue
 			PLAYER_STATUS.Reset();
 			break;
 		}
-		case EventType::EvMouseMoved:
+		case EventType::EvEntityChangeRGBA:
 		{
-			MouseMoveEvent* mouseMove = dynamic_cast<MouseMoveEvent*>(ev);
-			KeyPress keycode = mouseMove->GetKeyCode();
+			EntChangeRGBAEvent* event = dynamic_cast<EntChangeRGBAEvent*>(ev);
+			if (g_engine.m_coordinator.ComponentExists<SpriteComponent>(event->GetEntityID()))
+			{
+				auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(event->GetEntityID());
+				sprite.setFilter(glm::vec4(event->R(), event->G(), event->B(), event->A()));
+			}
 
 			return;
 		}

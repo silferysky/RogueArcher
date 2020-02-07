@@ -62,6 +62,23 @@ namespace Rogue
 		std::string path;
 	};
 
+	class EntChangeRGBAEvent : public EntityEvent
+	{
+	public:
+		SET_EVENT_TYPE(EvEntityChangeRGBA);
+
+		EntChangeRGBAEvent(Entity ent, float R, float G, float B, float A = 1.0f)
+			: EntityEvent(ent), r{ R }, g{ G }, b{ B }, a{ A }{}
+
+		inline float R() const { return r; }
+		inline float G() const { return g; }
+		inline float B() const { return b; }
+		inline float A() const { return a; }
+
+	private:
+		float r, g, b, a;
+	};
+
 	class EntChangeStateEvent : public EntityEvent
 	{
 	public:

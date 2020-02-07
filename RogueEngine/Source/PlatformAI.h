@@ -8,5 +8,9 @@ namespace Rogue
 	public:
 		PlatformAI(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent);
 		virtual void AIPatrolUpdate() override;
+
+		float r, g, b, a;
+		float transitionSpeed;
+		bool transiting;
 	};
 }
