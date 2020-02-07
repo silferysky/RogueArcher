@@ -22,7 +22,7 @@ namespace Rogue
 		if (PlayerStatusManager::instance().GetDeath())
 		{
 			m_timer += g_deltaTime * g_engine.GetTimeScale();
-			if (m_timer >= 0.4592f && m_timer < 3.0f)
+			if (m_timer >= 0.4592166f && m_timer < 3.0f)
 			{
 				g_engine.m_coordinator.GetSystem<CameraSystem>()->setIsActive(false);
 				g_engine.m_coordinator.GetComponent<TransformComponent>(m_other).setPosition(PlayerStatusManager::instance().GetCheckpoint());
