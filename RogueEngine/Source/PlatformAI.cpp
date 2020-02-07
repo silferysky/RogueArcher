@@ -134,17 +134,16 @@ namespace Rogue
 				//a = 1.0f;
 				transiting = true;
 
-				ev = new EntChangeSpriteEvent(toChangeSprite, "Resources\\Assets\\FlowerBud.png");
-				if (!g_engine.m_coordinator.ComponentExists<AnimationComponent>(toChangeSprite))
+				//ev = new EntChangeSpriteEvent(toChangeSprite, "Resources\\Assets\\FlowerBud.png");
+				/* if (!g_engine.m_coordinator.ComponentExists<AnimationComponent>(toChangeSprite))
 				{
 					AnimationComponent animation{};
-					animation.Deserialize("4;3;0.3f;0;0;");
+					animation.Deserialize("4;0;0.3f;0;0;");
 					g_engine.m_coordinator.AddComponent(toChangeSprite, animation);
-				}
-				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setCurrentFrame(3);
-				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setEndFrame(1);
+				} */
 				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setIsAnimating(true);
 				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setIsNotReversed(false);
+				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setCurrentFrame(4);
 			}
 			else
 			{
@@ -154,21 +153,20 @@ namespace Rogue
 				b = 0.62f;
 				//a = 1.0f;
 				transiting = true;
-				ev = new EntChangeSpriteEvent(toChangeSprite, "Resources\\Assets\\FlowerBud.png");
-				if (!g_engine.m_coordinator.ComponentExists<AnimationComponent>(toChangeSprite))
+				//ev = new EntChangeSpriteEvent(toChangeSprite, "Resources\\Assets\\FlowerBud.png");
+				/* if (!g_engine.m_coordinator.ComponentExists<AnimationComponent>(toChangeSprite))
 				{
 					AnimationComponent animation{};
-					animation.Deserialize("4;3;0.3f;0;0;");
+					animation.Deserialize("4;0;0.3f;0;0;");
 					g_engine.m_coordinator.AddComponent(toChangeSprite, animation);
-				}
-				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setCurrentFrame(0);
-				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setEndFrame(3);
+				} */
 				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setIsAnimating(true);
 				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setIsNotReversed(true);
+				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setCurrentFrame(0);
 			}
-			ev->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
+			//ev->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
 			//rgbaEv->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
-			EventDispatcher::instance().AddEvent(ev);
+			//EventDispatcher::instance().AddEvent(ev);
 			//EventDispatcher::instance().AddEvent(rgbaEv);
 
 			//Manually preventing second occurance of this event
