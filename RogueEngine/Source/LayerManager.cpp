@@ -105,7 +105,7 @@ namespace Rogue
 			});
 
 		if (it != m_layers.end())
-			return it->first;
+			return static_cast<int>(it->first);
 		else
 			return -1;
 	}
