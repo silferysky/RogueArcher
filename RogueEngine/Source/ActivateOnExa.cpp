@@ -21,23 +21,15 @@ namespace Rogue
 		{
 			m_isLightMode = PlayerStatusManager::instance().GetLightStatus();
 
-			if (!m_isLightMode)
+			if (m_isLightMode)
 			{
-				g_engine.m_coordinator.GetComponent<AnimationComponent>(m_entity).setIsAnimating(true);
-
-				auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_entity);
-
-				glm::vec4 colourFilter = sprite.getFilter();
-				colourFilter.a = 1.0f;
-				g_engine.m_coordinator.GetComponent<SpriteComponent>(m_entity).setFilter(colourFilter);
+				g_engine.m_coordinator.GetComponent<ParticleEmitterComponent>(m_entity).SetIsActive(true);
 			}
 		}
-		else if (!g_engine.m_coordinator.GetComponent<AnimationComponent>(m_entity).getIsAnimating() && g_engine.m_coordinator.GetComponent<SpriteComponent>(m_entity).getFilter().a)
-			// not animating and not transparent
+		else if (g_engine.m_coordinator.GetComponent<ParticleEmitterComponent>(m_entity).GetIsActive())
+			// active
 		{
-			glm::vec4 colourFilter = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_entity).getFilter();
-			colourFilter.a = 0.0f;
-			g_engine.m_coordinator.GetComponent<SpriteComponent>(m_entity).setFilter(colourFilter);
+			g_engine.m_coordinator.GetComponent<ParticleEmitterComponent>(m_entity).SetIsActive(false);
 		}
 	}
 }
