@@ -80,7 +80,7 @@ namespace Rogue
 			if (!animate->getIsLooping())
 			{
 				animate->setIsAnimating(false);
-				currentFrame = animate->getFrames() - 1;
+				currentFrame = animate->getFrames();
 			}
 			else
 				currentFrame = 0;
