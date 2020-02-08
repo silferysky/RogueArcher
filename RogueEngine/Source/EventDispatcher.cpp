@@ -114,8 +114,8 @@ namespace Rogue
 			Event* nextEvent = instance().GetQueueHead();
 			instance().DispatchEvent(nextEvent);
 			instance().EventQueue.pop();
-			//if (nextEvent->eventCat != EventCatEditor && nextEvent->eventCat != EventCatEditorUndo)
-				//delete nextEvent;
+			if (nextEvent->eventCat != EventCatEditor)
+				delete nextEvent;
 		}
 		g_engine.m_coordinator.EndTimeSystem("Event Dispatcher");
 	}

@@ -35,7 +35,7 @@ namespace Rogue
 	public:
 
 		MenuControllerSystem();
-		~MenuControllerSystem() = default;
+		~MenuControllerSystem();
 
 		//Basic System 
 		void Init() override;

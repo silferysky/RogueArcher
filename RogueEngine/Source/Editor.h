@@ -32,6 +32,7 @@ namespace Rogue
 		Editor() :
 			System(SystemID::id_EDITOR)
 		{}
+		~Editor();
 
 		void Init() override;
 		void Update() override;

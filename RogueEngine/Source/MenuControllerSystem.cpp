@@ -35,6 +35,12 @@ namespace Rogue
 	{
 	}
 
+	MenuControllerSystem::~MenuControllerSystem()
+	{
+		m_menuObjs.clear();
+		m_confirmQuitEnt.clear();
+	}
+
 	void MenuControllerSystem::Init()
 	{
 		REGISTER_LISTENER(SystemID::id_MENUCONTROLLERSYSTEM, MenuControllerSystem::Receive);
