@@ -32,7 +32,6 @@ namespace Rogue
 				}
 
 				child.SetPosition(0.0f, 0.0f);
-				child.SetPositionZ(1);
 				child.SetGlobalDirty();
 			}
 		}
@@ -43,7 +42,6 @@ namespace Rogue
 
 			if (!m_isLightMode)
 			{
-				g_engine.m_coordinator.GetComponent<AnimationComponent>(m_entity).setCurrentFrame(0);
 				g_engine.m_coordinator.GetComponent<AnimationComponent>(m_entity).setIsAnimating(true);
 
 				// set parent to disappear
@@ -69,7 +67,6 @@ namespace Rogue
 			glm::vec4 parentFilter = parentSprite.getFilter();
 			parentFilter.a = 1.0f;
 			parentSprite.setFilter(parentFilter);
-			parentSprite.setTexture("Resources\\Assets\\ElaIdle.png");
 
 			glm::vec4 colourFilter = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_entity).getFilter();
 			colourFilter.a = 0.0f;

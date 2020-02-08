@@ -181,14 +181,14 @@ namespace Rogue
 	void PlayerStatusManager::ToggleLightStatus()
 	{
 		m_isLightMode = !m_isLightMode;
-		//ChangePlayerSprite();
+		ChangePlayerSprite();
 
 	}
 
 	void PlayerStatusManager::SetLightStatus(bool isLight)
 	{
 		m_isLightMode = isLight;
-		//ChangePlayerSprite();
+		ChangePlayerSprite();
 	}
 
 	bool PlayerStatusManager::GetLightStatus() const
