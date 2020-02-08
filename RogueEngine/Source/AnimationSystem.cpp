@@ -80,7 +80,7 @@ namespace Rogue
 			if (!animate->getIsLooping())
 			{
 				animate->setIsAnimating(false);
-				currentFrame = animate->getFrames() -1;
+				currentFrame = animate->getEndFrame();
 			}
 			else
 				currentFrame = 0;
@@ -142,8 +142,8 @@ namespace Rogue
 
 			if (animate.getIsNotReversed())
 			{
-				sprite.setTexCoordMin(0.0f);
-				sprite.setTexCoordMax(1.0f / animate.getFrames());
+				sprite.setTexCoordMin(animate.getStartFrame() / animate.getFrames());
+				sprite.setTexCoordMax(animate.getStartFrame() + 1 / animate.getFrames());
 				animate.setCurrentFrame(animate.getStartFrame());
 			}
 			else
