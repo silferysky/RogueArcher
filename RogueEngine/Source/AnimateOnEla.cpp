@@ -55,7 +55,6 @@ namespace Rogue
 				glm::vec4 colourFilter = sprite.getFilter();
 				colourFilter.a = 1.0f;
 				sprite.setFilter(colourFilter);
-
 			}
 		}
 		else if (!g_engine.m_coordinator.GetComponent<AnimationComponent>(m_entity).getIsAnimating() && g_engine.m_coordinator.GetComponent<SpriteComponent>(m_entity).getFilter().a)
