@@ -9,8 +9,9 @@ namespace Rogue
 	PlatformAI::PlatformAI(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent)
 		: PatrolAI(entity, logicComponent, statsComponent),
 		r{ 1.0f }, g{ 1.0f }, b{ 1.0f }, a{ 1.0f },
-		transitionSpeed{0.2f}, 
-		transiting{ false }
+		transitionSpeed{ 0.3f },
+		transiting{ false },
+		changeDelay{ m_patrolDelay / 2 }
 	{
 		//HierarchyInfo& info = g_engine.m_coordinator.GetHierarchyInfo(entity);
 		//for (auto child : info.m_children)
@@ -94,11 +95,11 @@ namespace Rogue
 			}
 		}
 
-		std::ostringstream oss;
-		if (g_engine.m_coordinator.ComponentExists<AnimationComponent>(toChangeSprite) && toChangeSprite != MAX_ENTITIES)
-		{
-			oss << "ANIM: " << g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).getCurrentFrame();
-		}
+		//std::ostringstream oss;
+		//if (g_engine.m_coordinator.ComponentExists<AnimationComponent>(toChangeSprite) && toChangeSprite != MAX_ENTITIES)
+		//{
+		//	oss << "ANIM: " << g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).getCurrentFrame();
+		//}
 		//RE_INFO(oss.str());
 
 		//If m_delay == m_patrolDelay, it means a new waypoint is just selected
@@ -123,7 +124,7 @@ namespace Rogue
 				return;
 
 			//Changing buds
-			EntChangeSpriteEvent* ev;
+			//EntChangeSpriteEvent* ev;
 			//EntChangeRGBAEvent* rgbaEv;
 			if ((m_currentPointIndex && firstPos.y > secondPos.y) || (!m_currentPointIndex && firstPos.y < secondPos.y))
 			{
@@ -142,8 +143,8 @@ namespace Rogue
 					g_engine.m_coordinator.AddComponent(toChangeSprite, animation);
 				} */
 				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setIsAnimating(true);
-				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setIsNotReversed(false);
-				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setCurrentFrame(4);
+				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setIsNotReversed(true);
+				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setCurrentFrame(0);
 			}
 			else
 			{
@@ -161,8 +162,8 @@ namespace Rogue
 					g_engine.m_coordinator.AddComponent(toChangeSprite, animation);
 				} */
 				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setIsAnimating(true);
-				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setIsNotReversed(true);
-				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setCurrentFrame(0);
+				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setIsNotReversed(false);
+				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setCurrentFrame(4);
 			}
 			//ev->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
 			//rgbaEv->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
@@ -172,7 +173,7 @@ namespace Rogue
 			//Manually preventing second occurance of this event
 			m_delay -= 0.001f;
 		}
-		else if (m_delay == 0.0f)
+		else if (m_delay - changeDelay > -0.01f && m_delay - changeDelay < 0.01f)
 		{
 			if ((m_currentPointIndex && firstPos.y > secondPos.y) || (!m_currentPointIndex && firstPos.y < secondPos.y))
 			{

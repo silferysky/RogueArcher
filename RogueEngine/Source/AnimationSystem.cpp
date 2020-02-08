@@ -67,7 +67,7 @@ namespace Rogue
 
 		// have not yet reached next frame
 		if (animate->getTimer() < animate->getSecondsPerFrame())
-			return;
+			return;	
 
 		animate->setTimer(0);
 
@@ -80,7 +80,7 @@ namespace Rogue
 			if (!animate->getIsLooping())
 			{
 				animate->setIsAnimating(false);
-				currentFrame = animate->getFrames();
+				currentFrame = animate->getFrames() -1;
 			}
 			else
 				currentFrame = 0;
