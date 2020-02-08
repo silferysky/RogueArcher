@@ -96,13 +96,19 @@ namespace Rogue
 		FmodErrorCheck(m_result);
 	}
 
+	/* void Sound::ReleaseSound()
+	{
+		m_result = m_fmodSound->release();
+		FmodErrorCheck(m_result);
+	} */
+
 	void Sound::Release()
 	{
 		m_result = m_fmodSound->release();
 		FmodErrorCheck(m_result);
 
-		//m_result = m_system->release();
-		//FmodErrorCheck(m_result);
+		m_result = m_system->release();
+		FmodErrorCheck(m_result);
 	}
 
 	/* Getters/Setters */
