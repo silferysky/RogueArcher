@@ -23,7 +23,7 @@ namespace Rogue
 				PlayerStatusManager::instance().IncrementSoulsCollected();
 
 				g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(m_entity).DestroySound();
-				g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(m_entity).getSound().Release();
+				g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(m_entity).getSound().Unload();
 				g_engine.m_coordinator.AddToDeleteQueue(m_entity);
 			}
 			m_collected = true;
