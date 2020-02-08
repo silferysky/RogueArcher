@@ -94,11 +94,11 @@ namespace Rogue
 			}
 		}
 
-		std::ostringstream oss;
-		if (g_engine.m_coordinator.ComponentExists<AnimationComponent>(toChangeSprite) && toChangeSprite != MAX_ENTITIES)
-		{
-			oss << "ANIM: " << g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).getCurrentFrame();
-		}
+		//std::ostringstream oss;
+		//if (g_engine.m_coordinator.ComponentExists<AnimationComponent>(toChangeSprite) && toChangeSprite != MAX_ENTITIES)
+		//{
+		//	oss << "ANIM: " << g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).getCurrentFrame();
+		//}
 		//RE_INFO(oss.str());
 
 		//If m_delay == m_patrolDelay, it means a new waypoint is just selected
@@ -123,7 +123,7 @@ namespace Rogue
 				return;
 
 			//Changing buds
-			EntChangeSpriteEvent* ev;
+			//EntChangeSpriteEvent* ev;
 			//EntChangeRGBAEvent* rgbaEv;
 			if ((m_currentPointIndex && firstPos.y > secondPos.y) || (!m_currentPointIndex && firstPos.y < secondPos.y))
 			{
