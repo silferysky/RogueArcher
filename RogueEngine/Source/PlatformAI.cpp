@@ -9,9 +9,9 @@ namespace Rogue
 	PlatformAI::PlatformAI(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent)
 		: PatrolAI(entity, logicComponent, statsComponent),
 		r{ 1.0f }, g{ 1.0f }, b{ 1.0f }, a{ 1.0f },
-		transitionSpeed{ 0.3f },
+		transitionSpeed{ 0.5f },
 		transiting{ false },
-		changeDelay{ m_patrolDelay / 2 }
+		changeDelay{ m_patrolDelay / 1.5f }
 	{
 		//HierarchyInfo& info = g_engine.m_coordinator.GetHierarchyInfo(entity);
 		//for (auto child : info.m_children)
