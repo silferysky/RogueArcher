@@ -142,8 +142,8 @@ namespace Rogue
 
 			if (animate.getIsNotReversed())
 			{
-				sprite.setTexCoordMin(animate.getStartFrame() / animate.getFrames());
-				sprite.setTexCoordMax(animate.getStartFrame() + 1 / animate.getFrames());
+				sprite.setTexCoordMin((float)animate.getStartFrame() / animate.getFrames());
+				sprite.setTexCoordMax((float)animate.getStartFrame() + 1 / animate.getFrames());
 				animate.setCurrentFrame(animate.getStartFrame());
 			}
 			else
