@@ -123,10 +123,10 @@ namespace Rogue
 	{
 		config.ConfigInit();
 
-		AllocConsole();
-		(void)freopen("CONIN$", "r", stdin);
-		(void)freopen("CONOUT$", "w", stdout);
-		(void)freopen("CONOUT$", "w", stderr);
+		//AllocConsole();
+		//(void)freopen("CONIN$", "r", stdin);
+		//(void)freopen("CONOUT$", "w", stdout);
+		//(void)freopen("CONOUT$", "w", stderr);
 
 		hWnd = CreateOpenGLWindow(const_cast<char*>(config.GetTitle().c_str()), config.GetX(), config.GetY(),
 			config.GetWidth(), config.GetHeight(), 0, config.GetFlags());
