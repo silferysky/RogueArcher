@@ -99,7 +99,8 @@ namespace Rogue
 			else
 			{
 				//If it reaches here, that means indicator exists already
-				if (g_engine.m_coordinator.ComponentExists<ChildComponent>(PLAYER_STATUS.GetIndicator()) &&
+				if (PLAYER_STATUS.GetIndicator() != MAX_ENTITIES &&
+					g_engine.m_coordinator.ComponentExists<ChildComponent>(PLAYER_STATUS.GetIndicator()) &&
 					g_engine.m_coordinator.ComponentExists<TransformComponent>(PLAYER_STATUS.GetIndicator()))
 				{
 					Vec2 calculatedPos = GetTeleportRaycast();
