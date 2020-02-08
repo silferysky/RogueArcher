@@ -20,15 +20,24 @@ namespace Rogue
 		if (m_teleCharge > PlayerStatusManager::instance().GetTeleportCharge())
 		{
 			g_engine.m_coordinator.GetComponent<AnimationComponent>(m_entity).setIsAnimating(true);
+			g_engine.m_coordinator.GetComponent<AnimationComponent>(m_entity).setCurrentFrame(0);
 
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_entity);
 
 			glm::vec4 colourFilter = sprite.getFilter();
 			colourFilter.a = 1.0f;
 			g_engine.m_coordinator.GetComponent<SpriteComponent>(m_entity).setFilter(colourFilter);
+
+			if (g_engine.m_coordinator.ComponentExists<ChildComponent>(m_entity))
+			{
+				g_engine.m_coordinator.GetComponent<ChildComponent>(m_entity).SetIsFollowing(false);
+				g_engine.m_coordinator.GetComponent<TransformComponent>(m_entity).setPosition(
+					g_engine.m_coordinator.GetComponent<TransformComponent>(g_engine.m_coordinator.GetComponent<ChildComponent>(m_entity).GetParent()).GetPosition());
+			}
+
 		}
 		else if (!g_engine.m_coordinator.GetComponent<AnimationComponent>(m_entity).getIsAnimating() && g_engine.m_coordinator.GetComponent<SpriteComponent>(m_entity).getFilter().a)
-		// not animating and not transparent
+			// not animating and not transparent
 		{
 			glm::vec4 colourFilter = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_entity).getFilter();
 			colourFilter.a = 0.0f;
