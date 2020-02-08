@@ -699,6 +699,7 @@ namespace Rogue
 		{
 			if (it->m_entity == ent)
 			{
+				g_engine.m_coordinator.AddToDeleteQueue(it->m_entity);
 				m_teleports.erase(it);
 				return;
 			}
