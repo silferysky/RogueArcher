@@ -53,6 +53,14 @@ namespace Rogue
 		m_entityLogicMap = std::map<Entity, std::vector<std::shared_ptr<ScriptComponent>>>();
 	}
 
+	LogicSystem::~LogicSystem()
+	{
+		for (auto& scriptVec : m_entityLogicMap)
+		{
+			scriptVec.second.clear();
+		}
+		m_entityLogicMap.clear();
+	}
 
 	void LogicSystem::Init()
 	{

@@ -29,7 +29,7 @@ namespace Rogue
 	public:
 		//Logic System constructors/destructors
 		LogicSystem();
-		~LogicSystem() = default;
+		~LogicSystem();
 
 		//Basic System 
 		void Init() override;
