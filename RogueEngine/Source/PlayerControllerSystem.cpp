@@ -788,7 +788,7 @@ namespace Rogue
 		//EventDispatcher::instance().AddEvent(parentTransform);
 
 		//For teleport VFX
-		TimedEntity ent(g_engine.m_coordinator.cloneArchetypes("TeleportSprite", false), 1.0f);
+		TimedEntity ent(g_engine.m_coordinator.cloneArchetypes("TeleportSprite", false), 0.5f);
 		m_teleports.push_back(ent);
 		if (g_engine.m_coordinator.ComponentExists<TransformComponent>(m_teleports.back().m_entity))
 		{
