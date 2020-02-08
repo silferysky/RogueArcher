@@ -142,8 +142,8 @@ namespace Rogue
 					g_engine.m_coordinator.AddComponent(toChangeSprite, animation);
 				} */
 				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setIsAnimating(true);
-				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setIsNotReversed(false);
-				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setCurrentFrame(4);
+				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setIsNotReversed(true);
+				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setCurrentFrame(0);
 			}
 			else
 			{
@@ -161,8 +161,8 @@ namespace Rogue
 					g_engine.m_coordinator.AddComponent(toChangeSprite, animation);
 				} */
 				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setIsAnimating(true);
-				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setIsNotReversed(true);
-				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setCurrentFrame(0);
+				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setIsNotReversed(false);
+				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setCurrentFrame(4);
 			}
 			//ev->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
 			//rgbaEv->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
