@@ -173,7 +173,7 @@ namespace Rogue
 			//Manually preventing second occurance of this event
 			m_delay -= 0.001f;
 		}
-		else if (m_delay - changeDelay > -0.01f || m_delay - changeDelay < 0.01f)
+		else if (m_delay - changeDelay > -0.01f && m_delay - changeDelay < 0.01f)
 		{
 			if ((m_currentPointIndex && firstPos.y > secondPos.y) || (!m_currentPointIndex && firstPos.y < secondPos.y))
 			{
