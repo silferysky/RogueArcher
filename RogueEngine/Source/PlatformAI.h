@@ -12,5 +12,6 @@ namespace Rogue
 		float r, g, b, a;
 		float transitionSpeed;
 		bool transiting;
+		float changeDelay;
 	};
 }

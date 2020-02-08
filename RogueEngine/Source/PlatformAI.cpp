@@ -9,8 +9,9 @@ namespace Rogue
 	PlatformAI::PlatformAI(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent)
 		: PatrolAI(entity, logicComponent, statsComponent),
 		r{ 1.0f }, g{ 1.0f }, b{ 1.0f }, a{ 1.0f },
-		transitionSpeed{0.3f}, 
-		transiting{ false }
+		transitionSpeed{ 0.3f },
+		transiting{ false },
+		changeDelay{ m_patrolDelay / 2 }
 	{
 		//HierarchyInfo& info = g_engine.m_coordinator.GetHierarchyInfo(entity);
 		//for (auto child : info.m_children)
@@ -172,7 +173,7 @@ namespace Rogue
 			//Manually preventing second occurance of this event
 			m_delay -= 0.001f;
 		}
-		else if (m_delay == 0.0f)
+		else if (m_delay - changeDelay > -0.01f || m_delay - changeDelay < 0.01f)
 		{
 			if ((m_currentPointIndex && firstPos.y > secondPos.y) || (!m_currentPointIndex && firstPos.y < secondPos.y))
 			{
