@@ -159,6 +159,14 @@ namespace Rogue
 		m_redoStack.push_back(ev);
 	}
 
+	Editor::~Editor()
+	{
+		m_undoStack.clear();
+		m_redoStack.clear();
+		m_pastedEntitiesVector.clear();
+		m_deletedEntitiesVector.clear();
+	}
+
 	void Editor::Init()
 	{
 		Signature signature;
