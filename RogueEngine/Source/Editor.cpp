@@ -161,10 +161,6 @@ namespace Rogue
 
 	Editor::~Editor()
 	{
-		m_undoStack.clear();
-		m_redoStack.clear();
-		m_pastedEntitiesVector.clear();
-		m_deletedEntitiesVector.clear();
 	}
 
 	void Editor::Init()
@@ -376,6 +372,10 @@ namespace Rogue
 
 	void Editor::Shutdown()
 	{
+		m_undoStack.clear();
+		m_redoStack.clear();
+		m_pastedEntitiesVector.clear();
+		m_deletedEntitiesVector.clear();
 		EditorManager::instance().Shutdown();
 	}
 }
