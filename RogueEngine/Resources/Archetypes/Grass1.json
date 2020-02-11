@@ -1,4 +1,5 @@
 {
     "Signature": 5,
-    "Entity": "Name{Grass1}|Tag{}|Sprite{Resources\\Assets\\Plants2.png;0.252307;0.514706;0.506657;1}||Transform{470.944;-335.406;113.435;127.073;0;-2}||||||||||||||||"
+    "Entity": "Name{Grass1}|Tag{}|Sprite{Resources\\Assets\\Plants2.png;0.252307;0.514706;0.506657;1}||Transform{470.944;-335.406;113.435;127.073;0;-2}||||||||||||||||",
+		"Children": ""
 }

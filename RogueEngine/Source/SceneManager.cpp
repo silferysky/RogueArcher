@@ -169,7 +169,8 @@ namespace Rogue
 		m_objectFactory->AddToArchetypes(
 			info.m_objectName,
 			g_engine.m_coordinator.GetEntityManager().GetSignature(*it),
-			m_objectFactory->SerializeComponents(info));
+			m_objectFactory->SerializeComponents(info),
+			m_objectFactory->SerializeChildren(info));
 
 		std::ostringstream ostrstream;
 		ostrstream << "Resources/Archetypes/" << info.m_objectName << ".json";
@@ -266,7 +267,7 @@ namespace Rogue
 		g_engine.SetTimeScale(1.0f);
 	}
 
-	std::map<std::string, std::pair<Signature, std::string>> SceneManager::GetArchetypeMap() const
+	std::map<std::string, std::tuple<Signature, std::string, std::string>> SceneManager::GetArchetypeMap() const
 	{
 		return m_objectFactory->GetArchetypeMap();
 	}
