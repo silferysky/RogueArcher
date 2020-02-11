@@ -154,6 +154,7 @@ namespace Rogue
 	{
 		auto& activeObjects = g_engine.m_coordinator.GetActiveObjects();
 		auto it = activeObjects.begin();
+
 		for (; it != activeObjects.end(); ++it)
 		{
 			if (*it == archetypeEntity)
@@ -174,6 +175,8 @@ namespace Rogue
 		ostrstream << "Resources/Archetypes/" << info.m_objectName << ".json";
 		BasicIO::WriteArchetypeJsonFile(ostrstream.str());
 		SaveArchetypeList("Resources/Archetypes/Archetypes.json");
+
+		m_objectFactory->SaveArchetype(info.m_objectName);
 	}
 
 	void SceneManager::RemoveArchetype(std::string_view archetypeEntity)
