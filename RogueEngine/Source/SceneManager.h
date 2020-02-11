@@ -57,7 +57,7 @@ namespace Rogue
 		void SaveAndLoadLevel();
 
 		void LoadArchetypes(const char* fileName);
-		void SaveArchetype(const char* fileName);
+		void SaveArchetype(const char* fileName, Entity archetypeEntity);
 		void SaveArchetypeList(const char* fileName);
 		void AddToArchetypes(Entity archetypeEntity);
 		void RemoveArchetype(std::string_view archetypeEntity);
