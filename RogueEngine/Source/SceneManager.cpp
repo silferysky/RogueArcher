@@ -140,9 +140,9 @@ namespace Rogue
 		m_objectFactory->LoadArchetypes(fileName);
 	}
 
-	void SceneManager::SaveArchetype(const char* fileName)
+	void SceneManager::SaveArchetype(const char* fileName, Entity archetypeEntity)
 	{
-		m_objectFactory->SaveArchetype(fileName);
+		m_objectFactory->SaveArchetype(fileName, archetypeEntity);
 	}
 
 	void SceneManager::SaveArchetypeList(const char* fileName)
@@ -175,8 +175,6 @@ namespace Rogue
 		ostrstream << "Resources/Archetypes/" << info.m_objectName << ".json";
 		BasicIO::WriteArchetypeJsonFile(ostrstream.str());
 		SaveArchetypeList("Resources/Archetypes/Archetypes.json");
-
-		m_objectFactory->SaveArchetype(info.m_objectName);
 	}
 
 	void SceneManager::RemoveArchetype(std::string_view archetypeEntity)
@@ -197,7 +195,8 @@ namespace Rogue
 
 	void SceneManager::UpdateArchetype(const char* archetypeName, Entity archetypeEntity)
 	{
-		m_objectFactory->UpdateArchetype(archetypeName, archetypeEntity);
+		SaveArchetype(archetypeName, archetypeEntity);
+		//m_objectFactory->UpdateArchetype(archetypeName, archetypeEntity);
 	}
 
 	void SceneManager::Clone(Entity toClone)

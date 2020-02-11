@@ -23,6 +23,7 @@ Technology is prohibited.
 #include "Types.h"
 #include "logger.h"
 #include "EntityManager.h"
+#include "BasicIO.h"
 #include "FileIO.h"
 #include "EditorHierarchyInfo.h"
 #include "CameraManager.h"
@@ -346,33 +347,49 @@ namespace Rogue
 		}*/
 	}
 
-	void ObjectFactory::SaveArchetype(std::string_view file)
+	void ObjectFactory::SaveArchetype(std::string_view file, Entity archetypeEntity)
 	{
 		auto iterator = m_archetypes.find(file.data());
 		if (iterator == m_archetypes.end())
-			return;
+		{
+			SceneManager::instance().AddToArchetypes(archetypeEntity);
+		}
 		
-		std::ostringstream ostrstream;
+		std::ostringstream ostrstream, childstrstream;
 		ostrstream << "Resources/Archetypes/" << file << ".json";
 
-		HierarchyInfo info; //= g_engine.m_coordinator.GetHierarchyInfo();
-		auto& activeObjects = g_engine.m_coordinator.GetActiveObjects();
-		int signatureInInt = -1;
-		for (Entity& obj : activeObjects)
-		{
-			if (g_engine.m_coordinator.GetHierarchyInfo(obj).m_objectName == file)
-			{
-				info = g_engine.m_coordinator.GetHierarchyInfo(obj);
-				signatureInInt = static_cast<int>(g_engine.m_coordinator.GetEntityManager().GetSignature(obj).to_ulong());
-			}
-		}
+		BasicIO::WriteArchetypeJsonFile(ostrstream.str());
+
+		//HierarchyInfo info; //= g_engine.m_coordinator.GetHierarchyInfo();
+		//auto& activeObjects = g_engine.m_coordinator.GetActiveObjects();
+		//int signatureInInt = -1;
+
+		//for (Entity& obj : activeObjects)
+		//{
+		//	if (g_engine.m_coordinator.GetHierarchyInfo(obj).m_objectName == file)
+		//	{
+		//		info = g_engine.m_coordinator.GetHierarchyInfo(obj);
+		//		signatureInInt = static_cast<int>(g_engine.m_coordinator.GetEntityManager().GetSignature(obj).to_ulong());
+		//		break;
+		//	}
+		//}
+		HierarchyInfo info = g_engine.m_coordinator.GetHierarchyInfo(archetypeEntity);
+		int signatureInInt = static_cast<int>(g_engine.m_coordinator.GetEntityManager().GetSignature(archetypeEntity).to_ulong());
 		
 		//Safety check if entity not found
 		if (signatureInInt == -1)
 			return;
 
+		for (auto& child : info.m_children)
+		{
+			HierarchyInfo& obj = g_engine.m_coordinator.GetHierarchyInfo(child);
+			SaveArchetype(obj.m_objectName, obj.m_Entity);
+			childstrstream << obj.m_objectName << ";";
+		}
+
 		RESerialiser::WriteToFile(ostrstream.str().c_str(), "Signature", &signatureInInt);
 		RESerialiser::WriteToFile(ostrstream.str().c_str(), "Entity", SerializeComponents(info).c_str());
+		RESerialiser::WriteToFile(ostrstream.str().c_str(), "Children", childstrstream.str().c_str());
 	}
 
 	void ObjectFactory::AddToArchetypes(std::string_view archetypeName, Signature signature, std::string_view toDeserialize)

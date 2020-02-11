@@ -249,9 +249,9 @@ namespace Rogue
 			return SceneManager::instance().Clone(archetype, createHierarchy);
 		}
 
-		void SaveArchetype(const char* archetype)
+		void SaveArchetype(const char* archetype, Entity archetypeID)
 		{
-			SceneManager::instance().SaveArchetype(archetype);
+			SceneManager::instance().SaveArchetype(archetype, archetypeID);
 		}
 
 		Entity clone(Entity existingEntity, bool createHierarchy = true)
