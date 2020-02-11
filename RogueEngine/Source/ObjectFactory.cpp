@@ -272,6 +272,7 @@ namespace Rogue
 		std::ostringstream ostrstream;
 		std::string stdstr;
 		Signature curSignature;
+		std::string childStr;
 
 		while (std::getline(istrstream, stdstr, ';'))
 		{
@@ -280,7 +281,8 @@ namespace Rogue
 
 			rapidjson::Document archetypeFile = RESerialiser::DeserialiseFromFile(ostrstream.str().c_str());
 			curSignature = archetypeFile["Signature"].GetInt();
-			AddToArchetypes(stdstr, curSignature, archetypeFile["Entity"].GetString());
+			childStr = archetypeFile["Children"].GetString();
+			AddToArchetypes(stdstr, curSignature, archetypeFile["Entity"].GetString(), childStr);
 		}
 
 
@@ -349,10 +351,12 @@ namespace Rogue
 
 	void ObjectFactory::SaveArchetype(std::string_view file, Entity archetypeEntity)
 	{
+		bool hasNewArchetypes = false;
 		auto iterator = m_archetypes.find(file.data());
 		if (iterator == m_archetypes.end())
 		{
 			SceneManager::instance().AddToArchetypes(archetypeEntity);
+			hasNewArchetypes = true;
 		}
 		
 		std::ostringstream ostrstream, childstrstream;
@@ -390,11 +394,14 @@ namespace Rogue
 		RESerialiser::WriteToFile(ostrstream.str().c_str(), "Signature", &signatureInInt);
 		RESerialiser::WriteToFile(ostrstream.str().c_str(), "Entity", SerializeComponents(info).c_str());
 		RESerialiser::WriteToFile(ostrstream.str().c_str(), "Children", childstrstream.str().c_str());
+
+		if (hasNewArchetypes)
+			SaveArchetypeList();
 	}
 
-	void ObjectFactory::AddToArchetypes(std::string_view archetypeName, Signature signature, std::string_view toDeserialize)
+	void ObjectFactory::AddToArchetypes(std::string_view archetypeName, Signature signature, std::string_view toDeserialize, std::string_view children)
 	{
-		m_archetypes.insert({ archetypeName.data(), std::pair<Signature, std::string>(signature, toDeserialize.data()) });
+		m_archetypes.insert({ archetypeName.data(), std::tuple<Signature, std::string, std::string>(signature, toDeserialize.data(), children.data()) });
 	}
 
 	void ObjectFactory::UpdateArchetype(const char* archetype, Entity entityToReplace)
@@ -404,7 +411,8 @@ namespace Rogue
 		{
 			Signature updatedSignature = g_engine.m_coordinator.GetEntityManager().GetSignature(entityToReplace);
 			std::string updatedDeserializedString = SerializeComponents(g_engine.m_coordinator.GetHierarchyInfo(entityToReplace));
-			m_archetypes[archetype] = std::pair<Signature, std::string>(updatedSignature, updatedDeserializedString);
+			std::string updatedChildrenString = SerializeChildren(g_engine.m_coordinator.GetHierarchyInfo(entityToReplace));
+			m_archetypes[archetype] = std::tuple<Signature, std::string, std::string>(updatedSignature, updatedDeserializedString, updatedChildrenString);
 		}
 	}
 
@@ -558,10 +566,10 @@ namespace Rogue
 		{
 			std::ostringstream ostrstream;
 			Entity curEnt = g_engine.m_coordinator.CreateEntity();
-			Signature curSignature = m_archetypes[archetype].first;
+			Signature curSignature = std::get<0>(m_archetypes[archetype]);
 
 			//Does the actual clone
-			std::istringstream istrstream(m_archetypes[archetype].second);
+			std::istringstream istrstream(std::get<1>(m_archetypes[archetype]));
 			std::string toDeserialise, tagDeserialized;
 			//To skip 2 things - name
 			std::getline(istrstream, toDeserialise, '{');
@@ -578,10 +586,20 @@ namespace Rogue
 				CREATE_HIERARCHY_OBJ(curEnt, ostrstream.str(), tagDeserialized, archetype, -1);
 			}
 
+			//For Children
+			std::vector<std::string> children;
+			std::string temp;
+			std::istringstream childrenstream(std::get<2>(m_archetypes[archetype]));
+			while (std::getline(childrenstream, temp, ';'))
+			{
+				Clone(temp.c_str(), createHierarchy);
+			}
+
+
 			return curEnt;
 		}
 		else
-			return NULL;
+			return MAX_ENTITIES;
 	}
 
 	bool ObjectFactory::CheckFileTooSmall(size_t type, size_t size)
@@ -743,13 +761,14 @@ namespace Rogue
 		
 		for (Entity& child : entityHierarchy.m_children)
 		{
-			strstream << child << ";";
+			HierarchyInfo info = g_engine.m_coordinator.GetHierarchyInfo(child);
+			strstream << info.m_objectName << ";";
 		}
 
 		return strstream.str();
 	}
 
-	std::map<std::string, std::pair<Signature, std::string>> ObjectFactory::GetArchetypeMap() const
+	std::map<std::string, std::tuple<Signature, std::string, std::string>> ObjectFactory::GetArchetypeMap() const
 	{
 		return m_archetypes;
 	}
