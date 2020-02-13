@@ -40,6 +40,7 @@
     <ClInclude Include="Source\ColliderComponent.h" />
     <ClInclude Include="Source\DeathBox.h" />
     <ClInclude Include="Source\DisappearOnCollide.h" />
+    <ClInclude Include="Source\EditorTileSet.h" />
     <ClInclude Include="Source\FadeComponent.h" />
     <ClInclude Include="Source\FadeObject.h" />
     <ClInclude Include="Source\FadeSystem.h" />
@@ -198,6 +199,7 @@
     <ClCompile Include="Source\ColliderComponent.cpp" />
     <ClCompile Include="Source\DeathBox.cpp" />
     <ClCompile Include="Source\DisappearOnCollide.cpp" />
+    <ClCompile Include="Source\EditorTileSet.cpp" />
     <ClCompile Include="Source\FadeObject.cpp" />
     <ClCompile Include="Source\FadeSystem.cpp" />
     <ClCompile Include="Source\LayerManager.cpp" />
