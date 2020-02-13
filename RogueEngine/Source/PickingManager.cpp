@@ -48,7 +48,6 @@ namespace Rogue
 		
 		scale.x = REAbs(scale.x);
 		scale.y = REAbs(scale.y);
-
 		pickArea.setMin(Vec2{ pos.x - scale.x * 0.5f, pos.y - scale.y * 0.5f });
 		pickArea.setMax(Vec2{ pos.x + scale.x * 0.5f, pos.y + scale.y * 0.5f });
 
@@ -59,7 +58,6 @@ namespace Rogue
 	{
 		Vec2 cameraPos{ cameraPos3D.x, cameraPos3D.y };
 		Vec2 worldDimensions = g_engine.GetWorldDimensions();
-
 		m_viewportArea.setMin(cameraPos - worldDimensions);
 		m_viewportArea.setMax(cameraPos + worldDimensions);
 	}
