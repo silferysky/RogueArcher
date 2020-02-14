@@ -80,47 +80,45 @@ namespace Rogue
 	{
 		g_engine.m_coordinator.InitTimeSystem("Physics System");
 
-		for (int step = 0; step < g_engine.GetStepCount(); ++step)
+		// For all entities
+		std::set<Entity>::iterator iEntity;
+		for (iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
 		{
-			// For all entities
-			std::set<Entity>::iterator iEntity;
-			for (iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
-			{
 #if 0
-				std::string name = g_engine.m_coordinator.GetHierarchyInfo(*iEntity).m_objectName;
-				bool correct = false;
-				if (name == "Ball")
-				{
-					correct = true;
-				}
-#endif
-				auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
-
-				if (rigidbody.getIsStatic())
-					continue;
-
-				auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
-
-
-				// Add relevant forces to each rigidbody
-				ForceManager::instance().AddForce(*iEntity, rigidbody);
-
-				// Update positions
-				Integrate(rigidbody, transform);
-
-				// Reset accForce
-				rigidbody.setAccForce(Vec2());
-
-				//if (g_engine.m_coordinator.GetHierarchyInfo(*iEntity).m_children.size())
-				//{
-				//	ParentTransformEvent* parentEv = new ParentTransformEvent(*iEntity, MAX_ENTITIES);
-				//	parentEv->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
-				//	EventDispatcher::instance().AddEvent(parentEv);
-				//}
+			std::string name = g_engine.m_coordinator.GetHierarchyInfo(*iEntity).m_objectName;
+			bool correct = false;
+			if (name == "Ball")
+			{
+				correct = true;
 			}
+#endif
+			auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
 
-			ForceManager::instance().UpdateAges();
+			if (rigidbody.getIsStatic())
+				continue;
+
+			auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
+
+
+			// Add relevant forces to each rigidbody
+			ForceManager::instance().AddForce(*iEntity, rigidbody);
+
+			// Update positions
+			Integrate(rigidbody, transform);
+
+			// Reset accForce
+			rigidbody.setAccForce(Vec2());
+
+			//if (g_engine.m_coordinator.GetHierarchyInfo(*iEntity).m_children.size())
+			//{
+			//	ParentTransformEvent* parentEv = new ParentTransformEvent(*iEntity, MAX_ENTITIES);
+			//	parentEv->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+			//	EventDispatcher::instance().AddEvent(parentEv);
+			//}
 		}
+
+		ForceManager::instance().UpdateAges();
+
 		g_engine.m_coordinator.EndTimeSystem("Physics System");
 	}
 

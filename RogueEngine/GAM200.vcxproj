@@ -277,6 +277,7 @@
     <ClCompile Include="Source\SoulCollectible.cpp" />
     <ClCompile Include="Source\AnimateOnEla.cpp" />
     <ClCompile Include="Source\StatsComponent.cpp" />
+    <ClCompile Include="Source\SystemManager.cpp" />
     <ClCompile Include="Source\TeleCharge1.cpp" />
     <ClCompile Include="Source\TeleCharge2.cpp" />
     <ClCompile Include="Source\TeleCharge3.cpp" />

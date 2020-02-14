@@ -67,6 +67,7 @@ namespace Rogue
 
 	void REEngine::RegisterSystems()
 	{
+		// Order of system updates will be manually set in SystemManager.h
 		m_coordinator.RegisterSystem<InputManager>();
 		m_coordinator.RegisterSystem<LogicSystem>();
 		m_coordinator.RegisterSystem<ParticleSystem>();
@@ -122,6 +123,7 @@ namespace Rogue
 	void REEngine::Init()
 	{
 		config.ConfigInit();
+		g_fixedDeltaTime = 1 / 60.0f;
 
 		AllocConsole();
 		(void)freopen("CONIN$", "r", stdin);
@@ -168,7 +170,6 @@ namespace Rogue
 	{
 		m_stepCount = 0;
 		Timer::ChronoClock mainLoopTimer;
-		g_fixedDeltaTime = 1/60.0f;
 
 		while (m_gameIsRunning)
 		{
