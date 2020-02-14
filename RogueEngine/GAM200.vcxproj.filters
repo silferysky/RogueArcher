@@ -149,6 +149,9 @@
     <Filter Include="RogueEngine\Systems\AI\Script Types\Gameplay">
       <UniqueIdentifier>{34f57ff7-c234-4e04-acdc-e548db4bc778}</UniqueIdentifier>
     </Filter>
+    <Filter Include="RogueEngine\Systems\Graphics\Lighting">
+      <UniqueIdentifier>{22fd065d-c5a3-40a5-a580-585a775c4fd3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Resource.h">
@@ -643,6 +646,12 @@
     <ClInclude Include="Source\ActivateOnDeathExa.h">
       <Filter>RogueEngine\Systems\AI\Script Types\Gameplay</Filter>
     </ClInclude>
+    <ClInclude Include="Source\LightComponent.h">
+      <Filter>RogueEngine\Systems\Graphics\Lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LightingSystem.h">
+      <Filter>RogueEngine\Systems\Graphics\Lighting</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -1019,6 +1028,12 @@
     </ClCompile>
     <ClCompile Include="Source\ActivateOnDeathExa.cpp">
       <Filter>RogueEngine\Systems\AI\Script Types\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\LightComponent.cpp">
+      <Filter>RogueEngine\Systems\Graphics\Lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\LightingSystem.cpp">
+      <Filter>RogueEngine\Systems\Graphics\Lighting</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
