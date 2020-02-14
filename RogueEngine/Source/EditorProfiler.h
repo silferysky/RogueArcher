@@ -25,8 +25,13 @@ namespace Rogue
 	class ImGuiProfiler : public IEditable
 	{
 	private:
+		std::vector<float> m_vecTimeSystem; // For histogram
+		const std::map<const char*, float>& m_timeSystemRef;
+		float m_profileInterval;
+		float m_profileAge;
+
 	public:
-		ImGuiProfiler() = default;
+		ImGuiProfiler();
 		~ImGuiProfiler() = default;
 		virtual void Init() override;
 		virtual void Update() override;

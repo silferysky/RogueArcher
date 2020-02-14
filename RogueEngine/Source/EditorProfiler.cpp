@@ -17,11 +17,21 @@ Technology is prohibited.
 /* End Header **************************************************************************/
 #include "Precompiled.h"
 #include "EditorProfiler.h"
+#include "SystemList.h"
 
 namespace Rogue
 {
+	ImGuiProfiler::ImGuiProfiler() :
+		m_timeSystemRef(g_engine.m_coordinator.GetSystemTimes())
+	{}
+
 	void ImGuiProfiler::Init()
 	{
+		m_vecTimeSystem.reserve(static_cast<int>(SystemID::id_LASTSYS));
+
+		// Set interval to 2 seconds
+		m_profileInterval = 0.5f;
+		m_profileAge = 0.0f;
 	}
 	void ImGuiProfiler::Update()
 	{
@@ -54,38 +64,59 @@ namespace Rogue
 			ImGui::EndMenu();
 		}*/
 		ImGui::TextWrapped("%.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-
-
-		// Time is in microseconds
-		const std::map<const char*, float>& timeSystem = g_engine.m_coordinator.GetSystemTimes();
-		std::vector<float> vecTimeSystem; // For histogram
-
+		ImGui::NewLine();
+		ImGui::TextWrapped("%d SPS", static_cast<int>(1 / g_fixedDeltaTime + 1.0f));
+		
 		float col_size = ImGui::GetWindowWidth() * 0.75f;
 		float col_height = ImGui::GetWindowHeight() * 0.25f;
 
-		auto iter = timeSystem.begin();
-		for (const auto& iter : timeSystem)
-		{
-			float systemTime = iter.second / Timer::s_microsecPerSec; // Convert systemTime from microsec to seconds
-			systemTime = systemTime / g_deltaTime * 100.0f;
+		if (m_profileAge >= m_profileInterval)
+		{	
+			m_profileAge = 0.0f;
+			m_vecTimeSystem.clear();
 
-			if (systemTime > 20.0f)
+			for (const auto& iter : m_timeSystemRef)
 			{
-				ImGui::TextColored({ 1.0f,1.0f,0.0f,1.0f }, "%s %.2f %%", iter.first, systemTime);
-			}
-			else
-			{
-				ImGui::Text("%s %.2f %%", iter.first, systemTime);
-			}
+				float systemTime = iter.second / Timer::s_microsecPerSec; // Convert systemTime from microsec to seconds
+				systemTime = systemTime / g_deltaTime * 100.0f;
 
-			// Time is in milliseconds
-			vecTimeSystem.push_back(systemTime);
+				if (systemTime > 20.0f)
+				{
+					ImGui::TextColored({ 1.0f,1.0f,0.0f,1.0f }, "%s %.2f %%", iter.first, systemTime);
+				}
+				else
+				{
+					ImGui::Text("%s %.2f %%", iter.first, systemTime);
+				}
+
+				// Time is in milliseconds
+				m_vecTimeSystem.emplace_back(systemTime);
+			}
 		}
+		else
+		{
+			for (const auto& iter : m_timeSystemRef)
+			{
+				float systemTime = iter.second / Timer::s_microsecPerSec; // Convert systemTime from microsec to seconds
+				systemTime = systemTime / g_deltaTime * 100.0f;
 
-		ImGui::PlotHistogram("", vecTimeSystem.data(), int(vecTimeSystem.size()), 0, "Profile Time Graph", 0.0f, 100.0f, ImVec2{ col_size, col_height });
+				if (systemTime > 20.0f)
+				{
+					ImGui::TextColored({ 1.0f,1.0f,0.0f,1.0f }, "%s %.2f %%", iter.first, systemTime);
+				}
+				else
+				{
+					ImGui::Text("%s %.2f %%", iter.first, systemTime);
+				}
+			}
+		}
+		ImGui::PlotHistogram("", m_vecTimeSystem.data(), int(m_vecTimeSystem.size()), 0, "Profile Time Graph", 0.0f, 100.0f, ImVec2{ col_size, col_height });
 
 		ImGui::End();
+
+		m_profileAge += g_deltaTime;
 	}
+
 	void ImGuiProfiler::Shutdown()
 	{
 	}

@@ -100,20 +100,21 @@ namespace Rogue
 
 		for (step = 0; step < g_engine.GetStepCount(); ++step)
 		{
-			// If game is paused, freeze physics system unless step once is called.
-			if (m_gameIsPaused && m_stepOnce)
+			// Only run physics if game is paused
+			if (!m_gameIsPaused)
 			{
-				--m_stepCounter;
-
-				if (m_stepCounter == 0)
-					m_stepOnce = false;
-
 				g_engine.m_coordinator.InitTimeSystem("Physics System");
 				m_systems[static_cast<int>(SystemID::id_PHYSICSSYSTEM)].second->Update();
 				g_engine.m_coordinator.EndTimeSystem("Physics System");
 			}
-			else
+			else if (m_stepOnce) // Game is paused and step button is pressed
 			{
+				if(step >= g_engine.GetStepCount() - 1)
+					--m_stepCounter;
+
+				if (m_stepCounter == 0)
+					m_stepOnce = false;
+
 				g_engine.m_coordinator.InitTimeSystem("Physics System");
 				m_systems[static_cast<int>(SystemID::id_PHYSICSSYSTEM)].second->Update();
 				g_engine.m_coordinator.EndTimeSystem("Physics System");
