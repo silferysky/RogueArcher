@@ -37,12 +37,11 @@ namespace Rogue
 		**********************************/
 		// General variables
 		float m_timeScale;
-		
 		// Game loop variables
+		int m_stepCount;
 		Timer::ChronoTime m_loopStart;
 		Timer::ChronoTime m_loopEnd;
 		float m_accumulatedTime;
-		int	m_stepCount;
 		bool m_gameIsRunning;
 
 		/*********************************

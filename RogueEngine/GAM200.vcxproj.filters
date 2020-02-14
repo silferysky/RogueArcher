@@ -1026,5 +1026,8 @@
     <ClCompile Include="Source\EditorTileSet.cpp">
       <Filter>RogueEditor\EditorFiles</Filter>
     </ClCompile>
+    <ClCompile Include="Source\SystemManager.cpp">
+      <Filter>RogueEngine\Core\ECS</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
