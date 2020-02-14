@@ -38,6 +38,7 @@ Technology is prohibited.
 #include "ParticleEmitterComponent.h"
 #include "MaskingComponent.h"
 #include "FadeComponent.h"
+#include "LightComponent.h"
 #include "ChildComponent.h" // THis is not to be initialized by ObjectFactory
 
 namespace Rogue
@@ -64,6 +65,7 @@ namespace Rogue
 		PARTICLE,
 		MASKING,
 		FADE,
+		LIGHT,
 
 		CHILD,
 		LASTCOMP

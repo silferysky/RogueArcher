@@ -707,6 +707,11 @@ namespace Rogue
 						strstream << "FADE{" << g_engine.m_coordinator.GetComponent<FadeComponent>(entityToSerialize).Serialize() << "}";
 						break;
 					}
+					case static_cast<int>(LIGHT) :
+					{
+						strstream << "LIGHT{" << g_engine.m_coordinator.GetComponent<LightComponent>(entityToSerialize).Serialize() << "}";
+						break;
+					}
 					default:
 					{
 						RE_CORE_WARN("OUT OF BOUNDS OBJECT COMPONENT SAVING");
@@ -850,6 +855,11 @@ namespace Rogue
 					case static_cast<int>(FADE) :
 					{
 						g_engine.m_coordinator.LoadComponent<FadeComponent>(curEnt, readstr);
+						break;
+					}
+					case static_cast<int>(LIGHT) :
+					{
+						g_engine.m_coordinator.LoadComponent<LightComponent>(curEnt, readstr);
 						break;
 					}
 					default:
