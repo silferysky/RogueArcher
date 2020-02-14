@@ -96,7 +96,9 @@ namespace Rogue
 	void SystemManager::FixedUpdate()
 	{
 		// Fixed update
-		for (int step = 0; step < g_engine.GetStepCount(); ++step)
+		static int step;
+
+		for (step = 0; step < g_engine.GetStepCount(); ++step)
 		{
 			// If game is paused, freeze physics system unless step once is called.
 			if (m_gameIsPaused && m_stepOnce)
@@ -106,14 +108,33 @@ namespace Rogue
 				if (m_stepCounter == 0)
 					m_stepOnce = false;
 
+				g_engine.m_coordinator.InitTimeSystem("Physics System");
 				m_systems[static_cast<int>(SystemID::id_PHYSICSSYSTEM)].second->Update();
+				g_engine.m_coordinator.EndTimeSystem("Physics System");
 			}
 			else
+			{
+				g_engine.m_coordinator.InitTimeSystem("Physics System");
 				m_systems[static_cast<int>(SystemID::id_PHYSICSSYSTEM)].second->Update();
+				g_engine.m_coordinator.EndTimeSystem("Physics System");
+			}
 
+			g_engine.m_coordinator.InitTimeSystem("Circle Collision System");
 			m_systems[static_cast<int>(SystemID::id_CIRCLECOLLISIONSYSTEM)].second->Update();
+			g_engine.m_coordinator.EndTimeSystem("Circle Collision System");
+
+			g_engine.m_coordinator.InitTimeSystem("Box Collision System");
 			m_systems[static_cast<int>(SystemID::id_BOXCOLLISIONSYSTEM)].second->Update();
+			g_engine.m_coordinator.EndTimeSystem("Box Collision System");
+
+			g_engine.m_coordinator.InitTimeSystem("Collision System");
 			m_systems[static_cast<int>(SystemID::id_COLLISIONSYSTEM)].second->Update();
+			g_engine.m_coordinator.EndTimeSystem("Collision System");
 		}
+
+		Timer::instance().GetSystemTimes()["Physics System"] *= step;
+		Timer::instance().GetSystemTimes()["Circle Collision System"] *= step;
+		Timer::instance().GetSystemTimes()["Box Collision System"] *= step;
+		Timer::instance().GetSystemTimes()["Collision System"] *= step;
 	}
 }

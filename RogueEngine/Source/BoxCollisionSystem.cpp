@@ -45,8 +45,6 @@ namespace Rogue
 
 	void BoxCollisionSystem::Update()
 	{
-		g_engine.m_coordinator.InitTimeSystem("Box Collision System");
-
 		std::set<Entity>::iterator iEntity;
 
 		// Update colliders and partition them.
@@ -214,8 +212,6 @@ namespace Rogue
 			//}
 
 		}
-
-		g_engine.m_coordinator.EndTimeSystem("Box Collision System");
 	}
 
 	void BoxCollisionSystem::Receive(Event* ev)

@@ -78,20 +78,10 @@ namespace Rogue
 
 	void PhysicsSystem::Update()
 	{
-		g_engine.m_coordinator.InitTimeSystem("Physics System");
-
 		// For all entities
 		std::set<Entity>::iterator iEntity;
 		for (iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
 		{
-#if 0
-			std::string name = g_engine.m_coordinator.GetHierarchyInfo(*iEntity).m_objectName;
-			bool correct = false;
-			if (name == "Ball")
-			{
-				correct = true;
-			}
-#endif
 			auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
 
 			if (rigidbody.getIsStatic())
@@ -118,8 +108,6 @@ namespace Rogue
 		}
 
 		ForceManager::instance().UpdateAges();
-
-		g_engine.m_coordinator.EndTimeSystem("Physics System");
 	}
 
 	void PhysicsSystem::Receive(Event* ev)

@@ -55,7 +55,8 @@ namespace Rogue
 
 	void MenuControllerSystem::Update()
 	{
-		
+		g_engine.m_coordinator.InitTimeSystem("Menu Controller System");
+		g_engine.m_coordinator.EndTimeSystem("Menu Controller System");
 	}
 
 	void MenuControllerSystem::Receive(Event* ev)

@@ -173,7 +173,7 @@ namespace Rogue
 
 		while (m_gameIsRunning)
 		{
-			g_deltaTime = std::chrono::duration_cast<std::chrono::microseconds>(m_loopEnd - m_loopStart).count() / Timer::s_microsecondsPerSecond;
+			g_deltaTime = std::chrono::duration_cast<std::chrono::microseconds>(m_loopEnd - m_loopStart).count() / Timer::s_microsecPerSec;
 
 			m_loopStart = mainLoopTimer.now();
 
