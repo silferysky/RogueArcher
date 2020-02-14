@@ -22,13 +22,13 @@ Technology is prohibited.
 namespace Rogue
 {
 	// Units
-	const float Timer::s_microsecondsPerSecond = 1000000.0f; // To be used at the final calculation
-	const float Timer::s_millisecondsPerSecond = 1000.0f; // To be used at the final calculation
-	const float Timer::s_microsecondsPerMillisecond = 1000.0f; // To be used at the final calculation
+	const float Timer::s_microsecPerSec = 1000000.0f; // To be used at the final calculation
+	const float Timer::s_millisecPerSec = 1000.0f; // To be used at the final calculation
+	const float Timer::s_microsecPerMillisec = 1000.0f; // To be used at the final calculation
 		
 	void Timer::TimerInit(const char* System)
 	{
-		m_timeMap.insert(std::make_pair(System, 0.0f));
+		m_timeMap.emplace(std::make_pair(System, 0.0f));
 		m_startTimer = m_timer.now();
 	}
 
@@ -45,7 +45,7 @@ namespace Rogue
 		i->second = static_cast<float>(std::chrono::duration_cast<std::chrono::microseconds>(delta).count());
 	}
 
-	const std::map<const char*, float>& Timer::GetSystemTimes() const
+	std::map<const char*, float>& Timer::GetSystemTimes()
 	{
 		return m_timeMap;
 	}

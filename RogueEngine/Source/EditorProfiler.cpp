@@ -57,18 +57,16 @@ namespace Rogue
 
 
 		// Time is in microseconds
-		std::map<const char*, float> timeSystem = g_engine.m_coordinator.GetSystemTimes();
+		const std::map<const char*, float>& timeSystem = g_engine.m_coordinator.GetSystemTimes();
 		std::vector<float> vecTimeSystem; // For histogram
 
 		float col_size = ImGui::GetWindowWidth() * 0.75f;
 		float col_height = ImGui::GetWindowHeight() * 0.25f;
-		float dtInMilliseconds = g_deltaTime / Timer::s_millisecondsPerSecond;
-
 
 		auto iter = timeSystem.begin();
 		for (const auto& iter : timeSystem)
 		{
-			float systemTime = iter.second / Timer::s_microsecondsPerSecond;
+			float systemTime = iter.second / Timer::s_microsecPerSec; // Convert systemTime from microsec to seconds
 			systemTime = systemTime / g_deltaTime * 100.0f;
 
 			if (systemTime > 20.0f)

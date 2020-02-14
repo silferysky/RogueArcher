@@ -34,14 +34,14 @@ namespace Rogue
 		using ChronoTime = std::chrono::time_point <std::chrono::steady_clock>;
 		using FloatSec = std::chrono::duration<float>;
 
-		static const float s_microsecondsPerSecond;
-		static const float s_millisecondsPerSecond;
-		static const float s_microsecondsPerMillisecond;
+		static const float s_microsecPerSec;
+		static const float s_millisecPerSec;
+		static const float s_microsecPerMillisec;
 
 		Timer() = default;
 		void TimerInit(const char* System);
 		void TimerEnd(const char* System);
-		const std::map<const char*, float>& GetSystemTimes() const;
+		std::map<const char*, float>& GetSystemTimes();
 
 		ChronoTime GetCurrTime() const;
 	private:
