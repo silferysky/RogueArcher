@@ -381,7 +381,7 @@ namespace Rogue
 		}
 
 
-		if (childInfo.m_parent != -1 && childInfo.m_parent != MAX_ENTITIES)
+		if (childInfo.m_parent != MAX_ENTITIES)
 		{
 			HierarchyInfo& oldParentInfo = g_engine.m_coordinator.GetHierarchyInfo(childInfo.m_parent);
 			auto end = std::remove(oldParentInfo.m_children.begin(), oldParentInfo.m_children.end(), child);
