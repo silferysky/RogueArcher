@@ -28,6 +28,10 @@ Technology is prohibited.
 #include "Logger.h"
 #include "REEngine.h"
 
+#ifndef MOVE_WITH_FORCE
+	#define MOVE_WITH_FORCE
+#endif
+
 namespace Rogue
 {
 	//-------------------------------------------------------//
@@ -43,13 +47,51 @@ namespace Rogue
 		else
 			rigidbody.setAcceleration(rigidbody.getAccForce() * rigidbody.getInvMass());
 
-		transform.offSetPosition(rigidbody.getVelocity() * simulationTime);
-
-		rigidbody.offSetVelocity(rigidbody.getAcceleration() * simulationTime);
-		rigidbody.setVelocity(rigidbody.getVelocity() * std::pow(rigidbody.getDamping(), simulationTime));
-
+		rigidbody.offSetVelocity(rigidbody.getAcceleration() * simulationTime); // Acceleration -> Velocity
+		rigidbody.setVelocity(rigidbody.getVelocity() * std::pow(rigidbody.getDamping(), simulationTime)); // Velocity w/ damping
+		transform.offSetPosition(rigidbody.getVelocity() * simulationTime); // Velocity -> Position
 	}
 
+	Vec2 PhysicsSystem::PlayerMoveByForce(PlayerControllerComponent& playerCtrl, RigidbodyComponent& rigidbody, const Vec2& moveDir)
+	{
+		float playerSpeed = playerCtrl.GetMoveSpeed();
+		float forceMultiplier = playerCtrl.GetMoveForceMultiplier(); // How fast the player accelerates
+		Vec2 targetVel = moveDir * playerSpeed; // The max speed the player can go
+		
+		Vec2 force{}; // The force to apply on the player
+
+		if (moveDir.y == 0)
+			force.x = (targetVel.x - rigidbody.getVelocity().x) * forceMultiplier;
+		else if (moveDir.x == 0)
+			force.y = targetVel.y - rigidbody.getVelocity().y * forceMultiplier;
+		else
+			force = Vec2(targetVel - rigidbody.getVelocity()) * forceMultiplier;
+
+#if 0
+		const float maxForce = playerSpeed / g_fixedDeltaTime; // An arbitruary number to limit the max force
+
+		// Clamp force to prevent force from exceeding an amount
+		if (Vec2SqLength(force) > maxForce * maxForce)
+		{
+			force = maxForce * moveDir;
+		}
+#endif
+#if 0
+		// Clamp force to prevent force from exceeding an amount (For horizontal movement tentatively)
+		if (REAbs(force.x) > maxForce.x)
+		{
+			force.x = maxForce.x * moveDir.x;
+		}
+#endif	
+		return force;
+	}
+
+	void PhysicsSystem::PlayerMoveByVelocity(PlayerControllerComponent& playerCtrl, RigidbodyComponent& rigidbody, const Vec2& vecDir)
+	{
+		float playerSpeed = playerCtrl.GetMoveSpeed();
+
+		rigidbody.setVelocity(Vec2(playerSpeed / 5.0f * vecDir.x, rigidbody.getVelocity().y));
+	}
 
 	//-------------------------------------------------------//
 	//              PUBLIC MEMBER FUNCTIONS					 //
@@ -78,50 +120,36 @@ namespace Rogue
 
 	void PhysicsSystem::Update()
 	{
-		g_engine.m_coordinator.InitTimeSystem("Physics System");
-
-		for (int step = 0; step < g_engine.GetStepCount(); ++step)
+		// For all entities
+		std::set<Entity>::iterator iEntity;
+		for (iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
 		{
-			// For all entities
-			std::set<Entity>::iterator iEntity;
-			for (iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
-			{
-#if 0
-				std::string name = g_engine.m_coordinator.GetHierarchyInfo(*iEntity).m_objectName;
-				bool correct = false;
-				if (name == "Ball")
-				{
-					correct = true;
-				}
-#endif
-				auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
+			auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
 
-				if (rigidbody.getIsStatic())
-					continue;
+			if (rigidbody.getIsStatic())
+				continue;
 
-				auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
+			auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
 
 
-				// Add relevant forces to each rigidbody
-				ForceManager::instance().AddForce(*iEntity, rigidbody);
+			// Add relevant forces to each rigidbody
+			ForceManager::instance().AddForce(*iEntity, rigidbody);
 
-				// Update positions
-				Integrate(rigidbody, transform);
+			// Update positions
+			Integrate(rigidbody, transform);
 
-				// Reset accForce
-				rigidbody.setAccForce(Vec2());
+			// Reset accForce
+			rigidbody.setAccForce(Vec2());
 
-				//if (g_engine.m_coordinator.GetHierarchyInfo(*iEntity).m_children.size())
-				//{
-				//	ParentTransformEvent* parentEv = new ParentTransformEvent(*iEntity, MAX_ENTITIES);
-				//	parentEv->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
-				//	EventDispatcher::instance().AddEvent(parentEv);
-				//}
-			}
-
-			ForceManager::instance().UpdateAges();
+			//if (g_engine.m_coordinator.GetHierarchyInfo(*iEntity).m_children.size())
+			//{
+			//	ParentTransformEvent* parentEv = new ParentTransformEvent(*iEntity, MAX_ENTITIES);
+			//	parentEv->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+			//	EventDispatcher::instance().AddEvent(parentEv);
+			//}
 		}
-		g_engine.m_coordinator.EndTimeSystem("Physics System");
+
+		ForceManager::instance().UpdateAges();
 	}
 
 	void PhysicsSystem::Receive(Event* ev)
@@ -148,41 +176,22 @@ namespace Rogue
 
 			PlayerControllerComponent& playerCtrl = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(player);
 			RigidbodyComponent& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(player);
-			
-			float playerSpeed = playerCtrl.GetMoveSpeed();
 
-			const float forceMultiplier = 10.0f; // How fast the player accelerates
-			//const float maxForce = 10000.0f; // An arbitruary number to limit the max force
 			Vec2 vecMovement = EvEntMove->GetVecMovement();
-			Vec2 targetVel = vecMovement * playerSpeed; // The max speed the player can go
-			Vec2 force{}; // The force to apply on the player
 
-			if (vecMovement.y == 0)
-				force.x = targetVel.x - rigidbody.getVelocity().x * forceMultiplier;
-			else if (vecMovement.x == 0)
-				force.y = targetVel.y - rigidbody.getVelocity().y * forceMultiplier;
-			else
-				force = Vec2(targetVel - rigidbody.getVelocity()) * forceMultiplier;
+#ifdef MOVE_WITH_FORCE
+			Vec2 force = PlayerMoveByForce(playerCtrl, rigidbody, vecMovement);
+			std::stringstream ss;
+			ss << force;
+			RE_INFO(ss.str());
 
-#if 0
-			// Clamp force to prevent force from exceeding an amount
-			if (Vec2SqDistance(force) > maxForce * maxForce)
+			for (int steps = 0; steps < g_engine.GetStepCount(); steps++)
 			{
-				Vec2 forceNormalized;
-				Vec2Normalize(forceNormalized, force);
-
-				force = maxForce * forceNormalized;
+				ForceManager::instance().RegisterForce(player, force);
 			}
+#else
+			PlayerMoveByVelocity(playerCtrl, rigidbody, vecMovement);
 #endif
-#if 0
-			// Clamp force to prevent force from exceeding an amount (For horizontal movement tentatively)
-			if (force.x > maxForce)
-			{
-				force.x = maxForce;
-			}
-#endif	
-			ForceManager::instance().RegisterForce(player, force, g_fixedDeltaTime);
-			//rigidbody.addForce(force);
 
 			return;
 		}

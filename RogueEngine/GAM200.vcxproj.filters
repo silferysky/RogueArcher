@@ -643,6 +643,9 @@
     <ClInclude Include="Source\ActivateOnDeathExa.h">
       <Filter>RogueEngine\Systems\AI\Script Types\Gameplay</Filter>
     </ClInclude>
+    <ClInclude Include="Source\EditorTileSet.h">
+      <Filter>RogueEditor\EditorFiles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -1019,6 +1022,12 @@
     </ClCompile>
     <ClCompile Include="Source\ActivateOnDeathExa.cpp">
       <Filter>RogueEngine\Systems\AI\Script Types\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EditorTileSet.cpp">
+      <Filter>RogueEditor\EditorFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SystemManager.cpp">
+      <Filter>RogueEngine\Core\ECS</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

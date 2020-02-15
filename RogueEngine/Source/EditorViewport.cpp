@@ -179,9 +179,13 @@ namespace Rogue
 					
 			}
 		}
+
 		ImVec2 imageSize = ImGui::GetContentRegionAvail();
 		ImGui::Image((void*)(intptr_t)(g_engine.m_coordinator.GetSystem<GraphicsSystem>()->getFBO()), ImVec2(imageSize.x,imageSize.y ), ImVec2(0, 1), ImVec2(1, 0));
-
+		auto drawlist = ImGui::GetWindowDrawList();
+		ImVec2 TileSize(64.0f, 64.0f);
+		ImGui::GetWindowContentRegionMin();
+		//drawlist->AddLine(ImVec2(1000.0f, 1000.0f), ImVec2(100.0f, 100.0f), ImColor(120, 100, 100), 3.0f);
 		if (ImGui::BeginDragDropTarget())
 		{
 			if (const ImGuiPayload * payload = ImGui::AcceptDragDropPayload("Data"))
@@ -255,8 +259,6 @@ namespace Rogue
 	}
 	void ImGuiEditorViewport::ShowGizmo(Entity& selectedentity)
 	{
-		const AABB& viewportArea = PickingManager::instance().GetViewPortArea();
-		
 		if (g_engine.m_coordinator.ComponentExists<TransformComponent>(selectedentity))
 		{
 
