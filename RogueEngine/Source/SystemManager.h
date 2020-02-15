@@ -16,19 +16,12 @@ Technology is prohibited.
 */
 /* End Header **************************************************************************/
 #pragma once
-#include <set>
-#include <cassert>
-#include <unordered_map>
-#include <typeindex>
-#include <memory>
 #include "EntityManager.h"
 #include "ComponentArray.h"
 #include "Logger.h"
 #include "Event.h"
 #include "SystemList.h"
 #include "BaseSystem.h"
-#include <vector>
-#include <utility>
 #include "CollisionTagSystem.h"
 #include "EventDispatcher.h"
 #include "GameEvent.h"
@@ -78,73 +71,7 @@ namespace Rogue
 			}
 		}
 
-		void UpdateSystems()
-		{
-			for (auto& system : m_systems)
-			{
-				// Note: Debug draw system currently doesn't update here.
-
-				if (m_gameModeChanged)
-				{
-					if (m_showCursor)
-					{
-						m_showCursor = false;
-						ShowCursor(false);
-					}
-					else
-					{
-						m_showCursor = true;
-						ShowCursor(true);
-					}
-					m_gameModeChanged = false;
-				}
-
-				// Only run editor if editor is running.
-				if (system.second->m_systemID == SystemID::id_EDITOR)
-				{
-					if (!m_editorIsRunning)
-						continue;
-				}
-
-				// If game is paused, freeze physics system unless step once is called.
-				if (m_gameIsPaused && m_gameIsRunning)
-				{
-					if (system.second->m_systemID == SystemID::id_PHYSICSSYSTEM)
-					{
-						if (m_stepOnce)
-						{
-							--m_stepCounter;
-
-							system.second->Update();
-							
-							if(m_stepCounter == 0)
-								m_stepOnce = false;
-						}
-						continue;
-					}
-				}
-
-				//Skip these systems if game is paused or not running
-				if (m_gameIsPaused || !m_gameIsRunning)
-				{
-					if (system.second->m_systemID == SystemID::id_LOGICSYSTEM ||
-						system.second->m_systemID == SystemID::id_DEBUGDRAWSYSTEM ||
-						//system.second->m_systemID == SystemID::id_COLLISIONSYSTEM ||
-						//system.second->m_systemID == SystemID::id_BOXCOLLISIONSYSTEM ||
-						//system.second->m_systemID == SystemID::id_CIRCLECOLLISIONSYSTEM ||
-						system.second->m_systemID == SystemID::id_ANIMATIONSYSTEM ||
-						system.second->m_systemID == SystemID::id_PHYSICSSYSTEM ||
-						system.second->m_systemID == SystemID::id_PARTICLEEMITTERSYSTEM ||
-						system.second->m_systemID == SystemID::id_PARTICLESYSTEM ||
-						system.second->m_systemID == SystemID::id_FADESYSTEM //||
-						//system.second->m_systemID == SystemID::id_PLAYERCONTROLLERSYSTEM
-						)
-						continue;
-				}
-
-				system.second->Update();
-			}
-		}
+		void UpdateSystems();
 
 		void ShutdownSystems()
 		{
@@ -309,5 +236,8 @@ namespace Rogue
 
 		size_t m_stepFrames = 1;
 		size_t m_stepCounter = 0;
+
+		void FixedUpdate();
+		void Update();
 	};
 }

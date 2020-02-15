@@ -22,17 +22,20 @@ Technology is prohibited.
 namespace Rogue
 {
 	PlayerControllerComponent::PlayerControllerComponent() :
-		m_moveSpeed{ 5000.0f }, m_slowTime{ 0.1f }, m_isActive{ true }, m_moveState{ MoveState::e_stop }, m_grounded{ false }, m_jumpTimer{ 0.1f }
+		m_moveSpeed{ 5000.0f }, m_slowTime{ 0.1f }, m_isActive{ true }, m_moveState{ MoveState::e_stop }, m_grounded{ false }, m_jumpTimer{ 0.1f }, m_moveForceMultiplier{10.0f}
 	{}
 
 	void PlayerControllerComponent::DisplayOnInspector()
 	{
 		ImGui::PushItemWidth(75);
-		ImGui::DragFloat("Time Scale", &m_slowTime, 0.01f, 0.0f, 1.0f);
+		ImGui::DragFloat("Slow-Mo Time", &m_slowTime, 0.01f, 0.0f, 1.0f);
 		SetSlowTime(m_slowTime);
 
 		ImGui::PushItemWidth(75);
 		ImGui::DragFloat("Movement Speed", &m_moveSpeed, 1.0f, 1.0f, 1000000.0f);
+
+		ImGui::PushItemWidth(75);
+		ImGui::DragFloat("Movement Force Multiplier", &m_moveForceMultiplier, 1.0f, 1.0f, 1000000.0f);
 	}
 
 	void PlayerControllerComponent::SetSlowTime(float slowTime)
@@ -43,6 +46,11 @@ namespace Rogue
 	void PlayerControllerComponent::SetMoveSpeed(float speed)
 	{
 		m_moveSpeed = speed;
+	}
+
+	void PlayerControllerComponent::SetMoveForceMultiplier(float multiplier)
+	{
+		m_moveForceMultiplier = multiplier;
 	}
 
 	void PlayerControllerComponent::SetMoveState(MoveState state)
@@ -58,6 +66,11 @@ namespace Rogue
 	float PlayerControllerComponent::GetMoveSpeed() const
 	{
 		return m_moveSpeed;
+	}
+
+	float PlayerControllerComponent::GetMoveForceMultiplier() const
+	{
+		return m_moveForceMultiplier;
 	}
 
 	MoveState PlayerControllerComponent::GetMoveState() const
@@ -81,6 +94,7 @@ namespace Rogue
 		ss << m_isActive << ";";
 		ss << m_slowTime << ";";
 		ss << m_moveSpeed << ";";
+		ss << m_moveForceMultiplier << ";";
 		return ss.str();
 	}
 
@@ -97,6 +111,9 @@ namespace Rogue
 
 		if(std::getline(ss, s1, ';'))
 			m_moveSpeed = std::stof(s1);
+
+		if (std::getline(ss, s1, ';'))
+			m_moveForceMultiplier = std::stof(s1);
 	}
 
 }

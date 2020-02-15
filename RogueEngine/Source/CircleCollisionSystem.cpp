@@ -44,8 +44,6 @@ namespace Rogue
 
 	void CircleCollisionSystem::Update()
 	{
-		g_engine.m_coordinator.InitTimeSystem("Circle Collision System");
-
 		std::set<Entity>::iterator iEntity;
 		for (iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
 		{
@@ -114,8 +112,6 @@ namespace Rogue
 			// Collision Response (Contact, forces, rest, Impulse, Torque)
 			CollisionManager::instance().ResolveManifolds();
 		}
-
-		g_engine.m_coordinator.EndTimeSystem("Circle Collision System");
 	}
 
 	void CircleCollisionSystem::Receive(Event* ev)

@@ -74,10 +74,9 @@ namespace Rogue
 		}
 	}
 
+	// Remove all forces tied to entity
 	void ForceManager::RemoveForce(Entity entity)
 	{
-		// If there is more than 1 force that belongs to the same entity,
-		// the oldest force will be removed (set inactive).
 		
 		std::vector<ForceInfo>::iterator i;
 
@@ -89,7 +88,6 @@ namespace Rogue
 			if (i->m_entity == entity)
 			{
 				i->m_isActive = false;
-				return;
 			}
 		}
 	}

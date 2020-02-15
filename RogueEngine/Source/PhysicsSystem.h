@@ -26,6 +26,7 @@ namespace Rogue
 	class Timer;
 	class RigidbodyComponent;
 	class TransformComponent;
+	class PlayerControllerComponent;
 
 	class PhysicsSystem : public System, public EventListener
 	{
@@ -37,6 +38,10 @@ namespace Rogue
 		bool checkAABB;
 		bool checkOBB;
 		bool allowGravity;
+
+		// Temporary place to store movement script
+		Vec2 PlayerMoveByForce(PlayerControllerComponent& playerCtrl, RigidbodyComponent& rigidbody, const Vec2& vecDir);
+		void PlayerMoveByVelocity(PlayerControllerComponent& playerCtrl, RigidbodyComponent& rigidbody, const Vec2& vecDir);
 	public:
 		PhysicsSystem(Vec2 gravity = { 0.0f, -9.81f });
 		~PhysicsSystem() = default;
