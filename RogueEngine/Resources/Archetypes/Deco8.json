@@ -1,4 +1,5 @@
 {
     "Signature": 5,
-    "Entity": "Name{Deco8}|Tag{}|Sprite{Resources\\Assets\\Stalagmite2.png;0.416667;1;0.434027;1}||Transform{-589.056;-354.048;111.734;125.167;0;15}||||||||||||||||"
+    "Entity": "Name{Deco8}|Tag{}|Sprite{Resources\\Assets\\Stalagmite2.png;0.416667;1;0.434027;1}||Transform{-589.056;-354.048;111.734;125.167;0;15}||||||||||||||||",
+		"Children": ""
 }

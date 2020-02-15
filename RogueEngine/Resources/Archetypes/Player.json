@@ -1,4 +1,5 @@
 {
     "Signature": 74295,
-    "Entity": "Name{Player}|Tag{Player}|Sprite{Resources\\Assets\\ExaElaBall.png;1;1;1;1}|Rigidbody{0;0;0;0;1;1;0;1;0.5;0.1;0.01;}|Transform{-1557;258;60;60;0;-1}||BoxCollider{0;0;-2;-7;3;AWAKE}|PlayerController{0;0.2;3000;}||||Camera{0;0;1;}||||Collider{BOX}|||Particle Emitter{0;0;0;0;20;20;0;0;0.1;0;0;0.5;0;1;1;Resources/Assets/Light.png;-2;}||"
+    "Entity": "Name{Player}|Tag{Player}|Sprite{Resources\\Assets\\ExaElaBall.png;1;1;1;1}|Rigidbody{0;0;0;0;1;1;0;1;0.5;0.1;0.01;}|Transform{-1557;258;60;60;0;-1}||BoxCollider{0;0;-2;-7;3;AWAKE}|PlayerController{0;0.2;3000;}||||Camera{0;0;1;}||||Collider{BOX}|||Particle Emitter{0;0;0;0;20;20;0;0;0.1;0;0;0.5;0;1;1;Resources/Assets/Light.png;-2;}||",
+		"Children": ""
 }

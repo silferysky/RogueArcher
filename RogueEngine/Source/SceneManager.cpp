@@ -140,9 +140,9 @@ namespace Rogue
 		m_objectFactory->LoadArchetypes(fileName);
 	}
 
-	void SceneManager::SaveArchetype(const char* fileName)
+	void SceneManager::SaveArchetype(const char* fileName, Entity archetypeEntity)
 	{
-		m_objectFactory->SaveArchetype(fileName);
+		m_objectFactory->SaveArchetype(fileName, archetypeEntity);
 	}
 
 	void SceneManager::SaveArchetypeList(const char* fileName)
@@ -154,6 +154,7 @@ namespace Rogue
 	{
 		auto& activeObjects = g_engine.m_coordinator.GetActiveObjects();
 		auto it = activeObjects.begin();
+
 		for (; it != activeObjects.end(); ++it)
 		{
 			if (*it == archetypeEntity)
@@ -168,7 +169,8 @@ namespace Rogue
 		m_objectFactory->AddToArchetypes(
 			info.m_objectName,
 			g_engine.m_coordinator.GetEntityManager().GetSignature(*it),
-			m_objectFactory->SerializeComponents(info));
+			m_objectFactory->SerializeComponents(info),
+			m_objectFactory->SerializeChildren(info));
 
 		std::ostringstream ostrstream;
 		ostrstream << "Resources/Archetypes/" << info.m_objectName << ".json";
@@ -194,7 +196,8 @@ namespace Rogue
 
 	void SceneManager::UpdateArchetype(const char* archetypeName, Entity archetypeEntity)
 	{
-		m_objectFactory->UpdateArchetype(archetypeName, archetypeEntity);
+		SaveArchetype(archetypeName, archetypeEntity);
+		//m_objectFactory->UpdateArchetype(archetypeName, archetypeEntity);
 	}
 
 	void SceneManager::Clone(Entity toClone)
@@ -264,7 +267,7 @@ namespace Rogue
 		g_engine.SetTimeScale(1.0f);
 	}
 
-	std::map<std::string, std::pair<Signature, std::string>> SceneManager::GetArchetypeMap() const
+	std::map<std::string, std::tuple<Signature, std::string, std::string>> SceneManager::GetArchetypeMap() const
 	{
 		return m_objectFactory->GetArchetypeMap();
 	}

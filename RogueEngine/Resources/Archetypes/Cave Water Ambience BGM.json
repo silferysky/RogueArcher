@@ -1,4 +1,5 @@
 {
     "Signature": 1024,
-    "Entity": "Name{Cave Water Ambience BGM}|Tag{BGM}|||||||||||Audio{Resources/Sounds/[Water Ambience]WATER-CAVE_GEN-HDF-25449.ogg;1;0;0;0;}||||||||"
+    "Entity": "Name{Cave Water Ambience BGM}|Tag{BGM}|||||||||||Audio{Resources/Sounds/[Water Ambience]WATER-CAVE_GEN-HDF-25449.ogg;1;0;0;0;}||||||||",
+		"Children": ""
 }
