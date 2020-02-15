@@ -652,9 +652,7 @@
     <ClInclude Include="Source\LightingSystem.h">
       <Filter>RogueEngine\Systems\Graphics\Lighting</Filter>
     </ClInclude>
-    <ClInclude Include="Source\EditorTileSet.h">
-      <Filter>RogueEditor\EditorFiles</Filter>
-    </ClInclude>
+    <ClInclude Include="Source\EditorTileSet.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">

@@ -91,15 +91,16 @@ namespace Rogue
 					{
 						if (ImGui::Button("Save As Prefab"))
 						{
-							auto archetypeMap = SceneManager::instance().GetArchetypeMap();
-							auto it = archetypeMap.find(infoObj.m_objectName);
-							if (it != archetypeMap.end())
-								SceneManager::instance().SaveArchetype(infoObj.m_objectName.c_str());
-							else
-							{
-								SceneManager::instance().AddToArchetypes(i);
-								//SceneManager::instance().SaveArchetype(infoObj.m_objectName.c_str());
-							}
+							SceneManager::instance().SaveArchetype(infoObj.m_objectName.c_str(), infoObj.m_Entity);
+							//auto archetypeMap = SceneManager::instance().GetArchetypeMap();
+							//auto it = archetypeMap.find(infoObj.m_objectName);
+							//if (it != archetypeMap.end())
+							//	SceneManager::instance().SaveArchetype(infoObj.m_objectName.c_str(), infoObj.m_Entity);
+							//else
+							//{
+							//	SceneManager::instance().AddToArchetypes(i);
+							//	//SceneManager::instance().SaveArchetype(infoObj.m_objectName.c_str());
+							//}
 						}
 					}
 					else

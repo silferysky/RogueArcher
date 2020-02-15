@@ -57,7 +57,7 @@ namespace Rogue
 		void SaveAndLoadLevel();
 
 		void LoadArchetypes(const char* fileName);
-		void SaveArchetype(const char* fileName);
+		void SaveArchetype(const char* fileName, Entity archetypeEntity);
 		void SaveArchetypeList(const char* fileName);
 		void AddToArchetypes(Entity archetypeEntity);
 		void RemoveArchetype(std::string_view archetypeEntity);
@@ -81,7 +81,7 @@ namespace Rogue
 
 		void ReloadLevel();
 
-		std::map<std::string, std::pair<Signature, std::string>> GetArchetypeMap() const;
+		std::map<std::string, std::tuple<Signature, std::string, std::string>> GetArchetypeMap() const;
 
 		//For other systems to add entites here
 		void AddToActiveEntities(Entity ent, bool createHierarchy = true);

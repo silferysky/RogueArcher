@@ -34,9 +34,9 @@ namespace Rogue
 		void SaveLevel(const char* fileName);
 
 		void LoadArchetypes(const char* fileName);
-		void SaveArchetypeList(const char* fileName);
-		void SaveArchetype(std::string_view file);
-		void AddToArchetypes(std::string_view archetype, Signature signature, std::string_view toDeserialize);
+		void SaveArchetypeList(const char* fileName = "Resources/Archetypes/Archetypes.json");
+		void SaveArchetype(std::string_view file, Entity archetypeEntity);
+		void AddToArchetypes(std::string_view archetype, Signature signature, std::string_view toDeserialize, std::string_view children);
 		void UpdateArchetype(const char* archetype, Entity entityToReplace);
 
 		void LoadLevelFiles(const char* fileName);
@@ -52,7 +52,7 @@ namespace Rogue
 		std::string SerializeComponents(HierarchyInfo& entityHierarchy);
 		std::string SerializeChildren(HierarchyInfo& entityHierarchy);
 
-		std::map<std::string, std::pair<Signature, std::string>> GetArchetypeMap() const;
+		std::map<std::string, std::tuple<Signature, std::string, std::string>> GetArchetypeMap() const;
 
 	private:
 
@@ -62,7 +62,7 @@ namespace Rogue
 		size_t m_maxEntityCount; //Represents max entity size of FILE (not level)
 		size_t m_maxArchetypeCount;
 		size_t m_maxFileCount;
-		std::map<std::string, std::pair<Signature, std::string>> m_archetypes;
+		std::map<std::string, std::tuple<Signature, std::string, std::string>> m_archetypes;
 
 	};
 
