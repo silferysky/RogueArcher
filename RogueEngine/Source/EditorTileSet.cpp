@@ -38,6 +38,7 @@ namespace Rogue
 	}
 	void ImGuiTileSet::Update()
 	{
+
 		if (m_openWindow)
 		{
 			if (!ImGui::Begin("TileSet", &m_openWindow))
@@ -48,28 +49,31 @@ namespace Rogue
 			{
 				ImGui::BeginChild("Test");
 				auto drawlist = ImGui::GetWindowDrawList();
-
-				//ImVec2 test;
-				//drawlist->AddLine(test, ImVec2(100.0f, 100.9f), ImColor(120, 100, 100), 3.0f);
+				std::cout << m_tilesHeight << std::endl;
 				ImGui::Columns(2);
 				ImVec2 imageSize;
 				imageSize.x = 50.0f;
 				imageSize.y = 50.0f;
-				for (int j = 0; j < 10;++j)
-				{
-					ImGui::NewLine();
-					for (int i = 0; i < 10; ++i)
-					{
-						ImGui::SameLine();
-						ImGui::Image((void*)(intptr_t)(g_engine.m_coordinator.GetSystem<GraphicsSystem>()->getFBO()), ImVec2(imageSize.x, imageSize.y), ImVec2(0, 1), ImVec2(1, 0), ImVec4(1, 1, 1, 1), ImGui::GetStyle().Colors[ImGuiCol_Border]);
-						if (ImGui::IsItemClicked(0))
-						{
-							
-						}
-					}
-				}
 
+				for (auto& i : m_TileSet)
+				{		
+					ImGui::Image((void*)i.m_tileId, ImVec2(imageSize.x, imageSize.y), ImVec2(0, 1), ImVec2(1, 0), ImVec4(1, 1, 1, 1), ImGui::GetStyle().Colors[ImGuiCol_Border]);
+				}
 				
+				//for (int j = 0; j < 10;++j)
+				//{
+				//	ImGui::NewLine();
+				//	for (int i = 0; i < 10; ++i)
+				//	{
+				//		ImGui::SameLine();
+				//		ImGui::Image((void*)(intptr_t)(g_engine.m_coordinator.GetSystem<GraphicsSystem>()->getFBO()), ImVec2(imageSize.x, imageSize.y), ImVec2(0, 1), ImVec2(1, 0), ImVec4(1, 1, 1, 1), ImGui::GetStyle().Colors[ImGuiCol_Border]);
+				//		if (ImGui::IsItemClicked(0))
+				//		{
+				//			
+				//		}
+				//	}
+				//}
+			
 				ImGui::NextColumn();
 				ImGui::Text("Current Image");
 				if (ImGui::BeginDragDropTarget())

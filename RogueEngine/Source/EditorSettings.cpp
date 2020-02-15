@@ -100,17 +100,19 @@ namespace Rogue
 				ImGui::CloseCurrentPopup();
 			ImGui::EndPopup();
 		}
-		
 		ImGui::End();
 	}
+
 	void ImGuiEditorSettings::Shutdown()
 	{
+
 	}
+
 	Style ImGuiEditorSettings::getcurrentState()
 	{
-		std::cout << "style:" << ImGuiEditorSettings::instance().m_currentBackgroundState << std::endl;
 		return ImGuiEditorSettings::instance().m_currentBackgroundState;
 	}
+
 	void ImGuiEditorSettings::SetCurrentState(Style style)
 	{
 		m_currentBackgroundState = style;
