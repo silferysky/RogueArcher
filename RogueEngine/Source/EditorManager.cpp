@@ -53,6 +53,7 @@ namespace Rogue
 	void EditorManager::Update()
 	{
 		g_engine.m_coordinator.InitTimeSystem("Editor");
+
 		// Start the Dear ImGui frame
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplWin32_NewFrame();
@@ -95,6 +96,8 @@ namespace Rogue
 
 		ImGui::EndFrame();
 		ImGui::UpdatePlatformWindows();
+
+		g_engine.m_coordinator.EndTimeSystem("Editor");
 	}
 
 	void EditorManager::Shutdown()

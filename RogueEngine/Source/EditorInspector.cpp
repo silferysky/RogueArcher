@@ -30,7 +30,7 @@ Technology is prohibited.
 #include "CollisionManager.h"
 #include "ChildComponent.h"
 #include "Main.h"
-
+#include "EditorTileSet.h"
 namespace Rogue
 {
 	ImGuiInspector::ImGuiInspector() :
@@ -296,7 +296,7 @@ namespace Rogue
 
 					if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(i))
 					{
-						if (ImGui::CollapsingHeader("Player Controllable"))
+						if (ImGui::CollapsingHeader("Player Controller"))
 						{
 							auto& PCC = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(i);
 							PCC.DisplayOnInspector();
@@ -685,7 +685,11 @@ namespace Rogue
 
 		ImGui::DragFloat("Set Gravity", &m_gravity.y, 1.0f, -10000.0f, 10000.0f);
 		g_engine.m_coordinator.GetSystem<PhysicsSystem>()->setGravity(m_gravity);
-
+		if (ImGui::Button("TileSet"))
+		{
+			EditorManager::instance().AddEditorWindow<ImGuiTileSet>("TileSet");
+			ImGuiTileSet::instance().Init();
+		}
 		ImGui::End();
 
 

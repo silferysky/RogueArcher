@@ -32,6 +32,7 @@ namespace Rogue
 		: public BaseComponent
 	{
 		float m_moveSpeed;
+		float m_moveForceMultiplier;
 		float m_slowTime;
 		bool m_isActive;
 		MoveState m_moveState;
@@ -47,12 +48,14 @@ namespace Rogue
 
 		void SetSlowTime(float slowTime);
 		void SetMoveSpeed(float speed);
+		void SetMoveForceMultiplier(float multiplier);
 		void SetMoveState(MoveState state);
 		void SetIsActive(const bool& isActive);
 
 		bool GetIsActive() const;
 		float GetSlowTime() const;
 		float GetMoveSpeed() const;
+		float GetMoveForceMultiplier() const;
 		MoveState GetMoveState() const;
 
 		std::string Serialize() override;

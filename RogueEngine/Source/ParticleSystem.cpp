@@ -39,6 +39,8 @@ namespace Rogue
 
 	void ParticleSystem::Update()
 	{
+		g_engine.m_coordinator.InitTimeSystem("Particle System");
+
 		for (auto entity : m_entities)
 		{
 			auto& particle = g_engine.m_coordinator.GetComponent<ParticleComponent>(entity);
@@ -48,6 +50,8 @@ namespace Rogue
 			if (particle.GetLifetime() <= 0)
 				g_engine.m_coordinator.AddToDeleteQueue(entity);
 		}
+
+		g_engine.m_coordinator.InitTimeSystem("Particle System");
 	}
 
 	void ParticleSystem::Receive(Event* ev)
