@@ -85,7 +85,9 @@ namespace Rogue
 		std::ostringstream strstream;
 		
 		strstream << "{\n  \"Signature\": 0,";
-		strstream << "\n  \"Entity\": \"\"";
+		strstream << "\n  \"Entity\": \"\",";
+		strstream << "\n  \"Children\": \"\"";
+
 		strstream << "\n}";
 
 		WriteFile(FileName.data(), strstream.str().c_str());

@@ -1,4 +1,5 @@
 {
     "Signature": 2053,
-    "Entity": "Name{MainMenu_Bg}|Tag{}|Sprite{Resources\\Assets\\MainMenu_Sprite.png;1;1;1;1}||Transform{0;0;2000;1200;0;1000}|||||||||UI{0;}|||||||"
+    "Entity": "Name{MainMenu_Bg}|Tag{}|Sprite{Resources\\Assets\\MainMenu_Sprite.png;1;1;1;1}||Transform{0;0;2000;1200;0;1000}|||||||||UI{0;}|||||||",
+		"Children": ""
 }
