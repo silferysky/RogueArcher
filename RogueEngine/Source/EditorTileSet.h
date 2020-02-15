@@ -17,14 +17,14 @@ namespace Rogue
 	private:
 		std::vector<TileSet> m_TileSet;
 		bool m_openWindow = true;
-		const int m_tileSize = 64;
+		int m_tileSize = 64;
 		float m_columnWidth;
 		ImVec2 m_mousePos;
 		bool m_isCollision;
 		float m_viewportWidth;
 		float m_viewportHeight;
-		int m_tilesHeight;
-		int m_tilesWidth;
+		int m_tilesHeight = 0;
+		int m_tilesWidth = 0;
 
 	public:
 		static ImGuiTileSet& instance()
