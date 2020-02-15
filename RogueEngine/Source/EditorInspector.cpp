@@ -295,7 +295,7 @@ namespace Rogue
 
 					if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(i))
 					{
-						if (ImGui::CollapsingHeader("Player Controllable"))
+						if (ImGui::CollapsingHeader("Player Controller"))
 						{
 							auto& PCC = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(i);
 							PCC.DisplayOnInspector();

@@ -76,7 +76,7 @@ namespace Rogue
 	void InputManager::Update()
 	{
 		Timer TimerSystem;
-		TimerSystem.TimerInit("Input System");
+		g_engine.m_coordinator.InitTimeSystem("Input System");
 		//Always do this first
 		//Shallow add old keyboardstate details over to keep track of how long button is pressed
 		PrevKeyboardState += CurKeyboardState;
@@ -91,7 +91,7 @@ namespace Rogue
 
 		//Do keyfunction inputs here
 		HandleState();
-		TimerSystem.TimerEnd("Input System");
+		g_engine.m_coordinator.EndTimeSystem("Input System");
 
 		//Always do this last
 	}

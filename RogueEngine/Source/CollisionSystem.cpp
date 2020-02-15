@@ -43,8 +43,6 @@ namespace Rogue
 
 	void CollisionSystem::Update()
 	{
-		g_engine.m_coordinator.InitTimeSystem("Collision System");
-
 		std::set<Entity>::iterator iEntity;
 		for (iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
 		{
@@ -117,7 +115,6 @@ namespace Rogue
 			CollisionManager::instance().ResolveManifolds();
 
 		}
-		g_engine.m_coordinator.EndTimeSystem("Collision System");
 	}
 
 	void CollisionSystem::Receive(Event* ev)

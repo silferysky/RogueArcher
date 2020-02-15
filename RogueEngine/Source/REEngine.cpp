@@ -68,6 +68,7 @@ namespace Rogue
 
 	void REEngine::RegisterSystems()
 	{
+		// Order of system updates will be manually set in SystemManager.h
 		m_coordinator.RegisterSystem<InputManager>();
 		m_coordinator.RegisterSystem<LogicSystem>();
 		m_coordinator.RegisterSystem<ParticleSystem>();
@@ -125,6 +126,7 @@ namespace Rogue
 	void REEngine::Init()
 	{
 		config.ConfigInit();
+		g_fixedDeltaTime = 1 / 60.0f;
 
 		AllocConsole();
 		(void)freopen("CONIN$", "r", stdin);
@@ -135,9 +137,9 @@ namespace Rogue
 			config.GetWidth(), config.GetHeight(), 0, config.GetFlags());
 		
 		// set full screen
-		//SetWindowLongPtr(hWnd, GWL_STYLE, WS_VISIBLE | WS_POPUP);
-		//SetWindowPos(hWnd, HWND_TOP, 0, 0, GetSystemMetrics(SM_CXSCREEN),
-		//	GetSystemMetrics(SM_CYSCREEN), SWP_FRAMECHANGED);
+		SetWindowLongPtr(hWnd, GWL_STYLE, WS_VISIBLE | WS_POPUP);
+		SetWindowPos(hWnd, HWND_TOP, 0, 0, GetSystemMetrics(SM_CXSCREEN),
+		GetSystemMetrics(SM_CYSCREEN), SWP_FRAMECHANGED);
 		//ShowCursor(false);
 
 		if (hWnd == NULL)
@@ -171,11 +173,10 @@ namespace Rogue
 	{
 		m_stepCount = 0;
 		Timer::ChronoClock mainLoopTimer;
-		g_fixedDeltaTime = 1/60.0f;
 
 		while (m_gameIsRunning)
 		{
-			g_deltaTime = std::chrono::duration_cast<std::chrono::microseconds>(m_loopEnd - m_loopStart).count() / Timer::s_microsecondsPerSecond;
+			g_deltaTime = std::chrono::duration_cast<std::chrono::microseconds>(m_loopEnd - m_loopStart).count() / Timer::s_microsecPerSec;
 
 			m_loopStart = mainLoopTimer.now();
 
