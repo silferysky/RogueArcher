@@ -250,9 +250,9 @@ namespace Rogue
 			return SceneManager::instance().Clone(archetype, createHierarchy);
 		}
 
-		void SaveArchetype(const char* archetype)
+		void SaveArchetype(const char* archetype, Entity archetypeID)
 		{
-			SceneManager::instance().SaveArchetype(archetype);
+			SceneManager::instance().SaveArchetype(archetype, archetypeID);
 		}
 
 		Entity clone(Entity existingEntity, bool createHierarchy = true)
@@ -289,11 +289,16 @@ namespace Rogue
 			for (auto& entity : m_deleteQueue)
 			{
 				DestroyEntity(entity);
-				/*for (auto itr = GetActiveObjects().begin(); itr != GetActiveObjects().end(); ++itr)
-				{
-					if (*itr == entity)
-						GetActiveObjects().erase(itr);
-				} */
+
+				//auto& activeObjects = g_engine.m_coordinator.GetActiveObjects();
+				//for (auto iterator = activeObjects.begin(); iterator != activeObjects.end(); ++iterator)
+				//{
+				//	if (*iterator == entity)
+				//	{
+				//		activeObjects.erase(iterator);
+				//		break;
+				//	}
+				//}
 			}
 
 			m_deleteQueue.clear();

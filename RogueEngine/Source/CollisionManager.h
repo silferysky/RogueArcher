@@ -50,7 +50,7 @@ namespace Rogue
 
 		Mtx33 GetColliderWorldMatrix(const BaseCollider& collider, const TransformComponent& trans) const;
 		inline Vec2 GetColliderScale(const BaseCollider& collider, const TransformComponent& trans) const;
-		inline Vec2 GetColliderPosition(const BaseCollider& collider, const TransformComponent& trans) const;
+		Vec2 GetColliderPosition(const BaseCollider& collider, const TransformComponent& trans) const;
 		inline float GetColliderRotation(const BaseCollider& collider, const TransformComponent& trans) const;
 
 		void GenerateManifoldCirclevsCircle(Entity A, Entity B);

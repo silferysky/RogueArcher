@@ -1,4 +1,5 @@
 {
     "Signature": 2053,
-    "Entity": "Name{NoBtn}|Tag{}|Sprite{Resources\\Assets\\NoBtn.png;1;1;1;1001}||Transform{250;-200;300;200;0;1001}|||||||||UI{0;}|||||||"
+    "Entity": "Name{NoBtn}|Tag{}|Sprite{Resources\\Assets\\NoBtn.png;1;1;1;1001}||Transform{250;-200;300;200;0;1001}|||||||||UI{0;}|||||||",
+		"Children": ""
 }

@@ -1,4 +1,5 @@
 {
     "Signature": 5,
-    "Entity": "Name{Shroom1}|Tag{}|Sprite{Resources\\Assets\\Shroom.png;0.416667;1;0.434027;1}||Transform{-350.303;-369.977;-52.565;58.8846;0;10}||||||||||||||||"
+    "Entity": "Name{Shroom1}|Tag{}|Sprite{Resources\\Assets\\Shroom.png;0.416667;1;0.434027;1}||Transform{-350.303;-369.977;-52.565;58.8846;0;10}||||||||||||||||",
+		"Children": ""
 }

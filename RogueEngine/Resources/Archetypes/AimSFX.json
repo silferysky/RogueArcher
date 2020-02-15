@@ -1,4 +1,5 @@
 {
     "Signature": 1028,
-    "Entity": "Name{AimSFX}|Tag{}|||Transform{0;0;100;100;0;0}||||||||Audio{Resources\\Sounds\\[Hold Projectile Hum]SCI-FI-CHAMBER_GEN-HDF-20553.ogg;1;0.3;0;0;}||||||||"
+    "Entity": "Name{AimSFX}|Tag{}|||Transform{0;0;100;100;0;0}||||||||Audio{Resources\\Sounds\\[Hold Projectile Hum]SCI-FI-CHAMBER_GEN-HDF-20553.ogg;1;0.3;0;0;}||||||||",
+		"Children": ""
 }

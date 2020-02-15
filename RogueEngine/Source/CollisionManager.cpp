@@ -48,7 +48,7 @@ namespace Rogue
 		return collider.getScaleOffSet() + Vec2(REAbs(trans.GetScale().x), REAbs(trans.GetScale().y));
 	}
 
-	inline Vec2 CollisionManager::GetColliderPosition(const BaseCollider& collider, const TransformComponent& trans) const
+	Vec2 CollisionManager::GetColliderPosition(const BaseCollider& collider, const TransformComponent& trans) const
 	{
 		return collider.getCenterOffSet() + trans.GetPosition();
 	}
