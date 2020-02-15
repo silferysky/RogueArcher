@@ -43,6 +43,7 @@ namespace Rogue
 		id_CAMERASYSTEM,
 		id_AUDIOSYSTEM,
 		id_UISYSTEM,
+		id_LIGHTINGSYSTEM,
 		id_PARENTCHILDSYSTEM,
 		id_EDITOR,
 

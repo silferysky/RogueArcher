@@ -44,6 +44,8 @@
     <ClInclude Include="Source\FadeComponent.h" />
     <ClInclude Include="Source\FadeObject.h" />
     <ClInclude Include="Source\FadeSystem.h" />
+    <ClInclude Include="Source\LightComponent.h" />
+    <ClInclude Include="Source\LightingSystem.h" />
     <ClInclude Include="Source\SoulCollectible.h" />
     <ClInclude Include="Source\LayerManager.h" />
     <ClInclude Include="Source\CollisionSystem.h" />
@@ -236,6 +238,8 @@
     <ClCompile Include="Source\imgui_stl.cpp" />
     <ClCompile Include="Source\imgui_widgets.cpp" />
     <ClCompile Include="Source\ImSequencer.cpp" />
+    <ClCompile Include="Source\LightComponent.cpp" />
+    <ClCompile Include="Source\LightingSystem.cpp" />
     <ClCompile Include="Source\LogicComponent.cpp" />
     <ClCompile Include="Source\LogicSystem.cpp" />
     <ClCompile Include="Source\Manifold.cpp" />

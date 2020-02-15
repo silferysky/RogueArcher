@@ -44,6 +44,7 @@ namespace Rogue
 			ShaderMap.emplace("Screen Shader", Shader(directory + "vertexScreenShader.txt", directory + "fragmentScreenShader.txt"));
 			ShaderMap.emplace("Debug Shader", Shader(directory + "vertexLineShader.txt", directory + "fragmentLineShader.txt"));
 			ShaderMap.emplace("Font Shader", Shader(directory + "vertexFontShader.txt", directory + "fragmentFontShader.txt"));
+			ShaderMap.emplace("Lighting Shader", Shader(directory + "vertexLightShader.txt", directory + "fragmentLightShader.txt"));
 		}
 
 		const std::map<std::string, Shader>& getShaderMap() const
