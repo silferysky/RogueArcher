@@ -383,6 +383,7 @@
       <PreprocessToFile>false</PreprocessToFile>
       <AdditionalOptions>/std:c++17 %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>_NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
