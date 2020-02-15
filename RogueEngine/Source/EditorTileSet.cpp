@@ -14,6 +14,7 @@ namespace Rogue
 		const AABB& viewportArea = PickingManager::instance().GetViewPortArea();
 		m_viewportWidth = viewportArea.getMax().x - viewportArea.getMin().x;
 		m_viewportHeight = viewportArea.getMax().y - viewportArea.getMin().y;
+		
 		int m_id = 0;
 		TileSet tileset;
 		while (m_viewportHeight > 0)
@@ -28,11 +29,11 @@ namespace Rogue
 				m_viewportWidth -= m_tileSize;
 				m_TileSet.push_back(tileset);
 				++m_id;
+				++m_tilesWidth;
 				break;
 			}
 			m_viewportHeight -= m_tileSize;
-			
-			
+			++m_tilesHeight;
 		}
 	}
 	void ImGuiTileSet::Update()
@@ -54,7 +55,7 @@ namespace Rogue
 				ImVec2 imageSize;
 				imageSize.x = 50.0f;
 				imageSize.y = 50.0f;
-				for (int j = 0; j < 10 ;++j)
+				for (int j = 0; j < 10;++j)
 				{
 					ImGui::NewLine();
 					for (int i = 0; i < 10; ++i)
@@ -116,5 +117,17 @@ namespace Rogue
 	}
 	void ImGuiTileSet::Shutdown()
 	{
+	}
+
+	Entity ImGuiTileSet::Create2DSprite()
+	{
+		Entity newEnt = g_engine.m_coordinator.CreateEntity();
+		g_engine.m_coordinator.AddComponent<TransformComponent>(
+			newEnt,
+			TransformComponent(Vec2{ 0.0f, 0.0f }, Vec2{ 100.0f, 100.0f }, 0.0f));
+
+		auto& Sprite = g_engine.m_coordinator.CreateComponent<SpriteComponent>(newEnt);
+		Sprite.Deserialize("Resources/Assets/DefaultSprite.png;1;1;1;1;1");
+		return newEnt;
 	}
 }

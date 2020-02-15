@@ -33,7 +33,11 @@ namespace Rogue
 			System(SystemID::id_EDITOR)
 		{}
 		~Editor();
-
+		static Editor& instance()
+		{
+			static Editor instance;
+			return instance;
+		}
 		void Init() override;
 		void Update() override;
 		void Receive(Event* ev) override final;

@@ -26,21 +26,24 @@ namespace Rogue
 	void ImGuiEditorSettings::Update()
 	{
 		ImGui::Begin("Settings");
-
+		
 		ImGui::Text("Change Background Style");
 		if (ImGui::Button("Dark Style"))
 		{
 			ImGui::StyleColorsDark();
+			ImGuiEditorSettings::instance().SetCurrentState(Style::Dark);
 		}
 
 		if (ImGui::Button("Light Style"))
 		{
 			ImGui::StyleColorsLight();
+			ImGuiEditorSettings::instance().SetCurrentState(Style::Light);
 		}
 
 		if (ImGui::Button("Classic Style"))
 		{
 			ImGui::StyleColorsClassic();
+			ImGuiEditorSettings::instance().SetCurrentState(Style::Classic);
 		}
 
 		ImGui::Checkbox("Show Demo", &show_demo_window);
@@ -97,9 +100,19 @@ namespace Rogue
 				ImGui::CloseCurrentPopup();
 			ImGui::EndPopup();
 		}
+		
 		ImGui::End();
 	}
 	void ImGuiEditorSettings::Shutdown()
 	{
+	}
+	Style ImGuiEditorSettings::getcurrentState()
+	{
+		std::cout << "style:" << ImGuiEditorSettings::instance().m_currentBackgroundState << std::endl;
+		return ImGuiEditorSettings::instance().m_currentBackgroundState;
+	}
+	void ImGuiEditorSettings::SetCurrentState(Style style)
+	{
+		m_currentBackgroundState = style;
 	}
 }

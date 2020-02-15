@@ -37,6 +37,7 @@ Technology is prohibited.
 #include "AnimationSystem.h"
 #include "PlayerControllerSystem.h"
 #include "MenuControllerSystem.h"
+#include "EditorSettings.h"
 
 namespace Rogue
 {

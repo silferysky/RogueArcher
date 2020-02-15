@@ -30,7 +30,11 @@ namespace Rogue
 	public:
 		ImGuiEditorViewport();
 		~ImGuiEditorViewport() = default;
-
+		static ImGuiEditorViewport& instance()
+		{
+			static ImGuiEditorViewport instance;
+			return instance;
+		}
 		virtual void Init() override;
 		virtual void Update() override;
 		virtual void Shutdown() override;
