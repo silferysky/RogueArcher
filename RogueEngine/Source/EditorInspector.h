@@ -31,6 +31,11 @@ namespace Rogue
 	public:
 		ImGuiInspector();
 		~ImGuiInspector() = default;
+		static ImGuiInspector& instance()
+		{
+			static ImGuiInspector instance;
+			return instance;
+		}
 		virtual void Init() override;
 		virtual void Update() override;
 		virtual void Shutdown() override;

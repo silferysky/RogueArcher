@@ -27,6 +27,11 @@ namespace Rogue
 	private:
 		float m_check = 0.0f;
 	public:
+		static ImGuiConsole& instance()
+		{
+			static ImGuiConsole instance;
+			return instance;
+		}
 		ImGuiConsole();
 		~ImGuiConsole() = default;
 		virtual void Init() override;
