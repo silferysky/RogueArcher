@@ -21,6 +21,7 @@ Technology is prohibited.
 #include "GL/glew.h"
 #include "GLHelper.hpp"
 #include "ComponentList.h"
+#include "CameraSystem.h"
 
 namespace Rogue
 {
