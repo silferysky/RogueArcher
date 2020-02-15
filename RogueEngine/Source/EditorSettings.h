@@ -21,13 +21,33 @@ Technology is prohibited.
 
 namespace Rogue
 {
+	enum Style
+	{
+		Classic = 1,
+		Dark,
+		Light
+	};
+
 	class ImGuiEditorSettings:public IEditable
 	{
+
+	public:
+		static ImGuiEditorSettings& instance()
+		{
+			static ImGuiEditorSettings instance;
+			return instance;
+		}
 		virtual void Init() override;
 		virtual void Update() override;
 		virtual void Shutdown() override;
+		Style getcurrentState();
+		void SetCurrentState(Style style);
+	private:
 		bool show_demo_window = false;
 		bool show_another_window = false;
 		bool show = false;
+		Style m_currentBackgroundState;
+
+			
 	};
 }

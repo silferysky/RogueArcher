@@ -25,6 +25,11 @@ namespace Rogue
 	public:
 		ImGuiEditorFile();
 		~ImGuiEditorFile();
+		static ImGuiEditorFile& instance()
+		{
+			static ImGuiEditorFile instance;
+			return instance;
+		}
 		virtual void Init() override;
 		virtual void Update() override;
 		virtual void Shutdown() override;

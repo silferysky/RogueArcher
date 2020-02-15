@@ -26,6 +26,11 @@ namespace Rogue
 	public:
 		ImGuiComponent();
 		~ImGuiComponent();
+		static ImGuiComponent& instance()
+		{
+			static ImGuiComponent instance;
+			return instance;
+		}
 		virtual void Init() override;
 		virtual void Update() override;
 		virtual void Shutdown() override;
