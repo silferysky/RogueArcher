@@ -583,7 +583,7 @@ namespace Rogue
 
 			if (createHierarchy)
 			{
-				CREATE_HIERARCHY_OBJ(curEnt, ostrstream.str(), tagDeserialized, archetype, -1);
+				CREATE_HIERARCHY_OBJ(curEnt, ostrstream.str(), tagDeserialized, archetype, MAX_ENTITIES);
 			}
 
 			//For Children
@@ -592,7 +592,13 @@ namespace Rogue
 			std::istringstream childrenstream(std::get<2>(m_archetypes[archetype]));
 			while (std::getline(childrenstream, temp, ';'))
 			{
-				Clone(temp.c_str(), createHierarchy);
+				Entity childEnt = Clone(temp.c_str(), createHierarchy);
+				if (createHierarchy)
+				{
+					ParentSetEvent* parentEv = new ParentSetEvent(curEnt, childEnt);
+					parentEv->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+					EventDispatcher::instance().AddEvent(parentEv);
+				}
 			}
 
 
