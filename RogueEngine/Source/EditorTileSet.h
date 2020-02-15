@@ -7,7 +7,7 @@ namespace Rogue
 	struct TileSet
 	{
 		std::string m_texturename;
-		int m_tileId;
+		GLuint m_tileId;
 		Vec2 m_minPos;
 		Vec2 m_MaxPos;
 	};
@@ -23,6 +23,8 @@ namespace Rogue
 		bool m_isCollision;
 		float m_viewportWidth;
 		float m_viewportHeight;
+		int m_tilesHeight;
+		int m_tilesWidth;
 
 	public:
 		static ImGuiTileSet& instance()
@@ -32,7 +34,7 @@ namespace Rogue
 		}
 		ImGuiTileSet() :m_TileSet() {}
 		~ImGuiTileSet() = default;
-
+		Entity Create2DSprite();
 		virtual void Init() override final;
 		virtual void Update() override final;
 		virtual void Shutdown() override final;

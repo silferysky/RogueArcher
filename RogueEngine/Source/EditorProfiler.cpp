@@ -18,7 +18,7 @@ Technology is prohibited.
 #include "Precompiled.h"
 #include "EditorProfiler.h"
 #include "SystemList.h"
-
+#include "EditorSettings.h"
 namespace Rogue
 {
 	ImGuiProfiler::ImGuiProfiler() :
@@ -36,33 +36,6 @@ namespace Rogue
 	void ImGuiProfiler::Update()
 	{
 		ImGui::Begin("Profiler");
-		/*if (ImGui::Button("Clear"))
-		{
-
-		}
-		ImGui::SameLine();
-		if (ImGui::Button("Collapse"))
-		{
-
-		}
-		if (ImGui::Button("Error Pause"))
-		{
-
-		}
-		ImGui::SameLine();
-		if (ImGui::BeginMenu("Editor"))
-		{
-			if (ImGui::MenuItem("Player Logging"))
-			{
-
-			}
-			ImGui::Separator();
-			if (ImGui::MenuItem("Editor"))
-			{
-
-			}
-			ImGui::EndMenu();
-		}*/
 		ImGui::TextWrapped("%.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 		ImGui::NewLine();
 		ImGui::TextWrapped("%d SPS", static_cast<int>(1 / g_fixedDeltaTime + 1.0f));
@@ -79,10 +52,30 @@ namespace Rogue
 			{
 				float systemTime = iter.second / Timer::s_microsecPerSec; // Convert systemTime from microsec to seconds
 				systemTime = systemTime / g_deltaTime * 100.0f;
-
+				//std::cout << (g_engine.m_coordinator.getcurrentState()) << std::endl;
 				if (systemTime > 20.0f)
 				{
-					ImGui::TextColored({ 1.0f,1.0f,0.0f,1.0f }, "%s %.2f %%", iter.first, systemTime);
+					switch (ImGuiEditorSettings::instance().getcurrentState())
+					{
+						case Style::Classic:
+						{
+							ImGui::TextColored({ 1.0f,1.0f,0.0f,1.0f }, "%s %.2f %%", iter.first, systemTime);
+						}
+						break;
+						case Style::Dark:
+						{
+							ImGui::TextColored({ 1.0f,1.0f,0.0f,1.0f }, "%s %.2f %%", iter.first, systemTime);
+						}
+						break;
+						case Style::Light:
+						{
+							ImGui::TextColored({ 0.0f,0.0f,0.0f,1.0f }, "%s %.2f %%", iter.first, systemTime);
+						}
+						break;
+						default:
+							break;
+					}
+					
 				}
 				else
 				{
@@ -102,7 +95,26 @@ namespace Rogue
 
 				if (systemTime > 20.0f)
 				{
-					ImGui::TextColored({ 1.0f,1.0f,0.0f,1.0f }, "%s %.2f %%", iter.first, systemTime);
+					switch (ImGuiEditorSettings::instance().getcurrentState())
+					{
+					case Style::Classic:
+					{
+						ImGui::TextColored({ 1.0f,1.0f,0.0f,1.0f }, "%s %.2f %%", iter.first, systemTime);
+						break;
+					}					
+					case Style::Dark:
+					{
+						ImGui::TextColored({ 1.0f,1.0f,0.0f,1.0f }, "%s %.2f %%", iter.first, systemTime);
+						break;
+					}					
+					case Style::Light:
+					{
+						ImGui::TextColored({ 0.0f,0.0f,0.0f,1.0f }, "%s %.2f %%", iter.first, systemTime);
+						break;
+					}					
+					default:
+						break;
+					}
 				}
 				else
 				{

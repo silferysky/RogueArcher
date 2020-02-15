@@ -168,6 +168,7 @@ namespace Rogue
 		Signature signature;
 		g_engine.m_coordinator.SetSystemSignature<Editor>(signature);
 		REGISTER_LISTENER(SystemID::id_EDITOR, Editor::Receive);
+		EditorManager::instance().AddEditorWindow<ImGuiProfiler>("Profiler");
 		EditorManager::instance().AddEditorWindow<ImGuiEditorFile>("File");
 		EditorManager::instance().AddEditorWindow<ImGuiEditorEdit>("Edit");
 		EditorManager::instance().AddEditorWindow<ImGuiComponent>("Component");
@@ -178,7 +179,6 @@ namespace Rogue
 		EditorManager::instance().AddEditorWindow<ImGuiEditorViewport>("Viewport");
 		EditorManager::instance().AddEditorWindow<ImGuiEditorSettings>("Settings");
 		EditorManager::instance().AddEditorWindow<ImGuiConsole>("Console");
-		EditorManager::instance().AddEditorWindow<ImGuiProfiler>("Profiler");
 		EditorManager::instance().Init();
 	}
 

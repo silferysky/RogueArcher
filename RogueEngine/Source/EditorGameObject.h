@@ -27,6 +27,11 @@ namespace Rogue
 	public:
 		ImGuiGameObject();
 		~ImGuiGameObject();
+		static ImGuiGameObject& instance()
+		{
+			static ImGuiGameObject instance;
+			return instance;
+		}
 		virtual void Init() override;
 		virtual void Update() override;
 		virtual void Shutdown() override;

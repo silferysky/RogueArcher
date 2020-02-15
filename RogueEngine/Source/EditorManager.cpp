@@ -105,9 +105,6 @@ namespace Rogue
 		ImGui_ImplOpenGL3_Shutdown();
 		ImGui_ImplWin32_Shutdown();
 		ImGui::DestroyContext();
-
-		//glfwDestroyWindow(window);
-		//glfwTerminate();
 	}
 }
 	

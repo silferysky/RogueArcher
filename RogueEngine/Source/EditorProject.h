@@ -26,8 +26,14 @@ namespace Rogue
 	class ImGuiProject : public IEditable
 	{
 	public:
+
 		ImGuiProject();
 		~ImGuiProject();
+		static ImGuiProject& instance()
+		{
+			static ImGuiProject instance;
+			return instance;
+		}
 		virtual void Init() override;
 		virtual void Update() override;
 		virtual void Shutdown() override;

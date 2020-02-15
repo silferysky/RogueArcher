@@ -25,6 +25,11 @@ namespace Rogue
 	{
 	std::vector<Entity>& m_currentVector = g_engine.m_coordinator.GetActiveObjects();
 	public:
+		static ImGuiEditorEdit& instance()
+		{
+			static ImGuiEditorEdit instance;
+			return instance;
+		}
 		ImGuiEditorEdit();
 		~ImGuiEditorEdit();
 		virtual void Init() override;
