@@ -19,7 +19,7 @@ namespace Rogue
 		// Set graphics system signature
 		g_engine.m_coordinator.SetSystemSignature<LightingSystem>(signature);
 
-		//m_shader = g_engine.m_coordinator.loadShader("Lighting Shader");
+		m_shader = g_engine.m_coordinator.loadShader("Lighting Shader");
 
 		m_projLocation = glGetUniformLocation(m_shader.GetShader(), "projection");
 		m_viewLocation = glGetUniformLocation(m_shader.GetShader(), "view");
