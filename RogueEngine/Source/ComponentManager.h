@@ -38,27 +38,33 @@ namespace Rogue
 		template<typename TComponent>
 		void RegisterComponent()
 		{
-			//RE_ASSERT(m_componentTypes.find(typeName) == m_componentTypes.end(), "Registering component type more than once.");
+#if 0
+			RE_ASSERT(m_componentTypes.find(typeName) == m_componentTypes.end(), "Registering component type more than once.");
 
-			// Add this component type to the component type map
-			//m_componentTypes.insert({ typeName, m_nextComponentType });
+			 Add this component type to the component type map
+			m_componentTypes.insert({ typeName, m_nextComponentType });
 
-			//std::stringstream out;
-			//out.clear();
-			//out.str("");
-			//out << "Creating " << typeName << "s...";
-			//RE_CORE_INFO(out.str());
+			std::stringstream out;
+			out.clear();
+			out.str("");
+			out << "Creating " << typeName << "s...";
+			RE_CORE_INFO(out.str());
+#endif
+			// Create a ComponentArray pointer and add it to the component arrays vector
+			if (m_componentArrays.size() < GetComponentType<TComponent>() + 1)
+				m_componentArrays.resize(GetComponentType<TComponent>() + 1);
 
-			// Create a ComponentArray pointer and add it to the component arrays map
-			m_componentArrays.insert({ GetComponentType<TComponent>(), std::make_shared<ComponentArray<TComponent>>() });
+			m_componentArrays[GetComponentType<TComponent>()] = std::make_shared<ComponentArray<TComponent>>();
 			
-			//out.clear();
-			//out.str("");
-			//out << "Array of " << MAX_ENTITIES << " " << typeName << "s created!";
-			//RE_CORE_INFO(out.str());
+#if 0
+			out.clear();
+			out.str("");
+			out << "Array of " << MAX_ENTITIES << " " << typeName << "s created!";
+			RE_CORE_INFO(out.str());
 
 			// Increment the value so that the next component registered will be different
-			//++m_nextComponentType;
+			++m_nextComponentType;
+#endif
 		}
 
 		template<typename T>
@@ -86,19 +92,16 @@ namespace Rogue
 		{
 			// Notify each component array that an entity has been destroyed
 			// If it has a component for that entity, it will remove it
-			for (auto const& pair : m_componentArrays)
+			for (const std::shared_ptr<BaseComponentArray>& pComponentArray : m_componentArrays)
 			{
-				auto const& component = pair.second;
-
-				component->EntityDestroyed(entity);
-				//RE_CORE_INFO("Components Removed\n");
+				pComponentArray->EntityDestroyed(entity);
 			}
 		}
 		
 		void clone(Entity existingEntity, Entity toClone)
 		{
-			for(auto i = m_componentArrays.begin(); i != m_componentArrays.cend(); i++)
-				i->second->clone(existingEntity, toClone);
+			for(const std::shared_ptr<BaseComponentArray>& pComponentArray : m_componentArrays)
+				pComponentArray->clone(existingEntity, toClone);
 		}
 
 	private:
@@ -118,7 +121,7 @@ namespace Rogue
 
 		//std::unordered_map<const char*, ComponentType> m_componentTypes{};
 
-		std::unordered_map<ComponentType, std::shared_ptr<BaseComponentArray>> m_componentArrays{};
+		std::vector<std::shared_ptr<BaseComponentArray>> m_componentArrays{};
 
 	};
 }

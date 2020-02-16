@@ -49,6 +49,13 @@ namespace Rogue
 			m_gameModeChanged = false;
 		}
 
+		if (m_gameIsPaused && m_stepOnce) // Game is paused and step button is pressed
+		{
+			// Step and return
+			StepUpdate();
+			return;
+		}
+
 		// System updates that are before fixed updates are placed here.
 		m_systems[static_cast<int>(SystemID::id_INPUTMANAGER)].second->Update();
 
@@ -68,6 +75,9 @@ namespace Rogue
 
 		FixedUpdate();
 		Update();
+
+		// If placed before ^, will cause memory leak.
+		EventDispatcher::instance().Update();
 	}
 
 	void SystemManager::Update()
@@ -101,20 +111,8 @@ namespace Rogue
 		for (step = 0; step < g_engine.GetStepCount(); ++step)
 		{
 			// Only run physics if game is paused
-			if (!m_gameIsPaused)
+			if (!m_gameIsPaused && m_gameIsRunning)
 			{
-				g_engine.m_coordinator.InitTimeSystem("Physics System");
-				m_systems[static_cast<int>(SystemID::id_PHYSICSSYSTEM)].second->Update();
-				g_engine.m_coordinator.EndTimeSystem("Physics System");
-			}
-			else if (m_stepOnce) // Game is paused and step button is pressed
-			{
-				if(step >= g_engine.GetStepCount() - 1)
-					--m_stepCounter;
-
-				if (m_stepCounter == 0)
-					m_stepOnce = false;
-
 				g_engine.m_coordinator.InitTimeSystem("Physics System");
 				m_systems[static_cast<int>(SystemID::id_PHYSICSSYSTEM)].second->Update();
 				g_engine.m_coordinator.EndTimeSystem("Physics System");
@@ -137,5 +135,29 @@ namespace Rogue
 		Timer::instance().GetSystemTimes()["Circle Collision System"] *= step;
 		Timer::instance().GetSystemTimes()["Box Collision System"] *= step;
 		Timer::instance().GetSystemTimes()["Collision System"] *= step;
+	}
+
+	void SystemManager::StepUpdate()
+	{
+		--m_stepCounter;
+
+		if (m_stepCounter <= 0)
+			m_stepOnce = false;
+
+		// System updates that are before fixed updates are placed here.
+		m_systems[static_cast<int>(SystemID::id_INPUTMANAGER)].second->Update();
+		m_systems[static_cast<int>(SystemID::id_LOGICSYSTEM)].second->Update();
+		m_systems[static_cast<int>(SystemID::id_PARTICLESYSTEM)].second->Update();
+		m_systems[static_cast<int>(SystemID::id_PARTICLEEMITTERSYSTEM)].second->Update();
+		m_systems[static_cast<int>(SystemID::id_CURSORSYSTEM)].second->Update();
+		m_systems[static_cast<int>(SystemID::id_PICKINGSYSTEM)].second->Update();
+		m_systems[static_cast<int>(SystemID::id_PLAYERCONTROLLERSYSTEM)].second->Update();
+		m_systems[static_cast<int>(SystemID::id_MENUCONTROLLERSYSTEM)].second->Update();
+
+		FixedUpdate();
+		Update();
+
+		// If placed before ^, will cause memory leak.
+		EventDispatcher::instance().Update();
 	}
 }

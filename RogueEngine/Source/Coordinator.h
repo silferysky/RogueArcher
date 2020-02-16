@@ -83,9 +83,6 @@ namespace Rogue
 			// Update the core systems
 			m_systemManager->UpdateSystems();
 
-			// If placed before ^, will cause memory leak.
-			EventDispatcher::instance().Update();
-
 			DeleteEntities();
 
 		}
@@ -231,10 +228,12 @@ namespace Rogue
 		{
 			return m_entityManager->GetSignature(entity).test(GetComponentType<T>());
 		}
+
 		void InitTimeSystem(const char* system)
 		{
 			Timer::instance().TimerInit(system);
 		}
+
 		void EndTimeSystem(const char* system)
 		{
 			Timer::instance().TimerEnd(system);
@@ -245,7 +244,7 @@ namespace Rogue
 			return Timer::instance().GetSystemTimes();
 		}
 
-		Entity cloneArchetypes(const char* archetype, bool createHierarchy = true)
+		Entity CloneArchetypes(const char* archetype, bool createHierarchy = true)
 		{
 			return SceneManager::instance().Clone(archetype, createHierarchy);
 		}

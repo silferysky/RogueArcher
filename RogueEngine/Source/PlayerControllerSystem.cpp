@@ -87,7 +87,7 @@ namespace Rogue
 		{
 			if (PLAYER_STATUS.GetIndicator() == MAX_ENTITIES && PLAYER_STATUS.GetPlayerEntity() != MAX_ENTITIES)
 			{
-				PLAYER_STATUS.SetIndicator(g_engine.m_coordinator.cloneArchetypes("Indicator", false));
+				PLAYER_STATUS.SetIndicator(g_engine.m_coordinator.CloneArchetypes("Indicator", false));
 
 				ParentSetEvent* parent = new ParentSetEvent(*m_entities.begin(), PLAYER_STATUS.GetIndicator());
 				parent->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
@@ -789,7 +789,7 @@ namespace Rogue
 		//EventDispatcher::instance().AddEvent(parentTransform);
 
 		//For teleport VFX
-		TimedEntity ent(g_engine.m_coordinator.cloneArchetypes("TeleportSprite", false), 0.5f);
+		TimedEntity ent(g_engine.m_coordinator.CloneArchetypes("TeleportSprite", false), 0.5f);
 		m_teleports.push_back(ent);
 		if (g_engine.m_coordinator.ComponentExists<TransformComponent>(m_teleports.back().m_entity))
 		{

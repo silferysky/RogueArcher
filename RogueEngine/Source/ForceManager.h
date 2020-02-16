@@ -52,10 +52,10 @@ namespace Rogue
 		}
 
 		void Init();
+		void ApplyAllForces(); 
 		void UpdateAges();
 
 		void RegisterForce(Entity entity, const Vec2& force, float lifetime = 0.0166666f);
-		void AddForce(Entity entity, RigidbodyComponent& body) const;
 		void RemoveForce(Entity entity);
 	};
 
