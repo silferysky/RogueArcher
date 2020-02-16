@@ -19,6 +19,7 @@ Technology is prohibited.
 #include "EntityManager.h"
 #include "ComponentArray.h"
 #include "ComponentList.h"
+#include "ComponentIndex.h"
 #include "Logger.h"
 
 namespace Rogue
@@ -26,47 +27,45 @@ namespace Rogue
 	class ComponentManager
 	{
 	public:
-		template<typename T>
+		template<typename TComponent>
+		ComponentType GetComponentType()
+		{
+			//const char* typeName = typeid(T).name();
+			//RE_ASSERT(m_componentTypes.find(typeName) != m_componentTypes.end(), "Component not registered before use.");
+			return TypeID<TComponent>::value();
+		}
+
+		template<typename TComponent>
 		void RegisterComponent()
 		{
-			const char* typeName = typeid(T).name();
-			RE_ASSERT(m_componentTypes.find(typeName) == m_componentTypes.end(), "Registering component type more than once.");
+			//RE_ASSERT(m_componentTypes.find(typeName) == m_componentTypes.end(), "Registering component type more than once.");
 
 			// Add this component type to the component type map
-			m_componentTypes.insert({ typeName, m_nextComponentType });
+			//m_componentTypes.insert({ typeName, m_nextComponentType });
 
-			std::stringstream out;
-			out.clear();
-			out.str("");
-			out << "Creating " << typeName << "s...";
+			//std::stringstream out;
+			//out.clear();
+			//out.str("");
+			//out << "Creating " << typeName << "s...";
 			//RE_CORE_INFO(out.str());
 
 			// Create a ComponentArray pointer and add it to the component arrays map
-			m_componentArrays.insert({ typeName, std::make_shared<ComponentArray<T>>() });
-
-
-			out.clear();
-			out.str("");
-			out << "Array of " << MAX_ENTITIES << " " << typeName << "s created!";
+			m_componentArrays.insert({ GetComponentType<TComponent>(), std::make_shared<ComponentArray<TComponent>>() });
+			
+			//out.clear();
+			//out.str("");
+			//out << "Array of " << MAX_ENTITIES << " " << typeName << "s created!";
 			//RE_CORE_INFO(out.str());
 
 			// Increment the value so that the next component registered will be different
-			++m_nextComponentType;
-		}
-
-		template<typename T>
-		ComponentType GetComponentType()
-		{
-			const char* typeName = typeid(T).name();
-			RE_ASSERT(m_componentTypes.find(typeName) != m_componentTypes.end(), "Component not registered before use.");
-			return m_componentTypes[typeName];
+			//++m_nextComponentType;
 		}
 
 		template<typename T>
 		void AddComponent(Entity entity, T component)
 		{
-			std::stringstream out;
-			out << "Added " << typeid(T).name() << " to Entity " << entity;
+			//std::stringstream out;
+			//out << "Added " << typeid(T).name() << " to Entity " << entity;
 			//RE_CORE_INFO(out.str());
 			GetComponentArray<T>()->InsertData(entity, component);
 		}
@@ -102,27 +101,24 @@ namespace Rogue
 				i->second->clone(existingEntity, toClone);
 		}
 
-		size_t Size() const
-		{
-			return m_nextComponentType;
-		}
-
 	private:
 
-		template<typename T>
-		std::shared_ptr<ComponentArray<T>> GetComponentArray()
+		template<typename TComponent>
+		std::shared_ptr<ComponentArray<TComponent>> GetComponentArray()
 		{
 
-			const char* typeName = typeid(T).name();
-			RE_ASSERT(m_componentTypes.find(typeName) != m_componentTypes.end(), "Component not registered before use.");
-			return std::static_pointer_cast<ComponentArray<T>>(m_componentArrays[typeName]);
+			//const char* typeName = typeid(T).name();
+			//RE_ASSERT(m_componentTypes.find(typeName) != m_componentTypes.end(), "Component not registered before use.");
+			//return std::static_pointer_cast<ComponentArray<T>>(m_componentArrays[typeName]);
+			
+			return std::static_pointer_cast<ComponentArray<TComponent>>( m_componentArrays[GetComponentType<TComponent>()] );
 		}
 
-		ComponentType m_nextComponentType{};
+		//ComponentType m_nextComponentType{};
 
-		std::unordered_map<const char*, ComponentType> m_componentTypes{};
+		//std::unordered_map<const char*, ComponentType> m_componentTypes{};
 
-		std::unordered_map<const char*, std::shared_ptr<BaseComponentArray>> m_componentArrays{};
+		std::unordered_map<ComponentType, std::shared_ptr<BaseComponentArray>> m_componentArrays{};
 
 	};
 }
