@@ -148,13 +148,13 @@ namespace Rogue
 			//RE_CORE_INFO(output.str());
 		}
 
-		template<typename T>
-		void AddComponent(Entity entity, const T& component)
+		template<typename TComponent>
+		void AddComponent(Entity entity, TComponent&& component)
 		{
-			m_componentManager->AddComponent<T>(entity, component);
+			m_componentManager->AddComponent<TComponent>( entity, std::move(component) );
 
 			auto signature = m_entityManager->GetSignature(entity);
-			signature.set(m_componentManager->GetComponentType<T>(), true);
+			signature.set(m_componentManager->GetComponentType<TComponent>(), true);
 			m_entityManager->SetSignature(entity, signature);
 
 			m_systemManager->EntitySignatureChanged(entity, signature);
@@ -191,12 +191,6 @@ namespace Rogue
 		{
 			AddComponent(owner, T());
 			return GetComponent<T>(owner);
-		}
-
-		template<typename T>
-		void CopyComponent(Entity owner, Entity toCopyFrom)
-		{
-			CreateComponent<T>(owner) = GetComponent<T>(toCopyFrom);
 		}
 
 		template<typename T>
@@ -254,10 +248,10 @@ namespace Rogue
 			SceneManager::instance().SaveArchetype(archetype, archetypeID);
 		}
 
-		Entity clone(Entity existingEntity, bool createHierarchy = true)
+		Entity Clone(Entity existingEntity, bool createHierarchy = true)
 		{
 			Entity clonedEntity = CreateEntity();
-			m_componentManager->clone(existingEntity, clonedEntity);
+			m_componentManager->Clone(existingEntity, clonedEntity);
 
 			Signature newEntitySignature = m_entityManager->GetSignature(existingEntity);
 			m_entityManager->SetSignature(clonedEntity, newEntitySignature);
@@ -265,7 +259,6 @@ namespace Rogue
 			SceneManager::instance().AddToActiveEntities(clonedEntity, createHierarchy);
 
 			return clonedEntity;
-			//m_sceneManager->Clone(existingEntity);
 		}
 
 		void ResetEvents()

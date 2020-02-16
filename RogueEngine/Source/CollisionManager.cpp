@@ -1028,17 +1028,17 @@ namespace Rogue
 	void CollisionManager::InsertDiffPair(Entity a, Entity b)
 	{
 		// Always box first, then circle.
-		m_diffPairs.emplace_back(std::make_pair(a, b));
+		m_diffPairs.emplace(std::make_pair(a, b));
 	}
 
 	void CollisionManager::InsertBoxPair(Entity a, Entity b)
 	{
-		m_boxPairs.emplace_back(std::make_pair(a, b));
+		m_boxPairs.emplace(std::make_pair(a, b));
 	}
 
 	void CollisionManager::InsertCirclePair(Entity a, Entity b)
 	{
-		m_circlePairs.emplace_back(std::make_pair(a, b));
+		m_circlePairs.emplace(std::make_pair(a, b));
 	}
 
 	void CollisionManager::GenerateDiffManifolds()

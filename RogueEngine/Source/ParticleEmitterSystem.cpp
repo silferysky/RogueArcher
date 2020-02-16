@@ -90,7 +90,7 @@ namespace Rogue
 
 		for (int i = 0; i < magnitude * timeScale; ++i)
 		{
-			Entity particle = g_engine.m_coordinator.clone(unitParticle, false);
+			Entity particle = g_engine.m_coordinator.Clone(unitParticle, false);
 
 			TransformComponent& particleTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(particle);
 			Vec2 pos = transform.GetPosition();

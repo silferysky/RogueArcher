@@ -46,6 +46,7 @@ namespace Rogue
 	MemoryManager::~MemoryManager()
 	{
 		free(MemoryStart);
+
 		RE_INFO("CLOSE MEMORY MANAGER");
 	}
 
@@ -76,8 +77,9 @@ namespace Rogue
 
 		//Warning message if full
 		if (SpaceUsed == MEM_SPACE)
+		{
 			RE_CORE_WARN("MAXED OUT MEMORY");
-
+		}
 		/***********************************************************
 						Hierarchy of Memory Manager
 

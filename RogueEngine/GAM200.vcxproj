@@ -38,6 +38,7 @@
     <ClInclude Include="Source\ChildComponent.h" />
     <ClInclude Include="Source\CircleCollisionSystem.h" />
     <ClInclude Include="Source\ColliderComponent.h" />
+    <ClInclude Include="Source\IntegerPairHasher.h" />
     <ClInclude Include="Source\ComponentIndex.h" />
     <ClInclude Include="Source\DeathBox.h" />
     <ClInclude Include="Source\DisappearOnCollide.h" />
@@ -200,6 +201,7 @@
     <ClCompile Include="Source\ChildComponent.cpp" />
     <ClCompile Include="Source\CircleCollisionSystem.cpp" />
     <ClCompile Include="Source\ColliderComponent.cpp" />
+    <ClCompile Include="Source\IntegerPairHasher.cpp" />
     <ClCompile Include="Source\ComponentIndex.cpp" />
     <ClCompile Include="Source\ComponentManager.cpp" />
     <ClCompile Include="Source\DeathBox.cpp" />
@@ -393,6 +395,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(SolutionDir)Dep\FreeType\win64;$(SolutionDir)Dep\FMOD\lib\x64;$(SolutionDir)Dep\SOIL\x64;$(SolutionDir)Dep\GLFW\lib-vc2019;$(SolutionDir)Dep\glew-2.1.0\lib\Release\x64</AdditionalLibraryDirectories>
       <AdditionalDependencies>freetype.lib;fmod_vc.lib;glfw3.lib;glfw3dll.lib;opengl32.lib;SOIL.lib;glew32.lib;glew32s.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <Profile>true</Profile>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

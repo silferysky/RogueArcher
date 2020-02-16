@@ -44,6 +44,7 @@ namespace Rogue
 		std::map<const char*, float>& GetSystemTimes();
 
 		ChronoTime GetCurrTime() const;
+		float CalculateDuration(const ChronoTime& start, const ChronoTime& end) const;
 	private:
 		ChronoClock m_timer;
 		ChronoTime m_startTimer;

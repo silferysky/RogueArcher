@@ -622,7 +622,7 @@ namespace Rogue
 
 					if (ImGui::Button("Clone Object"))
 					{
-						g_engine.m_coordinator.clone(i);
+						g_engine.m_coordinator.Clone(i);
 					}
 					ImGui::SameLine();
 					if (ImGui::Button("Delete Object"))
