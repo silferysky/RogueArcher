@@ -7,7 +7,7 @@ namespace Rogue
 	struct TileSet
 	{
 		std::string_view m_texturename;
-		GLuint m_tileId;
+		int m_tileId;
 		Vec2 m_tilePos;
 		bool m_collision = false;
 		Texture m_tileTexture;

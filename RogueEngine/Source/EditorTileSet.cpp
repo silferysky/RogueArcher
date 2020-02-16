@@ -13,8 +13,6 @@ namespace Rogue
 		}
 
 		const AABB& viewportArea = PickingManager::instance().GetViewPortArea();
-		m_viewportWidth = viewportArea.getMax().x - viewportArea.getMin().x;
-		m_viewportHeight = viewportArea.getMax().y - viewportArea.getMin().y;
 		m_minX = viewportArea.getMin().x;
 		m_minY = viewportArea.getMin().y;
 		m_maxX = viewportArea.getMax().x;
@@ -25,8 +23,8 @@ namespace Rogue
 			tileset.m_tileTexture.m_texture = 0;
 			tileset.m_texturename = "";
 			tileset.m_tileTexture.m_data = 0;
-			tileset.m_tilePos.x = round(m_minX / m_tileSize) * m_tileSize;
-			tileset.m_tilePos.y = round(m_maxY / m_tileSize) * m_tileSize;
+			tileset.m_tilePos.x = round(m_minX / m_tileSize) * m_tileSize + m_tileSize/2;
+			tileset.m_tilePos.y = round(m_maxY / m_tileSize) * m_tileSize - m_tileSize/2;
 			m_minX += m_tileSize;
 			if (m_check)
 			{
@@ -47,19 +45,16 @@ namespace Rogue
 		if (!m_openWindow)
 		{
 			EditorManager::instance().RemoveEditorWindow<ImGuiTileSet>("TileSet");
-			m_openWindow = false;
 		}
-		if (m_openWindow)
+		else
 		{
 			if (!ImGui::Begin("TileSet", &m_openWindow))
-			{
-				
+			{		
 				ImGui::End();
 			}
 			else
 			{
-				ImGui::BeginChild("Tile");
-				
+				ImGui::BeginChild("Tile");			
 				ImGui::Columns(2);
 				ImGui::AlignTextToFramePadding();
 				ImVec2 imageSize;
@@ -79,7 +74,6 @@ namespace Rogue
 					}
 					ImGui::Image((void*)i.m_tileTexture.m_texture, ImVec2(imageSize.x, imageSize.y), ImVec2(0, 1), ImVec2(1, 0), ImVec4(1,1, 1, 1), i.m_bordercolor);
 					--m_tilesWidth;
-									
 					if (ImGui::IsItemClicked(0))
 					{
 						i.m_tileTexture = TextureManager::instance().loadTexture(m_currentPath.c_str());
@@ -194,12 +188,13 @@ namespace Rogue
 		g_engine.m_coordinator.AddComponent<TransformComponent>(newEnt,TransformComponent(position, scale, 0.0f));
 		if (iscollision)
 		{
-			g_engine.m_coordinator.AddComponent<RigidbodyComponent>(newEnt,RigidbodyComponent());
+			auto& rigid = g_engine.m_coordinator.CreateComponent<RigidbodyComponent>(newEnt);
+			rigid.setIsStatic(true);
 			g_engine.m_coordinator.AddComponent<BoxCollider2DComponent>(newEnt, BoxCollider2DComponent());
+			g_engine.m_coordinator.AddComponent<ColliderComponent>(newEnt, ColliderComponent(std::make_shared<BoxShape>()));
 		}
 		auto& Sprite = g_engine.m_coordinator.CreateComponent<SpriteComponent>(newEnt);
 		Sprite.setTexturePath(tilepath);
-
 		return newEnt;
 	}
 }
