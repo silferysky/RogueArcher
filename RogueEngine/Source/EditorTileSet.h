@@ -6,18 +6,10 @@ namespace Rogue
 {
 	struct TileSet
 	{
-		std::string_view m_texturename;
-		int m_tileId;
-		Vec2 m_tilePos;
-		bool m_collision = false;
-		Texture m_tileTexture;
-		ImVec4 m_bordercolor = { 1.0f,1.0f,1.0f,0.5f };
-	};
-
-	enum Mode
-	{
-		Single,
-		Drag
+		std::string m_texturename;
+		GLuint m_tileId;
+		Vec2 m_minPos;
+		Vec2 m_MaxPos;
 	};
 
 	class ImGuiTileSet : public IEditable
@@ -25,23 +17,15 @@ namespace Rogue
 	private:
 		std::vector<TileSet> m_TileSet;
 		bool m_openWindow = true;
-		int m_tileSize = 100;
+		int m_tileSize = 64;
 		float m_columnWidth;
 		ImVec2 m_mousePos;
-		bool m_isCollision = false;
+		bool m_isCollision;
 		float m_viewportWidth;
 		float m_viewportHeight;
 		int m_tilesHeight = 0;
 		int m_tilesWidth = 0;
-		bool m_check = true;
-		Texture m_currentTexture;
-		std::string m_currentPath = "None";
-		bool m_firstclicked = false;
-		float m_minX;
-		float m_minY;
-		float m_maxX;
-		float m_maxY;
-		int m_currentmode = 0;
+
 	public:
 		static ImGuiTileSet& instance()
 		{
@@ -50,7 +34,7 @@ namespace Rogue
 		}
 		ImGuiTileSet() :m_TileSet() {}
 		~ImGuiTileSet() = default;
-		Entity Create2DSprite(Vec2 position, Vec2 scale, std::string_view tilepath,bool iscollision);
+		Entity Create2DSprite();
 		virtual void Init() override final;
 		virtual void Update() override final;
 		virtual void Shutdown() override final;

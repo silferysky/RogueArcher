@@ -37,7 +37,7 @@ namespace Rogue
 		RECT rect;
 		::GetClientRect(g_engine.GetWindowHandler(), &rect);
 		io.DisplaySize = ImVec2((float)(rect.right - rect.left), (float)(rect.bottom - rect.top));
-		ImGui::StyleColorsDark();
+		ImGui::StyleColorsClassic();
 		io.ConfigDockingWithShift = false;
 		io.ConfigFlags = ImGuiConfigFlags_DockingEnable;
 
