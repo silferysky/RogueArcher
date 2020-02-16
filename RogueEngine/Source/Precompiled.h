@@ -26,6 +26,7 @@ Technology is prohibited.
 #include <map>
 #include <memory>
 #include <set>
+#include <unordered_set>
 #include <bitset>
 #include <functional>
 #include <utility>

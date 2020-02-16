@@ -44,6 +44,7 @@ namespace Rogue
 			auto i = std::find_if(m_systems.begin(), m_systems.end(),
 				[&typeName](const std::pair<std::type_index, std::shared_ptr<System>>& element) { return element.first == typeName; });
 
+
 			RE_ASSERT(i == m_systems.end(), "Registering system more than once.");
 
 			// Insert the newly created system pointer and typename into the map.
@@ -57,7 +58,8 @@ namespace Rogue
 
 			auto i = std::find_if(m_systems.begin(), m_systems.end(),
 				[&SystemName](const std::pair<std::type_index, std::shared_ptr<System>>& element) { return element.first == SystemName; });
-			
+
+
 			RE_ASSERT(i != m_systems.end(), "System not found!")
 
 			return std::dynamic_pointer_cast<T>(i->second); // Casts the base shared_ptr to derived
@@ -115,7 +117,10 @@ namespace Rogue
 				std::type_index type = pair.first;
 				std::shared_ptr<System> system = pair.second;
 				std::unordered_map<std::type_index, Signature>::iterator i = m_signatures.find(type);
+
+
 				RE_ASSERT(i != m_signatures.end(), "System signature not found! Please set an empty sig if your system does not require any component");
+				
 				Signature systemSignature = i->second;
 
 
@@ -124,15 +129,17 @@ namespace Rogue
 				{
 					if (system->m_entities.insert(entity).second)
 					{
+
 						CLEARSTRING(out);
 						out << "Entity " << entity << " added to " << type.name();
-						//RE_CORE_INFO(out.str());
+						RE_CORE_INFO(out.str());
 					}
 					else
 					{
+
 						CLEARSTRING(out);
 						out << "Entity " << entity << " exists in " << type.name();
-						//RE_CORE_INFO(out.str());
+						RE_CORE_INFO(out.str());
 					}
 				}
 				// Entity signature does not match system signature - erase from set/don't add
@@ -140,15 +147,17 @@ namespace Rogue
 				{
 					if (system->m_entities.find(entity) != system->m_entities.end()) // If entity exists
 					{
+
 						CLEARSTRING(out);
 						out << "Entity " << entity << " removed from " << type.name();
-						//RE_CORE_INFO(out.str());
+						RE_CORE_INFO(out.str());
 					}
 					else
 					{
+
 						CLEARSTRING(out);
 						out << "Entity " << entity << " not added to " << type.name();
-						//RE_CORE_INFO(out.str());
+						RE_CORE_INFO(out.str());
 					}
 					system->m_entities.erase(entity);
 				}

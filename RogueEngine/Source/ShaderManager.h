@@ -56,11 +56,11 @@ namespace Rogue
 		{
 			auto itr = ShaderMap.find(shader);
 
+
 			std::stringstream out;
 			out << "Shader " << shader << " not found!";
-
 			RE_ASSERT(itr != ShaderMap.end(), out.str().c_str());
-			
+
 			return itr->second;
 		}
 	};

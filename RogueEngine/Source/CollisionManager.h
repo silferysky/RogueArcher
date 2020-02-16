@@ -16,8 +16,6 @@ Technology is prohibited.
 */
 /* End Header **************************************************************************/
 #pragma once
-#include <vector>
-
 #include "REMath.h"
 #include "Vector2D.h"
 #include "Matrix33.h"
@@ -28,14 +26,17 @@ Technology is prohibited.
 #include "CircleCollider2DComponent.h"
 #include "Manifold.h"
 #include "LayerManager.h"
+#include "IntegerPairHasher.h"
 
 namespace Rogue
 {
 	class CollisionManager
 	{
-		std::vector<std::pair<Entity, Entity>> m_diffPairs; // Stored pairs of aabb and circle
-		std::vector<std::pair<Entity, Entity>> m_boxPairs; // Stored pairs of aabbs
-		std::vector<std::pair<Entity, Entity>> m_circlePairs; // Stored pairs of circles
+		using ColliderPairSet = std::unordered_set<std::pair<Entity, Entity>, IntegerPairHasher<Entity>, IntegerPairComparer<Entity>>;
+
+		ColliderPairSet m_diffPairs; // Stored pairs of aabb and circle
+		ColliderPairSet m_boxPairs; // Stored pairs of aabbs
+		ColliderPairSet m_circlePairs; // Stored pairs of circles
 		std::vector<Manifold> m_manifolds; // To generate and resolve after collision tests
 
 		static const float s_correction_factor;

@@ -41,7 +41,7 @@ namespace Rogue
 			[&SystemName](const std::pair<const char*, float>& element) { return element.first == SystemName; });
 
 		RE_ASSERT(i != m_timeMap.end(), "Cannot find system in timer!");
-		
+
 		i->second = static_cast<float>(std::chrono::duration_cast<std::chrono::microseconds>(delta).count());
 	}
 
@@ -53,5 +53,12 @@ namespace Rogue
 	Timer::ChronoTime Timer::GetCurrTime() const
 	{
 		return m_timer.now();
+	}
+
+	float Timer::CalculateDuration(const ChronoTime& start, const ChronoTime& end) const
+	{
+		FloatSec delta = end - start;
+
+		return static_cast<float>(std::chrono::duration_cast<std::chrono::microseconds>(delta).count()) / s_microsecPerSec;
 	}
 }
