@@ -120,35 +120,36 @@ namespace Rogue
 
 	void PhysicsSystem::Update()
 	{
+		// Add relevant forces to each rigidbody
+		ForceManager::instance().ApplyAllForces();
+
 		// For all entities
 		std::set<Entity>::iterator iEntity;
 		for (iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
 		{
 			auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
 
-			if (rigidbody.getIsStatic())
+			if (rigidbody.getIsStatic()) // Skip static bodies
 				continue;
 
 			auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
-
-
-			// Add relevant forces to each rigidbody
-			ForceManager::instance().AddForce(*iEntity, rigidbody);
 
 			// Update positions
 			Integrate(rigidbody, transform);
 
 			// Reset accForce
 			rigidbody.setAccForce(Vec2());
-
-			//if (g_engine.m_coordinator.GetHierarchyInfo(*iEntity).m_children.size())
-			//{
-			//	ParentTransformEvent* parentEv = new ParentTransformEvent(*iEntity, MAX_ENTITIES);
-			//	parentEv->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
-			//	EventDispatcher::instance().AddEvent(parentEv);
-			//}
+#if 0
+			if (g_engine.m_coordinator.GetHierarchyInfo(*iEntity).m_children.size())
+			{
+				ParentTransformEvent* parentEv = new ParentTransformEvent(*iEntity, MAX_ENTITIES);
+				parentEv->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+				EventDispatcher::instance().AddEvent(parentEv);
+			}
+#endif
 		}
 
+		// Increase their ages 
 		ForceManager::instance().UpdateAges();
 	}
 
@@ -181,9 +182,6 @@ namespace Rogue
 
 #ifdef MOVE_WITH_FORCE
 			Vec2 force = PlayerMoveByForce(playerCtrl, rigidbody, vecMovement);
-			std::stringstream ss;
-			ss << force;
-			RE_INFO(ss.str());
 
 			for (int steps = 0; steps < g_engine.GetStepCount(); steps++)
 			{

@@ -255,10 +255,10 @@ namespace Rogue
 					g_engine.m_coordinator.clone(*m_entities.begin());
 
 				if (keycode == KeyPress::Numpad1)
-					g_engine.m_coordinator.cloneArchetypes("Box");
+					g_engine.m_coordinator.CloneArchetypes("Box");
 
 				if (keycode == KeyPress::Numpad2)
-					g_engine.m_coordinator.cloneArchetypes("Circle");*/
+					g_engine.m_coordinator.CloneArchetypes("Circle");*/
 
 				if (keycode == KeyPress::KeyF8)
 				{
@@ -282,15 +282,15 @@ namespace Rogue
 	void MenuControllerSystem::InitPauseMenu()
 	{
 		//g_engine.SetTimeScale(0.0f);
-		m_menuObjs.push_back(g_engine.m_coordinator.cloneArchetypes("crosshair", false));
-		m_menuObjs.push_back(g_engine.m_coordinator.cloneArchetypes("MainMenu_Bg", false));
-		m_menuObjs.push_back(g_engine.m_coordinator.cloneArchetypes("HowToPlayBtn", false));
-		m_menuObjs.push_back(g_engine.m_coordinator.cloneArchetypes("MainMenu_Btn", false));
-		m_menuObjs.push_back(g_engine.m_coordinator.cloneArchetypes("Resume", false));
-		m_menuObjs.push_back(g_engine.m_coordinator.cloneArchetypes("QuitBtn", false));
-		m_menuObjs.push_back(g_engine.m_coordinator.cloneArchetypes("HowToPlay", false));
-		m_confirmQuitEnt.push_back(g_engine.m_coordinator.cloneArchetypes("YesBtn", false));
-		m_confirmQuitEnt.push_back(g_engine.m_coordinator.cloneArchetypes("NoBtn", false));
+		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("crosshair", false));
+		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("MainMenu_Bg", false));
+		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("HowToPlayBtn", false));
+		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("MainMenu_Btn", false));
+		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("Resume", false));
+		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("QuitBtn", false));
+		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("HowToPlay", false));
+		m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("YesBtn", false));
+		m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("NoBtn", false));
 
 		SetUIMenuObjs(false);
 	}

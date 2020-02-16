@@ -3,5 +3,5 @@
 
 namespace Rogue
 {
-	ComponentType TypeCounter::value = 1;
+	ComponentType TypeCounter::value = 0;
 }

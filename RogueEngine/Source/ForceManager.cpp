@@ -60,17 +60,15 @@ namespace Rogue
 		m_forceInfos.emplace_back(ForceInfo{ entity, force, lifetime, true });
 	}
 
-	void ForceManager::AddForce(Entity entity, RigidbodyComponent& body) const
+	void ForceManager::ApplyAllForces()
 	{
 		for (const ForceInfo& forceInfo : m_forceInfos)
 		{
-			if (forceInfo.m_entity == entity)
-			{
-				if (forceInfo.m_isActive == false)
-					continue;
+			if (forceInfo.m_isActive == false)
+				continue;
 
-				body.addForce(forceInfo.m_force);
-			}
+			RigidbodyComponent& body = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(forceInfo.m_entity);
+			body.addForce(forceInfo.m_force);
 		}
 	}
 

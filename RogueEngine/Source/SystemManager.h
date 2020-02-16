@@ -204,7 +204,7 @@ namespace Rogue
 			m_stepOnce = true;
 		
 			if(m_stepFrames)
-				m_stepCounter = m_stepFrames;
+				m_stepCounter = static_cast<int>(m_stepFrames);
 		}
 
 		void CreateAssignTagEvent(Entity entity)
@@ -235,9 +235,11 @@ namespace Rogue
 		bool m_showCursor = true;
 
 		size_t m_stepFrames = 1;
-		size_t m_stepCounter = 0;
+		int m_stepCounter = 0;
 
 		void FixedUpdate();
 		void Update();
+
+		void StepUpdate();
 	};
 }
