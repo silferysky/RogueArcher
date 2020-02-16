@@ -23,7 +23,7 @@ namespace Rogue
 {
 	enum Style
 	{
-		Classic = 1,
+		Classic = 0,
 		Dark,
 		Light
 	};
@@ -40,13 +40,13 @@ namespace Rogue
 		virtual void Init() override;
 		virtual void Update() override;
 		virtual void Shutdown() override;
-		Style getcurrentState();
+		Style getcurrentState() const;
 		void SetCurrentState(Style style);
 	private:
 		bool show_demo_window = false;
 		bool show_another_window = false;
 		bool show = false;
-		Style m_currentBackgroundState;
+		Style m_currentBackgroundState = Dark;
 
 			
 	};

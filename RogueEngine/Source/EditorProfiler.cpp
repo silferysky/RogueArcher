@@ -19,10 +19,14 @@ Technology is prohibited.
 #include "EditorProfiler.h"
 #include "SystemList.h"
 #include "EditorSettings.h"
+#include "REMath.h"
+
 namespace Rogue
 {
 	ImGuiProfiler::ImGuiProfiler() :
-		m_timeSystemRef(g_engine.m_coordinator.GetSystemTimes())
+		m_timeSystemRef(g_engine.m_coordinator.GetSystemTimes()),
+		m_profileAge{ 0.0f },
+		m_profileInterval{ 0.5f }
 	{}
 
 	void ImGuiProfiler::Init()
@@ -48,34 +52,48 @@ namespace Rogue
 			m_profileAge = 0.0f;
 			m_vecTimeSystem.clear();
 
+			float highestDt = 0.0f;
+			std::string highestSystem;
+
 			for (const auto& iter : m_timeSystemRef)
 			{
-				float systemTime = iter.second / Timer::s_microsecPerSec; // Convert systemTime from microsec to seconds
+				float systemTime = iter.second;
+				if (systemTime > highestDt)
+				{
+					highestDt = systemTime;
+					highestSystem = std::string(iter.first);
+				}
+			}
+
+			for (const auto& iter : m_timeSystemRef)
+			{
+				float systemTime = iter.second;
+				systemTime /= Timer::s_microsecPerSec; // Convert systemTime from microsec to seconds
 				systemTime = systemTime / g_deltaTime * 100.0f;
 				//std::cout << (g_engine.m_coordinator.getcurrentState()) << std::endl;
-				if (systemTime > 20.0f)
+
+				if (std::string(iter.first) == highestSystem)
 				{
 					switch (ImGuiEditorSettings::instance().getcurrentState())
 					{
-						case Style::Classic:
-						{
-							ImGui::TextColored({ 1.0f,1.0f,0.0f,1.0f }, "%s %.2f %%", iter.first, systemTime);
-						}
+					case Style::Classic:
+					{
+						ImGui::TextColored({ 1.0f,1.0f,0.0f,1.0f }, "%s %.2f %%", iter.first, systemTime);
 						break;
-						case Style::Dark:
-						{
-							ImGui::TextColored({ 1.0f,1.0f,0.0f,1.0f }, "%s %.2f %%", iter.first, systemTime);
-						}
-						break;
-						case Style::Light:
-						{
-							ImGui::TextColored({ 0.0f,0.0f,0.0f,1.0f }, "%s %.2f %%", iter.first, systemTime);
-						}
-						break;
-						default:
-							break;
 					}
-					
+					case Style::Dark:
+					{
+						ImGui::TextColored({ 1.0f,1.0f,0.0f,1.0f }, "%s %.2f %%", iter.first, systemTime);
+						break;
+					}
+					case Style::Light:
+					{
+						ImGui::TextColored({ 0.0f,0.0f,0.0f,1.0f }, "%s %.2f %%", iter.first, systemTime);
+						break;
+					}
+					default:
+						break;
+					}
 				}
 				else
 				{
@@ -85,33 +103,51 @@ namespace Rogue
 				// Time is in milliseconds
 				m_vecTimeSystem.emplace_back(systemTime);
 			}
+
+
 		}
 		else
 		{
+			float highestDt = 0.0f;
+			std::string highestSystem;
+
 			for (const auto& iter : m_timeSystemRef)
 			{
-				float systemTime = iter.second / Timer::s_microsecPerSec; // Convert systemTime from microsec to seconds
-				systemTime = systemTime / g_deltaTime * 100.0f;
-
-				if (systemTime > 20.0f)
+				float systemTime = iter.second;
+				if (systemTime > highestDt)
 				{
-					switch (ImGuiEditorSettings::instance().getcurrentState())
+					highestDt = systemTime;
+					highestSystem = std::string(iter.first);
+				}
+			}
+
+			for (const auto& iter : m_timeSystemRef)
+			{
+				float systemTime = iter.second;
+				systemTime /= Timer::s_microsecPerSec; // Convert systemTime from microsec to seconds
+				systemTime = systemTime / g_deltaTime * 100.0f;
+				//std::cout << (g_engine.m_coordinator.getcurrentState()) << std::endl;
+
+				if (std::string(iter.first) == highestSystem)
+				{
+					Style style = ImGuiEditorSettings::instance().getcurrentState();
+					switch (style)
 					{
 					case Style::Classic:
 					{
 						ImGui::TextColored({ 1.0f,1.0f,0.0f,1.0f }, "%s %.2f %%", iter.first, systemTime);
 						break;
-					}					
+					}
 					case Style::Dark:
 					{
 						ImGui::TextColored({ 1.0f,1.0f,0.0f,1.0f }, "%s %.2f %%", iter.first, systemTime);
 						break;
-					}					
+					}
 					case Style::Light:
 					{
 						ImGui::TextColored({ 0.0f,0.0f,0.0f,1.0f }, "%s %.2f %%", iter.first, systemTime);
 						break;
-					}					
+					}
 					default:
 						break;
 					}

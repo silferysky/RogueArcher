@@ -108,9 +108,9 @@ namespace Rogue
 
 	}
 
-	Style ImGuiEditorSettings::getcurrentState()
+	Style ImGuiEditorSettings::getcurrentState() const
 	{
-		return ImGuiEditorSettings::instance().m_currentBackgroundState;
+		return m_currentBackgroundState;
 	}
 
 	void ImGuiEditorSettings::SetCurrentState(Style style)
