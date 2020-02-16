@@ -24,8 +24,8 @@ Technology is prohibited.
 
 #define CONSOLE_SIZE 100
 
-#define ENABLE_LOGGER
-#define ENABLE_ASSERT
+//#define ENABLE_LOGGER
+//#define ENABLE_ASSERT
 
 namespace Rogue
 {
