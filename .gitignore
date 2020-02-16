@@ -57,4 +57,4 @@ RogueEngine/.vs/*
 RogueEngine/log/ClientFileLog.txt
 RogueEngine/log/CoreFileLog.txt
 RogueEngine/Resources/TestJsonFileCreator.json
-After.vsp
+*.vsp
