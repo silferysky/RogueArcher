@@ -653,6 +653,9 @@
       <Filter>RogueEngine\Systems\Graphics\Lighting</Filter>
     </ClInclude>
     <ClInclude Include="Source\EditorTileSet.h" />
+    <ClInclude Include="Source\ComponentIndex.h">
+      <Filter>RogueEngine\Core\ECS</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -1041,6 +1044,12 @@
     </ClCompile>
     <ClCompile Include="Source\EditorTileSet.cpp">
       <Filter>RogueEditor\EditorFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ComponentManager.cpp">
+      <Filter>RogueEngine\Core\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ComponentIndex.cpp">
+      <Filter>RogueEngine\Core\ECS</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

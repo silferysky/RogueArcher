@@ -38,6 +38,7 @@
     <ClInclude Include="Source\ChildComponent.h" />
     <ClInclude Include="Source\CircleCollisionSystem.h" />
     <ClInclude Include="Source\ColliderComponent.h" />
+    <ClInclude Include="Source\ComponentIndex.h" />
     <ClInclude Include="Source\DeathBox.h" />
     <ClInclude Include="Source\DisappearOnCollide.h" />
     <ClInclude Include="Source\EditorTileSet.h" />
@@ -199,6 +200,8 @@
     <ClCompile Include="Source\ChildComponent.cpp" />
     <ClCompile Include="Source\CircleCollisionSystem.cpp" />
     <ClCompile Include="Source\ColliderComponent.cpp" />
+    <ClCompile Include="Source\ComponentIndex.cpp" />
+    <ClCompile Include="Source\ComponentManager.cpp" />
     <ClCompile Include="Source\DeathBox.cpp" />
     <ClCompile Include="Source\DisappearOnCollide.cpp" />
     <ClCompile Include="Source\EditorTileSet.cpp" />
