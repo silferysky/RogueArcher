@@ -62,6 +62,12 @@ namespace Rogue
 			m_WindowsMap.emplace(name, std::make_shared<T>());
 		}
 
+		template <typename T>
+		void RemoveEditorWindow(std::string name)
+		{
+			m_WindowsVector.pop_back();
+			m_WindowsMap.erase(name);
+		}
 		int GetPickedEntity() const { return m_pickedEntity; }
 		void SetPickedEntity(int entity) { m_pickedEntity = entity; }
 
