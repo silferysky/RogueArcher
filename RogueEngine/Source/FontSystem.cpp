@@ -39,13 +39,10 @@ namespace Rogue
 
 		FT_Library ft;
 		FT_Face face;
-		FT_Error ftError = FT_Init_FreeType(&ft);
-		FT_Error faceError = FT_New_Face(ft, "Fonts/Pokemon Solid.ttf", 0, &face);
 
+		RE_ASSERT(!FT_Init_FreeType(&ft), "ERROR - Could not init FreeType Library");
 
-		RE_ASSERT(!ftError, "ERROR - Could not init FreeType Library");
-
-		RE_ASSERT(!faceError, "ERROR - Failed to load font");
+		RE_ASSERT(!FT_New_Face(ft, "Fonts/Pokemon Solid.ttf", 0, &face), "ERROR - Failed to load font");
 
 		FT_Set_Pixel_Sizes(face, 0, 48);
 

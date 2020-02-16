@@ -24,12 +24,12 @@ namespace Rogue
 	{
 	public:
 		virtual ~BaseComponentArray() = default;
-		virtual void Clone(Entity, Entity) = 0;
+		virtual void clone(Entity, Entity) = 0;
 		virtual void EntityDestroyed(Entity entity) = 0;
 	};
 
 
-	template<typename TComponent>
+	template<typename T>
 	class ComponentArray : public BaseComponentArray
 	{
 	public:
@@ -37,24 +37,20 @@ namespace Rogue
 			m_size{ 0 }
 		{}
 
-		void InsertData(Entity entity, TComponent&& component)
+		void InsertData(Entity entity, T component)
 		{
-
 			RE_ASSERT(m_entityToIndexMap.find(entity) == m_entityToIndexMap.end(), "Component added to same entity more than once.");
-
 			// Put new entry at end and update the maps
 			size_t newIndex = m_size;
 			m_entityToIndexMap[entity] = newIndex;
 			m_indexToEntityMap[newIndex] = entity;
-			m_componentArray[newIndex] = std::forward<TComponent&&>(component);
+			m_componentArray[newIndex] = component;
 			++m_size;
 		}
 
 		void RemoveData(Entity entity)
 		{
-
 			RE_ASSERT(m_entityToIndexMap.find(entity) != m_entityToIndexMap.end(), "Removing non-existent component.");
-			
 			if (!m_size)
 				return;
 			// Copy element at end into deleted element's place to maintain density
@@ -73,9 +69,8 @@ namespace Rogue
 			--m_size;
 		}
 
-		TComponent& GetData(Entity entity)
+		T& GetData(Entity entity)
 		{
-
 			RE_ASSERT(m_entityToIndexMap.find(entity) != m_entityToIndexMap.end(), "Retrieving non-existent component.");
 			return m_componentArray[m_entityToIndexMap[entity]];
 		}
@@ -88,11 +83,11 @@ namespace Rogue
 			}
 		}
 		
-		void Clone(Entity existingEntity, Entity toClone) override
+		void clone(Entity existingEntity, Entity toClone)
 		{
 			if (ComponentExists(existingEntity))
 			{
-				InsertData( toClone, std::move( GetData(existingEntity) ) );
+				InsertData(toClone, T{ GetData(existingEntity) });
 			}
 		}
 
@@ -113,7 +108,7 @@ namespace Rogue
 			return m_entityToIndexMap.find(entity) != m_entityToIndexMap.end();
 		}
 
-		std::array<TComponent, MAX_ENTITIES> m_componentArray;
+		std::array<T, MAX_ENTITIES> m_componentArray;
 
 		std::unordered_map<Entity, size_t> m_entityToIndexMap;
 

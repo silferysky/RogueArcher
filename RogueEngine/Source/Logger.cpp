@@ -66,9 +66,10 @@ namespace Rogue
 		if (!args)
 		{
 			RE_CORE_ERROR(errorMsg);
+//#if defined (_DEBUG) | defined (DEBUG)
+//			//assert(args && errorMsg);
+//#endif
 
-			//#if defined (_DEBUG) | defined (DEBUG)
-			//assert(args && errorMsg);
 		}
 	}
 }

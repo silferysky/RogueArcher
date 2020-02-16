@@ -333,7 +333,7 @@ namespace Rogue
 							else
 							{
 								m_undoStack.push_back(pasteObjEvent);
-								m_pastedEntity = g_engine.m_coordinator.Clone(m_copiedEntity);
+								m_pastedEntity = g_engine.m_coordinator.clone(m_copiedEntity);
 								m_pastedEntitiesVector.push_back(m_pastedEntity);
 							}
 						}
@@ -349,7 +349,7 @@ namespace Rogue
 						{
 							if (deleteObjEvent->GetIsUndo())
 							{
-								g_engine.m_coordinator.Clone(m_deletedEntitiesVector.back());
+								g_engine.m_coordinator.clone(m_deletedEntitiesVector.back());
 								m_deletedEntitiesVector.pop_back();
 								AddToRedoStack(m_undoStack.back());
 								m_undoStack.pop_back();

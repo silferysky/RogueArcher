@@ -29,7 +29,7 @@ namespace Rogue
 		CollisionMode m_collisionMode;
 
 	public:
-		AABB m_aabb;	
+		AABB m_aabb;
 		OBB m_obb;
 
 		BoxCollider2DComponent();

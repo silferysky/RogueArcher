@@ -235,7 +235,6 @@ namespace Rogue
 					KeyPressSub keycodeSpecial = keytriggeredcombinedev->GetSubKey();
 
 					//Do stuff
-
 					RE_INFO(keytriggeredcombinedev->ToString());
 				}
 

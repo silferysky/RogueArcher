@@ -656,9 +656,6 @@
     <ClInclude Include="Source\ComponentIndex.h">
       <Filter>RogueEngine\Core\ECS</Filter>
     </ClInclude>
-    <ClInclude Include="Source\IntegerPairHasher.h">
-      <Filter>RogueEngine\Systems\Collision\Data</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -1053,9 +1050,6 @@
     </ClCompile>
     <ClCompile Include="Source\ComponentIndex.cpp">
       <Filter>RogueEngine\Core\ECS</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\IntegerPairHasher.cpp">
-      <Filter>RogueEngine\Systems\Collision\Data</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

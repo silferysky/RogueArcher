@@ -48,8 +48,7 @@ namespace Rogue
 		g_engine.m_coordinator.SetSystemSignature<GraphicsSystem>(signature);
 
 		// Init OpenGL libraries.
-		bool openGLInitSuccess = InitializeOpenGL();
-		RE_ASSERT(openGLInitSuccess, "OpenGL not initialized");
+		RE_ASSERT(InitializeOpenGL(), "OpenGL not initialized");
 
 		// Emplace shaders into the map
 		ShaderManager::instance().Init();

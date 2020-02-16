@@ -86,7 +86,6 @@ namespace Rogue
 
 	void SceneManager::LoadLevel(const std::string& fileName)
 	{
-		auto start = Timer::instance().GetCurrTime();
 		if (PLAYER_STATUS.GetPlayerEntity() != MAX_ENTITIES)
 		{
 			//Telling PlayerControllerSystem to do full reset
@@ -114,16 +113,6 @@ namespace Rogue
 		g_engine.m_coordinator.SystemInits();
 		g_engine.m_coordinator.GetSystem<AudioSystem>()->TrueInit();
 		//g_engine.m_coordinator.ResetEvents();
-
-		auto end = Timer::instance().GetCurrTime();
-
-		float duration = Timer::instance().CalculateDuration(start, end);
-
-
-		std::stringstream ss;
-		ss << "Time taken to load scene: " << duration << "s";
-		RE_CORE_INFO(ss.str());
-		CLEARSTRING(ss);
 	}
 
 	void SceneManager::SaveLevel(const char* fileName)

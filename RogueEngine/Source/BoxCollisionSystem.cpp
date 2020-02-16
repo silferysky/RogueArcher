@@ -135,6 +135,13 @@ namespace Rogue
 
 					CollisionManager::instance().InsertBoxPair(*iEntity, *iNextEntity);
 				}
+
+				// Test OBBs vs OBBs collision
+				//if (CollisionManager::instance().DiscreteOBBvsOBB(currBoxCollider.m_obb, nextBoxCollider.m_obb))
+				//{
+				//	std::cout << "Entity " << *iEntity << " OBB collides with Entity " << *iNextEntity << " OBB" << std::endl;
+				//}
+
 			}
 
 			// Generate manifolds from collided pairs

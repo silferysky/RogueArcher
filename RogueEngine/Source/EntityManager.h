@@ -54,9 +54,7 @@ namespace Rogue
 			{
 				REActiveEntityCount = static_cast<uint32_t>(m_currentActiveObjects.size());
 			}
-
 			RE_ASSERT(REActiveEntityCount < MAX_ENTITIES, "Too many entities in existence.");
-
 			Entity id = REAvailableEntities.front();
 			REAvailableEntities.pop();
 			++REActiveEntityCount;
@@ -81,27 +79,23 @@ namespace Rogue
 
 			std::stringstream out;
 			out << "Entities Destroyed. Current active entities: " << REActiveEntityCount;
-
-			RE_CORE_INFO(out.str());
+			//////RE_CORE_INFO(out.str());
 		}
 
 		void SetSignature(Entity entity, Signature signature)
 		{
-
 			RE_ASSERT(entity < MAX_ENTITIES, "Entity out of range.");
 			RESignatures[entity] = signature;
 		}
 
 		Signature GetSignature(Entity entity)
 		{
-
 			RE_ASSERT(entity < MAX_ENTITIES, "Entity out of range.");
 			return RESignatures[entity];
 		}
 
 		HierarchyInfo& GetHierarchyInfo(Entity entity)
 		{
-
 			RE_ASSERT(entity < MAX_ENTITIES, "Entity out of range.");
 			return m_entityInfo[entity];
 		}

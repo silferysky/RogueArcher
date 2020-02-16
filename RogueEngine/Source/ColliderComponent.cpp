@@ -41,9 +41,7 @@ namespace Rogue
 	{
 		if (!rhs.m_shape)
 		{
-
 			RE_CORE_ERROR("Copied shape is nullptr!");
-
 			m_shape.reset(new BoxShape);
 			*m_shape = *rhs.m_shape;
 			return;
@@ -85,9 +83,7 @@ namespace Rogue
 	{
 		if (!rhs.m_shape)
 		{
-
 			RE_CORE_ERROR("Copied collider shape is nullptr!");
-
 			m_shape.reset(new BoxShape);
 			*m_shape = *rhs.m_shape;
 			return *this;
@@ -224,9 +220,7 @@ namespace Rogue
 					{
 						ChangeLayer(pos);
 					}
-
 					CLEARSTRING(ss);
-
 				}
 
 				ImGui::EndMenu();
@@ -244,7 +238,6 @@ namespace Rogue
 			checked = m_collisionMask[pos];
 			ss << CollisionManager::instance().GetLayerName(pos);
 			ImGui::Checkbox(ss.str().c_str(), &checked);
-
 			CLEARSTRING(ss);
 
 			m_collisionMask.set(pos, checked);

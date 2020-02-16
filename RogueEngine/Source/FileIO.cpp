@@ -43,7 +43,6 @@ namespace Rogue
 	{
 		std::FILE* pFile = nullptr;
 		fopen_s(&pFile, FileName, "r");
-
 		RE_ASSERT(pFile, "Error opening file for deserialization");
 
 		std::vector<char> buffer(MAX_FILE_BUFFER_SIZE);
