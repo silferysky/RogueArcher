@@ -35,6 +35,7 @@ namespace Rogue
 	void ImGuiEditorViewport::Update()
 	{
 		ImGui::Begin("Viewport");
+		ImGui::BeginChild("Viewport child");
 		ImGuiStyle& style = ImGui::GetStyle();
 		if (ImGui::Button("Play"))
 		{
@@ -171,7 +172,7 @@ namespace Rogue
 					const AABB& viewportArea = PickingManager::instance().GetViewPortArea();
 					TransformComponent& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(i);
 					Vec2 pos = trans.GetPosition();
-					if (CollisionManager::instance().DiscretePointVsAABB(pos, viewportArea))
+					if (CollisionManager::instance().DiscretePointVsAABB(pos, viewportArea) && ImGui::IsWindowFocused())
 					{
 						ShowGizmo(i);
 					}
@@ -250,7 +251,7 @@ namespace Rogue
 		mousePos.y = mousePos.y * height / imageSize.y;
 
 		PickingManager::instance().SetViewPortCursor(mousePos);
-		//ImGui::EndChild();
+		ImGui::EndChild();
 		ImGui::End();
 	}
 	void ImGuiEditorViewport::Shutdown()
