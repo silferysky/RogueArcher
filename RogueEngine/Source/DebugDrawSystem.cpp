@@ -95,14 +95,24 @@ Technology is prohibited.
 			{
 				if (g_engine.m_coordinator.ComponentExists<Rogue::BoxCollider2DComponent>(entity))
 				{
-					auto& collider = g_engine.m_coordinator.GetComponent<Rogue::BoxCollider2DComponent>(entity);
+					auto& box = g_engine.m_coordinator.GetComponent<Rogue::BoxCollider2DComponent>(entity);
 
-					if (collider.GetIsCollided())
-						glUniform4fv(m_filterLocation, 1, glm::value_ptr(glm::vec4(0.0f, 1.0f, 1.0f, 1.0f)));
+					if (box.GetIsCollided())
+					{
+						if (box.GetCollisionMode() == Rogue::CollisionMode::e_trigger)
+							glUniform4fv(m_filterLocation, 1, glm::value_ptr(glm::vec4(0.196f, 0.804f, 0.196f, 1.0f))); // lime green
+						else
+							glUniform4fv(m_filterLocation, 1, glm::value_ptr(glm::vec4(1.0f, 0.411f, 0.705f, 1.0f))); // hot pink
+					}
 					else
-						glUniform4fv(m_filterLocation, 1, glm::value_ptr(glm::vec4(1.0f, 0.5f, 0.2f, 1.0f)));
+					{
+						if (box.GetCollisionMode() == Rogue::CollisionMode::e_trigger)
+							glUniform4fv(m_filterLocation, 1, glm::value_ptr(glm::vec4(0.0f, 1.0f, 1.0f, 1.0f))); // cyan
+						else
+							glUniform4fv(m_filterLocation, 1, glm::value_ptr(glm::vec4(1.0f, 0.5f, 0.2f, 1.0f))); // orange
+					}
 
-					drawAABB(&collider, &transform);
+					drawAABB(&box, &transform);
 					//drawOBB(&collider, &rBody);
 				}
 				if (g_engine.m_coordinator.ComponentExists<Rogue::CircleCollider2DComponent>(entity))
@@ -110,9 +120,13 @@ Technology is prohibited.
 					auto& circle = g_engine.m_coordinator.GetComponent<Rogue::CircleCollider2DComponent>(entity);
 
 					if (circle.GetIsCollided())
-						glUniform4fv(m_filterLocation, 1, glm::value_ptr(glm::vec4(0.0f, 1.0f, 1.0f, 1.0f)));
+					{
+						glUniform4fv(m_filterLocation, 1, glm::value_ptr(glm::vec4(1.0f, 0.411f, 0.705f, 1.0f)));
+					}
 					else
+					{
 						glUniform4fv(m_filterLocation, 1, glm::value_ptr(glm::vec4(1.0f, 0.5f, 0.2f, 1.0f)));
+					}
 
 					drawCircle(&circle, &transform);
 				}
