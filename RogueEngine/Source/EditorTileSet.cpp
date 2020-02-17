@@ -5,6 +5,28 @@
 
 namespace Rogue
 {
+	std::string ImGuiTileSet::Serialize()
+	{
+		std::ostringstream oss;
+
+		for (auto& tile : m_GlobalTileSet)
+		{
+			oss << tile.Serialize() << "|";
+		}
+
+		return oss.str();
+	}
+	void ImGuiTileSet::Deserialize(std::string_view deserializeStr)
+	{
+		std::istringstream iss(deserializeStr.data());
+		std::string str;
+
+		while (std::getline(iss, str, '|'))
+		{
+
+		}
+	}
+
 	ImGuiTileSet::ImGuiTileSet() :m_TileSet(), m_GlobalTileSet(),
 		m_minY(0),m_minX(0),m_maxX(0),m_maxY(0),m_tileSize(100),m_tilesHeight(0),
 		m_tilesWidth(0),m_currentTileX(0),m_currentTileY(0),m_openWindow(true), m_isCollision(false),
