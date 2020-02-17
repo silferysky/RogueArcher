@@ -6,7 +6,7 @@ namespace Rogue
 {
 	struct TileSet
 	{
-		std::string_view m_texturename;
+		std::string m_texturename;
 		Entity m_tileId;
 		Vec2 m_tilePos;
 		bool m_collision = false;
