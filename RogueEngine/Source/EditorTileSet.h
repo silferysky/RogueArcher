@@ -7,7 +7,7 @@ namespace Rogue
 	struct TileSet
 	{
 		std::string_view m_texturename;
-		int m_tileId;
+		Entity m_tileId;
 		Vec2 m_tilePos;
 		bool m_collision = false;
 		Texture m_tileTexture;
@@ -23,17 +23,17 @@ namespace Rogue
 	class ImGuiTileSet : public IEditable
 	{
 	private:
+		std::vector<TileSet> m_GlobalTileSet;
 		std::vector<TileSet> m_TileSet;
 		bool m_openWindow = true;
 		int m_tileSize = 100;
-		float m_columnWidth;
-		ImVec2 m_mousePos;
 		bool m_isCollision = false;
-		float m_viewportWidth;
-		float m_viewportHeight;
 		int m_tilesHeight = 0;
 		int m_tilesWidth = 0;
+		float m_currentTileX = 0;
+		float m_currentTileY = 0;
 		bool m_check = true;
+		bool m_globalcheck = false;
 		Texture m_currentTexture;
 		std::string m_currentPath = "None";
 		bool m_firstclicked = false;
@@ -48,7 +48,7 @@ namespace Rogue
 			static ImGuiTileSet instance;
 			return instance;
 		}
-		ImGuiTileSet() :m_TileSet() {}
+		ImGuiTileSet();
 		~ImGuiTileSet() = default;
 		Entity Create2DSprite(Vec2 position, Vec2 scale, std::string_view tilepath,bool iscollision);
 		virtual void Init() override final;
