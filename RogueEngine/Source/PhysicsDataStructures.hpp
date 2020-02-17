@@ -19,6 +19,7 @@ Technology is prohibited.
 #include "REMath.h"
 #include "AABB.h"
 #include "OBB.h"
+#include "TransformComponent.h"
 
 namespace Rogue
 {
@@ -239,6 +240,24 @@ namespace Rogue
 		{
 			return Type::e_polygon;
 		}
+	};
+
+	class RigidbodyComponent;
+	
+	template <typename TCollider>
+	struct CollisionInfo
+	{
+		Entity m_entity;
+		const TCollider& m_collider;
+		const RigidbodyComponent& m_rigidbody;
+		const TransformComponent& m_transform;
+
+		CollisionInfo(Entity entity, TCollider& collider, RigidbodyComponent& body, TransformComponent& trans) :
+			m_entity{ entity },
+			m_collider{ collider },
+			m_rigidbody{ body },
+			m_transform{ trans }
+		{}
 	};
 
 } // ns Rogue

@@ -15,6 +15,7 @@ without the prior written consent of DigiPen Institute of
 Technology is prohibited.
 */
 /* End Header **************************************************************************/
+#pragma once
 #include "PhysicsDataStructures.hpp"
 #include "BaseComponent.h"
 #include "LayerManager.h"

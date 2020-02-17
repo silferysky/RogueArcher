@@ -17,7 +17,6 @@ Technology is prohibited.
 /* End Header **************************************************************************/
 #include "Precompiled.h"
 #include "CollisionManager.h"
-#include "Main.h"
 #include "Logger.h"
 #include "PhysicsDataStructures.hpp"
 
@@ -170,6 +169,7 @@ namespace Rogue
 	{
 		Manifold manifold(A, B);
 
+		// TODO: Pass components as parameters instead of getting from ECS
 		auto& BoxCompA = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(A);
 		auto& BoxCompB = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(B);
 		auto& TransA = g_engine.m_coordinator.GetComponent<TransformComponent>(A);
@@ -1025,20 +1025,21 @@ namespace Rogue
 		return lowerBound <= val && val <= upperBound;
 	}
 
-	void CollisionManager::InsertDiffPair(Entity a, Entity b)
+	bool CollisionManager::InsertDiffPair(Entity a, Entity b)
 	{
 		// Always box first, then circle.
-		m_diffPairs.emplace(std::make_pair(a, b));
+		return m_diffPairs.emplace(std::make_pair(a, b)).second;
 	}
 
-	void CollisionManager::InsertBoxPair(Entity a, Entity b)
+	bool CollisionManager::InsertBoxPair(Entity a, Entity b)
 	{
-		m_boxPairs.emplace(std::make_pair(a, b));
+		auto pair = m_boxPairs.emplace(std::make_pair(a, b));
+		return pair.second;
 	}
 
-	void CollisionManager::InsertCirclePair(Entity a, Entity b)
+	bool CollisionManager::InsertCirclePair(Entity a, Entity b)
 	{
-		m_circlePairs.emplace(std::make_pair(a, b));
+		return m_circlePairs.emplace(std::make_pair(a, b)).second;
 	}
 
 	void CollisionManager::GenerateDiffManifolds()
@@ -1047,8 +1048,6 @@ namespace Rogue
 		{
 			GenerateManifoldAABBvsCircle(pair.first, pair.second);
 		}
-
-		m_diffPairs.clear();
 	}
 
 	void CollisionManager::GenerateBoxManifolds()
@@ -1057,8 +1056,6 @@ namespace Rogue
 		{
 			GenerateManifoldAABBvsAABB(pair.first, pair.second);
 		}
-
-		m_boxPairs.clear();
 	}
 
 	void CollisionManager::GenerateCircleManifolds()
@@ -1067,8 +1064,6 @@ namespace Rogue
 		{
 			GenerateManifoldCirclevsCircle(pair.first, pair.second);
 		}
-	
-		m_circlePairs.clear(); // To be removed when doing collision events!!!
 	}
 
 	void CollisionManager::ResolveManifolds()

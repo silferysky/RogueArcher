@@ -20,6 +20,7 @@ Technology is prohibited.
 #include "Vector2D.h"
 #include "Types.h"
 #include "Vector2D.h"
+#include "PhysicsDataStructures.hpp"
 
 namespace Rogue
 {
@@ -183,101 +184,101 @@ namespace Rogue
 
 	};
 
-	class EntCollisionOrTrigger : public EntityEvent
+	template <typename TColliderA, typename TColliderB>
+	class EntCollisionOrTrigger : public Event
 	{
 	public:
-		EntCollisionOrTrigger(Entity id_1, Entity id_2)
-			:EntityEvent(id_1), collidedEntity{ id_2 }{}
+		inline CollisionInfo<TColliderA>& GetThis() { return m_this; }
+		inline CollisionInfo<TColliderB>& GetOther() { return m_other; }
 
-		inline Entity GetOtherEntity() { return collidedEntity; }
-
-	protected:
-		Entity collidedEntity;
-	};
-
-	class EntCollisionEnterEvent : public EntCollisionOrTrigger
-	{
-	public:
-		SET_EVENT_CATEGORY(EventCatCollision)
-		SET_EVENT_TYPE(EvOnCollisionEnter)
-
-		EntCollisionEnterEvent(Entity id_1, Entity id_2)
-			:EntCollisionOrTrigger(id_1, id_2){}
-	};
-
-	class EntCollisionStayEvent : public EntCollisionOrTrigger
-	{
-		Vec2 m_posA;
-		Vec2 m_posB;
-		Vec2 m_scaleA;
-		Vec2 m_scaleB;
-	public:
-		SET_EVENT_CATEGORY(EventCatCollision)
-			SET_EVENT_TYPE(EvOnCollisionStay)
-
-			EntCollisionStayEvent(Entity id_1, Entity id_2, Vec2 posA, Vec2 posB, Vec2 scaleA, Vec2 scaleB) :
-			EntCollisionOrTrigger(id_1, id_2), m_posA{ posA }, m_posB{ posB }, m_scaleA{ scaleA }, m_scaleB{ scaleB }
+		template <typename TColliderA, typename TColliderB>
+		EntCollisionOrTrigger(const CollisionInfo<TColliderA>& colA, const CollisionInfo<TColliderB>& colB) :
+			m_this{ colA },
+			m_other{ colB }
 		{}
 
-		Vec2 GetAPos() const
-		{
-			return m_posA;
-		}
+	protected:
+		CollisionInfo<TColliderA> m_this;
+		CollisionInfo<TColliderB> m_other;
+	};
+	
+	template <typename TColliderA, typename TColliderB>
+	class EntCollisionEnterEvent : public EntCollisionOrTrigger<TColliderA, TColliderB>
+	{
+	public:
+		SET_EVENT_CATEGORY(EventCatCollision)
+		SET_EVENT_TYPE(EvOnCollisionEnter)
 
-		Vec2 GetBPos() const
-		{
-			return m_posB;
-		}
-
-		Vec2 GetScaleA() const
-		{
-			return m_scaleA;
-		}
-
-		Vec2 GetScaleB() const
-		{
-			return m_scaleB;
-		}
+		template <typename TColliderA, typename TColliderB>
+		EntCollisionEnterEvent(const CollisionInfo<TColliderA>& colA, const CollisionInfo<TColliderB>& colB) :
+			EntCollisionOrTrigger<TColliderA, TColliderB>(colA, colB)
+		{}
 	};
 
-	class EntCollisionExitEvent : public EntCollisionOrTrigger
+	template <typename TColliderA, typename TColliderB>
+	class EntCollisionStayEvent : public EntCollisionOrTrigger<TColliderA, TColliderB>
+	{
+	public:
+		SET_EVENT_CATEGORY(EventCatCollision)
+		SET_EVENT_TYPE(EvOnCollisionStay)
+
+		template <typename TColliderA, typename TColliderB>
+		EntCollisionStayEvent(const CollisionInfo<TColliderA>& colA, const CollisionInfo<TColliderB>& colB) :
+			EntCollisionOrTrigger<TColliderA, TColliderB>(colA, colB)
+		{}
+	};
+
+	template <typename TColliderA, typename TColliderB>
+	class EntCollisionExitEvent : public EntCollisionOrTrigger<TColliderA, TColliderB>
 	{
 	public:
 		SET_EVENT_CATEGORY(EventCatCollision)
 		SET_EVENT_TYPE(EvOnCollisionExit)
 
-		EntCollisionExitEvent(Entity id_1, Entity id_2)
-			:EntCollisionOrTrigger(id_1, id_2) {}
+		template <typename TColliderA, typename TColliderB>
+		EntCollisionExitEvent(const CollisionInfo<TColliderA>& colA, const CollisionInfo<TColliderB>& colB) :
+			EntCollisionOrTrigger<TColliderA, TColliderB>(colA, colB)
+		{}
 	};
 
-	class EntTriggerEnterEvent : public EntCollisionEnterEvent
+	template <typename TColliderA, typename TColliderB>
+	class EntTriggerEnterEvent : public EntCollisionEnterEvent<TColliderA, TColliderB>
 	{
 	public:
 		SET_EVENT_CATEGORY(EventCatTrigger)
-		SET_EVENT_TYPE(EvOnCollisionEnter)
+		SET_EVENT_TYPE(EvOnTriggerEnter)
 
-		EntTriggerEnterEvent(Entity id_1, Entity id_2)
-			:EntCollisionEnterEvent(id_1, id_2) {}
+
+		template <typename TColliderA, typename TColliderB>
+		EntTriggerEnterEvent(const CollisionInfo<TColliderA>& colA, const CollisionInfo<TColliderB>& colB) :
+			EntCollisionEnterEvent<TColliderA, TColliderB>(colA, colB)
+		{}
 	};
 
-	class EntTriggerStayEvent : public EntCollisionStayEvent
+	template <typename TColliderA, typename TColliderB>
+	class EntTriggerStayEvent : public EntCollisionStayEvent<TColliderA, TColliderB>
 	{
 	public:
 		SET_EVENT_CATEGORY(EventCatTrigger)
-		SET_EVENT_TYPE(EvOnCollisionStay)
+		SET_EVENT_TYPE(EvOnTriggerStay)
 
-		EntTriggerStayEvent(Entity id_1, Entity id_2, Vec2 transA, Vec2 transB) :
-			EntCollisionStayEvent(id_1, id_2, transA, transB, Vec2(), Vec2()) {}
+		template <typename TColliderA, typename TColliderB>
+		EntTriggerStayEvent(const CollisionInfo<TColliderA>& colA, const CollisionInfo<TColliderB>& colB) :
+			EntCollisionStayEvent<TColliderA, TColliderB>(colA, colB)
+		{}
 	};
 
-	class EntTriggerExitEvent : public EntCollisionExitEvent
+	template <typename TColliderA, typename TColliderB>
+	class EntTriggerExitEvent : public EntCollisionExitEvent<TColliderA, TColliderB>
 	{
 	public:
 		SET_EVENT_CATEGORY(EventCatTrigger)
-		SET_EVENT_TYPE(EvOnCollisionExit)
+		SET_EVENT_TYPE(EvOnTriggerExit)
 
-		EntTriggerExitEvent(Entity id_1, Entity id_2)
-			:EntCollisionExitEvent(id_1, id_2) {}
+		template <typename TColliderA, typename TColliderB>
+		EntTriggerExitEvent(const CollisionInfo<TColliderA>& colA, const CollisionInfo<TColliderB>& colB) :
+			EntCollisionExitEvent<TColliderA, TColliderB>(colA, colB)
+		{}
 	};
 
 	class EntPickedEvent : public EntityEvent

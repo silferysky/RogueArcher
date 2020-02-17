@@ -127,9 +127,9 @@ namespace Rogue
 		case EventCategory::EventCatCollision:
 		case EventCategory::EventCatTrigger:
 		{
-			EntCollisionOrTrigger* event = dynamic_cast<EntCollisionOrTrigger*>(ev);
-			Entity object = event->GetEntityID();
-			Entity triggered = event->GetOtherEntity();
+			auto* event = dynamic_cast<EntCollisionOrTrigger<BoxCollider2DComponent, BoxCollider2DComponent>*>(ev);
+			Entity object = event->GetThis().m_entity;
+			Entity triggered = event->GetOther().m_entity;
 			for (Entity m : m_entities)
 			{
 				if (m == object || m == triggered)

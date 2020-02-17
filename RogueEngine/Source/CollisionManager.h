@@ -23,24 +23,27 @@ Technology is prohibited.
 #include "OBB.h"
 #include "TransformComponent.h"
 #include "RigidbodyComponent.h"
+#include "BoxCollider2DComponent.h"
 #include "CircleCollider2DComponent.h"
 #include "Manifold.h"
 #include "LayerManager.h"
 #include "IntegerPairHasher.h"
+#include "GameEvent.h"
+#include "Main.h"
 
 namespace Rogue
 {
 	class CollisionManager
 	{
-		using ColliderPairSet = std::unordered_set<std::pair<Entity, Entity>, IntegerPairHasher<Entity>, IntegerPairComparer<Entity>>;
+	using ColliderPairSet = std::unordered_set<std::pair<Entity, Entity>, IntegerPairHasher<Entity>, IntegerPairComparer<Entity>>;
 
-		ColliderPairSet m_diffPairs; // Stored pairs of aabb and circle
-		ColliderPairSet m_boxPairs; // Stored pairs of aabbs
-		ColliderPairSet m_circlePairs; // Stored pairs of circles
-		std::vector<Manifold> m_manifolds; // To generate and resolve after collision tests
+	ColliderPairSet m_diffPairs; // Stored pairs of aabb and circle
+	ColliderPairSet m_boxPairs; // Stored pairs of aabbs
+	ColliderPairSet m_circlePairs; // Stored pairs of circles
+	std::vector<Manifold> m_manifolds; // To generate and resolve after collision tests
 
-		static const float s_correction_factor;
-		static const float s_correction_slop; // Penetration threshold
+	static const float s_correction_factor;
+	static const float s_correction_slop; // Penetration threshold
 
 	public:
 		static CollisionManager& instance()
@@ -77,7 +80,7 @@ namespace Rogue
 		// BOUNDING CIRCLE
 		void UpdateBoundingCircle(BoundingCircle& circle, const TransformComponent& trans) const;
 		bool DiscreteCircleVsCircle(const BoundingCircle& circleA, const BoundingCircle& circleB);
-		int ContinuousCircleVsLineSegment(const CircleCollider2DComponent& circle, const Vec2& ptEnd, const LineSegment& lineSeg,	
+		int ContinuousCircleVsLineSegment(const CircleCollider2DComponent& circle, const Vec2& ptEnd, const LineSegment& lineSeg,
 			Vec2& interPt, Vec2& normalAtCollision, float& interTime, bool& checkLineEdges);
 		int ContinuousCircleVsLineEdge(bool withinBothLines, const CircleCollider2DComponent& circle, const Vec2& ptEnd,
 			const LineSegment& lineSeg, Vec2& interPt, Vec2& normalAtCollision, float& interTime);
@@ -109,9 +112,9 @@ namespace Rogue
 		inline bool IsBetweenBounds(float val, float lowerBound, float upperBound) const;
 
 		// Manifold
-		void InsertDiffPair(Entity a, Entity b);
-		void InsertBoxPair(Entity a, Entity b);
-		void InsertCirclePair(Entity a, Entity b);
+		bool InsertDiffPair(Entity a, Entity b);
+		bool InsertBoxPair(Entity a, Entity b);
+		bool InsertCirclePair(Entity a, Entity b);
 		void GenerateDiffManifolds();
 		void GenerateBoxManifolds();
 		void GenerateCircleManifolds();
@@ -130,6 +133,139 @@ namespace Rogue
 		void PrintCollisionMask(const LayerManager::Bits& mask) const;
 		size_t GetNumberOfLayers() const;
 		size_t GetLayerCategory(const LayerManager::Bits& cat) const;
+
+		// Collision Events
+		bool DetectCollision(const BoxCollider2DComponent& colliderA, const BoxCollider2DComponent& colliderB)
+		{
+			return DiscreteAABBvsAABB(colliderA.m_aabb, colliderB.m_aabb);
+		}
+
+		bool DetectCollision(const BoxCollider2DComponent& colliderA, const CircleCollider2DComponent& colliderB)
+		{
+			return DiscreteAABBVsCircle(colliderA.m_aabb, colliderB.m_collider);
+		}
+
+		bool DetectCollision(const CircleCollider2DComponent& colliderA, const CircleCollider2DComponent colliderB)
+		{
+			return DiscreteCircleVsCircle(colliderA.m_collider, colliderB.m_collider);
+		}
+
+		template <typename TColliderA, typename TColliderB>
+		void CheckExitingCollidedPairs()
+		{
+			for(auto& pair : m_boxPairs)
+			{
+				TColliderA& colliderA = g_engine.m_coordinator.GetComponent<TColliderA>(pair.first);
+				TColliderB& colliderB = g_engine.m_coordinator.GetComponent<TColliderB>(pair.second);
+
+				// TODO: Make collision checks templated
+				if (!DetectCollision(colliderA, colliderB))
+				{
+					RigidbodyComponent& bodyA = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(pair.first);
+					RigidbodyComponent& bodyB = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(pair.second);
+					TransformComponent& transA = g_engine.m_coordinator.GetComponent<TransformComponent>(pair.first);
+					TransformComponent& transB = g_engine.m_coordinator.GetComponent<TransformComponent>(pair.second);
+
+					CollisionInfo<TColliderA> infoA(pair.first, colliderA, bodyA, transA);
+					CollisionInfo<TColliderB> infoB(pair.second, colliderB, bodyB, transB);
+
+					SendExitEvents(infoA, infoB);
+				}
+			}
+		}
+
+		template <typename TColliderA, typename TColliderB>
+		void SendEnterEvents(const CollisionInfo<TColliderA>& infoA, const CollisionInfo<TColliderB>& infoB)
+		{
+			// If A and/or B is/are a trigger(s), dispatch trigger event(s).
+			if (infoA.m_collider.GetCollisionMode() == CollisionMode::e_trigger)
+			{
+				auto* ev = new EntTriggerEnterEvent<TColliderA, TColliderB>{ infoA, infoB };
+				ev->SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
+				EventDispatcher::instance().AddEvent(ev);
+			}
+			else if (infoA.m_collider.GetCollisionMode() == CollisionMode::e_awake)
+			{
+				auto* ev = new EntCollisionEnterEvent<TColliderA, TColliderB>{ infoA, infoB };
+				ev->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
+				EventDispatcher::instance().AddEvent(ev);
+			}
+
+			if (infoB.m_collider.GetCollisionMode() == CollisionMode::e_trigger)
+			{
+				auto* ev = new EntTriggerEnterEvent<TColliderB, TColliderA>{ infoB, infoA };
+				ev->SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
+				EventDispatcher::instance().AddEvent(ev);
+			}
+			else if (infoB.m_collider.GetCollisionMode() == CollisionMode::e_awake)
+			{
+				auto* ev = new EntCollisionEnterEvent<TColliderA, TColliderB>{ infoB, infoA };
+				ev->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
+				EventDispatcher::instance().AddEvent(ev);
+			}
+		}
+		
+		template <typename TColliderA, typename TColliderB>
+		void SendStayEvents(const CollisionInfo<TColliderA>& infoA, const CollisionInfo<TColliderB>& infoB)
+		{
+			// If A and/or B is/are a trigger(s), dispatch trigger event(s).
+			if (infoA.m_collider.GetCollisionMode() == CollisionMode::e_trigger)
+			{
+				auto* ev = new EntTriggerStayEvent<TColliderA, TColliderB>{ infoA, infoB };
+				ev->SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
+				EventDispatcher::instance().AddEvent(ev);
+			}
+			else if (infoA.m_collider.GetCollisionMode() == CollisionMode::e_awake)
+			{
+				auto* ev = new EntCollisionStayEvent<TColliderA, TColliderB>{ infoA, infoB };
+				ev->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
+				EventDispatcher::instance().AddEvent(ev);
+			}
+
+			if (infoB.m_collider.GetCollisionMode() == CollisionMode::e_trigger)
+			{
+				auto* ev = new EntTriggerStayEvent<TColliderB, TColliderA>{ infoB, infoA };
+				ev->SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
+				EventDispatcher::instance().AddEvent(ev);
+			}
+			else if (infoB.m_collider.GetCollisionMode() == CollisionMode::e_awake)
+			{
+				auto* ev = new EntCollisionStayEvent<TColliderA, TColliderB>{ infoB, infoA };
+				ev->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
+				EventDispatcher::instance().AddEvent(ev);
+			}
+		}
+
+		template <typename TColliderA, typename TColliderB>
+		void SendExitEvents(const CollisionInfo<TColliderA>& infoA, const CollisionInfo<TColliderB>& infoB)
+		{
+			// If A and/or B is/are a trigger(s), dispatch trigger event(s).
+			if (infoA.m_collider.GetCollisionMode() == CollisionMode::e_trigger)
+			{
+				auto* ev = new EntTriggerExitEvent<TColliderA, TColliderB>{ infoA, infoB };
+				ev->SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
+				EventDispatcher::instance().AddEvent(ev);
+			}
+			else if (infoA.m_collider.GetCollisionMode() == CollisionMode::e_awake)
+			{
+				auto* ev = new EntCollisionExitEvent<TColliderA, TColliderB>{ infoA, infoB };
+				ev->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
+				EventDispatcher::instance().AddEvent(ev);
+			}
+
+			if (infoB.m_collider.GetCollisionMode() == CollisionMode::e_trigger)
+			{
+				auto* ev = new EntTriggerExitEvent<TColliderB, TColliderA>{ infoB, infoA };
+				ev->SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
+				EventDispatcher::instance().AddEvent(ev);
+			}
+			else if (infoB.m_collider.GetCollisionMode() == CollisionMode::e_awake)
+			{
+				auto* ev = new EntCollisionExitEvent<TColliderA, TColliderB>{ infoB, infoA };
+				ev->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
+				EventDispatcher::instance().AddEvent(ev);
+			}
+		}
 	};
 }
 

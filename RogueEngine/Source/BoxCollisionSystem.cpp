@@ -57,10 +57,9 @@ namespace Rogue
 			if (currBoxCollider.GetCollisionMode() == CollisionMode::e_asleep)
 				continue;
 
-			// Update collidables
+			// Update collider
 			CollisionManager::instance().UpdateAABB(currBoxCollider.m_aabb, currTransform);
-			CollisionManager::instance().UpdateOBB(currBoxCollider.m_obb, currTransform);
-
+			
 			// Conduct spatial partitioning
 		}
 
@@ -103,42 +102,25 @@ namespace Rogue
 				// Test for AABBs vs AABBs
 				if (CollisionManager::instance().DiscreteAABBvsAABB(currBoxCollider.m_aabb, nextBoxCollider.m_aabb))
 				{
-					// If A and/or B is/are a trigger(s), dispatch trigger event(s).
-					if (currBoxCollider.GetCollisionMode() == CollisionMode::e_trigger)
-					{
-						EntTriggerEnterEvent* ev = new EntTriggerEnterEvent{ *iEntity, *iNextEntity };
-						ev->SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
-						EventDispatcher::instance().AddEvent(ev);
+					CollisionInfo<BoxCollider2DComponent> infoA(*iEntity, currBoxCollider, currRigidbody, currTransform);
+					CollisionInfo<BoxCollider2DComponent> infoB(*iNextEntity, nextBoxCollider, nextRigidbody, nextTransform);
 
+					if (CollisionManager::instance().InsertBoxPair(*iEntity, *iNextEntity))
+						CollisionManager::instance().SendEnterEvents(infoA, infoB);
+					else
+						CollisionManager::instance().SendStayEvents(infoA, infoB);
+
+					// If at least one of them is a trigger, skip resolution
+					if (currBoxCollider.GetCollisionMode() == CollisionMode::e_trigger || nextBoxCollider.GetCollisionMode() == CollisionMode::e_trigger)
 						continue;
-					}
-					if (nextBoxCollider.GetCollisionMode() == CollisionMode::e_trigger)
-					{
-						EntTriggerEnterEvent* ev = new EntTriggerEnterEvent{ *iNextEntity, *iEntity };
-						ev->SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
-						EventDispatcher::instance().AddEvent(ev);
 
-						continue;
-					}
-
-					// Hard coded logic to prevent player from jumping mid air :(
-					EntCollisionStayEvent* ev = new EntCollisionStayEvent
-					{
-							*iEntity, *iNextEntity,
-							currTransform.GetPosition(), nextTransform.GetPosition(),
-							CollisionManager::instance().GetColliderScale(currBoxCollider.m_aabb, currTransform),
-							CollisionManager::instance().GetColliderScale(nextBoxCollider.m_aabb, nextTransform)
-					};
-
-					ev->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
-					EventDispatcher::instance().AddEvent(ev);
-
-					CollisionManager::instance().InsertBoxPair(*iEntity, *iNextEntity);
+					// Generate manifolds from collided pairs
+					CollisionManager::instance().GenerateManifoldAABBvsAABB(*iEntity, *iNextEntity);
 				}
+
+				CollisionManager::instance().CheckExitingCollidedPairs<BoxCollider2DComponent, BoxCollider2DComponent>();
 			}
 
-			// Generate manifolds from collided pairs
-			CollisionManager::instance().GenerateBoxManifolds();
 
 			// Collision Impulse and Torque/Contact Resolution (Other resolutionsdone using trigger events: Other weird forces, rest, game logic)
 			CollisionManager::instance().ResolveManifolds();

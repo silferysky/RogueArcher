@@ -138,7 +138,8 @@ Technology is prohibited.
 			return;
 
 		//std::cout << "Drawing OBB" << std::endl;
-
+		// TODO: Move OBB to another component.
+#if 0
 		glBindVertexArray(m_VAO);
 		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 
@@ -156,6 +157,7 @@ Technology is prohibited.
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindVertexArray(0);
+#endif
 	}
 
 	void DebugDrawSystem::drawCircle(Rogue::CircleCollider2DComponent* circle, Rogue::TransformComponent* transform)

@@ -23,19 +23,17 @@ Technology is prohibited.
 namespace Rogue
 {
 	BoxCollider2DComponent::BoxCollider2DComponent() :
-		m_rotatable{ false }, m_aabb{}, m_obb{}, m_collisionMode{CollisionMode::e_awake}
+		m_aabb{}, m_collisionMode{CollisionMode::e_awake}
 	{}
 
 	BoxCollider2DComponent::BoxCollider2DComponent(const BoxCollider2DComponent& rhs) :
-		m_rotatable{ rhs.m_rotatable }, m_aabb{ rhs.m_aabb }, m_obb{ rhs.m_obb }, m_collisionMode{rhs.m_collisionMode}
+		m_aabb{ rhs.m_aabb }, m_collisionMode{rhs.m_collisionMode}
 	{}
 
 	BoxCollider2DComponent::BoxCollider2DComponent(BoxCollider2DComponent&& rhs) noexcept :
-		m_rotatable{ false }, m_aabb{ AABB{} }, m_obb{ OBB{} }, m_collisionMode{}
+		m_aabb{ AABB{} }, m_collisionMode{}
 	{
-		std::swap(m_rotatable, rhs.m_rotatable);
 		std::swap(m_aabb, rhs.m_aabb);
-		std::swap(m_obb, rhs.m_obb);
 		std::swap(m_collisionMode, rhs.m_collisionMode);
 	}
 
@@ -44,16 +42,6 @@ namespace Rogue
 		if (this != &rhs)
 		{
 			m_aabb.operator=(rhs.m_aabb);
-
-			m_rotatable = rhs.m_rotatable;
-
-			m_obb.setSize(rhs.m_obb.getSize());
-			std::vector<Vec2> vertexList{};
-
-			vertexList.reserve(m_obb.getSize());
-
-			m_obb.setModelVerts(vertexList);
-
 			m_collisionMode = rhs.m_collisionMode;
 		}
 		return *this;
@@ -63,23 +51,11 @@ namespace Rogue
 	{
 		if (this != &rhs)
 		{
-			std::swap(m_rotatable, rhs.m_rotatable);
 			std::swap(m_aabb, rhs.m_aabb);
-			std::swap(m_obb, rhs.m_obb);
 			std::swap(m_collisionMode, rhs.m_collisionMode);
 		}
 
 		return *this;
-	}
-
-	bool BoxCollider2DComponent::Rotatable() const
-	{
-		return m_rotatable;
-	}
-
-	void BoxCollider2DComponent::setRotatable(bool set)
-	{
-		m_rotatable = set;
 	}
 
 	CollisionMode BoxCollider2DComponent::GetCollisionMode() const
@@ -94,15 +70,17 @@ namespace Rogue
 
 	std::string BoxCollider2DComponent::Serialize()
 	{
-		//Size, modelVertexList
 		std::ostringstream ss;
+
+#if 0
+		//Size, modelVertexList
 		ss << m_obb.getSize() << ";";
 
 		for (size_t i = 0; i < m_obb.getSize(); ++i)
 		{
 			ss << m_obb.modelVerts()[i].x << ";" << m_obb.modelVerts()[i].y << ";";
 		}
-
+#endif
 		ss << m_aabb.getCenterOffSet().x << ";";
 		ss << m_aabb.getCenterOffSet().y << ";";
 
@@ -134,6 +112,7 @@ namespace Rogue
 		std::vector<Vec2> vertexList{};
 		size_t size = 0;
 
+#if 1
 		// For OBB
 		if (std::getline(ss, s1, ';'))
 		{
@@ -146,9 +125,7 @@ namespace Rogue
 			std::getline(ss, s2, ';');
 			vertexList.emplace_back(Vec2(stof(s1), stof(s2)));
 		}
-
-		m_obb.setModelVerts(vertexList);
-		m_obb.setSize(size);
+#endif
 
 		// For AABB
 		float x = 0.0f;

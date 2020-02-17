@@ -353,7 +353,6 @@ namespace Rogue
 							return;
 
 						ForceManager::instance().RegisterForce(*iEntity, Vec2(0.0f, 35000.0f));
-						//rigidbody.addForce(Vec2(0.0f, 35000.0f));
 
 						// Reset boolean for grounded
 						if (!PLAYER_STATUS.HasJumped())
@@ -522,13 +521,14 @@ namespace Rogue
 		}
 		case EventType::EvOnCollisionExit:
 		{
-			EntCollisionExitEvent* collisionExit = dynamic_cast<EntCollisionExitEvent*>(ev);
+			EntCollisionExitEvent<BoxCollider2DComponent, BoxCollider2DComponent>* collisionExit
+				= dynamic_cast<EntCollisionExitEvent<BoxCollider2DComponent, BoxCollider2DComponent>*>(ev);
 			return;
 		}
 
 		case EventType::EvOnCollisionStay:
 		{
-			EntCollisionStayEvent* collisionStay = dynamic_cast<EntCollisionStayEvent*>(ev);
+			auto* collisionStay = dynamic_cast<EntCollisionStayEvent<BoxCollider2DComponent, BoxCollider2DComponent>*>(ev);
 
 			if (m_ignoreFrameEvent)
 			{
@@ -539,22 +539,25 @@ namespace Rogue
 			Entity player;
 			Entity ground;
 			Vec2 playerTrans, groundTrans;
-			Vec2 playerScale, groundScale;
+			Vec2 playerScale, groundScale; 
 
-			HierarchyInfo infoA = g_engine.m_coordinator.GetHierarchyInfo(collisionStay->GetEntityID());
-			HierarchyInfo infoB = g_engine.m_coordinator.GetHierarchyInfo(collisionStay->GetOtherEntity());
+			const BoxCollider2DComponent* groundCollider = nullptr;
+
+			HierarchyInfo infoA = g_engine.m_coordinator.GetHierarchyInfo(collisionStay->GetThis().m_entity);
+			HierarchyInfo infoB = g_engine.m_coordinator.GetHierarchyInfo(collisionStay->GetOther().m_entity);
 			
 			if (infoA.m_tag == "Player")
 			{
 				if (infoB.m_tag == "Ground" || infoB.m_tag == "Platform")
 				{
-					player = collisionStay->GetEntityID();
-					playerTrans = collisionStay->GetAPos();
-					playerScale = collisionStay->GetScaleA();
+					player = collisionStay->GetThis().m_entity;
+					playerTrans = CollisionManager::instance().GetColliderPosition(collisionStay->GetThis().m_collider.m_aabb, collisionStay->GetThis().m_transform);
+					playerScale = CollisionManager::instance().GetColliderScale(collisionStay->GetThis().m_collider.m_aabb, collisionStay->GetThis().m_transform);
 
-					ground = collisionStay->GetOtherEntity();
-					groundTrans = collisionStay->GetBPos();
-					groundScale = collisionStay->GetScaleB();
+					ground = collisionStay->GetOther().m_entity;
+					groundTrans = CollisionManager::instance().GetColliderPosition(collisionStay->GetOther().m_collider.m_aabb, collisionStay->GetOther().m_transform);
+					groundScale = CollisionManager::instance().GetColliderScale(collisionStay->GetOther().m_collider.m_aabb, collisionStay->GetOther().m_transform); 
+					groundCollider = &collisionStay->GetOther().m_collider;
 				}
 				else
 					return;
@@ -563,13 +566,15 @@ namespace Rogue
 			{
 				if (infoA.m_tag == "Ground" || infoB.m_tag == "Platform")
 				{
-					ground = collisionStay->GetEntityID();
-					groundTrans = collisionStay->GetAPos();
-					groundScale = collisionStay->GetScaleA();
+					ground = collisionStay->GetThis().m_entity;
+					groundTrans = CollisionManager::instance().GetColliderPosition(collisionStay->GetThis().m_collider.m_aabb, collisionStay->GetThis().m_transform);
+					groundScale = CollisionManager::instance().GetColliderScale(collisionStay->GetThis().m_collider.m_aabb, collisionStay->GetThis().m_transform);
+					groundCollider = &collisionStay->GetThis().m_collider;
 
-					player = collisionStay->GetOtherEntity();
-					playerTrans = collisionStay->GetBPos();
-					playerScale = collisionStay->GetScaleB();
+					player = collisionStay->GetOther().m_entity;
+					playerTrans = CollisionManager::instance().GetColliderPosition(collisionStay->GetOther().m_collider.m_aabb, collisionStay->GetOther().m_transform);
+					playerScale = CollisionManager::instance().GetColliderScale(collisionStay->GetOther().m_collider.m_aabb, collisionStay->GetOther().m_transform);
+					
 				}
 				else
 					return;
@@ -584,17 +589,11 @@ namespace Rogue
 				const float buffer = 10.0f;
 
 				LineSegment finiteRay(playerTrans, Vec2(playerTrans.x, playerTrans.y - playerScale.y / 2.0f - buffer));
-				
-				if (!g_engine.m_coordinator.ComponentExists<BoxCollider2DComponent>(ground))
-					return;
 
-				BoxCollider2DComponent& groundCollider = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(ground);
-
-				LineSegment colliderEdge(Vec2(groundCollider.m_aabb.getMin().x, groundCollider.m_aabb.getMax().y), groundCollider.m_aabb.getMax());
+				LineSegment colliderEdge(Vec2(groundCollider->m_aabb.getMin().x, groundCollider->m_aabb.getMax().y), groundCollider->m_aabb.getMax());
 
 				if (CollisionManager::instance().DiscreteLineVsLine(finiteRay, colliderEdge))
 				{
-					//RE_INFO("Ray Collided With Ground!");
 					player.m_grounded = true;
 					PLAYER_STATUS.SetHasJumped(false);	
 				}

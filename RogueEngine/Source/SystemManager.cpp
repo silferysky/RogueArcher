@@ -118,17 +118,17 @@ namespace Rogue
 				g_engine.m_coordinator.EndTimeSystem("Physics System");
 			}
 
-			g_engine.m_coordinator.InitTimeSystem("Circle Collision System");
-			m_systems[static_cast<int>(SystemID::id_CIRCLECOLLISIONSYSTEM)].second->Update();
-			g_engine.m_coordinator.EndTimeSystem("Circle Collision System");
+			//g_engine.m_coordinator.InitTimeSystem("Circle Collision System");
+			//m_systems[static_cast<int>(SystemID::id_CIRCLECOLLISIONSYSTEM)].second->Update();
+			//g_engine.m_coordinator.EndTimeSystem("Circle Collision System");
 
 			g_engine.m_coordinator.InitTimeSystem("Box Collision System");
 			m_systems[static_cast<int>(SystemID::id_BOXCOLLISIONSYSTEM)].second->Update();
 			g_engine.m_coordinator.EndTimeSystem("Box Collision System");
 
-			g_engine.m_coordinator.InitTimeSystem("Collision System");
-			m_systems[static_cast<int>(SystemID::id_COLLISIONSYSTEM)].second->Update();
-			g_engine.m_coordinator.EndTimeSystem("Collision System");
+			//g_engine.m_coordinator.InitTimeSystem("Collision System");
+			//m_systems[static_cast<int>(SystemID::id_COLLISIONSYSTEM)].second->Update();
+			//g_engine.m_coordinator.EndTimeSystem("Collision System");
 		}
 
 		Timer::instance().GetSystemTimes()["Physics System"] *= step;

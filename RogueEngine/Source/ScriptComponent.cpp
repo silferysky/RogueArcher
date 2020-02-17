@@ -97,17 +97,18 @@ namespace Rogue
 		//RE_INFO("AI IDLE");
 	}
 
-	void ScriptComponent::HandleCollision(EntCollisionOrTrigger* ev)
+	// Might template this in future...
+	void ScriptComponent::HandleCollision(EntCollisionOrTrigger<BoxCollider2DComponent, BoxCollider2DComponent>* ev)
 	{
 		switch (ev->GetEventType())
 		{
 		case EventType::EvOnCollisionEnter:
 		{
 			//Set entity to either first or second ID depending on which it isn't
-			Entity otherEnt = ev->GetEntityID();
+			Entity otherEnt = ev->GetThis().m_entity;
 
-			if (ev->GetEntityID() == m_entity)
-				otherEnt = ev->GetOtherEntity();
+			if (ev->GetThis().m_entity == m_entity)
+				otherEnt = ev->GetOther().m_entity;
 
 			if (ev->GetEventCat() & EventCatTrigger)
 				OnTriggerEnter(otherEnt);
@@ -119,10 +120,10 @@ namespace Rogue
 		case EventType::EvOnCollisionStay:
 		{
 			//Set entity to either first or second ID depending on which it isn't
-			Entity otherEnt = ev->GetEntityID();
+			Entity otherEnt = ev->GetThis().m_entity;
 
-			if (ev->GetEntityID() == m_entity)
-				otherEnt = ev->GetOtherEntity();
+			if (ev->GetThis().m_entity == m_entity)
+				otherEnt = ev->GetOther().m_entity;
 
 			if (ev->GetEventCat() & EventCatTrigger)
 				OnTriggerStay(otherEnt);
@@ -134,10 +135,10 @@ namespace Rogue
 		case EventType::EvOnCollisionExit:
 		{
 			//Set entity to either first or second ID depending on which it isn't
-			Entity otherEnt = ev->GetEntityID();
+			Entity otherEnt = ev->GetThis().m_entity;
 
-			if (ev->GetEntityID() == m_entity)
-				otherEnt = ev->GetOtherEntity();
+			if (ev->GetThis().m_entity == m_entity)
+				otherEnt = ev->GetOther().m_entity;
 
 			if (ev->GetEventCat() & EventCatTrigger)
 				OnTriggerExit(otherEnt);
