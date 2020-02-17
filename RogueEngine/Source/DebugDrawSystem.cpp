@@ -93,9 +93,9 @@ Technology is prohibited.
 
 			if (entity) // If not background
 			{
-				if (g_engine.m_coordinator.ComponentExists<Rogue::BoxCollider2DComponent>(entity))
+				if (auto optionalCollider = g_engine.m_coordinator.TryGetComponent<Rogue::BoxCollider2DComponent>(entity))
 				{
-					auto& box = g_engine.m_coordinator.GetComponent<Rogue::BoxCollider2DComponent>(entity);
+					Rogue::BoxCollider2DComponent& box = optionalCollider->get();
 
 					if (box.GetIsCollided())
 					{
@@ -113,11 +113,11 @@ Technology is prohibited.
 					}
 
 					drawAABB(&box, &transform);
-					//drawOBB(&collider, &rBody);
+					//drawOBB(&box, &rBody);
 				}
-				if (g_engine.m_coordinator.ComponentExists<Rogue::CircleCollider2DComponent>(entity))
+				if (auto optionalCollider = g_engine.m_coordinator.TryGetComponent<Rogue::CircleCollider2DComponent>(entity))
 				{
-					auto& circle = g_engine.m_coordinator.GetComponent<Rogue::CircleCollider2DComponent>(entity);
+					Rogue::CircleCollider2DComponent& circle = optionalCollider->get();
 
 					if (circle.GetIsCollided())
 					{

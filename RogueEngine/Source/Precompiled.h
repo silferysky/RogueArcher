@@ -29,6 +29,7 @@ Technology is prohibited.
 #include <unordered_set>
 #include <bitset>
 #include <functional>
+#include <optional>
 #include <utility>
 #include <algorithm>
 #include <cmath>

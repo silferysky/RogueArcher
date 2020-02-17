@@ -84,7 +84,6 @@ namespace Rogue
 			m_systemManager->UpdateSystems();
 
 			DeleteEntities();
-
 		}
 
 		void Shutdown()
@@ -137,11 +136,11 @@ namespace Rogue
 			return AudioManager::instance().loadSound(sound.data(), volume, looping);
 		}
 
-		template<typename T>
+		template<typename TComponent>
 		void RegisterComponent()
 		{
-			const char* typeName = typeid(T).name();
-			m_componentManager->RegisterComponent<T>();
+			const char* typeName = typeid(TComponent).name();
+			m_componentManager->RegisterComponent<TComponent>();
 
 			std::stringstream output;
 			output << typeName << " registered!";
@@ -161,66 +160,75 @@ namespace Rogue
 			m_systemManager->CreateAssignTagEvent(entity);
 		}
 
-		template<typename T>
+		template<typename TComponent>
 		void RemoveComponent(Entity entity)
 		{
 			std::cout << "component removed from entity" << std::endl;
-			m_componentManager->RemoveComponent<T>(entity);
+			m_componentManager->RemoveComponent<TComponent>(entity);
 
 			auto signature = m_entityManager->GetSignature(entity);
-			signature.set(m_componentManager->GetComponentType<T>(), false);
+			signature.set(m_componentManager->GetComponentType<TComponent>(), false);
 			m_entityManager->SetSignature(entity, signature);
 
 			m_systemManager->EntitySignatureChanged(entity, signature);
 		}
 
-		template<typename T>
-		T& GetComponent(Entity entity)
+		template<typename TComponent>
+		TComponent& GetComponent(Entity entity)
 		{
-			return m_componentManager->GetComponent<T>(entity);
+			return m_componentManager->GetComponent<TComponent>(entity);
 		}
 
-		template<typename T>
+		template <typename TComponent>
+		std::optional<std::reference_wrapper<TComponent>> TryGetComponent(Entity entity)
+		{
+			if (ComponentExists<TComponent>(entity))
+				return std::optional<std::reference_wrapper<TComponent>>(GetComponent<TComponent>(entity));
+			else
+				return std::nullopt;
+		}
+
+		template<typename TComponent>
 		ComponentType GetComponentType()
 		{
-			return m_componentManager->GetComponentType<T>();
+			return m_componentManager->GetComponentType<TComponent>();
 		}
 
-		template<typename T>
-		T& CreateComponent(Entity owner)
+		template<typename TComponent>
+		TComponent& CreateComponent(Entity owner)
 		{
-			AddComponent(owner, T());
-			return GetComponent<T>(owner);
+			AddComponent(owner, TComponent());
+			return GetComponent<TComponent>(owner);
 		}
 
-		template<typename T>
+		template<typename TComponent>
 		void LoadComponent(Entity owner, std::string_view strToLoad)
 		{
-			CreateComponent<T>(owner).Deserialize(strToLoad);
+			CreateComponent<TComponent>(owner).Deserialize(strToLoad);
 		}
 
-		template<typename T>
+		template<typename TComponent>
 		void RegisterSystem()
 		{
-			return m_systemManager->RegisterSystem<T>();
+			return m_systemManager->RegisterSystem<TComponent>();
 		}
 
-		template<typename T>
-		std::shared_ptr<T> GetSystem()
+		template<typename TComponent>
+		std::shared_ptr<TComponent> GetSystem()
 		{
-			return m_systemManager->GetSystem<T>();
+			return m_systemManager->GetSystem<TComponent>();
 		}
 
-		template<typename T>
+		template<typename TComponent>
 		void SetSystemSignature(const Signature& signature)
 		{
-			m_systemManager->SetSignature<T>(signature);
+			m_systemManager->SetSignature<TComponent>(signature);
 		}
 
-		template <typename T>
+		template <typename TComponent>
 		bool ComponentExists(Entity entity)
 		{
-			return m_entityManager->GetSignature(entity).test(GetComponentType<T>());
+			return m_entityManager->GetSignature(entity).test(GetComponentType<TComponent>());
 		}
 
 		void InitTimeSystem(const char* system)
