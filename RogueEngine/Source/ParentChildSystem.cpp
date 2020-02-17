@@ -26,7 +26,7 @@ namespace Rogue
 		{
 			auto& childComponent = g_engine.m_coordinator.GetComponent<ChildComponent>(entity);
 
-			if (childComponent.GetParent() == -1 || !g_engine.m_coordinator.ComponentExists<TransformComponent>(childComponent.GetParent()))
+			if (childComponent.GetParent() == MAX_ENTITIES || !g_engine.m_coordinator.ComponentExists<TransformComponent>(childComponent.GetParent()))
 				return;
 
 			auto& transComponent = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
