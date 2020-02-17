@@ -31,6 +31,7 @@ Technology is prohibited.
 #include "ParentEvent.h"
 #include "EditorHierarchy.h"
 #include "PlayerStatusManager.h"
+#include "EditorTileSet.h"
 
 namespace Rogue
 {
@@ -55,6 +56,10 @@ namespace Rogue
 		CameraManager::instance().SetCameraMax(cameraMax);
 		CameraManager::instance().SetLevelCameraZoom(cameraZoom);
 		CameraManager::instance().SetCameraZoom(cameraZoom);
+
+		//For Tile Set
+		std::string tilesetSerialized = level["Tileset"].GetString();
+		ImGuiTileSet::instance().Deserialize(tilesetSerialized);
 
 		//For Entity Count
 		m_maxEntityCount = level["MaxEntityCount"].GetInt();
@@ -192,6 +197,10 @@ namespace Rogue
 		RESerialiser::WriteToFile(fileName, "CameraMaxX", &cameraMax.x);
 		RESerialiser::WriteToFile(fileName, "CameraMaxY", &cameraMax.y);
 		RESerialiser::WriteToFile(fileName, "CameraZoom", &cameraZoom);
+
+		std::string serializedStr = ImGuiTileSet::instance().Serialize();
+		cstr = serializedStr.c_str();
+		RESerialiser::WriteToFile(fileName, "Tileset", cstr);
 
 		Entity entCount = 0;
 		size_t skipCount = 0; //No need to skip MenuControllerSystem's UI since they are not created as activeobjects
