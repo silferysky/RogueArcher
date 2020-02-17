@@ -282,16 +282,17 @@ namespace Rogue
 
 	void MenuControllerSystem::InitPauseMenu()
 	{
-		//g_engine.SetTimeScale(0.0f);
-		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("crosshair", false));
-		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("MainMenu_Bg", false));
-		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("HowToPlayBtn", false));
-		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("MainMenu_Btn", false));
-		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("Resume", false));
-		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("QuitBtn", false));
-		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("HowToPlay", false));
-		m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("YesBtn", false));
-		m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("NoBtn", false));
+		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("MenuUI", false));
+		for (auto& child : g_engine.m_coordinator.GetHierarchyInfo(m_menuObjs.front()).m_children)
+		{
+			m_menuObjs.push_back(child);
+		}
+
+		m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("MenuConfirmUI", false));
+		for (auto& child : g_engine.m_coordinator.GetHierarchyInfo(m_confirmQuitEnt.front()).m_children)
+		{
+			m_confirmQuitEnt.push_back(child);
+		}
 
 		SetUIMenuObjs(false);
 	}
