@@ -134,6 +134,7 @@ namespace Rogue
 						{
 							i.m_tileTexture = TextureManager::instance().loadTexture("None");
 							i.m_texturename = "None";
+							i.m_bordercolor = { 1.0f, 1.0f, 1.0f, 0.5f };
 							if (m_currentmode == Mode::Drag)
 							{
 								if (!m_firstclicked)
@@ -189,6 +190,7 @@ namespace Rogue
 							{
 								i.m_tileTexture = TextureManager::instance().loadTexture("None");
 								i.m_texturename = "None";
+								i.m_bordercolor = { 1.0f, 1.0f, 1.0f, 0.5f };
 							}					
 						}
 					}
