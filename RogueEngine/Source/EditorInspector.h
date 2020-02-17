@@ -29,6 +29,7 @@ namespace Rogue
 		std::vector <Entity>& activeObjects;
 		ImVec4 m_color;
 		int m_tileInstanceCount;
+		bool m_show = false;
 	public:
 		ImGuiInspector();
 		~ImGuiInspector() = default;
