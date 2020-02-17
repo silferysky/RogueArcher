@@ -115,6 +115,8 @@ namespace Rogue
 		strstream << ",\n  \"CameraMaxY\": " << 0;
 		strstream << ",\n  \"CameraZoom\": " << 1.0;
 
+		strstream << ",\n  \"Tileset\": \"\"";
+
 		strstream << ",\n  \"StartPosX\": " << 0;
 		strstream << ",\n  \"StartPosY\": " << 0;
 
