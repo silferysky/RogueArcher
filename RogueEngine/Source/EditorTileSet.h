@@ -4,13 +4,13 @@
 
 namespace Rogue
 {
-	struct TileSet
+	struct Tile
 	{
 		std::string m_texturename;
-		Entity m_tileId;
+		Entity m_tileId = 0;
 		Vec2 m_tilePos;
 		bool m_collision = false;
-		Texture m_tileTexture;
+		Texture m_tileTexture = { 0 };
 		ImVec4 m_bordercolor = { 1.0f,1.0f,1.0f,0.5f };
 	};
 
@@ -23,25 +23,29 @@ namespace Rogue
 	class ImGuiTileSet : public IEditable
 	{
 	private:
-		std::vector<TileSet> m_GlobalTileSet;
-		std::vector<TileSet> m_TileSet;
-		bool m_openWindow = true;
-		int m_tileSize = 100;
-		bool m_isCollision = false;
-		int m_tilesHeight = 0;
-		int m_tilesWidth = 0;
-		float m_currentTileX = 0;
-		float m_currentTileY = 0;
-		bool m_check = true;
-		bool m_globalcheck = false;
-		Texture m_currentTexture;
-		std::string m_currentPath = "None";
-		bool m_firstclicked = false;
+		std::vector<Tile> m_GlobalTileSet;
+		std::vector<Tile> m_TileSet;
+		bool m_openWindow;
+		bool m_isCollision;
+		bool m_check;
+		bool m_firstclicked;
+		bool m_globalcheck;
+		bool m_deleteTile;
+		int m_tileSize;
+		int m_tilesHeight;
+		int m_tilesWidth;
+		float m_currentTileX;
+		float m_currentTileY;
 		float m_minX;
 		float m_minY;
 		float m_maxX;
 		float m_maxY;
+		Texture m_currentTexture = { 0 };
+		std::string m_currentPath = "None";
+		
+
 		int m_currentmode = 0;
+
 	public:
 		static ImGuiTileSet& instance()
 		{
