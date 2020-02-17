@@ -105,29 +105,48 @@ namespace Rogue
 					--m_tilesWidth;
 					if (ImGui::IsItemClicked(0))
 					{
-						i.m_tileTexture = TextureManager::instance().loadTexture(m_currentPath.c_str());
-						i.m_texturename = m_currentPath.c_str();
-						if (m_currentmode == Mode::Drag)
+						if (m_deleteTile)
 						{
-							if (!m_firstclicked)
+							i.m_tileTexture = TextureManager::instance().loadTexture("None");
+							i.m_texturename = "None";
+							if (m_currentmode == Mode::Drag)
 							{
-								m_firstclicked = true;
-							}
-							else
-							{
-								m_firstclicked = false;
+								if (!m_firstclicked)
+								{
+									m_firstclicked = true;
+								}
+								else
+								{
+									m_firstclicked = false;
+								}
 							}
 						}
-						if (m_isCollision)
+						else
 						{
-							i.m_collision = true;
-							i.m_bordercolor = { 0.8f,0.1f,0.1f,1.0f };
+							i.m_tileTexture = TextureManager::instance().loadTexture(m_currentPath.c_str());
+							i.m_texturename = m_currentPath.c_str();
+							if (m_currentmode == Mode::Drag)
+							{
+								if (!m_firstclicked)
+								{
+									m_firstclicked = true;
+								}
+								else
+								{
+									m_firstclicked = false;
+								}
+							}
+							if (m_isCollision)
+							{
+								i.m_collision = true;
+								i.m_bordercolor = { 0.8f,0.1f,0.1f,1.0f };
+							}
 						}
 					}
 					if (m_currentmode == Mode::Drag)
 					{
-						//if (!m_deleteTile)
-						//{
+						if (!m_deleteTile)
+						{
 							if (ImGui::IsItemHovered() && m_firstclicked && m_currentPath != "None")
 							{
 								i.m_tileTexture = TextureManager::instance().loadTexture(m_currentPath.c_str());
@@ -138,15 +157,15 @@ namespace Rogue
 									i.m_bordercolor = { 0.8f,0.1f,0.1f,1.0f };
 								}
 							}
-						//}
-						//else
-						//{
-						//	if (ImGui::IsItemHovered() && m_firstclicked)
-						//	{
-						//		i.m_tileTexture = TextureManager::instance().loadTexture("None");
-						//		i.m_texturename = "None";
-						//	}					
-						//}
+						}
+						else
+						{
+							if (ImGui::IsItemHovered() && m_firstclicked)
+							{
+								i.m_tileTexture = TextureManager::instance().loadTexture("None");
+								i.m_texturename = "None";
+							}					
+						}
 					}
 				}
 				ImGui::NextColumn();
@@ -196,24 +215,24 @@ namespace Rogue
 					{
 						for (auto& j : ImGuiTileSet::instance().m_GlobalTileSet)
 						{
-							//if tile is used
-							if (i.m_tileTexture.m_data != 0)
+							//find global tile
+							if (i.m_tilePos.x == j.m_tilePos.x && i.m_tilePos.y == j.m_tilePos.y)
 							{
-								//find global tile
-								if (i.m_tilePos.x == j.m_tilePos.x && i.m_tilePos.y == j.m_tilePos.y)
+								//if texture has been changed
+								if (i.m_texturename != j.m_texturename)
 								{
-									//if texture has been changed
-									if (i.m_texturename != j.m_texturename)
+									j.m_texturename = i.m_texturename;
+									//if tile exists, delete tile
+									if (j.m_tileId > 0)
 									{
-										j.m_texturename = i.m_texturename;
-										//if tile exists, delete tile
-										if (j.m_tileId > 0)
-										{
-											g_engine.m_coordinator.AddToDeleteQueue(j.m_tileId);
-										}
-										
-										j.m_tileId = Create2DSprite(i.m_tilePos, Vec2{ 100.0f,100.0f }, i.m_texturename, i.m_collision);
+										g_engine.m_coordinator.AddToDeleteQueue(j.m_tileId);
 									}
+									if (j.m_texturename.c_str() == "None")
+									{
+										g_engine.m_coordinator.AddToDeleteQueue(j.m_tileId);
+									}
+									
+									j.m_tileId = Create2DSprite(i.m_tilePos, Vec2{ 100.0f,100.0f }, i.m_texturename, i.m_collision);
 								}
 							}
 						}
