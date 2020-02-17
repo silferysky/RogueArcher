@@ -528,7 +528,7 @@ namespace Rogue
 
 		case EventType::EvOnCollisionStay:
 		{
-			auto* collisionStay = dynamic_cast<EntCollisionStayEvent<BoxCollider2DComponent, BoxCollider2DComponent>*>(ev);
+			auto* collisionStay = dynamic_cast<AABBCollisionStayEvent*>(ev);
 
 			if (m_ignoreFrameEvent)
 			{

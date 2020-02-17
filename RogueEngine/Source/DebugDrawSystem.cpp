@@ -93,22 +93,27 @@ Technology is prohibited.
 
 			if (entity) // If not background
 			{
-				auto& collider = g_engine.m_coordinator.GetComponent<Rogue::ColliderComponent>(entity);
-
-				if (collider.GetIsCollided())
-					glUniform4fv(m_filterLocation, 1, glm::value_ptr(glm::vec4(0.0f, 1.0f, 1.0f, 1.0f)));
-				else
-					glUniform4fv(m_filterLocation, 1, glm::value_ptr(glm::vec4(1.0f, 0.5f, 0.2f, 1.0f)));
-
 				if (g_engine.m_coordinator.ComponentExists<Rogue::BoxCollider2DComponent>(entity))
 				{
 					auto& collider = g_engine.m_coordinator.GetComponent<Rogue::BoxCollider2DComponent>(entity);
+
+					if (collider.GetIsCollided())
+						glUniform4fv(m_filterLocation, 1, glm::value_ptr(glm::vec4(0.0f, 1.0f, 1.0f, 1.0f)));
+					else
+						glUniform4fv(m_filterLocation, 1, glm::value_ptr(glm::vec4(1.0f, 0.5f, 0.2f, 1.0f)));
+
 					drawAABB(&collider, &transform);
 					//drawOBB(&collider, &rBody);
 				}
 				if (g_engine.m_coordinator.ComponentExists<Rogue::CircleCollider2DComponent>(entity))
 				{
 					auto& circle = g_engine.m_coordinator.GetComponent<Rogue::CircleCollider2DComponent>(entity);
+
+					if (circle.GetIsCollided())
+						glUniform4fv(m_filterLocation, 1, glm::value_ptr(glm::vec4(0.0f, 1.0f, 1.0f, 1.0f)));
+					else
+						glUniform4fv(m_filterLocation, 1, glm::value_ptr(glm::vec4(1.0f, 0.5f, 0.2f, 1.0f)));
+
 					drawCircle(&circle, &transform);
 				}
 				

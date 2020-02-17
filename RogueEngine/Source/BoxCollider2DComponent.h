@@ -25,6 +25,7 @@ namespace Rogue
 	class BoxCollider2DComponent : public BaseComponent
 	{
 		CollisionMode m_collisionMode;
+		bool m_isCollided;
 	public:
 		AABB m_aabb;
 
@@ -36,6 +37,8 @@ namespace Rogue
 
 		CollisionMode GetCollisionMode() const;
 		void SetCollisionMode(CollisionMode mode);
+		bool GetIsCollided() const;
+		void SetIsCollided(bool isCollided);
 
 		void DisplayOnInspector();
 		std::string Serialize() override;

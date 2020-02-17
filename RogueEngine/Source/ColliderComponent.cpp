@@ -252,17 +252,6 @@ namespace Rogue
 		ImGui::NewLine();
 	}
 
-	bool ColliderComponent::GetIsCollided() const
-	{
-		return m_isCollided;
-	}
-
-	void ColliderComponent::SetIsCollided(bool isCollided)
-	{
-		m_isCollided = isCollided;
-	}
-
-
 	std::shared_ptr<Shape> ColliderComponent::GetShape() const
 	{
 		return m_shape;

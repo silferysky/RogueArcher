@@ -170,6 +170,9 @@ namespace Rogue
 					CollisionInfo<TColliderB> infoB(pair.second, colliderB, bodyB, transB);
 
 					SendExitEvents(infoA, infoB);
+
+					colliderA.SetIsCollided(false);
+					colliderB.SetIsCollided(false);
 				}
 			}
 		}

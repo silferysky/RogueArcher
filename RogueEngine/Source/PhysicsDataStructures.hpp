@@ -247,10 +247,10 @@ namespace Rogue
 	template <typename TCollider>
 	struct CollisionInfo
 	{
-		Entity m_entity;
-		const TCollider& m_collider;
-		const RigidbodyComponent& m_rigidbody;
-		const TransformComponent& m_transform;
+		const Entity m_entity;
+		TCollider& m_collider;
+		RigidbodyComponent& m_rigidbody;
+		TransformComponent& m_transform;
 
 		CollisionInfo(Entity entity, TCollider& collider, RigidbodyComponent& body, TransformComponent& trans) :
 			m_entity{ entity },

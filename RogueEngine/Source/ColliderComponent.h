@@ -27,7 +27,6 @@ namespace Rogue
 		std::shared_ptr<Shape> m_shape;
 		LayerManager::Bits m_collisionMask;
 		LayerManager::Bits m_collisionCategory;
-		bool m_isCollided = false;
 	public:
 		ColliderComponent(const std::shared_ptr<Shape> ptr = nullptr);
 		ColliderComponent(const ColliderComponent& rhs); // Copy constructor
@@ -42,9 +41,6 @@ namespace Rogue
 		std::shared_ptr<Shape> GetShape() const;
 		const LayerManager::Bits& GetCollisionMask() const;
 		const LayerManager::Bits& GetCollisionCat() const;
-
-		bool GetIsCollided() const;
-		void SetIsCollided(bool isCollided);
 
 		void SetShape(const std::shared_ptr<Shape>& pShape);
 		void SetMask(size_t layerPos, bool set = true);

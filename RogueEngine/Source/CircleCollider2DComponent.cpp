@@ -22,7 +22,7 @@ Technology is prohibited.
 namespace Rogue
 {
 	CircleCollider2DComponent::CircleCollider2DComponent(CircleCollider2DComponent&& rhs) noexcept :
-		m_collider{ BoundingCircle{} }
+		m_collider{}, m_isCollided{ false }
 	{
 		std::swap(m_collider, rhs.m_collider);
 	}
@@ -44,6 +44,17 @@ namespace Rogue
 		}
 		return *this;
 	}
+	
+	bool CircleCollider2DComponent::GetIsCollided() const
+	{
+		return m_isCollided;
+	}
+
+	void CircleCollider2DComponent::SetIsCollided(bool isCollided)
+	{
+		m_isCollided = isCollided;
+	}
+
 	void CircleCollider2DComponent::DisplayOnInspector()
 	{
 		float radius = m_collider.getRadius();

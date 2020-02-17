@@ -105,6 +105,9 @@ namespace Rogue
 					CollisionInfo<BoxCollider2DComponent> infoA(*iEntity, currBoxCollider, currRigidbody, currTransform);
 					CollisionInfo<BoxCollider2DComponent> infoB(*iNextEntity, nextBoxCollider, nextRigidbody, nextTransform);
 
+					currBoxCollider.SetIsCollided(true);
+					nextBoxCollider.SetIsCollided(true);
+
 					if (CollisionManager::instance().InsertBoxPair(*iEntity, *iNextEntity))
 						CollisionManager::instance().SendEnterEvents(infoA, infoB);
 					else

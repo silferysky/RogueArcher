@@ -23,7 +23,7 @@ Technology is prohibited.
 namespace Rogue
 {
 	BoxCollider2DComponent::BoxCollider2DComponent() :
-		m_aabb{}, m_collisionMode{CollisionMode::e_awake}
+		m_aabb{}, m_collisionMode{ CollisionMode::e_awake }, m_isCollided{ false }
 	{}
 
 	BoxCollider2DComponent::BoxCollider2DComponent(const BoxCollider2DComponent& rhs) :
@@ -66,6 +66,16 @@ namespace Rogue
 	void BoxCollider2DComponent::SetCollisionMode(CollisionMode mode)
 	{
 		m_collisionMode = mode;
+	}
+
+	bool BoxCollider2DComponent::GetIsCollided() const
+	{
+		return m_isCollided;
+	}
+
+	void BoxCollider2DComponent::SetIsCollided(bool isCollided)
+	{
+		m_isCollided = isCollided;
 	}
 
 	std::string BoxCollider2DComponent::Serialize()

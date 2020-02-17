@@ -25,6 +25,7 @@ namespace Rogue
 	class CircleCollider2DComponent
 		: public BaseComponent
 	{
+		bool m_isCollided;
 	public:
 		CircleCollider2DComponent() = default;
 		~CircleCollider2DComponent() = default;
@@ -36,6 +37,9 @@ namespace Rogue
 		CircleCollider2DComponent& operator=(CircleCollider2DComponent&& rhs) noexcept;
 
 		BoundingCircle m_collider;
+
+		bool GetIsCollided() const;
+		void SetIsCollided(bool isCollided);
 
 		void DisplayOnInspector();
 		std::string Serialize() override;
