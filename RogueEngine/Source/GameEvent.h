@@ -247,8 +247,6 @@ namespace Rogue
 	{
 	public:
 		SET_EVENT_CATEGORY(EventCatTrigger)
-		SET_EVENT_TYPE(EvOnTriggerEnter)
-
 
 		template <typename TColliderA, typename TColliderB>
 		EntTriggerEnterEvent(const CollisionInfo<TColliderA>& colA, const CollisionInfo<TColliderB>& colB) :
@@ -261,7 +259,6 @@ namespace Rogue
 	{
 	public:
 		SET_EVENT_CATEGORY(EventCatTrigger)
-		SET_EVENT_TYPE(EvOnTriggerStay)
 
 		template <typename TColliderA, typename TColliderB>
 		EntTriggerStayEvent(const CollisionInfo<TColliderA>& colA, const CollisionInfo<TColliderB>& colB) :
@@ -274,7 +271,6 @@ namespace Rogue
 	{
 	public:
 		SET_EVENT_CATEGORY(EventCatTrigger)
-		SET_EVENT_TYPE(EvOnTriggerExit)
 
 		template <typename TColliderA, typename TColliderB>
 		EntTriggerExitEvent(const CollisionInfo<TColliderA>& colA, const CollisionInfo<TColliderB>& colB) :

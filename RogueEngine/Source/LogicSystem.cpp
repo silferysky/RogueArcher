@@ -133,12 +133,12 @@ namespace Rogue
 			for (Entity m : m_entities)
 			{
 				if (m == object || m == triggered)
-					if (m_entityLogicMap[m].size())
+					if (m_entityLogicMap[m].size()) // I think u can skip this step
 					{
 						for (auto& ai : m_entityLogicMap[m])
 						{
 							ai->HandleCollision(event);
-							if (!m_entityLogicMap[m].size())
+							if (!m_entityLogicMap[m].size()) // And this?
 								return;
 						}
 					}

@@ -71,10 +71,6 @@ namespace Rogue
 		EvOnCollisionStay,
 		EvOnCollisionExit,
 
-		EvOnTriggerEnter,
-		EvOnTriggerStay,
-		EvOnTriggerExit,
-
 		EvCameraShake,
 		EvChangeAnimation,
 		EvEntityPicked,
