@@ -5,6 +5,10 @@
 
 namespace Rogue
 {
+	ImGuiTileSet::ImGuiTileSet() :m_TileSet(), m_GlobalTileSet()
+	{
+	}
+
 	void ImGuiTileSet::Init()
 	{
 		if (m_TileSet.size())
@@ -23,22 +27,40 @@ namespace Rogue
 			tileset.m_tileTexture.m_texture = 0;
 			tileset.m_texturename = "";
 			tileset.m_tileTexture.m_data = 0;
-			tileset.m_tilePos.x = round(m_minX / m_tileSize) * m_tileSize + m_tileSize/2;
-			tileset.m_tilePos.y = round(m_maxY / m_tileSize) * m_tileSize - m_tileSize/2;
+			tileset.m_tileId = 0;
+			m_currentTileX = round(m_minX / m_tileSize) * m_tileSize + m_tileSize / 2;
+			tileset.m_tilePos.x = m_currentTileX;
+			m_currentTileY = round(m_maxY / m_tileSize) * m_tileSize - m_tileSize / 2;
+			tileset.m_tilePos.y = m_currentTileY;
 			m_minX += m_tileSize;
 			if (m_check)
 			{
 				++m_tilesWidth;
 			}
 			ImGuiTileSet::instance().m_TileSet.push_back(tileset);
+			for (auto& i : ImGuiTileSet::instance().m_GlobalTileSet)
+			{
+				if (i.m_tilePos.x == m_currentTileX && i.m_tilePos.y == m_currentTileY)
+				{
+					//tileset.m_texturename = i.m_texturename;
+					m_globalcheck = true;
+					break;
+				}
+			}
+			if (!m_globalcheck)
+			{
+				ImGuiTileSet::instance().m_GlobalTileSet.push_back(tileset);
+			}
 			if (m_minX > m_maxX && m_minY < m_maxY)
 			{
 				m_minX = viewportArea.getMin().x;
 				m_maxY -= m_tileSize;
 				++m_tilesHeight;
 				m_check = false;
+				m_globalcheck = false;
 			}
 		}
+
 	}
 	void ImGuiTileSet::Update()
 	{
@@ -55,7 +77,7 @@ namespace Rogue
 			}
 			else
 			{
-				ImGui::BeginChild("Tile");			
+				ImGui::BeginChild("Tile");
 				ImGui::Columns(2);
 				ImGui::AlignTextToFramePadding();
 				ImVec2 imageSize;
@@ -155,9 +177,31 @@ namespace Rogue
 				{
 					for (auto& i : ImGuiTileSet::instance().m_TileSet)
 					{
-						if (i.m_tileTexture.m_data != 0)
+						for (auto& j : ImGuiTileSet::instance().m_GlobalTileSet)
 						{
-							Create2DSprite(i.m_tilePos, Vec2{ 100.0f,100.0f }, i.m_texturename,i.m_collision);
+							//if tile is used
+							if (i.m_tileTexture.m_data != 0)
+							{
+								//find global tile
+								if (i.m_tilePos.x == j.m_tilePos.x && i.m_tilePos.y == j.m_tilePos.y)
+								{
+									//if texture has been changed
+									if (i.m_texturename != j.m_texturename)
+									{
+										//j.m_texturename = i.m_texturename;
+										//j.m_tileTexture = i.m_tileTexture;
+										j = i;
+										//if tile exists, delete tile
+										if (j.m_tileId > 0)
+										{
+											g_engine.m_coordinator.AddToDeleteQueue(j.m_tileId);
+										}
+										
+										j.m_tileId = Create2DSprite(i.m_tilePos, Vec2{ 100.0f,100.0f }, i.m_texturename, i.m_collision);
+									}
+								}
+							}
+						
 						}
 					}
 				}
@@ -183,6 +227,9 @@ namespace Rogue
 	{
 		
 	}
+
+
+
 	Entity ImGuiTileSet::Create2DSprite(Vec2 position, Vec2 scale, std::string_view tilepath, bool iscollision)
 	{
 		Entity newEnt = g_engine.m_coordinator.CreateEntity();

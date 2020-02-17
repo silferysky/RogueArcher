@@ -40,7 +40,7 @@ namespace Rogue
 		virtual void Init() override;
 		virtual void Update() override;
 		virtual void Shutdown() override;
-		int GetTileInstanceCount();
+		int GetTileInstanceCount() const;
 		void ReduceTileInstanceCount();
 	};
 };

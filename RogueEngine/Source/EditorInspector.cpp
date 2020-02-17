@@ -699,7 +699,7 @@ namespace Rogue
 	void ImGuiInspector::Shutdown()
 	{
 	}
-	int ImGuiInspector::GetTileInstanceCount()
+	int ImGuiInspector::GetTileInstanceCount() const
 	{
 		return ImGuiInspector::instance().m_tileInstanceCount;
 	}
