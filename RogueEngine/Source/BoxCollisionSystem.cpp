@@ -190,7 +190,28 @@ namespace Rogue
 	}
 
 	void BoxCollisionSystem::Receive(Event* ev)
-	{}
+	{
+		/* switch (ev->GetEventType())
+		{
+		case Rogue::EventType::EvOnCollisionEnter:
+		{
+			Rogue::EntCollisionEnterEvent<Rogue::BoxCollider2DComponent, Rogue::BoxCollider2DComponent>* collisionEnter
+				= dynamic_cast<Rogue::EntCollisionEnterEvent<Rogue::BoxCollider2DComponent, Rogue::BoxCollider2DComponent>*>(ev);
+
+			g_engine.m_coordinator.GetComponent<ColliderComponent>(collisionEnter->GetThis().m_entity).SetIsCollided(true);
+			return;
+		}
+
+		case Rogue::EventType::EvOnCollisionExit:
+		{
+			Rogue::EntCollisionExitEvent<Rogue::BoxCollider2DComponent, Rogue::BoxCollider2DComponent>* collisionExit
+				= dynamic_cast<Rogue::EntCollisionExitEvent<Rogue::BoxCollider2DComponent, Rogue::BoxCollider2DComponent>*>(ev);
+
+			g_engine.m_coordinator.GetComponent<ColliderComponent>(collisionExit->GetThis().m_entity).SetIsCollided(false);
+			return;
+		}
+		} */
+	}
 
 	void BoxCollisionSystem::Shutdown()
 	{}

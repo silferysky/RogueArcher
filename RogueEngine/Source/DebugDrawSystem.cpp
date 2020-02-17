@@ -27,6 +27,7 @@ Technology is prohibited.
 #include "SystemManager.h"
 #include "EventListener.h"
 #include "KeyEvent.h"
+#include "GameEvent.h"
 
 //namespace Rogue
 //{
@@ -55,6 +56,7 @@ Technology is prohibited.
 
 		m_projLocation = glGetUniformLocation(m_shader.GetShader(), "projection");
 		m_viewLocation = glGetUniformLocation(m_shader.GetShader(), "view");
+		m_filterLocation = glGetUniformLocation(m_shader.GetShader(), "colourFilter");
 
 		Rogue::GenerateLinePrimitive(m_VBO, m_VAO);
 
@@ -91,6 +93,13 @@ Technology is prohibited.
 
 			if (entity) // If not background
 			{
+				auto& collider = g_engine.m_coordinator.GetComponent<Rogue::ColliderComponent>(entity);
+
+				if (collider.GetIsCollided())
+					glUniform4fv(m_filterLocation, 1, glm::value_ptr(glm::vec4(0.0f, 1.0f, 0.0f, 1.0f)));
+				else
+					glUniform4fv(m_filterLocation, 1, glm::value_ptr(glm::vec4(1.0f, 0.5f, 0.2f, 1.0f)));
+
 				if (g_engine.m_coordinator.ComponentExists<Rogue::BoxCollider2DComponent>(entity))
 				{
 					auto& collider = g_engine.m_coordinator.GetComponent<Rogue::BoxCollider2DComponent>(entity);

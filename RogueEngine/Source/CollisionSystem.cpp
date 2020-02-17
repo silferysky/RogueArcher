@@ -116,7 +116,8 @@ namespace Rogue
 	}
 
 	void CollisionSystem::Receive(Event* ev)
-	{}
+	{
+	}
 
 	void CollisionSystem::Shutdown()
 	{}

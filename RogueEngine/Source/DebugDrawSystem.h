@@ -29,6 +29,7 @@ Technology is prohibited.
 		Rogue::Shader m_shader;
 		GLint m_viewLocation;
 		GLint m_projLocation;
+		GLint m_filterLocation;
 
 		std::shared_ptr<Rogue::CameraSystem> m_pCamera;
 
