@@ -10,6 +10,8 @@ namespace Rogue
 		Entity m_tileId = 0;
 		Vec2 m_tilePos;
 		bool m_collision = false;
+		float m_tileWidth = 100;
+		float m_tileHeight = 100;
 		Texture m_tileTexture = { 0 };
 		ImVec4 m_bordercolor = { 1.0f,1.0f,1.0f,0.5f };
 	};

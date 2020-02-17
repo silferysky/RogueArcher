@@ -126,8 +126,8 @@ namespace Rogue
 					}
 					if (m_currentmode == Mode::Drag)
 					{
-						if (!m_deleteTile)
-						{
+						//if (!m_deleteTile)
+						//{
 							if (ImGui::IsItemHovered() && m_firstclicked && m_currentPath != "None")
 							{
 								i.m_tileTexture = TextureManager::instance().loadTexture(m_currentPath.c_str());
@@ -138,11 +138,15 @@ namespace Rogue
 									i.m_bordercolor = { 0.8f,0.1f,0.1f,1.0f };
 								}
 							}
-						}
-						else
-						{
-
-						}
+						//}
+						//else
+						//{
+						//	if (ImGui::IsItemHovered() && m_firstclicked)
+						//	{
+						//		i.m_tileTexture = TextureManager::instance().loadTexture("None");
+						//		i.m_texturename = "None";
+						//	}					
+						//}
 					}
 				}
 				ImGui::NextColumn();
@@ -201,7 +205,7 @@ namespace Rogue
 									//if texture has been changed
 									if (i.m_texturename != j.m_texturename)
 									{
-										j = i;
+										j.m_texturename = i.m_texturename;
 										//if tile exists, delete tile
 										if (j.m_tileId > 0)
 										{
@@ -230,8 +234,6 @@ namespace Rogue
 				{
 
 				}
-
-				
 				ImGui::TextWrapped("When Drag Mode, first click to start drag and second click to stop drag");
 				ImGui::TextWrapped("When Collision is on, the tile border will be red color");
 				ImGui::EndChild();
