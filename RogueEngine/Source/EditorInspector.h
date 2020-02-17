@@ -28,6 +28,7 @@ namespace Rogue
 	{
 		std::vector <Entity>& activeObjects;
 		ImVec4 m_color;
+		int m_tileInstanceCount;
 	public:
 		ImGuiInspector();
 		~ImGuiInspector() = default;
@@ -39,6 +40,7 @@ namespace Rogue
 		virtual void Init() override;
 		virtual void Update() override;
 		virtual void Shutdown() override;
-
+		int GetTileInstanceCount();
+		void ReduceTileInstanceCount();
 	};
 };

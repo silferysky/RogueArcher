@@ -34,7 +34,7 @@ Technology is prohibited.
 namespace Rogue
 {
 	ImGuiInspector::ImGuiInspector() :
-		activeObjects{ g_engine.m_coordinator.GetActiveObjects() }, m_color{ 0.0f,0.0f,0.0f,0.0f }
+		activeObjects{ g_engine.m_coordinator.GetActiveObjects() }, m_color{ 0.0f,0.0f,0.0f,0.0f },m_tileInstanceCount(0)
 	{}
 
 	void ImGuiInspector::Init()
@@ -687,15 +687,25 @@ namespace Rogue
 		g_engine.m_coordinator.GetSystem<PhysicsSystem>()->setGravity(m_gravity);
 		if (ImGui::Button("TileSet"))
 		{
-			EditorManager::instance().AddEditorWindow<ImGuiTileSet>("TileSet");
-			ImGuiTileSet::instance().Init();
+			if (!ImGuiInspector::instance().m_tileInstanceCount)
+			{
+				EditorManager::instance().AddEditorWindow<ImGuiTileSet>("TileSet");
+				ImGuiTileSet::instance().Init();
+				++ImGuiInspector::instance().m_tileInstanceCount;
+			}
 		}
 		ImGui::End();
-
-
 	}
 	void ImGuiInspector::Shutdown()
 	{
+	}
+	int ImGuiInspector::GetTileInstanceCount()
+	{
+		return ImGuiInspector::instance().m_tileInstanceCount;
+	}
+	void ImGuiInspector::ReduceTileInstanceCount()
+	{
+		--ImGuiInspector::instance().m_tileInstanceCount;
 	}
 };
 

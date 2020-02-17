@@ -45,6 +45,7 @@ namespace Rogue
 		if (!m_openWindow)
 		{
 			EditorManager::instance().RemoveEditorWindow<ImGuiTileSet>("TileSet");
+			ImGuiInspector::instance().ReduceTileInstanceCount();
 		}
 		else
 		{

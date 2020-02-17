@@ -652,12 +652,14 @@
     <ClInclude Include="Source\LightingSystem.h">
       <Filter>RogueEngine\Systems\Graphics\Lighting</Filter>
     </ClInclude>
-    <ClInclude Include="Source\EditorTileSet.h" />
     <ClInclude Include="Source\ComponentIndex.h">
       <Filter>RogueEngine\Core\ECS</Filter>
     </ClInclude>
     <ClInclude Include="Source\IntegerPairHasher.h">
       <Filter>RogueEngine\Systems\Collision\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EditorTileSet.h">
+      <Filter>RogueEditor\EditorFiles</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
