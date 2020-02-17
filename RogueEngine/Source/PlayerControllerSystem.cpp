@@ -334,7 +334,6 @@ namespace Rogue
 				else if (keycode == KeyPress::MB2 || keycode == KeyPress::KeyShift || keycode == KeyPress::KeyE)
 				{
 					ToggleMode();
-
 				}
 
 				else if (keycode == KeyPress::MB3)
@@ -516,6 +515,12 @@ namespace Rogue
 						player.m_grounded = false;
 					}
 				}
+				//For testing only
+				//else if (keycode == KeyPress::KeyDelete)
+				//{
+				//	g_engine.m_coordinator.AddToDeleteQueue(PLAYER_STATUS.GetIndicator());
+				//	PLAYER_STATUS.SetIndicator(MAX_ENTITIES);
+				//}
 			}
 			
 			return;

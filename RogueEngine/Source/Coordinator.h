@@ -287,17 +287,19 @@ namespace Rogue
 		{
 			for (auto& entity : m_deleteQueue)
 			{
-				DestroyEntity(entity);
+				Entity parentEnt = GetHierarchyInfo(entity).m_parent;
+				if (parentEnt != MAX_ENTITIES)
+				{
+					HierarchyInfo& parentInfo = GetHierarchyInfo(parentEnt);
+					auto it = std::find(std::begin(parentInfo.m_children), std::end(parentInfo.m_children), entity);
+					if (it != std::end(parentInfo.m_children))
+					{
+						parentInfo.m_children.erase(it);
+					}
+				}
+				GetHierarchyInfo(entity).m_children.clear();
 
-				//auto& activeObjects = g_engine.m_coordinator.GetActiveObjects();
-				//for (auto iterator = activeObjects.begin(); iterator != activeObjects.end(); ++iterator)
-				//{
-				//	if (*iterator == entity)
-				//	{
-				//		activeObjects.erase(iterator);
-				//		break;
-				//	}
-				//}
+				DestroyEntity(entity);
 			}
 
 			m_deleteQueue.clear();
