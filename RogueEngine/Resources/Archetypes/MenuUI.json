@@ -1,0 +1,5 @@
+{
+    "Signature": 0,
+    "Entity": "Name{MenuParent}|Tag{}|",
+    "Children": "crosshair;MainMenu_Bg;HowToPlayBtn;MainMenuBtn;Resume;QuitBtn;HowToPlay"
+}
