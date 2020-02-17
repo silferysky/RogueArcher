@@ -98,7 +98,7 @@ namespace Rogue
 			switch (counter)
 			{
 			case 0:
-				setIsActive(std::stoi(s1));
+				setIsActive(std::stof(s1));
 				break;
 			case 1:
 				setAmbientFactor(std::stof(s1));

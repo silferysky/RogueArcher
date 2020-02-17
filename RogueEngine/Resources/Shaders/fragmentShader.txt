@@ -2,13 +2,21 @@
 
 out vec4 FragColor;
 in vec4 ourColor;
-in vec2 TexCoord;
+in vec2 TexCoord; 
+in vec3 FragPos;
+in vec3 Normal; 
 
 uniform sampler2D texture1;
 uniform vec4 colourFilter = vec4(1.0, 1.0, 1.0, 1.0);
+uniform vec3 lightPos; 
 uniform vec4 lightColor = vec4(1.0, 1.0, 1.0, 1.0);
+uniform vec3 objectColor;
 
 void main()
 {
-  FragColor = colourFilter * lightColor * texture(texture1, TexCoord);
+  // ambient
+  float ambientStrength = 1.0;
+  vec4 ambient = ambientStrength * lightColor;
+    
+  FragColor = colourFilter * ambient * texture(texture1, TexCoord);
 }

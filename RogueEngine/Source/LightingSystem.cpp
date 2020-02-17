@@ -15,6 +15,7 @@ namespace Rogue
 		// Add components to signature
 		Signature signature;
 		signature.set(g_engine.m_coordinator.GetComponentType<LightComponent>());
+		signature.set(g_engine.m_coordinator.GetComponentType<TransformComponent>());
 
 		// Set graphics system signature
 		g_engine.m_coordinator.SetSystemSignature<LightingSystem>(signature);
@@ -33,6 +34,8 @@ namespace Rogue
 	void LightingSystem::Update()
 	{
 		g_engine.m_coordinator.InitTimeSystem("Lighting System");
+
+		while (true);
 
 		// For all entities
 		for (auto entity : m_entities)
