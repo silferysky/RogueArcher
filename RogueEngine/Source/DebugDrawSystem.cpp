@@ -96,7 +96,7 @@ Technology is prohibited.
 				auto& collider = g_engine.m_coordinator.GetComponent<Rogue::ColliderComponent>(entity);
 
 				if (collider.GetIsCollided())
-					glUniform4fv(m_filterLocation, 1, glm::value_ptr(glm::vec4(0.0f, 1.0f, 0.0f, 1.0f)));
+					glUniform4fv(m_filterLocation, 1, glm::value_ptr(glm::vec4(0.0f, 1.0f, 1.0f, 1.0f)));
 				else
 					glUniform4fv(m_filterLocation, 1, glm::value_ptr(glm::vec4(1.0f, 0.5f, 0.2f, 1.0f)));
 
