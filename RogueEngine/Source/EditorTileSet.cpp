@@ -37,16 +37,17 @@ namespace Rogue
 			{
 				++m_tilesWidth;
 			}
-			ImGuiTileSet::instance().m_TileSet.push_back(tileset);
 			for (auto& i : ImGuiTileSet::instance().m_GlobalTileSet)
 			{
 				if (i.m_tilePos.x == m_currentTileX && i.m_tilePos.y == m_currentTileY)
 				{
-					//tileset.m_texturename = i.m_texturename;
+					tileset.m_tileTexture = i.m_tileTexture;
 					m_globalcheck = true;
 					break;
 				}
 			}
+			
+			ImGuiTileSet::instance().m_TileSet.push_back(tileset);
 			if (!m_globalcheck)
 			{
 				ImGuiTileSet::instance().m_GlobalTileSet.push_back(tileset);
