@@ -12,17 +12,13 @@ namespace Rogue
 
 	void Checkpoint::OnTriggerEnter(Entity other)
 	{
-		if (!m_saved)
+		if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(other))
 		{
-			if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(other))
-			{
-				g_engine.m_coordinator.GetComponent<FadeComponent>(m_entity).setIsActive(true);
-				g_engine.m_coordinator.GetComponent<FadeComponent>(m_entity).setIsFadingIn(false);
-
-				g_engine.m_coordinator.loadSound("Resources/Sounds/soul_pickup.ogg", 0.3f, false).Play();
-				PlayerStatusManager::instance().SetCheckpoint(g_engine.m_coordinator.GetComponent<TransformComponent>(m_entity).GetPosition());
-			}
-			m_saved = true;
+			g_engine.m_coordinator.GetComponent<FadeComponent>(m_entity).setIsActive(true);
+			g_engine.m_coordinator.GetComponent<FadeComponent>(m_entity).setIsFadingIn(false);
+			
+			g_engine.m_coordinator.loadSound("Resources/Sounds/soul_pickup.ogg", 0.3f, false).Play();
+			PlayerStatusManager::instance().SetCheckpoint(g_engine.m_coordinator.GetComponent<TransformComponent>(m_entity).GetPosition());
 		}
 	}
 }
