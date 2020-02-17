@@ -14,6 +14,46 @@ namespace Rogue
 		return m_isActive;
 	}
 
+	void LightComponent::setAmbientFactor(const float& ambientFactor)
+	{
+		m_ambientFactor = ambientFactor;
+	}
+
+	float LightComponent::getAmbientFactor() const
+	{
+		return m_ambientFactor;
+	}
+
+	void LightComponent::setDiffuseFactor(const float& diffuseFactor)
+	{
+		m_diffuseFactor = diffuseFactor;
+	}
+
+	float LightComponent::getDiffuseFactor() const
+	{
+		return m_diffuseFactor;
+	}
+
+	void LightComponent::setSpecularFactor(const float& specularFactor)
+	{
+		m_specularFactor = specularFactor;
+	}
+
+	float LightComponent::getSpecularFactor() const
+	{
+		return m_specularFactor;
+	}
+
+	void LightComponent::setAttenuation(const float& attenuation)
+	{
+		m_attenuation = attenuation;
+	}
+
+	float LightComponent::getAttenuation() const
+	{
+		return m_attenuation;
+	}
+
 	void LightComponent::DisplayOnInspector()
 	{
 		ImVec2 imageSize{ ImGui::GetWindowWidth() / 2, ImGui::GetWindowHeight() / 8 };
@@ -22,11 +62,28 @@ namespace Rogue
 
 		ImGui::Checkbox("Active?", &m_isActive);
 		setIsActive(m_isActive);
+
+		ImGui::DragFloat("Ambient Factor", &m_ambientFactor, 0.1f, 0.0f, 100.0f);
+		setAmbientFactor(m_ambientFactor);
+
+		ImGui::DragFloat("Diffuse Factor", &m_diffuseFactor, 0.1f, 0.0f, 100.0f);
+		setDiffuseFactor(m_diffuseFactor);
+
+		ImGui::DragFloat("Specular Factor", &m_specularFactor, 0.1f, 0.0f, 100.0f);
+		setSpecularFactor(m_specularFactor);
+
+		ImGui::DragFloat("Attenuation", &m_attenuation, 0.1f, 0.0f, 100.0f);
+		setAttenuation(m_attenuation);
 	}
 
 	std::string LightComponent::Serialize()
 	{
 		std::ostringstream ss;
+		ss << m_isActive << ";";
+		ss << m_ambientFactor<< ";";
+		ss << m_diffuseFactor << ";";
+		ss << m_specularFactor << ";";
+		ss << m_attenuation << ";";
 		return ss.str();
 	}
 
@@ -40,6 +97,21 @@ namespace Rogue
 		{
 			switch (counter)
 			{
+			case 0:
+				setIsActive(std::stoi(s1));
+				break;
+			case 1:
+				setAmbientFactor(std::stof(s1));
+				break;
+			case 2:
+				setDiffuseFactor(std::stof(s1));
+				break;
+			case 3:
+				setSpecularFactor(std::stof(s1));
+				break;
+			case 4:
+				setAttenuation(std::stof(s1));
+				break;
 			default:
 				break;
 			}

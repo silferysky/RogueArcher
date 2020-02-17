@@ -381,7 +381,20 @@ namespace Rogue
 								g_engine.m_coordinator.RemoveComponent<MaskingComponent>(i);
 							}
 						}
-					} 
+					}
+
+					if (g_engine.m_coordinator.ComponentExists<LightComponent>(i))
+					{
+						if (ImGui::CollapsingHeader("Light"))
+						{
+							auto& Light = g_engine.m_coordinator.GetComponent<LightComponent>(i);
+							Light.DisplayOnInspector();
+							if (ImGui::Button("Remove Component"))
+							{
+								g_engine.m_coordinator.RemoveComponent<LightComponent>(i);
+							}
+						}
+					}
 
 					ImGui::Separator();
 
@@ -449,6 +462,11 @@ namespace Rogue
 							if (ImGui::MenuItem("Masking Component", nullptr, false, !g_engine.m_coordinator.ComponentExists<MaskingComponent>(i)))
 							{
 								g_engine.m_coordinator.AddComponent(i, MaskingComponent());
+							}
+
+							if (ImGui::MenuItem("Light Component", nullptr, false, !g_engine.m_coordinator.ComponentExists<LightComponent>(i)))
+							{
+								g_engine.m_coordinator.AddComponent(i, LightComponent());
 							}
 
 							ImGui::EndMenu();
@@ -559,6 +577,14 @@ namespace Rogue
 							if (ImGui::MenuItem("Particle Emitter Component", nullptr, false, g_engine.m_coordinator.ComponentExists<ParticleEmitterComponent>(i)))
 							{
 								g_engine.m_coordinator.RemoveComponent<ParticleEmitterComponent>(i);
+							}
+							if (ImGui::MenuItem("Masking Component", nullptr, false, g_engine.m_coordinator.ComponentExists<MaskingComponent>(i)))
+							{
+								g_engine.m_coordinator.RemoveComponent<MaskingComponent>(i);
+							}
+							if (ImGui::MenuItem("Light Component", nullptr, false, g_engine.m_coordinator.ComponentExists<LightComponent>(i)))
+							{
+								g_engine.m_coordinator.RemoveComponent<LightComponent>(i);
 							}
 
 							ImGui::EndMenu();

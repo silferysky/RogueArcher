@@ -20,6 +20,18 @@ namespace Rogue
 		void setIsActive(const bool& isActive);
 		bool getIsActive() const;
 
+		void setAmbientFactor(const float& ambientFactor);
+		float getAmbientFactor() const;
+
+		void setDiffuseFactor(const float& diffuseFactor);
+		float getDiffuseFactor() const;
+
+		void setSpecularFactor(const float& specularFactor);
+		float getSpecularFactor() const;
+
+		void setAttenuation(const float& attenuation);
+		float getAttenuation() const;
+
 		void DisplayOnInspector();
 		//Serialize
 		virtual std::string Serialize() override;
