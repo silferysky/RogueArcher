@@ -19,6 +19,8 @@ namespace Rogue
 		virtual std::string Serialize() override
 		{
 			std::ostringstream oss;
+			
+			//oss << m_tileId << ";";
 			oss << m_texturename << ";";
 			oss << m_tilePos.x << "," << m_tilePos.y << ";";
 			oss << m_collision << ";";
@@ -31,6 +33,14 @@ namespace Rogue
 		{
 			std::istringstream iss(deserializeStr.data());
 			std::string str;
+
+
+			//if (std::getline(iss, str, ';'))
+			//{
+			//	if (str[0] == '0')
+			//		return;
+			//}
+
 			if (std::getline(iss, str, ';'))
 			{
 				m_texturename = str; 

@@ -23,7 +23,10 @@ namespace Rogue
 
 		while (std::getline(iss, str, '|'))
 		{
-
+			for (auto& tile : m_GlobalTileSet)
+			{
+				tile.Deserialize(str);
+			}
 		}
 	}
 
