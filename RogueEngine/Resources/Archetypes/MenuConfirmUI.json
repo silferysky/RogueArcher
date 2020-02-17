@@ -1,5 +1,5 @@
 {
-    "Signature": 0,
-    "Entity": "Name{MenuConfirm}|Tag{}|",
+    "Signature": 4,
+    "Entity": "Name{MenuParent}|Tag{}|Transform{0;0;1;1;0;0}|||||||||||||||||||",
     "Children": "YesBtn;NoBtn"
 } 
