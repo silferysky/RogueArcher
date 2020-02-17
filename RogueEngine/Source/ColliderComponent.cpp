@@ -201,6 +201,7 @@ namespace Rogue
 		size_t cat = CollisionManager::instance().GetLayerCategory(m_collisionCategory);
 		std::string name = std::string(CollisionManager::instance().GetLayerName(cat));
 	
+		ImGui::NewLine();
 		ImGui::Text("Current Layer: %s", name.c_str());
 		
 		size_t numLayers = CollisionManager::instance().GetNumberOfLayers();

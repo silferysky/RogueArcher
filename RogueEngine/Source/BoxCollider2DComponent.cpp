@@ -27,11 +27,11 @@ namespace Rogue
 	{}
 
 	BoxCollider2DComponent::BoxCollider2DComponent(const BoxCollider2DComponent& rhs) :
-		m_aabb{ rhs.m_aabb }, m_collisionMode{rhs.m_collisionMode}
+		m_aabb{ rhs.m_aabb }, m_collisionMode{ rhs.m_collisionMode }, m_isCollided{ false }
 	{}
 
 	BoxCollider2DComponent::BoxCollider2DComponent(BoxCollider2DComponent&& rhs) noexcept :
-		m_aabb{ AABB{} }, m_collisionMode{}
+		m_aabb{ AABB{} }, m_collisionMode{}, m_isCollided{ false }
 	{
 		std::swap(m_aabb, rhs.m_aabb);
 		std::swap(m_collisionMode, rhs.m_collisionMode);

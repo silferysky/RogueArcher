@@ -22,7 +22,6 @@ namespace Rogue
 		LayerManager(); // Constructor
 
 		void AddLayer(std::string_view name);
-		void AddLayer(std::string_view name, const Bits& layer);
 		void RemoveLayer(size_t layer);
 		void RemoveLayer(std::string_view name);
 		std::string_view GetName(size_t pos) const;
