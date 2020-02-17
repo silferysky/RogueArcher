@@ -105,6 +105,7 @@ namespace Rogue
 					CollisionInfo<BoxCollider2DComponent> infoA(*iEntity, currBoxCollider, currRigidbody, currTransform);
 					CollisionInfo<BoxCollider2DComponent> infoB(*iNextEntity, nextBoxCollider, nextRigidbody, nextTransform);
 
+					// Set booleans for both colliders/triggers
 					currBoxCollider.SetIsCollided(true);
 					nextBoxCollider.SetIsCollided(true);
 
@@ -120,100 +121,68 @@ namespace Rogue
 					// Generate manifolds from collided pairs
 					CollisionManager::instance().GenerateManifoldAABBvsAABB(*iEntity, *iNextEntity);
 				}
-
+				// Remove exiting pairs and send exit events
 				CollisionManager::instance().CheckExitingCollidedPairs<BoxCollider2DComponent, BoxCollider2DComponent>();
 			}
-
-
 			// Collision Impulse and Torque/Contact Resolution (Other resolutionsdone using trigger events: Other weird forces, rest, game logic)
 			CollisionManager::instance().ResolveManifolds();
-
-			//auto& collidedPairs = CollisionManager::instance().GetCollidedPairs();
-
-			//for (auto i = collidedPairs.begin(); i != collidedPairs.end(); i++)
-			//{
-			//	auto& collidedPair = *i;
-
-			//	auto& currRigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(collidedPair.first);
-			//	auto& currTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(collidedPair.first);
-			//	auto& currBoxCollider = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(collidedPair.first);
-
-			//	// Skip asleep or static colliders.
-			//	if (currBoxCollider.GetCollisionMode() == CollisionMode::e_asleep)
-			//		continue;
-
-			//	auto& nextBoxCollider = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(collidedPair.second);
-			//	auto& nextRigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(collidedPair.second);
-			//	auto& nextTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(collidedPair.second);
-
-			//	// Skip asleep or static colliders.
-			//	if (nextBoxCollider.GetCollisionMode() == CollisionMode::e_asleep)
-			//		continue;
-
-			//	if (currRigidbody.getIsStatic() && nextRigidbody.getIsStatic())
-			//		continue;
-
-			//	// Test for AABBs vs AABBs FALSE TEST
-			//	if (!CollisionManager::instance().DiscreteAABBvsAABB(currBoxCollider.m_aabb, nextBoxCollider.m_aabb))
-			//	{
-			//		// If A and/or B is/are a trigger(s), dispatch trigger exit event(s).
-			//		if (currBoxCollider.GetCollisionMode() == CollisionMode::e_trigger)
-			//		{
-			//			EntTriggerExitEvent* ev = new EntTriggerExitEvent{ *iEntity, *iNextEntity };
-			//			ev->SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
-			//			EventDispatcher::instance().AddEvent(ev);
-			//		}
-			//		if (nextBoxCollider.GetCollisionMode() == CollisionMode::e_trigger)
-			//		{
-			//			EntTriggerExitEvent* ev = new EntTriggerExitEvent{ *iNextEntity, *iEntity };
-			//			ev->SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
-			//			EventDispatcher::instance().AddEvent(ev);
-			//		}
-			//		else
-			//		{
-			//			EntCollisionExitEvent* ev =
-			//				new EntCollisionExitEvent{ *iEntity, *iNextEntity };
-			//			ev->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
-			//			EventDispatcher::instance().AddEvent(ev);
-
-			//			CollisionManager::instance().GenerateManifolds(*iEntity, *iNextEntity);
-			//		}
-
-			//		collidedPairs.erase(i);
-			//	}
-			//}
-
-			// Test OBBs vs OBBs collision
-			//if (CollisionManager::instance().DiscreteOBBvsOBB(currBoxCollider.m_obb, nextBoxCollider.m_obb))
-			//{
-			//	std::cout << "Entity " << *iEntity << " OBB collides with Entity " << *iNextEntity << " OBB" << std::endl;
-			//}
-
 		}
 	}
 
 	void BoxCollisionSystem::Receive(Event* ev)
 	{
-		/* switch (ev->GetEventType())
+#if TEST_COLLISION_EVENTS
+		if (ev->GetEventCat() & EventCatCollision)
 		{
-		case Rogue::EventType::EvOnCollisionEnter:
-		{
-			Rogue::EntCollisionEnterEvent<Rogue::BoxCollider2DComponent, Rogue::BoxCollider2DComponent>* collisionEnter
-				= dynamic_cast<Rogue::EntCollisionEnterEvent<Rogue::BoxCollider2DComponent, Rogue::BoxCollider2DComponent>*>(ev);
+			switch (ev->GetEventType())
+			{
+			case EventType::EvOnCollisionEnter:
+			{
+				auto* collisionEnter = dynamic_cast<AABBCollisionEnterEvent*>(ev);
 
-			g_engine.m_coordinator.GetComponent<ColliderComponent>(collisionEnter->GetThis().m_entity).SetIsCollided(true);
-			return;
+				collisionEnter->GetThis().m_collider.SetIsCollided(true);
+				collisionEnter->GetOther().m_collider.SetIsCollided(true);
+
+				return;
+			}
+
+			case EventType::EvOnCollisionExit:
+			{
+				auto* collisionExit = dynamic_cast<AABBCollisionExitEvent*>(ev);
+
+				collisionExit->GetThis().m_collider.SetIsCollided(false);
+				collisionExit->GetOther().m_collider.SetIsCollided(false);
+
+				return;
+			}
+			}
 		}
-
-		case Rogue::EventType::EvOnCollisionExit:
+		else if (ev->GetEventCat() & EventCatTrigger)
 		{
-			Rogue::EntCollisionExitEvent<Rogue::BoxCollider2DComponent, Rogue::BoxCollider2DComponent>* collisionExit
-				= dynamic_cast<Rogue::EntCollisionExitEvent<Rogue::BoxCollider2DComponent, Rogue::BoxCollider2DComponent>*>(ev);
+			switch (ev->GetEventType())
+			{
+			case EventType::EvOnCollisionEnter:
+			{
+				auto* collisionEnter = dynamic_cast<AABBTriggerEnterEvent*>(ev);
 
-			g_engine.m_coordinator.GetComponent<ColliderComponent>(collisionExit->GetThis().m_entity).SetIsCollided(false);
-			return;
+				collisionEnter->GetThis().m_collider.SetIsCollided(true);
+				collisionEnter->GetOther().m_collider.SetIsCollided(true);
+
+				return;
+			}
+
+			case EventType::EvOnCollisionExit:
+			{
+				auto* collisionExit = dynamic_cast<AABBTriggerExitEvent*>(ev);
+
+				collisionExit->GetThis().m_collider.SetIsCollided(false);
+				collisionExit->GetOther().m_collider.SetIsCollided(false);
+
+				return;
+			}
+			}
 		}
-		} */
+#endif
 	}
 
 	void BoxCollisionSystem::Shutdown()
