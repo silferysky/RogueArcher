@@ -42,6 +42,8 @@ namespace Rogue
 	ColliderPairSet m_circlePairs; // Stored pairs of circles
 	std::vector<Manifold> m_manifolds; // To generate and resolve after collision tests
 
+	std::vector<std::pair<Entity, Entity>> m_eraseQueue;
+
 	static const float s_correction_factor;
 	static const float s_correction_slop; // Penetration threshold
 
@@ -169,13 +171,20 @@ namespace Rogue
 					CollisionInfo<TColliderA> infoA(pair.first, colliderA, bodyA, transA);
 					CollisionInfo<TColliderB> infoB(pair.second, colliderB, bodyB, transB);
 
-					m_boxPairs.erase(pair);
+					m_eraseQueue.emplace_back(pair);
 
 					colliderA.SetIsCollided(false);
 					colliderB.SetIsCollided(false);
 					SendExitEvents(infoA, infoB);
 				}
 			}
+
+			for (std::pair<Entity, Entity> pair : m_eraseQueue)
+			{
+				m_boxPairs.erase(pair);
+			}
+
+			m_eraseQueue.clear();
 		}
 
 		template <typename TColliderA, typename TColliderB>

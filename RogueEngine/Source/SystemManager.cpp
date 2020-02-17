@@ -110,28 +110,30 @@ namespace Rogue
 
 		for (step = 0; step < g_engine.GetStepCount(); ++step)
 		{
-			// Only run physics if game is paused
+			// Only run physics if game is running
 			if (!m_gameIsPaused && m_gameIsRunning)
 			{
 				g_engine.m_coordinator.InitTimeSystem("Physics System");
 				m_systems[static_cast<int>(SystemID::id_PHYSICSSYSTEM)].second->Update();
 				g_engine.m_coordinator.EndTimeSystem("Physics System");
 			}
-
-			//g_engine.m_coordinator.InitTimeSystem("Circle Collision System");
-			//m_systems[static_cast<int>(SystemID::id_CIRCLECOLLISIONSYSTEM)].second->Update();
-			//g_engine.m_coordinator.EndTimeSystem("Circle Collision System");
+			
+			g_engine.m_coordinator.InitTimeSystem("Circle Collision System");
+			m_systems[static_cast<int>(SystemID::id_CIRCLECOLLISIONSYSTEM)].second->Update();
+			g_engine.m_coordinator.EndTimeSystem("Circle Collision System");
 
 			g_engine.m_coordinator.InitTimeSystem("Box Collision System");
 			m_systems[static_cast<int>(SystemID::id_BOXCOLLISIONSYSTEM)].second->Update();
 			g_engine.m_coordinator.EndTimeSystem("Box Collision System");
 
-			//g_engine.m_coordinator.InitTimeSystem("Collision System");
-			//m_systems[static_cast<int>(SystemID::id_COLLISIONSYSTEM)].second->Update();
-			//g_engine.m_coordinator.EndTimeSystem("Collision System");
+			g_engine.m_coordinator.InitTimeSystem("Collision System");
+			m_systems[static_cast<int>(SystemID::id_COLLISIONSYSTEM)].second->Update();
+			g_engine.m_coordinator.EndTimeSystem("Collision System");
 		}
-
-		Timer::instance().GetSystemTimes()["Physics System"] *= step;
+		
+		if (!m_gameIsPaused && m_gameIsRunning)
+			Timer::instance().GetSystemTimes()["Physics System"] *= step;
+		
 		Timer::instance().GetSystemTimes()["Circle Collision System"] *= step;
 		Timer::instance().GetSystemTimes()["Box Collision System"] *= step;
 		Timer::instance().GetSystemTimes()["Collision System"] *= step;
