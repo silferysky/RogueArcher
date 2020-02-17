@@ -19,6 +19,7 @@ Technology is prohibited.
 #include "Event.h"
 #include "Vector2D.h"
 #include "Types.h"
+#include "BoxCollider2DComponent.h"
 #include "Vector2D.h"
 #include "PhysicsDataStructures.hpp"
 
@@ -280,6 +281,13 @@ namespace Rogue
 			EntCollisionExitEvent<TColliderA, TColliderB>(colA, colB)
 		{}
 	};
+
+	using AABBCollisionEnterEvent = EntCollisionEnterEvent<BoxCollider2DComponent, BoxCollider2DComponent>;
+	using AABBCollisionStayEvent = EntCollisionStayEvent<BoxCollider2DComponent, BoxCollider2DComponent>;
+	using AABBCollisionExitEvent = EntCollisionExitEvent<BoxCollider2DComponent, BoxCollider2DComponent>;
+	using AABBTriggerEnterEvent = EntTriggerEnterEvent<BoxCollider2DComponent, BoxCollider2DComponent>;
+	using AABBTriggerStayEvent = EntTriggerStayEvent<BoxCollider2DComponent, BoxCollider2DComponent>;
+	using AABBTriggerExitEvent = EntTriggerExitEvent<BoxCollider2DComponent, BoxCollider2DComponent>;
 
 	class EntPickedEvent : public EntityEvent
 	{
