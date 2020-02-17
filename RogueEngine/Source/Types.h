@@ -19,9 +19,9 @@ Technology is prohibited.
 
 namespace Rogue
 {
-	using Entity = std::uint32_t;
+	using Entity = std::uint16_t;
 
-	const Entity MAX_ENTITIES = 65536;
+	const Entity MAX_ENTITIES =	65535;
 
 	using ComponentType = std::uint8_t;
 

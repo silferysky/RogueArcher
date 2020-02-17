@@ -70,7 +70,7 @@ namespace Rogue
 						if (!buffer)
 						{
 							return;
-						}
+						}	
 						infoObj.m_objectName = buffer;
 						memset(buffer, 0, 64);
 					}
@@ -720,6 +720,49 @@ namespace Rogue
 				++ImGuiInspector::instance().m_tileInstanceCount;
 			}
 		}
+		ImGui::SameLine();
+		if (ImGui::Button("Layer"))
+		{	
+			m_show = true;
+
+		}
+		if (m_show)
+		{
+			static char LayerBuffer[64];
+			ImGui::Text("Layer Name");
+			ImGui::InputText("##Layer", LayerBuffer, 64);
+			if (ImGui::Button("Add Layer"))
+			{
+				if (!LayerBuffer)
+				{
+					return;
+				}
+				LayerManager::instance().AddLayer(LayerBuffer);
+				memset(LayerBuffer, 0, 64);
+			}
+			if (ImGui::Button("Remove Layer"))
+			{
+				ImGui::OpenPopup("Layers");
+
+			}
+			if (ImGui::BeginPopup("Layers"))
+			{
+				for (int i = 0; i < LayerManager::instance().GetLayerSize(); ++i)
+				{
+					if (ImGui::MenuItem(LayerManager::instance().GetName(i).data()))
+					{
+						LayerManager::instance().RemoveLayer(i);
+					}
+				}
+				ImGui::EndPopup();
+			}
+			if (ImGui::Button("Close"))
+			{
+				m_show = false;
+			}
+
+		}
+
 		ImGui::End();
 	}
 	void ImGuiInspector::Shutdown()

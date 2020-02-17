@@ -26,6 +26,7 @@ namespace Rogue
 	void LayerManager::RemoveLayer(std::string_view name)
 	{
 		// TODO: Remove by finding layer
+
 	}
 
 	std::string_view LayerManager::GetName(size_t pos) const
