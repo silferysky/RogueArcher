@@ -24,8 +24,22 @@ namespace Rogue
 	class BaseComponent
 		: public ISerializable
 	{
+	protected:
+		bool m_componentIsActive;
+
 	public:
-		BaseComponent() = default;
+		BaseComponent() : m_componentIsActive(true) {};
 		virtual ~BaseComponent() = default;
+
+		bool GetComponentIsActive() const
+		{
+			return m_componentIsActive;
+		}
+
+		void SetComponentIsActive(bool isActive)
+		{
+			m_componentIsActive = isActive;
+		}
+
 	};
 }
