@@ -62,6 +62,10 @@ namespace Rogue
 		m_transformLocation = glGetUniformLocation(m_shader.GetShader(), "transform");
 		m_filterLocation = glGetUniformLocation(m_shader.GetShader(), "colourFilter");
 
+		glUniformMatrix4fv(glGetUniformLocation(m_shader.GetShader(), "light.ambient"), 1, GL_FALSE, glm::value_ptr(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f)));
+		glUniformMatrix4fv(glGetUniformLocation(m_shader.GetShader(), "light.diffuse"), 1, GL_FALSE, glm::value_ptr(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f)));
+		glUniformMatrix4fv(glGetUniformLocation(m_shader.GetShader(), "light.specular"), 1, GL_FALSE, glm::value_ptr(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f)));
+
 		GenerateQuadPrimitive(m_VBO, m_VAO, m_EBO);
 		GenerateFrameQuad(m_frameVAO, m_frameVBO);
 
