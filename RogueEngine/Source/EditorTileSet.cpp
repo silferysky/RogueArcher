@@ -44,22 +44,26 @@ namespace Rogue
 		{
 			m_TileSet.clear();
 		}
-
+		
 		const AABB& viewportArea = PickingManager::instance().GetViewPortArea();
 		m_minX = viewportArea.getMin().x;
 		m_minY = viewportArea.getMin().y;
 		m_maxX = viewportArea.getMax().x;
 		m_maxY = viewportArea.getMax().y;
 		Tile tileset;
+		m_tilesWidth = 0;
+		m_tilesHeight = 0;
+		m_check = true;
+
 		while (m_minX < m_maxX)
 		{
 			tileset.m_tileTexture.m_texture = 0;
 			tileset.m_texturename = "";
 			tileset.m_tileTexture.m_data = 0;
 			tileset.m_tileId = 0;
-			m_currentTileX = round(m_minX / m_tileSize) * m_tileSize + m_tileSize / 2;
+			m_currentTileX = round(m_minX / m_tileSize) * m_tileSize + m_tileSize;
 			tileset.m_tilePos.x = m_currentTileX;
-			m_currentTileY = round(m_maxY / m_tileSize) * m_tileSize - m_tileSize / 2;
+			m_currentTileY = round(m_maxY / m_tileSize) * m_tileSize - m_tileSize;
 			tileset.m_tilePos.y = m_currentTileY;
 			m_minX += m_tileSize;
 			if (m_check)
@@ -92,7 +96,7 @@ namespace Rogue
 				m_globalcheck = false;
 			}
 		}
-
+		
 	}
 	void ImGuiTileSet::Update()
 	{
@@ -109,6 +113,8 @@ namespace Rogue
 			}
 			else
 			{
+				//static bool disable_mouse_wheel = false;
+				//ImGuiWindowFlags window_flags = ImGuiWindowFlags_HorizontalScrollbar | (disable_mouse_wheel ? ImGuiWindowFlags_NoScrollWithMouse : 0);
 				ImGui::BeginChild("Tile");
 				ImGui::Columns(2);
 				ImGui::AlignTextToFramePadding();
@@ -116,20 +122,21 @@ namespace Rogue
 				imageSize.x = 20.0f;
 				imageSize.y = 20.0f;
 				int temp = ImGuiTileSet::instance().m_tilesWidth;
+				int width = ImGuiTileSet::instance().m_tilesWidth;
 				for (auto& i : ImGuiTileSet::instance().m_TileSet)
 				{	
-					if (m_tilesWidth > 0)
+					if (width > 0)
 					{
 						ImGui::SameLine();
 					}
 					else
 					{
 						ImGui::NewLine();
-						m_tilesWidth = temp;
+						width = temp;
 					}
-
+					--width;
 					ImGui::Image((void*)i.m_tileTexture.m_texture, ImVec2(imageSize.x, imageSize.y), ImVec2(0, 1), ImVec2(1, 0), ImVec4(1,1, 1, 1), i.m_bordercolor);
-					--m_tilesWidth;
+
 					if (ImGui::IsItemClicked(0))
 					{
 						if (m_deleteTile)
@@ -296,6 +303,7 @@ namespace Rogue
 	void ImGuiTileSet::Shutdown()
 	{
 		m_TileSet.clear();
+
 	}
 
 	Entity ImGuiTileSet::Create2DSprite(Vec2 position, Vec2 scale, std::string_view tilepath, bool iscollision)
