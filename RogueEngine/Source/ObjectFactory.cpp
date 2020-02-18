@@ -58,8 +58,7 @@ namespace Rogue
 		CameraManager::instance().SetCameraZoom(cameraZoom);
 
 		//For Tile Set
-		std::string tilesetSerialized = level["Tileset"].GetString();
-		ImGuiTileSet::instance().Deserialize(tilesetSerialized);
+		LoadTileset(fileName);
 
 		//For Entity Count
 		m_maxEntityCount = level["MaxEntityCount"].GetInt();
@@ -198,9 +197,7 @@ namespace Rogue
 		RESerialiser::WriteToFile(fileName, "CameraMaxY", &cameraMax.y);
 		RESerialiser::WriteToFile(fileName, "CameraZoom", &cameraZoom);
 
-		std::string serializedStr = ImGuiTileSet::instance().Serialize();
-		cstr = serializedStr.c_str();
-		RESerialiser::WriteToFile(fileName, "Tileset", cstr);
+		SaveTileset(fileName);
 
 		Entity entCount = 0;
 		size_t skipCount = 0; //No need to skip MenuControllerSystem's UI since they are not created as activeobjects
@@ -273,6 +270,21 @@ namespace Rogue
 		}
 
 		RE_INFO("LEVEL SAVED");
+	}
+
+	void ObjectFactory::LoadTileset(const char* fileName)
+	{
+		rapidjson::Document level = RESerialiser::DeserialiseFromFile(fileName);
+		std::string tilesetSerialized = level["Tileset"].GetString();
+		ImGuiTileSet::instance().Deserialize(tilesetSerialized);
+	}
+
+	void ObjectFactory::SaveTileset(const char* fileName)
+	{
+		const char* cstr;
+		std::string serializedStr = ImGuiTileSet::instance().Serialize();
+		cstr = serializedStr.c_str();
+		RESerialiser::WriteToFile(fileName, "Tileset", cstr);
 	}
 
 	void ObjectFactory::LoadArchetypes(const char* fileName)
