@@ -72,6 +72,7 @@ namespace Rogue
 				{
 					tileset.m_tileTexture = i.m_tileTexture;
 					tileset.m_bordercolor = i.m_bordercolor;
+					tileset.m_texturename = i.m_texturename;
 					m_globalcheck = true;
 					break;
 				}
@@ -246,10 +247,13 @@ namespace Rogue
 							//find global tile
 							if (i.m_tilePos.x == j.m_tilePos.x && i.m_tilePos.y == j.m_tilePos.y)
 							{
+								
 								//if texture has been changed
 								if (i.m_texturename != j.m_texturename)
 								{
 									j.m_texturename = i.m_texturename;
+									j.m_tileTexture = i.m_tileTexture;
+									j.m_bordercolor = i.m_bordercolor;
 									//if tile exists, delete tile
 									if (j.m_tileId > 0)
 									{
