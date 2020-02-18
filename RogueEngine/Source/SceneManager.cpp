@@ -148,12 +148,16 @@ namespace Rogue
 
 	void SceneManager::LoadTileset(const char* fileName)
 	{
-		m_objectFactory->LoadTileset(fileName);
+		std::ostringstream ostrstream;
+		ostrstream << "Resources/Levels/" << fileName;
+		m_objectFactory->LoadTileset(ostrstream.str().c_str());
 	}
 
 	void SceneManager::SaveTileset(const char* fileName)
 	{
-		m_objectFactory->SaveTileset(fileName);
+		std::ostringstream ostrstream;
+		ostrstream << "Resources/Levels/" << fileName;
+		m_objectFactory->SaveTileset(ostrstream.str().c_str());
 	}
 
 	void SceneManager::LoadArchetypes(const char* fileName)
