@@ -32,6 +32,8 @@ namespace Rogue
 
 		void LoadLevel(const char* fileName);
 		void SaveLevel(const char* fileName);
+		void LoadTileset(const char* fileName);
+		void SaveTileset(const char* fileName);
 
 		void LoadArchetypes(const char* fileName);
 		void SaveArchetypeList(const char* fileName = "Resources/Archetypes/Archetypes.json");
