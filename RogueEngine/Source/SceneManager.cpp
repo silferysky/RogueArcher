@@ -146,6 +146,16 @@ namespace Rogue
 		LoadLevel(m_currentFileName.c_str());
 	}
 
+	void SceneManager::LoadTileset(const char* fileName)
+	{
+		m_objectFactory->LoadTileset(fileName);
+	}
+
+	void SceneManager::SaveTileset(const char* fileName)
+	{
+		m_objectFactory->SaveTileset(fileName);
+	}
+
 	void SceneManager::LoadArchetypes(const char* fileName)
 	{
 		m_objectFactory->LoadArchetypes(fileName);

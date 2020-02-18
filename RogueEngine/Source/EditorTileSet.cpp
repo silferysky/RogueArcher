@@ -277,6 +277,12 @@ namespace Rogue
 									j.m_tileId = Create2DSprite(i.m_tilePos, Vec2{ 100.0f,100.0f }, i.m_texturename, i.m_collision);
 								}
 							}
+							//Terence send halp
+							//const char* cstr;
+							//std::string serializedStr = ImGuiTileSet::instance().Serialize();
+							//cstr = serializedStr.c_str();
+							//RESerialiser::WriteToFile(fileName, "Tileset", cstr);
+							
 						}
 					}
 				}
