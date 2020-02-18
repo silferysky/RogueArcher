@@ -113,10 +113,10 @@ namespace Rogue
 			}
 			else
 			{
-				//static bool disable_mouse_wheel = false;
-				//ImGuiWindowFlags window_flags = ImGuiWindowFlags_HorizontalScrollbar | (disable_mouse_wheel ? ImGuiWindowFlags_NoScrollWithMouse : 0);
+				
 				ImGui::BeginChild("Tile");
 				ImGui::Columns(2);
+				ImGui::BeginChild("##1", ImVec2(10, 0), false, ImGuiWindowFlags_HorizontalScrollbar);
 				ImGui::AlignTextToFramePadding();
 				ImVec2 imageSize;
 				imageSize.x = 20.0f;
@@ -204,6 +204,7 @@ namespace Rogue
 						}
 					}
 				}
+				ImGui::EndChild();
 				ImGui::NextColumn();
 				m_currentTexture = TextureManager::instance().loadTexture(m_currentPath.c_str());
 				ImGui::Text("Current Image");
