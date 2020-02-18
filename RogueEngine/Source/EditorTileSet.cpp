@@ -116,8 +116,10 @@ namespace Rogue
 				
 				ImGui::BeginChild("Tile");
 				ImGui::Columns(2);
-				ImGui::BeginChild("##1", ImVec2(10, 0), false, ImGuiWindowFlags_HorizontalScrollbar);
+				ImGui::BeginChild("##1", ImVec2(0, 0), false, ImGuiWindowFlags_HorizontalScrollbar);
+				ImGui::SetNextWindowContentWidth(1500);
 				ImGui::AlignTextToFramePadding();
+
 				ImVec2 imageSize;
 				imageSize.x = 20.0f;
 				imageSize.y = 20.0f;
