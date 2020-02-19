@@ -1,6 +1,7 @@
 #include "Precompiled.h"
 #include "LightingSystem.h"
 #include "Main.h"
+#include "CameraManager.h"
 
 namespace Rogue
 {
@@ -27,6 +28,9 @@ namespace Rogue
 		m_transformLocation = glGetUniformLocation(m_shader.GetShader(), "transform");
 
 		m_pCamera = g_engine.m_coordinator.GetSystem<CameraSystem>();
+		m_graphicsShader = g_engine.m_coordinator.GetSystem<GraphicsSystem>()->getShader();
+
+		m_totalLightsLocation = glGetUniformLocation(m_graphicsShader.GetShader(), "totalLights");
 
 		GenerateQuadPrimitive(m_VBO, m_VAO, m_EBO);
 	}
@@ -66,6 +70,7 @@ namespace Rogue
 		// For all entities
 		for (auto entity : m_entities)
 		{
+			//++totalLights;
 			if (!g_engine.m_coordinator.GetGameState())
 				draw(entity);
 		}
@@ -74,7 +79,40 @@ namespace Rogue
 		glBindVertexArray(0); //Reset
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
+		glUseProgram(m_graphicsShader.GetShader());
+
+		glUniform1i(m_totalLightsLocation, totalLights);
+		glUniform3fv(glGetUniformLocation(m_graphicsShader.GetShader(), "viewPos"), 1, glm::value_ptr(CameraManager::instance().GetCameraPos()));
+
+		// For all entities
+		for (auto entity : m_entities)
+		{
+			//--totalLights;
+
+			//UpdateShader(entity);
+		}
+
+		glUseProgram(0);
+
 		g_engine.m_coordinator.EndTimeSystem("Lighting System");
+	}
+
+	void LightingSystem::UpdateShader(Entity& entity)
+	{
+		auto& light = g_engine.m_coordinator.GetComponent<LightComponent>(entity);
+		auto position = g_engine.m_coordinator.GetComponent<TransformComponent>(entity).GetPosition();
+
+		std::string lightLocation = "light[" + std::to_string(totalLights) + ']';
+
+		float ambient = light.getAmbientFactor();
+		float diffuse = light.getDiffuseFactor();
+		float specular = light.getSpecularFactor();
+
+		glUniform3f(glGetUniformLocation(m_graphicsShader.GetShader(), (lightLocation + ".position").c_str()), position.x, position.y, 1.0f);
+		glUniform3f(glGetUniformLocation(m_graphicsShader.GetShader(), (lightLocation + ".specular").c_str()), specular, specular, specular);
+		glUniform3f(glGetUniformLocation(m_graphicsShader.GetShader(), (lightLocation + ".ambient").c_str()), ambient, ambient, ambient);
+		glUniform3f(glGetUniformLocation(m_graphicsShader.GetShader(), (lightLocation + ".diffuse").c_str()), diffuse, diffuse, diffuse);
+		glUniform3f(glGetUniformLocation(m_graphicsShader.GetShader(), (lightLocation + ".specular").c_str()), specular, specular, specular);
 	}
 
 	void LightingSystem::Shutdown()

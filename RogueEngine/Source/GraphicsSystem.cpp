@@ -118,9 +118,9 @@ namespace Rogue
 		glBindVertexArray(0); //Reset
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
+		g_engine.m_coordinator.GetSystem<LightingSystem>()->TrueUpdate();
 		g_engine.m_coordinator.GetSystem<FontSystem>()->TrueUpdate();
 		g_engine.m_coordinator.GetSystem<DebugDrawSystem>()->TrueUpdate();
-		g_engine.m_coordinator.GetSystem<LightingSystem>()->TrueUpdate();
 
 		g_engine.SwapBuffer();
 
@@ -169,14 +169,6 @@ namespace Rogue
 
 		// Draw the Mesh
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-	}
-
-	void GraphicsSystem::UpdateLighting(Entity& entity)
-	{
-		// FUCK
-		glUniform4fv(glGetUniformLocation(m_shader.GetShader(), "light.ambient"), 1, glm::value_ptr(glm::vec4(1.0f)));
-		glUniform4fv(glGetUniformLocation(m_shader.GetShader(), "light.diffuse"), 1, glm::value_ptr(glm::vec4(1.0f)));
-		glUniform4fv(glGetUniformLocation(m_shader.GetShader(), "light.specular"), 1, glm::value_ptr(glm::vec4(1.0f)));
 	}
 
 	void GraphicsSystem::Receive(Event* ev)
@@ -232,6 +224,11 @@ namespace Rogue
 	GLuint& GraphicsSystem::getFBO()
 	{
 		return m_FBO;
+	}
+
+	Shader& GraphicsSystem::getShader()
+	{
+		return m_shader;
 	}
 
 	bool GraphicsSystem::InitializeOpenGL()

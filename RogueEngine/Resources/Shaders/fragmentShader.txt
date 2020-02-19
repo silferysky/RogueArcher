@@ -10,9 +10,9 @@ struct Light
   float linear;
   float quadratic;
     
-  vec4 ambient;
-  vec4 diffuse;
-  vec4 specular;
+  float ambient;
+  float diffuse;
+  float specular;
 };
 
 in vec4 ourColor;
@@ -22,7 +22,7 @@ in vec3 Normal;
 
 uniform sampler2D texture1;
 uniform vec4 colourFilter = vec4(1.0, 1.0, 1.0, 1.0);
-uniform vec3 viewPos = vec3(1.0, 1.0, 1.0);
+uniform vec3 viewPos;
 
 uniform const int totalLights = 0;
 uniform Light light[totalLights];
