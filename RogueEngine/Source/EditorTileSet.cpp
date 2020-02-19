@@ -328,4 +328,77 @@ namespace Rogue
 		Sprite.setTexturePath(tilepath);
 		return newEnt;
 	}
+
+	std::string Tile::Serialize()
+	{
+		std::ostringstream oss;
+
+		//oss << m_tileId << ";";
+		oss << m_texturename << ";";
+		oss << m_tilePos.x << "," << m_tilePos.y << ";";
+		oss << m_collision << ";";
+		oss << m_bordercolor.w << "," << m_bordercolor.x << "," << m_bordercolor.y << "," << m_bordercolor.z << ";";
+
+		return oss.str();
+	}
+
+	void Tile::Deserialize(std::string_view deserializeStr)
+	{
+		std::istringstream iss(deserializeStr.data());
+		std::string str;
+
+		if (std::getline(iss, str, ';'))
+		{
+			m_texturename = str;
+			m_tileTexture = TextureManager::instance().loadTexture(str.c_str());
+		}
+
+		if (std::getline(iss, str, ','))
+		{
+			m_tilePos.x = std::stof(str);
+		}
+		if (std::getline(iss, str, ';'))
+		{
+			m_tilePos.y = std::stof(str);
+		}
+
+		if (std::getline(iss, str, ';'))
+		{
+			m_collision = std::stoi(str);
+		}
+
+		if (std::getline(iss, str, ','))
+		{
+			m_bordercolor.w = std::stof(str);
+		}
+		if (std::getline(iss, str, ','))
+		{
+			m_bordercolor.x = std::stof(str);
+		}
+		if (std::getline(iss, str, ','))
+		{
+			m_bordercolor.y = std::stof(str);
+		}
+		if (std::getline(iss, str, ';'))
+		{
+			m_bordercolor.z = std::stof(str);
+		}
+
+		//Creating a sprite
+		ImGuiTileSet::instance().Create2DSprite(m_tilePos, Vec2(100.0f, 100.0f), m_texturename, m_collision);
+
+		//Entity tileEntity = g_engine.m_coordinator.CreateEntity();
+
+		//g_engine.m_coordinator.AddComponent<SpriteComponent>(tileEntity, SpriteComponent());
+		//g_engine.m_coordinator.AddComponent<TransformComponent>(tileEntity, TransformComponent());
+		//g_engine.m_coordinator.TryGetComponent<SpriteComponent>(tileEntity)->get().setTexturePath(m_texturename);
+		//g_engine.m_coordinator.TryGetComponent<TransformComponent>(tileEntity)->get().setPosition(m_tilePos);
+
+
+		//if (m_collision)
+		//{
+		//	g_engine.m_coordinator.AddComponent<RigidbodyComponent>(tileEntity, RigidbodyComponent());
+		//	g_engine.m_coordinator.AddComponent<BoxCollider2DComponent>(tileEntity, BoxCollider2DComponent());
+		//}
+	}
 }
