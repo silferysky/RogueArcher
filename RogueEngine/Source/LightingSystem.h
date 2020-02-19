@@ -35,13 +35,19 @@ namespace Rogue
 		GLuint m_EBO;
 
 		Shader m_shader;
+		Shader m_graphicsShader;
+
 		GLint m_projLocation;
 		GLint m_viewLocation;
 		GLint m_transformLocation;
+		GLint m_totalLightsLocation;
 
 		std::shared_ptr<CameraSystem> m_pCamera;
 
+		unsigned totalLights = 0;
+
 		void draw(Entity& entity);
+		void UpdateShader(Entity& entity);
 	public:
 		LightingSystem();
 		~LightingSystem() = default;
@@ -49,6 +55,8 @@ namespace Rogue
 		void Init() override;
 		void Update() override;
 		void Shutdown() override;
+
+		void TrueUpdate();
 
 		void Receive(Event* ev);
 	};
