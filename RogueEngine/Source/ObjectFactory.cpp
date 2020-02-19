@@ -149,8 +149,8 @@ namespace Rogue
 					//g_engine.m_coordinator.CreateComponent<ChildComponent>(loadedEnt).SetParent(childInfo.m_parent);
 				}
 
-				HierarchyInfo& parentInfo = g_engine.m_coordinator.GetHierarchyInfo(childInfo.m_parent);
-				parentInfo.m_children.push_back(loadedEnt);
+				//HierarchyInfo& parentInfo = g_engine.m_coordinator.GetHierarchyInfo(childInfo.m_parent);
+				//parentInfo.m_children.push_back(loadedEnt);
 				loadedQueue.pop();
 				//debugStr << "Entity " << parentInfo.m_Entity << ":" << parentInfo.m_objectName << " has child " << loadedEnt;
 				//RE_INFO(debugStr.str());
