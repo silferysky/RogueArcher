@@ -23,6 +23,7 @@ Technology is prohibited.
 #include "EventDispatcher.h"
 #include "KeyEvent.h"
 #include "FontSystem.h"
+#include "LightingSystem.h"
 
 namespace Rogue
 {
@@ -126,6 +127,7 @@ namespace Rogue
 
 		g_engine.m_coordinator.GetSystem<FontSystem>()->TrueUpdate();
 		g_engine.m_coordinator.GetSystem<DebugDrawSystem>()->TrueUpdate();
+		g_engine.m_coordinator.GetSystem<LightingSystem>()->TrueUpdate();
 
 		g_engine.SwapBuffer();
 

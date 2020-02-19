@@ -50,6 +50,8 @@ namespace Rogue
 		void Update() override;
 		void Shutdown() override;
 
+		void TrueUpdate();
+
 		void Receive(Event* ev);
 	};
 }
