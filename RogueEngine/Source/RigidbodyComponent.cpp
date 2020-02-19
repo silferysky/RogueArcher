@@ -166,6 +166,8 @@ namespace Rogue
 
 	void RigidbodyComponent::DisplayOnInspector()
 	{
+		ImGui::Checkbox("Component Active", &m_componentIsActive);
+
 		ImGui::PushItemWidth(75);
 		ImGui::Checkbox("Static?", &m_isStatic);
 		setIsStatic(m_isStatic);

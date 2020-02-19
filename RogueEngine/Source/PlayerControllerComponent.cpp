@@ -27,6 +27,7 @@ namespace Rogue
 
 	void PlayerControllerComponent::DisplayOnInspector()
 	{
+		ImGui::Checkbox("Component Active", &m_componentIsActive);
 		ImGui::PushItemWidth(75);
 		ImGui::DragFloat("Slow-Mo Time", &m_slowTime, 0.01f, 0.0f, 1.0f);
 		SetSlowTime(m_slowTime);

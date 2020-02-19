@@ -28,6 +28,7 @@ namespace Rogue
 
 	void AudioEmitterComponent::DisplayOnInspector()
 	{
+		ImGui::Checkbox("Component Active", &m_componentIsActive);
 		float m_volume = getVolume();
 		ImGui::DragFloat("Volume", &m_volume, 0.02f, 0.0f, 10.0f);
 		setVolume(m_volume);

@@ -170,6 +170,7 @@ namespace Rogue
 
 	void BoxCollider2DComponent::DisplayOnInspector()
 	{
+		ImGui::Checkbox("Component Active", &m_componentIsActive);
 		Vec2 m_scale = m_aabb.getScaleOffSet();
 		Vec2 m_center = m_aabb.getCenterOffSet();
 

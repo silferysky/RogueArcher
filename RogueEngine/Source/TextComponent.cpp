@@ -42,6 +42,7 @@ namespace Rogue
 
 	void TextComponent::DisplayOnInspector()
 	{
+		ImGui::Checkbox("Component Active", &m_componentIsActive);
 		static char m_newwords[128];
 		ImGui::PushItemWidth(75);
 		ImGui::TextWrapped("Current Text : ");

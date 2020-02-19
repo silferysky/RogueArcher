@@ -79,6 +79,8 @@ namespace Rogue
 		static char m_newSpritePath[128];
 		static char m_priorityDraw[128];
 
+		ImGui::Checkbox("Component Active", &m_componentIsActive);
+
 		ImGui::PushItemWidth(75);
 		ImGui::TextWrapped("Current File Path");
 		ImGui::TextWrapped("%s", m_texturePath.c_str());

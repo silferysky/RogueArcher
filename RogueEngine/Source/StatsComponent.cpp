@@ -162,6 +162,7 @@ namespace Rogue
 
 	void StatsComponent::DisplayOnInspector()
 	{
+		ImGui::Checkbox("Component Active", &m_componentIsActive);
 		ImGui::PushItemWidth(75);
 		ImGui::DragInt("Health", &m_health, 1.0f, 0, 10);
 

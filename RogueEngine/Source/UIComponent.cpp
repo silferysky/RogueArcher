@@ -33,8 +33,9 @@ namespace Rogue
 
 	void UIComponent::DisplayOnInspector()
 	{
+		ImGui::Checkbox("Component Active", &m_componentIsActive);
 		ImGui::PushItemWidth(75);
-		ImGui::Checkbox("Active?", &m_isActive);
+		ImGui::Checkbox("UI Active?", &m_isActive);
 		setIsActive(m_isActive);
 	}
 

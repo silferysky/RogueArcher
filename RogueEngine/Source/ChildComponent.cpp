@@ -132,6 +132,7 @@ namespace Rogue
 
 	void ChildComponent::DisplayOnInspector()
 	{
+		ImGui::Checkbox("Component Active", &m_componentIsActive);
 		bool isDirtyCheck = false;
 
 		//If this function is updated, update EditorInspector's PositionDisplay also
