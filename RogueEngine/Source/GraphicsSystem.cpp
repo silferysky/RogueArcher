@@ -63,10 +63,6 @@ namespace Rogue
 		m_transformLocation = glGetUniformLocation(m_shader.GetShader(), "transform");
 		m_filterLocation = glGetUniformLocation(m_shader.GetShader(), "colourFilter");
 
-		glUniformMatrix4fv(glGetUniformLocation(m_shader.GetShader(), "light.ambient"), 1, GL_FALSE, glm::value_ptr(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f)));
-		glUniformMatrix4fv(glGetUniformLocation(m_shader.GetShader(), "light.diffuse"), 1, GL_FALSE, glm::value_ptr(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f)));
-		glUniformMatrix4fv(glGetUniformLocation(m_shader.GetShader(), "light.specular"), 1, GL_FALSE, glm::value_ptr(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f)));
-
 		GenerateQuadPrimitive(m_VBO, m_VAO, m_EBO);
 		GenerateFrameQuad(m_frameVAO, m_frameVBO);
 
@@ -170,6 +166,11 @@ namespace Rogue
 		glUniformMatrix4fv(m_projLocation, 1, GL_FALSE, glm::value_ptr(g_engine.GetProjMat()));
 		glUniformMatrix4fv(m_viewLocation, 1, GL_FALSE, glm::value_ptr(viewMat));
 		glUniformMatrix4fv(m_transformLocation, 1, GL_FALSE, glm::value_ptr(transformMat));
+		
+		// FUCK
+		glUniform4fv(glGetUniformLocation(m_shader.GetShader(), "light.ambient"), 1, glm::value_ptr(glm::vec4(1.0f)));
+		glUniform4fv(glGetUniformLocation(m_shader.GetShader(), "light.diffuse"), 1, glm::value_ptr(glm::vec4(1.0f)));
+		glUniform4fv(glGetUniformLocation(m_shader.GetShader(), "light.specular"), 1, glm::value_ptr(glm::vec4(1.0f)));
 
 		// rgb filtering
 		glUniform4fv(m_filterLocation, 1, glm::value_ptr(sprite.getFilter()));

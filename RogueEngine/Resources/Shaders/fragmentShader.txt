@@ -18,27 +18,26 @@ in vec3 Normal;
 uniform sampler2D texture1;
 uniform vec4 colourFilter = vec4(1.0, 1.0, 1.0, 1.0);
 uniform vec3 viewPos = vec3(1.0, 1.0, 1.0);
-uniform vec4 lightColor = vec4(1.0, 1.0, 1.0, 1.0);
 
 uniform Light light;
 
 void main()
 {
   // ambient
-  vec4 ambient = lightColor;
+  vec4 ambient = light.ambient * texture(texture1, TexCoord).rgba;
   
   // diffuse
   vec3 norm = normalize(Normal);
   vec3 lightDir = normalize(light.position - FragPos);
   float diff = max(dot(norm, lightDir), 0.0);
-  vec4 diffuse = light.diffuse * diff * lightColor;
+  vec4 diffuse = light.diffuse * diff * texture(texture1, TexCoord).rgba;
   
   // specular
   vec3 viewDir = normalize(viewPos - FragPos);
   vec3 reflectDir = reflect(-lightDir, norm);  
   float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
-  vec4 specular = spec * lightColor;  
+  vec4 specular = spec * texture(texture1, TexCoord).rgba;  
             
   vec4 result = ambient + diffuse + specular;
-  FragColor = colourFilter * result * texture(texture1, TexCoord);
+  FragColor = colourFilter * result;
 }
