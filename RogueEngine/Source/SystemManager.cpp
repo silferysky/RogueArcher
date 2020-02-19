@@ -53,26 +53,39 @@ namespace Rogue
 		if (m_gameIsPaused && m_stepOnce) // Game is paused and step button is pressed
 		{
 			// Step and return
-			StepUpdate();
+			while (m_stepCounter > 0)
+			{
+				for(int steps = 0; steps < g_engine.GetStepCount(); steps++)
+					UpdateSystem(SystemID::id_PHYSICSSYSTEM);
+
+				m_stepCounter--;
+			}
+			m_stepOnce = false;
+
 			return;
 		}
 
 		// System updates that are before fixed updates are placed here.
-		m_systems[static_cast<int>(SystemID::id_INPUTMANAGER)].second->Update();
+		UpdateSystem(SystemID::id_INPUTMANAGER);
+
+		// Fire events for input
+		EventDispatcher::instance().Update();
 
 		//Skip these systems if game is paused or not running
 		if (!m_gameIsPaused && m_gameIsRunning)
 		{
-			m_systems[static_cast<int>(SystemID::id_LOGICSYSTEM)].second->Update();
-			m_systems[static_cast<int>(SystemID::id_PARTICLESYSTEM)].second->Update();
-			m_systems[static_cast<int>(SystemID::id_PARTICLEEMITTERSYSTEM)].second->Update();
+			UpdateSystem(SystemID::id_LOGICSYSTEM);
+			UpdateSystem(SystemID::id_PARTICLESYSTEM);
+			UpdateSystem(SystemID::id_PARTICLEEMITTERSYSTEM);
+
+			// Fire events for logic/AI/scripts
+			EventDispatcher::instance().Update();
 		}
 
-		m_systems[static_cast<int>(SystemID::id_CURSORSYSTEM)].second->Update();
-		m_systems[static_cast<int>(SystemID::id_PICKINGSYSTEM)].second->Update();
-		m_systems[static_cast<int>(SystemID::id_PLAYERCONTROLLERSYSTEM)].second->Update();
-		m_systems[static_cast<int>(SystemID::id_MENUCONTROLLERSYSTEM)].second->Update();
-
+		UpdateSystem(SystemID::id_CURSORSYSTEM);
+		UpdateSystem(SystemID::id_PICKINGSYSTEM);
+		UpdateSystem(SystemID::id_PLAYERCONTROLLERSYSTEM);
+		UpdateSystem(SystemID::id_MENUCONTROLLERSYSTEM);
 
 		FixedUpdate();
 		Update();
@@ -83,26 +96,26 @@ namespace Rogue
 
 	void SystemManager::Update()
 	{
-		m_systems[static_cast<int>(SystemID::id_GRAPHICSSYSTEM)].second->Update();
-		m_systems[static_cast<int>(SystemID::id_MASKINGSYSTEM)].second->Update();
+		UpdateSystem(SystemID::id_GRAPHICSSYSTEM);
+		UpdateSystem(SystemID::id_MASKINGSYSTEM);
 
 		// Only update these systems if game is not paused and scene is running
 		if (!m_gameIsPaused && m_gameIsRunning)
 		{
-			m_systems[static_cast<int>(SystemID::id_FADESYSTEM)].second->Update();
-			m_systems[static_cast<int>(SystemID::id_ANIMATIONSYSTEM)].second->Update();
+			UpdateSystem(SystemID::id_FADESYSTEM);
+			UpdateSystem(SystemID::id_ANIMATIONSYSTEM);
 		}
 
-		m_systems[static_cast<int>(SystemID::id_FONTSYSTEM)].second->Update();
-		m_systems[static_cast<int>(SystemID::id_CAMERASYSTEM)].second->Update();
-		m_systems[static_cast<int>(SystemID::id_AUDIOSYSTEM)].second->Update();
-		m_systems[static_cast<int>(SystemID::id_UISYSTEM)].second->Update();
-		m_systems[static_cast<int>(SystemID::id_LIGHTINGSYSTEM)].second->Update();
-		m_systems[static_cast<int>(SystemID::id_PARENTCHILDSYSTEM)].second->Update();
+		UpdateSystem(SystemID::id_FONTSYSTEM);
+		UpdateSystem(SystemID::id_CAMERASYSTEM);
+		UpdateSystem(SystemID::id_AUDIOSYSTEM);
+		UpdateSystem(SystemID::id_UISYSTEM);
+		UpdateSystem(SystemID::id_LIGHTINGSYSTEM);
+		UpdateSystem(SystemID::id_PARENTCHILDSYSTEM);
 
 		// Only run editor if editor is running.
 		if (m_editorIsRunning)
-			m_systems[static_cast<int>(SystemID::id_EDITOR)].second->Update();
+			UpdateSystem(SystemID::id_EDITOR);
 	}
 
 	void SystemManager::FixedUpdate()
@@ -116,20 +129,20 @@ namespace Rogue
 			if (!m_gameIsPaused && m_gameIsRunning)
 			{
 				g_engine.m_coordinator.InitTimeSystem("Physics System");
-				m_systems[static_cast<int>(SystemID::id_PHYSICSSYSTEM)].second->Update();
+				UpdateSystem(SystemID::id_PHYSICSSYSTEM);
 				g_engine.m_coordinator.EndTimeSystem("Physics System");
 			}
 			
 			g_engine.m_coordinator.InitTimeSystem("Circle Collision System");
-			m_systems[static_cast<int>(SystemID::id_CIRCLECOLLISIONSYSTEM)].second->Update();
+			UpdateSystem(SystemID::id_CIRCLECOLLISIONSYSTEM);
 			g_engine.m_coordinator.EndTimeSystem("Circle Collision System");
 
 			g_engine.m_coordinator.InitTimeSystem("Box Collision System");
-			m_systems[static_cast<int>(SystemID::id_BOXCOLLISIONSYSTEM)].second->Update();
+			UpdateSystem(SystemID::id_BOXCOLLISIONSYSTEM);
 			g_engine.m_coordinator.EndTimeSystem("Box Collision System");
 
 			g_engine.m_coordinator.InitTimeSystem("Collision System");
-			m_systems[static_cast<int>(SystemID::id_COLLISIONSYSTEM)].second->Update();
+			UpdateSystem(SystemID::id_COLLISIONSYSTEM);
 			g_engine.m_coordinator.EndTimeSystem("Collision System");
 		}
 		
@@ -139,29 +152,8 @@ namespace Rogue
 		Timer::instance().GetSystemTimes()["Circle Collision System"] *= step;
 		Timer::instance().GetSystemTimes()["Box Collision System"] *= step;
 		Timer::instance().GetSystemTimes()["Collision System"] *= step;
-	}
 
-	void SystemManager::StepUpdate()
-	{
-		--m_stepCounter;
-
-		if (m_stepCounter <= 0)
-			m_stepOnce = false;
-
-		// System updates that are before fixed updates are placed here.
-		m_systems[static_cast<int>(SystemID::id_INPUTMANAGER)].second->Update();
-		m_systems[static_cast<int>(SystemID::id_LOGICSYSTEM)].second->Update();
-		m_systems[static_cast<int>(SystemID::id_PARTICLESYSTEM)].second->Update();
-		m_systems[static_cast<int>(SystemID::id_PARTICLEEMITTERSYSTEM)].second->Update();
-		m_systems[static_cast<int>(SystemID::id_CURSORSYSTEM)].second->Update();
-		m_systems[static_cast<int>(SystemID::id_PICKINGSYSTEM)].second->Update();
-		m_systems[static_cast<int>(SystemID::id_PLAYERCONTROLLERSYSTEM)].second->Update();
-		m_systems[static_cast<int>(SystemID::id_MENUCONTROLLERSYSTEM)].second->Update();
-
-		FixedUpdate();
-		Update();
-
-		// If placed before ^, will cause memory leak.
+		// Fire events for collisions
 		EventDispatcher::instance().Update();
 	}
 }

@@ -50,6 +50,7 @@ namespace Rogue
 
 	void BackgroundComponent::DisplayOnInspector()
 	{
+		ImGui::Checkbox("Component Active", &m_componentIsActive);
 		ImGui::DragFloat("Background Parallax", &m_parallax, 0.01f, 0.0f, 10.0f);
 		SetParallax(m_parallax);
 	}

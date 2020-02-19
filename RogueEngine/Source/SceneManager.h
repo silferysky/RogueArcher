@@ -55,6 +55,8 @@ namespace Rogue
 		void LoadLevel(const std::string& fileName);
 		void SaveLevel(const char* fileName);
 		void SaveAndLoadLevel();
+		void LoadTileset(const char* fileName);
+		void SaveTileset(const char* fileName);
 
 		void LoadArchetypes(const char* fileName);
 		void SaveArchetype(const char* fileName, Entity archetypeEntity);

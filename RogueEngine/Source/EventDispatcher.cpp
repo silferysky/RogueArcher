@@ -82,7 +82,8 @@ namespace Rogue
 
 	void EventDispatcher::AddEvent(Event* e)
 	{
-		EventQueue.push(e);
+		//instance().EventQueue.push(e);
+		instance().DispatchEvent(e);
 	}
 
 	void EventDispatcher::AddEventDelayed(Event* e)

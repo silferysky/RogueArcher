@@ -23,6 +23,7 @@ namespace Rogue
 {
 	void ParticleEmitterComponent::DisplayOnInspector()
 	{
+		ImGui::Checkbox("Component Active", &m_componentIsActive);
 		bool m_isActive = GetIsActive();
 
 		ImGui::PushItemWidth(75);

@@ -156,6 +156,8 @@ namespace Rogue
 
 	void LogicComponent::DisplayOnInspector()
 	{
+		ImGui::Checkbox("Component Active", &m_componentIsActive);
+
 		const char* aiType[] = { "Static", "Patrol", "Finder", "Trigger",  "Platform", "Transition", "Appear on Collide", "Disappear on Collide", 
 			"UI Tele Charge 1", "UI Tele Charge 2", "UI Tele Charge 3", "Death", "Checkpoint", "Soul Collectible", "Teleport Animation", 
 			"Animate on Exa", "Animate on Ela", "Activate on Exa", "Activate on Ela", "Activate on Exa Death", "Activate on Ela Death" };

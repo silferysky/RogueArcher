@@ -24,10 +24,9 @@ namespace Rogue
 
 		while (std::getline(iss, str, '|'))
 		{
-			for (auto& tile : m_GlobalTileSet)
-			{
-				tile.Deserialize(str);
-			}
+			Tile tile;
+			tile.Deserialize(str);
+			m_GlobalTileSet.push_back(tile);
 		}
 	}
 
@@ -44,22 +43,26 @@ namespace Rogue
 		{
 			m_TileSet.clear();
 		}
-
+		
 		const AABB& viewportArea = PickingManager::instance().GetViewPortArea();
 		m_minX = viewportArea.getMin().x;
 		m_minY = viewportArea.getMin().y;
 		m_maxX = viewportArea.getMax().x;
 		m_maxY = viewportArea.getMax().y;
 		Tile tileset;
+		m_tilesWidth = 0;
+		m_tilesHeight = 0;
+		m_check = true;
+
 		while (m_minX < m_maxX)
 		{
 			tileset.m_tileTexture.m_texture = 0;
 			tileset.m_texturename = "";
 			tileset.m_tileTexture.m_data = 0;
 			tileset.m_tileId = 0;
-			m_currentTileX = round(m_minX / m_tileSize) * m_tileSize + m_tileSize / 2;
+			m_currentTileX = round(m_minX / m_tileSize) * m_tileSize + m_tileSize;
 			tileset.m_tilePos.x = m_currentTileX;
-			m_currentTileY = round(m_maxY / m_tileSize) * m_tileSize - m_tileSize / 2;
+			m_currentTileY = round(m_maxY / m_tileSize) * m_tileSize - m_tileSize;
 			tileset.m_tilePos.y = m_currentTileY;
 			m_minX += m_tileSize;
 			if (m_check)
@@ -92,7 +95,7 @@ namespace Rogue
 				m_globalcheck = false;
 			}
 		}
-
+		
 	}
 	void ImGuiTileSet::Update()
 	{
@@ -109,27 +112,32 @@ namespace Rogue
 			}
 			else
 			{
+				
 				ImGui::BeginChild("Tile");
 				ImGui::Columns(2);
+				ImGui::BeginChild("##1", ImVec2(0, 0), false, ImGuiWindowFlags_HorizontalScrollbar);
+				ImGui::SetNextWindowContentWidth(1500);
 				ImGui::AlignTextToFramePadding();
+
 				ImVec2 imageSize;
 				imageSize.x = 20.0f;
 				imageSize.y = 20.0f;
 				int temp = ImGuiTileSet::instance().m_tilesWidth;
+				int width = ImGuiTileSet::instance().m_tilesWidth;
 				for (auto& i : ImGuiTileSet::instance().m_TileSet)
 				{	
-					if (m_tilesWidth > 0)
+					if (width > 0)
 					{
 						ImGui::SameLine();
 					}
 					else
 					{
 						ImGui::NewLine();
-						m_tilesWidth = temp;
+						width = temp;
 					}
-
+					--width;
 					ImGui::Image((void*)i.m_tileTexture.m_texture, ImVec2(imageSize.x, imageSize.y), ImVec2(0, 1), ImVec2(1, 0), ImVec4(1,1, 1, 1), i.m_bordercolor);
-					--m_tilesWidth;
+
 					if (ImGui::IsItemClicked(0))
 					{
 						if (m_deleteTile)
@@ -197,6 +205,7 @@ namespace Rogue
 						}
 					}
 				}
+				ImGui::EndChild();
 				ImGui::NextColumn();
 				m_currentTexture = TextureManager::instance().loadTexture(m_currentPath.c_str());
 				ImGui::Text("Current Image");
@@ -254,6 +263,7 @@ namespace Rogue
 									j.m_texturename = i.m_texturename;
 									j.m_tileTexture = i.m_tileTexture;
 									j.m_bordercolor = i.m_bordercolor;
+									//std::cout << j.m_texturename << std::endl;
 									//if tile exists, delete tile
 									if (j.m_tileId > 0)
 									{
@@ -269,6 +279,10 @@ namespace Rogue
 							}
 						}
 					}
+
+					//Terence send halp
+					std::string file = SceneManager::instance().getCurrentFileName().c_str();
+					SceneManager::instance().SaveTileset(file.c_str());
 				}
 
 				if (ImGui::Button("Delete current path"))
@@ -296,12 +310,12 @@ namespace Rogue
 	void ImGuiTileSet::Shutdown()
 	{
 		m_TileSet.clear();
+
 	}
 
 	Entity ImGuiTileSet::Create2DSprite(Vec2 position, Vec2 scale, std::string_view tilepath, bool iscollision)
 	{
 		Entity newEnt = g_engine.m_coordinator.CreateEntity();
-		g_engine.m_coordinator.AddComponent<TransformComponent>(newEnt,TransformComponent(position, scale, 0.0f));
 		if (iscollision)
 		{
 			auto& rigid = g_engine.m_coordinator.CreateComponent<RigidbodyComponent>(newEnt);
@@ -309,8 +323,90 @@ namespace Rogue
 			g_engine.m_coordinator.AddComponent<BoxCollider2DComponent>(newEnt, BoxCollider2DComponent());
 			g_engine.m_coordinator.AddComponent<ColliderComponent>(newEnt, ColliderComponent(std::make_shared<BoxShape>()));
 		}
+		auto& trans = g_engine.m_coordinator.CreateComponent<TransformComponent>(newEnt);
+		trans.setPosition(position);
+		trans.setScale(scale);
+		trans.setZ(100);
 		auto& Sprite = g_engine.m_coordinator.CreateComponent<SpriteComponent>(newEnt);
-		Sprite.setTexturePath(tilepath);
+		Sprite.setTexturePath(tilepath); 
 		return newEnt;
+	}
+
+	std::string Tile::Serialize()
+	{
+		std::ostringstream oss;
+
+		std::cout << "Serialize" <<  m_texturename << std::endl;
+		//oss << m_tileId << ";";
+		oss << m_texturename << ";";
+		oss << m_tilePos.x << "," << m_tilePos.y << ";";
+		oss << m_collision << ";";
+		oss << m_bordercolor.w << "," << m_bordercolor.x << "," << m_bordercolor.y << "," << m_bordercolor.z << ";";
+
+		return oss.str();
+	}
+
+	void Tile::Deserialize(std::string_view deserializeStr)
+	{
+		std::istringstream iss(deserializeStr.data());
+		std::string str;
+
+		if (std::getline(iss, str, ';'))
+		{
+			m_texturename = str;
+			m_tileTexture = TextureManager::instance().loadTexture(str.c_str());
+		}
+
+		if (std::getline(iss, str, ','))
+		{
+			m_tilePos.x = std::stof(str);
+		}
+		if (std::getline(iss, str, ';'))
+		{
+			m_tilePos.y = std::stof(str);
+		}
+
+		if (std::getline(iss, str, ';'))
+		{
+			m_collision = std::stoi(str);
+		}
+
+		if (std::getline(iss, str, ','))
+		{
+			m_bordercolor.w = std::stof(str);
+		}
+		if (std::getline(iss, str, ','))
+		{
+			m_bordercolor.x = std::stof(str);
+		}
+		if (std::getline(iss, str, ','))
+		{
+			m_bordercolor.y = std::stof(str);
+		}
+		if (std::getline(iss, str, ';'))
+		{
+			m_bordercolor.z = std::stof(str);
+		}
+
+		//Creating a sprite
+		if (m_texturename != "None" && m_texturename != "")
+		{
+			//std::cout << "Create: " << m_texturename << std::endl;
+			ImGuiTileSet::instance().Create2DSprite(m_tilePos, Vec2(100.0f, 100.0f), m_texturename, m_collision);
+		}
+
+		//Entity tileEntity = g_engine.m_coordinator.CreateEntity();
+
+		//g_engine.m_coordinator.AddComponent<SpriteComponent>(tileEntity, SpriteComponent());
+		//g_engine.m_coordinator.AddComponent<TransformComponent>(tileEntity, TransformComponent());
+		//g_engine.m_coordinator.TryGetComponent<SpriteComponent>(tileEntity)->get().setTexturePath(m_texturename);
+		//g_engine.m_coordinator.TryGetComponent<TransformComponent>(tileEntity)->get().setPosition(m_tilePos);
+
+
+		//if (m_collision)
+		//{
+		//	g_engine.m_coordinator.AddComponent<RigidbodyComponent>(tileEntity, RigidbodyComponent());
+		//	g_engine.m_coordinator.AddComponent<BoxCollider2DComponent>(tileEntity, BoxCollider2DComponent());
+		//}
 	}
 }

@@ -57,6 +57,7 @@ namespace Rogue
 
 	void CircleCollider2DComponent::DisplayOnInspector()
 	{
+		ImGui::Checkbox("Component Active", &m_componentIsActive);
 		float radius = m_collider.getRadius();
 		Vec2 centerOffset = m_collider.getCenterOffSet();
 

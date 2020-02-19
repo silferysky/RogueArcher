@@ -148,6 +148,7 @@ namespace Rogue
 
 	void TransformComponent::DisplayOnInspector()
 	{
+		ImGui::Checkbox("Component Active", &m_componentIsActive);
 		//If this function is updated, update EditorInspector's TransformDisplay also
 		ImGui::Text("Translate");
 		ImGui::SameLine();

@@ -25,7 +25,10 @@ namespace Rogue
 		: public ISerializable
 	{
 	public:
-		BaseComponent() = default;
+		bool m_componentIsActive;
+
+		BaseComponent() : m_componentIsActive(true) {};
 		virtual ~BaseComponent() = default;
+
 	};
 }

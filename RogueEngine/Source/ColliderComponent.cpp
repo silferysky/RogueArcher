@@ -198,6 +198,8 @@ namespace Rogue
 
 	void ColliderComponent::DisplayOnInspector()
 	{
+		ImGui::Checkbox("Component Active", &m_componentIsActive);
+
 		size_t cat = CollisionManager::instance().GetLayerCategory(m_collisionCategory);
 		std::string name = std::string(CollisionManager::instance().GetLayerName(cat));
 	

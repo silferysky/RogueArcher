@@ -52,10 +52,11 @@ namespace Rogue
 
 	void CameraComponent::DisplayOnInspector()
 	{
+		ImGui::Checkbox("Component Active", &m_componentIsActive);
 		bool m_isMain = getIsActive();
 
 		ImGui::PushItemWidth(75);
-		ImGui::Checkbox("Active?", &m_isMain);
+		ImGui::Checkbox("Camera Active?", &m_isMain);
 		ImGui::TextWrapped("There can only be 1 active non-world camera at a time, set others to non-active if you want this to be the main camera.");
 		setIsActive(m_isMain);
 
