@@ -24,8 +24,8 @@ Technology is prohibited.
 
 #define CONSOLE_SIZE 100
 
-//#define ENABLE_LOGGER
-//#define ENABLE_ASSERT
+#define ENABLE_LOGGER 1
+#define ENABLE_ASSERT 1
 
 namespace Rogue
 {
@@ -60,61 +60,43 @@ namespace Rogue
 //MACROs
 
 //Core Logger
-#ifdef ENABLE_LOGGER
+#if ENABLE_LOGGER
 	#define RE_CORE_TRACE(TFirst, ...)		Logger::instance().GetCoreFileLogger()->trace(TFirst);		Logger::AddStringToConsole(TFirst)
-#else
-	#define RE_CORE_TRACE(TFirst, ...)
-#endif
 
-#ifdef ENABLE_LOGGER
 	#define RE_CORE_INFO(TFirst, ...)		Logger::instance().GetCoreFileLogger()->info(TFirst);		Logger::AddStringToConsole(TFirst)
-#else
-	#define RE_CORE_INFO(TFirst, ...)
-#endif
 
-#ifdef ENABLE_LOGGER
 	#define RE_CORE_WARN(TFirst, ...)		Logger::instance().GetCoreFileLogger()->warn(TFirst);		Logger::AddStringToConsole(TFirst)
-#else
-	#define RE_CORE_WARN
-#endif
 
-#ifdef ENABLE_LOGGER
 	#define RE_CORE_ERROR(TFirst, ...)			Logger::instance().GetCoreFileLogger()->error(TFirst);		Logger::AddStringToConsole(TFirst)
-#else
-	#define RE_CORE_ERROR(TFirst, ...)
-#endif
 
-//#define RE_CORE_FATAL(TFirst, ...)	Logger::instance().GetCoreFileLogger()->fatal(TFirst);		Logger::AddStringToConsole(TFirst)
+	//#define RE_CORE_FATAL(TFirst, ...)	Logger::instance().GetCoreFileLogger()->fatal(TFirst);		Logger::AddStringToConsole(TFirst)
 
 //Client Logger
-#ifdef ENABLE_LOGGER
 	#define RE_TRACE(TFirst, ...)		Logger::instance().GetClientFileLogger()->trace(TFirst);	Logger::AddStringToConsole(TFirst)
-#endif
 
-#ifdef ENABLE_LOGGER	
 	#define RE_INFO(TFirst, ...)		Logger::instance().GetClientFileLogger()->info(TFirst);		Logger::AddStringToConsole(TFirst)
-#else
-	#define RE_INFO(TFirst, ...)
-#endif
 
-#ifdef ENABLE_LOGGER
 	#define RE_WARN(TFirst, ...)		Logger::instance().GetClientFileLogger()->warn(TFirst);		Logger::AddStringToConsole(TFirst)
-#else
-	#define RE_INFO(TFirst, ...)
-#endif
 
-#ifdef ENABLE_LOGGER
 	#define RE_ERROR(TFirst, ...)		Logger::instance().GetClientFileLogger()->error(TFirst);	Logger::AddStringToConsole(TFirst)
-#else
+
+	//#define RE_FATAL(TFirst, ...)			Logger::instance().GetClientFileLogger()->fatal(TFirst);	Logger::AddStringToConsole(TFirst)
+
+#else // If logger is disabled. 
+	#define RE_CORE_TRACE(TFirst, ...)
+	#define RE_CORE_INFO(TFirst, ...)
+	#define RE_CORE_WARN(TFirst, ...)
+	#define RE_CORE_ERROR(TFirst, ...)
+	#define RE_TRACE(TFirst, ...)
+	#define RE_INFO(TFirst, ...)
+	#define RE_WARN(TFirst, ...)
 	#define RE_ERROR(TFirst, ...)
 #endif
 
-//#define RE_FATAL(TFirst, ...)			Logger::instance().GetClientFileLogger()->fatal(TFirst);	Logger::AddStringToConsole(TFirst)
-
 //Assert Logging
-//Uncommented version does not provide a readable message, but commented version will run in both modes
-#ifdef ENABLE_ASSERT
-	#define RE_ASSERT(args, msg)	Logger::instance().AssertArgs(args, msg);//if(args == false) { RE_CORE_ERROR(msg);	assert(args && msg); }
+//Uncommented version does not provide a readable message, but commented version (if statement) will run in both modes
+#if ENABLE_ASSERT
+	#define RE_ASSERT(args, msg)	Logger::instance().AssertArgs(args, msg); if(args == 0) { RE_CORE_ERROR(msg);	assert(args && msg); }
 #else
 	#define RE_ASSERT(args, msg)
 #endif

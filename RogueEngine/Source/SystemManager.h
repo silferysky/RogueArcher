@@ -249,6 +249,6 @@ namespace Rogue
 		void FixedUpdate();
 		void Update();
 
-		void StepUpdate();
+		void UpdateSystem(SystemID id) { m_systems[static_cast<int>(id)].second->Update(); }
 	};
 }

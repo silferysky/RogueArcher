@@ -122,7 +122,7 @@ namespace Rogue
 					CollisionManager::instance().GenerateManifoldAABBvsAABB(*iEntity, *iNextEntity);
 				}
 				// Remove exiting pairs and send exit events
-				CollisionManager::instance().CheckExitingCollidedPairs<BoxCollider2DComponent, BoxCollider2DComponent>();
+				CollisionManager::instance().CheckExitingCollidedPairs<BoxCollider2DComponent, BoxCollider2DComponent>(m_entities);
 			}
 			// Collision Impulse and Torque/Contact Resolution (Other resolutionsdone using trigger events: Other weird forces, rest, game logic)
 			CollisionManager::instance().ResolveManifolds();

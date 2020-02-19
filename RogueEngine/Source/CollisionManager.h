@@ -153,10 +153,17 @@ namespace Rogue
 		}
 
 		template <typename TColliderA, typename TColliderB>
-		void CheckExitingCollidedPairs()
+		void CheckExitingCollidedPairs(const std::set<Entity>& entities)
 		{
 			for(auto& pair : m_boxPairs) // TODO: Templatize pair set as well
 			{
+				// If either entities don't exist in the set anymore, remove.
+				if (entities.find(pair.first) == entities.end() || entities.find(pair.second) == entities.end())
+				{
+					m_eraseQueue.emplace_back(pair);
+					continue;
+				}
+
 				TColliderA& colliderA = g_engine.m_coordinator.GetComponent<TColliderA>(pair.first);
 				TColliderB& colliderB = g_engine.m_coordinator.GetComponent<TColliderB>(pair.second);
 
