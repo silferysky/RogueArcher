@@ -24,10 +24,9 @@ namespace Rogue
 
 		while (std::getline(iss, str, '|'))
 		{
-			for (auto& tile : m_GlobalTileSet)
-			{
-				tile.Deserialize(str);
-			}
+			Tile tile;
+			tile.Deserialize(str);
+			m_GlobalTileSet.push_back(tile);
 		}
 	}
 
@@ -264,6 +263,7 @@ namespace Rogue
 									j.m_texturename = i.m_texturename;
 									j.m_tileTexture = i.m_tileTexture;
 									j.m_bordercolor = i.m_bordercolor;
+									//std::cout << j.m_texturename << std::endl;
 									//if tile exists, delete tile
 									if (j.m_tileId > 0)
 									{
@@ -316,7 +316,6 @@ namespace Rogue
 	Entity ImGuiTileSet::Create2DSprite(Vec2 position, Vec2 scale, std::string_view tilepath, bool iscollision)
 	{
 		Entity newEnt = g_engine.m_coordinator.CreateEntity();
-		g_engine.m_coordinator.AddComponent<TransformComponent>(newEnt,TransformComponent(position, scale, 0.0f));
 		if (iscollision)
 		{
 			auto& rigid = g_engine.m_coordinator.CreateComponent<RigidbodyComponent>(newEnt);
@@ -324,8 +323,12 @@ namespace Rogue
 			g_engine.m_coordinator.AddComponent<BoxCollider2DComponent>(newEnt, BoxCollider2DComponent());
 			g_engine.m_coordinator.AddComponent<ColliderComponent>(newEnt, ColliderComponent(std::make_shared<BoxShape>()));
 		}
+		auto& trans = g_engine.m_coordinator.CreateComponent<TransformComponent>(newEnt);
+		trans.setPosition(position);
+		trans.setScale(scale);
+		trans.setZ(100);
 		auto& Sprite = g_engine.m_coordinator.CreateComponent<SpriteComponent>(newEnt);
-		Sprite.setTexturePath(tilepath);
+		Sprite.setTexturePath(tilepath); 
 		return newEnt;
 	}
 
@@ -333,6 +336,7 @@ namespace Rogue
 	{
 		std::ostringstream oss;
 
+		std::cout << "Serialize" <<  m_texturename << std::endl;
 		//oss << m_tileId << ";";
 		oss << m_texturename << ";";
 		oss << m_tilePos.x << "," << m_tilePos.y << ";";
@@ -385,7 +389,11 @@ namespace Rogue
 		}
 
 		//Creating a sprite
-		ImGuiTileSet::instance().Create2DSprite(m_tilePos, Vec2(100.0f, 100.0f), m_texturename, m_collision);
+		if (m_texturename != "None" && m_texturename != "")
+		{
+			//std::cout << "Create: " << m_texturename << std::endl;
+			ImGuiTileSet::instance().Create2DSprite(m_tilePos, Vec2(100.0f, 100.0f), m_texturename, m_collision);
+		}
 
 		//Entity tileEntity = g_engine.m_coordinator.CreateEntity();
 

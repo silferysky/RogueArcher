@@ -175,9 +175,6 @@ namespace Rogue
 		//	//RE_INFO("HI");
 		//}
 
-		//Load Tileset
-		ImGuiTileSet::instance().Deserialize(fileName);
-
 
 		RE_INFO("LEVEL LOADED");
 		debugStr << entCount << " ENTITIES LOADED";
