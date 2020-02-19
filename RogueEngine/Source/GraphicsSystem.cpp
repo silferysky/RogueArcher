@@ -111,10 +111,7 @@ namespace Rogue
 		{
 			auto& entity = pair.second;
 
-			//if (g_engine.m_coordinator.ComponentExists<UIComponent>(entity))
-				//drawUI(entity);
-			//else
-				draw(entity);
+			draw(entity);
 		}
 
 		glUseProgram(0);
@@ -167,11 +164,6 @@ namespace Rogue
 		glUniformMatrix4fv(m_viewLocation, 1, GL_FALSE, glm::value_ptr(viewMat));
 		glUniformMatrix4fv(m_transformLocation, 1, GL_FALSE, glm::value_ptr(transformMat));
 		
-		// FUCK
-		glUniform4fv(glGetUniformLocation(m_shader.GetShader(), "light.ambient"), 1, glm::value_ptr(glm::vec4(1.0f)));
-		glUniform4fv(glGetUniformLocation(m_shader.GetShader(), "light.diffuse"), 1, glm::value_ptr(glm::vec4(1.0f)));
-		glUniform4fv(glGetUniformLocation(m_shader.GetShader(), "light.specular"), 1, glm::value_ptr(glm::vec4(1.0f)));
-
 		// rgb filtering
 		glUniform4fv(m_filterLocation, 1, glm::value_ptr(sprite.getFilter()));
 
@@ -179,34 +171,12 @@ namespace Rogue
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	}
 
-	void GraphicsSystem::drawUI(Entity& entity)
+	void GraphicsSystem::UpdateLighting(Entity& entity)
 	{
-		// don't draw inactive UI
-		if (!g_engine.m_coordinator.GetComponent<UIComponent>(entity).getIsActive())
-			return;
-
-		auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(entity);
-		auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
-
-		auto transformMat = glm::mat4(1.0f);
-		auto texture = sprite.getTexture();
-
-		transformMat = glm::translate(transformMat, { transform.GetPosition().x, transform.GetPosition().y, 1.0f });
-		transformMat = glm::rotate(transformMat, transform.GetRotation(), glm::vec3(0.0f, 0.0f, 1.0f));
-		transformMat = glm::scale(transformMat, glm::vec3(transform.GetScale().x, transform.GetScale().y, 1.0f));
-
-		glBindTexture(GL_TEXTURE_2D, texture.m_texture);
-		UpdateTextureCoords(sprite.getTexCoordMin(), sprite.getTexCoordMax());
-
-		// model to world, world to view, view to projection
-		glUniformMatrix4fv(m_projLocation, 1, GL_FALSE, glm::value_ptr(g_engine.GetProjMat()));
-		glUniformMatrix4fv(m_viewLocation, 1, GL_FALSE, glm::value_ptr(glm::mat4(1.0f)));
-		glUniformMatrix4fv(m_transformLocation, 1, GL_FALSE, glm::value_ptr(transformMat));
-
-		glUniform4fv(m_filterLocation, 1, glm::value_ptr(sprite.getFilter()));
-
-		// Draw the Mesh
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		// FUCK
+		glUniform4fv(glGetUniformLocation(m_shader.GetShader(), "light.ambient"), 1, glm::value_ptr(glm::vec4(1.0f)));
+		glUniform4fv(glGetUniformLocation(m_shader.GetShader(), "light.diffuse"), 1, glm::value_ptr(glm::vec4(1.0f)));
+		glUniform4fv(glGetUniformLocation(m_shader.GetShader(), "light.specular"), 1, glm::value_ptr(glm::vec4(1.0f)));
 	}
 
 	void GraphicsSystem::Receive(Event* ev)

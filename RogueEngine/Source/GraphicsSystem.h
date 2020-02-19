@@ -63,7 +63,7 @@ namespace Rogue
 		void Shutdown() override;
 
 		void draw(Entity& entity);
-		void drawUI(Entity& entity);
+		void UpdateLighting(Entity& entity);
 
 		void Receive(Event* ev);
 
