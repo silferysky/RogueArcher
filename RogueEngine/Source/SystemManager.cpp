@@ -16,6 +16,7 @@
 #include "MenuControllerSystem.h"
 #include "AnimationSystem.h"
 #include "CameraSystem.h"
+#include "LightingSystem.h"
 #include "AudioSystem.h"
 #include "CursorSystem.h"
 #include "PickingSystem.h"
@@ -96,6 +97,7 @@ namespace Rogue
 		m_systems[static_cast<int>(SystemID::id_CAMERASYSTEM)].second->Update();
 		m_systems[static_cast<int>(SystemID::id_AUDIOSYSTEM)].second->Update();
 		m_systems[static_cast<int>(SystemID::id_UISYSTEM)].second->Update();
+		m_systems[static_cast<int>(SystemID::id_LIGHTINGSYSTEM)].second->Update();
 		m_systems[static_cast<int>(SystemID::id_PARENTCHILDSYSTEM)].second->Update();
 
 		// Only run editor if editor is running.

@@ -35,14 +35,13 @@ namespace Rogue
 	{
 		g_engine.m_coordinator.InitTimeSystem("Lighting System");
 
-		while (true);
-
+#if LIGHTING_SYSTEM_IS_READY_BOIS
 		// For all entities
 		for (auto entity : m_entities)
 		{
 			draw(entity);
 		}
-
+#endif
 		g_engine.m_coordinator.EndTimeSystem("Lighting System");
 	}
 

@@ -55,4 +55,6 @@ namespace Rogue
 
 		id_LASTSYS
 	};
+
+	// Also remember to add your system manually into Update() or FixedUpdate() in SystemManager::UpdateSystems()
 }
