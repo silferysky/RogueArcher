@@ -22,9 +22,9 @@
     "Entity4": "Name{MM_BGCOLOR}|Tag{}|Sprite{Resources\\Assets\\MainMenu_Sprite.png;1;1;1;1;}||Transform{0;0;2000;1200;0;1000}|||||||||UI{1;}|||||||||||",
     "Entity5": "Name{Button_SFX}|Tag{}|||Transform{0;0;100;100;0;0}||||||||Audio{Resources\\Sounds\\button.ogg;1;0.5;0;0;}||||||||||||",
     "EntityParent0": 65535,
-    "EntityParent1": 0,
-    "EntityParent2": 0,
-    "EntityParent3": 0,
-    "EntityParent4": 0,
-    "EntityParent5": 0
+    "EntityParent1": 65535,
+    "EntityParent2": 65535,
+    "EntityParent3": 65535,
+    "EntityParent4": 65535,
+    "EntityParent5": 65535
 }
