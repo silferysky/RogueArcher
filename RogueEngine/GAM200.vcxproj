@@ -38,6 +38,7 @@
     <ClInclude Include="Source\ChildComponent.h" />
     <ClInclude Include="Source\CircleCollisionSystem.h" />
     <ClInclude Include="Source\ColliderComponent.h" />
+    <ClInclude Include="Source\ForegroundComponent.h" />
     <ClInclude Include="Source\IntegerPairHasher.h" />
     <ClInclude Include="Source\ComponentIndex.h" />
     <ClInclude Include="Source\DeathBox.h" />
@@ -201,6 +202,7 @@
     <ClCompile Include="Source\ChildComponent.cpp" />
     <ClCompile Include="Source\CircleCollisionSystem.cpp" />
     <ClCompile Include="Source\ColliderComponent.cpp" />
+    <ClCompile Include="Source\ForegroundComponent.cpp" />
     <ClCompile Include="Source\IntegerPairHasher.cpp" />
     <ClCompile Include="Source\ComponentIndex.cpp" />
     <ClCompile Include="Source\ComponentManager.cpp" />

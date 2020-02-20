@@ -104,9 +104,6 @@
     <Filter Include="RogueEngine\Systems\UI">
       <UniqueIdentifier>{0b09499a-b5ad-41dc-946a-16db0a0a9183}</UniqueIdentifier>
     </Filter>
-    <Filter Include="RogueEngine\Systems\Background">
-      <UniqueIdentifier>{35b776bc-69be-4171-bdd6-d15d73e24b2a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="RogueEngine\Systems\Particle System">
       <UniqueIdentifier>{368b5bf4-6c90-4902-9e57-4634c120da48}</UniqueIdentifier>
     </Filter>
@@ -151,6 +148,12 @@
     </Filter>
     <Filter Include="RogueEngine\Systems\Graphics\Debug Draw">
       <UniqueIdentifier>{72496074-30f5-465a-abd5-300a936ce5a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RogueEngine\Systems\Camera\Background">
+      <UniqueIdentifier>{35b776bc-69be-4171-bdd6-d15d73e24b2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RogueEngine\Systems\Graphics\Foreground">
+      <UniqueIdentifier>{08b5b499-0003-4f77-8409-07cc78391bd7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -485,7 +488,7 @@
       <Filter>RogueEngine\Systems\UI</Filter>
     </ClInclude>
     <ClInclude Include="Source\BackgroundComponent.h">
-      <Filter>RogueEngine\Systems\Background</Filter>
+      <Filter>RogueEngine\Systems\Camera\Background</Filter>
     </ClInclude>
     <ClInclude Include="Source\EditorProfiler.h">
       <Filter>RogueEditor\EditorFiles</Filter>
@@ -660,6 +663,9 @@
     </ClInclude>
     <ClInclude Include="Source\EditorTileSet.h">
       <Filter>RogueEditor\EditorFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ForegroundComponent.h">
+      <Filter>RogueEngine\Systems\Graphics\Foreground</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -895,7 +901,7 @@
       <Filter>RogueEngine\Systems\UI</Filter>
     </ClCompile>
     <ClCompile Include="Source\BackgroundComponent.cpp">
-      <Filter>RogueEngine\Systems\Background</Filter>
+      <Filter>RogueEngine\Systems\Camera\Background</Filter>
     </ClCompile>
     <ClCompile Include="Source\EditorProfiler.cpp">
       <Filter>RogueEditor\EditorFiles</Filter>
@@ -1058,6 +1064,9 @@
     </ClCompile>
     <ClCompile Include="Source\IntegerPairHasher.cpp">
       <Filter>RogueEngine\Systems\Collision\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ForegroundComponent.cpp">
+      <Filter>RogueEngine\Systems\Graphics\Foreground</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
