@@ -67,8 +67,8 @@ namespace Rogue
 			if (forceInfo.m_isActive == false)
 				continue;
 
-			RigidbodyComponent& body = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(forceInfo.m_entity);
-			body.addForce(forceInfo.m_force);
+			if(auto bodyOption = g_engine.m_coordinator.TryGetComponent<RigidbodyComponent>(forceInfo.m_entity))
+				bodyOption->get().addForce(forceInfo.m_force);
 		}
 	}
 
