@@ -26,32 +26,42 @@ Technology is prohibited.
 
 namespace Rogue
 {
+	EventDispatcher::~EventDispatcher()
+	{
+		while (GetQueueHead() != nullptr)
+		{
+			Event* ev = GetQueueHead();
+			EventQueue.pop();
+			delete ev;
+		}
+	}
+
 	void EventDispatcher::Init()
 	{
 		EventQueue = std::queue<Event*>();
-		DelayedEventQueue = std::queue<Event*>();
+		//DelayedEventQueue = std::queue<Event*>();
 		ListenerMap = std::map<SystemID, LISTENER_HANDLER>();
 	}
 
 	Event* EventDispatcher::GetQueueHead() { return EventQueue.front(); }
 
-	Event* EventDispatcher::GetQueueHeadDelayed() { return DelayedEventQueue.front(); }
+	//Event* EventDispatcher::GetQueueHeadDelayed() { return DelayedEventQueue.front(); }
 
-	void EventDispatcher::CombineQueue()
-	{
-		while (!DelayedEventQueue.empty())
-		{
-			EventQueue.push(DelayedEventQueue.front());
-			DelayedEventQueue.pop();
-		}
-	}
+	//void EventDispatcher::CombineQueue()
+	//{
+	//	while (!DelayedEventQueue.empty())
+	//	{
+	//		EventQueue.push(DelayedEventQueue.front());
+	//		DelayedEventQueue.pop();
+	//	}
+	//}
 
-	void EventDispatcher::CombineQueueCmd(Event& e)
-	{
-		if (e.GetEventType() == DelayedEventQueue.front()->GetEventType() &&
-			e.GetEventName() == DelayedEventQueue.front()->GetEventName())
-			isCombiningQueue = true;
-	}
+	//void EventDispatcher::CombineQueueCmd(Event& e)
+	//{
+	//	if (e.GetEventType() == DelayedEventQueue.front()->GetEventType() &&
+	//		e.GetEventName() == DelayedEventQueue.front()->GetEventName())
+	//		isCombiningQueue = true;
+	//}
 
 	void EventDispatcher::AddListener(SystemID ID, LISTENER_HANDLER handler)
 	{
@@ -86,28 +96,28 @@ namespace Rogue
 		instance().DispatchEvent(e);
 	}
 
-	void EventDispatcher::AddEventDelayed(Event* e)
-	{
-		DelayedEventQueue.push(e);
-	}
+	//void EventDispatcher::AddEventDelayed(Event* e)
+	//{
+	//	DelayedEventQueue.push(e);
+	//}
 
 	void EventDispatcher::ResetEvents()
 	{
 		while (instance().EventQueue.size())
 			instance().EventQueue.pop();
 
-		while (instance().DelayedEventQueue.size())
-			instance().DelayedEventQueue.pop();
+		//while (instance().DelayedEventQueue.size())
+		//	instance().DelayedEventQueue.pop();
 	}
 
 	void EventDispatcher::Update()
 	{
 		g_engine.m_coordinator.InitTimeSystem("Event Dispatcher");
-		if (isCombiningQueue)
-		{
-			instance().CombineQueue();
-			instance().isCombiningQueue = false;
-		}
+		//if (isCombiningQueue)
+		//{
+		//	instance().CombineQueue();
+		//	instance().isCombiningQueue = false;
+		//}
 
 		//While queue is not empty, handle all events
 		while (!instance().EventQueue.empty())
