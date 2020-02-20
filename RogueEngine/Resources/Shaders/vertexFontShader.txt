@@ -2,8 +2,11 @@
 layout (location = 0) in vec4 vertex; // <vec2 pos, vec2 tex>
 out vec2 TexCoords;
 
-uniform mat4 projection;
-uniform mat4 view;
+layout (std140) uniform Matrices
+{                            // base alignment  // aligned offset
+  uniform mat4 projection;   // 16                 0
+  uniform mat4 view;         // 16                 16
+};
 
 void main()
 {

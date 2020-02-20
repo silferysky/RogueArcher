@@ -27,8 +27,11 @@ Technology is prohibited.
 		GLuint m_EBO;
 
 		Rogue::Shader m_shader;
-		GLint m_viewLocation;
-		GLint m_projLocation;
+
+		// Uniform Buffer Object
+		GLint m_uniformBlockIndex;
+		GLuint m_uboMatrices;
+
 		GLint m_filterLocation;
 
 		std::shared_ptr<Rogue::CameraSystem> m_pCamera;

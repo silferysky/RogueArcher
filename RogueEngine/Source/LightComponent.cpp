@@ -24,14 +24,14 @@ namespace Rogue
 		return m_ambientFactor;
 	}
 
-	void LightComponent::setDiffuseFactor(const float& diffuseFactor)
+	void LightComponent::setRadius(const float& radius)
 	{
-		m_diffuseFactor = diffuseFactor;
+		m_radius = radius;
 	}
 
-	float LightComponent::getDiffuseFactor() const
+	float LightComponent::getRadius() const
 	{
-		return m_diffuseFactor;
+		return m_radius;
 	}
 
 	void LightComponent::setSpecularFactor(const float& specularFactor)
@@ -44,14 +44,14 @@ namespace Rogue
 		return m_specularFactor;
 	}
 
-	void LightComponent::setAttenuation(const float& attenuation)
+	glm::vec4& LightComponent::getTint()
 	{
-		m_attenuation = attenuation;
+		return m_tint;
 	}
 
-	float LightComponent::getAttenuation() const
+	void LightComponent::setTint(const glm::vec4& tint)
 	{
-		return m_attenuation;
+		m_tint = tint;
 	}
 
 	void LightComponent::DisplayOnInspector()
@@ -67,14 +67,14 @@ namespace Rogue
 		ImGui::DragFloat("Ambient Factor", &m_ambientFactor, 0.1f, 0.0f, 100.0f);
 		setAmbientFactor(m_ambientFactor);
 
-		ImGui::DragFloat("Diffuse Factor", &m_diffuseFactor, 0.1f, 0.0f, 100.0f);
-		setDiffuseFactor(m_diffuseFactor);
-
 		ImGui::DragFloat("Specular Factor", &m_specularFactor, 0.1f, 0.0f, 100.0f);
 		setSpecularFactor(m_specularFactor);
 
-		ImGui::DragFloat("Attenuation", &m_attenuation, 0.1f, 0.0f, 100.0f);
-		setAttenuation(m_attenuation);
+		ImGui::DragFloat("Radius", &m_radius, 10.0f, 0.0f, 10000.0f);
+		setRadius(m_radius);
+
+		ImGui::PushItemWidth(250);
+		ImGui::ColorEdit4("Tint", (float*)&m_tint);
 	}
 
 	std::string LightComponent::Serialize()
@@ -82,9 +82,9 @@ namespace Rogue
 		std::ostringstream ss;
 		ss << m_isActive << ";";
 		ss << m_ambientFactor<< ";";
-		ss << m_diffuseFactor << ";";
+		ss << m_radius << ";";
 		ss << m_specularFactor << ";";
-		ss << m_attenuation << ";";
+		ss << m_tint.r << ";" << m_tint.g << ";" << m_tint.b << ";" << m_tint.a << ";";
 		return ss.str();
 	}
 
@@ -105,13 +105,23 @@ namespace Rogue
 				setAmbientFactor(std::stof(s1));
 				break;
 			case 2:
-				setDiffuseFactor(std::stof(s1));
+				setRadius(std::stof(s1));
 				break;
 			case 3:
 				setSpecularFactor(std::stof(s1));
 				break;
 			case 4:
-				setAttenuation(std::stof(s1));
+				if (std::getline(ss, s1, ';'))
+					m_tint.r = std::stof(s1);
+
+				if (std::getline(ss, s1, ';'))
+					m_tint.g = std::stof(s1);
+
+				if (std::getline(ss, s1, ';'))
+					m_tint.b = std::stof(s1);
+
+				if (std::getline(ss, s1, ';'))
+					m_tint.a = std::stof(s1);
 				break;
 			default:
 				break;
