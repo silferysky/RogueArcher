@@ -268,6 +268,7 @@ namespace Rogue
 			std::cout << "GLEW broke" << std::endl;
 			return false;
 		}
+		glGetError();
 
 		return true;
 	}

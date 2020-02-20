@@ -1,6 +1,6 @@
 {
     "MaxEntityCount": 8,
-    "EntityCount": 8,
+    "EntityCount": 6,
     "CameraMinX": 0.0,
     "CameraMinY": 0.0,
     "CameraMaxX": 0.0,
@@ -23,8 +23,8 @@
     "Entity3": "Name{HowToPlay}|Tag{}|Sprite{Resources\\Assets\\How to play.png;1;1;1;1;}||Transform{-570.72;-232.615;300;60;0;0}|||||||||UI{1;}|||||||||||",
     "Entity4": "Name{QuitBtn}|Tag{}|Sprite{Resources\\Assets\\Quit.png;1;1;1;1;}||Transform{-658.621;-300.965;160;80;0;0}|||||||||UI{1;}|||||||||||",
     "Entity5": "Name{BGM_SFX}|Tag{}|||Transform{0;0;100;100;0;0}||||||||Audio{Resources\\Sounds\\[BGM]ANCIENT RUINS - NewAge MSCNEW2_33.ogg;1;0.8;1;0;}||||||||||||",
-    "Entity6": "Name{Game Object 6}|Tag{}|||Transform{0;0;100;100;0;0}||||||||||||||||||LIGHT{1;1;1;1;1;}||",
-    "Entity7": "Name{Game Object 7}|Tag{}|||Transform{0;0;100;100;0;0}||||||||||||||||||LIGHT{1;1;1;1;1;}||",
+    "Entity6": "Name{Game Object 6}|Tag{}|||Transform{0;0;100;100;0;0}||||||||||||||||||LIGHT{1;1;1;1;0.848039;0.153811;0.153811;1;}||",
+    "Entity7": "Name{Game Object 7}|Tag{}|||Transform{0;0;100;100;0;0}||||||||||||||||||LIGHT{1;1;1;1;1;1;1;1;}||",
     "EntityParent0": 65535,
     "EntityParent1": 0,
     "EntityParent2": 0,

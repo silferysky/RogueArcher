@@ -72,6 +72,7 @@ namespace Rogue
 		// For all entities
 		for (auto entity : m_entities)
 		{
+			++totalLights;
 			if (!g_engine.m_coordinator.GetGameState())
 				draw(entity);
 		}
@@ -82,7 +83,7 @@ namespace Rogue
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 		glUseProgram(m_graphicsShader.GetShader());
-		glUniform3fv(glGetUniformLocation(m_graphicsShader.GetShader(), "viewPos"), 1, glm::value_ptr(CameraManager::instance().GetCameraPos()));
+		glUniform1i(glGetUniformLocation(m_graphicsShader.GetShader(), "TOTAL_LIGHTS"), totalLights);
 
 		// For all entities
 		for (auto entity : m_entities)
@@ -91,33 +92,30 @@ namespace Rogue
 		}
 
 		glUseProgram(0);
-		totalLights = 0;
 
 		g_engine.m_coordinator.EndTimeSystem("Lighting System");
 	}
 
 	void LightingSystem::UpdateShader(Entity& entity)
 	{
+		--totalLights;
+
 		auto& light = g_engine.m_coordinator.GetComponent<LightComponent>(entity);
 		auto position = g_engine.m_coordinator.GetComponent<TransformComponent>(entity).GetPosition();
 
 		std::string lightLocation = "light[" + std::to_string(totalLights) + ']';
 
 		float ambient = light.getAmbientFactor();
-		float diffuse = light.getDiffuseFactor();
 		float specular = light.getSpecularFactor();
-		float attenuation = light.getAttenuation();
+		float radius = light.getRadius();
+		glm::vec4 tint = light.getTint();
 
 		glUniform3f(glGetUniformLocation(m_graphicsShader.GetShader(), (lightLocation + ".position").c_str()), position.x, position.y, 1.0f);
 		glUniform1f(glGetUniformLocation(m_graphicsShader.GetShader(), (lightLocation + ".ambient").c_str()), ambient);
-		glUniform1f(glGetUniformLocation(m_graphicsShader.GetShader(), (lightLocation + ".diffuse").c_str()), diffuse);
 		glUniform1f(glGetUniformLocation(m_graphicsShader.GetShader(), (lightLocation + ".specular").c_str()), specular);
+		glUniform1f(glGetUniformLocation(m_graphicsShader.GetShader(), (lightLocation + ".radius").c_str()), radius);
 
-		glUniform1f(glGetUniformLocation(m_graphicsShader.GetShader(), (lightLocation + ".constant").c_str()), attenuation);
-		glUniform1f(glGetUniformLocation(m_graphicsShader.GetShader(), (lightLocation + ".linear").c_str()), attenuation);
-		glUniform1f(glGetUniformLocation(m_graphicsShader.GetShader(), (lightLocation + ".quadratic").c_str()), attenuation);
-
-		++totalLights;
+		glUniform4fv(glGetUniformLocation(m_graphicsShader.GetShader(), (lightLocation + ".tint").c_str()), 1, glm::value_ptr(tint));
 	}
 
 	void LightingSystem::Shutdown()
