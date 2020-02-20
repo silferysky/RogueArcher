@@ -58,8 +58,18 @@ namespace Rogue
 		m_shader = g_engine.m_coordinator.loadShader("Object Shader");
 		m_screenShader = g_engine.m_coordinator.loadShader("Screen Shader");
 
+		m_uniformBlockIndex = glGetUniformBlockIndex(m_shader.GetShader(), "Matrices");
+		glUniformBlockBinding(m_shader.GetShader(), m_uniformBlockIndex, 0);
+
+		// create uniform buffer
+		glGenBuffers(1, &m_uboMatrices);
+		glBindBuffer(GL_UNIFORM_BUFFER, m_uboMatrices);
+		glBufferData(GL_UNIFORM_BUFFER, 2 * sizeof(glm::mat4), NULL, GL_STATIC_DRAW);
+		glBindBuffer(GL_UNIFORM_BUFFER, 0);
+		// define the range of the buffer
+		glBindBufferRange(GL_UNIFORM_BUFFER, 0, m_uboMatrices, 0, 2 * sizeof(glm::mat4));
+
 		m_projLocation = glGetUniformLocation(m_shader.GetShader(), "projection");
-		m_viewLocation = glGetUniformLocation(m_shader.GetShader(), "view");
 		m_transformLocation = glGetUniformLocation(m_shader.GetShader(), "transform");
 		m_filterLocation = glGetUniformLocation(m_shader.GetShader(), "colourFilter");
 
@@ -106,6 +116,9 @@ namespace Rogue
 		glBindVertexArray(m_VAO);
 		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 
+		glBindBuffer(GL_UNIFORM_BUFFER, m_uboMatrices);
+		glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::mat4), glm::value_ptr(g_engine.GetProjMat()));
+
 		// For all entities
 		for (auto pair : m_drawQueue)
 		{
@@ -114,6 +127,7 @@ namespace Rogue
 			draw(entity);
 		}
 
+		glBindBuffer(GL_UNIFORM_BUFFER, 0);
 		glUseProgram(0);
 		glBindVertexArray(0); //Reset
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -138,12 +152,11 @@ namespace Rogue
 		auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(entity);
 		auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
 
-		auto transformMat = glm::mat4(1.0f);
-		auto viewMat = m_pCamera->GetViewMatrix(1.0f);
+		glm::mat4 transformMat = glm::mat4(1.0f);
+		glm::mat4 viewMat;
 		auto texture = sprite.getTexture();
 
 		transformMat = glm::translate(transformMat, { transform.GetPosition().x, transform.GetPosition().y, 1.0f });
-
 		transformMat = glm::rotate(transformMat, transform.GetRotation(), glm::vec3(0.0f, 0.0f, 1.0f));
 
 		// Flip the player depending on direction
@@ -158,10 +171,11 @@ namespace Rogue
 		// Parallax
 		if (g_engine.m_coordinator.ComponentExists<BackgroundComponent>(entity))
 			viewMat = m_pCamera->GetViewMatrix(g_engine.m_coordinator.GetComponent<BackgroundComponent>(entity).GetParallax());
+		else
+			viewMat = m_pCamera->GetViewMatrix();
 
 		// model to world, world to view, view to projection
-		glUniformMatrix4fv(m_projLocation, 1, GL_FALSE, glm::value_ptr(g_engine.GetProjMat()));
-		glUniformMatrix4fv(m_viewLocation, 1, GL_FALSE, glm::value_ptr(viewMat));
+		glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(viewMat));
 		glUniformMatrix4fv(m_transformLocation, 1, GL_FALSE, glm::value_ptr(transformMat));
 		
 		// rgb filtering
