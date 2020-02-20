@@ -110,7 +110,14 @@ namespace Rogue
 				entityParent = MAX_ENTITIES;
 			}
 
-			CREATE_HIERARCHY_OBJ(curEnt, readstr, tagstr, "", loadedQueue.front() + entityParent);
+			if (entityParent == MAX_ENTITIES)
+			{
+				CREATE_HIERARCHY_OBJ(curEnt, readstr, tagstr, "", entityParent);
+			}
+			else
+			{
+				CREATE_HIERARCHY_OBJ(curEnt, readstr, tagstr, "", loadedQueue.front() + entityParent);
+			}
 
 
 			debugStr << "Entity " << curEnt << "'s Signature: " << g_engine.m_coordinator.GetEntityManager().GetSignature(curEnt).to_ulong();
@@ -140,21 +147,17 @@ namespace Rogue
 					loadedQueue.pop();
 					continue;
 				}
-				//Create ChildComponent if it doesn't exist
-				else if (!g_engine.m_coordinator.ComponentExists<ChildComponent>(loadedEnt))
-				{
-					ParentSetEvent* setParentEv = new ParentSetEvent(childInfo.m_parent, childInfo.m_Entity);
-					setParentEv->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
-					EventDispatcher::instance().AddEvent(setParentEv);
-					//g_engine.m_coordinator.CreateComponent<ChildComponent>(loadedEnt).SetParent(childInfo.m_parent);
-				}
 
-				//HierarchyInfo& parentInfo = g_engine.m_coordinator.GetHierarchyInfo(childInfo.m_parent);
-				//parentInfo.m_children.push_back(loadedEnt);
+				ParentSetEvent* setParentEv = new ParentSetEvent(childInfo.m_parent, childInfo.m_Entity);
+				setParentEv->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+				EventDispatcher::instance().AddEvent(setParentEv);
 				loadedQueue.pop();
-				//debugStr << "Entity " << parentInfo.m_Entity << ":" << parentInfo.m_objectName << " has child " << loadedEnt;
-				//RE_INFO(debugStr.str());
-				//CLEARSTR(debugStr);
+
+				HierarchyInfo& parentInfo = g_engine.m_coordinator.GetHierarchyInfo(childInfo.m_parent);
+				//parentInfo.m_children.push_back(loadedEnt);
+				debugStr << "Entity " << parentInfo.m_Entity << ":" << parentInfo.m_objectName << " has child " << loadedEnt;
+				RE_INFO(debugStr.str());
+				CLEARSTR(debugStr);
 			}
 		}
 		//for (; entityIt != entityEnd; ++entityIt)
