@@ -116,9 +116,6 @@
     <Filter Include="RogueEngine\Systems\Menu Controller">
       <UniqueIdentifier>{bd10c2f1-4f88-4468-8fc1-005733ac1d17}</UniqueIdentifier>
     </Filter>
-    <Filter Include="RogueEngine\Systems\Debug Draw">
-      <UniqueIdentifier>{72496074-30f5-465a-abd5-300a936ce5a7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="RogueEngine\Systems\Picking">
       <UniqueIdentifier>{9231369d-d291-484d-86b5-06cc6c94dddc}</UniqueIdentifier>
     </Filter>
@@ -151,6 +148,9 @@
     </Filter>
     <Filter Include="RogueEngine\Systems\Graphics\Lighting">
       <UniqueIdentifier>{22fd065d-c5a3-40a5-a580-585a775c4fd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RogueEngine\Systems\Graphics\Debug Draw">
+      <UniqueIdentifier>{72496074-30f5-465a-abd5-300a936ce5a7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -365,7 +365,7 @@
       <Filter>RogueEngine\Systems\UI</Filter>
     </ClInclude>
     <ClInclude Include="Source\DebugDrawSystem.h">
-      <Filter>RogueEngine\Systems\Debug Draw</Filter>
+      <Filter>RogueEngine\Systems\Graphics\Debug Draw</Filter>
     </ClInclude>
     <ClInclude Include="Source\imgui.h">
       <Filter>RogueEditor\EditorLibrary</Filter>
@@ -781,7 +781,7 @@
       <Filter>RogueEngine\Systems\UI</Filter>
     </ClCompile>
     <ClCompile Include="Source\DebugDrawSystem.cpp">
-      <Filter>RogueEngine\Systems\Debug Draw</Filter>
+      <Filter>RogueEngine\Systems\Graphics\Debug Draw</Filter>
     </ClCompile>
     <ClCompile Include="Source\imgui.cpp">
       <Filter>RogueEditor\EditorLibrary</Filter>

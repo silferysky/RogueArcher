@@ -25,7 +25,7 @@ Technology is prohibited.
 namespace Rogue
 {
 	FontSystem::FontSystem() :
-		System(SystemID::id_FONTSYSTEM), m_VAO{ 0 }, m_VBO{ 0 }, m_EBO{ 0 }, m_shader{ }, m_projectionLocation{ 0 }, m_viewLocation{ 0 }
+		System(SystemID::id_FONTSYSTEM), m_VAO{ 0 }, m_VBO{ 0 }, m_EBO{ 0 }, m_shader{ }
 	{}
 
 	void FontSystem::Init()
@@ -41,7 +41,6 @@ namespace Rogue
 		FT_Face face;
 		FT_Error ftError = FT_Init_FreeType(&ft);
 		FT_Error faceError = FT_New_Face(ft, "Fonts/Pokemon Solid.ttf", 0, &face);
-
 
 		RE_ASSERT(!ftError, "ERROR - Could not init FreeType Library");
 
@@ -89,8 +88,11 @@ namespace Rogue
 		m_shader = g_engine.m_coordinator.loadShader("Font Shader");
 
 		glUseProgram(m_shader.GetShader());
-		m_projectionLocation = glGetUniformLocation(m_shader.GetShader(), "projection");
-		m_viewLocation = glGetUniformLocation(m_shader.GetShader(), "view");
+		m_uniformBlockIndex = glGetUniformBlockIndex(m_shader.GetShader(), "Matrices");
+		glUniformBlockBinding(m_shader.GetShader(), m_uniformBlockIndex, 0);
+		m_uboMatrices = g_engine.m_coordinator.GetSystem<Rogue::GraphicsSystem>()->getUBOMatrices();
+
+		m_pCamera = g_engine.m_coordinator.GetSystem<CameraSystem>();
 
 		// configure buffers
 		glGenVertexArrays(1, &m_VAO);
@@ -115,8 +117,10 @@ namespace Rogue
 		TimeSystem.TimerInit("Font System");
 
 		glUseProgram(m_shader.GetShader());
-		glUniformMatrix4fv(m_projectionLocation, 1, GL_FALSE, glm::value_ptr(g_engine.GetProjMat()));
-		glUniformMatrix4fv(m_viewLocation, 1, GL_FALSE, glm::value_ptr(g_engine.m_coordinator.GetSystem<CameraSystem>()->GetViewMatrix(1.0f)));
+		glBindBuffer(GL_UNIFORM_BUFFER, m_uboMatrices);
+		glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::mat4), glm::value_ptr(g_engine.GetProjMat()));
+		glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(m_pCamera->GetViewMatrix()));
+
 		glBindVertexArray(m_VAO);
 		glActiveTexture(GL_TEXTURE0);
 
@@ -128,6 +132,7 @@ namespace Rogue
 			RenderText(text.GetWords(), transform.GetPosition(), transform.GetScale(), text.GetColour());
 		}
 
+		glBindBuffer(GL_UNIFORM_BUFFER, 0);
 		glBindVertexArray(0);
 		glBindTexture(GL_TEXTURE_2D, 0);
 		glUseProgram(0);

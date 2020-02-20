@@ -44,11 +44,10 @@ namespace Rogue
 		Shader m_screenShader;
 		Shader m_shader;
 
+		// Uniform Buffer Object
 		GLint m_uniformBlockIndex;
 		GLuint m_uboMatrices;
 
-		GLint m_projLocation;
-		GLint m_viewLocation;
 		GLint m_transformLocation;
 		GLint m_filterLocation;
 
@@ -75,6 +74,7 @@ namespace Rogue
 		void UpdateFrameBuffer();
 
 		GLuint& getFBO();
+		GLuint& getUBOMatrices();
 		Shader& getShader();
 	};
 }

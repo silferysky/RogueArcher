@@ -24,6 +24,7 @@ Technology is prohibited.
 #include "GL/glew.h"
 #include "GLHelper.hpp"
 #include "ComponentList.h"
+#include "CameraSystem.h"
 
 namespace Rogue
 {
@@ -44,8 +45,12 @@ namespace Rogue
 		GLuint m_EBO;
 
 		Shader m_shader;
-		GLint m_projectionLocation;
-		GLint m_viewLocation;
+		
+		// Uniform Buffer Object
+		GLint m_uniformBlockIndex;
+		GLuint m_uboMatrices;
+
+		std::shared_ptr<CameraSystem> m_pCamera;
 	public:
 		FontSystem();
 		~FontSystem() = default;

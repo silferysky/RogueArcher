@@ -31,7 +31,7 @@ namespace Rogue
 		: System(SystemID::id_GRAPHICSSYSTEM), m_VAO{ 0 }, m_VBO{ 0 }, m_EBO{ 0 },
 		m_FBO{ 0 }, m_texColourBuffer{ 0 }, m_RBO{ 0 },
 		m_screenShader{ }, m_shader{ }, 
-		m_projLocation{ 0 }, m_viewLocation{ 0 }, m_transformLocation{ 0 }, m_filterLocation{ 0 },
+		m_transformLocation{ 0 }, m_filterLocation{ 0 },
 		m_frameVAO{ 0 }, m_frameVBO{ 0 }
 	{}
 
@@ -69,7 +69,6 @@ namespace Rogue
 		// define the range of the buffer
 		glBindBufferRange(GL_UNIFORM_BUFFER, 0, m_uboMatrices, 0, 2 * sizeof(glm::mat4));
 
-		m_projLocation = glGetUniformLocation(m_shader.GetShader(), "projection");
 		m_transformLocation = glGetUniformLocation(m_shader.GetShader(), "transform");
 		m_filterLocation = glGetUniformLocation(m_shader.GetShader(), "colourFilter");
 
@@ -238,6 +237,11 @@ namespace Rogue
 	GLuint& GraphicsSystem::getFBO()
 	{
 		return m_FBO;
+	}
+
+	GLuint& GraphicsSystem::getUBOMatrices()
+	{
+		return m_uboMatrices;
 	}
 
 	Shader& GraphicsSystem::getShader()

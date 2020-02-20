@@ -54,8 +54,10 @@ Technology is prohibited.
 
 		glUseProgram(m_shader.GetShader());
 
-		m_projLocation = glGetUniformLocation(m_shader.GetShader(), "projection");
-		m_viewLocation = glGetUniformLocation(m_shader.GetShader(), "view");
+		m_uniformBlockIndex = glGetUniformBlockIndex(m_shader.GetShader(), "Matrices");
+		glUniformBlockBinding(m_shader.GetShader(), m_uniformBlockIndex, 0);
+		m_uboMatrices = g_engine.m_coordinator.GetSystem<Rogue::GraphicsSystem>()->getUBOMatrices();
+
 		m_filterLocation = glGetUniformLocation(m_shader.GetShader(), "colourFilter");
 
 		Rogue::GenerateLinePrimitive(m_VBO, m_VAO);
@@ -74,8 +76,10 @@ Technology is prohibited.
 	{
 		glUseProgram(m_shader.GetShader());
 
-		glUniformMatrix4fv(m_viewLocation, 1, GL_FALSE, glm::value_ptr(m_pCamera->GetViewMatrix(1.0f)));
-		glUniformMatrix4fv(m_projLocation, 1, GL_FALSE, glm::value_ptr(g_engine.GetProjMat()));
+		glBindBuffer(GL_UNIFORM_BUFFER, m_uboMatrices);
+		glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::mat4), glm::value_ptr(g_engine.GetProjMat()));
+		glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(m_pCamera->GetViewMatrix()));
+		glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
 		// For all entities
 		for (auto entity : m_entities)

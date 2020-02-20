@@ -37,8 +37,10 @@ namespace Rogue
 		Shader m_shader;
 		Shader m_graphicsShader;
 
-		GLint m_projLocation;
-		GLint m_viewLocation;
+		// Uniform Buffer Object
+		GLint m_uniformBlockIndex;
+		GLuint m_uboMatrices;
+
 		GLint m_transformLocation;
 		GLint m_totalLightsLocation;
 
