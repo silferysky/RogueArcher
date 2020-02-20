@@ -21,6 +21,7 @@ Technology is prohibited.
 #include "CollisionManager.h"
 
 #define MAX_32BIT_NUMBER 0xFFFFFFFF
+#define MAX_16BIT_NUMBER 0x7FFF
 
 namespace Rogue
 {
@@ -162,10 +163,10 @@ namespace Rogue
 		ss << ";";
 
 		// Collision category
-		ss << m_collisionCategory << ";";
+		ss << m_collisionCategory.to_ulong() << ";";
 
 		// Collision mask
-		ss << m_collisionMask << ";";
+		ss << m_collisionMask.to_ulong() << ";";
 
 		return ss.str();
 	}
@@ -186,12 +187,12 @@ namespace Rogue
 		}
 		
 		if (std::getline(ss, s1, ';'))
-			m_collisionCategory = LayerManager::Bits(s1);
+			m_collisionCategory = LayerManager::Bits(std::stoull(s1));
 		else
 			m_collisionCategory = LayerManager::s_layerDefault.first;
 
 		if (std::getline(ss, s1, ';'))
-			m_collisionMask = LayerManager::Bits(s1);
+			m_collisionMask = LayerManager::Bits(std::stoull(s1));
 		else
 			m_collisionMask = LayerManager::Bits(MAX_32BIT_NUMBER);
 	}
