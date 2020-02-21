@@ -39,6 +39,7 @@ Technology is prohibited.
 #include "MaskingComponent.h"
 #include "FadeComponent.h"
 #include "LightComponent.h"
+#include "ForegroundComponent.h"
 #include "ChildComponent.h" // THis is not to be initialized by ObjectFactory
 
 namespace Rogue
@@ -66,6 +67,7 @@ namespace Rogue
 		MASKING,
 		FADE,
 		LIGHT,
+		FOREGROUND,
 
 		CHILD,
 		LASTCOMP

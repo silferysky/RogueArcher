@@ -41,15 +41,18 @@ namespace Rogue
 		GLuint m_frameVAO;
 		GLuint m_frameVBO;
 
-		Shader m_screenShader;
 		Shader m_shader;
+		Shader m_foregroundShader;
+		Shader m_screenShader;
 
 		// Uniform Buffer Object
-		GLint m_uniformBlockIndex;
 		GLuint m_uboMatrices;
 
 		GLint m_transformLocation;
 		GLint m_filterLocation;
+
+		GLint m_foregroundTransformLocation;
+		GLint m_foregroundFilterLocation;
 
 		std::shared_ptr<CameraSystem> m_pCamera;
 		float m_playerX = 1.0f;
@@ -66,7 +69,7 @@ namespace Rogue
 		void Shutdown() override;
 
 		void draw(Entity& entity);
-		void UpdateLighting(Entity& entity);
+		void drawForeground(Entity& entity);
 
 		void Receive(Event* ev);
 

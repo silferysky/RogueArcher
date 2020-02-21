@@ -667,6 +667,9 @@
     <ClInclude Include="Source\ForegroundComponent.h">
       <Filter>RogueEngine\Systems\Graphics\Foreground</Filter>
     </ClInclude>
+    <ClInclude Include="Source\LightsFlicker.h">
+      <Filter>RogueEngine\Systems\AI\Script Types</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -1067,6 +1070,9 @@
     </ClCompile>
     <ClCompile Include="Source\ForegroundComponent.cpp">
       <Filter>RogueEngine\Systems\Graphics\Foreground</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\LightsFlicker.cpp">
+      <Filter>RogueEngine\Systems\AI\Script Types</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -336,6 +336,20 @@ namespace Rogue
 						}
 					}
 
+					if (g_engine.m_coordinator.ComponentExists<ForegroundComponent>(i))
+					{
+						if (ImGui::CollapsingHeader("Foreground"))
+						{
+							auto& foreground = g_engine.m_coordinator.GetComponent<ForegroundComponent>(i);
+							foreground.DisplayOnInspector();
+
+							if (ImGui::Button("Remove Component"))
+							{
+								g_engine.m_coordinator.RemoveComponent<ForegroundComponent>(i);
+							}
+						}
+					}
+
 					if (g_engine.m_coordinator.ComponentExists<BackgroundComponent>(i))
 					{
 						if (ImGui::CollapsingHeader("Background"))
@@ -452,6 +466,11 @@ namespace Rogue
 							if (ImGui::MenuItem("Particle Emitter Component", nullptr, false, !g_engine.m_coordinator.ComponentExists<ParticleEmitterComponent>(i)))
 							{
 								g_engine.m_coordinator.AddComponent(i, ParticleEmitterComponent());
+							}
+
+							if (ImGui::MenuItem("Foreground Component", nullptr, false, !g_engine.m_coordinator.ComponentExists<ForegroundComponent>(i)))
+							{
+								g_engine.m_coordinator.AddComponent(i, ForegroundComponent());
 							}
 
 							if (ImGui::MenuItem("Background Component", nullptr, false, !g_engine.m_coordinator.ComponentExists<BackgroundComponent>(i)))

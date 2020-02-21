@@ -56,10 +56,14 @@ namespace Rogue
 		ShaderManager::instance().Init();
 
 		m_shader = g_engine.m_coordinator.loadShader("Object Shader");
+		m_foregroundShader = g_engine.m_coordinator.loadShader("Foreground Shader");
 		m_screenShader = g_engine.m_coordinator.loadShader("Screen Shader");
 
-		m_uniformBlockIndex = glGetUniformBlockIndex(m_shader.GetShader(), "Matrices");
+		GLint m_uniformBlockIndex = glGetUniformBlockIndex(m_shader.GetShader(), "Matrices");
 		glUniformBlockBinding(m_shader.GetShader(), m_uniformBlockIndex, 0);
+
+		m_uniformBlockIndex = glGetUniformBlockIndex(m_foregroundShader.GetShader(), "Matrices");
+		glUniformBlockBinding(m_foregroundShader.GetShader(), m_uniformBlockIndex, 0);
 
 		// create uniform buffer
 		glGenBuffers(1, &m_uboMatrices);
@@ -71,6 +75,9 @@ namespace Rogue
 
 		m_transformLocation = glGetUniformLocation(m_shader.GetShader(), "transform");
 		m_filterLocation = glGetUniformLocation(m_shader.GetShader(), "colourFilter");
+
+		m_foregroundTransformLocation = glGetUniformLocation(m_foregroundShader.GetShader(), "transform");
+		m_foregroundFilterLocation = glGetUniformLocation(m_foregroundShader.GetShader(), "colourFilter");
 
 		GenerateQuadPrimitive(m_VBO, m_VAO, m_EBO);
 		GenerateFrameQuad(m_frameVAO, m_frameVBO);
@@ -123,7 +130,29 @@ namespace Rogue
 		{
 			auto& entity = pair.second;
 
-			draw(entity);
+			if (!g_engine.m_coordinator.ComponentExists<ForegroundComponent>(entity))
+				draw(entity);
+		}
+
+		glBindBuffer(GL_UNIFORM_BUFFER, 0);
+		glUseProgram(0);
+		glBindVertexArray(0); //Reset
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+		glUseProgram(m_foregroundShader.GetShader());
+		glBindVertexArray(m_VAO);
+		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+
+		glBindBuffer(GL_UNIFORM_BUFFER, m_uboMatrices);
+		glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::mat4), glm::value_ptr(g_engine.GetProjMat()));
+
+		// For all entities
+		for (auto pair : m_drawQueue)
+		{
+			auto& entity = pair.second;
+
+			if (g_engine.m_coordinator.ComponentExists<ForegroundComponent>(entity))
+				drawForeground(entity);
 		}
 
 		glBindBuffer(GL_UNIFORM_BUFFER, 0);
@@ -179,6 +208,33 @@ namespace Rogue
 		
 		// rgb filtering
 		glUniform4fv(m_filterLocation, 1, glm::value_ptr(sprite.getFilter()));
+
+		// Draw the Mesh
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+	}
+
+	void GraphicsSystem::drawForeground(Entity& entity)
+	{
+		auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(entity);
+		auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
+
+		glm::mat4 transformMat = glm::mat4(1.0f);
+		glm::mat4 viewMat;
+		auto texture = sprite.getTexture();
+
+		transformMat = glm::translate(transformMat, { transform.GetPosition().x, transform.GetPosition().y, 1.0f });
+		transformMat = glm::rotate(transformMat, transform.GetRotation(), glm::vec3(0.0f, 0.0f, 1.0f));
+		transformMat = glm::scale(transformMat, glm::vec3(transform.GetScale().x, transform.GetScale().y, 1.0f));
+
+		glBindTexture(GL_TEXTURE_2D, texture.m_texture);
+		UpdateTextureCoords(sprite.getTexCoordMin(), sprite.getTexCoordMax());
+
+		// model to world, world to view, view to projection
+		glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(viewMat));
+		glUniformMatrix4fv(m_foregroundTransformLocation, 1, GL_FALSE, glm::value_ptr(transformMat));
+
+		// rgb filtering
+		glUniform4fv(m_foregroundFilterLocation, 1, glm::value_ptr(sprite.getFilter()));
 
 		// Draw the Mesh
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);

@@ -44,6 +44,7 @@ Technology is prohibited.
 #include "ActivateOnExa.h"
 #include "ActivateOnDeathEla.h"
 #include "ActivateOnDeathExa.h"
+#include "LightsFlicker.h"
 
 namespace Rogue
 {
@@ -302,6 +303,12 @@ namespace Rogue
 					AddLogicInterface(entities, std::make_shared<ActivateOnDeathEla>(newAI));
 					break;
 				}
+				case AIType::Lights_Flicker:
+				{
+					LightsFlicker newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<LightsFlicker>(newAI));
+					break;
+				}
 				case AIType::AI_Static:
 				default:
 				{
@@ -459,6 +466,12 @@ namespace Rogue
 					break;
 				}
 				case AIType::Gameplay_ActivateOnDeathEla:
+				{
+					ScriptComponent newAI(entity, logicComponent, statsComponent);
+					AddLogicInterface(entity, std::make_shared<ScriptComponent>(newAI));
+					break;
+				}
+				case AIType::Lights_Flicker:
 				{
 					ScriptComponent newAI(entity, logicComponent, statsComponent);
 					AddLogicInterface(entity, std::make_shared<ScriptComponent>(newAI));

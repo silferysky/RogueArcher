@@ -744,6 +744,11 @@ namespace Rogue
 						strstream << "Text{" << g_engine.m_coordinator.GetComponent<TextComponent>(entityToSerialize).Serialize() << "}";
 						break;
 					}
+					case static_cast<int>(FOREGROUND) :
+					{
+						strstream << "Foreground{" << g_engine.m_coordinator.GetComponent<ForegroundComponent>(entityToSerialize).Serialize() << "}";
+						break;
+					}
 					case static_cast<int>(BACKGROUND) :
 					{
 						strstream << "Background{" << g_engine.m_coordinator.GetComponent<BackgroundComponent>(entityToSerialize).Serialize() << "}";
@@ -896,6 +901,11 @@ namespace Rogue
 					case static_cast<int>(TEXT) :
 					{
 						g_engine.m_coordinator.LoadComponent<TextComponent>(curEnt, readstr);
+						break;
+					}
+					case static_cast<int>(FOREGROUND) :
+					{
+						g_engine.m_coordinator.LoadComponent<ForegroundComponent>(curEnt, readstr);
 						break;
 					}
 					case static_cast<int>(BACKGROUND) :

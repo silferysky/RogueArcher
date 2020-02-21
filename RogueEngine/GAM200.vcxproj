@@ -49,6 +49,7 @@
     <ClInclude Include="Source\FadeSystem.h" />
     <ClInclude Include="Source\LightComponent.h" />
     <ClInclude Include="Source\LightingSystem.h" />
+    <ClInclude Include="Source\LightsFlicker.h" />
     <ClInclude Include="Source\SoulCollectible.h" />
     <ClInclude Include="Source\LayerManager.h" />
     <ClInclude Include="Source\CollisionSystem.h" />
@@ -247,6 +248,7 @@
     <ClCompile Include="Source\ImSequencer.cpp" />
     <ClCompile Include="Source\LightComponent.cpp" />
     <ClCompile Include="Source\LightingSystem.cpp" />
+    <ClCompile Include="Source\LightsFlicker.cpp" />
     <ClCompile Include="Source\LogicComponent.cpp" />
     <ClCompile Include="Source\LogicSystem.cpp" />
     <ClCompile Include="Source\Manifold.cpp" />
