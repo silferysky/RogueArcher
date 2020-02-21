@@ -28,7 +28,7 @@ namespace Rogue
 
 	void ForceManager::Init()
 	{
-		m_forceInfos.reserve(32); // Reserve to an arbitruary good size to minimize simulation-time allocation
+		m_forceInfos.reserve(16); // Reserve to an arbitruary good size to minimize simulation-time allocation
 	}
 
 	void ForceManager::UpdateAges()
@@ -67,8 +67,8 @@ namespace Rogue
 			if (forceInfo.m_isActive == false)
 				continue;
 
-			RigidbodyComponent& body = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(forceInfo.m_entity);
-			body.addForce(forceInfo.m_force);
+			if(auto bodyOption = g_engine.m_coordinator.TryGetComponent<RigidbodyComponent>(forceInfo.m_entity))
+				bodyOption->get().addForce(forceInfo.m_force);
 		}
 	}
 

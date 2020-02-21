@@ -32,15 +32,15 @@ namespace Rogue
 		}
 
 		EventDispatcher() = default;
-		~EventDispatcher() = default;
+		~EventDispatcher();
 
 		void Init();
 
 		//Queue functions
 		Event* GetQueueHead();
-		Event* GetQueueHeadDelayed();
-		void CombineQueue();
-		void CombineQueueCmd(Event& e);
+		//Event* GetQueueHeadDelayed();
+		//void CombineQueue();
+		//void CombineQueueCmd(Event& e);
 
 		//Listener functions
 		void AddListener(SystemID ID, LISTENER_HANDLER handler);
@@ -60,8 +60,8 @@ namespace Rogue
 
 	private:
 		std::queue<Event*> EventQueue;
-		std::queue<Event*> DelayedEventQueue;
+		//std::queue<Event*> DelayedEventQueue;
 		std::map<SystemID, LISTENER_HANDLER> ListenerMap;
-		bool isCombiningQueue = false;
+		//bool isCombiningQueue = false;
 	};
 }

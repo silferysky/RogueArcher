@@ -111,8 +111,8 @@ namespace Rogue
 				setSpecularFactor(std::stof(s1));
 				break;
 			case 4:
-				if (std::getline(ss, s1, ';'))
-					m_tint.r = std::stof(s1);
+				//Already gotten new line
+				m_tint.r = std::stof(s1);
 
 				if (std::getline(ss, s1, ';'))
 					m_tint.g = std::stof(s1);

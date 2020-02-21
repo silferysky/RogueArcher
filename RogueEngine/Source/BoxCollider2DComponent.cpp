@@ -122,7 +122,8 @@ namespace Rogue
 		std::vector<Vec2> vertexList{};
 		size_t size = 0;
 
-#if 1
+		// Shouldn't be used anymore.
+#if 0
 		// For OBB
 		if (std::getline(ss, s1, ';'))
 		{
