@@ -1025,36 +1025,16 @@ namespace Rogue
 		return lowerBound <= val && val <= upperBound;
 	}
 
-	bool CollisionManager::InsertDiffPair(Entity a, Entity b)
+	bool CollisionManager::InsertCollidedPair(Entity a, Entity b)
 	{
-		// Always box first, then circle.
-		return m_diffPairs.emplace(std::make_pair(a, b)).second;
-	}
-
-	bool CollisionManager::InsertBoxPair(Entity a, Entity b)
-	{
-		auto pair = m_boxPairs.emplace(std::make_pair(a, b));
-		return pair.second;
-	}
-
-	bool CollisionManager::InsertCirclePair(Entity a, Entity b)
-	{
-		return m_circlePairs.emplace(std::make_pair(a, b)).second;
+		return m_collidedPairs.emplace(std::make_pair(a, b)).second;
 	}
 
 	void CollisionManager::GenerateDiffManifolds()
 	{
-		for (std::pair<Entity, Entity> pair : m_diffPairs)
+		for (std::pair<Entity, Entity> pair : m_collidedPairs)
 		{
-			GenerateManifoldAABBvsCircle(pair.first, pair.second);
-		}
-	}
 
-	void CollisionManager::GenerateBoxManifolds()
-	{
-		for (std::pair<Entity, Entity> pair : m_boxPairs)
-		{
-			GenerateManifoldAABBvsAABB(pair.first, pair.second);
 		}
 	}
 

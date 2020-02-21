@@ -661,6 +661,9 @@
     <ClInclude Include="Source\EditorTileSet.h">
       <Filter>RogueEditor\EditorFiles</Filter>
     </ClInclude>
+    <ClInclude Include="Source\ICollider.h">
+      <Filter>RogueEngine\Systems\Collision\Data</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">

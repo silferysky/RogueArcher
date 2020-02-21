@@ -38,6 +38,7 @@
     <ClInclude Include="Source\ChildComponent.h" />
     <ClInclude Include="Source\CircleCollisionSystem.h" />
     <ClInclude Include="Source\ColliderComponent.h" />
+    <ClInclude Include="Source\ICollider.h" />
     <ClInclude Include="Source\IntegerPairHasher.h" />
     <ClInclude Include="Source\ComponentIndex.h" />
     <ClInclude Include="Source\DeathBox.h" />

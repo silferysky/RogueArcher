@@ -131,7 +131,7 @@ namespace Rogue
 
 	void BoxCollisionSystem::Receive(Event* ev)
 	{
-#if TEST_COLLISION_EVENTS
+#ifdef TEST_COLLISION_EVENTS
 		if (ev->GetEventCat() & EventCatCollision)
 		{
 			switch (ev->GetEventType())

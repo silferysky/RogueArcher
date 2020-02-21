@@ -18,11 +18,12 @@ Technology is prohibited.
 #pragma once
 #include "BaseComponent.h"
 #include "AABB.h"
+#include "ICollider.h"
 #include "PhysicsDataStructures.hpp"
 
 namespace Rogue
 {
-	class BoxCollider2DComponent : public BaseComponent
+	class BoxCollider2DComponent : public BaseComponent, public ICollider
 	{
 		CollisionMode m_collisionMode;
 		bool m_isCollided;

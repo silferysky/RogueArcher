@@ -35,17 +35,15 @@ namespace Rogue
 {
 	class CollisionManager
 	{
-	using ColliderPairSet = std::unordered_set<std::pair<Entity, Entity>, IntegerPairHasher<Entity>, IntegerPairComparer<Entity>>;
+		using ColliderPairSet = std::unordered_set<std::pair<Entity, Entity>, IntegerPairHasher<Entity>, IntegerPairComparer<Entity>>;
 
-	ColliderPairSet m_diffPairs; // Stored pairs of aabb and circle
-	ColliderPairSet m_boxPairs; // Stored pairs of aabbs
-	ColliderPairSet m_circlePairs; // Stored pairs of circles
-	std::vector<Manifold> m_manifolds; // To generate and resolve after collision tests
+		ColliderPairSet m_collidedPairs; // Stored pairs of collided entities
+		std::vector<Manifold> m_manifolds; // To generate and resolve after collision tests
 
-	std::vector<std::pair<Entity, Entity>> m_eraseQueue;
+		std::vector<std::pair<Entity, Entity>> m_eraseQueue;
 
-	static const float s_correction_factor;
-	static const float s_correction_slop; // Penetration threshold
+		static const float s_correction_factor;
+		static const float s_correction_slop; // Penetration threshold
 
 	public:
 		static CollisionManager& instance()
@@ -114,9 +112,7 @@ namespace Rogue
 		inline bool IsBetweenBounds(float val, float lowerBound, float upperBound) const;
 
 		// Manifold
-		bool InsertDiffPair(Entity a, Entity b);
-		bool InsertBoxPair(Entity a, Entity b);
-		bool InsertCirclePair(Entity a, Entity b);
+		bool InsertCollidedPair(Entity a, Entity b);
 		void GenerateDiffManifolds();
 		void GenerateBoxManifolds();
 		void GenerateCircleManifolds();
@@ -125,7 +121,7 @@ namespace Rogue
 		static float GetCorrectionFactor();
 		static float GetCorrectionSlop();
 
-		// Collision filters
+		// ============================ Collision Layers ==============================
 		bool FilterColliders(const LayerManager::Bits& mask, const LayerManager::Bits& category);
 		void AddLayer(std::string_view name);
 		void RemoveLayer(size_t layer);
@@ -136,7 +132,11 @@ namespace Rogue
 		size_t GetNumberOfLayers() const;
 		size_t GetLayerCategory(const LayerManager::Bits& cat) const;
 
-		// Collision Events
+
+		// ============================ Generic Wrappers ================================
+
+		
+
 		bool DetectCollision(const BoxCollider2DComponent& colliderA, const BoxCollider2DComponent& colliderB)
 		{
 			return DiscreteAABBvsAABB(colliderA.m_aabb, colliderB.m_aabb);
@@ -152,10 +152,11 @@ namespace Rogue
 			return DiscreteCircleVsCircle(colliderA.m_collider, colliderB.m_collider);
 		}
 
+		// ============================ Collision Events ==============================
 		template <typename TColliderA, typename TColliderB>
 		void CheckExitingCollidedPairs(const std::set<Entity>& entities)
 		{
-			for(auto& pair : m_boxPairs) // TODO: Templatize pair set as well
+			for(auto& pair : m_collidedPairs) // TODO: Templatize pair set as well
 			{
 				// If either entities don't exist in the set anymore, remove.
 				if (entities.find(pair.first) == entities.end() || entities.find(pair.second) == entities.end())

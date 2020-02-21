@@ -44,74 +44,88 @@ namespace Rogue
 	void CollisionSystem::Update()
 	{
 		std::set<Entity>::iterator iEntity;
+
+		// Update colliders and partition them.
 		for (iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
 		{
+			auto& currTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
+			if (auto currCollOption = g_engine.m_coordinator.TryGetComponent<BoxCollider2DComponent>(*iEntity))
+			{
+
+			}
+			// Skip asleep colliders
+			if (currBoxCollider.GetCollisionMode() == CollisionMode::e_asleep)
+				continue;
+
+			// Update collider
+			CollisionManager::instance().UpdateAABB(currBoxCollider.m_aabb, currTransform);
+
+			// Conduct spatial partitioning
+		}
+
+		// Test for collisions
+		// Loop through entities
+		for (iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
+		{
+			auto& currCollider = g_engine.m_coordinator.GetComponent<ColliderComponent>(*iEntity);
 			auto& currRigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
 			auto& currTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
-			auto& currCollider = g_engine.m_coordinator.GetComponent<ColliderComponent>(*iEntity);
-
-			Shape::Type currColliderType = Shape::Type::e_none;
-			Shape::Type nextColliderType = Shape::Type::e_none;
-
-			currColliderType = currCollider.GetShape()->GetType();
-			
-			// Conduct spatial partitioning
+			auto& currBoxCollider = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iEntity);
 
 			// Test AABB/OBB Collision
 			std::set<Entity>::iterator iNextEntity = iEntity;
 
+			// For each entity, the rest of the entities
 			for (iNextEntity++; iNextEntity != m_entities.end(); ++iNextEntity)
 			{
-				RigidbodyComponent& nextRigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iNextEntity);
+				auto& nextCollider = g_engine.m_coordinator.GetComponent<ColliderComponent>(*iNextEntity);
 
-				if (currRigidbody.getIsStatic() && nextRigidbody.getIsStatic())
-				{
-					continue;
-				}
-
-				ColliderComponent& nextCollider = g_engine.m_coordinator.GetComponent<ColliderComponent>(*iNextEntity);
-
+				// Filter colliders
 				if (!CollisionManager::instance().FilterColliders(currCollider.GetCollisionMask(), nextCollider.GetCollisionCat()) ||
 					!CollisionManager::instance().FilterColliders(currCollider.GetCollisionCat(), nextCollider.GetCollisionMask()))
-				{
-					//RE_INFO("~~~~~~");
 					continue;
-				}
-					
-				TransformComponent& nextTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iNextEntity);
 
-				nextColliderType = nextCollider.GetShape()->GetType();
+				auto& nextRigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iNextEntity);
 
-				if (currColliderType == Shape::Type::e_circle && nextColliderType == Shape::Type::e_box)
+				// Skip if both static.
+				if (currRigidbody.getIsStatic() && nextRigidbody.getIsStatic())
+					continue;
+
+				auto& nextBoxCollider = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iNextEntity);
+
+				// Skip asleep colliders.
+				if (nextBoxCollider.GetCollisionMode() == CollisionMode::e_asleep)
+					continue;
+
+				auto& nextTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iNextEntity);
+
+				// Test for AABBs vs AABBs
+				if (CollisionManager::instance().DiscreteAABBvsAABB(currBoxCollider.m_aabb, nextBoxCollider.m_aabb))
 				{
-					auto& circleA = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(*iEntity);
-					auto& boxB = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iNextEntity);
-					
-					if (CollisionManager::instance().DiscreteCircleVsAABB(circleA.m_collider, boxB.m_aabb))
-					{
-						RE_INFO("CircleA BoxB Colliding!");
-						CollisionManager::instance().InsertDiffPair(*iNextEntity, *iEntity);
-					}
+					CollisionInfo<BoxCollider2DComponent> infoA(*iEntity, currBoxCollider, currRigidbody, currTransform);
+					CollisionInfo<BoxCollider2DComponent> infoB(*iNextEntity, nextBoxCollider, nextRigidbody, nextTransform);
+
+					// Set booleans for both colliders/triggers
+					currBoxCollider.SetIsCollided(true);
+					nextBoxCollider.SetIsCollided(true);
+
+					if (CollisionManager::instance().InsertBoxPair(*iEntity, *iNextEntity))
+						CollisionManager::instance().SendEnterEvents(infoA, infoB);
+					else
+						CollisionManager::instance().SendStayEvents(infoA, infoB);
+
+					// If at least one of them is a trigger, skip resolution
+					if (currBoxCollider.GetCollisionMode() == CollisionMode::e_trigger || nextBoxCollider.GetCollisionMode() == CollisionMode::e_trigger)
+						continue;
+
+					// Generate manifolds from collided pairs
+					CollisionManager::instance().GenerateManifoldAABBvsAABB(*iEntity, *iNextEntity);
 				}
-				else if (currColliderType == Shape::Type::e_box && nextColliderType == Shape::Type::e_circle)
-				{
-					auto& boxA = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iEntity);
-					auto& circleB = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(*iNextEntity);
-				
-					if (CollisionManager::instance().DiscreteAABBVsCircle(boxA.m_aabb, circleB.m_collider))
-					{
-						RE_INFO("CircleB BoxA Colliding!");
-						CollisionManager::instance().InsertDiffPair(*iEntity, *iNextEntity);
-					}
-				}
+				// Remove exiting pairs and send exit events
+				CollisionManager::instance().CheckExitingCollidedPairs<BoxCollider2DComponent, BoxCollider2DComponent>(m_entities);
 			}
-
-			// Generate manifolds from collided pairs
-			CollisionManager::instance().GenerateDiffManifolds();
-
-			// Collision Response (Contact, forces, rest, Impulse, Torque)
+			// Collision Impulse and Torque/Contact Resolution (Other resolutionsdone using trigger events: Other weird forces, rest, game logic)
 			CollisionManager::instance().ResolveManifolds();
-
 		}
 	}
 
