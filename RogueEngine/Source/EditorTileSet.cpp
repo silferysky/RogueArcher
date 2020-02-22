@@ -387,6 +387,7 @@ namespace Rogue
 		//oss << m_tileId << ";";
 		oss << m_texturename << ";";
 		oss << m_tilePos.x << "," << m_tilePos.y << ";";
+		oss << m_texCoordMinX << "," << m_texCoordMaxX << "," << m_texCoordMinY << "," << m_texCoordMaxY << ";";
 		oss << m_collision << ";";
 		oss << m_bordercolor.w << "," << m_bordercolor.x << "," << m_bordercolor.y << "," << m_bordercolor.z << ";";
 
@@ -398,12 +399,14 @@ namespace Rogue
 		std::istringstream iss(deserializeStr.data());
 		std::string str;
 
+		//Texturename
 		if (std::getline(iss, str, ';'))
 		{
 			m_texturename = str;
 			m_tileTexture = TextureManager::instance().loadTexture(str.c_str());
 		}
 
+		//TilePosition
 		if (std::getline(iss, str, ','))
 		{
 			m_tilePos.x = std::stof(str);
@@ -413,11 +416,31 @@ namespace Rogue
 			m_tilePos.y = std::stof(str);
 		}
 
+		//TexCoordinate Values
+		if (std::getline(iss, str, ','))
+		{
+			m_texCoordMinX = std::stof(str);
+		}
+		if (std::getline(iss, str, ','))
+		{
+			m_texCoordMaxX = std::stof(str);
+		}
+		if (std::getline(iss, str, ','))
+		{
+			m_texCoordMinY = std::stof(str);
+		}
+		if (std::getline(iss, str, ';'))
+		{
+			m_texCoordMaxY = std::stof(str);
+		}
+
+		//Collison
 		if (std::getline(iss, str, ';'))
 		{
 			m_collision = std::stoi(str);
 		}
 
+		//BorderColor
 		if (std::getline(iss, str, ','))
 		{
 			m_bordercolor.w = std::stof(str);
