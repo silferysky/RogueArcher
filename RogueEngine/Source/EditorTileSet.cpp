@@ -31,7 +31,7 @@ namespace Rogue
 	}
 
 	ImGuiTileSet::ImGuiTileSet() :m_TileSet(), m_GlobalTileSet(),
-		m_minY(0),m_minX(0),m_maxX(0),m_maxY(0),m_tileSize(100),m_tilesHeight(0),
+		m_minY(0),m_minX(0),m_maxX(0),m_maxY(0),m_tileSize(61),m_tilesHeight(0),
 		m_tilesWidth(0),m_currentTileX(0),m_currentTileY(0),m_openWindow(true), m_isCollision(false),
 		m_check(true), m_firstclicked(false), m_globalcheck(false), m_deleteTile(false)
 	{
@@ -60,9 +60,9 @@ namespace Rogue
 			tileset.m_texturename = "";
 			tileset.m_tileTexture.m_data = 0;
 			tileset.m_tileId = 0;
-			m_currentTileX = round(m_minX / m_tileSize) * m_tileSize + m_tileSize;
+			m_currentTileX = round(m_minX / m_tileSize) * m_tileSize ;
 			tileset.m_tilePos.x = m_currentTileX;
-			m_currentTileY = round(m_maxY / m_tileSize) * m_tileSize - m_tileSize;
+			m_currentTileY = round(m_maxY / m_tileSize) * m_tileSize ;
 			tileset.m_tilePos.y = m_currentTileY;
 			m_minX += m_tileSize;
 			if (m_check)
@@ -320,7 +320,7 @@ namespace Rogue
 									//	g_engine.m_coordinator.AddToDeleteQueue(j.m_tileId);
 									//}
 									
-									j.m_tileId = Create2DSprite(i.m_tilePos, Vec2{ 61,61 }, i.m_texturename, i.m_collision);
+									j.m_tileId = Create2DSprite(i.m_tilePos, Vec2{ i.m_tileWidth,i.m_tileHeight }, i.m_texturename, i.m_collision);
 									auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(j.m_tileId);
 									sprite.setTexCoordMinX(j.m_texCoordMinX);
 									sprite.setTexCoordMaxX(j.m_texCoordMaxX);
@@ -462,7 +462,7 @@ namespace Rogue
 		if (m_texturename != "None" && m_texturename != "")
 		{
 			//std::cout << "Create: " << m_texturename << std::endl;
-			Entity ent = ImGuiTileSet::instance().Create2DSprite(m_tilePos, Vec2(100.0f, 100.0f), m_texturename, m_collision);
+			Entity ent = ImGuiTileSet::instance().Create2DSprite(m_tilePos, Vec2(m_tileWidth, m_tileHeight), m_texturename, m_collision);
 			auto& sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(ent)->get();
 			sprite.setTexCoordMinX(m_texCoordMinX);
 			sprite.setTexCoordMinY(m_texCoordMinY);

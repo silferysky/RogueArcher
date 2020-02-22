@@ -12,8 +12,8 @@ namespace Rogue
 		Entity m_tempTile = 0;
 		Vec2 m_tilePos;
 		bool m_collision = false;
-		float m_tileWidth = 100;
-		float m_tileHeight = 100;
+		float m_tileWidth = 61;
+		float m_tileHeight = 61;
 		float m_texCoordMinX = 0.0f;
 		float m_texCoordMaxX = 1.0f;
 		float m_texCoordMinY = 0.0f;
