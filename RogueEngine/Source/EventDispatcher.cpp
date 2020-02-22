@@ -28,12 +28,12 @@ namespace Rogue
 {
 	EventDispatcher::~EventDispatcher()
 	{
-		while (GetQueueHead() != nullptr)
-		{
-			Event* ev = GetQueueHead();
-			EventQueue.pop();
-			delete ev;
-		}
+		//while (GetQueueHead() != nullptr)
+		//{
+		//	Event* ev = GetQueueHead();
+		//	EventQueue.pop();
+		//	delete ev;
+		//}
 	}
 
 	void EventDispatcher::Init()
