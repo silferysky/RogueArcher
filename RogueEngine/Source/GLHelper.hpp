@@ -67,9 +67,9 @@ namespace Rogue
 		};
 
 		glBufferSubData(GL_ARRAY_BUFFER, 8 * sizeof(float), sizeof(float), max);
-		glBufferSubData(GL_ARRAY_BUFFER, 17 * sizeof(float), sizeof(float), max);
+		glBufferSubData(GL_ARRAY_BUFFER, 17 * sizeof(float), sizeof(float), min);
 		glBufferSubData(GL_ARRAY_BUFFER, 26 * sizeof(float), sizeof(float), min);
-		glBufferSubData(GL_ARRAY_BUFFER, 35 * sizeof(float), sizeof(float), min);
+		glBufferSubData(GL_ARRAY_BUFFER, 35 * sizeof(float), sizeof(float), max);
 	}
 
 	static const float frameVertices[] = 

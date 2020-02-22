@@ -195,9 +195,8 @@ namespace Rogue
 
 		glBindTexture(GL_TEXTURE_2D, texture.m_texture);
 		UpdateTextureCoords(sprite.getTexCoordMin(), sprite.getTexCoordMax());
-		//UpdateTextureCoordsY(sprite.getTexCoordMinY(), sprite.getTexCoordMaxY());
-		//std::cout << "Y: " << sprite.getTexCoordMinY() << std::endl;
-		//std::cout << "YMax: " << sprite.getTexCoordMaxY() << std::endl;
+		UpdateTextureCoordsY(sprite.getTexCoordMinY(), sprite.getTexCoordMaxY());
+
 		// Parallax
 		if (g_engine.m_coordinator.ComponentExists<BackgroundComponent>(entity))
 			viewMat = m_pCamera->GetViewMatrix(g_engine.m_coordinator.GetComponent<BackgroundComponent>(entity).GetParallax());
