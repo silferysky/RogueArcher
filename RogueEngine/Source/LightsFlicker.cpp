@@ -16,9 +16,16 @@ namespace Rogue
 
 	void LightsFlicker::AIIdleUpdate()
 	{
-		auto& light = g_engine.m_coordinator.GetComponent<LightComponent>(m_entity);
+		m_timer += g_deltaTime * g_engine.GetTimeScale();
 
-		light.setAmbientFactor(rand() / (RAND_MAX / 52));
-		light.setSpecularFactor(rand() / (RAND_MAX / 52));
+		if (m_timer > static_cast <float> (rand()) / static_cast <float> (RAND_MAX/0.25f))
+		{
+			auto& light = g_engine.m_coordinator.GetComponent<LightComponent>(m_entity);
+
+			light.setAmbientFactor(rand() / (RAND_MAX / 17));
+			light.setSpecularFactor(rand() / (RAND_MAX / 17));
+			
+			m_timer = 0.0f;
+		}
 	}
 }

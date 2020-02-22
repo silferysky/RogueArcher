@@ -38,7 +38,6 @@ namespace Rogue
 		Shader m_graphicsShader;
 
 		// Uniform Buffer Object
-		GLint m_uniformBlockIndex;
 		GLuint m_uboMatrices;
 
 		GLint m_transformLocation;

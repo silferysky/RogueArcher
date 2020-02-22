@@ -12,5 +12,6 @@ namespace Rogue
 		virtual void AIActiveStateUpdate() override;
 		virtual void AIIdleUpdate() override;
 	private:
+		float m_timer = 0.0f;
 	};
 }

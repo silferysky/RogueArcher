@@ -23,7 +23,7 @@ namespace Rogue
 
 		m_shader = g_engine.m_coordinator.loadShader("Lighting Shader");
 
-		m_uniformBlockIndex = glGetUniformBlockIndex(m_shader.GetShader(), "Matrices");
+		GLint m_uniformBlockIndex = glGetUniformBlockIndex(m_shader.GetShader(), "Matrices");
 		glUniformBlockBinding(m_shader.GetShader(), m_uniformBlockIndex, 0);
 		m_uboMatrices = g_engine.m_coordinator.GetSystem<Rogue::GraphicsSystem>()->getUBOMatrices();
 

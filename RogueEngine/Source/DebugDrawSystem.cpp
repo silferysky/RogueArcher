@@ -54,7 +54,7 @@ Technology is prohibited.
 
 		glUseProgram(m_shader.GetShader());
 
-		m_uniformBlockIndex = glGetUniformBlockIndex(m_shader.GetShader(), "Matrices");
+		GLint m_uniformBlockIndex = glGetUniformBlockIndex(m_shader.GetShader(), "Matrices");
 		glUniformBlockBinding(m_shader.GetShader(), m_uniformBlockIndex, 0);
 		m_uboMatrices = g_engine.m_coordinator.GetSystem<Rogue::GraphicsSystem>()->getUBOMatrices();
 

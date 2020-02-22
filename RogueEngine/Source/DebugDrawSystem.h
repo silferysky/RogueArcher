@@ -29,7 +29,6 @@ Technology is prohibited.
 		Rogue::Shader m_shader;
 
 		// Uniform Buffer Object
-		GLint m_uniformBlockIndex;
 		GLuint m_uboMatrices;
 
 		GLint m_filterLocation;
