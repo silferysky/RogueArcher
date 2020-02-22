@@ -320,7 +320,7 @@ namespace Rogue
 									//	g_engine.m_coordinator.AddToDeleteQueue(j.m_tileId);
 									//}
 									
-									j.m_tileId = Create2DSprite(i.m_tilePos, Vec2{ 100,100 }, i.m_texturename, i.m_collision);
+									j.m_tileId = Create2DSprite(i.m_tilePos, Vec2{ 61,61 }, i.m_texturename, i.m_collision);
 									auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(j.m_tileId);
 									sprite.setTexCoordMinX(j.m_texCoordMinX);
 									sprite.setTexCoordMaxX(j.m_texCoordMaxX);
