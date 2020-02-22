@@ -462,7 +462,12 @@ namespace Rogue
 		if (m_texturename != "None" && m_texturename != "")
 		{
 			//std::cout << "Create: " << m_texturename << std::endl;
-			ImGuiTileSet::instance().Create2DSprite(m_tilePos, Vec2(100.0f, 100.0f), m_texturename, m_collision);
+			Entity ent = ImGuiTileSet::instance().Create2DSprite(m_tilePos, Vec2(100.0f, 100.0f), m_texturename, m_collision);
+			auto& sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(ent)->get();
+			sprite.setTexCoordMinX(m_texCoordMinX);
+			sprite.setTexCoordMinY(m_texCoordMinY);
+			sprite.setTexCoordMaxX(m_texCoordMaxX);
+			sprite.setTexCoordMaxY(m_texCoordMaxY);
 		}
 
 		//Entity tileEntity = g_engine.m_coordinator.CreateEntity();
