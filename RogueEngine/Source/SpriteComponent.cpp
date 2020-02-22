@@ -43,24 +43,24 @@ namespace Rogue
 		return m_texturePath;
 	}
 
-	void SpriteComponent::setTexCoordMin(const float& TexCoordMin)
+	void SpriteComponent::setTexCoordMinX(const float& TexCoordMin)
 	{
-		m_texCoordMin = TexCoordMin;
+		m_texCoordMinX = TexCoordMin;
 	}
 
-	void SpriteComponent::setTexCoordMax(const float& TexCoordMax)
+	void SpriteComponent::setTexCoordMaxX(const float& TexCoordMax)
 	{
-		m_texCoordMax = TexCoordMax;
+		m_texCoordMaxX = TexCoordMax;
 	}
 
-	float SpriteComponent::getTexCoordMin() const
+	float SpriteComponent::getTexCoordMinX() const
 	{
-		return m_texCoordMin;
+		return m_texCoordMinX;
 	}
 
-	float SpriteComponent::getTexCoordMax() const
+	float SpriteComponent::getTexCoordMaxX() const
 	{
-		return m_texCoordMax;
+		return m_texCoordMaxX;
 	}
 
 	void SpriteComponent::setTexCoordMinY(const float& TexCoordMinY)

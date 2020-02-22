@@ -322,8 +322,8 @@ namespace Rogue
 									
 									j.m_tileId = Create2DSprite(i.m_tilePos, Vec2{ 100,100 }, i.m_texturename, i.m_collision);
 									auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(j.m_tileId);
-									sprite.setTexCoordMin(j.m_texCoordMinX);
-									sprite.setTexCoordMax(j.m_texCoordMaxX);
+									sprite.setTexCoordMinX(j.m_texCoordMinX);
+									sprite.setTexCoordMaxX(j.m_texCoordMaxX);
 									sprite.setTexCoordMinY(j.m_texCoordMinY);
 									sprite.setTexCoordMaxY(j.m_texCoordMaxY);
 								}

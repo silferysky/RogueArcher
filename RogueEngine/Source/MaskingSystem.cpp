@@ -59,8 +59,8 @@ namespace Rogue
 			masking->setTimer(0.0f);
 		}
 
-		sprite->setTexCoordMin(static_cast<float>(min));
-		sprite->setTexCoordMax(static_cast<float>(max));
+		sprite->setTexCoordMinX(static_cast<float>(min));
+		sprite->setTexCoordMaxX(static_cast<float>(max));
 
 		if (masking->getIsActive())
 			masking->setTimer(static_cast<float>(timer));
@@ -73,8 +73,8 @@ namespace Rogue
 			auto& masking = g_engine.m_coordinator.GetComponent<MaskingComponent>(entity);
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(entity);
 
-			sprite.setTexCoordMin(0.0f);
-			sprite.setTexCoordMax(1.0f / masking.getFrameSize());
+			sprite.setTexCoordMinX(0.0f);
+			sprite.setTexCoordMaxX(1.0f / masking.getFrameSize());
 		}
 	}
 

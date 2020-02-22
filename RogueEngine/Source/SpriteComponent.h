@@ -29,8 +29,8 @@ namespace Rogue
 	{
 		std::string m_texturePath;
 		Texture m_texture;
-		float m_texCoordMin = 0.0f;
-		float m_texCoordMax = 1.0f;
+		float m_texCoordMinX = 0.0f;
+		float m_texCoordMaxX = 1.0f;
 		float m_texCoordMinY = 0.0f;
 		float m_texCoordMaxY = 1.0f;
 
@@ -42,11 +42,11 @@ namespace Rogue
 		void setTexture(const char* texture);
 		Texture& getTexture();
 
-		void setTexCoordMin(const float& TexCoordMin);
-		float getTexCoordMin() const;
+		void setTexCoordMinX(const float& TexCoordMin);
+		float getTexCoordMinX() const;
 
-		void setTexCoordMax(const float& texCoordMax);
-		float getTexCoordMax() const;
+		void setTexCoordMaxX(const float& texCoordMax);
+		float getTexCoordMaxX() const;
 		
 		void setTexCoordMinY(const float& TexCoordMinY);
 		float getTexCoordMinY() const;

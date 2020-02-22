@@ -90,8 +90,8 @@ namespace Rogue
 		double min = currentFrame / totalFrames;
 		double max = ++currentFrame / totalFrames;
 
-		sprite->setTexCoordMin(static_cast<float>(min));
-		sprite->setTexCoordMax(static_cast<float>(max));
+		sprite->setTexCoordMinX(static_cast<float>(min));
+		sprite->setTexCoordMaxX(static_cast<float>(max));
 
 		if (animate->getIsAnimating())
 			animate->setCurrentFrame(static_cast<int>(currentFrame));
@@ -126,8 +126,8 @@ namespace Rogue
 		double min = (currentFrame - 1) / totalFrames;
 		double max = currentFrame-- / totalFrames;
 
-		sprite->setTexCoordMin(static_cast<float>(min));
-		sprite->setTexCoordMax(static_cast<float>(max));
+		sprite->setTexCoordMinX(static_cast<float>(min));
+		sprite->setTexCoordMaxX(static_cast<float>(max));
 
 		if (animate->getIsAnimating())
 			animate->setCurrentFrame(static_cast<int>(currentFrame));
@@ -142,14 +142,14 @@ namespace Rogue
 
 			if (animate.getIsNotReversed())
 			{
-				sprite.setTexCoordMin((float)animate.getStartFrame() / animate.getFrames());
-				sprite.setTexCoordMax((float)animate.getStartFrame() + 1 / animate.getFrames());
+				sprite.setTexCoordMinX((float)animate.getStartFrame() / animate.getFrames());
+				sprite.setTexCoordMaxX((float)animate.getStartFrame() + 1 / animate.getFrames());
 				animate.setCurrentFrame(animate.getStartFrame());
 			}
 			else
 			{
-				sprite.setTexCoordMin(animate.getFrames() - 1.0f / animate.getFrames());
-				sprite.setTexCoordMax(1.0f);
+				sprite.setTexCoordMinX(animate.getFrames() - 1.0f / animate.getFrames());
+				sprite.setTexCoordMaxX(1.0f);
 				animate.setCurrentFrame(animate.getFrames());
 			}
 		}

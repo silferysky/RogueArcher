@@ -194,7 +194,7 @@ namespace Rogue
 		transformMat = glm::scale(transformMat, glm::vec3(transform.GetScale().x, transform.GetScale().y, 1.0f));
 
 		glBindTexture(GL_TEXTURE_2D, texture.m_texture);
-		UpdateTextureCoords(sprite.getTexCoordMin(), sprite.getTexCoordMax());
+		UpdateTextureCoords(sprite.getTexCoordMinX(), sprite.getTexCoordMaxX());
 		UpdateTextureCoordsY(sprite.getTexCoordMinY(), sprite.getTexCoordMaxY());
 
 		// Parallax
@@ -228,7 +228,7 @@ namespace Rogue
 		transformMat = glm::scale(transformMat, glm::vec3(transform.GetScale().x, transform.GetScale().y, 1.0f));
 
 		glBindTexture(GL_TEXTURE_2D, texture.m_texture);
-		UpdateTextureCoords(sprite.getTexCoordMin(), sprite.getTexCoordMax());
+		UpdateTextureCoords(sprite.getTexCoordMinX(), sprite.getTexCoordMaxX());
 		UpdateTextureCoordsY(sprite.getTexCoordMinY(), sprite.getTexCoordMaxY());
 		// model to world, world to view, view to projection
 		glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(viewMat));
