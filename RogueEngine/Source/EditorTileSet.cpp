@@ -311,14 +311,14 @@ namespace Rogue
 									j.m_texCoordMinY = i.m_texCoordMinY;
 									j.m_texCoordMaxY = i.m_texCoordMaxY;
 									//if tile exists, delete tile
-									if (j.m_tileId > 0)
-									{
+									//if (j.m_tileId > 0)
+									//{
 										g_engine.m_coordinator.AddToDeleteQueue(j.m_tileId);
-									}
-									if (j.m_texturename.c_str() == "None")
-									{
-										g_engine.m_coordinator.AddToDeleteQueue(j.m_tileId);
-									}
+									//}
+									//if (j.m_texturename.c_str() == "None")
+									//{
+									//	g_engine.m_coordinator.AddToDeleteQueue(j.m_tileId);
+									//}
 									
 									j.m_tileId = Create2DSprite(i.m_tilePos, Vec2{ 100,100 }, i.m_texturename, i.m_collision);
 									auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(j.m_tileId);
