@@ -31,6 +31,8 @@ namespace Rogue
 		Texture m_texture;
 		float m_texCoordMin = 0.0f;
 		float m_texCoordMax = 1.0f;
+		float m_texCoordMinY = 0.0f;
+		float m_texCoordMaxY = 1.0f;
 
 		glm::vec4 m_filter = { 1.0f, 1.0f, 1.0f, 1.0f };
 	public:
@@ -46,6 +48,12 @@ namespace Rogue
 		void setTexCoordMax(const float& texCoordMax);
 		float getTexCoordMax() const;
 		
+		void setTexCoordMinY(const float& TexCoordMinY);
+		float getTexCoordMinY() const;
+
+		void setTexCoordMaxY(const float& texCoordMaxY);
+		float getTexCoordMaxY() const;
+
 		void setTexturePath(std::string_view texturePath);
 		std::string_view getTexturePath() const;
 

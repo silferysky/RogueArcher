@@ -195,7 +195,9 @@ namespace Rogue
 
 		glBindTexture(GL_TEXTURE_2D, texture.m_texture);
 		UpdateTextureCoords(sprite.getTexCoordMin(), sprite.getTexCoordMax());
-
+		//UpdateTextureCoordsY(sprite.getTexCoordMinY(), sprite.getTexCoordMaxY());
+		//std::cout << "Y: " << sprite.getTexCoordMinY() << std::endl;
+		//std::cout << "YMax: " << sprite.getTexCoordMaxY() << std::endl;
 		// Parallax
 		if (g_engine.m_coordinator.ComponentExists<BackgroundComponent>(entity))
 			viewMat = m_pCamera->GetViewMatrix(g_engine.m_coordinator.GetComponent<BackgroundComponent>(entity).GetParallax());
@@ -228,7 +230,7 @@ namespace Rogue
 
 		glBindTexture(GL_TEXTURE_2D, texture.m_texture);
 		UpdateTextureCoords(sprite.getTexCoordMin(), sprite.getTexCoordMax());
-
+		UpdateTextureCoordsY(sprite.getTexCoordMinY(), sprite.getTexCoordMaxY());
 		// model to world, world to view, view to projection
 		glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(viewMat));
 		glUniformMatrix4fv(m_foregroundTransformLocation, 1, GL_FALSE, glm::value_ptr(transformMat));

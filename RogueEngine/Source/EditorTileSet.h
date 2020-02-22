@@ -4,11 +4,20 @@
 
 namespace Rogue
 {
+	struct TilePallet
+	{
+		std::string m_texturename;
+		Texture m_texture;
+		float m_texCoordMin = 0.0f;
+		float m_texCoordMax = 1.0f;
+	};
+
 	struct Tile
 		: public ISerializable
 	{
 		std::string m_texturename;
 		Entity m_tileId = 0;
+		Entity m_tempTile = 0;
 		Vec2 m_tilePos;
 		bool m_collision = false;
 		float m_tileWidth = 100;
@@ -31,6 +40,7 @@ namespace Rogue
 	private:
 		std::vector<Tile> m_GlobalTileSet;
 		std::vector<Tile> m_TileSet;
+		std::vector<TilePallet> m_tilePallete;
 		bool m_openWindow;
 		bool m_isCollision;
 		bool m_check;
@@ -46,6 +56,7 @@ namespace Rogue
 		float m_minY;
 		float m_maxX;
 		float m_maxY;
+
 		Texture m_currentTexture = { 0 };
 		std::string m_currentPath = "None";
 		
