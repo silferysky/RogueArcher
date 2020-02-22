@@ -4,14 +4,6 @@
 
 namespace Rogue
 {
-	struct TilePallet
-	{
-		std::string m_texturename;
-		Texture m_texture;
-		float m_texCoordMin = 0.0f;
-		float m_texCoordMax = 1.0f;
-	};
-
 	struct Tile
 		: public ISerializable
 	{
@@ -22,6 +14,10 @@ namespace Rogue
 		bool m_collision = false;
 		float m_tileWidth = 100;
 		float m_tileHeight = 100;
+		float m_texCoordMinX = 0.0f;
+		float m_texCoordMaxX = 1.0f;
+		float m_texCoordMinY = 0.0f;
+		float m_texCoordMaxY = 1.0f;
 		Texture m_tileTexture = { 0 };
 		ImVec4 m_bordercolor = { 1.0f,1.0f,1.0f,0.5f };
 
@@ -40,7 +36,6 @@ namespace Rogue
 	private:
 		std::vector<Tile> m_GlobalTileSet;
 		std::vector<Tile> m_TileSet;
-		std::vector<TilePallet> m_tilePallete;
 		bool m_openWindow;
 		bool m_isCollision;
 		bool m_check;

@@ -76,6 +76,10 @@ namespace Rogue
 					tileset.m_tileTexture = i.m_tileTexture;
 					tileset.m_bordercolor = i.m_bordercolor;
 					tileset.m_texturename = i.m_texturename;
+					tileset.m_texCoordMinX = i.m_texCoordMinX;
+					tileset.m_texCoordMaxX = i.m_texCoordMaxX;
+					tileset.m_texCoordMinY = i.m_texCoordMinY;
+					tileset.m_texCoordMaxY = i.m_texCoordMaxY;
 					m_globalcheck = true;
 					break;
 				}
@@ -136,7 +140,7 @@ namespace Rogue
 						width = temp;
 					}
 					--width;
-					ImGui::Image((void*)i.m_tileTexture.m_texture, ImVec2(imageSize.x, imageSize.y), ImVec2(0, 1), ImVec2(1, 0), ImVec4(1,1, 1, 1), i.m_bordercolor);
+					ImGui::Image((void*)i.m_tileTexture.m_texture, ImVec2(imageSize.x, imageSize.y), ImVec2(i.m_texCoordMinX, i.m_texCoordMaxY), ImVec2(i.m_texCoordMaxX, i.m_texCoordMinY), ImVec4(1,1, 1, 1), i.m_bordercolor);
 
 					if (ImGui::IsItemClicked(0))
 					{
@@ -145,6 +149,8 @@ namespace Rogue
 							i.m_tileTexture = TextureManager::instance().loadTexture("None");
 							i.m_texturename = "None";
 							i.m_bordercolor = { 1.0f, 1.0f, 1.0f, 0.5f };
+							//TODO
+							i.m_texCoordMinX;
 							if (m_currentmode == Mode::Drag)
 							{
 								if (!m_firstclicked)
@@ -161,6 +167,10 @@ namespace Rogue
 						{
 							i.m_tileTexture = TextureManager::instance().loadTexture(m_currentPath.c_str());
 							i.m_texturename = m_currentPath.c_str();
+							i.m_texCoordMinX = m_minX;
+							i.m_texCoordMaxX = m_maxX;
+							i.m_texCoordMinY = m_minY;
+							i.m_texCoordMaxY = m_maxY;
 							if (m_currentmode == Mode::Drag)
 							{
 								if (!m_firstclicked)
@@ -187,6 +197,10 @@ namespace Rogue
 							{
 								i.m_tileTexture = TextureManager::instance().loadTexture(m_currentPath.c_str());
 								i.m_texturename = m_currentPath.c_str();
+								i.m_texCoordMinX = m_minX;
+								i.m_texCoordMaxX = m_maxX;
+								i.m_texCoordMinY = m_minY;
+								i.m_texCoordMaxY = m_maxY;
 								if (m_isCollision)
 								{
 									i.m_collision = true;
@@ -208,6 +222,8 @@ namespace Rogue
 				ImGui::EndChild();
 				ImGui::NextColumn();
 				m_currentTexture = TextureManager::instance().loadTexture(m_currentPath.c_str());
+				ImGui::Text("Current Selected Tile");
+				ImGui::Image((void*)m_currentTexture.m_texture, ImVec2(50.0f, 50.f), ImVec2(m_minX, m_maxY), ImVec2(m_maxX, m_minY), ImVec4(1, 1, 1, 1), ImGui::GetStyle().Colors[ImGuiCol_Border]);
 				ImGui::Text("Current Image");
 				ImGui::Image((void*)m_currentTexture.m_texture, ImVec2(50.0f, 50.f), ImVec2(0, 1), ImVec2(1, 0), ImVec4(1, 1, 1, 1), ImGui::GetStyle().Colors[ImGuiCol_Border]);
 				if (ImGui::BeginDragDropTarget())
@@ -218,21 +234,6 @@ namespace Rogue
 						if (payload_n.m_fileType == "png" || payload_n.m_fileType == "bmp")
 						{
 							m_currentPath = payload_n.m_filePath.c_str();
-							m_tilePallete.clear();
-							for (int i = 0; i < 5; ++i)
-							{
-								float m_tempmin = 0;
-								float m_tempmax = 0.2f;
-								for (int j = 0; j < 5; ++j)
-								{
-									TilePallet pallet;
-									pallet.m_texture = TextureManager::instance().loadTexture(m_currentPath.c_str());
-									pallet.m_texCoordMin = m_tempmin;
-									pallet.m_texCoordMax = m_tempmax;
-									m_tempmin += 0.2f;
-									m_tempmax += 0.2f;
-								}
-							}
 							ImGui::EndDragDropTarget();
 						}
 						else
@@ -241,15 +242,34 @@ namespace Rogue
 						}
 					}
 				}
+				float minx = 0.0f;
+				float maxx = 0.2f;
+				float miny = 0.8f;
+				float maxy = 1.0f;
+
 				for (int i = 0; i < 5; ++i)
 				{
 					ImGui::NewLine();				
 					for (int j = 0; j < 5; ++j)
 					{
 						ImGui::SameLine();
-						ImGui::Image((void*)m_currentTexture.m_texture, ImVec2(50.0f, 50.f), ImVec2(0, 1), ImVec2(1, 0), ImVec4(1, 1, 1, 1), ImGui::GetStyle().Colors[ImGuiCol_Border]);
+						ImGui::Image((void*)m_currentTexture.m_texture, ImVec2(50.0f, 50.0f), ImVec2(minx, maxy), ImVec2(maxx, miny), ImVec4(1, 1, 1, 1), ImGui::GetStyle().Colors[ImGuiCol_Border]);
+						if (ImGui::IsItemClicked(0))
+						{
+							m_minX = minx;
+							m_minY = miny;
+							m_maxX = maxx;
+							m_maxY = maxy;
+						}
+						minx += 0.2f;
+						maxx += 0.2f;
 					}
+					minx = 0.0f;
+					maxx = 0.2f;
+					miny -= 0.2f;
+					maxy -= 0.2f;
 				}
+
 				ImGui::Text("%s", m_currentPath.c_str());
 				
 				if (ImGui::RadioButton("Single Tile Mode", m_currentmode == Mode::Single))
@@ -286,7 +306,10 @@ namespace Rogue
 									j.m_texturename = i.m_texturename;
 									j.m_tileTexture = i.m_tileTexture;
 									j.m_bordercolor = i.m_bordercolor;
-									//std::cout << j.m_texturename << std::endl;
+									j.m_texCoordMinX = i.m_texCoordMinX;
+									j.m_texCoordMaxX = i.m_texCoordMaxX;
+									j.m_texCoordMinY = i.m_texCoordMinY;
+									j.m_texCoordMaxY = i.m_texCoordMaxY;
 									//if tile exists, delete tile
 									if (j.m_tileId > 0)
 									{
@@ -298,17 +321,13 @@ namespace Rogue
 									}
 									
 									j.m_tileId = Create2DSprite(i.m_tilePos, Vec2{ 100,100 }, i.m_texturename, i.m_collision);
+									auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(j.m_tileId);
+									sprite.setTexCoordMin(j.m_texCoordMinX);
+									sprite.setTexCoordMax(j.m_texCoordMaxX);
+									sprite.setTexCoordMinY(j.m_texCoordMinY);
+									sprite.setTexCoordMaxY(j.m_texCoordMaxY);
 								}
 							}
-						}
-					}
-					for (auto& i : ImGuiTileSet::instance().m_GlobalTileSet)
-					{
-						if (g_engine.m_coordinator.ComponentExists<SpriteComponent>(i.m_tileId))
-						{
-							auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(i.m_tileId);
-								sprite.setTexCoordMin(0.0f);
-								sprite.setTexCoordMax(0.25f);
 						}
 					}
 					std::string file = SceneManager::instance().getCurrentFileName().c_str();
