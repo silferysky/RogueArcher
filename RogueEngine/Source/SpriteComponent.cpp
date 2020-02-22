@@ -63,6 +63,26 @@ namespace Rogue
 		return m_texCoordMax;
 	}
 
+	void SpriteComponent::setTexCoordMinY(const float& TexCoordMinY)
+	{
+		m_texCoordMinY = TexCoordMinY;
+	}
+
+	float SpriteComponent::getTexCoordMinY() const
+	{
+		return m_texCoordMinY;
+	}
+
+	void SpriteComponent::setTexCoordMaxY(const float& texCoordMaxY)
+	{
+		m_texCoordMaxY = texCoordMaxY;
+	}
+
+	float SpriteComponent::getTexCoordMaxY() const
+	{
+		return m_texCoordMaxY;
+	}
+
 	glm::vec4& SpriteComponent::getFilter()
 	{
 		return m_filter;

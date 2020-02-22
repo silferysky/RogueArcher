@@ -209,7 +209,7 @@ namespace Rogue
 				ImGui::NextColumn();
 				m_currentTexture = TextureManager::instance().loadTexture(m_currentPath.c_str());
 				ImGui::Text("Current Image");
-				ImGui::Image((void*)m_currentTexture.m_texture, ImVec2(150.0f, 150.f), ImVec2(0, 1), ImVec2(1, 0), ImVec4(1, 1, 1, 1), ImGui::GetStyle().Colors[ImGuiCol_Border]);
+				ImGui::Image((void*)m_currentTexture.m_texture, ImVec2(50.0f, 50.f), ImVec2(0, 1), ImVec2(1, 0), ImVec4(1, 1, 1, 1), ImGui::GetStyle().Colors[ImGuiCol_Border]);
 				if (ImGui::BeginDragDropTarget())
 				{
 					if (const ImGuiPayload * payload = ImGui::AcceptDragDropPayload("Data"))
@@ -218,6 +218,21 @@ namespace Rogue
 						if (payload_n.m_fileType == "png" || payload_n.m_fileType == "bmp")
 						{
 							m_currentPath = payload_n.m_filePath.c_str();
+							m_tilePallete.clear();
+							for (int i = 0; i < 5; ++i)
+							{
+								float m_tempmin = 0;
+								float m_tempmax = 0.2f;
+								for (int j = 0; j < 5; ++j)
+								{
+									TilePallet pallet;
+									pallet.m_texture = TextureManager::instance().loadTexture(m_currentPath.c_str());
+									pallet.m_texCoordMin = m_tempmin;
+									pallet.m_texCoordMax = m_tempmax;
+									m_tempmin += 0.2f;
+									m_tempmax += 0.2f;
+								}
+							}
 							ImGui::EndDragDropTarget();
 						}
 						else
@@ -226,7 +241,15 @@ namespace Rogue
 						}
 					}
 				}
-
+				for (int i = 0; i < 5; ++i)
+				{
+					ImGui::NewLine();				
+					for (int j = 0; j < 5; ++j)
+					{
+						ImGui::SameLine();
+						ImGui::Image((void*)m_currentTexture.m_texture, ImVec2(50.0f, 50.f), ImVec2(0, 1), ImVec2(1, 0), ImVec4(1, 1, 1, 1), ImGui::GetStyle().Colors[ImGuiCol_Border]);
+					}
+				}
 				ImGui::Text("%s", m_currentPath.c_str());
 				
 				if (ImGui::RadioButton("Single Tile Mode", m_currentmode == Mode::Single))
@@ -274,13 +297,20 @@ namespace Rogue
 										g_engine.m_coordinator.AddToDeleteQueue(j.m_tileId);
 									}
 									
-									j.m_tileId = Create2DSprite(i.m_tilePos, Vec2{ 100.0f,100.0f }, i.m_texturename, i.m_collision);
+									j.m_tileId = Create2DSprite(i.m_tilePos, Vec2{ 100,100 }, i.m_texturename, i.m_collision);
 								}
 							}
 						}
 					}
-
-					//Terence send halp
+					for (auto& i : ImGuiTileSet::instance().m_GlobalTileSet)
+					{
+						if (g_engine.m_coordinator.ComponentExists<SpriteComponent>(i.m_tileId))
+						{
+							auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(i.m_tileId);
+								sprite.setTexCoordMin(0.0f);
+								sprite.setTexCoordMax(0.25f);
+						}
+					}
 					std::string file = SceneManager::instance().getCurrentFileName().c_str();
 					SceneManager::instance().SaveTileset(file.c_str());
 				}
@@ -335,8 +365,6 @@ namespace Rogue
 	std::string Tile::Serialize()
 	{
 		std::ostringstream oss;
-
-		std::cout << "Serialize" <<  m_texturename << std::endl;
 		//oss << m_tileId << ";";
 		oss << m_texturename << ";";
 		oss << m_tilePos.x << "," << m_tilePos.y << ";";
