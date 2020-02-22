@@ -222,7 +222,7 @@ namespace Rogue
 		glm::mat4 viewMat;
 		auto texture = sprite.getTexture();
 
-		transformMat = glm::translate(transformMat, { transform.GetPosition().x, transform.GetPosition().y, 1.0f });
+		transformMat = glm::translate(transformMat, { transform.GetPosition().x, transform.GetPosition().y,  1.0f });
 		transformMat = glm::rotate(transformMat, transform.GetRotation(), glm::vec3(0.0f, 0.0f, 1.0f));
 		transformMat = glm::scale(transformMat, glm::vec3(transform.GetScale().x, transform.GetScale().y, 1.0f));
 
@@ -309,7 +309,7 @@ namespace Rogue
 	{
 		// Init OpenGL
 		glEnable(GL_TEXTURE_2D);						   // Texture Mapping
-		//glEnable(GL_DEPTH_TEST);
+		glEnable(GL_DEPTH_TEST);
 		glShadeModel(GL_SMOOTH);						   // Smooth shading
 		glDepthFunc(GL_LEQUAL);							   // Depth testing type
 		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Perspective Calculations
