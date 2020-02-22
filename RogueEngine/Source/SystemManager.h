@@ -233,6 +233,8 @@ namespace Rogue
 			return m_stepFrames;
 		}
 
+		void SetTransitionLevel(std::string_view levelName);
+
 	private:
 		std::unordered_map<std::type_index, Signature> m_signatures;
 		std::vector<std::pair<std::type_index, std::shared_ptr<System>>> m_systems;
@@ -242,6 +244,9 @@ namespace Rogue
 		bool m_stepOnce = false;
 		bool m_gameModeChanged = false;
 		bool m_showCursor = true;
+
+		bool m_transitionLevel = false;
+		std::string m_transitionString = "";
 
 		size_t m_stepFrames = 1;
 		int m_stepCounter = 0;

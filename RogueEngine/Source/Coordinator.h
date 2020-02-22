@@ -402,5 +402,10 @@ namespace Rogue
 		{
 			return m_systemManager->GetStepFrames();
 		}
+
+		void SetTransitionLevel(std::string_view levelName)
+		{
+			m_systemManager->SetTransitionLevel(levelName);
+		}
 	};
 }

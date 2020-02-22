@@ -92,6 +92,12 @@ namespace Rogue
 
 		// If placed before ^, will cause memory leak.
 		EventDispatcher::instance().Update();
+
+		if (m_transitionLevel)
+		{
+			SceneManager::instance().LoadLevel(m_transitionString.c_str());
+			m_transitionLevel = false;
+		}
 	}
 
 	void SystemManager::Update()
@@ -116,6 +122,12 @@ namespace Rogue
 		// Only run editor if editor is running.
 		if (m_editorIsRunning)
 			UpdateSystem(SystemID::id_EDITOR);
+	}
+
+	void SystemManager::SetTransitionLevel(std::string_view levelName)
+	{
+		m_transitionLevel = true;
+		m_transitionString = levelName.data();
 	}
 
 	void SystemManager::FixedUpdate()
