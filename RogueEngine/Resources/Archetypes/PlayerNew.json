@@ -1,0 +1,5 @@
+{
+    "Signature": 1057783,
+    "Entity": "Name{PlayerNew}|Tag{Player}|Sprite{Resources\\Assets\\ExaIdle.png;1;1;1;1;}|Rigidbody{0;-1500;0;2.24897;1;1;0;1;0.5;0.1;0.01;}|Transform{-2813.04;703.69;61;61;0;13}||BoxCollider{0;-2;-15;-5;AWAKE}|PlayerController{0;0.2;400;15;}|LogicComponent{21;0;1;0}|StatsComponent{0;0;0;0;0;;0;}|Animation{8;0;0.1;1;0;1;}|Camera{0;0;1;100;1;}||||Collider{BOX;2;4294967293;}|||||||LIGHT{1;7.5;601;3.2;0.828431;0.441448;0.0974626;1;}|||",
+    "Children": "TeleCharge1;TeleCharge2;TeleCharge3;Teleport Animation;Exa-Ela Animation;Ela-Exa Animation;Exa Particle Emitter;Ela Particle Emitter;Exa Death Particle;Ela Death Particle;"
+}
