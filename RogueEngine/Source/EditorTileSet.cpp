@@ -2,6 +2,7 @@
 #include "EditorTileSet.h"
 #include "REEngine.h"
 #include "PickingManager.h"
+#include "Logger.h"
 
 namespace Rogue
 {
@@ -9,10 +10,27 @@ namespace Rogue
 	{
 		std::ostringstream oss;
 
+
+		int tiles = 0;
+
 		for (auto& tile : m_GlobalTileSet)
 		{
-			oss << tile.Serialize() << "|";
+			if (tile.m_texturename != "" && tile.m_texturename != "None")
+			{
+				tiles++;
+				oss << tile.Serialize() << "|";
+			}
+
+			std::stringstream texture;
+			texture << "Texture name: " << tile.m_texturename;
+
+			RE_INFO(texture.str());
 		}
+
+
+		std::stringstream ss;
+		ss << "Size of vector: " << m_GlobalTileSet.size() << "\nSerialized tiles: " << tiles;
+		RE_INFO(ss.str());
 
 		return oss.str();
 	}
@@ -21,12 +39,15 @@ namespace Rogue
 	{
 		std::istringstream iss(deserializeStr.data());
 		std::string str;
+		
+		m_GlobalTileSet.clear();
 
 		while (std::getline(iss, str, '|'))
 		{
 			Tile tile;
 			tile.Deserialize(str);
-			m_GlobalTileSet.push_back(tile);
+			if(tile.m_texturename != "" && tile.m_texturename != "None")
+				m_GlobalTileSet.push_back(tile);
 		}
 	}
 
