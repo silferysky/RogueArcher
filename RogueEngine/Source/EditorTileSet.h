@@ -8,6 +8,7 @@ namespace Rogue
 		: public ISerializable
 	{
 		std::string m_texturename;
+		std::string m_tag;
 		Entity m_tileId = 0;
 		Entity m_tempTile = 0;
 		Vec2 m_tilePos;
@@ -42,6 +43,8 @@ namespace Rogue
 		bool m_firstclicked;
 		bool m_globalcheck;
 		bool m_deleteTile;
+		bool m_hasTextureChanged;
+		bool m_groundtag;
 		int m_tileSize;
 		int m_tilesHeight;
 		int m_tilesWidth;

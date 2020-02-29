@@ -54,7 +54,7 @@ namespace Rogue
 	ImGuiTileSet::ImGuiTileSet() :m_TileSet(), m_GlobalTileSet(),
 		m_minY(0),m_minX(0),m_maxX(0),m_maxY(0),m_tileSize(61),m_tilesHeight(0),
 		m_tilesWidth(0),m_currentTileX(0),m_currentTileY(0),m_openWindow(true), m_isCollision(false),
-		m_check(true), m_firstclicked(false), m_globalcheck(false), m_deleteTile(false)
+		m_check(true), m_firstclicked(false), m_globalcheck(false), m_deleteTile(false),m_hasTextureChanged(false),m_groundtag(false)
 	{
 	}
 
@@ -107,10 +107,7 @@ namespace Rogue
 			}
 			
 			ImGuiTileSet::instance().m_TileSet.push_back(tileset);
-			if (!m_globalcheck)
-			{
-				ImGuiTileSet::instance().m_GlobalTileSet.push_back(tileset);
-			}
+
 			if (m_minX > m_maxX && m_minY < m_maxY)
 			{
 				m_minX = viewportArea.getMin().x;
@@ -143,7 +140,6 @@ namespace Rogue
 				ImGui::BeginChild("##1", ImVec2(0, 0), false, ImGuiWindowFlags_HorizontalScrollbar);
 				ImGui::SetNextWindowContentWidth(1500);
 				ImGui::AlignTextToFramePadding();
-
 				ImVec2 imageSize;
 				imageSize.x = 20.0f;
 				imageSize.y = 20.0f;
@@ -170,7 +166,6 @@ namespace Rogue
 							i.m_tileTexture = TextureManager::instance().loadTexture("None");
 							i.m_texturename = "None";
 							i.m_bordercolor = { 1.0f, 1.0f, 1.0f, 0.5f };
-							//TODO
 							i.m_texCoordMinX;
 							if (m_currentmode == Mode::Drag)
 							{
@@ -319,9 +314,10 @@ namespace Rogue
 						{
 							//find global tile
 							if (i.m_tilePos.x == j.m_tilePos.x && i.m_tilePos.y == j.m_tilePos.y)
-							{
-								
-								//if texture has been changed
+							{		
+
+								m_globalcheck = true;
+								//if texture has been changed, just change the texture
 								if (i.m_texturename != j.m_texturename)
 								{
 									j.m_texturename = i.m_texturename;
@@ -331,15 +327,8 @@ namespace Rogue
 									j.m_texCoordMaxX = i.m_texCoordMaxX;
 									j.m_texCoordMinY = i.m_texCoordMinY;
 									j.m_texCoordMaxY = i.m_texCoordMaxY;
-									//if tile exists, delete tile
-									//if (j.m_tileId > 0)
-									//{
-										g_engine.m_coordinator.AddToDeleteQueue(j.m_tileId);
-									//}
-									//if (j.m_texturename.c_str() == "None")
-									//{
-									//	g_engine.m_coordinator.AddToDeleteQueue(j.m_tileId);
-									//}
+
+									g_engine.m_coordinator.AddToDeleteQueue(j.m_tileId);
 									
 									j.m_tileId = Create2DSprite(i.m_tilePos, Vec2{ i.m_tileWidth,i.m_tileHeight }, i.m_texturename, i.m_collision);
 									auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(j.m_tileId);
@@ -347,10 +336,35 @@ namespace Rogue
 									sprite.setTexCoordMaxX(j.m_texCoordMaxX);
 									sprite.setTexCoordMinY(j.m_texCoordMinY);
 									sprite.setTexCoordMaxY(j.m_texCoordMaxY);
+									m_hasTextureChanged = true;	
 								}
 							}
 						}
+						//if current tile does not exist in global tile set
+						if (!m_globalcheck)
+						{
+							if (i.m_texturename == "" || i.m_texturename == "None" || m_hasTextureChanged)
+							{
+								m_globalcheck = false;
+								m_hasTextureChanged = false;
+								continue;
+							}
+							else
+							{
+								i.m_tileId = Create2DSprite(i.m_tilePos, Vec2{ i.m_tileWidth,i.m_tileHeight }, i.m_texturename, i.m_collision);
+								auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(i.m_tileId);
+								sprite.setTexCoordMinX(i.m_texCoordMinX);
+								sprite.setTexCoordMaxX(i.m_texCoordMaxX);
+								sprite.setTexCoordMinY(i.m_texCoordMinY);
+								sprite.setTexCoordMaxY(i.m_texCoordMaxY);
+								ImGuiTileSet::instance().m_GlobalTileSet.push_back(i);
+							}
+						}
+						m_globalcheck = false;
+						m_hasTextureChanged = false;
 					}
+						
+					std::cout << ImGuiTileSet::instance().m_GlobalTileSet.size() << std::endl;
 					std::string file = SceneManager::instance().getCurrentFileName().c_str();
 					SceneManager::instance().SaveTileset(file.c_str());
 				}
