@@ -41,8 +41,9 @@ namespace Rogue
 		AIState GetCurState() const;
 		void	SetCurState(AIState newState);
 
-		AIType	GetLogicType() const;
-		void	SetLogicType(AIType newType);
+		std::vector<AIType>	GetLogicType() const;
+		void	AddLogicType(AIType newType);
+		void	RemoveLogicType(AIType type);
 
 		void	SetActiveStateBit(size_t pos);
 		void	ResetActiveStateBit();
@@ -56,7 +57,7 @@ namespace Rogue
 
 	private:
 
-		enum AIType m_AIType;
+		std::vector<enum AIType> m_AIType;
 		//AllStates must be a vector since it does not necessarily act in order
 		std::vector<AIState> m_allStates;
 		//std::vector<std::string> m_allScripts;

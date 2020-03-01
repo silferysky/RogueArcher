@@ -65,14 +65,25 @@ namespace Rogue
 		m_currentState = newState;
 	}
 
-	AIType LogicComponent::GetLogicType() const
+	std::vector<AIType> LogicComponent::GetLogicType() const
 	{
 		return m_AIType;
 	}
 
-	void LogicComponent::SetLogicType(AIType newType)
+	void LogicComponent::AddLogicType(AIType newType)
 	{
-		m_AIType = newType;
+		auto it = std::find(std::begin(m_AIType), std::end(m_AIType), newType);
+		if (it != std::end(m_AIType))
+			m_AIType.push_back(newType);
+	}
+
+	void LogicComponent::RemoveLogicType(AIType type)
+	{
+		auto it = std::find(std::begin(m_AIType), std::end(m_AIType), type);
+		if (it != std::end(m_AIType))
+		{
+			m_AIType.erase(it);
+		}
 	}
 
 	void LogicComponent::SetActiveStateBit(size_t pos)
@@ -95,7 +106,13 @@ namespace Rogue
 		//AI Type, AI first state, all different AI states
 		std::ostringstream ss;
 		
-		ss << static_cast<int>(m_AIType) << ";";
+		ss << static_cast<int>(m_AIType.size()) << ";";
+
+		for (auto& ai : m_AIType)
+		{
+			ss << static_cast<int>(ai) << ";";
+		}
+
 		ss << static_cast<int>(m_currentState) << ";";
 		ss << static_cast<int>(m_allStates.size()) << ";";
 
@@ -123,7 +140,7 @@ namespace Rogue
 			{
 			case 0:
 			{
-				m_AIType = static_cast<AIType>(stoi(s1));
+				m_AIType.push_back(static_cast<AIType>(stoi(s1)));
 				break;
 			}
 			case 1:
@@ -165,11 +182,11 @@ namespace Rogue
 			"UI Tele Charge 1", "UI Tele Charge 2", "UI Tele Charge 3", "Death", "Checkpoint", "Soul Collectible", "Teleport Animation", 
 			"Animate on Exa", "Animate on Ela", "Activate on Exa", "Activate on Ela", "Activate on Exa Death", "Activate on Ela Death", "Lights Flicker" };
 		const char* aiState[] = { "Idle", "Chase", "Patrol"};
-		int tempInt = (int)m_AIType;
+		int tempInt = (int)(*m_AIType.begin());
 
 		//For AI Type
 		ImGui::Combo("AI Type", &tempInt, aiType, IM_ARRAYSIZE(aiType));
-		m_AIType = (AIType)tempInt;
+		//m_AIType = (AIType)tempInt;
 		
 		//For initial state
 		tempInt = (int)m_currentState;
