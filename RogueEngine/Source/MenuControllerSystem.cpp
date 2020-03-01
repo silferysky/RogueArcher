@@ -61,6 +61,22 @@ namespace Rogue
 	{
 		switch (ev->GetEventType())
 		{
+		case EventType::EvEntityHover:
+		{
+			EntHoverEvent* hover = dynamic_cast<EntHoverEvent*>(ev);
+
+			if (g_engine.m_coordinator.ComponentExists<SpriteComponent>(hover->GetEntityID()))
+			{
+				//+2 to skip crosshair and background
+				if (hover->GetEntityID() < m_menuObjs.front() + 2 || hover->GetEntityID() > *(m_menuObjs.end() - 1))
+					return;
+				auto filter = g_engine.m_coordinator.GetComponent<SpriteComponent>(hover->GetEntityID()).getFilter();
+				filter.a = 0.8f;
+				g_engine.m_coordinator.GetComponent<SpriteComponent>(hover->GetEntityID()).setFilter(filter);
+			}
+
+			return;
+		}
 		case EventType::EvEntityPicked:
 		{
 			//Prevents entity buttons from being useful when game is inactive, allows for pause tho
