@@ -140,7 +140,12 @@ namespace Rogue
 			{
 			case 0:
 			{
-				m_AIType.push_back(static_cast<AIType>(stoi(s1)));
+				int aisize = stoi(s1);
+				for (int i = 0; i < aisize; ++i)
+				{
+					if (std::getline(ss,s1,';'))
+						m_AIType.push_back(static_cast<AIType>(stoi(s1)));
+				}
 				break;
 			}
 			case 1:
