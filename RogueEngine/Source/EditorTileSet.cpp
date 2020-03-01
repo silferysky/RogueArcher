@@ -315,9 +315,14 @@ namespace Rogue
 							//find global tile
 							if (i.m_tilePos.x == j.m_tilePos.x && i.m_tilePos.y == j.m_tilePos.y)
 							{		
-
 								m_globalcheck = true;
 								//if texture has been changed, just change the texture
+								if ((i.m_texturename != j.m_texturename) && i.m_texturename == "None")
+								{
+									g_engine.m_coordinator.AddToDeleteQueue(j.m_tileId);
+									//m_globalcheck = false;
+									continue;
+								}
 								if (i.m_texturename != j.m_texturename)
 								{
 									j.m_texturename = i.m_texturename;
@@ -364,7 +369,6 @@ namespace Rogue
 						m_hasTextureChanged = false;
 					}
 						
-					std::cout << ImGuiTileSet::instance().m_GlobalTileSet.size() << std::endl;
 					std::string file = SceneManager::instance().getCurrentFileName().c_str();
 					SceneManager::instance().SaveTileset(file.c_str());
 				}
