@@ -64,6 +64,7 @@ namespace Rogue
 		EvEntityDamaged,
 		EvEntityDestroy,
 		EvEntityHitchhike,
+		EvEntityHover,
 
 		EvResetGame,
 

@@ -291,8 +291,16 @@ namespace Rogue
 		SET_EVENT_TYPE(EvEntityPicked)
 
 		EntPickedEvent(Entity _id) :
-			EntityEvent(_id)
-		{}
+			EntityEvent(_id) {}
+	};
+
+	class EntHoverEvent : public EntityEvent
+	{
+	public:
+		SET_EVENT_TYPE(EvEntityHover)
+
+		EntHoverEvent(Entity _id) :
+			EntityEvent(_id){}
 	};
 
 	class EntHitchhikeEvent : public EntityEvent
