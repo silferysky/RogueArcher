@@ -41,7 +41,6 @@ namespace Rogue
 		std::string str;
 		
 		m_GlobalTileSet.clear();
-
 		while (std::getline(iss, str, '|'))
 		{
 			Tile tile;
@@ -315,9 +314,20 @@ namespace Rogue
 							//find global tile
 							if (i.m_tilePos.x == j.m_tilePos.x && i.m_tilePos.y == j.m_tilePos.y)
 							{		
-
 								m_globalcheck = true;
 								//if texture has been changed, just change the texture
+								if ((i.m_texturename != j.m_texturename) && i.m_texturename == "None")
+								{
+									j.m_texturename = i.m_texturename;
+									j.m_tileTexture = i.m_tileTexture;
+									j.m_bordercolor = i.m_bordercolor;
+									j.m_texCoordMinX = i.m_texCoordMinX;
+									j.m_texCoordMaxX = i.m_texCoordMaxX;
+									j.m_texCoordMinY = i.m_texCoordMinY;
+									j.m_texCoordMaxY = i.m_texCoordMaxY;
+									g_engine.m_coordinator.AddToDeleteQueue(j.m_tileId);
+									continue;
+								}
 								if (i.m_texturename != j.m_texturename)
 								{
 									j.m_texturename = i.m_texturename;
@@ -364,7 +374,6 @@ namespace Rogue
 						m_hasTextureChanged = false;
 					}
 						
-					std::cout << ImGuiTileSet::instance().m_GlobalTileSet.size() << std::endl;
 					std::string file = SceneManager::instance().getCurrentFileName().c_str();
 					SceneManager::instance().SaveTileset(file.c_str());
 				}
@@ -498,6 +507,7 @@ namespace Rogue
 		{
 			//std::cout << "Create: " << m_texturename << std::endl;
 			Entity ent = ImGuiTileSet::instance().Create2DSprite(m_tilePos, Vec2(m_tileWidth, m_tileHeight), m_texturename, m_collision);
+			m_tileId = ent;
 			auto& sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(ent)->get();
 			sprite.setTexCoordMinX(m_texCoordMinX);
 			sprite.setTexCoordMinY(m_texCoordMinY);
