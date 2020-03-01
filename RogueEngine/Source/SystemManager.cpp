@@ -34,6 +34,19 @@ namespace Rogue
 	// Note: Debug draw system currently doesn't update here.
 	void SystemManager::UpdateSystems()
 	{
+		if (m_transitionLevel && m_transitionTime < 0.0f)
+		{
+			SceneManager::instance().LoadLevel(m_transitionString.c_str());
+			m_transitionLevel = false;
+			m_transitionTime = TRANSIT_TIME;
+			return;
+		}
+		else if (m_transitionLevel)
+		{
+			m_transitionTime -= g_deltaTime * g_engine.GetTimeScale();
+			return;
+		}
+
 		// Update cursor
 		if (m_gameModeChanged)
 		{
@@ -92,12 +105,6 @@ namespace Rogue
 
 		// If placed before ^, will cause memory leak.
 		EventDispatcher::instance().Update();
-
-		if (m_transitionLevel)
-		{
-			SceneManager::instance().LoadLevel(m_transitionString.c_str());
-			m_transitionLevel = false;
-		}
 	}
 
 	void SystemManager::Update()

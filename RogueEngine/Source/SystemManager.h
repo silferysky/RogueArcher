@@ -245,7 +245,9 @@ namespace Rogue
 		bool m_gameModeChanged = false;
 		bool m_showCursor = true;
 
+#define TRANSIT_TIME 1.0f
 		bool m_transitionLevel = false;
+		float m_transitionTime = TRANSIT_TIME;
 		std::string m_transitionString = "";
 
 		size_t m_stepFrames = 1;

@@ -19,7 +19,6 @@ Technology is prohibited.
 #include "EventListener.h"
 #include "BaseSystem.h"
 #include <vector>
-#define TRANSITION_TIME 1.0f
 
 namespace Rogue
 {
@@ -29,8 +28,6 @@ namespace Rogue
 		std::vector<Entity> m_menuObjs;
 		std::vector<Entity> m_confirmQuitEnt;
 		bool m_confirmQuit;
-		float m_transitionTimer;
-		bool m_isTransitingOut;
 
 	public:
 
@@ -52,11 +49,6 @@ namespace Rogue
 		void ToggleQuitButtonObj();
 		size_t GetUIMenuObjsSize();
 		void ResumeGame();
-
-		//Transitioning
-		void Transit();
-		bool GetTransitType() const;
-		float GetTransitTime() const;
 	};
 }
 
