@@ -35,8 +35,8 @@ namespace Rogue
 		void	AddAIState(AIState newState);
 		void	AddAIStateInactive(AIState newState);
 
-		std::vector<std::string> GetScriptString() const;
-		void	AddScriptString(const std::string& newScript);
+		//std::vector<std::string> GetScriptString() const;
+		//void	AddScriptString(const std::string& newScript);
 
 		AIState GetCurState() const;
 		void	SetCurState(AIState newState);
@@ -59,7 +59,7 @@ namespace Rogue
 		enum AIType m_AIType;
 		//AllStates must be a vector since it does not necessarily act in order
 		std::vector<AIState> m_allStates;
-		std::vector<std::string> m_allScripts;
+		//std::vector<std::string> m_allScripts;
 		//Multiple states can be active, but the first active state will be executed
 		std::bitset<static_cast<size_t>(AIState::AIState_Last)> m_activeStates;
 		enum AIState m_currentState;

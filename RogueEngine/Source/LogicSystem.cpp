@@ -82,7 +82,7 @@ namespace Rogue
 		//Check if any new AI needs to be added
 		if (m_entities.size() > m_entityLogicMap.size())
 		{
-			AddExcessAI();
+			GenerateScripts();
 		}
 		else if (m_entities.size() < m_entityLogicMap.size()) //Check if any AI needs to be deleted
 		{
@@ -171,7 +171,7 @@ namespace Rogue
 		m_entityLogicMap.clear();
 	}
 
-	void LogicSystem::AddExcessAI()
+	void LogicSystem::GenerateScripts()
 	{
 		for (auto& entities : m_entities)
 		{
@@ -336,7 +336,7 @@ namespace Rogue
 		}
 	}
 
-	void LogicSystem::GenerateScript()
+	/*void LogicSystem::GenerateScript()
 	{
 		for (auto& entity : m_entities)
 		{
@@ -487,9 +487,9 @@ namespace Rogue
 				}
 			}
 		}
-	}
+	}*/
 
-	void LogicSystem::DeleteScript()
+	void LogicSystem::DeleteScripts()
 	{
 		for (auto& scripts : m_entityLogicMap)
 		{
@@ -515,38 +515,6 @@ namespace Rogue
 			}
 		}
 	}
-
-	/*void LogicSystem::SeekNearestWaypoint(Entity ent)
-	{
-		Vec2* currentLocation = &g_engine.m_coordinator.GetComponent<TransformComponent>(ent).getPosition();
-		Vec2* nearestWaypoint = nullptr;
-		float distance = 0.0f;
-		for (std::vector<Vec2>::iterator it = m_entityLogicMap[ent]->GetWaypoints().begin(); it != m_entityLogicMap[ent]->GetWaypoints().end(); ++it)
-		{
-			//First iteration sets first value by default
-			if (nearestWaypoint == nullptr)
-			{
-				nearestWaypoint = &*it;
-				distance = Vec2Distance(*currentLocation, *it);
-				continue;
-			}
-
-			//For all other iterations
-			float tempDistance = Vec2Distance(*currentLocation, *it);
-			if (tempDistance < distance)
-			{
-				nearestWaypoint = &*it;
-				distance = tempDistance;
-			}
-		}
-
-		//Null checker
-		if (!nearestWaypoint)
-			return;
-		
-		//Sets the best waypoint into the new location
-		m_entityLogicMap[ent]->AddNextPoint(*nearestWaypoint);
-	}*/
 
 	void LogicSystem::CreateMoveEvent(Entity ent, Vec2 vec)
 	{

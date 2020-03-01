@@ -40,15 +40,15 @@ namespace Rogue
 		m_allStates.push_back(newState);
 	}
 
-	std::vector<std::string> LogicComponent::GetScriptString() const
-	{
-		return m_allScripts;
-	}
+	//std::vector<std::string> LogicComponent::GetScriptString() const
+	//{
+	//	return m_allScripts;
+	//}
 
-	 void LogicComponent::AddScriptString(const std::string& newScript)
-	{
-		 m_allScripts.push_back(newScript);
-	}
+	// void LogicComponent::AddScriptString(const std::string& newScript)
+	//{
+	//	 m_allScripts.push_back(newScript);
+	//}
 
 	void LogicComponent::SetAllAIStates(std::vector<AIState> states)
 	{
@@ -94,6 +94,7 @@ namespace Rogue
 	{
 		//AI Type, AI first state, all different AI states
 		std::ostringstream ss;
+		
 		ss << static_cast<int>(m_AIType) << ";";
 		ss << static_cast<int>(m_currentState) << ";";
 		ss << static_cast<int>(m_allStates.size()) << ";";
@@ -136,17 +137,19 @@ namespace Rogue
 				break;
 			}
 			default:
+			{
 				if (numOfStates > 0)
 				{
 					m_allStates.emplace(m_allStates.begin(), static_cast<AIState>(stoi(s1)));
 					//m_allStates.push_back(static_cast<AIState>(stoi(s1)));
 					--numOfStates;
 				}
-				else
-				{
-					m_allScripts.push_back(s1);
-				}
+				//else
+				//{
+				//	m_allScripts.push_back(s1);
+				//}
 				break;
+			}
 			}
 			++counter;
 		}
