@@ -91,6 +91,9 @@ namespace Rogue
 
 				toUpdate.clear();
 			}
+
+			if (childComponent.GetPosition().x == 0)
+				childComponent.SetPosition(Vec2(1.0f,1.0f));
 		}
 
 		g_engine.m_coordinator.EndTimeSystem("Parent Child System");

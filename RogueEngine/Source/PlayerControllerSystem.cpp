@@ -257,6 +257,27 @@ namespace Rogue
 			PLAYER_STATUS.Reset();
 			break;
 		}
+		case EventType::EvEntityHitchhike:
+		{
+			if (PLAYER_STATUS.GetPlayerEntity() == MAX_ENTITIES)
+				return;
+
+			EntHitchhikeEvent* event = dynamic_cast<EntHitchhikeEvent*>(ev);
+			if (event->GetEntityID() != MAX_ENTITIES)
+			{
+				SetPlayerParent(event->GetEntityID());
+				if (g_engine.m_coordinator.ComponentExists<ChildComponent>(PLAYER_STATUS.GetPlayerEntity()))
+				{
+					auto& player = g_engine.m_coordinator.GetComponent<ChildComponent>(PLAYER_STATUS.GetPlayerEntity());
+					player.ResetLocalDirty();
+					//player.SetGlobalDirty();
+				}
+			}
+			else
+				ResetPlayerParent();
+			break;
+		}
+
 		case EventType::EvEntityChangeRGBA:
 		{
 			EntChangeRGBAEvent* event = dynamic_cast<EntChangeRGBAEvent*>(ev);
@@ -334,7 +355,6 @@ namespace Rogue
 				else if (keycode == KeyPress::MB2 || keycode == KeyPress::KeyShift || keycode == KeyPress::KeyE)
 				{
 					ToggleMode();
-
 				}
 
 				else if (keycode == KeyPress::MB3)
@@ -399,7 +419,7 @@ namespace Rogue
 				{
 					if (g_engine.GetIsFocused())
 					{
-						if (keycode == KeyPress::KeyA && PLAYER_STATUS.IsPlayerActive())
+						if (keycode == KeyPress::KeyA && PLAYER_STATUS.IsPlayerActive() && PLAYER_STATUS.GetHitchhikedEntity() == MAX_ENTITIES)
 						{
 							auto& ctrler = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(*iEntity);
 							ctrler.SetMoveState(MoveState::e_left);
@@ -411,7 +431,7 @@ namespace Rogue
 							PLAYER_STATUS.SetMoveLeft(true);
 							MovingPlayer();
 						}
-						else if (keycode == KeyPress::KeyD && PLAYER_STATUS.IsPlayerActive())
+						else if (keycode == KeyPress::KeyD && PLAYER_STATUS.IsPlayerActive() && PLAYER_STATUS.GetHitchhikedEntity() == MAX_ENTITIES)
 						{
 							auto& ctrler = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(*iEntity);
 							ctrler.SetMoveState(MoveState::e_right);

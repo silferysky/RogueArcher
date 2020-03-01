@@ -63,9 +63,9 @@ namespace Rogue
 		{
 		case EventType::EvKeyTriggered:
 		{
-			KeyTriggeredEvent* mouseClick = dynamic_cast<KeyTriggeredEvent*>(ev);
+			KeyTriggeredEvent* key = dynamic_cast<KeyTriggeredEvent*>(ev);
 
-			if (mouseClick->GetKeyCode() != KeyPress::MB1)
+			if (key->GetKeyCode() != KeyPress::MB1 && key->GetKeyCode() != KeyPress::KeyR)
 				return;
 
 			PickingManager::instance().GenerateViewPortAABB(CameraManager::instance().GetCameraPos(), CameraManager::instance().GetCameraZoom());
@@ -85,13 +85,22 @@ namespace Rogue
 				// Go through every transform component
 				for (Entity entity : m_entities)
 				{
-					//Skip all non UI entities
-					//Skip all cursor entities (crosshair)
-					//Skip inactive UI entities
-					if (!g_engine.m_coordinator.ComponentExists<UIComponent>(entity) ||
-						g_engine.m_coordinator.ComponentExists<CursorComponent>(entity) ||
-						!g_engine.m_coordinator.GetComponent<UIComponent>(entity).getIsActive())
-						continue;
+					//Skip clauses
+					if (key->GetKeyCode() == KeyPress::MB1)
+					{
+						//Skip all non UI entities
+						//Skip all cursor entities (crosshair)
+						//Skip inactive UI entities
+						if (!g_engine.m_coordinator.ComponentExists<UIComponent>(entity) ||
+							g_engine.m_coordinator.ComponentExists<CursorComponent>(entity) ||
+							!g_engine.m_coordinator.GetComponent<UIComponent>(entity).getIsActive())
+							continue;
+					}
+					else if (key->GetKeyCode() == KeyPress::KeyR)
+					{
+						if (!g_engine.m_coordinator.ComponentExists<LogicComponent>(entity))
+							continue;
+					}
 
 					TransformComponent& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
 					Vec2 pos = trans.GetPosition();
@@ -116,15 +125,33 @@ namespace Rogue
 				}
 
 				// Send EntityPickedEvent
-				if (pickedEntity >= 0)
+				if (key->GetKeyCode() == KeyPress::MB1)
 				{
-					EntPickedEvent* event = new EntPickedEvent{ static_cast<Entity>(pickedEntity) };
+					if (pickedEntity >= 0)
+					{
+						EntPickedEvent* event = new EntPickedEvent{ static_cast<Entity>(pickedEntity) };
 
-					if (g_engine.m_coordinator.GetEditorIsRunning() && !g_engine.m_coordinator.GetGameState())
-						event->SetSystemReceivers((int)SystemID::id_EDITOR);
-					event->SetSystemReceivers((int)SystemID::id_MENUCONTROLLERSYSTEM);
+						if (g_engine.m_coordinator.GetEditorIsRunning() && !g_engine.m_coordinator.GetGameState())
+							event->SetSystemReceivers((int)SystemID::id_EDITOR);
+						event->SetSystemReceivers((int)SystemID::id_MENUCONTROLLERSYSTEM);
 
-					EventDispatcher::instance().AddEvent(event);
+						EventDispatcher::instance().AddEvent(event);
+					}
+				}
+				else if (key->GetKeyCode() == KeyPress::KeyR)
+				{
+					if (pickedEntity >= 0)
+					{
+						EntHitchhikeEvent* event = new EntHitchhikeEvent(static_cast<Entity>(pickedEntity));
+						event->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
+						EventDispatcher::instance().AddEvent(event);
+					}
+					else
+					{
+						EntHitchhikeEvent* event = new EntHitchhikeEvent(static_cast<Entity>(MAX_ENTITIES));
+						event->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
+						EventDispatcher::instance().AddEvent(event);
+					}
 				}
 			}
 			return;
