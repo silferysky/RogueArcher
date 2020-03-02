@@ -311,4 +311,13 @@ namespace Rogue
 		EntHitchhikeEvent(Entity _id)
 			: EntityEvent(_id){}
 	};
+
+	class EntResetToCameraEvent : public EntityEvent
+	{
+	public:
+		SET_EVENT_TYPE(EvEntityResetToCamera)
+
+		EntResetToCameraEvent(Entity _id)
+			: EntityEvent(_id) {}
+	};
 }

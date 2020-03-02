@@ -79,6 +79,7 @@ namespace Rogue
 		EvFade,
 		EvEntityChangeSprite,
 		EvEntityChangeRGBA,
+		EvEntityResetToCamera,
 
 		EvParentSet,
 		EvParentReset,

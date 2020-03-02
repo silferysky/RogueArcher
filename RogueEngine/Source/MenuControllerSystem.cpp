@@ -336,16 +336,23 @@ namespace Rogue
 
 	void MenuControllerSystem::ToggleUIMenuObjs()
 	{
-		Vec2 camera = Vec2(CameraManager::instance().GetCameraPos().x, CameraManager::instance().GetCameraPos().y);
-		g_engine.m_coordinator.GetComponent<TransformComponent>(m_menuObjs.front()).setPosition(Vec2());
-		g_engine.m_coordinator.GetComponent<TransformComponent>(m_confirmQuitEnt.front()).setPosition(Vec2());
-
-		std::ostringstream oss;
-		oss << "PauseMenu " << camera.x << ", " << camera.y;
-		RE_INFO(oss.str());
-
 		for (Entity ent : m_menuObjs)
 		{
+			if (ent == m_menuObjs.front())
+			{
+				Vec2 camera = Vec2(CameraManager::instance().GetCameraPos().x, CameraManager::instance().GetCameraPos().y);
+				//g_engine.m_coordinator.GetComponent<TransformComponent>(m_menuObjs.front()).setPosition(Vec2());
+				//g_engine.m_coordinator.GetComponent<TransformComponent>(m_confirmQuitEnt.front()).setPosition(Vec2());
+
+				g_engine.m_coordinator.GetComponent<TransformComponent>(m_menuObjs.front()).setPosition(camera);
+				g_engine.m_coordinator.GetComponent<TransformComponent>(m_confirmQuitEnt.front()).setPosition(camera);
+
+				//std::ostringstream oss;
+				//oss << "PauseMenu " << camera.x << ", " << camera.y;
+				//RE_INFO(oss.str());
+			}
+
+			//Do not do last item (ControlHelp)
 			if (ent == m_menuObjs.back())
 				return;
 
@@ -370,9 +377,6 @@ namespace Rogue
 				}
 			}
 		}
-
-		g_engine.m_coordinator.GetComponent<TransformComponent>(m_menuObjs.front()).setPosition(camera);
-		g_engine.m_coordinator.GetComponent<TransformComponent>(m_confirmQuitEnt.front()).setPosition(camera);
 	}
 
 	void MenuControllerSystem::SetUIMenuObjs(bool newActive)
