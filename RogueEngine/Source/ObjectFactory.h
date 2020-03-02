@@ -29,7 +29,6 @@ namespace Rogue
 	{
 
 	public:
-
 		void LoadLevel(const char* fileName);
 		void SaveLevel(const char* fileName);
 		void LoadTileset(const char* fileName);

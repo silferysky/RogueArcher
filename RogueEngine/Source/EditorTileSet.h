@@ -73,6 +73,7 @@ namespace Rogue
 		ImGuiTileSet();
 		~ImGuiTileSet() = default;
 		Entity Create2DSprite(Vec2 position, Vec2 scale, std::string_view tilepath,bool iscollision);
+		void ClearTileset();
 		virtual void Init() override final;
 		virtual void Update() override final;
 		virtual void Shutdown() override final;

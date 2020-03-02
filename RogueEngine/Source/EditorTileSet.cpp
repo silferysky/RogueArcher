@@ -39,7 +39,12 @@ namespace Rogue
 	{
 		std::istringstream iss(deserializeStr.data());
 		std::string str;
-		
+
+		for (auto& ent : m_GlobalTileSet)
+		{
+			g_engine.m_coordinator.AddToDeleteQueue(ent.m_tileId);
+		}
+
 		m_GlobalTileSet.clear();
 		while (std::getline(iss, str, '|'))
 		{
@@ -423,6 +428,11 @@ namespace Rogue
 		auto& Sprite = g_engine.m_coordinator.CreateComponent<SpriteComponent>(newEnt);
 		Sprite.setTexturePath(tilepath); 
 		return newEnt;
+	}
+
+	void ImGuiTileSet::ClearTileset()
+	{
+		m_TileSet.clear();
 	}
 
 	std::string Tile::Serialize()
