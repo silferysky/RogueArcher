@@ -1,5 +1,0 @@
-{
-  "Signature": 31,
-  "Entity": "Name{Circle}|Tag{}|Sprite{Resources/Assets/test.bmp;1}|Rigidbody{0;0;0;0;1;1;0}|Transform{400;0;100;100;0}|CircleCollider{70.7}|BoxCollider{6;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;1;0;0.5;1;-0.5;1;-1;0;-0.5;-1;0.5;-1;}|PlayerControllable{1}|LogicComponent{1;3;3}|StatsComponent{1;1;5;5}",
-	"Children": ""
-}

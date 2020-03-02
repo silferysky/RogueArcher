@@ -296,13 +296,13 @@ namespace Rogue
 
 	void MenuControllerSystem::InitPauseMenu()
 	{
-		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("MenuUI", false));
+		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("MenuUI", true));
 		for (auto& child : g_engine.m_coordinator.GetHierarchyInfo(m_menuObjs.front()).m_children)
 		{
 			m_menuObjs.push_back(child);
 		}
 
-		m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("MenuConfirmUI", false));
+		m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("MenuConfirmUI", true));
 		for (auto& child : g_engine.m_coordinator.GetHierarchyInfo(m_confirmQuitEnt.front()).m_children)
 		{
 			m_confirmQuitEnt.push_back(child);
@@ -336,6 +336,14 @@ namespace Rogue
 
 	void MenuControllerSystem::ToggleUIMenuObjs()
 	{
+		Vec2 camera = Vec2(CameraManager::instance().GetCameraPos().x, CameraManager::instance().GetCameraPos().y);
+		g_engine.m_coordinator.GetComponent<TransformComponent>(m_menuObjs.front()).setPosition(Vec2());
+		g_engine.m_coordinator.GetComponent<TransformComponent>(m_confirmQuitEnt.front()).setPosition(Vec2());
+
+		std::ostringstream oss;
+		oss << "PauseMenu " << camera.x << ", " << camera.y;
+		RE_INFO(oss.str());
+
 		for (Entity ent : m_menuObjs)
 		{
 			if (ent == m_menuObjs.back())
@@ -352,12 +360,19 @@ namespace Rogue
 					glm::vec3 cameraPos = CameraManager::instance().GetCameraPos();
 					TransformComponent& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(ent);
 					if (!ui.getIsActive())
-						transform.setPosition(Vec2(transform.GetPosition().x - cameraPos.x, transform.GetPosition().y - cameraPos.y));
+					{
+						//transform.setPosition(Vec2(transform.GetPosition().x - cameraPos.x, transform.GetPosition().y - cameraPos.y));
+					}
 					else
-						transform.setPosition(Vec2(transform.GetPosition().x + cameraPos.x, transform.GetPosition().y + cameraPos.y));
+					{
+						//transform.setPosition(Vec2(transform.GetPosition().x + cameraPos.x, transform.GetPosition().y + cameraPos.y));
+					}
 				}
 			}
 		}
+
+		g_engine.m_coordinator.GetComponent<TransformComponent>(m_menuObjs.front()).setPosition(camera);
+		g_engine.m_coordinator.GetComponent<TransformComponent>(m_confirmQuitEnt.front()).setPosition(camera);
 	}
 
 	void MenuControllerSystem::SetUIMenuObjs(bool newActive)

@@ -331,6 +331,10 @@ namespace Rogue
 
 	bool ParentChildSystem::CheckValidReassign(Entity newParent, Entity child)
 	{
+		//Safety catch
+		if (child == MAX_ENTITIES)
+			return false;
+
 		bool isValid = true;
 		HierarchyInfo it = g_engine.m_coordinator.GetHierarchyInfo(newParent);
 

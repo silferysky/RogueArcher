@@ -1,5 +1,5 @@
 {
     "Signature": 4260036,
-    "Entity": "Name{Ela Particle Emitter}|Tag{}|||Transform{-2813.04;702.985;61;61;0;13}||||LogicComponent{18;0;1;0}|StatsComponent{0;0;0;0;0;;0;}|||||||||Particle Emitter{-11;-24;18;23;10;10;0;0;0.001;0;0;0.5;1;0;1;Resources/Assets/ParticleEla.png;12;}|||||||",
+    "Entity": "Name{Ela Particle Emitter}|Tag{}|||Transform{-2813.04;702.985;61;61;0;13}||||LogicComponent{1;18;0;1;0}|StatsComponent{0;0;0;0;0;;0;}|||||||||Particle Emitter{-11;-24;18;23;10;10;0;0;0.001;0;0;0.5;1;0;1;Resources/Assets/ParticleEla.png;12;}|||||||",
     "Children": ""
 }
