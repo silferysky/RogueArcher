@@ -321,15 +321,15 @@ namespace Rogue
 				m_confirmQuit = false;
 				UIComponent& ui = g_engine.m_coordinator.GetComponent<UIComponent>(m_menuObjs.back());
 				ui.setIsActive(!ui.getIsActive());	
-				if (g_engine.m_coordinator.ComponentExists<TransformComponent>(m_menuObjs.back()))
-				{
-					glm::vec3 cameraPos = CameraManager::instance().GetCameraPos();
-					TransformComponent& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(m_menuObjs.back());
-					if (!ui.getIsActive())
-						transform.setPosition(Vec2(transform.GetPosition().x - cameraPos.x, transform.GetPosition().y - cameraPos.y));
-					else
-						transform.setPosition(Vec2(transform.GetPosition().x + cameraPos.x, transform.GetPosition().y + cameraPos.y));
-				}
+				//if (g_engine.m_coordinator.ComponentExists<TransformComponent>(m_menuObjs.back()))
+				//{
+				//	glm::vec3 cameraPos = CameraManager::instance().GetCameraPos();
+				//	TransformComponent& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(m_menuObjs.back());
+				//	if (!ui.getIsActive())
+				//		transform.setPosition(Vec2(transform.GetPosition().x - cameraPos.x, transform.GetPosition().y - cameraPos.y));
+				//	else
+				//		transform.setPosition(Vec2(transform.GetPosition().x + cameraPos.x, transform.GetPosition().y + cameraPos.y));
+				//}
 			}
 		}
 	}
@@ -341,15 +341,9 @@ namespace Rogue
 			if (ent == m_menuObjs.front())
 			{
 				Vec2 camera = Vec2(CameraManager::instance().GetCameraPos().x, CameraManager::instance().GetCameraPos().y);
-				//g_engine.m_coordinator.GetComponent<TransformComponent>(m_menuObjs.front()).setPosition(Vec2());
-				//g_engine.m_coordinator.GetComponent<TransformComponent>(m_confirmQuitEnt.front()).setPosition(Vec2());
 
 				g_engine.m_coordinator.GetComponent<TransformComponent>(m_menuObjs.front()).setPosition(camera);
 				g_engine.m_coordinator.GetComponent<TransformComponent>(m_confirmQuitEnt.front()).setPosition(camera);
-
-				//std::ostringstream oss;
-				//oss << "PauseMenu " << camera.x << ", " << camera.y;
-				//RE_INFO(oss.str());
 			}
 
 			//Do not do last item (ControlHelp)
@@ -361,20 +355,6 @@ namespace Rogue
 			{
 				UIComponent& ui = g_engine.m_coordinator.GetComponent<UIComponent>(ent);
 				ui.setIsActive(!ui.getIsActive());
-
-				if (g_engine.m_coordinator.ComponentExists<TransformComponent>(ent))
-				{
-					glm::vec3 cameraPos = CameraManager::instance().GetCameraPos();
-					TransformComponent& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(ent);
-					if (!ui.getIsActive())
-					{
-						//transform.setPosition(Vec2(transform.GetPosition().x - cameraPos.x, transform.GetPosition().y - cameraPos.y));
-					}
-					else
-					{
-						//transform.setPosition(Vec2(transform.GetPosition().x + cameraPos.x, transform.GetPosition().y + cameraPos.y));
-					}
-				}
 			}
 		}
 	}
@@ -431,15 +411,15 @@ namespace Rogue
 				UIComponent& ui = g_engine.m_coordinator.GetComponent<UIComponent>(ent);
 				ui.setIsActive(!ui.getIsActive());
 
-				if (g_engine.m_coordinator.ComponentExists<TransformComponent>(ent))
-				{
-					glm::vec3 cameraPos = CameraManager::instance().GetCameraPos();
-					TransformComponent& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(ent);
-					if (!ui.getIsActive())
-						transform.setPosition(Vec2(transform.GetPosition().x - cameraPos.x, transform.GetPosition().y - cameraPos.y));
-					else
-						transform.setPosition(Vec2(transform.GetPosition().x + cameraPos.x, transform.GetPosition().y + cameraPos.y));
-				}
+				//if (g_engine.m_coordinator.ComponentExists<TransformComponent>(ent))
+				//{
+				//	glm::vec3 cameraPos = CameraManager::instance().GetCameraPos();
+				//	TransformComponent& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(ent);
+				//	if (!ui.getIsActive())
+				//		transform.setPosition(Vec2(transform.GetPosition().x - cameraPos.x, transform.GetPosition().y - cameraPos.y));
+				//	else
+				//		transform.setPosition(Vec2(transform.GetPosition().x + cameraPos.x, transform.GetPosition().y + cameraPos.y));
+				//}
 			}
 	}
 
