@@ -15,7 +15,7 @@ namespace Rogue
 
 		for (auto& tile : m_GlobalTileSet)
 		{
-			if (tile.m_texturename != "" && tile.m_texturename != "None")
+			if (tile.m_texturename != "" && tile.m_texturename != "Resources\\Assets\\tile.png")
 			{
 				tiles++;
 				oss << tile.Serialize() << "|";
@@ -50,7 +50,7 @@ namespace Rogue
 		{
 			Tile tile;
 			tile.Deserialize(str);
-			if(tile.m_texturename != "" && tile.m_texturename != "None")
+			if(tile.m_texturename != "" && tile.m_texturename != "Resources\\Assets\\tile.png")
 				m_GlobalTileSet.push_back(tile);
 		}
 	}
@@ -82,7 +82,8 @@ namespace Rogue
 		while (m_minX < m_maxX)
 		{
 			tileset.m_tileTexture.m_texture = 0;
-			tileset.m_texturename = "";
+			tileset.m_texturename = "Resources\\Assets\\tile.png";
+			tileset.m_tileTexture = TextureManager::instance().loadTexture("Resources\\Assets\\tile.png");
 			tileset.m_tileTexture.m_data = 0;
 			tileset.m_tileId = 0;
 			m_currentTileX = round(m_minX / m_tileSize) * m_tileSize ;
@@ -167,8 +168,8 @@ namespace Rogue
 					{
 						if (m_deleteTile)
 						{
-							i.m_tileTexture = TextureManager::instance().loadTexture("None");
-							i.m_texturename = "None";
+							i.m_tileTexture = TextureManager::instance().loadTexture("Resources\\Assets\\tile.png");
+							i.m_texturename = "Resources\\Assets\\tile.png";
 							i.m_bordercolor = { 1.0f, 1.0f, 1.0f, 0.5f };
 							i.m_texCoordMinX;
 							if (m_currentmode == Mode::Drag)
@@ -213,7 +214,7 @@ namespace Rogue
 					{
 						if (!m_deleteTile)
 						{
-							if (ImGui::IsItemHovered() && m_firstclicked && m_currentPath != "None")
+							if (ImGui::IsItemHovered() && m_firstclicked && m_currentPath != "Resources\\Assets\\tile.png")
 							{
 								i.m_tileTexture = TextureManager::instance().loadTexture(m_currentPath.c_str());
 								i.m_texturename = m_currentPath.c_str();
@@ -232,8 +233,8 @@ namespace Rogue
 						{
 							if (ImGui::IsItemHovered() && m_firstclicked)
 							{
-								i.m_tileTexture = TextureManager::instance().loadTexture("None");
-								i.m_texturename = "None";
+								i.m_tileTexture = TextureManager::instance().loadTexture("Resources\\Assets\\tile.png");
+								i.m_texturename = "Resources\\Assets\\tile.png";
 								i.m_bordercolor = { 1.0f, 1.0f, 1.0f, 0.5f };
 							}					
 						}
@@ -321,7 +322,7 @@ namespace Rogue
 							{		
 								m_globalcheck = true;
 								//if texture has been changed, just change the texture
-								if ((i.m_texturename != j.m_texturename) && i.m_texturename == "None")
+								if ((i.m_texturename != j.m_texturename) && i.m_texturename == "Resources\\Assets\\tile.png")
 								{
 									j.m_texturename = i.m_texturename;
 									j.m_tileTexture = i.m_tileTexture;
@@ -358,7 +359,7 @@ namespace Rogue
 						//if current tile does not exist in global tile set
 						if (!m_globalcheck)
 						{
-							if (i.m_texturename == "" || i.m_texturename == "None" || m_hasTextureChanged)
+							if (i.m_texturename == "" || i.m_texturename == "Resources\\Assets\\tile.png" || m_hasTextureChanged)
 							{
 								m_globalcheck = false;
 								m_hasTextureChanged = false;
@@ -385,7 +386,7 @@ namespace Rogue
 
 				if (ImGui::Button("Delete current path"))
 				{
-					m_currentPath = "None";
+					m_currentPath = "Resources\\Assets\\tile.png";
 				}
 
 				if (ImGui::Checkbox("Collision On", &m_isCollision))
@@ -513,7 +514,7 @@ namespace Rogue
 		}
 
 		//Creating a sprite
-		if (m_texturename != "None" && m_texturename != "")
+		if (m_texturename != "Resources\\Assets\\tile.png" && m_texturename != "")
 		{
 			//std::cout << "Create: " << m_texturename << std::endl;
 			Entity ent = ImGuiTileSet::instance().Create2DSprite(m_tilePos, Vec2(m_tileWidth, m_tileHeight), m_texturename, m_collision);
