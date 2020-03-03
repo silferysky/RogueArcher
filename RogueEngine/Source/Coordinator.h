@@ -286,8 +286,18 @@ namespace Rogue
 
 		void DeleteEntities()
 		{
+			std::vector<Entity> childrenToDelete;
 			for (auto& entity : m_deleteQueue)
 			{
+				//Removing Children
+				HierarchyInfo& entInfo = GetHierarchyInfo(entity);
+				for (auto& child : entInfo.m_children)
+				{
+					GetHierarchyInfo(child).m_parent = entInfo.m_parent;
+					childrenToDelete.push_back(child);
+				}
+				GetHierarchyInfo(entity).m_children.clear();
+				
 				//Erasing from Parent
 				Entity parentEnt = GetHierarchyInfo(entity).m_parent;
 				if (parentEnt != MAX_ENTITIES)
@@ -300,20 +310,16 @@ namespace Rogue
 					}
 				}
 
-				//Removing from Children
-				HierarchyInfo& entInfo = GetHierarchyInfo(entity);
-				for (auto& child : entInfo.m_children)
-				{
-					GetHierarchyInfo(child).m_parent = entInfo.m_parent;
-				}
-				GetHierarchyInfo(entity).m_children.clear();
-
 				//Actual deleting
 				RemoveHierarchyInfo(entity);
 				DestroyEntity(entity);
 			}
 
 			m_deleteQueue.clear();
+			for (Entity child : childrenToDelete)
+			{
+				m_deleteQueue.push_back(child);
+			}
 		}
 
 		EntityManager& GetEntityManager() const
