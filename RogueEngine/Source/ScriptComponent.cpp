@@ -20,7 +20,7 @@ Technology is prohibited.
 #include "Logger.h"
 #include "Main.h"
 #include "PlayerStatusManager.h"
-
+#include "GameEvent.h"
 
 namespace Rogue
 {
@@ -97,20 +97,25 @@ namespace Rogue
 		//RE_INFO("AI IDLE");
 	}
 
-	// Might template this in future...
-	void ScriptComponent::HandleCollision(EntCollisionOrTrigger<BoxCollider2DComponent, BoxCollider2DComponent>* ev)
+	void ScriptComponent::OnCollisionEnter(Entity otherEnt)
 	{
-		switch (ev->GetEventType())
+		//RE_INFO("COLLISION ENTER");
+	}
+
+	// Might template this in future...
+	void ScriptComponent::HandleCollision(EntCollisionOrTrigger<BoxCollider2DComponent, BoxCollider2DComponent>& ev)
+	{
+		switch (ev.GetEventType())
 		{
 		case EventType::EvOnCollisionEnter:
 		{
 			//Set entity to either first or second ID depending on which it isn't
-			Entity otherEnt = ev->GetThis().m_entity;
+			Entity otherEnt = ev.GetThis().m_entity;
 
-			if (ev->GetThis().m_entity == m_entity)
-				otherEnt = ev->GetOther().m_entity;
+			if (ev.GetThis().m_entity == m_entity)
+				otherEnt = ev.GetOther().m_entity;
 
-			if (ev->GetEventCat() & EventCatTrigger)
+			if (ev.GetEventCat() & EventCatTrigger)
 				OnTriggerEnter(otherEnt);
 			else
 				OnCollisionEnter(otherEnt);
@@ -120,12 +125,12 @@ namespace Rogue
 		case EventType::EvOnCollisionStay:
 		{
 			//Set entity to either first or second ID depending on which it isn't
-			Entity otherEnt = ev->GetThis().m_entity;
+			Entity otherEnt = ev.GetThis().m_entity;
 
-			if (ev->GetThis().m_entity == m_entity)
-				otherEnt = ev->GetOther().m_entity;
+			if (ev.GetThis().m_entity == m_entity)
+				otherEnt = ev.GetOther().m_entity;
 
-			if (ev->GetEventCat() & EventCatTrigger)
+			if (ev.GetEventCat() & EventCatTrigger)
 				OnTriggerStay(otherEnt);
 			else
 				OnCollisionStay(otherEnt);
@@ -135,12 +140,12 @@ namespace Rogue
 		case EventType::EvOnCollisionExit:
 		{
 			//Set entity to either first or second ID depending on which it isn't
-			Entity otherEnt = ev->GetThis().m_entity;
+			Entity otherEnt = ev.GetThis().m_entity;
 
-			if (ev->GetThis().m_entity == m_entity)
-				otherEnt = ev->GetOther().m_entity;
+			if (ev.GetThis().m_entity == m_entity)
+				otherEnt = ev.GetOther().m_entity;
 
-			if (ev->GetEventCat() & EventCatTrigger)
+			if (ev.GetEventCat() & EventCatTrigger)
 				OnTriggerExit(otherEnt);
 			else
 				OnCollisionExit(otherEnt);
@@ -148,11 +153,6 @@ namespace Rogue
 			return;
 		}
 		}
-	}
-
-	void ScriptComponent::OnCollisionEnter(Entity otherEnt)
-	{
-		//RE_INFO("COLLISION ENTER");
 	}
 
 	void ScriptComponent::OnCollisionStay(Entity otherEnt)

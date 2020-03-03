@@ -139,16 +139,16 @@ namespace Rogue
 		}
 	}
 
-	void BoxCollisionSystem::Receive(Event* ev)
+	void BoxCollisionSystem::Receive(Event& ev)
 	{
 #if TEST_COLLISION_EVENTS
-		if (ev->GetEventCat() & EventCatCollision)
+		if (ev.GetEventCat() & EventCatCollision)
 		{
-			switch (ev->GetEventType())
+			switch (ev.GetEventType())
 			{
 			case EventType::EvOnCollisionEnter:
 			{
-				auto* collisionEnter = dynamic_cast<AABBCollisionEnterEvent*>(ev);
+				auto* collisionEnter = dynamic_cast<AABBCollisionEnterEvent&>(ev);
 
 				collisionEnter->GetThis().m_collider.SetIsCollided(true);
 				collisionEnter->GetOther().m_collider.SetIsCollided(true);
@@ -158,7 +158,7 @@ namespace Rogue
 
 			case EventType::EvOnCollisionExit:
 			{
-				auto* collisionExit = dynamic_cast<AABBCollisionExitEvent*>(ev);
+				auto* collisionExit = dynamic_cast<AABBCollisionExitEvent&>(ev);
 
 				collisionExit->GetThis().m_collider.SetIsCollided(false);
 				collisionExit->GetOther().m_collider.SetIsCollided(false);
@@ -167,13 +167,13 @@ namespace Rogue
 			}
 			}
 		}
-		else if (ev->GetEventCat() & EventCatTrigger)
+		else if (ev.GetEventCat() & EventCatTrigger)
 		{
-			switch (ev->GetEventType())
+			switch (ev.GetEventType())
 			{
 			case EventType::EvOnCollisionEnter:
 			{
-				auto* collisionEnter = dynamic_cast<AABBTriggerEnterEvent*>(ev);
+				auto* collisionEnter = dynamic_cast<AABBTriggerEnterEvent&>(ev);
 
 				collisionEnter->GetThis().m_collider.SetIsCollided(true);
 				collisionEnter->GetOther().m_collider.SetIsCollided(true);
@@ -183,7 +183,7 @@ namespace Rogue
 
 			case EventType::EvOnCollisionExit:
 			{
-				auto* collisionExit = dynamic_cast<AABBTriggerExitEvent*>(ev);
+				auto* collisionExit = dynamic_cast<AABBTriggerExitEvent&>(ev);
 
 				collisionExit->GetThis().m_collider.SetIsCollided(false);
 				collisionExit->GetOther().m_collider.SetIsCollided(false);

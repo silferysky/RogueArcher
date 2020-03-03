@@ -54,7 +54,7 @@ namespace Rogue
 		g_engine.m_coordinator.EndTimeSystem("Particle System");
 	}
 
-	void ParticleSystem::Receive(Event* ev)
+	void ParticleSystem::Receive(Event& ev)
 	{
 	}
 

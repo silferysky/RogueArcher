@@ -30,6 +30,6 @@ namespace Rogue
 		void Init() override;
 		void Update() override;
 		void Shutdown() override;
-		void Receive(Event* ev) override;
+		void Receive(Event& ev) override;
 	};
 }

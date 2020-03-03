@@ -23,7 +23,6 @@ Technology is prohibited.
 #include "Types.h"
 #include "PlayerStatusManager.h"
 #include "GameEvent.h"
-#include "BoxCollider2DComponent.h"
 
 //Default values
 #define DEF_PATROL_RANGE 10
@@ -56,7 +55,8 @@ namespace Rogue
 		virtual void AIIdleUpdate();
 
 		//Collision handlers
-		virtual void HandleCollision(EntCollisionOrTrigger<BoxCollider2DComponent, BoxCollider2DComponent>* ev);
+		// Might template this in future...
+		virtual void HandleCollision(EntCollisionOrTrigger<BoxCollider2DComponent, BoxCollider2DComponent>& ev);
 
 		virtual void OnCollisionEnter(Entity otherEnt);
 		virtual void OnCollisionStay(Entity otherEnt);

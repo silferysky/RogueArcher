@@ -31,7 +31,7 @@ namespace Rogue
 		//Basic System 
 		void Init() override;
 		void Update() override;
-		void Receive(Event* ev) override;
+		void Receive(Event& ev) override;
 		void Shutdown() override;
 	};
 }

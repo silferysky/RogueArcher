@@ -378,73 +378,118 @@ namespace Rogue
 
 	void InputManager::CreateKeyPressEvent(KeyPress key, int repeat, KeyPressSub subkey)
 	{
-		KeyPressEvent* event;
 		if (subkey == KeyPressSub::UNDEF)
-			event = new KeyPressEvent(key, repeat);
-		else
-			event = new KeyPressCombinedEvent(key, subkey, repeat);
-
-		event->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
-
-		if (g_engine.m_coordinator.GameIsActive())
-			event->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
-		else if (!g_engine.m_coordinator.GetGameState())
 		{
-			event->SetSystemReceivers((int)SystemID::id_MENUCONTROLLERSYSTEM);
-			event->SetSystemReceivers((int)SystemID::id_CAMERASYSTEM);
+			KeyPressEvent event(key, repeat);
+			event.SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
+
+			if (g_engine.m_coordinator.GameIsActive())
+				event.SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
+			else if (!g_engine.m_coordinator.GetGameState())
+			{
+				event.SetSystemReceivers((int)SystemID::id_MENUCONTROLLERSYSTEM);
+				event.SetSystemReceivers((int)SystemID::id_CAMERASYSTEM);
+			}
+			EventDispatcher::instance().AddEvent(event);
 		}
-		EventDispatcher::instance().AddEvent(event);
+		else
+		{
+			KeyPressCombinedEvent event(key, subkey, repeat);
+			event.SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
+
+			if (g_engine.m_coordinator.GameIsActive())
+				event.SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
+			else if (!g_engine.m_coordinator.GetGameState())
+			{
+				event.SetSystemReceivers((int)SystemID::id_MENUCONTROLLERSYSTEM);
+				event.SetSystemReceivers((int)SystemID::id_CAMERASYSTEM);
+			}
+			EventDispatcher::instance().AddEvent(event);
+		}
+
 	}
 
 	void InputManager::CreateKeyReleaseEvent(KeyPress key, KeyPressSub subkey)
 	{
-		KeyReleaseEvent* event;
 		if (subkey == KeyPressSub::UNDEF)
-			event = new KeyReleaseEvent(key);
-		else
-			event = new KeyReleasedCombinedEvent(key, subkey);
-
-		event->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
-		if (g_engine.m_coordinator.GameIsActive())
-			event->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
-		else if (!g_engine.m_coordinator.GetGameState())
 		{
-			event->SetSystemReceivers((int)SystemID::id_MENUCONTROLLERSYSTEM);
-			event->SetSystemReceivers((int)SystemID::id_CAMERASYSTEM);
+			KeyReleaseEvent event(key);
+
+			event.SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
+			if (g_engine.m_coordinator.GameIsActive())
+				event.SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
+			else if (!g_engine.m_coordinator.GetGameState())
+			{
+				event.SetSystemReceivers((int)SystemID::id_MENUCONTROLLERSYSTEM);
+				event.SetSystemReceivers((int)SystemID::id_CAMERASYSTEM);
+			}
+			EventDispatcher::instance().AddEvent(event);
 		}
-		EventDispatcher::instance().AddEvent(event);
+		else
+		{
+			KeyReleasedCombinedEvent event(key, subkey);
+
+			event.SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
+			if (g_engine.m_coordinator.GameIsActive())
+				event.SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
+			else if (!g_engine.m_coordinator.GetGameState())
+			{
+				event.SetSystemReceivers((int)SystemID::id_MENUCONTROLLERSYSTEM);
+				event.SetSystemReceivers((int)SystemID::id_CAMERASYSTEM);
+			}
+			EventDispatcher::instance().AddEvent(event);
+		}
 	}
 
 	void InputManager::CreateKeyTriggeredEvent(KeyPress key, KeyPressSub subkey)
 	{
-		KeyTriggeredEvent* event;
 		if (subkey == KeyPressSub::UNDEF)
-			event = new KeyTriggeredEvent(key);
-		else
-			event = new KeyTriggeredCombinedEvent(key, subkey);
+		{
+			KeyTriggeredEvent event(key);
 
-		if (g_engine.m_coordinator.GameIsActive())
-			event->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
+			if (g_engine.m_coordinator.GameIsActive())
+				event.SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
+			else
+			{
+				event.SetSystemReceivers((int)SystemID::id_MENUCONTROLLERSYSTEM);
+				event.SetSystemReceivers((int)SystemID::id_CAMERASYSTEM);
+			}
+
+			event.SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
+			event.SetSystemReceivers((int)SystemID::id_AUDIOSYSTEM);
+			event.SetSystemReceivers((int)SystemID::id_GRAPHICSSYSTEM);
+			event.SetSystemReceivers((int)SystemID::id_DEBUGDRAWSYSTEM);
+			event.SetSystemReceivers((int)SystemID::id_EDITOR);
+			event.SetSystemReceivers((int)SystemID::id_PICKINGSYSTEM);
+			EventDispatcher::instance().AddEvent(event);
+		}
 		else
 		{
-			event->SetSystemReceivers((int)SystemID::id_MENUCONTROLLERSYSTEM);
-			event->SetSystemReceivers((int)SystemID::id_CAMERASYSTEM);
-		}
+			KeyTriggeredCombinedEvent event(key, subkey);
 
-		event->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
-		event->SetSystemReceivers((int)SystemID::id_AUDIOSYSTEM);
-		event->SetSystemReceivers((int)SystemID::id_GRAPHICSSYSTEM);
-		event->SetSystemReceivers((int)SystemID::id_DEBUGDRAWSYSTEM);
-		event->SetSystemReceivers((int)SystemID::id_EDITOR);
-		event->SetSystemReceivers((int)SystemID::id_PICKINGSYSTEM);
-		EventDispatcher::instance().AddEvent(event);
+			if (g_engine.m_coordinator.GameIsActive())
+				event.SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
+			else
+			{
+				event.SetSystemReceivers((int)SystemID::id_MENUCONTROLLERSYSTEM);
+				event.SetSystemReceivers((int)SystemID::id_CAMERASYSTEM);
+			}
+
+			event.SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
+			event.SetSystemReceivers((int)SystemID::id_AUDIOSYSTEM);
+			event.SetSystemReceivers((int)SystemID::id_GRAPHICSSYSTEM);
+			event.SetSystemReceivers((int)SystemID::id_DEBUGDRAWSYSTEM);
+			event.SetSystemReceivers((int)SystemID::id_EDITOR);
+			event.SetSystemReceivers((int)SystemID::id_PICKINGSYSTEM);
+			EventDispatcher::instance().AddEvent(event);
+		}
 	}
 
 	void InputManager::CreateDoubleClickEvent(KeyPress key)
 	{
-		MouseDoubleClickEvent* event = new MouseDoubleClickEvent(key);
+		MouseDoubleClickEvent event(key);
 
-		event->SetSystemReceivers((int)SystemID::id_PICKINGSYSTEM);
+		event.SetSystemReceivers((int)SystemID::id_PICKINGSYSTEM);
 		EventDispatcher::instance().AddEvent(event);
 	}
 

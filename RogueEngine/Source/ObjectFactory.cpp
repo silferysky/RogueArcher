@@ -148,8 +148,8 @@ namespace Rogue
 					continue;
 				}
 
-				ParentSetEvent* setParentEv = new ParentSetEvent(childInfo.m_parent, childInfo.m_Entity);
-				setParentEv->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+				ParentSetEvent setParentEv(childInfo.m_parent, childInfo.m_Entity);
+				setParentEv.SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
 				EventDispatcher::instance().AddEvent(setParentEv);
 				loadedQueue.pop();
 
@@ -620,12 +620,11 @@ namespace Rogue
 				Entity childEnt = Clone(temp.c_str(), createHierarchy);
 				if (createHierarchy)
 				{
-					ParentSetEvent* parentEv = new ParentSetEvent(curEnt, childEnt);
-					parentEv->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+					ParentSetEvent parentEv(curEnt, childEnt);
+					parentEv.SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
 					EventDispatcher::instance().AddEvent(parentEv);
 				}
 			}
-
 
 			return curEnt;
 		}

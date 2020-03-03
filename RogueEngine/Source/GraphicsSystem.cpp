@@ -241,19 +241,19 @@ namespace Rogue
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	}
 
-	void GraphicsSystem::Receive(Event* ev)
+	void GraphicsSystem::Receive(Event& ev)
 	{
-		switch (ev->GetEventType())
+		switch (ev.GetEventType())
 		{
 		case EventType::EvEntityMove:
 		{
-			//EntMoveEvent* EvEntMove = dynamic_cast<EntMoveEvent*>(ev);
+			//EntMoveEvent& EvEntMove = dynamic_cast<EntMoveEvent&>(ev);
 			//ForceManager::instance().RegisterForce(EvEntMove->GetEntityID(),
 				//EvEntMove->GetVecMovement(),
 				//g_fixedDeltaTime);
 
-			EntMoveEvent* EvEntMove = dynamic_cast<EntMoveEvent*>(ev);
-			m_playerX = EvEntMove->GetVecMovement().x;
+			EntMoveEvent& EvEntMove = dynamic_cast<EntMoveEvent&>(ev);
+			m_playerX = EvEntMove.GetVecMovement().x;
 
 			return;
 		}

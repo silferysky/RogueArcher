@@ -83,6 +83,6 @@ namespace Rogue
 	void MaskingSystem::Shutdown()
 	{}
 
-	void MaskingSystem::Receive(Event* ev)
+	void MaskingSystem::Receive(Event& ev)
 	{}
 }

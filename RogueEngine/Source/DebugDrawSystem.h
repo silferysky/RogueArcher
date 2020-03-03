@@ -50,6 +50,6 @@ Technology is prohibited.
 		void drawCircle(Rogue::CircleCollider2DComponent* circle, Rogue::TransformComponent* transform);
 		void drawVelocity(Rogue::RigidbodyComponent* rBody, Rogue::TransformComponent* transform);
 
-		void Receive(Rogue::Event* ev) override;
+		void Receive(Rogue::Event& ev) override;
 	};
 //}

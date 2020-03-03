@@ -122,7 +122,7 @@ struct ImGuiPayload;                // User data payload for drag and drop opera
 struct ImGuiPlatformIO;             // Multi-viewport support: interface for Platform/Renderer back-ends + viewports to render
 struct ImGuiPlatformMonitor;        // Multi-viewport support: user-provided bounds for each connected monitor/display. Used when positioning popups and tooltips to avoid them straddling monitors
 struct ImGuiSizeCallbackData;       // Callback data when using SetNextWindowSizeConstraints() (rare/advanced use)
-struct ImGuiStorage;                // Helper for key->value storage
+struct ImGuiStorage;                // Helper for key.value storage
 struct ImGuiStyle;                  // Runtime data for styling/colors
 struct ImGuiTextBuffer;             // Helper to hold and append into a text buffer (~string builder)
 struct ImGuiTextFilter;             // Helper to parse and apply text filters (e.g. "aaaaa[,bbbb][,ccccc]")
@@ -1735,7 +1735,7 @@ struct ImGuiTextBuffer
     IMGUI_API void      appendfv(const char* fmt, va_list args) IM_FMTLIST(2);
 };
 
-// Helper: Key->Value storage
+// Helper: key.Value storage
 // Typically you don't have to worry about this since a storage is held within each Window.
 // We use it to e.g. store collapse state for a tree (Int 0/1)
 // This is optimized for efficient lookup (dichotomy into a contiguous buffer) and rare insertion (typically tied to user interactions aka max once a frame)

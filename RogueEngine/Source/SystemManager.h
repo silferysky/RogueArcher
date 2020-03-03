@@ -218,8 +218,8 @@ namespace Rogue
 
 		void CreateAssignTagEvent(Entity entity)
 		{
-			EntChangeStateEvent* changeStateEvent = new EntChangeStateEvent(entity, 0);
-			changeStateEvent->SetSystemReceivers((int)SystemID::id_COLLISIONTAGSYSTEM);
+			EntChangeStateEvent changeStateEvent(entity, 0);
+			changeStateEvent.SetSystemReceivers((int)SystemID::id_COLLISIONTAGSYSTEM);
 			EventDispatcher::instance().AddEvent(changeStateEvent);
 		}
 

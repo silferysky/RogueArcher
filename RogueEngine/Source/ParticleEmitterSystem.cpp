@@ -62,7 +62,7 @@ namespace Rogue
 		g_engine.m_coordinator.EndTimeSystem("Particle Emitter System");
 	}
 
-	void ParticleEmitterSystem::Receive(Event* ev)
+	void ParticleEmitterSystem::Receive(Event& ev)
 	{
 	}
 

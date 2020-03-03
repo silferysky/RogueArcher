@@ -133,8 +133,8 @@ namespace Rogue
 								trans.DisplayOnInspector();
 								if (trans.GetIsModified())
 								{
-									ParentTransformEvent* setParentEv = new ParentTransformEvent(i, MAX_ENTITIES);
-									setParentEv->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+									ParentTransformEvent setParentEv(i, MAX_ENTITIES);
+									setParentEv.SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
 									EventDispatcher::instance().AddEvent(setParentEv);
 									trans.setModified(false);
 								}

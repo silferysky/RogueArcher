@@ -63,6 +63,6 @@ namespace Rogue
 
 		void RenderText(const std::string_view& text, Vec2 transform, const Vec2& scale, const glm::vec4& color);
 
-		void Receive(Event* ev);
+		void Receive(Event& ev);
 	};
 }

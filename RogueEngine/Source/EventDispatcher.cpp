@@ -30,7 +30,7 @@ namespace Rogue
 	{
 		//while (GetQueueHead() != nullptr)
 		//{
-		//	Event* ev = GetQueueHead();
+		//	Event& ev = GetQueueHead();
 		//	EventQueue.pop();
 		//	delete ev;
 		//}
@@ -38,14 +38,14 @@ namespace Rogue
 
 	void EventDispatcher::Init()
 	{
-		EventQueue = std::queue<Event*>();
-		//DelayedEventQueue = std::queue<Event*>();
+		EventQueue = std::queue<std::reference_wrapper<Event>>();
+		//DelayedEventQueue = std::queue<Event&>();
 		ListenerMap = std::map<SystemID, LISTENER_HANDLER>();
 	}
 
-	Event* EventDispatcher::GetQueueHead() { return EventQueue.front(); }
+	Event& EventDispatcher::GetQueueHead() { return EventQueue.front(); }
 
-	//Event* EventDispatcher::GetQueueHeadDelayed() { return DelayedEventQueue.front(); }
+	//Event& EventDispatcher::GetQueueHeadDelayed() { return DelayedEventQueue.front(); }
 
 	//void EventDispatcher::CombineQueue()
 	//{
@@ -90,21 +90,21 @@ namespace Rogue
 		return ListenerMap;
 	}
 
-	void EventDispatcher::AddEvent(Event* e)
+	void EventDispatcher::AddEvent(Event& e)
 	{
 		//instance().EventQueue.push(e);
 		instance().DispatchEvent(e);
 	}
 
-	//void EventDispatcher::AddEventDelayed(Event* e)
+	//void EventDispatcher::AddEventDelayed(Event& e)
 	//{
 	//	DelayedEventQueue.push(e);
 	//}
 
 	void EventDispatcher::ResetEvents()
 	{
-		while (instance().EventQueue.size())
-			instance().EventQueue.pop();
+		//while (instance().EventQueue.size())
+		//	instance().EventQueue.pop();
 
 		//while (instance().DelayedEventQueue.size())
 		//	instance().DelayedEventQueue.pop();
@@ -112,7 +112,6 @@ namespace Rogue
 
 	void EventDispatcher::Update()
 	{
-		g_engine.m_coordinator.InitTimeSystem("Event Dispatcher");
 		//if (isCombiningQueue)
 		//{
 		//	instance().CombineQueue();
@@ -120,18 +119,16 @@ namespace Rogue
 		//}
 
 		//While queue is not empty, handle all events
-		while (!instance().EventQueue.empty())
-		{
-			Event* nextEvent = instance().GetQueueHead();
-			instance().DispatchEvent(nextEvent);
-			instance().EventQueue.pop();
-			if (nextEvent->GetEventCat() != EventCatEditor)
-				delete nextEvent;
-		}
-		g_engine.m_coordinator.EndTimeSystem("Event Dispatcher");
+		//while (!instance().EventQueue.empty())
+		//{
+		//	Event& nextEvent = instance().GetQueueHead();
+		//	instance().DispatchEvent(nextEvent);
+		//	instance().EventQueue.pop();
+		//}
+
 	}
 
-	void EventDispatcher::DispatchEvent(Event* toHandle)
+	void EventDispatcher::DispatchEvent(Event& toHandle)
 	{
 		//Is better to let individual systems handle events than handle all here
 		//Basically: Send a message to the relevant system to activate relavent function
@@ -140,7 +137,7 @@ namespace Rogue
 
 		while (sysIt != ListenerMap.end())
 		{
-			if (toHandle->GetSystemReceivers().test((size_t)sysIt->first))
+			if (toHandle.GetSystemReceivers().test((size_t)sysIt->first))
 				sysIt->second(toHandle);
 			++sysIt;
 		}

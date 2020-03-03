@@ -121,6 +121,6 @@ namespace Rogue
 	void LightingSystem::Shutdown()
 	{}
 
-	void LightingSystem::Receive(Event* ev)
+	void LightingSystem::Receive(Event& ev)
 	{}
 }

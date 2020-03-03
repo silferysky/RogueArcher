@@ -63,8 +63,8 @@ namespace Rogue
 		if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(other))
 		{
 			//g_engine.m_coordinator.GetSystem<CameraSystem>()->setIsActive(false);
-			CameraShakeEvent* shake = new CameraShakeEvent(20.0f);
-			shake->SetSystemReceivers(static_cast<int>(SystemID::id_CAMERASYSTEM));
+			CameraShakeEvent shake(20.0f);
+			shake.SetSystemReceivers(static_cast<int>(SystemID::id_CAMERASYSTEM));
 			EventDispatcher::instance().AddEvent(shake);
 
 			PlayerStatusManager::instance().SetDeath(true);

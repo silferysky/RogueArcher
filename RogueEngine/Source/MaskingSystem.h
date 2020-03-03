@@ -41,6 +41,6 @@ namespace Rogue
 
 		void ResetTextures();
 
-		void Receive(Event* ev);
+		void Receive(Event& ev);
 	};
 }

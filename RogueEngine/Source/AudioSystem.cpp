@@ -105,14 +105,14 @@ namespace Rogue
 		g_engine.m_coordinator.EndTimeSystem("Audio System");
 	}
 
-	void AudioSystem::Receive(Event* ev)
+	void AudioSystem::Receive(Event& ev)
 	{
-		switch (ev->GetEventType())
+		switch (ev.GetEventType())
 		{
 		case EventType::EvKeyTriggered:
 		{
-			KeyTriggeredEvent* keytriggeredevent = dynamic_cast<KeyTriggeredEvent*>(ev);
-			KeyPress keycode = keytriggeredevent->GetKeyCode();
+			KeyTriggeredEvent& keytriggeredevent = dynamic_cast<KeyTriggeredEvent&>(ev);
+			KeyPress keycode = keytriggeredevent.GetKeyCode();
 			if (g_engine.GetIsFocused())
 			{
 				if (keycode == KeyPress::KeyM)

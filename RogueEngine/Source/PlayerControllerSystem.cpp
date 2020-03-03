@@ -89,8 +89,8 @@ namespace Rogue
 			{
 				PLAYER_STATUS.SetIndicator(g_engine.m_coordinator.CloneArchetypes("Indicator", false));
 
-				ParentSetEvent* parent = new ParentSetEvent(*m_entities.begin(), PLAYER_STATUS.GetIndicator());
-				parent->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+				ParentSetEvent parent(*m_entities.begin(), PLAYER_STATUS.GetIndicator());
+				parent.SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
 				EventDispatcher::instance().AddEvent(parent);
 
 				//Resetting some values
@@ -206,7 +206,7 @@ namespace Rogue
 
 	}
 
-	void PlayerControllerSystem::Receive(Event* ev)
+	void PlayerControllerSystem::Receive(Event& ev)
 	{
 		//Statement here to make sure all commands only apply if game is not running
 		//if (!g_engine.m_coordinator.GameIsActive())
@@ -218,11 +218,11 @@ namespace Rogue
 		if (m_entities.begin() == m_entities.end())
 			return;
 
-		switch (ev->GetEventType())
+		switch (ev.GetEventType())
 		{
 		case EventType::EvResetGame:
 		{
-			ResetGameEvent* reset = dynamic_cast<ResetGameEvent*>(ev);
+			ResetGameEvent& reset = dynamic_cast<ResetGameEvent&>(ev);
 
 			PLAYER_STATUS.SetPlayerEntity(MAX_ENTITIES);
 			PLAYER_STATUS.SetHitchhikeEntity(MAX_ENTITIES);
@@ -262,10 +262,10 @@ namespace Rogue
 			if (PLAYER_STATUS.GetPlayerEntity() == MAX_ENTITIES)
 				return;
 
-			EntHitchhikeEvent* event = dynamic_cast<EntHitchhikeEvent*>(ev);
-			if (event->GetEntityID() != MAX_ENTITIES)
+			EntHitchhikeEvent& event = dynamic_cast<EntHitchhikeEvent&>(ev);
+			if (event.GetEntityID() != MAX_ENTITIES)
 			{
-				SetPlayerParent(event->GetEntityID());
+				SetPlayerParent(event.GetEntityID());
 				if (g_engine.m_coordinator.ComponentExists<ChildComponent>(PLAYER_STATUS.GetPlayerEntity()))
 				{
 					auto& player = g_engine.m_coordinator.GetComponent<ChildComponent>(PLAYER_STATUS.GetPlayerEntity());
@@ -280,11 +280,11 @@ namespace Rogue
 
 		case EventType::EvEntityChangeRGBA:
 		{
-			EntChangeRGBAEvent* event = dynamic_cast<EntChangeRGBAEvent*>(ev);
-			if (g_engine.m_coordinator.ComponentExists<SpriteComponent>(event->GetEntityID()))
+			EntChangeRGBAEvent& event = dynamic_cast<EntChangeRGBAEvent&>(ev);
+			if (g_engine.m_coordinator.ComponentExists<SpriteComponent>(event.GetEntityID()))
 			{
-				auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(event->GetEntityID());
-				sprite.setFilter(glm::vec4(event->R(), event->G(), event->B(), event->A()));
+				auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(event.GetEntityID());
+				sprite.setFilter(glm::vec4(event.R(), event.G(), event.B(), event.A()));
 			}
 
 			return;
@@ -292,14 +292,14 @@ namespace Rogue
 
 		case EventType::EvEntityChangeSprite:
 		{
-			EntChangeSpriteEvent* event = dynamic_cast<EntChangeSpriteEvent*>(ev);
-			if (g_engine.m_coordinator.ComponentExists<SpriteComponent>(event->GetEntityID()))
+			EntChangeSpriteEvent& event = dynamic_cast<EntChangeSpriteEvent&>(ev);
+			if (g_engine.m_coordinator.ComponentExists<SpriteComponent>(event.GetEntityID()))
 			{
-				SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(event->GetEntityID());
-				//sprite.setTexture(event->GetFile().c_str());
-				sprite.setTexturePath(event->GetPath().c_str());
+				SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(event.GetEntityID());
+				//sprite.setTexture(event.GetFile().c_str());
+				sprite.setTexturePath(event.GetPath().c_str());
 
-				if (event->GetEntityID() == PLAYER_STATUS.GetPlayerEntity())
+				if (event.GetEntityID() == PLAYER_STATUS.GetPlayerEntity())
 				{
 					if (PLAYER_STATUS.GetLightStatus())
 						AudioManager::instance().loadSound("Resources/Sounds/LightChange.ogg", 0.3f, false).Play();
@@ -313,8 +313,8 @@ namespace Rogue
 
 		case EventType::EvKeyTriggered:
 		{
-			KeyTriggeredEvent* keytriggeredevent = dynamic_cast<KeyTriggeredEvent*>(ev);
-			KeyPress keycode = keytriggeredevent->GetKeyCode();
+			KeyTriggeredEvent& keytriggeredevent = dynamic_cast<KeyTriggeredEvent&>(ev);
+			KeyPress keycode = keytriggeredevent.GetKeyCode();
 
 			if (g_engine.GetIsFocused())
 			{
@@ -410,8 +410,8 @@ namespace Rogue
 		} //End KeyTriggered
 		case EventType::EvKeyPressed:
 		{
-			KeyPressEvent* EvPressKey = dynamic_cast<KeyPressEvent*>(ev);
-			KeyPress keycode = EvPressKey->GetKeyCode();
+			KeyPressEvent& EvPressKey = dynamic_cast<KeyPressEvent&>(ev);
+			KeyPress keycode = EvPressKey.GetKeyCode();
 			for (std::set<Entity>::iterator iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
 			{
 				//For 1st entity
@@ -424,9 +424,9 @@ namespace Rogue
 							auto& ctrler = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(*iEntity);
 							ctrler.SetMoveState(MoveState::e_left);
 
-							Event* ev = new EntMoveEvent{ *iEntity, true, -1.0f, 0.0f };
-							ev->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
-							ev->SetSystemReceivers((int)SystemID::id_GRAPHICSSYSTEM);
+							EntMoveEvent ev{ *iEntity, true, -1.0f, 0.0f };
+							ev.SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
+							ev.SetSystemReceivers((int)SystemID::id_GRAPHICSSYSTEM);
 							EventDispatcher::instance().AddEvent(ev);
 							PLAYER_STATUS.SetMoveLeft(true);
 							MovingPlayer();
@@ -436,9 +436,9 @@ namespace Rogue
 							auto& ctrler = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(*iEntity);
 							ctrler.SetMoveState(MoveState::e_right);
 
-							Event* ev = new EntMoveEvent{ *iEntity, true, 1.0f, 0.0f };
-							ev->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
-							ev->SetSystemReceivers((int)SystemID::id_GRAPHICSSYSTEM);
+							EntMoveEvent ev{ *iEntity, true, 1.0f, 0.0f };
+							ev.SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
+							ev.SetSystemReceivers((int)SystemID::id_GRAPHICSSYSTEM);
 							EventDispatcher::instance().AddEvent(ev);
 							PLAYER_STATUS.SetMoveLeft(false);
 							MovingPlayer();
@@ -484,8 +484,8 @@ namespace Rogue
 		}
 		case EventType::EvKeyReleased:
 		{
-			KeyReleaseEvent* KeyReleaseEv = dynamic_cast<KeyReleaseEvent*>(ev);
-			KeyPress keycode = KeyReleaseEv->GetKeyCode();
+			KeyReleaseEvent& KeyReleaseEv = dynamic_cast<KeyReleaseEvent&>(ev);
+			KeyPress keycode = KeyReleaseEv.GetKeyCode();
 
 			if (!g_engine.m_coordinator.GameIsActive())
 				return;
@@ -541,14 +541,13 @@ namespace Rogue
 		}
 		case EventType::EvOnCollisionExit:
 		{
-			EntCollisionExitEvent<BoxCollider2DComponent, BoxCollider2DComponent>* collisionExit
-				= dynamic_cast<EntCollisionExitEvent<BoxCollider2DComponent, BoxCollider2DComponent>*>(ev);
+			auto& collisionExit = dynamic_cast<AABBCollisionExitEvent&>(ev);
 			return;
 		}
 
 		case EventType::EvOnCollisionStay:
 		{
-			auto* collisionStay = dynamic_cast<AABBCollisionStayEvent*>(ev);
+			auto& collisionStay = dynamic_cast<AABBCollisionStayEvent&>(ev);
 
 			if (m_ignoreFrameEvent)
 			{
@@ -563,21 +562,21 @@ namespace Rogue
 
 			const BoxCollider2DComponent* groundCollider = nullptr;
 
-			HierarchyInfo infoA = g_engine.m_coordinator.GetHierarchyInfo(collisionStay->GetThis().m_entity);
-			HierarchyInfo infoB = g_engine.m_coordinator.GetHierarchyInfo(collisionStay->GetOther().m_entity);
+			HierarchyInfo infoA = g_engine.m_coordinator.GetHierarchyInfo(collisionStay.GetThis().m_entity);
+			HierarchyInfo infoB = g_engine.m_coordinator.GetHierarchyInfo(collisionStay.GetOther().m_entity);
 			
 			if (infoA.m_tag == "Player")
 			{
 				if (infoB.m_tag == "Ground" || infoB.m_tag == "Platform")
 				{
-					player = collisionStay->GetThis().m_entity;
-					playerTrans = CollisionManager::instance().GetColliderPosition(collisionStay->GetThis().m_collider.m_aabb, collisionStay->GetThis().m_transform);
-					playerScale = CollisionManager::instance().GetColliderScale(collisionStay->GetThis().m_collider.m_aabb, collisionStay->GetThis().m_transform);
+					player = collisionStay.GetThis().m_entity;
+					playerTrans = CollisionManager::instance().GetColliderPosition(collisionStay.GetThis().m_collider.m_aabb, collisionStay.GetThis().m_transform);
+					playerScale = CollisionManager::instance().GetColliderScale(collisionStay.GetThis().m_collider.m_aabb, collisionStay.GetThis().m_transform);
 
-					ground = collisionStay->GetOther().m_entity;
-					groundTrans = CollisionManager::instance().GetColliderPosition(collisionStay->GetOther().m_collider.m_aabb, collisionStay->GetOther().m_transform);
-					groundScale = CollisionManager::instance().GetColliderScale(collisionStay->GetOther().m_collider.m_aabb, collisionStay->GetOther().m_transform); 
-					groundCollider = &collisionStay->GetOther().m_collider;
+					ground = collisionStay.GetOther().m_entity;
+					groundTrans = CollisionManager::instance().GetColliderPosition(collisionStay.GetOther().m_collider.m_aabb, collisionStay.GetOther().m_transform);
+					groundScale = CollisionManager::instance().GetColliderScale(collisionStay.GetOther().m_collider.m_aabb, collisionStay.GetOther().m_transform); 
+					groundCollider = &collisionStay.GetOther().m_collider;
 				}
 				else
 					return;
@@ -586,14 +585,14 @@ namespace Rogue
 			{
 				if (infoA.m_tag == "Ground" || infoB.m_tag == "Platform")
 				{
-					ground = collisionStay->GetThis().m_entity;
-					groundTrans = CollisionManager::instance().GetColliderPosition(collisionStay->GetThis().m_collider.m_aabb, collisionStay->GetThis().m_transform);
-					groundScale = CollisionManager::instance().GetColliderScale(collisionStay->GetThis().m_collider.m_aabb, collisionStay->GetThis().m_transform);
-					groundCollider = &collisionStay->GetThis().m_collider;
+					ground = collisionStay.GetThis().m_entity;
+					groundTrans = CollisionManager::instance().GetColliderPosition(collisionStay.GetThis().m_collider.m_aabb, collisionStay.GetThis().m_transform);
+					groundScale = CollisionManager::instance().GetColliderScale(collisionStay.GetThis().m_collider.m_aabb, collisionStay.GetThis().m_transform);
+					groundCollider = &collisionStay.GetThis().m_collider;
 
-					player = collisionStay->GetOther().m_entity;
-					playerTrans = CollisionManager::instance().GetColliderPosition(collisionStay->GetOther().m_collider.m_aabb, collisionStay->GetOther().m_transform);
-					playerScale = CollisionManager::instance().GetColliderScale(collisionStay->GetOther().m_collider.m_aabb, collisionStay->GetOther().m_transform);
+					player = collisionStay.GetOther().m_entity;
+					playerTrans = CollisionManager::instance().GetColliderPosition(collisionStay.GetOther().m_collider.m_aabb, collisionStay.GetOther().m_transform);
+					playerScale = CollisionManager::instance().GetColliderScale(collisionStay.GetOther().m_collider.m_aabb, collisionStay.GetOther().m_transform);
 					
 				}
 				else
@@ -623,7 +622,7 @@ namespace Rogue
 				//	PLAYER_STATUS.SetHasJumped(false);
 				//	if (infoA.m_tag == "Platform")
 				//	{
-				//		//ParentSetEvent* parent = new ParentSetEvent(infoA.m_Entity, entity);
+				//		//ParentSetEvent& parent = new ParentSetEvent(infoA.m_Entity, entity);
 				//		//parent->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
 				//		//EventDispatcher::instance().AddEvent(parent);
 				//		//PLAYER_STATUS.SetHitchhikeEntity(infoA.m_Entity);
@@ -631,7 +630,7 @@ namespace Rogue
 				//	}
 				//	else //if (infoB.m_tag == "Platform")
 				//	{
-				//		//ParentSetEvent* parent = new ParentSetEvent(infoB.m_Entity, entity);
+				//		//ParentSetEvent& parent = new ParentSetEvent(infoB.m_Entity, entity);
 				//		//parent->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
 				//		//EventDispatcher::instance().AddEvent(parent);
 				//		//PLAYER_STATUS.SetHitchhikeEntity(infoB.m_Entity);
@@ -641,7 +640,7 @@ namespace Rogue
 			}
 			return;
 
-		} // switch (ev->GetEventType())
+		} // switch (ev.GetEventType())
 		} // Receive
 	}
 
@@ -728,8 +727,8 @@ namespace Rogue
 
 	void PlayerControllerSystem::CreateTeleportEvent(Vec2 newPosition)
 	{
-		EntTeleportEvent* event = new EntTeleportEvent(*m_entities.begin(), newPosition);
-		event->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
+		EntTeleportEvent event(*m_entities.begin(), newPosition);
+		event.SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
 		EventDispatcher::instance().AddEvent(event);
 	}
 
@@ -797,13 +796,13 @@ namespace Rogue
 
 		if (PLAYER_STATUS.GetHitchhikedEntity() != MAX_ENTITIES)
 		{
-			ParentResetEvent* parentReset = new ParentResetEvent(*m_entities.begin());
-			parentReset->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+			ParentResetEvent parentReset(*m_entities.begin());
+			parentReset.SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
 			EventDispatcher::instance().AddEvent(parentReset);
 			PLAYER_STATUS.SetHitchhikeEntity(MAX_ENTITIES);
 		}
 
-		//ParentTransformEvent* parentTransform = new ParentTransformEvent(*m_entities.begin(), true);
+		//ParentTransformEvent& parentTransform = new ParentTransformEvent(*m_entities.begin(), true);
 		//parentTransform->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
 		//EventDispatcher::instance().AddEvent(parentTransform);
 
@@ -948,8 +947,8 @@ namespace Rogue
 	{
 		if (!m_entities.size())
 			return;
-		ParentSetEvent* parent = new ParentSetEvent(newParent, *m_entities.begin());
-		parent->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+		ParentSetEvent parent(newParent, *m_entities.begin());
+		parent.SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
 		EventDispatcher::instance().AddEvent(parent);
 		PLAYER_STATUS.SetHitchhikeEntity(newParent);
 	}
@@ -958,8 +957,8 @@ namespace Rogue
 	{
 		if (PLAYER_STATUS.GetHitchhikedEntity() != MAX_ENTITIES)
 		{
-			ParentResetEvent* parentReset = new ParentResetEvent(*m_entities.begin());
-			parentReset->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+			ParentResetEvent parentReset(*m_entities.begin());
+			parentReset.SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
 			EventDispatcher::instance().AddEvent(parentReset);
 			PLAYER_STATUS.SetHitchhikeEntity(MAX_ENTITIES);
 		}
@@ -969,8 +968,8 @@ namespace Rogue
 	{
 		if (PLAYER_STATUS.GetHitchhikedEntity() != MAX_ENTITIES)
 		{
-			ChildTransformEvent* setParentEv = new ChildTransformEvent(*m_entities.begin(), false);
-			setParentEv->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+			ChildTransformEvent setParentEv(*m_entities.begin(), false);
+			setParentEv.SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
 			EventDispatcher::instance().AddEvent(setParentEv);
 		}
 	}

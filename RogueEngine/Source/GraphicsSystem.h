@@ -71,7 +71,7 @@ namespace Rogue
 		void draw(Entity& entity);
 		void drawForeground(Entity& entity);
 
-		void Receive(Event* ev);
+		void Receive(Event& ev);
 
 		void UseFrameBuffer();
 		void UpdateFrameBuffer();
