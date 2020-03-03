@@ -444,8 +444,8 @@ namespace Rogue
 	{
 		MouseDoubleClickEvent* event = new MouseDoubleClickEvent(key);
 
-		EventDispatcher::instance().AddEvent(event);
 		event->SetSystemReceivers((int)SystemID::id_PICKINGSYSTEM);
+		EventDispatcher::instance().AddEvent(event);
 	}
 
 	void InputManager::Shutdown()
