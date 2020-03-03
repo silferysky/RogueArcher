@@ -69,7 +69,7 @@ namespace Rogue
 		{
 			auto currColliderOpt = g_engine.m_coordinator.TryGetComponent<ColliderComponent>(*iEntity);
 #if 1
-			RE_ASSERT(static_cast<bool>(nextColliderOpt), "Entity doesn't have ColliderComponent");
+			RE_ASSERT(static_cast<bool>(currColliderOpt), "Entity doesn't have ColliderComponent");
 
 #endif
 			auto& currCollider = currColliderOpt->get();
