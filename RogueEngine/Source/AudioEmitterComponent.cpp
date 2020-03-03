@@ -56,7 +56,12 @@ namespace Rogue
 		ImGui::TextDisabled("New Sound Path");
 		ImGui::SameLine();
 		ImGui::PushItemWidth(250);
-		ImGui::InputText("                    ", m_newaudioPath, 128);
+		if (ImGui::InputText("                    ", m_newaudioPath, 128, ImGuiInputTextFlags_EnterReturnsTrue))
+		{
+			m_soundPath = m_constAudioPath + m_newaudioPath;
+			setSoundPath(m_soundPath);
+			memset(m_newaudioPath, 0, 128);
+		}
 
 		if (ImGui::Button("Set new path"))
 		{
