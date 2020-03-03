@@ -37,15 +37,16 @@ namespace Rogue
 			m_size{ 0 }
 		{}
 
-		void InsertData(Entity entity, const TComponent& component)
+		void InsertData(Entity entity, TComponent&& component)
 		{
+
 			RE_ASSERT(m_entityToIndexMap.find(entity) == m_entityToIndexMap.end(), "Component added to same entity more than once.");
 
 			// Put new entry at end and update the maps
 			size_t newIndex = m_size;
 			m_entityToIndexMap[entity] = newIndex;
 			m_indexToEntityMap[newIndex] = entity;
-			m_componentArray[newIndex] = component;
+			m_componentArray[newIndex] = std::forward<TComponent&&>(component);
 			++m_size;
 		}
 
@@ -91,7 +92,7 @@ namespace Rogue
 		{
 			if (ComponentExists(existingEntity))
 			{
-				InsertData( toClone, GetData(existingEntity) );
+				InsertData( toClone, std::move( GetData(existingEntity) ) );
 			}
 		}
 
