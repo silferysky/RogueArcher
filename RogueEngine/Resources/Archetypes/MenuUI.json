@@ -1,5 +1,5 @@
 {
     "Signature": 4,
     "Entity": "Name{MenuParent}|Tag{}|Transform{0;0;1;1;0;0}|||||||||||||||||||",
-    "Children": "crosshair;MainMenu_Bg;HowToPlayBtn;MainMenuBtn;Resume;QuitBtn;HowToPlay"
+    "Children": "crosshair;MainMenu_Bg;HowToPlayBtn;MainMenu_Btn;Resume;QuitBtn;HowToPlay"
 } 

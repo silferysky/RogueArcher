@@ -296,17 +296,28 @@ namespace Rogue
 
 	void MenuControllerSystem::InitPauseMenu()
 	{
-		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("MenuUI", false));
-		for (auto& child : g_engine.m_coordinator.GetHierarchyInfo(m_menuObjs.front()).m_children)
-		{
-			m_menuObjs.push_back(child);
-		}
+		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("crosshair", true));
+		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("MainMenu_Bg", true));
+		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("HowToPlayBtn", true));
+		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("MainMenu_Btn", true));
+		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("Resume", true));
+		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("QuitBtn", true));
+		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("HowToPlay", true));
 
-		m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("MenuConfirmUI", false));
-		for (auto& child : g_engine.m_coordinator.GetHierarchyInfo(m_confirmQuitEnt.front()).m_children)
-		{
-			m_confirmQuitEnt.push_back(child);
-		}
+		m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("YesBtn", true));
+		m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("NoBtn", true));
+
+		//m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("MenuUI", true));
+		//for (auto& child : g_engine.m_coordinator.GetHierarchyInfo(m_menuObjs.front()).m_children)
+		//{
+		//	m_menuObjs.push_back(child);
+		//}
+
+		//m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("MenuConfirmUI", true));
+		//for (auto& child : g_engine.m_coordinator.GetHierarchyInfo(m_confirmQuitEnt.front()).m_children)
+		//{
+		//	m_confirmQuitEnt.push_back(child);
+		//}
 
 		SetUIMenuObjs(false);
 	}
@@ -369,7 +380,7 @@ namespace Rogue
 				UIComponent& ui = g_engine.m_coordinator.GetComponent<UIComponent>(ent);
 				ui.setIsActive(newActive);
 
-				/*if (g_engine.m_coordinator.ComponentExists<TransformComponent>(ent))
+				if (g_engine.m_coordinator.ComponentExists<TransformComponent>(ent))
 				{
 					glm::vec3 cameraPos = CameraManager::instance().GetCameraPos();
 					TransformComponent& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(ent);
@@ -377,7 +388,7 @@ namespace Rogue
 						transform.setPosition(Vec2(transform.GetPosition().x - cameraPos.x, transform.GetPosition().y - cameraPos.y));
 					else
 						transform.setPosition(Vec2(transform.GetPosition().x + cameraPos.x, transform.GetPosition().y + cameraPos.y));
-				}*/
+				}
 			}
 		}
 
@@ -389,7 +400,7 @@ namespace Rogue
 				UIComponent& ui = g_engine.m_coordinator.GetComponent<UIComponent>(ent);
 				ui.setIsActive(newActive);
 
-				/*if (g_engine.m_coordinator.ComponentExists<TransformComponent>(ent))
+				if (g_engine.m_coordinator.ComponentExists<TransformComponent>(ent))
 				{
 					glm::vec3 cameraPos = CameraManager::instance().GetCameraPos();
 					TransformComponent& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(ent);
@@ -397,7 +408,7 @@ namespace Rogue
 						transform.setPosition(Vec2(transform.GetPosition().x - cameraPos.x, transform.GetPosition().y - cameraPos.y));
 					else
 						transform.setPosition(Vec2(transform.GetPosition().x + cameraPos.x, transform.GetPosition().y + cameraPos.y));
-				}*/
+				}
 			}
 		}
 	}
