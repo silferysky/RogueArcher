@@ -28,7 +28,7 @@ namespace Rogue
 		std::string m_tag;
 		std::string m_archetypeName;
 		bool m_selected = false;
-		Entity m_Entity = 0;
+		Entity m_Entity = MAX_ENTITIES;
 
 		Entity m_parent = MAX_ENTITIES;
 		std::vector<Entity> m_children;

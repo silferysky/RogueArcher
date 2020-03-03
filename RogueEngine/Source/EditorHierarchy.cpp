@@ -248,7 +248,7 @@ namespace Rogue
 			}
 
 			//For filtering
-			if (objInfo.m_objectName != "" && (objInfo.m_parent == MAX_ENTITIES || objInfo.m_parent == -1))
+			if (objInfo.m_Entity != MAX_ENTITIES && (objInfo.m_parent == MAX_ENTITIES || objInfo.m_parent == -1))
 				if (tagName == search || objectName == search)
 				{
 					DisplayHierarchyParent(objInfo);
