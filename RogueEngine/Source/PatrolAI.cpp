@@ -105,6 +105,11 @@ namespace Rogue
 		Vec2Normalize(travelDistance, travelDistValue);
 		aiTransform.setPosition(aiTransform.GetPosition() + travelDistance * m_statsComponent->getSpeed() * DT_TRANSFORM_MODIFIER);
 
+		for (auto& child : g_engine.m_coordinator.GetHierarchyInfo(m_entity).m_children)
+		{
+			g_engine.m_coordinator.GetComponent<ChildComponent>(child).SetGlobalDirty();
+		}
+
 		//If within a certain radius, assign next point
 		if (Vec2SqDistance(aiTransform.GetPosition(), m_nextPoint.front()) < m_statsComponent->getSightRange() * m_statsComponent->getSightRange())
 		{

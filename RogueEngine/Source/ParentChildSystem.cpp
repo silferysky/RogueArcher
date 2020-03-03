@@ -40,6 +40,11 @@ namespace Rogue
 				transComponent.setScale(Vec2(childComponent.GetScale().x * parentTransformComponent.GetScale().x, childComponent.GetScale().y * parentTransformComponent.GetScale().y));
 				transComponent.setRotation(childComponent.GetRotation() + parentTransformComponent.GetRotation());
 
+				if (transComponent.GetScale().x == 0.0f)
+					transComponent.setScale(Vec2(1.0f, transComponent.GetScale().y));
+				if (transComponent.GetScale().y == 0.0f)
+					transComponent.setScale(Vec2(transComponent.GetScale().x, 1.0f));
+
 				std::vector<Entity> toUpdate;
 				AddChildToVector(toUpdate, entity);
 				for (auto& ent : toUpdate)
@@ -84,16 +89,16 @@ namespace Rogue
 				transComponent.setScale(Vec2(childComponent.GetScale().x * parentTransformComponent.GetScale().x, childComponent.GetScale().y * parentTransformComponent.GetScale().y));
 				transComponent.setRotation(childComponent.GetRotation() + parentTransformComponent.GetRotation());
 
-				std::vector<Entity> toUpdate;
-				AddChildToVector(toUpdate, entity);
-				for (auto& ent : toUpdate)
-					g_engine.m_coordinator.GetComponent<ChildComponent>(ent).SetGlobalDirty();
-
-				toUpdate.clear();
+				if (transComponent.GetScale().x == 0.0f)
+					transComponent.setScale(Vec2(1.0f, transComponent.GetScale().y));
+				if (transComponent.GetScale().y == 0.0f)
+					transComponent.setScale(Vec2(transComponent.GetScale().x, 1.0f));
 			}
 
-			if (childComponent.GetPosition().x == 0)
-				childComponent.SetPosition(Vec2(1.0f,1.0f));
+			if (childComponent.GetScale().x == 0.0f)
+				childComponent.SetScale(Vec2(1.0f,childComponent.GetScale().y));
+			if (childComponent.GetScale().y == 0.0f)
+				childComponent.SetScale(Vec2(childComponent.GetScale().x, 1.0f));
 		}
 
 		g_engine.m_coordinator.EndTimeSystem("Parent Child System");
