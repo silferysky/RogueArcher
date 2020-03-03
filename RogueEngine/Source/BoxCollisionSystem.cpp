@@ -67,7 +67,12 @@ namespace Rogue
 		// Loop through entities
 		for (iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
 		{
-			auto& currCollider = g_engine.m_coordinator.GetComponent<ColliderComponent>(*iEntity);
+			auto currColliderOpt = g_engine.m_coordinator.TryGetComponent<ColliderComponent>(*iEntity);
+#if 1
+			RE_ASSERT(static_cast<bool>(nextColliderOpt), "Entity doesn't have ColliderComponent");
+
+#endif
+			auto& currCollider = currColliderOpt->get();
 			auto& currRigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
 			auto& currTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
 			auto& currBoxCollider = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iEntity);
@@ -76,9 +81,14 @@ namespace Rogue
 			std::set<Entity>::iterator iNextEntity = iEntity;
 
 			// For each entity, the rest of the entities
-			for (iNextEntity++; iNextEntity != m_entities.end(); ++iNextEntity)
+			for (iNextEntity; iNextEntity != m_entities.end(); ++iNextEntity)
 			{
-				auto& nextCollider = g_engine.m_coordinator.GetComponent<ColliderComponent>(*iNextEntity);
+				auto nextColliderOpt = g_engine.m_coordinator.TryGetComponent<ColliderComponent>(*iNextEntity);
+#if 1
+				RE_ASSERT(static_cast<bool>(nextColliderOpt), "Entity doesn't have ColliderComponent");
+				
+#endif
+				auto& nextCollider = nextColliderOpt->get();
 
 				// Filter colliders
 				if (!CollisionManager::instance().FilterColliders(currCollider.GetCollisionMask(), nextCollider.GetCollisionCat()) ||
