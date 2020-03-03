@@ -111,6 +111,12 @@ namespace Rogue
 			return m_entityInfo;
 		}
 
+		void RemoveHierarchyInfo(Entity ent)
+		{
+			m_entityInfo[ent] = HierarchyInfo();
+			//std::remove(m_entityInfo.begin(), m_entityInfo.end(), ent);
+		}
+
 		uint32_t GetActiveEntityCount()
 		{
 			return REActiveEntityCount;

@@ -675,7 +675,8 @@ namespace Rogue
 						if (g_engine.m_coordinator.ComponentExists<AudioEmitterComponent>(i))
 							g_engine.m_coordinator.GetComponent<AudioEmitterComponent>(i).DestroySound();
 
-						SceneManager::instance().DeleteActiveEntity(i);
+						g_engine.m_coordinator.AddToDeleteQueue(i);
+						//SceneManager::instance().DeleteActiveEntity(i);
 					}
 
 				}		

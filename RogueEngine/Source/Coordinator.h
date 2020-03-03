@@ -288,6 +288,7 @@ namespace Rogue
 		{
 			for (auto& entity : m_deleteQueue)
 			{
+				//Erasing from Parent
 				Entity parentEnt = GetHierarchyInfo(entity).m_parent;
 				if (parentEnt != MAX_ENTITIES)
 				{
@@ -299,7 +300,16 @@ namespace Rogue
 					}
 				}
 
+				//Removing from Children
+				HierarchyInfo& entInfo = GetHierarchyInfo(entity);
+				for (auto& child : entInfo.m_children)
+				{
+					GetHierarchyInfo(child).m_parent = entInfo.m_parent;
+				}
 				GetHierarchyInfo(entity).m_children.clear();
+
+				//Actual deleting
+				RemoveHierarchyInfo(entity);
 				DestroyEntity(entity);
 			}
 
@@ -336,6 +346,11 @@ namespace Rogue
 		std::array<HierarchyInfo, MAX_ENTITIES>& GetHierarchyInfoArray()
 		{
 			return m_entityManager->GetHierarchyInfoArray();
+		}
+
+		void RemoveHierarchyInfo(Entity ent)
+		{
+			m_entityManager->RemoveHierarchyInfo(ent);
 		}
 
 		bool GetGameState() const
