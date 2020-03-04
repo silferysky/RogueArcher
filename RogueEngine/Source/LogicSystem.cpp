@@ -32,7 +32,6 @@ Technology is prohibited.
 #include "TeleCharge1.h"
 #include "TeleCharge2.h"
 #include "TeleCharge3.h"
-#include "HoverOverButton.h"
 #include "AppearOnCollide.h"
 #include "DisappearOnCollide.h"
 #include "DeathBox.h"
@@ -182,150 +181,141 @@ namespace Rogue
 				auto& logicComponent = g_engine.m_coordinator.GetComponent<LogicComponent>(entities);
 				auto& statsComponent = g_engine.m_coordinator.GetComponent<StatsComponent>(entities);
 
-				for (auto& logic : logicComponent.GetLogicType())
+				switch (logicComponent.GetLogicType())
 				{
-					switch (logic)
-					{
-					case AIType::AI_Finder:
-					{
-						FinderAI newAI(entities, logicComponent, statsComponent);
-						AddLogicInterface(entities, std::make_shared<FinderAI>(newAI));
-						break;
-					}
-					case AIType::AI_Patrol:
-					{
-						PatrolAI newAI(entities, logicComponent, statsComponent);
-						AddLogicInterface(entities, std::make_shared<PatrolAI>(newAI));
-						break;
-					}
-					case AIType::AI_Trigger:
-					{
-						TriggerAI newAI(entities, logicComponent, statsComponent);
-						AddLogicInterface(entities, std::make_shared<TriggerAI>(newAI));
-						break;
-					}
-					case AIType::AI_Platform:
-					{
-						PlatformAI newAI(entities, logicComponent, statsComponent);
-						AddLogicInterface(entities, std::make_shared<PlatformAI>(newAI));
-						break;
-					}
-					case AIType::Obj_Transition:
-					{
-						TransitionObject newAI(entities, logicComponent, statsComponent, statsComponent.GetTransitionLevel());
-						AddLogicInterface(entities, std::make_shared<TransitionObject>(newAI));
-						break;
-					}
-					case AIType::Obj_AppearOnCollide:
-					{
-						AppearOnCollide newAI(entities, logicComponent, statsComponent);
-						AddLogicInterface(entities, std::make_shared<AppearOnCollide>(newAI));
-						break;
-					}
-					case AIType::Obj_DisappearOnCollide:
-					{
-						DisappearOnCollide newAI(entities, logicComponent, statsComponent);
-						AddLogicInterface(entities, std::make_shared<DisappearOnCollide>(newAI));
-						break;
-					}
-					case AIType::UI_TeleCharge1:
-					{
-						TeleCharge1 newAI(entities, logicComponent, statsComponent);
-						AddLogicInterface(entities, std::make_shared<TeleCharge1>(newAI));
-						break;
-					}
-					case AIType::UI_TeleCharge2:
-					{
-						TeleCharge2 newAI(entities, logicComponent, statsComponent);
-						AddLogicInterface(entities, std::make_shared<TeleCharge2>(newAI));
-						break;
-					}
-					case AIType::UI_TeleCharge3:
-					{
-						TeleCharge3 newAI(entities, logicComponent, statsComponent);
-						AddLogicInterface(entities, std::make_shared<TeleCharge3>(newAI));
-						break;
-					}
-					case AIType::UI_HoverOverButton:
-					{
-						HoverOverButton newAI(entities, logicComponent, statsComponent);
-						AddLogicInterface(entities, std::make_shared<HoverOverButton>(newAI));
-						break;
-					}
-					case AIType::Gameplay_DeathBox:
-					{
-						DeathBox newAI(entities, logicComponent, statsComponent);
-						AddLogicInterface(entities, std::make_shared<DeathBox>(newAI));
-						break;
-					}
-					case AIType::Gameplay_Checkpoint:
-					{
-						Checkpoint newAI(entities, logicComponent, statsComponent);
-						AddLogicInterface(entities, std::make_shared<Checkpoint>(newAI));
-						break;
-					}
-					case AIType::Gameplay_SoulCollectible:
-					{
-						SoulCollectible newAI(entities, logicComponent, statsComponent);
-						AddLogicInterface(entities, std::make_shared<SoulCollectible>(newAI));
-						break;
-					}
-					case AIType::Gameplay_TeleAnimation:
-					{
-						TeleAnimation newAI(entities, logicComponent, statsComponent);
-						AddLogicInterface(entities, std::make_shared<TeleAnimation>(newAI));
-						break;
-					}
-					case AIType::Gameplay_AnimateOnExa:
-					{
-						AnimateOnExa newAI(entities, logicComponent, statsComponent);
-						AddLogicInterface(entities, std::make_shared<AnimateOnExa>(newAI));
-						break;
-					}
-					case AIType::Gameplay_AnimateOnEla:
-					{
-						AnimateOnEla newAI(entities, logicComponent, statsComponent);
-						AddLogicInterface(entities, std::make_shared<AnimateOnEla>(newAI));
-						break;
-					}
-					case AIType::Gameplay_ActivateOnExa:
-					{
-						ActivateOnExa newAI(entities, logicComponent, statsComponent);
-						AddLogicInterface(entities, std::make_shared<ActivateOnExa>(newAI));
-						break;
-					}
-					case AIType::Gameplay_ActivateOnEla:
-					{
-						ActivateOnEla newAI(entities, logicComponent, statsComponent);
-						AddLogicInterface(entities, std::make_shared<ActivateOnEla>(newAI));
-						break;
-					}
-					case AIType::Gameplay_ActivateOnDeathExa:
-					{
-						ActivateOnDeathExa newAI(entities, logicComponent, statsComponent);
-						AddLogicInterface(entities, std::make_shared<ActivateOnDeathExa>(newAI));
-						break;
-					}
-					case AIType::Gameplay_ActivateOnDeathEla:
-					{
-						ActivateOnDeathEla newAI(entities, logicComponent, statsComponent);
-						AddLogicInterface(entities, std::make_shared<ActivateOnDeathEla>(newAI));
-						break;
-					}
-					case AIType::Lights_Flicker:
-					{
-						LightsFlicker newAI(entities, logicComponent, statsComponent);
-						AddLogicInterface(entities, std::make_shared<LightsFlicker>(newAI));
-						break;
-					}
-					case AIType::AI_Static:
-					default:
-					{
-						ScriptComponent newAI(entities, logicComponent, statsComponent);
-						AddLogicInterface(entities, std::make_shared<ScriptComponent>(newAI));
-						break;
-					}
-					}
+				case AIType::AI_Finder:
+				{
+					FinderAI newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<FinderAI>(newAI));
+					break;
+				}
+				case AIType::AI_Patrol:
+				{
+					PatrolAI newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<PatrolAI>(newAI));
+					break;
+				}
+				case AIType::AI_Trigger:
+				{
+					TriggerAI newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<TriggerAI>(newAI));
+					break;
+				}
+				case AIType::AI_Platform:
+				{
+					PlatformAI newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<PlatformAI>(newAI));
+					break;
+				}
+				case AIType::Obj_Transition:
+				{
+					TransitionObject newAI(entities, logicComponent, statsComponent, statsComponent.GetTransitionLevel());
+					AddLogicInterface(entities, std::make_shared<TransitionObject>(newAI));
+					break;
+				}
+				case AIType::Obj_AppearOnCollide:
+				{
+					AppearOnCollide newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<AppearOnCollide>(newAI));
+					break;
+				}
+				case AIType::Obj_DisappearOnCollide:
+				{
+					DisappearOnCollide newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<DisappearOnCollide>(newAI));
+					break;
+				}
+				case AIType::UI_TeleCharge1:
+				{
+					TeleCharge1 newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<TeleCharge1>(newAI));
+					break;
+				}
+				case AIType::UI_TeleCharge2:
+				{
+					TeleCharge2 newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<TeleCharge2>(newAI));
+					break;
+				}
+				case AIType::UI_TeleCharge3:
+				{
+					TeleCharge3 newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<TeleCharge3>(newAI));
+					break;
+				}
+				case AIType::Gameplay_DeathBox:
+				{
+					DeathBox newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<DeathBox>(newAI));
+					break;
+				}
+				case AIType::Gameplay_Checkpoint:
+				{
+					Checkpoint newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<Checkpoint>(newAI));
+					break;
+				}
+				case AIType::Gameplay_SoulCollectible:
+				{
+					SoulCollectible newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<SoulCollectible>(newAI));
+					break;
+				}
+				case AIType::Gameplay_TeleAnimation:
+				{
+					TeleAnimation newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<TeleAnimation>(newAI));
+					break;
+				}
+				case AIType::Gameplay_AnimateOnExa:
+				{
+					AnimateOnExa newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<AnimateOnExa>(newAI));
+					break;
+				}
+				case AIType::Gameplay_AnimateOnEla:
+				{
+					AnimateOnEla newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<AnimateOnEla>(newAI));
+					break;
+				}
+				case AIType::Gameplay_ActivateOnExa:
+				{
+					ActivateOnExa newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<ActivateOnExa>(newAI));
+					break;
+				}
+				case AIType::Gameplay_ActivateOnEla:
+				{
+					ActivateOnEla newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<ActivateOnEla>(newAI));
+					break;
+				}
+				case AIType::Gameplay_ActivateOnDeathExa:
+				{
+					ActivateOnDeathExa newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<ActivateOnDeathExa>(newAI));
+					break;
+				}
+				case AIType::Gameplay_ActivateOnDeathEla:
+				{
+					ActivateOnDeathEla newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<ActivateOnDeathEla>(newAI));
+					break;
+				}
+				case AIType::Lights_Flicker:
+				{
+					LightsFlicker newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<LightsFlicker>(newAI));
+					break;
+				}
+				case AIType::AI_Static:
+				default:
+				{
+					ScriptComponent newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<ScriptComponent>(newAI));
+					break;
+				}
 				}
 			}
 		}

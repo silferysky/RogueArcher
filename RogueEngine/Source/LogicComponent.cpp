@@ -65,25 +65,14 @@ namespace Rogue
 		m_currentState = newState;
 	}
 
-	std::vector<AIType> LogicComponent::GetLogicType() const
+	AIType LogicComponent::GetLogicType() const
 	{
 		return m_AIType;
 	}
 
-	void LogicComponent::AddLogicType(AIType newType)
+	void LogicComponent::SetLogicType(AIType newType)
 	{
-		auto it = std::find(std::begin(m_AIType), std::end(m_AIType), newType);
-		if (it != std::end(m_AIType))
-			m_AIType.push_back(newType);
-	}
-
-	void LogicComponent::RemoveLogicType(AIType type)
-	{
-		auto it = std::find(std::begin(m_AIType), std::end(m_AIType), type);
-		if (it != std::end(m_AIType))
-		{
-			m_AIType.erase(it);
-		}
+		m_AIType = newType;
 	}
 
 	void LogicComponent::SetActiveStateBit(size_t pos)
@@ -106,13 +95,7 @@ namespace Rogue
 		//AI Type, AI first state, all different AI states
 		std::ostringstream ss;
 		
-		ss << static_cast<int>(m_AIType.size()) << ";";
-
-		for (auto& ai : m_AIType)
-		{
-			ss << static_cast<int>(ai) << ";";
-		}
-
+		ss << static_cast<int>(m_AIType) << ";";
 		ss << static_cast<int>(m_currentState) << ";";
 		ss << static_cast<int>(m_allStates.size()) << ";";
 
@@ -144,7 +127,7 @@ namespace Rogue
 				for (int i = 0; i < aisize; ++i)
 				{
 					if (std::getline(ss,s1,';'))
-						m_AIType.push_back(static_cast<AIType>(stoi(s1)));
+						m_AIType = static_cast<AIType>(stoi(s1));
 				}
 				break;
 			}
@@ -187,13 +170,11 @@ namespace Rogue
 			"UI Tele Charge 1", "UI Tele Charge 2", "UI Tele Charge 3", "UI Hover Over Button", "Death", "Checkpoint", "Soul Collectible", "Teleport Animation", 
 			"Animate on Exa", "Animate on Ela", "Activate on Exa", "Activate on Ela", "Activate on Exa Death", "Activate on Ela Death", "Lights Flicker" };
 		const char* aiState[] = { "Idle", "Chase", "Patrol"};
-		int tempInt = 0;
-		if (m_AIType.size())
-			tempInt = (int)(*m_AIType.begin());
+		int tempInt = static_cast<int>(m_AIType);
 
 		//For AI Type
 		ImGui::Combo("AI Type", &tempInt, aiType, IM_ARRAYSIZE(aiType));
-		//m_AIType = (AIType)tempInt;
+		m_AIType = (AIType)tempInt;
 		
 		//For initial state
 		tempInt = (int)m_currentState;
