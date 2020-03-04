@@ -36,13 +36,22 @@ namespace Rogue
 			}
 		}
 
+		auto aniOption = g_engine.m_coordinator.TryGetComponent<AnimationComponent>(m_entity);
+		auto childOption = g_engine.m_coordinator.TryGetComponent<ChildComponent>(m_entity);
+
+		if (!aniOption || !childOption)
+			return;
+
+		AnimationComponent& animComp = aniOption->get();
+		ChildComponent& childComp = childOption->get();
+
 		if (m_isLightMode != PlayerStatusManager::instance().GetLightStatus())
 		{
 			m_isLightMode = PlayerStatusManager::instance().GetLightStatus();
 
 			if (!m_isLightMode)
 			{
-				g_engine.m_coordinator.GetComponent<AnimationComponent>(m_entity).setIsAnimating(true);
+				animComp.setIsAnimating(true);
 
 				// set parent to disappear
 				Entity m_parent = g_engine.m_coordinator.GetComponent<ChildComponent>(m_entity).GetParent();
@@ -57,7 +66,7 @@ namespace Rogue
 				sprite.setFilter(colourFilter);
 			}
 		}
-		else if (!g_engine.m_coordinator.GetComponent<AnimationComponent>(m_entity).getIsAnimating() && g_engine.m_coordinator.GetComponent<SpriteComponent>(m_entity).getFilter().a)
+		else if (!animComp.getIsAnimating() && g_engine.m_coordinator.GetComponent<SpriteComponent>(m_entity).getFilter().a)
 			// not animating and not transparent
 		{
 			//set parent to appear
