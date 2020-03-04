@@ -39,6 +39,8 @@ namespace Rogue
 			SceneManager::instance().LoadLevel(m_transitionString.c_str());
 			m_transitionLevel = false;
 			m_transitionTime = TRANSIT_TIME;
+			ImGuiTileSet::instance().ClearTileset();
+			
 			return;
 		}
 		else if (m_transitionLevel)
