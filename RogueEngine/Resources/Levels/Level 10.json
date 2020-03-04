@@ -53,7 +53,7 @@
     "Signature41": 8214,
     "Signature42": 8214,
     "Signature43": 8214,
-    "Entity0": "Name{Tutorial Guide}|Tag{}|Sprite{Resources\\Assets\\GuideTutorial_Level_WithGrid.png;1;1;1;1;}||Transform{-30;-5;7680;3240;0;0}|||||||||||||||||||||",
+    "Entity0": "Name{Tutorial Guide}|Tag{}|Sprite{Resources\\Assets\\GuideTutorial_Level_WithGrid.png;1;1;1;1;}||Transform{-30;-5;0;0;0;0}|||||||||||||||||||||",
     "Entity1": "Name{PlayerNew}|Tag{Player}|Sprite{Resources\\Assets\\ExaIdle.png;1;1;1;1;}|Rigidbody{0;-1500;0;0.0224897;1;1;0;1;0.5;0.1;0.01;}|Transform{-3155.61;981.99;61;61;0;13}||BoxCollider{0;-2;-15;-5;AWAKE}|PlayerController{0;0.2;400;15;}|LogicComponent{1;21;0;1;0}|StatsComponent{0;0;0;0;0;;0;}|Animation{8;0;0.1;1;0;1;}|Camera{0;0;1;100;1;}||||Collider{BOX;2;4294967293;}|||||||LIGHT{1;7.5;601;3.2;0.828431;0.441448;0.0974626;1;}|||",
     "Entity2": "Name{TeleCharge1}|Tag{}|Sprite{Resources\\Assets\\TeleChargeIndicator.png;1;1;1;1;}||Transform{-3227.9;756.836;25;25;0;100}||||LogicComponent{1;8;0;1;0}|StatsComponent{0;0;0;0;0;;0;}|Animation{4;2;0.1;1;0;1;}|||||||||||FADE{4;1;}||||",
     "Entity3": "Name{TeleCharge2}|Tag{}|Sprite{Resources\\Assets\\TeleChargeIndicator.png;1;1;1;1;}||Transform{-3204.9;748.836;25;25;0;100}||||LogicComponent{1;9;0;1;0}|StatsComponent{0;0;0;0;0;;0;}|Animation{4;0;0.1;1;1;1;}|||||||||||FADE{4;1;}||||",
