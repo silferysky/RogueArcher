@@ -1,3 +1,4 @@
+#include "Precompiled.h"
 #include "GamePlayEnding.h"
 #include "PlayerStatusManager.h"
 #include "Main.h"
