@@ -187,7 +187,9 @@ namespace Rogue
 			"UI Tele Charge 1", "UI Tele Charge 2", "UI Tele Charge 3", "Death", "Checkpoint", "Soul Collectible", "Teleport Animation", 
 			"Animate on Exa", "Animate on Ela", "Activate on Exa", "Activate on Ela", "Activate on Exa Death", "Activate on Ela Death", "Lights Flicker" };
 		const char* aiState[] = { "Idle", "Chase", "Patrol"};
-		int tempInt = (int)(*m_AIType.begin());
+		int tempInt = 0;
+		if (m_AIType.size())
+			tempInt = (int)(*m_AIType.begin());
 
 		//For AI Type
 		ImGui::Combo("AI Type", &tempInt, aiType, IM_ARRAYSIZE(aiType));
