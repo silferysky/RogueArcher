@@ -673,6 +673,9 @@
     <ClInclude Include="Source\HoverOverButton.h">
       <Filter>RogueEngine\Systems\AI\Script Types\UI</Filter>
     </ClInclude>
+    <ClInclude Include="Source\GamePlayEnding.h">
+      <Filter>RogueEngine\Systems\AI\Script Types\Gameplay</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -1079,6 +1082,9 @@
     </ClCompile>
     <ClCompile Include="Source\HoverOverButton.cpp">
       <Filter>RogueEngine\Systems\AI\Script Types\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GamePlayEnding.cpp">
+      <Filter>RogueEngine\Systems\AI\Script Types\Gameplay</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

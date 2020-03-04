@@ -310,6 +310,10 @@ namespace Rogue
 					AddLogicInterface(entities, std::make_shared<ActivateOnDeathEla>(newAI));
 					break;
 				}
+				case AIType::Gameplay_Ending:
+				{
+					break;
+				}
 				case AIType::Lights_Flicker:
 				{
 					LightsFlicker newAI(entities, logicComponent, statsComponent);
@@ -323,6 +327,7 @@ namespace Rogue
 					AddLogicInterface(entities, std::make_shared<ScriptComponent>(newAI));
 					break;
 				}
+
 				}
 			}
 		}

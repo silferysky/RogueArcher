@@ -43,6 +43,7 @@ namespace Rogue
 		Gameplay_ActivateOnEla,
 		Gameplay_ActivateOnDeathExa,
 		Gameplay_ActivateOnDeathEla,
+		Gameplay_Ending,
 		Lights_Flicker,
 		UI_HoverOverButton,
 		Obj_Fade,
