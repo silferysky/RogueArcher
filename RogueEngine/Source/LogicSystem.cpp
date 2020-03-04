@@ -32,6 +32,7 @@ Technology is prohibited.
 #include "TeleCharge1.h"
 #include "TeleCharge2.h"
 #include "TeleCharge3.h"
+#include "HoverOverButton.h"
 #include "AppearOnCollide.h"
 #include "DisappearOnCollide.h"
 #include "DeathBox.h"
@@ -243,6 +244,12 @@ namespace Rogue
 					{
 						TeleCharge3 newAI(entities, logicComponent, statsComponent);
 						AddLogicInterface(entities, std::make_shared<TeleCharge3>(newAI));
+						break;
+					}
+					case AIType::UI_HoverOverButton:
+					{
+						HoverOverButton newAI(entities, logicComponent, statsComponent);
+						AddLogicInterface(entities, std::make_shared<HoverOverButton>(newAI));
 						break;
 					}
 					case AIType::Gameplay_DeathBox:

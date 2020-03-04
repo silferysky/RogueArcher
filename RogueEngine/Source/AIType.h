@@ -33,6 +33,7 @@ namespace Rogue
 		UI_TeleCharge1,
 		UI_TeleCharge2,
 		UI_TeleCharge3,
+		UI_HoverOverButton,
 		Gameplay_DeathBox,
 		Gameplay_Checkpoint,
 		Gameplay_SoulCollectible,

@@ -670,6 +670,9 @@
     <ClInclude Include="Source\LightsFlicker.h">
       <Filter>RogueEngine\Systems\AI\Script Types</Filter>
     </ClInclude>
+    <ClInclude Include="Source\HoverOverButton.h">
+      <Filter>RogueEngine\Systems\AI\Script Types\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -1073,6 +1076,9 @@
     </ClCompile>
     <ClCompile Include="Source\LightsFlicker.cpp">
       <Filter>RogueEngine\Systems\AI\Script Types</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\HoverOverButton.cpp">
+      <Filter>RogueEngine\Systems\AI\Script Types\UI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
