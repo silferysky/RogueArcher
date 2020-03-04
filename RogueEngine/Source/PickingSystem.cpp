@@ -123,7 +123,7 @@ namespace Rogue
 		{
 			KeyTriggeredEvent& key = dynamic_cast<KeyTriggeredEvent&>(ev);
 
-			if (key.GetKeyCode() != KeyPress::MB1 && key.GetKeyCode() != KeyPress::KeyR)
+			if (key.GetKeyCode() != KeyPress::MB1)
 				return;
 
 			PickingManager::instance().GenerateViewPortAABB(CameraManager::instance().GetCameraPos(), CameraManager::instance().GetCameraZoom());
@@ -152,11 +152,6 @@ namespace Rogue
 						if (!g_engine.m_coordinator.ComponentExists<UIComponent>(entity) ||
 							g_engine.m_coordinator.ComponentExists<CursorComponent>(entity) ||
 							!g_engine.m_coordinator.GetComponent<UIComponent>(entity).getIsActive())
-							continue;
-					}
-					else if (key.GetKeyCode() == KeyPress::KeyR)
-					{
-						if (!g_engine.m_coordinator.ComponentExists<LogicComponent>(entity))
 							continue;
 					}
 
@@ -196,18 +191,77 @@ namespace Rogue
 						EventDispatcher::instance().AddEvent(event);
 					}
 				}
-				else if (key.GetKeyCode() == KeyPress::KeyR)
+			}
+			return;
+		}
+
+		case EventType::EvKeyReleased:
+		{
+			KeyReleaseEvent& key = dynamic_cast<KeyReleaseEvent&>(ev);
+
+			if (key.GetKeyCode() != KeyPress::MB1)
+				return;
+
+			PickingManager::instance().GenerateViewPortAABB(CameraManager::instance().GetCameraPos(), CameraManager::instance().GetCameraZoom());
+
+			// Get the viewport's AABB
+			const AABB& viewportArea = PickingManager::instance().GetViewPortArea();
+
+			// Get the cursor's world position
+			Vec2 cursor = PickingManager::instance().GetWorldCursor();
+
+			// If cursor is in the viewport area, proceed.
+			if (CollisionManager::instance().DiscretePointVsAABB(cursor, viewportArea))
+			{
+				int pickedEntity = -1;
+				int highestZ = 0;
+
+				// Go through every transform component
+				for (Entity entity : m_entities)
+				{
+					//Skip clauses
+					if (key.GetKeyCode() == KeyPress::MB1)
+					{
+						//Skip all non UI entities
+						//Skip all cursor entities (crosshair)
+						//Skip inactive UI entities
+						if (!g_engine.m_coordinator.ComponentExists<UIComponent>(entity) ||
+							g_engine.m_coordinator.ComponentExists<CursorComponent>(entity) ||
+							!g_engine.m_coordinator.GetComponent<UIComponent>(entity).getIsActive())
+							continue;
+					}
+
+					TransformComponent& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
+					Vec2 pos = trans.GetPosition();
+
+					// If entity is in the viewport area
+					if (CollisionManager::instance().DiscretePointVsAABB(pos, viewportArea))
+					{
+						// Generate the transform aabb of the entity
+						PickingManager::instance().GenerateMeshAABB(trans);
+						const AABB& pickArea = trans.GetPickArea();
+
+						// Check if cursor is on the entity
+						if (CollisionManager::instance().DiscretePointVsAABB(cursor, pickArea))
+						{
+							if (trans.GetZ() >= highestZ)
+							{
+								highestZ = trans.GetZ();
+								pickedEntity = entity;
+							}
+						}
+					}
+				}
+
+				// Send EntityPickedEvent
+				if (key.GetKeyCode() == KeyPress::MB1)
 				{
 					if (pickedEntity >= 0)
 					{
-						EntHitchhikeEvent event(static_cast<Entity>(pickedEntity));
-						event.SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
-						EventDispatcher::instance().AddEvent(event);
-					}
-					else
-					{
-						EntHitchhikeEvent event(static_cast<Entity>(MAX_ENTITIES));
-						event.SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
+						EntPickedEvent event{ static_cast<Entity>(pickedEntity) };
+
+						event.SetSystemReceivers((int)(SystemID::id_PLAYERCONTROLLERSYSTEM));
+
 						EventDispatcher::instance().AddEvent(event);
 					}
 				}

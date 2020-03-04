@@ -310,13 +310,13 @@ namespace Rogue
 		//m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("YesBtn", true));
 		//m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("NoBtn", true));
 
-		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("MenuUI", false));
+		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("MenuUI", true));
 		for (auto& child : g_engine.m_coordinator.GetHierarchyInfo(m_menuObjs.front()).m_children)
 		{
 			m_menuObjs.push_back(child);
 		}
 
-		m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("MenuConfirmUI", false));
+		m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("MenuConfirmUI", true));
 		for (auto& child : g_engine.m_coordinator.GetHierarchyInfo(m_confirmQuitEnt.front()).m_children)
 		{
 			m_confirmQuitEnt.push_back(child);
@@ -362,7 +362,10 @@ namespace Rogue
 			else
 			{
 				if (g_engine.m_coordinator.ComponentExists<ChildComponent>(ent))
+				{
 					g_engine.m_coordinator.GetComponent<ChildComponent>(ent).SetGlobalDirty();
+					g_engine.m_coordinator.GetComponent<ChildComponent>(ent).SetIsFollowing(false);
+				}
 			}
 
 			//Do not do last item (ControlHelp)
