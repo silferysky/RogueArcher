@@ -690,6 +690,10 @@ namespace Rogue
 						g_engine.m_coordinator.AddToDeleteQueue(i);
 						//SceneManager::instance().DeleteActiveEntity(i);
 					}
+					std::stringstream ss;
+					ss << "Number of active entities: " << g_engine.m_coordinator.GetActiveObjects().size();
+					ss << "\nNumber of Hierarchy Infos: " << g_engine.m_coordinator.GetHierarchyInfoArray().size();
+					RE_INFO(ss.str());
 
 				}		
 		}
