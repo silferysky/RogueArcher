@@ -65,6 +65,11 @@ namespace Rogue
 			PLAYER_STATUS.SetPlayerEntity(*m_entities.begin());
 		}
 
+		if (PLAYER_STATUS.GetFreezeControlTimer() > 0.0f)
+		{
+			PLAYER_STATUS.SetFreezeControlTimer(PLAYER_STATUS.GetFreezeControlTimer() - g_deltaTime * g_engine.GetTimeScale());
+		}
+
 		//PlayerControllerComponent& player = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(PLAYER_STATUS.GetPlayerEntity());
 
 		//if (player.m_grounded)
@@ -328,6 +333,11 @@ namespace Rogue
 				else if (keycode == KeyPress::KeyF6)
 					g_engine.ToggleVSync();
 
+				else if (PLAYER_STATUS.GetFreezeControlTimer() > 0.0f)
+				{
+					return;
+				}
+
 				else if (keycode == KeyPress::Key0)
 				{
 					PLAYER_STATUS.SetInfiniteJumps(!PLAYER_STATUS.GetInfiniteJumps());
@@ -414,6 +424,9 @@ namespace Rogue
 		} //End KeyTriggered
 		case EventType::EvKeyPressed:
 		{
+			if (PLAYER_STATUS.GetFreezeControlTimer() > 0.0f)
+				return;
+
 			KeyPressEvent& EvPressKey = dynamic_cast<KeyPressEvent&>(ev);
 			KeyPress keycode = EvPressKey.GetKeyCode();
 			for (std::set<Entity>::iterator iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
@@ -493,6 +506,10 @@ namespace Rogue
 
 			if (!g_engine.m_coordinator.GameIsActive())
 				return;
+
+			if (PLAYER_STATUS.GetFreezeControlTimer() > 0.0f)
+				return;
+
 			if (g_engine.GetIsFocused())
 			{
 				if (keycode == KeyPress::MB1)
