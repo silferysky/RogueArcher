@@ -111,7 +111,6 @@ namespace Rogue
 
 	void SystemManager::Update()
 	{
-		UpdateSystem(SystemID::id_PARENTCHILDSYSTEM);
 		UpdateSystem(SystemID::id_GRAPHICSSYSTEM);
 		UpdateSystem(SystemID::id_MASKINGSYSTEM);
 
@@ -127,6 +126,7 @@ namespace Rogue
 		UpdateSystem(SystemID::id_AUDIOSYSTEM);
 		UpdateSystem(SystemID::id_UISYSTEM);
 		UpdateSystem(SystemID::id_LIGHTINGSYSTEM);
+		UpdateSystem(SystemID::id_PARENTCHILDSYSTEM);
 
 		// Only run editor if editor is running.
 		if (m_editorIsRunning)

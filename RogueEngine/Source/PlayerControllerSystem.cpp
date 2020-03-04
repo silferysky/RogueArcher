@@ -506,9 +506,7 @@ namespace Rogue
 						//if (player.m_grounded)
 						//	PLAYER_STATUS.SetTeleportCharge(PLAYER_STATUS.GetMaxTeleportCharge());
 						if (PLAYER_STATUS.IsPlayerActive())
-						{
 							Teleport();
-						}
 						m_ignoreFrameEvent = true;
 					}
 					//if (PLAYER_STATUS.ShowIndicator())
@@ -646,27 +644,9 @@ namespace Rogue
 			}
 			return;
 
-		} 
-		case EventType::EvEntityPicked:
-		{
-			EntPickedEvent entEvent = dynamic_cast<EntPickedEvent&>(ev);
-
-			if (entEvent.GetEntityID() == MAX_ENTITIES)
-				return;
-
-			HierarchyInfo& info = g_engine.m_coordinator.GetHierarchyInfo(entEvent.GetEntityID());
-
-			if (info.m_tag != "Hitchhike")
-				return;
-
-			EntHitchhikeEvent hitchhike = EntHitchhikeEvent(entEvent.GetEntityID());
-			hitchhike.SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
-			EventDispatcher::instance().AddEvent(hitchhike);
-
-			return;
-		}
 		} // switch (ev.GetEventType())
-	}// Receive
+		} // Receive
+	}
 
 	void PlayerControllerSystem::Shutdown()
 	{
