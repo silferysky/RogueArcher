@@ -160,7 +160,7 @@ namespace Rogue
 		glBindVertexArray(0); //Reset
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-		g_engine.m_coordinator.GetSystem<LightingSystem>()->TrueUpdate();
+		//g_engine.m_coordinator.GetSystem<LightingSystem>()->TrueUpdate();
 		g_engine.m_coordinator.GetSystem<FontSystem>()->TrueUpdate();
 		g_engine.m_coordinator.GetSystem<DebugDrawSystem>()->TrueUpdate();
 

@@ -68,8 +68,6 @@ Technology is prohibited.
 	void DebugDrawSystem::Update()
 	{
 		// Fake update. Timer will be inaccurate for debug draw
-		g_engine.m_coordinator.InitTimeSystem("Debug Draw System");
-		g_engine.m_coordinator.EndTimeSystem("Debug Draw System");
 	}
 
 	void DebugDrawSystem::TrueUpdate()

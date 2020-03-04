@@ -60,7 +60,9 @@ namespace Rogue
 
 	void LightingSystem::TrueUpdate()
 	{
-		g_engine.m_coordinator.InitTimeSystem("Lighting System");
+		//g_engine.m_coordinator.InitTimeSystem("Lighting System");
+		if (m_entities.size() == 0)
+			return;
 
 		glUseProgram(m_shader.GetShader());
 		glBindVertexArray(m_VAO);
@@ -93,7 +95,7 @@ namespace Rogue
 
 		glUseProgram(0);
 
-		g_engine.m_coordinator.EndTimeSystem("Lighting System");
+		//g_engine.m_coordinator.EndTimeSystem("Lighting System");
 	}
 
 	void LightingSystem::UpdateShader(Entity& entity)

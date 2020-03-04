@@ -113,8 +113,8 @@ namespace Rogue
 
 	void FontSystem::TrueUpdate()
 	{
-		Timer TimeSystem;
-		TimeSystem.TimerInit("Font System");
+		//Timer TimeSystem;
+		//TimeSystem.TimerInit("Font System");
 
 		glUseProgram(m_shader.GetShader());
 		glBindBuffer(GL_UNIFORM_BUFFER, m_uboMatrices);
@@ -137,7 +137,7 @@ namespace Rogue
 		glBindTexture(GL_TEXTURE_2D, 0);
 		glUseProgram(0);
 
-		TimeSystem.TimerEnd("Font System");
+		//TimeSystem.TimerEnd("Font System");
 	}
 
 

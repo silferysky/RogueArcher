@@ -166,7 +166,11 @@ namespace Rogue
 						width = temp;
 					}
 					--width;
-					ImGui::Image((void*)i.m_tileTexture.m_texture, ImVec2(imageSize.x, imageSize.y), ImVec2(i.m_texCoordMinX, i.m_texCoordMaxY), ImVec2(i.m_texCoordMaxX, i.m_texCoordMinY), ImVec4(1,1, 1, 1), i.m_bordercolor);
+					ImGui::Image(reinterpret_cast<ImTextureID>(static_cast<unsigned long long>(i.m_tileTexture.m_texture)),
+						ImVec2(imageSize.x, imageSize.y),
+						ImVec2(i.m_texCoordMinX, i.m_texCoordMaxY),
+						ImVec2(i.m_texCoordMaxX, i.m_texCoordMinY),
+						ImVec4(1,1, 1, 1), i.m_bordercolor);
 
 					if (ImGui::IsItemClicked(0))
 					{
@@ -257,10 +261,22 @@ namespace Rogue
 				ImGui::EndChild();
 				ImGui::NextColumn();
 				m_currentTexture = TextureManager::instance().loadTexture(m_currentPath.c_str());
+
 				ImGui::Text("Current Selected Tile");
-				ImGui::Image((void*)m_currentTexture.m_texture, ImVec2(50.0f, 50.f), ImVec2(m_minX, m_maxY), ImVec2(m_maxX, m_minY), ImVec4(1, 1, 1, 1), ImGui::GetStyle().Colors[ImGuiCol_Border]);
+				ImGui::Image(reinterpret_cast<ImTextureID>(static_cast<unsigned long long>(m_currentTexture.m_texture)),
+					ImVec2(50.0f, 50.f),
+					ImVec2(m_minX, m_maxY),
+					ImVec2(m_maxX, m_minY),
+					ImVec4(1, 1, 1, 1),
+					ImGui::GetStyle().Colors[ImGuiCol_Border]);
+
 				ImGui::Text("Current Image");
-				ImGui::Image((void*)m_currentTexture.m_texture, ImVec2(50.0f, 50.f), ImVec2(0, 1), ImVec2(1, 0), ImVec4(1, 1, 1, 1), ImGui::GetStyle().Colors[ImGuiCol_Border]);
+				ImGui::Image(reinterpret_cast<ImTextureID>(static_cast<unsigned long long>(m_currentTexture.m_texture)),
+					ImVec2(50.0f, 50.f),
+					ImVec2(0, 1), ImVec2(1, 0),
+					ImVec4(1, 1, 1, 1),
+					ImGui::GetStyle().Colors[ImGuiCol_Border]);
+
 				if (ImGui::BeginDragDropTarget())
 				{
 					if (const ImGuiPayload * payload = ImGui::AcceptDragDropPayload("Data"))
@@ -288,7 +304,13 @@ namespace Rogue
 					for (int j = 0; j < 5; ++j)
 					{
 						ImGui::SameLine();
-						ImGui::Image((void*)m_currentTexture.m_texture, ImVec2(50.0f, 50.0f), ImVec2(minx, maxy), ImVec2(maxx, miny), ImVec4(1, 1, 1, 1), ImGui::GetStyle().Colors[ImGuiCol_Border]);
+						ImGui::Image(reinterpret_cast<ImTextureID>(static_cast<unsigned long long>(m_currentTexture.m_texture)),
+							ImVec2(50.0f, 50.0f),
+							ImVec2(minx, maxy),
+							ImVec2(maxx, miny),
+							ImVec4(1, 1, 1, 1),
+							ImGui::GetStyle().Colors[ImGuiCol_Border]);
+						
 						if (ImGui::IsItemClicked(0))
 						{
 							m_minX = minx;
