@@ -80,7 +80,7 @@ namespace Rogue
 	{
 	}
 
-	void CursorSystem::Receive(Event* ev)
+	void CursorSystem::Receive(Event& ev)
 	{
 	}
 }

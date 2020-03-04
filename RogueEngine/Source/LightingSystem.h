@@ -59,6 +59,6 @@ namespace Rogue
 
 		void TrueUpdate();
 
-		void Receive(Event* ev);
+		void Receive(Event& ev);
 	};
 }

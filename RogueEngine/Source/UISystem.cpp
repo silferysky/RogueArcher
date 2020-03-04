@@ -67,6 +67,6 @@ namespace Rogue
 	void UISystem::Shutdown()
 	{}
 
-	void UISystem::Receive(Event* ev)
+	void UISystem::Receive(Event& ev)
 	{}
 }

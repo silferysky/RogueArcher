@@ -88,16 +88,16 @@ namespace Rogue
 					// If A and/or B is/are a trigger(s), dispatch trigger event(s).
 					/*if (currBoundingCircle.GetCollisionMode() == CollisionMode::e_trigger)
 					{
-						EntTriggerEnterEvent* ev = new EntTriggerEnterEvent{ *iEntity, *iNextEntity };
-						ev->SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
+						EntTriggerEnterEvent& ev = new EntTriggerEnterEvent{ *iEntity, *iNextEntity };
+						ev.SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
 						EventDispatcher::instance().AddEvent(ev);
 
 						continue;
 					}
 					if (nextBoundingCircle.GetCollisionMode() == CollisionMode::e_trigger)
 					{
-						EntTriggerEnterEvent* ev = new EntTriggerEnterEvent{ *iNextEntity, *iEntity };
-						ev->SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
+						EntTriggerEnterEvent& ev = new EntTriggerEnterEvent{ *iNextEntity, *iEntity };
+						ev.SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
 						EventDispatcher::instance().AddEvent(ev);
 
 						continue;
@@ -114,7 +114,7 @@ namespace Rogue
 		}
 	}
 
-	void CircleCollisionSystem::Receive(Event* ev)
+	void CircleCollisionSystem::Receive(Event& ev)
 	{}
 
 	void CircleCollisionSystem::Shutdown()

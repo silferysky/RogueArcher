@@ -158,6 +158,6 @@ namespace Rogue
 	void AnimationSystem::Shutdown()
 	{}
 
-	void AnimationSystem::Receive(Event* ev)
+	void AnimationSystem::Receive(Event& ev)
 	{}
 }

@@ -247,14 +247,14 @@ Technology is prohibited.
 		glBindVertexArray(0);
 	}
 
-	void DebugDrawSystem::Receive(Rogue::Event* ev)
+	void DebugDrawSystem::Receive(Rogue::Event& ev)
 	{
-		switch (ev->GetEventType())
+		switch (ev.GetEventType())
 		{
 		case Rogue::EventType::EvKeyTriggered:
 		{
-			Rogue::KeyTriggeredEvent* keytriggeredevent = dynamic_cast<Rogue::KeyTriggeredEvent*>(ev);
-			Rogue::KeyPress keycode = keytriggeredevent->GetKeyCode();
+			Rogue::KeyTriggeredEvent& keytriggeredevent = dynamic_cast<Rogue::KeyTriggeredEvent&>(ev);
+			Rogue::KeyPress keycode = keytriggeredevent.GetKeyCode();
 		    
 			if (g_engine.GetIsFocused())
 			{

@@ -40,10 +40,10 @@ namespace Rogue
 		}
 		void Init() override;
 		void Update() override;
-		void Receive(Event* ev) override final;
+		void Receive(Event& ev) override final;
 		void Shutdown() override;
 
-		//void ExecuteCommand(EditorEvent* command);
+		//void ExecuteCommand(EditorEvent& command);
 		void ExecuteCommand(bool isUndo = true);
 		void UndoCommand();
 		void RedoCommand();
@@ -53,12 +53,12 @@ namespace Rogue
 		void PasteCommand();
 		void HandleStack(bool exeUndo = DoingUndo);
 
-		void AddToUndoStack(EditorEvent* ev);
-		void AddToRedoStack(EditorEvent* ev);
+		void AddToUndoStack(EditorEvent& ev);
+		void AddToRedoStack(EditorEvent& ev);
 
 	private:
-		std::vector<EditorEvent*> m_undoStack;
-		std::vector<EditorEvent*> m_redoStack;
+		std::vector<std::reference_wrapper<EditorEvent>> m_undoStack;
+		std::vector<std::reference_wrapper<EditorEvent>> m_redoStack;
 		std::vector<Entity>& m_currentVector = g_engine.m_coordinator.GetActiveObjects();
 		std::vector<Entity>& m_hierarchyVector = ImGuiEditorHierarchy::instance().GetCurrentHierarchyVector();
 		bool& m_isHierarchyActive = ImGuiEditorHierarchy::instance().GetIsHierarchyFocused();

@@ -121,16 +121,16 @@ namespace Rogue
 		g_engine.m_coordinator.EndTimeSystem("Logic System");
 	}
 
-	void LogicSystem::Receive(Event* ev)
+	void LogicSystem::Receive(Event& ev)
 	{
-		switch (ev->GetEventCat())
+		switch (ev.GetEventCat())
 		{
 		case EventCategory::EventCatCollision:
 		case EventCategory::EventCatTrigger:
 		{
-			auto* event = dynamic_cast<EntCollisionOrTrigger<BoxCollider2DComponent, BoxCollider2DComponent>*>(ev);
-			Entity object = event->GetThis().m_entity;
-			Entity triggered = event->GetOther().m_entity;
+			auto& event = dynamic_cast<EntCollisionOrTrigger<BoxCollider2DComponent, BoxCollider2DComponent>&>(ev);
+			Entity object = event.GetThis().m_entity;
+			Entity triggered = event.GetOther().m_entity;
 			for (Entity m : m_entities)
 			{
 				if (m == object || m == triggered)
@@ -521,8 +521,8 @@ namespace Rogue
 
 	void LogicSystem::CreateMoveEvent(Entity ent, Vec2 vec)
 	{
-		EntMoveEvent* moveEvent = new EntMoveEvent(ent, false, vec);
-		moveEvent->SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
+		EntMoveEvent moveEvent(ent, false, vec);
+		moveEvent.SetSystemReceivers((int)SystemID::id_PHYSICSSYSTEM);
 		EventDispatcher::instance().AddEvent(moveEvent);
 	}
 

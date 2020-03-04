@@ -67,7 +67,12 @@ namespace Rogue
 		// Loop through entities
 		for (iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
 		{
-			auto& currCollider = g_engine.m_coordinator.GetComponent<ColliderComponent>(*iEntity);
+			auto currColliderOpt = g_engine.m_coordinator.TryGetComponent<ColliderComponent>(*iEntity);
+#if 1
+			RE_ASSERT(static_cast<bool>(currColliderOpt), "Entity doesn't have ColliderComponent");
+
+#endif
+			auto& currCollider = currColliderOpt->get();
 			auto& currRigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
 			auto& currTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
 			auto& currBoxCollider = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iEntity);
@@ -76,9 +81,14 @@ namespace Rogue
 			std::set<Entity>::iterator iNextEntity = iEntity;
 
 			// For each entity, the rest of the entities
-			for (iNextEntity++; iNextEntity != m_entities.end(); ++iNextEntity)
+			for (iNextEntity; iNextEntity != m_entities.end(); ++iNextEntity)
 			{
-				auto& nextCollider = g_engine.m_coordinator.GetComponent<ColliderComponent>(*iNextEntity);
+				auto nextColliderOpt = g_engine.m_coordinator.TryGetComponent<ColliderComponent>(*iNextEntity);
+#if 1
+				RE_ASSERT(static_cast<bool>(nextColliderOpt), "Entity doesn't have ColliderComponent");
+				
+#endif
+				auto& nextCollider = nextColliderOpt->get();
 
 				// Filter colliders
 				if (!CollisionManager::instance().FilterColliders(currCollider.GetCollisionMask(), nextCollider.GetCollisionCat()) ||
@@ -129,16 +139,16 @@ namespace Rogue
 		}
 	}
 
-	void BoxCollisionSystem::Receive(Event* ev)
+	void BoxCollisionSystem::Receive(Event& ev)
 	{
 #if TEST_COLLISION_EVENTS
-		if (ev->GetEventCat() & EventCatCollision)
+		if (ev.GetEventCat() & EventCatCollision)
 		{
-			switch (ev->GetEventType())
+			switch (ev.GetEventType())
 			{
 			case EventType::EvOnCollisionEnter:
 			{
-				auto* collisionEnter = dynamic_cast<AABBCollisionEnterEvent*>(ev);
+				auto* collisionEnter = dynamic_cast<AABBCollisionEnterEvent&>(ev);
 
 				collisionEnter->GetThis().m_collider.SetIsCollided(true);
 				collisionEnter->GetOther().m_collider.SetIsCollided(true);
@@ -148,7 +158,7 @@ namespace Rogue
 
 			case EventType::EvOnCollisionExit:
 			{
-				auto* collisionExit = dynamic_cast<AABBCollisionExitEvent*>(ev);
+				auto* collisionExit = dynamic_cast<AABBCollisionExitEvent&>(ev);
 
 				collisionExit->GetThis().m_collider.SetIsCollided(false);
 				collisionExit->GetOther().m_collider.SetIsCollided(false);
@@ -157,13 +167,13 @@ namespace Rogue
 			}
 			}
 		}
-		else if (ev->GetEventCat() & EventCatTrigger)
+		else if (ev.GetEventCat() & EventCatTrigger)
 		{
-			switch (ev->GetEventType())
+			switch (ev.GetEventType())
 			{
 			case EventType::EvOnCollisionEnter:
 			{
-				auto* collisionEnter = dynamic_cast<AABBTriggerEnterEvent*>(ev);
+				auto* collisionEnter = dynamic_cast<AABBTriggerEnterEvent&>(ev);
 
 				collisionEnter->GetThis().m_collider.SetIsCollided(true);
 				collisionEnter->GetOther().m_collider.SetIsCollided(true);
@@ -173,7 +183,7 @@ namespace Rogue
 
 			case EventType::EvOnCollisionExit:
 			{
-				auto* collisionExit = dynamic_cast<AABBTriggerExitEvent*>(ev);
+				auto* collisionExit = dynamic_cast<AABBTriggerExitEvent&>(ev);
 
 				collisionExit->GetThis().m_collider.SetIsCollided(false);
 				collisionExit->GetOther().m_collider.SetIsCollided(false);

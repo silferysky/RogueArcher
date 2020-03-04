@@ -90,8 +90,8 @@ namespace Rogue
 		if (PLAYER_STATUS.GetPlayerEntity() != MAX_ENTITIES)
 		{
 			//Telling PlayerControllerSystem to do full reset
-			ResetGameEvent* ev = new ResetGameEvent();
-			ev->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
+			ResetGameEvent ev;
+			ev.SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
 			EventDispatcher::instance().AddEvent(ev);
 		}
 

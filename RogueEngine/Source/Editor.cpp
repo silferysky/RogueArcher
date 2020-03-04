@@ -25,10 +25,10 @@ namespace Rogue
 	{
 		if (isUndo)
 		{
-			EditorEvent* editorEv = m_undoStack.back();
-			editorEv->SetIsUndo(true);
+			EditorEvent& editorEv = m_undoStack.back();
+			editorEv.SetIsUndo(true);
 			
-			switch (editorEv->GetEventType())
+			switch (editorEv.GetEventType())
 			{
 			case EventType::EvEditorCreateObject:
 				EventDispatcher::instance().AddEvent(editorEv);
@@ -56,8 +56,8 @@ namespace Rogue
 		}
 		else
 		{
-			EditorEvent* editorEv = m_redoStack.front();
-			editorEv->SetIsUndo(false);
+			EditorEvent& editorEv = m_redoStack.front();
+			editorEv.SetIsUndo(false);
 			EventDispatcher::instance().AddEvent(editorEv);
 			AddToUndoStack(editorEv);
 		}
@@ -67,7 +67,7 @@ namespace Rogue
 	{
 		if (!m_undoStack.size())
 			return;
-		if (m_undoStack.back())
+		//if (m_undoStack.back())
 		{
 			ExecuteCommand(DoingUndo);
 			HandleStack(DoingUndo);
@@ -78,7 +78,7 @@ namespace Rogue
 	{
 		if (!m_redoStack.size())
 			return;
-		if (m_redoStack.back())
+		//if (m_redoStack.back())
 		{
 			ExecuteCommand(DoingRedo);
 			HandleStack(DoingRedo);
@@ -102,24 +102,24 @@ namespace Rogue
 
 	void Editor::CopyCommand()
 	{
-		EditorCopyObjectEvent* event = new EditorCopyObjectEvent();
-		event->SetSystemReceivers((int)SystemID::id_EDITOR);
+		EditorCopyObjectEvent event;
+		event.SetSystemReceivers((int)SystemID::id_EDITOR);
 		EventDispatcher::instance().AddEvent(event);
 		AddToUndoStack(event);
 	}
 
 	void Editor::PasteCommand()
 	{
-		EditorPasteObjectEvent* event = new EditorPasteObjectEvent();
-		event->SetSystemReceivers((int)SystemID::id_EDITOR);
+		EditorPasteObjectEvent event;
+		event.SetSystemReceivers((int)SystemID::id_EDITOR);
 		EventDispatcher::instance().AddEvent(event);
 		AddToUndoStack(event);
 	}
 
 	void Editor::DeleteCommand()
 	{
-		EditorDeleteObjectEvent* event = new EditorDeleteObjectEvent();
-		event->SetSystemReceivers((int)SystemID::id_EDITOR);
+		EditorDeleteObjectEvent event;
+		event.SetSystemReceivers((int)SystemID::id_EDITOR);
 		EventDispatcher::instance().AddEvent(event);
 		AddToUndoStack(event);
 	}
@@ -130,7 +130,7 @@ namespace Rogue
 			if (!m_undoStack.size())
 				return;
 
-			if (m_undoStack.back())
+			//if (m_undoStack.back())
 			{
 				m_redoStack.push_back(m_undoStack.back());
 				m_undoStack.pop_back();
@@ -140,7 +140,7 @@ namespace Rogue
 		{
 			if (!m_redoStack.size())
 				return;
-			if (m_redoStack.back())
+			//if (m_redoStack.back())
 			{
 				m_undoStack.push_back(m_redoStack.back());
 				m_redoStack.pop_back();
@@ -149,12 +149,12 @@ namespace Rogue
 		}
 	}
 
-	void Editor::AddToUndoStack(EditorEvent* ev)
+	void Editor::AddToUndoStack(EditorEvent& ev)
 	{
 		m_undoStack.push_back(ev);
 	}
 
-	void Editor::AddToRedoStack(EditorEvent* ev)
+	void Editor::AddToRedoStack(EditorEvent& ev)
 	{
 		m_redoStack.push_back(ev);
 	}
@@ -187,25 +187,25 @@ namespace Rogue
 		EditorManager::instance().Update();
 	}
 
-	void Editor::Receive(Event* ev)
+	void Editor::Receive(Event& ev)
 	{
 		if (g_engine.GetIsFocused())
 		{
-			switch (ev->GetEventType())
+			switch (ev.GetEventType())
 			{
 				case EventType::EvKeyTriggered:
 				{
-					KeyTriggeredEvent* keytriggeredevent = dynamic_cast<KeyTriggeredEvent*>(ev);
-					KeyPress keycode = keytriggeredevent->GetKeyCode();
+					KeyTriggeredEvent& keytriggeredevent = dynamic_cast<KeyTriggeredEvent&>(ev);
+					KeyPress keycode = keytriggeredevent.GetKeyCode();
 					if (keycode == KeyPress::KeyDelete)
 					{
 						//DeleteCommand();
 					}
-					if (ev->GetEventCat() & EventCatCombinedInput)
+					if (ev.GetEventCat() & EventCatCombinedInput)
 					{
-						KeyTriggeredCombinedEvent* keytriggeredcombinedev = dynamic_cast<KeyTriggeredCombinedEvent*>(ev);
-						KeyPress keycode = keytriggeredcombinedev->GetKeyCode();
-						KeyPressSub keycodeSpecial = keytriggeredcombinedev->GetSubKey();
+						KeyTriggeredCombinedEvent& keytriggeredcombinedev = dynamic_cast<KeyTriggeredCombinedEvent&>(ev);
+						KeyPress keycode = keytriggeredcombinedev.GetKeyCode();
+						KeyPressSub keycodeSpecial = keytriggeredcombinedev.GetSubKey();
 
 						if (keycode == KeyPress::KeyS && keycodeSpecial == KeyPressSub::KeyCtrl)
 						{
@@ -245,7 +245,7 @@ namespace Rogue
 						//}
 						return;
 					}
-					/*if (keytriggeredevent->GetKeyCode() == KeyPress::Numpad8)
+					/*if (keytriggeredevent.GetKeyCode() == KeyPress::Numpad8)
 					{
 						Entity selected = 0;
 						for (auto& i : m_currentVector)
@@ -270,23 +270,23 @@ namespace Rogue
 				}
 				case EventType::EvEntityPicked:
 				{
-					EntPickedEvent* pickedEvent = dynamic_cast<EntPickedEvent*>(ev);
-					EditorManager::instance().SetPickedEntity(pickedEvent->GetEntityID());
+					EntPickedEvent& pickedEvent = dynamic_cast<EntPickedEvent&>(ev);
+					EditorManager::instance().SetPickedEntity(pickedEvent.GetEntityID());
 
 					return;
 				}
 				case EventType::EvEditorCreateObject:
 				{
-					EditorCreateObjectEvent* createObjEvent = dynamic_cast<EditorCreateObjectEvent*>(ev);
-					if (createObjEvent->GetIsUndo())
+					EditorCreateObjectEvent& createObjEvent = dynamic_cast<EditorCreateObjectEvent&>(ev);
+					if (createObjEvent.GetIsUndo())
 					{
 						m_redoStack.push_back(createObjEvent);
-						g_engine.m_coordinator.AddToDeleteQueue(createObjEvent->GetEntityID());
+						g_engine.m_coordinator.AddToDeleteQueue(createObjEvent.GetEntityID());
 					}
 					else
 					{
 						m_undoStack.push_back(createObjEvent);
-						createObjEvent->SetEntityID(SceneManager::instance().Create2DSprite());
+						createObjEvent.SetEntityID(SceneManager::instance().Create2DSprite());
 					}
 
 
@@ -294,8 +294,8 @@ namespace Rogue
 				}
 				case EventType::EvEditorCopyObject:
 				{
-					EditorCopyObjectEvent* copyObjEvent = dynamic_cast<EditorCopyObjectEvent*>(ev);
-					if (copyObjEvent->GetIsUndo())
+					EditorCopyObjectEvent& copyObjEvent = dynamic_cast<EditorCopyObjectEvent&>(ev);
+					if (copyObjEvent.GetIsUndo())
 					{
 						m_redoStack.push_back(copyObjEvent);
 						//m_checkSprite = false;
@@ -317,12 +317,12 @@ namespace Rogue
 				}
 				case EvEditorPasteObject:
 				{
-					EditorPasteObjectEvent* pasteObjEvent = dynamic_cast<EditorPasteObjectEvent*>(ev);
+					EditorPasteObjectEvent& pasteObjEvent = dynamic_cast<EditorPasteObjectEvent&>(ev);
 					for (auto& i : m_hierarchyVector)
 					{
 						if (g_engine.m_coordinator.GetHierarchyInfo(i).m_selected)
 						{
-							if (pasteObjEvent->GetIsUndo())
+							if (pasteObjEvent.GetIsUndo())
 							{
 								g_engine.m_coordinator.AddToDeleteQueue(m_pastedEntitiesVector.back());
 								m_pastedEntitiesVector.pop_back();
@@ -342,12 +342,12 @@ namespace Rogue
 				}
 				case EvEditorDeleteObject:
 				{
-					EditorDeleteObjectEvent* deleteObjEvent = dynamic_cast<EditorDeleteObjectEvent*>(ev);
+					EditorDeleteObjectEvent& deleteObjEvent = dynamic_cast<EditorDeleteObjectEvent&>(ev);
 					for (auto& i : m_hierarchyVector)
 					{
 						if (g_engine.m_coordinator.GetHierarchyInfo(i).m_selected)
 						{
-							if (deleteObjEvent->GetIsUndo())
+							if (deleteObjEvent.GetIsUndo())
 							{
 								g_engine.m_coordinator.Clone(m_deletedEntitiesVector.back());
 								m_deletedEntitiesVector.pop_back();

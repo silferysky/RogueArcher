@@ -142,8 +142,8 @@ namespace Rogue
 #if 0
 			if (g_engine.m_coordinator.GetHierarchyInfo(*iEntity).m_children.size())
 			{
-				ParentTransformEvent* parentEv = new ParentTransformEvent(*iEntity, MAX_ENTITIES);
-				parentEv->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+				ParentTransformEvent& parentEv = new ParentTransformEvent(*iEntity, MAX_ENTITIES);
+				parentEv.SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
 				EventDispatcher::instance().AddEvent(parentEv);
 			}
 #endif
@@ -153,24 +153,24 @@ namespace Rogue
 		ForceManager::instance().UpdateAges();
 	}
 
-	void PhysicsSystem::Receive(Event* ev)
+	void PhysicsSystem::Receive(Event& ev)
 	{
-		switch (ev->GetEventType())
+		switch (ev.GetEventType())
 		{
 		case EventType::EvKeyTriggered:
 		{
-			KeyTriggeredEvent* EvTriggeredKey = dynamic_cast<KeyTriggeredEvent*>(ev);
+			KeyTriggeredEvent& EvTriggeredKey = dynamic_cast<KeyTriggeredEvent&>(ev);
 
-			//if (EvTriggeredKey->GetKeyCode() == KeyPress::Numpad9)
+			//if (EvTriggeredKey.GetKeyCode() == KeyPress::Numpad9)
 			//	allowGravity = allowGravity ? false : true;
 
 			return;
 		}
 		case EventType::EvEntityMove:
 		{
-			EntMoveEvent* EvEntMove = dynamic_cast<EntMoveEvent*>(ev);
+			EntMoveEvent& EvEntMove = dynamic_cast<EntMoveEvent&>(ev);
 
-			Entity player = EvEntMove->GetEntityID();
+			Entity player = EvEntMove.GetEntityID();
 
 			if (!g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(player))
 				return;
@@ -178,7 +178,7 @@ namespace Rogue
 			PlayerControllerComponent& playerCtrl = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(player);
 			RigidbodyComponent& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(player);
 
-			Vec2 vecMovement = EvEntMove->GetVecMovement();
+			Vec2 vecMovement = EvEntMove.GetVecMovement();
 
 #ifdef MOVE_WITH_FORCE
 			Vec2 force = PlayerMoveByForce(playerCtrl, rigidbody, vecMovement);
@@ -196,25 +196,25 @@ namespace Rogue
 
 		case EventType::EvEntityTeleport:
 		{
-			EntTeleportEvent* EvEntTeleport = dynamic_cast<EntTeleportEvent*>(ev);
+			EntTeleportEvent& EvEntTeleport = dynamic_cast<EntTeleportEvent&>(ev);
 			Vec2 oldPos{};
-			if (g_engine.m_coordinator.ComponentExists<TransformComponent>(EvEntTeleport->GetEntityID()))
+			if (g_engine.m_coordinator.ComponentExists<TransformComponent>(EvEntTeleport.GetEntityID()))
 			{
-				oldPos = g_engine.m_coordinator.GetComponent<TransformComponent>(EvEntTeleport->GetEntityID()).GetPosition();
-				g_engine.m_coordinator.GetComponent<TransformComponent>(EvEntTeleport->GetEntityID()).
-					setPosition(EvEntTeleport->GetVecMovement());
+				oldPos = g_engine.m_coordinator.GetComponent<TransformComponent>(EvEntTeleport.GetEntityID()).GetPosition();
+				g_engine.m_coordinator.GetComponent<TransformComponent>(EvEntTeleport.GetEntityID()).
+					setPosition(EvEntTeleport.GetVecMovement());
 			}
 
-			if (g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(EvEntTeleport->GetEntityID()))
+			if (g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(EvEntTeleport.GetEntityID()))
 			{
-				RigidbodyComponent& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(EvEntTeleport->GetEntityID());
+				RigidbodyComponent& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(EvEntTeleport.GetEntityID());
 				rigidbody.setVelocity(Vec2());
 				rigidbody.setAcceleration(Vec2());
-				ForceManager::instance().RemoveForce(EvEntTeleport->GetEntityID());
+				ForceManager::instance().RemoveForce(EvEntTeleport.GetEntityID());
 
-				oldPos = EvEntTeleport->GetVecMovement() - oldPos;
+				oldPos = EvEntTeleport.GetVecMovement() - oldPos;
 				Vec2Normalize(oldPos, oldPos);
-				ForceManager::instance().RegisterForce(EvEntTeleport->GetEntityID(), oldPos * 2000, 0.1f);
+				ForceManager::instance().RegisterForce(EvEntTeleport.GetEntityID(), oldPos * 2000, 0.1f);
 				//ForceManager::instance().AddForce(EvEntTeleport->GetEntityID(), rigidbody);
 			}
 

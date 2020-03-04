@@ -185,21 +185,21 @@ namespace Rogue
 		g_engine.m_coordinator.EndTimeSystem("Camera System");
 	}
 
-	void CameraSystem::Receive(Event* ev)
+	void CameraSystem::Receive(Event& ev)
 	{
 
-		switch (ev->GetEventType())
+		switch (ev.GetEventType())
 		{
 		case EventType::EvCameraShake:
 		{
-			CameraShakeEvent* cameraShakeEvent = dynamic_cast<CameraShakeEvent*>(ev);
-			m_cameraShake.SetShake(cameraShakeEvent->getMagnitude());
+			CameraShakeEvent& cameraShakeEvent = dynamic_cast<CameraShakeEvent&>(ev);
+			m_cameraShake.SetShake(cameraShakeEvent.getMagnitude());
 			return;
 		}
 		case EventType::EvKeyTriggered:
 		{
-			KeyTriggeredEvent* keytriggeredevent = dynamic_cast<KeyTriggeredEvent*>(ev);
-			KeyPress keycode = keytriggeredevent->GetKeyCode();
+			KeyTriggeredEvent& keytriggeredevent = dynamic_cast<KeyTriggeredEvent&>(ev);
+			KeyPress keycode = keytriggeredevent.GetKeyCode();
 
 			//if (keycode == KeyPress::KeyShift && g_engine.GetIsFocused())
 				//ToggleWorldCamera();
@@ -208,8 +208,8 @@ namespace Rogue
 		} //End KeyTriggered
 		case EventType::EvKeyPressed:
 		{
-			KeyPressEvent* EvPressKey = dynamic_cast<KeyPressEvent*>(ev);
-			KeyPress keycode = EvPressKey->GetKeyCode();
+			KeyPressEvent& EvPressKey = dynamic_cast<KeyPressEvent&>(ev);
+			KeyPress keycode = EvPressKey.GetKeyCode();
 
 			if (g_engine.GetIsFocused() && g_engine.m_coordinator.GetEditorIsRunning())
 			{

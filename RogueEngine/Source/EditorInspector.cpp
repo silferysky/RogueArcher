@@ -64,8 +64,16 @@ namespace Rogue
 					ImGui::TextDisabled("New Name");
 					ImGui::SameLine();
 					ImGui::PushItemWidth(75);
-					ImGui::InputText("                  ", buffer, 32);
-					if (ImGui::Button("Apply"))
+					if(ImGui::InputText("                  ", buffer, 32, ImGuiInputTextFlags_EnterReturnsTrue))
+					{
+						if (!buffer)
+						{
+							return;
+						}
+						infoObj.m_objectName = buffer;
+						memset(buffer, 0, 64);
+					}
+					if (ImGui::Button("Apply") )
 					{
 						if (!buffer)
 						{
@@ -80,7 +88,11 @@ namespace Rogue
 					ImGui::TextDisabled("%s",infoObj.m_tag.c_str());
 					ImGui::TextDisabled("New Tag Name");
 					ImGui::SameLine();
-					ImGui::InputText("               ", tagging, 64);
+					if (ImGui::InputText("               ", tagging, 64, ImGuiInputTextFlags_EnterReturnsTrue))
+					{
+						infoObj.m_tag = tagging;
+						memset(tagging, 0, 64);
+					}
 					if (ImGui::Button("Add New Tag"))
 					{
 						infoObj.m_tag = tagging;
@@ -133,8 +145,8 @@ namespace Rogue
 								trans.DisplayOnInspector();
 								if (trans.GetIsModified())
 								{
-									ParentTransformEvent* setParentEv = new ParentTransformEvent(i, MAX_ENTITIES);
-									setParentEv->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+									ParentTransformEvent setParentEv(i, MAX_ENTITIES);
+									setParentEv.SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
 									EventDispatcher::instance().AddEvent(setParentEv);
 									trans.setModified(false);
 								}
@@ -750,7 +762,15 @@ namespace Rogue
 		{
 			static char LayerBuffer[64];
 			ImGui::Text("Layer Name");
-			ImGui::InputText("##Layer", LayerBuffer, 64);
+			if (ImGui::InputText("##Layer", LayerBuffer, 64, ImGuiInputTextFlags_EnterReturnsTrue))
+			{
+				if (!LayerBuffer)
+				{
+					return;
+				}
+				LayerManager::instance().AddLayer(LayerBuffer);
+				memset(LayerBuffer, 0, 64);
+			}
 			if (ImGui::Button("Add Layer"))
 			{
 				if (!LayerBuffer)

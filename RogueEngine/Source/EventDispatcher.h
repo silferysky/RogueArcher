@@ -37,8 +37,8 @@ namespace Rogue
 		void Init();
 
 		//Queue functions
-		Event* GetQueueHead();
-		//Event* GetQueueHeadDelayed();
+		Event& GetQueueHead();
+		//Event& GetQueueHeadDelayed();
 		//void CombineQueue();
 		//void CombineQueueCmd(Event& e);
 
@@ -49,18 +49,18 @@ namespace Rogue
 		std::map<SystemID, LISTENER_HANDLER> GetMap();
 
 		//Adding / Removing Events
-		void AddEvent(Event* e);
-		void AddEventDelayed(Event* e);
+		void AddEvent(Event& e);
+		//void AddEventDelayed(Event& e);
 		void ResetEvents();
 
 		void Update();
 
 		//Dispatch sends it to the relavent system to execute event
-		void DispatchEvent(Event* toHandle);
+		void DispatchEvent(Event& toHandle);
 
 	private:
-		std::queue<Event*> EventQueue;
-		//std::queue<Event*> DelayedEventQueue;
+		std::queue<std::reference_wrapper<Event>> EventQueue;
+		//std::queue<Event&> DelayedEventQueue;
 		std::map<SystemID, LISTENER_HANDLER> ListenerMap;
 		//bool isCombiningQueue = false;
 	};

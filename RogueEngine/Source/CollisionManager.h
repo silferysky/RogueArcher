@@ -200,33 +200,33 @@ namespace Rogue
 			// If A and/or B is/are a trigger(s), dispatch trigger event(s).
 			if (infoA.m_collider.GetCollisionMode() == CollisionMode::e_trigger)
 			{
-				auto* ev = new EntTriggerEnterEvent<TColliderA, TColliderB>{ infoA, infoB };
-				ev->SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
-				ev->SetSystemReceivers((int)SystemID::id_BOXCOLLISIONSYSTEM);
+				EntTriggerEnterEvent<TColliderA, TColliderB> ev{ infoA, infoB };
+				ev.SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
+				ev.SetSystemReceivers((int)SystemID::id_BOXCOLLISIONSYSTEM);
 				EventDispatcher::instance().AddEvent(ev);
 			}
 			else if (infoA.m_collider.GetCollisionMode() == CollisionMode::e_awake)
 			{
-				auto* ev = new EntCollisionEnterEvent<TColliderA, TColliderB>{ infoA, infoB };
-				ev->SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
-				ev->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
-				ev->SetSystemReceivers((int)SystemID::id_BOXCOLLISIONSYSTEM);
+				EntCollisionEnterEvent<TColliderA, TColliderB> ev{ infoA, infoB };
+				ev.SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
+				ev.SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
+				ev.SetSystemReceivers((int)SystemID::id_BOXCOLLISIONSYSTEM);
 				EventDispatcher::instance().AddEvent(ev);
 			}
 
 			if (infoB.m_collider.GetCollisionMode() == CollisionMode::e_trigger)
 			{
-				auto* ev = new EntTriggerEnterEvent<TColliderB, TColliderA>{ infoB, infoA };
-				ev->SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
-				ev->SetSystemReceivers((int)SystemID::id_BOXCOLLISIONSYSTEM);
+				EntTriggerEnterEvent<TColliderB, TColliderA> ev{ infoB, infoA };
+				ev.SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
+				ev.SetSystemReceivers((int)SystemID::id_BOXCOLLISIONSYSTEM);
 				EventDispatcher::instance().AddEvent(ev);
 			}
 			else if (infoB.m_collider.GetCollisionMode() == CollisionMode::e_awake)
 			{
-				auto* ev = new EntCollisionEnterEvent<TColliderA, TColliderB>{ infoB, infoA };
-				ev->SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
-				ev->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
-				ev->SetSystemReceivers((int)SystemID::id_BOXCOLLISIONSYSTEM);
+				EntCollisionEnterEvent<TColliderB, TColliderA> ev{ infoB, infoA };
+				ev.SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
+				ev.SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
+				ev.SetSystemReceivers((int)SystemID::id_BOXCOLLISIONSYSTEM);
 				EventDispatcher::instance().AddEvent(ev);
 			}
 		}
@@ -237,29 +237,29 @@ namespace Rogue
 			// If A and/or B is/are a trigger(s), dispatch trigger event(s).
 			if (infoA.m_collider.GetCollisionMode() == CollisionMode::e_trigger)
 			{
-				auto* ev = new EntTriggerStayEvent<TColliderA, TColliderB>{ infoA, infoB };
-				ev->SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
+				EntTriggerStayEvent<TColliderA, TColliderB> ev{ infoA, infoB };
+				ev.SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
 				EventDispatcher::instance().AddEvent(ev);
 			}
 			else if (infoA.m_collider.GetCollisionMode() == CollisionMode::e_awake)
 			{
-				auto* ev = new EntCollisionStayEvent<TColliderA, TColliderB>{ infoA, infoB };
-				ev->SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
-				ev->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
+				EntCollisionStayEvent<TColliderA, TColliderB> ev{ infoA, infoB };
+				ev.SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
+				ev.SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
 				EventDispatcher::instance().AddEvent(ev);
 			}
 
 			if (infoB.m_collider.GetCollisionMode() == CollisionMode::e_trigger)
 			{
-				auto* ev = new EntTriggerStayEvent<TColliderB, TColliderA>{ infoB, infoA };
-				ev->SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
+				EntTriggerStayEvent<TColliderB, TColliderA> ev{ infoB, infoA };
+				ev.SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
 				EventDispatcher::instance().AddEvent(ev);
 			}
 			else if (infoB.m_collider.GetCollisionMode() == CollisionMode::e_awake)
 			{
-				auto* ev = new EntCollisionStayEvent<TColliderA, TColliderB>{ infoB, infoA };
-				ev->SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
-				ev->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
+				EntCollisionStayEvent<TColliderB, TColliderA> ev{ infoB, infoA };
+				ev.SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
+				ev.SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
 				EventDispatcher::instance().AddEvent(ev);
 			}
 		}
@@ -270,33 +270,33 @@ namespace Rogue
 			// If A and/or B is/are a trigger(s), dispatch trigger event(s).
 			if (infoA.m_collider.GetCollisionMode() == CollisionMode::e_trigger)
 			{
-				auto* ev = new EntTriggerExitEvent<TColliderA, TColliderB>{ infoA, infoB };
-				ev->SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
-				ev->SetSystemReceivers((int)SystemID::id_BOXCOLLISIONSYSTEM);
+				EntTriggerExitEvent<TColliderA, TColliderB> ev{ infoA, infoB };
+				ev.SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
+				ev.SetSystemReceivers((int)SystemID::id_BOXCOLLISIONSYSTEM);
 				EventDispatcher::instance().AddEvent(ev);
 			}
 			else if (infoA.m_collider.GetCollisionMode() == CollisionMode::e_awake)
 			{
-				auto* ev = new EntCollisionExitEvent<TColliderA, TColliderB>{ infoA, infoB };
-				ev->SetSystemReceivers((int)SystemID::id_LOGICSYSTEM); 
-				ev->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
-				ev->SetSystemReceivers((int)SystemID::id_BOXCOLLISIONSYSTEM);
+				EntCollisionExitEvent<TColliderA, TColliderB> ev{ infoA, infoB };
+				ev.SetSystemReceivers((int)SystemID::id_LOGICSYSTEM); 
+				ev.SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
+				ev.SetSystemReceivers((int)SystemID::id_BOXCOLLISIONSYSTEM);
 				EventDispatcher::instance().AddEvent(ev);
 			}
 
 			if (infoB.m_collider.GetCollisionMode() == CollisionMode::e_trigger)
 			{
-				auto* ev = new EntTriggerExitEvent<TColliderB, TColliderA>{ infoB, infoA };
-				ev->SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
-				ev->SetSystemReceivers((int)SystemID::id_BOXCOLLISIONSYSTEM);
+				EntTriggerExitEvent<TColliderB, TColliderA> ev{ infoB, infoA };
+				ev.SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
+				ev.SetSystemReceivers((int)SystemID::id_BOXCOLLISIONSYSTEM);
 				EventDispatcher::instance().AddEvent(ev);
 			}
 			else if (infoB.m_collider.GetCollisionMode() == CollisionMode::e_awake)
 			{
-				auto* ev = new EntCollisionExitEvent<TColliderA, TColliderB>{ infoB, infoA };
-				ev->SetSystemReceivers((int)SystemID::id_LOGICSYSTEM); 
-				ev->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
-				ev->SetSystemReceivers((int)SystemID::id_BOXCOLLISIONSYSTEM);
+				EntCollisionExitEvent<TColliderB, TColliderA> ev{ infoB, infoA };
+				ev.SetSystemReceivers((int)SystemID::id_LOGICSYSTEM); 
+				ev.SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
+				ev.SetSystemReceivers((int)SystemID::id_BOXCOLLISIONSYSTEM);
 				EventDispatcher::instance().AddEvent(ev);
 			}
 		}

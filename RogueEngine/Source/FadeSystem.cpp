@@ -66,16 +66,16 @@ namespace Rogue
 	void FadeSystem::Shutdown()
 	{}
 
-	void FadeSystem::Receive(Event* ev)
+	void FadeSystem::Receive(Event& ev)
 	{
-		switch (ev->GetEventType())
+		switch (ev.GetEventType())
 		{
 		case EvFade:
 		{
-			FadeEvent* event = dynamic_cast<FadeEvent*>(ev);
+			FadeEvent& event = dynamic_cast<FadeEvent&>(ev);
 			for (auto& entity : m_entities)
 			{
-				if (entity == event->GetEntityToFade())
+				if (entity == event.GetEntityToFade())
 				{
 					g_engine.m_coordinator.GetComponent<FadeComponent>(entity).setIsActive(true);
 					break;

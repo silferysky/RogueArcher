@@ -80,8 +80,8 @@ namespace Rogue
 			m_statsComponent != nullptr))
 			return;
 
-		ParentTransformEvent* event = new ParentTransformEvent(m_entity, true);
-		event->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+		ParentTransformEvent event(m_entity, true);
+		event.SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
 		EventDispatcher::instance().AddEvent(event);
 
 		TransformComponent& aiTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(m_entity);
@@ -139,8 +139,8 @@ namespace Rogue
 		}
 		//if (g_engine.m_coordinator.GetHierarchyInfo(m_entity).m_children.size())
 		//{
-		//	ParentTransformEvent* parentEv = new ParentTransformEvent(m_entity, MAX_ENTITIES);
-		//	parentEv->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+		//	ParentTransformEvent& parentEv = new ParentTransformEvent(m_entity, MAX_ENTITIES);
+		//	parentEv.SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
 		//	EventDispatcher::instance().AddEvent(parentEv);
 		//}
 

@@ -253,15 +253,18 @@ namespace Rogue
 
 	void PlayerStatusManager::ChangePlayerSprite()
 	{
-		EntChangeSpriteEvent* ev;
-		
 		if (m_isLightMode)
-			ev = new EntChangeSpriteEvent(m_entity, "Resources\\Assets\\ExaIdle.png");
+		{
+			EntChangeSpriteEvent ev(m_entity, "Resources\\Assets\\ExaIdle.png");
+			ev.SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
+			EventDispatcher::instance().AddEvent(ev);
+		}
 		else
-			ev = new EntChangeSpriteEvent(m_entity, "Resources\\Assets\\ElaIdle.png");
-
-		ev->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
-		EventDispatcher::instance().AddEvent(ev);
+		{
+			EntChangeSpriteEvent ev(m_entity, "Resources\\Assets\\ElaIdle.png");
+			ev.SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
+			EventDispatcher::instance().AddEvent(ev);
+		}
 	}
 
 }

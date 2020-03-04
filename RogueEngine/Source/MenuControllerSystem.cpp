@@ -57,22 +57,22 @@ namespace Rogue
 		g_engine.m_coordinator.EndTimeSystem("Menu Controller System");
 	}
 
-	void MenuControllerSystem::Receive(Event* ev)
+	void MenuControllerSystem::Receive(Event& ev)
 	{
-		switch (ev->GetEventType())
+		switch (ev.GetEventType())
 		{
 		case EventType::EvEntityHover:
 		{
-			EntHoverEvent* hover = dynamic_cast<EntHoverEvent*>(ev);
+			EntHoverEvent& hover = dynamic_cast<EntHoverEvent&>(ev);
 
-			if (g_engine.m_coordinator.ComponentExists<SpriteComponent>(hover->GetEntityID()))
+			if (g_engine.m_coordinator.ComponentExists<SpriteComponent>(hover.GetEntityID()))
 			{
 				//+2 to skip crosshair and background
-				if (hover->GetEntityID() < m_menuObjs.front() + 2 || hover->GetEntityID() > *(m_menuObjs.end() - 1))
+				if (hover.GetEntityID() < m_menuObjs.front() + 2 || hover.GetEntityID() > *(m_menuObjs.end() - 1))
 					return;
-				auto filter = g_engine.m_coordinator.GetComponent<SpriteComponent>(hover->GetEntityID()).getFilter();
+				auto filter = g_engine.m_coordinator.GetComponent<SpriteComponent>(hover.GetEntityID()).getFilter();
 				filter.a = 0.8f;
-				g_engine.m_coordinator.GetComponent<SpriteComponent>(hover->GetEntityID()).setFilter(filter);
+				g_engine.m_coordinator.GetComponent<SpriteComponent>(hover.GetEntityID()).setFilter(filter);
 			}
 
 			return;
@@ -83,12 +83,12 @@ namespace Rogue
 			if (!g_engine.m_coordinator.GetGameState())
 				return;
 
-			EntPickedEvent* entPicked = dynamic_cast<EntPickedEvent*>(ev);
+			EntPickedEvent& entPicked = dynamic_cast<EntPickedEvent&>(ev);
 
 			bool UIPicked = false;
 			for (Entity ent : m_entities)
 			{
-				if (ent == entPicked->GetEntityID())
+				if (ent == entPicked.GetEntityID())
 				{
 					UIPicked = true;
 					break;
@@ -101,7 +101,7 @@ namespace Rogue
 				
 				for (size_t it = 0; it < m_menuObjs.size() + m_confirmQuitEnt.size(); ++it)
 				{
-					if (entPicked->GetEntityID() == m_menuObjs.front() + it || entPicked->GetEntityID() == m_confirmQuitEnt.front() + it - m_menuObjs.size())
+					if (entPicked.GetEntityID() == m_menuObjs.front() + it || entPicked.GetEntityID() == m_confirmQuitEnt.front() + it - m_menuObjs.size())
 					{
 						AudioManager::instance().loadSound("Resources/Sounds/button.ogg", 0.3f, false).Play();
 						switch (it)
@@ -138,11 +138,11 @@ namespace Rogue
 
 				if (hierarchyObj.m_objectName == "")
 				{
-					hierarchyObj = g_engine.m_coordinator.GetHierarchyInfo(entPicked->GetEntityID());
+					hierarchyObj = g_engine.m_coordinator.GetHierarchyInfo(entPicked.GetEntityID());
 				}
 				else
 				{
-					hierarchyObj.m_Entity = entPicked->GetEntityID();
+					hierarchyObj.m_Entity = entPicked.GetEntityID();
 				}
 				
 				//For all cases of "How to Play" (Main Menu and Pause Screens)
@@ -227,8 +227,8 @@ namespace Rogue
 		}
 		case EventType::EvMouseMoved:
 		{
-			MouseMoveEvent* mouseMove = dynamic_cast<MouseMoveEvent*>(ev);
-			KeyPress keycode = mouseMove->GetKeyCode();
+			MouseMoveEvent& mouseMove = dynamic_cast<MouseMoveEvent&>(ev);
+			KeyPress keycode = mouseMove.GetKeyCode();
 
 			return;
 		}
@@ -239,18 +239,18 @@ namespace Rogue
 			if (!g_engine.m_coordinator.GetGameState())
 				return;
 
-			KeyTriggeredEvent* keytriggeredevent = dynamic_cast<KeyTriggeredEvent*>(ev);
-			KeyPress keycode = keytriggeredevent->GetKeyCode();
+			KeyTriggeredEvent& keytriggeredevent = dynamic_cast<KeyTriggeredEvent&>(ev);
+			KeyPress keycode = keytriggeredevent.GetKeyCode();
 			if (g_engine.GetIsFocused())
 			{
-				if (ev->GetEventCat() & EventCatCombinedInput)
+				if (ev.GetEventCat() & EventCatCombinedInput)
 				{
-					KeyTriggeredCombinedEvent* keytriggeredcombinedev = dynamic_cast<KeyTriggeredCombinedEvent*>(ev);
-					KeyPressSub keycodeSpecial = keytriggeredcombinedev->GetSubKey();
+					KeyTriggeredCombinedEvent& keytriggeredcombinedev = dynamic_cast<KeyTriggeredCombinedEvent&>(ev);
+					KeyPressSub keycodeSpecial = keytriggeredcombinedev.GetSubKey();
 
 					//Do stuff
 
-					RE_INFO(keytriggeredcombinedev->ToString());
+					RE_INFO(keytriggeredcombinedev.ToString());
 				}
 
 				if (keycode == KeyPress::KeyEsc)
@@ -277,7 +277,7 @@ namespace Rogue
 
 				if (keycode == KeyPress::KeyF8)
 				{
-					CameraShakeEvent* cameraShakeEvent = new CameraShakeEvent(220.0f);
+					CameraShakeEvent cameraShakeEvent(220.0f);
 					EventDispatcher::instance().AddEvent(cameraShakeEvent);
 				}
 			}

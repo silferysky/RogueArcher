@@ -1756,7 +1756,7 @@ ImU32 ImGui::GetColorU32(ImU32 col)
 
 //-----------------------------------------------------------------------------
 // [SECTION] ImGuiStorage
-// Helper: Key->value storage
+// Helper: key.value storage
 //-----------------------------------------------------------------------------
 
 // std::lower_bound but without the bullshit

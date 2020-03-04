@@ -109,10 +109,10 @@ namespace Rogue
 		strstream << ",\n  \"EntityCount\": " << 0;
 
 		//For Camera
-		strstream << ",\n  \"CameraMinX\": " << 0;
-		strstream << ",\n  \"CameraMinY\": " << 0;
-		strstream << ",\n  \"CameraMaxX\": " << 0;
-		strstream << ",\n  \"CameraMaxY\": " << 0;
+		strstream << ",\n  \"CameraMinX\": " << -3392.0f;
+		strstream << ",\n  \"CameraMinY\": " << -933.0f;
+		strstream << ",\n  \"CameraMaxX\": " << 2388.0f;
+		strstream << ",\n  \"CameraMaxY\": " << 1105.0f;
 		strstream << ",\n  \"CameraZoom\": " << 1.0;
 
 		strstream << ",\n  \"Tileset\": \"\"";

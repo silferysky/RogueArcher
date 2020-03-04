@@ -184,7 +184,7 @@ namespace Rogue
 		}
 	}
 
-	void FontSystem::Receive(Event* ev)
+	void FontSystem::Receive(Event& ev)
 	{
 
 	}

@@ -124,8 +124,8 @@ namespace Rogue
 				return;
 
 			//Changing buds
-			//EntChangeSpriteEvent* ev;
-			//EntChangeRGBAEvent* rgbaEv;
+			//EntChangeSpriteEvent& ev;
+			//EntChangeRGBAEvent& rgbaEv;
 			if ((m_currentPointIndex && firstPos.y > secondPos.y) || (!m_currentPointIndex && firstPos.y < secondPos.y))
 			{
 				//ev = new EntChangeRGBAEvent(m_entity, 1.0f, 0.0f, 1.0f, a);
@@ -165,8 +165,8 @@ namespace Rogue
 				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setIsNotReversed(false);
 				g_engine.m_coordinator.GetComponent<AnimationComponent>(toChangeSprite).setCurrentFrame(4);
 			}
-			//ev->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
-			//rgbaEv->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
+			//ev.SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
+			//rgbaEv.SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
 			//EventDispatcher::instance().AddEvent(ev);
 			//EventDispatcher::instance().AddEvent(rgbaEv);
 
@@ -209,7 +209,7 @@ namespace Rogue
 					collider.SetMask(lightPos, false);
 				}
 			}
-			//ev->SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
+			//ev.SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
 			//EventDispatcher::instance().AddEvent(ev);
 
 			//Manually preventing second occurance of this event
