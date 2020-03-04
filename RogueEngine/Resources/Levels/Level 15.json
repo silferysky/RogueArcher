@@ -1,6 +1,6 @@
 {
-    "MaxEntityCount": 1,
-    "EntityCount": 1,
+    "MaxEntityCount": 5,
+    "EntityCount": 5,
     "CameraMinX": 0.0,
     "CameraMinY": 0.0,
     "CameraMaxX": 0.0,
@@ -10,6 +10,18 @@
     "StartPosX": 0,
     "StartPosY": 0,
     "Signature0": 5,
+    "Signature1": 8214,
+    "Signature2": 8214,
+    "Signature3": 8214,
+    "Signature4": 8214,
     "Entity0": "Name{Game Object 0}|Tag{}|Sprite{Resources\\Assets\\GuideVegetationLevel.png;1;0.99999;0.99999;1;}||Transform{35;-35;4064;2580;0;0}|||||||||||||||||||||",
-    "EntityParent0": 65535
+    "Entity1": "Name{Collision1}|Tag{Ground}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-1537;213.495;100;100;0;0}||BoxCollider{0;0;700;245;AWAKE}|||||||||Collider{BOX;1;4294967295;}||||||||||",
+    "Entity2": "Name{Collision2}|Tag{Ground}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-1417;180.505;100;100;0;0}||BoxCollider{0;0;703;193;AWAKE}|||||||||Collider{BOX;1;4294967295;}||||||||||",
+    "Entity3": "Name{Collision3}|Tag{Ground}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-1229;152.505;100;100;0;0}||BoxCollider{0;0;703;126;AWAKE}|||||||||Collider{BOX;1;4294967295;}||||||||||",
+    "Entity4": "Name{Collision4}|Tag{}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-1442;97.505;100;100;0;0}||BoxCollider{0;0;890;126;AWAKE}|||||||||Collider{BOX;1;4294967295;}||||||||||",
+    "EntityParent0": 65535,
+    "EntityParent1": 65535,
+    "EntityParent2": 65535,
+    "EntityParent3": 65535,
+    "EntityParent4": 65535
 }
