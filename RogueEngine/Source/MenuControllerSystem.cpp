@@ -106,30 +106,33 @@ namespace Rogue
 						AudioManager::instance().loadSound("Resources/Sounds/button.ogg", 0.3f, false).Play();
 						switch (it)
 						{
-						case 0: //Crosshair
+						case 0: //MenuParent
+						case 8: //ConfirmBtnParent
 							break;
-						case 1: //MainMenu_Bg
+						case 1: //Crosshair
+							break;
+						case 2: //MainMenu_Bg
 							hierarchyObj.m_objectName = "MainMenu_Bg";
 							break;
-						case 2: //HowToPlayBtn
+						case 3: //HowToPlayBtn
 							hierarchyObj.m_objectName = "HowToPlayBtn";
 							break;
-						case 3: //MainMenu_Btn
+						case 4: //MainMenu_Btn
 							hierarchyObj.m_objectName = "MainMenu_Btn";
 							break;
-						case 4: //Resume
+						case 5: //Resume
 							hierarchyObj.m_objectName = "Resume";
 							break;
-						case 5: //QuitBtn
+						case 6: //QuitBtn
 							hierarchyObj.m_objectName = "Quit";
 							break;
-						case 6: //HowToPlay
+						case 7: //HowToPlay
 							hierarchyObj.m_objectName = "HowToPlay";
 							break;
-						case 7: //YesBtn
+						case 9: //YesBtn
 							hierarchyObj.m_objectName = "YesBtn";
 							break;
-						case 8: //NoBtn
+						case 10: //NoBtn
 							hierarchyObj.m_objectName = "NoBtn";
 							break;
 						}
