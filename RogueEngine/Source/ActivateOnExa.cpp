@@ -21,14 +21,17 @@ namespace Rogue
 		{
 			m_isLightMode = PlayerStatusManager::instance().GetLightStatus();
 
-			if (m_isLightMode)
+			if (auto particle = g_engine.m_coordinator.TryGetComponent<ParticleEmitterComponent>(m_entity))
 			{
-				g_engine.m_coordinator.GetComponent<ParticleEmitterComponent>(m_entity).SetIsActive(true);
-			}
-			else if (g_engine.m_coordinator.GetComponent<ParticleEmitterComponent>(m_entity).GetIsActive())
-				// active
-			{
-				g_engine.m_coordinator.GetComponent<ParticleEmitterComponent>(m_entity).SetIsActive(false);
+				if (m_isLightMode)
+				{
+					particle->get().SetIsActive(true);
+				}
+				else if (particle->get().GetIsActive())
+					// active
+				{
+					particle->get().SetIsActive(false);
+				}
 			}
 		}
 	}

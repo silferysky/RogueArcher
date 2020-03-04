@@ -17,68 +17,71 @@ namespace Rogue
 
 	void AnimateOnExa::AIIdleUpdate()
 	{
-		if (g_engine.m_coordinator.ComponentExists<ChildComponent>(m_entity))
+		if (auto child = g_engine.m_coordinator.TryGetComponent<ChildComponent>(m_entity))
 		{
-			auto& child = g_engine.m_coordinator.GetComponent<ChildComponent>(m_entity);
-			if (g_engine.m_coordinator.ComponentExists<TransformComponent>(child.GetParent()))
+			if (g_engine.m_coordinator.ComponentExists<TransformComponent>(child->get().GetParent()))
 			{
 				if (PLAYER_STATUS.GetMoveLeft())
 				{
-					child.SetScale(Vec2(-1.0f, 1.0f));
+					child->get().SetScale(Vec2(-1.0f, 1.0f));
 				}
 				else
 				{
-					child.SetScale(Vec2(1.0f, 1.0f));
+					child->get().SetScale(Vec2(1.0f, 1.0f));
 				}
 
-				child.SetPosition(0.0f, 0.0f);
-				child.SetGlobalDirty();
+				child->get().SetPosition(0.0f, 0.0f);
+				child->get().SetGlobalDirty();
 			}
 		}
 
-		auto aniOption = g_engine.m_coordinator.TryGetComponent<AnimationComponent>(m_entity);
-		auto childOption = g_engine.m_coordinator.TryGetComponent<ChildComponent>(m_entity);
-
-		if (!aniOption || !childOption)
-			return;
-
-		AnimationComponent& animComp = aniOption->get();
-		ChildComponent& childComp = childOption->get();
-
-		if (m_isLightMode != PlayerStatusManager::instance().GetLightStatus())
+		if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(m_entity))
 		{
-			m_isLightMode = PlayerStatusManager::instance().GetLightStatus();
-
-			if (m_isLightMode)
+			if (auto animate = g_engine.m_coordinator.TryGetComponent<AnimationComponent>(m_entity))
 			{
-				animComp.setIsAnimating(true);
+				if (m_isLightMode != PlayerStatusManager::instance().GetLightStatus())
+				{
+					m_isLightMode = PlayerStatusManager::instance().GetLightStatus();
 
-				// set parent to disappear
-				Entity m_parent = childComp.GetParent();
-				auto& parentSprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_parent);
-				glm::vec4 parentFilter = parentSprite.getFilter();
-				parentFilter.a = 0.0f;
-				parentSprite.setFilter(parentFilter);
+					if (m_isLightMode)
+					{
+						animate->get().setIsAnimating(true);
 
-				auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_entity);
-				glm::vec4 colourFilter = sprite.getFilter();
-				colourFilter.a = 1.0f;
-				sprite.setFilter(colourFilter);
+						// set parent to disappear
+						if (Entity m_parent = g_engine.m_coordinator.TryGetComponent<ChildComponent>(m_entity)->get().GetParent())
+						{
+							if (auto parentSprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(m_parent))
+							{
+								glm::vec4 parentFilter = parentSprite->get().getFilter();
+								parentFilter.a = 0.0f;
+								parentSprite->get().setFilter(parentFilter);
+							}
+						}
+
+						glm::vec4 colourFilter = sprite->get().getFilter();
+						colourFilter.a = 1.0f;
+						sprite->get().setFilter(colourFilter);
+					}
+				}
+				else if (!animate->get().getIsAnimating() && sprite->get().getFilter().a)
+					// not animating and not transparent
+				{
+					//set parent to appear
+					if (Entity m_parent = g_engine.m_coordinator.TryGetComponent<ChildComponent>(m_entity)->get().GetParent())
+					{
+						if (auto parentSprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(m_parent))
+						{
+							glm::vec4 parentFilter = parentSprite->get().getFilter();
+							parentFilter.a = 1.0f;
+							parentSprite->get().setFilter(parentFilter);
+						}
+					}
+
+					glm::vec4 colourFilter = sprite->get().getFilter();
+					colourFilter.a = 0.0f;
+					sprite->get().setFilter(colourFilter);
+				}
 			}
-		}
-		else if (!animComp.getIsAnimating() && g_engine.m_coordinator.GetComponent<SpriteComponent>(m_entity).getFilter().a)
-			// not animating and not transparent
-		{
-			//set parent to appear
-			Entity m_parent = g_engine.m_coordinator.GetComponent<ChildComponent>(m_entity).GetParent();
-			auto& parentSprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_parent);
-			glm::vec4 parentFilter = parentSprite.getFilter();
-			parentFilter.a = 1.0f;
-			parentSprite.setFilter(parentFilter);
-
-			glm::vec4 colourFilter = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_entity).getFilter();
-			colourFilter.a = 0.0f;
-			g_engine.m_coordinator.GetComponent<SpriteComponent>(m_entity).setFilter(colourFilter);
 		}
 	}
 }

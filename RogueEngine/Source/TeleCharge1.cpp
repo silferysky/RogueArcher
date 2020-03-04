@@ -27,8 +27,11 @@ namespace Rogue
 			else
 			{
 				m_timer = 0.0f;
-				g_engine.m_coordinator.GetComponent<FadeComponent>(m_entity).setIsActive(true);
-				g_engine.m_coordinator.GetComponent<FadeComponent>(m_entity).setIsFadingIn(false);
+				if (auto fade = g_engine.m_coordinator.TryGetComponent<FadeComponent>(m_entity))
+				{
+					fade->get().setIsActive(true);
+					fade->get().setIsFadingIn(false);
+				}
 				return;
 			}
 		}
@@ -39,13 +42,19 @@ namespace Rogue
 
 		if (m_teleCharge < 1)
 		{
-			g_engine.m_coordinator.GetComponent<FadeComponent>(m_entity).setIsActive(true);
-			g_engine.m_coordinator.GetComponent<FadeComponent>(m_entity).setIsFadingIn(false);
+			if (auto fade = g_engine.m_coordinator.TryGetComponent<FadeComponent>(m_entity))
+			{
+				fade->get().setIsActive(true);
+				fade->get().setIsFadingIn(false);
+			}
 		}
 		else
 		{
-			g_engine.m_coordinator.GetComponent<FadeComponent>(m_entity).setIsActive(true);
-			g_engine.m_coordinator.GetComponent<FadeComponent>(m_entity).setIsFadingIn(true);
+			if (auto fade = g_engine.m_coordinator.TryGetComponent<FadeComponent>(m_entity))
+			{
+				fade->get().setIsActive(true);
+				fade->get().setIsFadingIn(true);
+			}
 		}
 	}
 

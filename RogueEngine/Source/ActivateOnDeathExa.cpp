@@ -17,9 +17,12 @@ namespace Rogue
 
 	void ActivateOnDeathExa::AIIdleUpdate()
 	{
-		if (PLAYER_STATUS.GetDeath() && PLAYER_STATUS.GetLightStatus())
-			g_engine.m_coordinator.GetComponent<ParticleEmitterComponent>(m_entity).SetIsActive(true);
-		else
-			g_engine.m_coordinator.GetComponent<ParticleEmitterComponent>(m_entity).SetIsActive(false);
+		if (auto particle = g_engine.m_coordinator.TryGetComponent<ParticleEmitterComponent>(m_entity))
+		{
+			if (PLAYER_STATUS.GetDeath() && PLAYER_STATUS.GetLightStatus())
+				particle->get().SetIsActive(true);
+			else
+				particle->get().SetIsActive(false);
+		}
 	}
 }

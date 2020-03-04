@@ -25,12 +25,13 @@ namespace Rogue
 			if (m_timer >= 0.4592166f && m_timer < 3.0f)
 			{
 				g_engine.m_coordinator.GetSystem<CameraSystem>()->setIsActive(false);
-				g_engine.m_coordinator.GetComponent<TransformComponent>(m_other).setPosition(PlayerStatusManager::instance().GetCheckpoint());
+				if (auto transform = g_engine.m_coordinator.TryGetComponent<TransformComponent>(m_other))
+					transform->get().setPosition(PlayerStatusManager::instance().GetCheckpoint());
 				
 				if (PLAYER_STATUS.GetPlayerEntity() != MAX_ENTITIES && g_engine.m_coordinator.ComponentExists<SpriteComponent>(PlayerStatusManager::instance().GetPlayerEntity()))
 				{
-					SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_other);
-					sprite.setFilter(glm::vec4(sprite.getFilter().r, sprite.getFilter().g, sprite.getFilter().b, 0.0f));
+					if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(m_other))
+						sprite->get().setFilter(glm::vec4(sprite->get().getFilter().r, sprite->get().getFilter().g, sprite->get().getFilter().b, 0.0f));
 				}
 
 				if (PLAYER_STATUS.GetIndicator() != MAX_ENTITIES)
@@ -44,13 +45,14 @@ namespace Rogue
 			{
 				m_timer = 0.0f;
 				PlayerStatusManager::instance().SetDeath(false);
-				g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(m_other).SetIsActive(true);
+				if (auto player = g_engine.m_coordinator.TryGetComponent<PlayerControllerComponent>(m_other))
+					player->get().SetIsActive(true);
 				g_engine.m_coordinator.GetSystem<CameraSystem>()->setIsActive(true);
 
-				if (PLAYER_STATUS.GetPlayerEntity() != MAX_ENTITIES && g_engine.m_coordinator.ComponentExists<SpriteComponent>(PlayerStatusManager::instance().GetPlayerEntity()))
+				if (PLAYER_STATUS.GetPlayerEntity() != MAX_ENTITIES)
 				{
-					SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(PLAYER_STATUS.GetPlayerEntity());
-					sprite.setFilter(glm::vec4(sprite.getFilter().r, sprite.getFilter().g, sprite.getFilter().b, 1.0f));
+					if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(PLAYER_STATUS.GetPlayerEntity()))
+						sprite->get().setFilter(glm::vec4(sprite->get().getFilter().r, sprite->get().getFilter().g, sprite->get().getFilter().b, 1.0f));
 				}
 
 				PLAYER_STATUS.SetIndicatorStatus(true);
@@ -60,7 +62,7 @@ namespace Rogue
 
 	void DeathBox::OnTriggerEnter(Entity other)
 	{
-		if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(other))
+		if (auto player = g_engine.m_coordinator.TryGetComponent<PlayerControllerComponent>(other))
 		{
 			//g_engine.m_coordinator.GetSystem<CameraSystem>()->setIsActive(false);
 			CameraShakeEvent shake(20.0f);
@@ -70,7 +72,7 @@ namespace Rogue
 			PlayerStatusManager::instance().SetDeath(true);
 			g_engine.m_coordinator.loadSound("Resources/Sounds/die3.ogg", 0.3f, false).Play();
 			m_other = other;
-			g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(m_other).SetIsActive(false);
+			player->get().SetIsActive(false);
 		}
 	}
 }
