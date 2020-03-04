@@ -356,8 +356,10 @@ namespace Rogue
 			{
 				Vec2 camera = Vec2(CameraManager::instance().GetCameraPos().x, CameraManager::instance().GetCameraPos().y);
 
-				g_engine.m_coordinator.GetComponent<TransformComponent>(m_menuObjs.front()).setPosition(camera);
-				g_engine.m_coordinator.GetComponent<TransformComponent>(m_confirmQuitEnt.front()).setPosition(camera);
+				if (m_menuObjs.size() && g_engine.m_coordinator.ComponentExists<TransformComponent>(m_menuObjs.front()))
+					g_engine.m_coordinator.GetComponent<TransformComponent>(m_menuObjs.front()).setPosition(camera);
+				if (m_confirmQuitEnt.size() && g_engine.m_coordinator.ComponentExists<TransformComponent>(m_confirmQuitEnt.front()))
+					g_engine.m_coordinator.GetComponent<TransformComponent>(m_confirmQuitEnt.front()).setPosition(camera);
 			}
 			else
 			{
