@@ -316,6 +316,7 @@ namespace Rogue
 				//Actual deleting
 				RemoveHierarchyInfo(entity);
 				DestroyEntity(entity);
+				m_entityManager->RemoveEntityFromActiveObjects(entity);
 			}
 
 			m_deleteQueue.clear();
