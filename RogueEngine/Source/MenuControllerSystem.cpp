@@ -67,8 +67,8 @@ namespace Rogue
 
 			if (g_engine.m_coordinator.ComponentExists<SpriteComponent>(hover.GetEntityID()))
 			{
-				//+2 to skip crosshair and background
-				if (hover.GetEntityID() < m_menuObjs.front() + 2 || hover.GetEntityID() > *(m_menuObjs.end() - 1))
+				//+2 to skip menuparent, crosshair and background
+				if (hover.GetEntityID() < m_menuObjs.front() + 3 || hover.GetEntityID() > *(m_menuObjs.end() - 1))
 					return;
 				auto filter = g_engine.m_coordinator.GetComponent<SpriteComponent>(hover.GetEntityID()).getFilter();
 				filter.a = 0.8f;
@@ -310,13 +310,13 @@ namespace Rogue
 		//m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("YesBtn", true));
 		//m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("NoBtn", true));
 
-		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("MenuUI", false));
+		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("MenuUI", true));
 		for (auto& child : g_engine.m_coordinator.GetHierarchyInfo(m_menuObjs.front()).m_children)
 		{
 			m_menuObjs.push_back(child);
 		}
 
-		m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("MenuConfirmUI", false));
+		m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("MenuConfirmUI", true));
 		for (auto& child : g_engine.m_coordinator.GetHierarchyInfo(m_confirmQuitEnt.front()).m_children)
 		{
 			m_confirmQuitEnt.push_back(child);
