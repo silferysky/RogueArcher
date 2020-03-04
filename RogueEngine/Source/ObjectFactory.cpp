@@ -204,6 +204,7 @@ namespace Rogue
 
 		Entity entCount = 0;
 		size_t skipCount = 0; //No need to skip MenuControllerSystem's UI since they are not created as activeobjects
+		skipCount = g_engine.m_coordinator.GetSystem<MenuControllerSystem>()->GetUIMenuObjsSize();
 		entCount = static_cast<Entity>(g_engine.m_coordinator.GetActiveObjects().size() - skipCount);
 
 		/*size_t skipCount = g_engine.m_coordinator.GetSystem<MenuControllerSystem>()->GetUIMenuObjsSize();
