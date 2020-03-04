@@ -33,7 +33,6 @@ namespace Rogue
 		UI_TeleCharge1,
 		UI_TeleCharge2,
 		UI_TeleCharge3,
-		UI_HoverOverButton,
 		Gameplay_DeathBox,
 		Gameplay_Checkpoint,
 		Gameplay_SoulCollectible,
@@ -45,6 +44,7 @@ namespace Rogue
 		Gameplay_ActivateOnDeathExa,
 		Gameplay_ActivateOnDeathEla,
 		Lights_Flicker,
+		UI_HoverOverButton,
 		Obj_Fade,
 		AI_Last
 	};
