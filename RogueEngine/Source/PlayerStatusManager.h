@@ -29,6 +29,11 @@ namespace Rogue
 		void SetPlayerActive(bool active);
 		bool IsPlayerActive() const;
 
+		//Controls
+		void SetFreezeControlTimer(float time = 1.0f);
+		float GetFreezeControlTimer() const;
+		void FreezeControls();
+		void UnfreezeControls();
 
 		//Jump
 		void SetHasJumped(bool jumped);
@@ -90,6 +95,9 @@ namespace Rogue
 		bool m_moveLeft;
 		bool m_isActive;
 
+		//Controls
+		float m_freezeControlDuration;
+
 		//Jumping mechanic
 		bool m_hasJumped;
 		const float m_maxJumpTimer;
@@ -103,7 +111,6 @@ namespace Rogue
 		float m_teleportCharge;
 		float m_maxTeleportCharge;
 		float m_teleportDelayTimer;
-
 
 		//Light/Dark mode mechanic
 		bool m_isLightMode;

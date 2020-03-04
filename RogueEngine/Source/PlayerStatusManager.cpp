@@ -11,6 +11,7 @@ namespace Rogue
 		m_indicator{MAX_ENTITIES},
 		m_playerStartPos{Vec2(0,0)},
 		m_isActive{ true },
+		m_freezeControlDuration{ -1.0f },
 		m_isLightMode{ true },
 		m_hasJumped{ false },
 		m_moveLeft {false},
@@ -86,6 +87,26 @@ namespace Rogue
 	bool PlayerStatusManager::IsPlayerActive() const
 	{
 		return m_isActive;
+	}
+
+	void PlayerStatusManager::SetFreezeControlTimer(float time)
+	{
+		m_freezeControlDuration = time;
+	}
+
+	float PlayerStatusManager::GetFreezeControlTimer() const
+	{
+		return m_freezeControlDuration;
+	}
+
+	void PlayerStatusManager::FreezeControls()
+	{
+		m_freezeControlDuration = 10000.0f;
+	}
+
+	void PlayerStatusManager::UnfreezeControls()
+	{
+		m_freezeControlDuration = -1.0f;
 	}
 
 	void PlayerStatusManager::SetHasJumped(bool jumped)
