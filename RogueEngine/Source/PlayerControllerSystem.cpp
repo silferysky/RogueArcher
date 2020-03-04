@@ -549,10 +549,11 @@ namespace Rogue
 
 				else if (keycode == KeyPress::KeySpace)
 				{
+					AudioManager::instance().loadSound("Resources/Sounds/jump.ogg", 0.3f, false).Play();
 					for (Entity entity : m_entities)
 					{
 						PlayerControllerComponent& player = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity);
-
+						
 						player.m_grounded = false;
 					}
 				}
@@ -845,11 +846,11 @@ namespace Rogue
 			g_engine.m_coordinator.GetComponent<AnimationComponent>(*m_entities.begin()).setIsAnimating(true);
 
 		if (PLAYER_STATUS.GetTeleportCharge() == 3)
-			AudioManager::instance().loadSound("Resources/Sounds/teleport1.ogg", 0.3f, false).Play();
+			AudioManager::instance().loadSound("Resources/Sounds/teleport3.ogg", 0.3f, false).Play();
 		else if (PLAYER_STATUS.GetTeleportCharge() == 2)
 			AudioManager::instance().loadSound("Resources/Sounds/teleport2.ogg", 0.3f, false).Play();
 		else
-			AudioManager::instance().loadSound("Resources/Sounds/teleport3.ogg", 0.3f, false).Play();		
+			AudioManager::instance().loadSound("Resources/Sounds/teleport1.ogg", 0.3f, false).Play();		
 		AudioManager::instance().loadSound("Resources/Sounds/[Shoot Projectile]SCI-FI-WHOOSH_GEN-HDF-20864.ogg", 0.86f, false).Play();
 		AudioManager::instance().loadSound("Resources/Sounds/[Ela Appear]SCI-FI-WHOOSH_GEN-HDF-20870.ogg", 0.3f, false).Play();
 

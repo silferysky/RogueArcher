@@ -109,6 +109,10 @@ namespace Rogue
 					m_globalcheck = true;
 					break;
 				}
+				else
+				{
+					tileset.m_bordercolor = { 1.0f,1.0f,1.0f,0.5f };
+				}
 			}
 			
 			ImGuiTileSet::instance().m_TileSet.push_back(tileset);
@@ -208,6 +212,11 @@ namespace Rogue
 								i.m_collision = true;
 								i.m_bordercolor = { 0.8f,0.1f,0.1f,1.0f };
 							}
+							else
+							{
+								i.m_collision = false;
+								i.m_bordercolor = { 1.0f, 1.0f, 1.0f, 0.5f };
+							}
 						}
 					}
 					if (m_currentmode == Mode::Drag)
@@ -226,6 +235,11 @@ namespace Rogue
 								{
 									i.m_collision = true;
 									i.m_bordercolor = { 0.8f,0.1f,0.1f,1.0f };
+								}
+								else
+								{
+									i.m_collision = false;
+									i.m_bordercolor = { 1.0f, 1.0f, 1.0f, 0.5f };
 								}
 							}
 						}
@@ -322,38 +336,42 @@ namespace Rogue
 							{		
 								m_globalcheck = true;
 								//if texture has been changed, just change the texture
-								if ((i.m_texturename != j.m_texturename) && i.m_texturename == "Resources\\Assets\\tile.png")
+								if ((i.m_texturename != j.m_texturename) /*&& i.m_texturename == "Resources\\Assets\\tile.png"*/)
 								{
 									j.m_texturename = i.m_texturename;
 									j.m_tileTexture = i.m_tileTexture;
 									j.m_bordercolor = i.m_bordercolor;
+									j.m_collision = i.m_collision;
 									j.m_texCoordMinX = i.m_texCoordMinX;
 									j.m_texCoordMaxX = i.m_texCoordMaxX;
 									j.m_texCoordMinY = i.m_texCoordMinY;
 									j.m_texCoordMaxY = i.m_texCoordMaxY;
 									g_engine.m_coordinator.AddToDeleteQueue(j.m_tileId);
-									continue;
-								}
-								if (i.m_texturename != j.m_texturename)
-								{
-									j.m_texturename = i.m_texturename;
-									j.m_tileTexture = i.m_tileTexture;
-									j.m_bordercolor = i.m_bordercolor;
-									j.m_texCoordMinX = i.m_texCoordMinX;
-									j.m_texCoordMaxX = i.m_texCoordMaxX;
-									j.m_texCoordMinY = i.m_texCoordMinY;
-									j.m_texCoordMaxY = i.m_texCoordMaxY;
 
-									g_engine.m_coordinator.AddToDeleteQueue(j.m_tileId);
-									
-									j.m_tileId = Create2DSprite(i.m_tilePos, Vec2{ i.m_tileWidth,i.m_tileHeight }, i.m_texturename, i.m_collision);
+									j.m_tileId = Create2DSprite(i.m_tilePos, Vec2{m_tileSize,m_tileSize }, i.m_texturename, i.m_collision);
 									auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(j.m_tileId);
 									sprite.setTexCoordMinX(j.m_texCoordMinX);
 									sprite.setTexCoordMaxX(j.m_texCoordMaxX);
 									sprite.setTexCoordMinY(j.m_texCoordMinY);
 									sprite.setTexCoordMaxY(j.m_texCoordMaxY);
-									m_hasTextureChanged = true;	
+									m_hasTextureChanged = true;
+									continue;
 								}
+								//if (i.m_texturename != j.m_texturename)
+								//{
+								//	j.m_texturename = i.m_texturename;
+								//	j.m_tileTexture = i.m_tileTexture;
+								//	j.m_bordercolor = i.m_bordercolor;
+								//	j.m_collision = i.m_collision;
+								//	j.m_texCoordMinX = i.m_texCoordMinX;
+								//	j.m_texCoordMaxX = i.m_texCoordMaxX;
+								//	j.m_texCoordMinY = i.m_texCoordMinY;
+								//	j.m_texCoordMaxY = i.m_texCoordMaxY;
+								//
+								//	g_engine.m_coordinator.AddToDeleteQueue(j.m_tileId);
+								//	
+								//
+								//}
 							}
 						}
 						//if current tile does not exist in global tile set
@@ -367,7 +385,7 @@ namespace Rogue
 							}
 							else
 							{
-								i.m_tileId = Create2DSprite(i.m_tilePos, Vec2{ i.m_tileWidth,i.m_tileHeight }, i.m_texturename, i.m_collision);
+								i.m_tileId = Create2DSprite(i.m_tilePos, Vec2{m_tileSize,m_tileSize }, i.m_texturename, i.m_collision);
 								auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(i.m_tileId);
 								sprite.setTexCoordMinX(i.m_texCoordMinX);
 								sprite.setTexCoordMaxX(i.m_texCoordMaxX);
@@ -415,13 +433,13 @@ namespace Rogue
 	Entity ImGuiTileSet::Create2DSprite(Vec2 position, Vec2 scale, std::string_view tilepath, bool iscollision)
 	{
 		Entity newEnt = g_engine.m_coordinator.CreateEntity();
-		//if (iscollision)
-		//{
-		//	auto& rigid = g_engine.m_coordinator.CreateComponent<RigidbodyComponent>(newEnt);
-		//	rigid.setIsStatic(true);
-		//	g_engine.m_coordinator.AddComponent<BoxCollider2DComponent>(newEnt, BoxCollider2DComponent());
-		//	g_engine.m_coordinator.AddComponent<ColliderComponent>(newEnt, ColliderComponent(std::make_shared<BoxShape>()));
-		//}
+		if (iscollision)
+		{
+			auto& rigid = g_engine.m_coordinator.CreateComponent<RigidbodyComponent>(newEnt);
+			rigid.setIsStatic(true);
+			g_engine.m_coordinator.AddComponent<BoxCollider2DComponent>(newEnt, BoxCollider2DComponent());
+			g_engine.m_coordinator.AddComponent<ColliderComponent>(newEnt, ColliderComponent(std::make_shared<BoxShape>()));
+		}
 		auto& trans = g_engine.m_coordinator.CreateComponent<TransformComponent>(newEnt);
 		trans.setPosition(position);
 		trans.setScale(scale);
@@ -523,7 +541,7 @@ namespace Rogue
 		if (m_texturename != "Resources\\Assets\\tile.png" && m_texturename != "")
 		{
 			//std::cout << "Create: " << m_texturename << std::endl;
-			Entity ent = ImGuiTileSet::instance().Create2DSprite(m_tilePos, Vec2(m_tileWidth, m_tileHeight), m_texturename, m_collision);
+			Entity ent = ImGuiTileSet::instance().Create2DSprite(m_tilePos, Vec2(61, 61), m_texturename, m_collision);
 			m_tileId = ent;
 			auto& sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(ent)->get();
 			sprite.setTexCoordMinX(m_texCoordMinX);
