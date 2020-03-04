@@ -433,13 +433,13 @@ namespace Rogue
 	Entity ImGuiTileSet::Create2DSprite(Vec2 position, Vec2 scale, std::string_view tilepath, bool iscollision)
 	{
 		Entity newEnt = g_engine.m_coordinator.CreateEntity();
-		if (iscollision)
+		/*if (iscollision)
 		{
 			auto& rigid = g_engine.m_coordinator.CreateComponent<RigidbodyComponent>(newEnt);
 			rigid.setIsStatic(true);
 			g_engine.m_coordinator.AddComponent<BoxCollider2DComponent>(newEnt, BoxCollider2DComponent());
 			g_engine.m_coordinator.AddComponent<ColliderComponent>(newEnt, ColliderComponent(std::make_shared<BoxShape>()));
-		}
+		}*/
 		auto& trans = g_engine.m_coordinator.CreateComponent<TransformComponent>(newEnt);
 		trans.setPosition(position);
 		trans.setScale(scale);
