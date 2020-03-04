@@ -310,13 +310,13 @@ namespace Rogue
 		//m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("YesBtn", true));
 		//m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("NoBtn", true));
 
-		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("MenuUI", true));
+		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("MenuUI", false));
 		for (auto& child : g_engine.m_coordinator.GetHierarchyInfo(m_menuObjs.front()).m_children)
 		{
 			m_menuObjs.push_back(child);
 		}
 
-		m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("MenuConfirmUI", true));
+		m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("MenuConfirmUI", false));
 		for (auto& child : g_engine.m_coordinator.GetHierarchyInfo(m_confirmQuitEnt.front()).m_children)
 		{
 			m_confirmQuitEnt.push_back(child);

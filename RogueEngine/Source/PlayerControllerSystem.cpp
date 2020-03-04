@@ -269,7 +269,7 @@ namespace Rogue
 				if (g_engine.m_coordinator.ComponentExists<ChildComponent>(PLAYER_STATUS.GetPlayerEntity()))
 				{
 					auto& player = g_engine.m_coordinator.GetComponent<ChildComponent>(PLAYER_STATUS.GetPlayerEntity());
-					player.ResetLocalDirty();
+					player.SetLocalDirty();
 					//player.SetGlobalDirty();
 				}
 			}

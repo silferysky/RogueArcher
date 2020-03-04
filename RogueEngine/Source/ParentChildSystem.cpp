@@ -32,30 +32,8 @@ namespace Rogue
 			auto& transComponent = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
 			auto& parentTransformComponent = g_engine.m_coordinator.GetComponent<TransformComponent>(childComponent.GetParent());
 
-			//Global values is "corrupted", need to fix
-			if (childComponent.IsGlobalDirty())
-			{
-				transComponent.setPosition(childComponent.GetPosition() + parentTransformComponent.GetPosition());
-				transComponent.setZ(childComponent.GetPositionZ() + parentTransformComponent.GetZ());
-				transComponent.setScale(Vec2(childComponent.GetScale().x * parentTransformComponent.GetScale().x, childComponent.GetScale().y * parentTransformComponent.GetScale().y));
-				transComponent.setRotation(childComponent.GetRotation() + parentTransformComponent.GetRotation());
-
-				if (transComponent.GetScale().x == 0.0f)
-					transComponent.setScale(Vec2(1.0f, transComponent.GetScale().y));
-				if (transComponent.GetScale().y == 0.0f)
-					transComponent.setScale(Vec2(transComponent.GetScale().x, 1.0f));
-
-				std::vector<Entity> toUpdate;
-				AddChildToVector(toUpdate, entity);
-				for (auto& ent : toUpdate)
-					g_engine.m_coordinator.GetComponent<ChildComponent>(ent).SetGlobalDirty();
-
-				toUpdate.clear();
-
-				childComponent.ResetGlobalDirty();
-			}
 			//Local values is "corrupted", need to fix
-			else if (childComponent.IsLocalDirty())
+			if (childComponent.IsLocalDirty())
 			{
 				childComponent.SetPosition(transComponent.GetPosition() - parentTransformComponent.GetPosition());
 				childComponent.SetPositionZ(transComponent.GetZ() - parentTransformComponent.GetZ());
@@ -81,6 +59,24 @@ namespace Rogue
 				//}
 				childComponent.ResetLocalDirty();
 			}
+
+			//Global values is "corrupted", need to fix
+			else if (childComponent.IsGlobalDirty())
+			{
+				transComponent.setPosition(childComponent.GetPosition() + parentTransformComponent.GetPosition());
+				transComponent.setZ(childComponent.GetPositionZ() + parentTransformComponent.GetZ());
+				transComponent.setScale(Vec2(childComponent.GetScale().x * parentTransformComponent.GetScale().x, childComponent.GetScale().y * parentTransformComponent.GetScale().y));
+				transComponent.setRotation(childComponent.GetRotation() + parentTransformComponent.GetRotation());
+
+				std::vector<Entity> toUpdate;
+				AddChildToVector(toUpdate, entity);
+				for (auto& ent : toUpdate)
+					g_engine.m_coordinator.GetComponent<ChildComponent>(ent).SetGlobalDirty();
+
+				toUpdate.clear();
+
+				childComponent.ResetGlobalDirty();
+			}
 			//Following only happens if no local or global changes, but you just want to update it
 			else if (childComponent.IsFollowing())
 			{
@@ -88,17 +84,13 @@ namespace Rogue
 				transComponent.setZ(childComponent.GetPositionZ() + parentTransformComponent.GetZ());
 				transComponent.setScale(Vec2(childComponent.GetScale().x * parentTransformComponent.GetScale().x, childComponent.GetScale().y * parentTransformComponent.GetScale().y));
 				transComponent.setRotation(childComponent.GetRotation() + parentTransformComponent.GetRotation());
-
-				if (transComponent.GetScale().x == 0.0f)
-					transComponent.setScale(Vec2(1.0f, transComponent.GetScale().y));
-				if (transComponent.GetScale().y == 0.0f)
-					transComponent.setScale(Vec2(transComponent.GetScale().x, 1.0f));
 			}
 
-			if (childComponent.GetScale().x == 0.0f)
-				childComponent.SetScale(Vec2(1.0f,childComponent.GetScale().y));
-			if (childComponent.GetScale().y == 0.0f)
-				childComponent.SetScale(Vec2(childComponent.GetScale().x, 1.0f));
+			if (transComponent.GetScale().x == 0.0f)
+				transComponent.setScale(Vec2(1.0f, transComponent.GetScale().y));
+			if (transComponent.GetScale().y == 0.0f)
+				transComponent.setScale(Vec2(transComponent.GetScale().x, 1.0f));
+
 		}
 
 		g_engine.m_coordinator.EndTimeSystem("Parent Child System");
