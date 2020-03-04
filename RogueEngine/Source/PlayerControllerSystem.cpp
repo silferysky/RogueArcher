@@ -53,6 +53,10 @@ namespace Rogue
 
 	void PlayerControllerSystem::Update()
 	{
+		//In case no player character leexdee
+		if (!m_entities.size())
+			return;
+
 		//For PlayerControllerSystem Timer
 		m_ignoreFrameEvent = false;
 
@@ -342,7 +346,7 @@ namespace Rogue
 						//PLAYER_STATUS.SetIndicatorStatus();
 					}
 
-					if (PLAYER_STATUS.GetIndicator() != MAX_ENTITIES)
+					if (PLAYER_STATUS.GetIndicator() != MAX_ENTITIES && g_engine.m_coordinator.ComponentExists<ChildComponent>(PLAYER_STATUS.GetIndicator()))
 					{
 						ChildComponent& comp = g_engine.m_coordinator.GetComponent<ChildComponent>(PLAYER_STATUS.GetIndicator());
 						//SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(PLAYER_STATUS.GetIndicator());
