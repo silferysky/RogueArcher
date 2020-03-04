@@ -17,6 +17,7 @@ Technology is prohibited.
 /* End Header **************************************************************************/
 #include "Precompiled.h"
 #include "EditorFile.h"
+#include "EditorTileSet.h"
 #include "Main.h"
 
 namespace Rogue
@@ -51,6 +52,7 @@ namespace Rogue
 					sceneManager.IncrementSceneIterator();
 					sceneManager.Create2DSprite();
 
+					ImGuiTileSet::instance().ClearTileset();
 					//Setting values
 					//Entity backgroundEnt = *g_engine.m_coordinator.GetActiveObjects().begin();
 					//g_engine.m_coordinator.GetHierarchyInfo(backgroundEnt).m_objectName = "Background";

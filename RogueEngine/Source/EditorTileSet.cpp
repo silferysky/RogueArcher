@@ -433,7 +433,13 @@ namespace Rogue
 
 	void ImGuiTileSet::ClearTileset()
 	{
+		for (auto& tile : m_GlobalTileSet)
+		{
+			g_engine.m_coordinator.AddToDeleteQueue(tile.m_tileId);
+		}
+
 		m_TileSet.clear();
+		m_GlobalTileSet.clear();
 	}
 
 	std::string Tile::Serialize()
