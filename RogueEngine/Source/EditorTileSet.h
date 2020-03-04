@@ -8,13 +8,9 @@ namespace Rogue
 		: public ISerializable
 	{
 		std::string m_texturename;
-		std::string m_tag;
 		Entity m_tileId = 0;
-		Entity m_tempTile = 0;
 		Vec2 m_tilePos;
 		bool m_collision = false;
-		float m_tileWidth = 61;
-		float m_tileHeight = 61;
 		float m_texCoordMinX = 0.0f;
 		float m_texCoordMaxX = 1.0f;
 		float m_texCoordMinY = 0.0f;
