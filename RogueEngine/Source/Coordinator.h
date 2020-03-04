@@ -310,6 +310,9 @@ namespace Rogue
 					}
 				}
 
+				//Erasing in Scripts
+				GetSystem<LogicSystem>()->RemoveLogicInterface(entity);
+
 				//Actual deleting
 				RemoveHierarchyInfo(entity);
 				DestroyEntity(entity);
