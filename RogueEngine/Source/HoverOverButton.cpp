@@ -18,24 +18,24 @@ namespace Rogue
 
 	void HoverOverButton::AIIdleUpdate()
 	{
-		auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(m_entity);
-
-		PickingManager::instance().GenerateMeshAABB(transform);
-
-		// cursor is on the button
-		if (CollisionManager::instance().DiscretePointVsAABB(PickingManager::instance().GetWorldCursor(), transform.GetPickArea()))
+		if (auto transform = g_engine.m_coordinator.TryGetComponent<TransformComponent>(m_entity))
 		{
-			// put the hover logic here: stuff like play a sound, change the button colour etc...
-			auto sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_entity);
 
-			std::cout << "Hovering!" << std::endl;
-		}
-		else
-		{
-			// revert the hover logic
-			auto sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_entity);
+			PickingManager::instance().GenerateMeshAABB(transform->get());
 
-			sprite.setFilter(glm::vec4(1, 1, 1, 1));
+			// cursor is on the button
+			if (CollisionManager::instance().DiscretePointVsAABB(PickingManager::instance().GetWorldCursor(), transform->get().GetPickArea()))
+			{
+				// put the hover logic here: stuff like play a sound, change the button colour etc...
+				//auto sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_entity);
+
+				std::cout << "Hovering!" << std::endl;
+			}
+			else
+			{
+				// revert the hover logic
+				//auto sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_entity);
+			}
 		}
 	}
 }

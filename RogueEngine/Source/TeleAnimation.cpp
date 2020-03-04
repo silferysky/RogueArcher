@@ -17,31 +17,37 @@ namespace Rogue
 
 	void TeleAnimation::AIIdleUpdate()
 	{
-		if (m_teleCharge > PlayerStatusManager::instance().GetTeleportCharge())
+		if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(m_entity))
 		{
-			g_engine.m_coordinator.GetComponent<AnimationComponent>(m_entity).setIsAnimating(true);
-			g_engine.m_coordinator.GetComponent<AnimationComponent>(m_entity).setCurrentFrame(0);
-
-			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_entity);
-
-			glm::vec4 colourFilter = sprite.getFilter();
-			colourFilter.a = 1.0f;
-			g_engine.m_coordinator.GetComponent<SpriteComponent>(m_entity).setFilter(colourFilter);
-
-			if (g_engine.m_coordinator.ComponentExists<ChildComponent>(m_entity))
+			if (auto animation = g_engine.m_coordinator.TryGetComponent<AnimationComponent>(m_entity))
 			{
-				g_engine.m_coordinator.GetComponent<ChildComponent>(m_entity).SetIsFollowing(false);
-				g_engine.m_coordinator.GetComponent<TransformComponent>(m_entity).setPosition(
-					g_engine.m_coordinator.GetComponent<TransformComponent>(g_engine.m_coordinator.GetComponent<ChildComponent>(m_entity).GetParent()).GetPosition());
-			}
+				if (m_teleCharge > PlayerStatusManager::instance().GetTeleportCharge())
+				{
+					animation->get().setIsAnimating(true);
+					animation->get().setCurrentFrame(0);
 
-		}
-		else if (!g_engine.m_coordinator.GetComponent<AnimationComponent>(m_entity).getIsAnimating() && g_engine.m_coordinator.GetComponent<SpriteComponent>(m_entity).getFilter().a)
-			// not animating and not transparent
-		{
-			glm::vec4 colourFilter = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_entity).getFilter();
-			colourFilter.a = 0.0f;
-			g_engine.m_coordinator.GetComponent<SpriteComponent>(m_entity).setFilter(colourFilter);
+
+					glm::vec4 colourFilter = sprite->get().getFilter();
+					colourFilter.a = 1.0f;
+					g_engine.m_coordinator.GetComponent<SpriteComponent>(m_entity).setFilter(colourFilter);
+
+					if (auto child = g_engine.m_coordinator.TryGetComponent<ChildComponent>(m_entity))
+					{
+						child->get().SetIsFollowing(false);
+						if (auto transform = g_engine.m_coordinator.TryGetComponent<TransformComponent>(m_entity))
+							if (auto parentTransform = g_engine.m_coordinator.TryGetComponent<TransformComponent>(child->get().GetParent()))
+								transform->get().setPosition(parentTransform->get().GetPosition());
+					}
+
+				}
+				else if (!animation->get().getIsAnimating() && sprite->get().getFilter().a)
+					// not animating and not transparent
+				{
+					glm::vec4 colourFilter = sprite->get().getFilter();
+					colourFilter.a = 0.0f;
+					sprite->get().setFilter(colourFilter);
+				}
+			}
 		}
 
 		m_teleCharge = PlayerStatusManager::instance().GetTeleportCharge();
