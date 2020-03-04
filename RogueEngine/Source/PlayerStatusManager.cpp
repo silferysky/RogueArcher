@@ -99,6 +99,16 @@ namespace Rogue
 		return m_freezeControlDuration;
 	}
 
+	void PlayerStatusManager::FreezeControls()
+	{
+		m_freezeControlDuration = 10000.0f;
+	}
+
+	void PlayerStatusManager::UnfreezeControls()
+	{
+		m_freezeControlDuration = -1.0f;
+	}
+
 	void PlayerStatusManager::SetHasJumped(bool jumped)
 	{
 		m_hasJumped = jumped;

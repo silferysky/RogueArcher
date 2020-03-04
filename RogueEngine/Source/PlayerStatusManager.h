@@ -32,6 +32,8 @@ namespace Rogue
 		//Controls
 		void SetFreezeControlTimer(float time = 1.0f);
 		float GetFreezeControlTimer() const;
+		void FreezeControls();
+		void UnfreezeControls();
 
 		//Jump
 		void SetHasJumped(bool jumped);

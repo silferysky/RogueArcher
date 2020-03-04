@@ -333,8 +333,14 @@ namespace Rogue
 				else if (keycode == KeyPress::KeyF6)
 					g_engine.ToggleVSync();
 
-				else if (PLAYER_STATUS.GetFreezeControlTimer() > 0.0f)
+				//else if (PLAYER_STATUS.GetFreezeControlTimer() > 0.0f)
+				//{
+				//	return;
+				//}
+				
+				else if (keycode == KeyPress::KeyZ)
 				{
+					PLAYER_STATUS.SetFreezeControlTimer(10.0f);
 					return;
 				}
 
