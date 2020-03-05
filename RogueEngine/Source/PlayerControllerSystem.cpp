@@ -986,7 +986,7 @@ namespace Rogue
 		if (g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(PLAYER_STATUS.GetPlayerEntity()))
 		{
 			auto& player = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(PLAYER_STATUS.GetPlayerEntity());
-			player.m_componentIsActive = false;
+			player.setIsStatic(true);
 		}
 
 		ParentSetEvent parent(newParent, *m_entities.begin());
@@ -1003,7 +1003,7 @@ namespace Rogue
 			if (g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(PLAYER_STATUS.GetPlayerEntity()))
 			{
 				auto& player = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(PLAYER_STATUS.GetPlayerEntity());
-				player.m_componentIsActive = true;
+				player.setIsStatic(false);
 			}
 
 			ParentResetEvent parentReset(*m_entities.begin());
