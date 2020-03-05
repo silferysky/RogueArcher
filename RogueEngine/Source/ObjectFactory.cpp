@@ -57,9 +57,6 @@ namespace Rogue
 		CameraManager::instance().SetLevelCameraZoom(cameraZoom);
 		CameraManager::instance().SetCameraZoom(cameraZoom);
 
-		//For Tile Set
-		LoadTileset(fileName);
-
 		//For Entity Count
 		m_maxEntityCount = level["MaxEntityCount"].GetInt();
 		Entity entCount = level["EntityCount"].GetInt();
@@ -177,6 +174,9 @@ namespace Rogue
 		//	RE_INFO(debugStr.str());
 		//	//RE_INFO("HI");
 		//}
+
+		//For Tile Set
+		LoadTileset(fileName);
 
 		//Set at end to ensure no weird camera panning
 		CAMERA_MANAGER.SetCameraPos({ level["StartPosX"].GetFloat(), level["StartPosY"].GetFloat(), 0.0f });
