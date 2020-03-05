@@ -709,6 +709,8 @@ namespace Rogue
 		Vec2 m_cameraMax = CameraManager::instance().GetCameraMax();
 		float m_levelCameraZoom = CameraManager::instance().GetLevelCameraZoom();
 
+		Vec2 m_startCameraPos = PLAYER_STATUS.GetStartingPos();
+
 		if (m_worldCamera)
 		{
 			m_cameraPos.x = 0.0f;
@@ -723,6 +725,10 @@ namespace Rogue
 		ImGui::DragFloat("Camera Min Y", &m_cameraMin.y, 1.0f, -10000.0f, 10000.0f);
 		ImGui::DragFloat("Camera Max X", &m_cameraMax.x, 1.0f, -10000.0f, 10000.0f);
 		ImGui::DragFloat("Camera Max Y", &m_cameraMax.y, 1.0f, -10000.0f, 10000.0f);
+
+		ImGui::DragFloat("Camera Start X", &m_startCameraPos.x, 1.0f, -10000.0f, 10000.0f);
+		ImGui::DragFloat("Camera Start Y", &m_startCameraPos.y, 1.0f, -10000.0f, 10000.0f);
+
 		ImGui::DragFloat("Level Camera Zoom", &m_levelCameraZoom, 0.01f, 0.0f, 10.0f);
 		ImGui::DragFloat("Camera Zoom", &m_cameraZoom, 0.01f, 0.0f, 10.0f);
 
@@ -736,6 +742,7 @@ namespace Rogue
 		CameraManager::instance().SetCameraPos(m_cameraPos);
 		CameraManager::instance().SetCameraMin(m_cameraMin);
 		CameraManager::instance().SetCameraMax(m_cameraMax);
+		PLAYER_STATUS.SetStartingPos(m_startCameraPos);
 		CameraManager::instance().SetLevelCameraZoom(m_levelCameraZoom);
 		CameraManager::instance().SetCameraZoom(m_cameraZoom);
 

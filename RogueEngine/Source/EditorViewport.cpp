@@ -45,6 +45,7 @@ namespace Rogue
 				g_engine.SetTimeScale(1.0f);
 				//SceneManager::instance().SaveLevel(SceneManager::instance().getCurrentFileName().c_str());
 				CameraManager::instance().SetCameraZoom(CameraManager::instance().GetLevelCameraZoom());
+				CameraManager::instance().SetCameraPos(glm::vec3(PLAYER_STATUS.GetStartingPos().x, PLAYER_STATUS.GetStartingPos().y, CameraManager::instance().GetCameraPos().z));
 				//SceneManager::instance().SaveAndLoadLevel();
 				g_engine.m_coordinator.SetGameState(true);
 				//ShowCursor(false);

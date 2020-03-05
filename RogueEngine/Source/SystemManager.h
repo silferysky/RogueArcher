@@ -233,7 +233,9 @@ namespace Rogue
 			return m_stepFrames;
 		}
 
-		void SetTransitionLevel(std::string_view levelName);
+		void SetTransitionLevel(std::string_view levelName, float transitTime);
+
+		bool TransitFinish() const;
 
 	private:
 		std::unordered_map<std::type_index, Signature> m_signatures;
@@ -245,9 +247,8 @@ namespace Rogue
 		bool m_gameModeChanged = false;
 		bool m_showCursor = true;
 
-#define TRANSIT_TIME 1.0f
 		bool m_transitionLevel = false;
-		float m_transitionTime = TRANSIT_TIME;
+		float m_transitionTime = 0.0f;
 		std::string m_transitionString = "";
 
 		size_t m_stepFrames = 1;

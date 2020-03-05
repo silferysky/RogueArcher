@@ -34,18 +34,19 @@ namespace Rogue
 	// Note: Debug draw system currently doesn't update here.
 	void SystemManager::UpdateSystems()
 	{
-		if (m_transitionLevel && m_transitionTime < 0.0f)
+		std::cout << "Is Transiting: " << m_transitionLevel << std::endl;
+		std::cout << "Transition Time Left " << m_transitionTime << std::endl;
+		if (m_transitionLevel && TransitFinish())
 		{
+			ImGuiTileSet::instance().ClearTileset();
 			SceneManager::instance().LoadLevel(m_transitionString.c_str());
 			m_transitionLevel = false;
-			m_transitionTime = TRANSIT_TIME;
-			ImGuiTileSet::instance().ClearTileset();
 			
 			return;
 		}
 		else if (m_transitionLevel)
 		{
-			m_transitionTime -= g_deltaTime * g_engine.GetTimeScale();
+			m_transitionTime -= g_deltaTime; //* g_engine.GetTimeScale();
 			return;
 		}
 
@@ -133,10 +134,16 @@ namespace Rogue
 			UpdateSystem(SystemID::id_EDITOR);
 	}
 
-	void SystemManager::SetTransitionLevel(std::string_view levelName)
+	void SystemManager::SetTransitionLevel(std::string_view levelName, float transitionTime)
 	{
 		m_transitionLevel = true;
 		m_transitionString = levelName.data();
+		m_transitionTime = transitionTime;
+	}
+
+	bool SystemManager::TransitFinish() const
+	{
+		return m_transitionTime < 0.0f;
 	}
 
 	void SystemManager::FixedUpdate()
