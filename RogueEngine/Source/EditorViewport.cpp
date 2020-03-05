@@ -173,7 +173,7 @@ namespace Rogue
 					const AABB& viewportArea = PickingManager::instance().GetViewPortArea();
 					TransformComponent& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(i);
 					Vec2 pos = trans.GetPosition();
-					if (CollisionManager::instance().DiscretePointVsAABB(pos, viewportArea) && ImGui::IsWindowFocused())
+					if (CollisionManager::instance().DiscretePointVsAABB(pos, viewportArea) /*&& ImGui::IsWindowFocused()*/)
 					{
 						ShowGizmo(i);
 					}

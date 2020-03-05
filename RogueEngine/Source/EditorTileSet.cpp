@@ -369,7 +369,9 @@ namespace Rogue
 									j.m_texCoordMinY = i.m_texCoordMinY;
 									j.m_texCoordMaxY = i.m_texCoordMaxY;
 									g_engine.m_coordinator.AddToDeleteQueue(j.m_tileId);
-
+									
+									if (i.m_texturename == "Resources\\Assets\\tile.png")
+										continue;
 									j.m_tileId = Create2DSprite(i.m_tilePos, Vec2{m_tileSize,m_tileSize }, i.m_texturename, i.m_collision);
 									auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(j.m_tileId);
 									sprite.setTexCoordMinX(j.m_texCoordMinX);

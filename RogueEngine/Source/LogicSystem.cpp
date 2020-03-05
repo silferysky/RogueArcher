@@ -33,6 +33,7 @@ Technology is prohibited.
 #include "TeleCharge2.h"
 #include "TeleCharge3.h"
 #include "HoverOverButton.h"
+#include "ProgressBar.h"
 #include "AppearOnCollide.h"
 #include "DisappearOnCollide.h"
 #include "DeathBox.h"
@@ -248,6 +249,12 @@ namespace Rogue
 				{
 					HoverOverButton newAI(entities, logicComponent, statsComponent);
 					AddLogicInterface(entities, std::make_shared<HoverOverButton>(newAI));
+					break;
+				}
+				case AIType::UI_ProgressBar:
+				{
+					ProgressBar newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<ProgressBar>(newAI));
 					break;
 				}
 				case AIType::Gameplay_DeathBox:
