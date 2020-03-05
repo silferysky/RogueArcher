@@ -38,7 +38,7 @@ namespace Rogue
 		float m_cameraLerp = 1.6f;
 
 		CameraShake m_cameraShake;
-
+		std::vector<Entity>& m_currentVector;
 		bool m_worldCamera;
 		bool m_isActive = true;
 	public:
