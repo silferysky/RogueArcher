@@ -272,8 +272,12 @@ namespace Rogue
 				return;
 
 			EntHitchhikeEvent& event = dynamic_cast<EntHitchhikeEvent&>(ev);
+
 			if (event.GetEntityID() != MAX_ENTITIES)
 			{
+				if (g_engine.m_coordinator.GetHierarchyInfo(event.GetEntityID()).m_tag != "Hitchhike")
+					return;
+
 				SetPlayerParent(event.GetEntityID());
 				if (g_engine.m_coordinator.ComponentExists<ChildComponent>(PLAYER_STATUS.GetPlayerEntity()))
 				{
@@ -281,9 +285,15 @@ namespace Rogue
 					player.SetLocalDirty();
 					//player.SetGlobalDirty();
 				}
+				if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(PLAYER_STATUS.GetPlayerEntity()))
+				{
+					auto& player = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(PLAYER_STATUS.GetPlayerEntity());	
+				}
 			}
 			else
+			{
 				ResetPlayerParent();
+			}
 			break;
 		}
 
