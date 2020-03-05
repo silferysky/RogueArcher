@@ -44,66 +44,6 @@ namespace Rogue
 	void PickingSystem::Update()
 	{
 		g_engine.m_coordinator.InitTimeSystem("Picking System");
-		
-		if (!g_engine.m_coordinator.GetPauseState())
-		{
-			g_engine.m_coordinator.EndTimeSystem("Picking System");
-			return;
-		}
-
-		//For hovering
-		PickingManager::instance().GenerateViewPortAABB(CameraManager::instance().GetCameraPos(), CameraManager::instance().GetCameraZoom());
-		const AABB& viewportArea = PickingManager::instance().GetViewPortArea();
-		Vec2 cursor = PickingManager::instance().GetWorldCursor();
-
-		// If cursor is in the viewport area, proceed.
-		if (CollisionManager::instance().DiscretePointVsAABB(cursor, viewportArea))
-		{
-			int pickedEntity = -1;
-			int highestZ = 0;
-
-			// Go through every transform component
-			for (Entity entity : m_entities)
-			{
-				//Skip all non UI entities
-				//Skip all cursor entities (crosshair)
-				//Skip inactive UI entities
-				if (!g_engine.m_coordinator.ComponentExists<UIComponent>(entity) ||
-					g_engine.m_coordinator.ComponentExists<CursorComponent>(entity) ||
-					!g_engine.m_coordinator.GetComponent<UIComponent>(entity).getIsActive())
-					continue;
-
-				TransformComponent& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
-				Vec2 pos = trans.GetPosition();
-
-				// If entity is in the viewport area
-				if (CollisionManager::instance().DiscretePointVsAABB(pos, viewportArea))
-				{
-					// Generate the transform aabb of the entity
-					PickingManager::instance().GenerateMeshAABB(trans);
-					const AABB& pickArea = trans.GetPickArea();
-
-					// Check if cursor is on the entity
-					if (CollisionManager::instance().DiscretePointVsAABB(cursor, pickArea))
-					{
-						if (trans.GetZ() >= highestZ)
-						{
-							highestZ = trans.GetZ();
-							pickedEntity = entity;
-						}
-					}
-				}
-			}
-
-			if (pickedEntity >= 0)
-			{
-				EntHoverEvent ev(pickedEntity);
-				ev.SetSystemReceivers((int)SystemID::id_MENUCONTROLLERSYSTEM);
-				EventDispatcher::instance().AddEvent(ev);
-			}
-		}
-
-
 		g_engine.m_coordinator.EndTimeSystem("Picking System");
 	}
 
@@ -228,58 +168,77 @@ namespace Rogue
 			// Get the cursor's world position
 			Vec2 cursor = PickingManager::instance().GetWorldCursor();
 
-			// If cursor is in the viewport area, proceed.
-			if (CollisionManager::instance().DiscretePointVsAABB(cursor, viewportArea))
+			Entity temp = PickObject();
+			int pickedEntity = -1;
+			if (temp != MAX_ENTITIES)
+				pickedEntity = static_cast<int>(temp);
+
+			// Send EntityPickedEvent
+			if (pickedEntity >= 0)
 			{
-				int pickedEntity = -1;
-				int highestZ = 0;
+				EntPickedEvent event{ static_cast<Entity>(pickedEntity) };
 
-				// Go through every transform component
-				for (Entity entity : m_entities)
-				{
-					// Skip cursor entities (crosshair)
-					if (g_engine.m_coordinator.ComponentExists<CursorComponent>(entity))
-						continue;
+				if (g_engine.m_coordinator.GetEditorIsRunning() && !g_engine.m_coordinator.GetGameState())
+					event.SetSystemReceivers((int)SystemID::id_EDITOR);
 
-					// Skip inactive UI entities
-					if (g_engine.m_coordinator.ComponentExists<UIComponent>(entity) && !g_engine.m_coordinator.GetComponent<UIComponent>(entity).getIsActive())
-						continue;
-
-					TransformComponent& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
-					Vec2 pos = trans.GetPosition();
-
-					// If entity is in the viewport area
-					if (CollisionManager::instance().DiscretePointVsAABB(pos, viewportArea))
-					{	
-						// Generate the transform aabb of the entity
-						PickingManager::instance().GenerateMeshAABB(trans);
-						const AABB& pickArea = trans.GetPickArea();
-
-						// Check if cursor is on the entity
-						if (CollisionManager::instance().DiscretePointVsAABB(cursor, pickArea))
-						{
-							if (trans.GetZ() >= highestZ)
-							{
-								highestZ = trans.GetZ();
-								pickedEntity = entity;
-							}
-						}
-					}
-				}
-
-				// Send EntityPickedEvent
-				if (pickedEntity >= 0)
-				{
-					EntPickedEvent event{ static_cast<Entity>(pickedEntity) };
-
-					if (g_engine.m_coordinator.GetEditorIsRunning() && !g_engine.m_coordinator.GetGameState())
-						event.SetSystemReceivers((int)SystemID::id_EDITOR);
-
-					EventDispatcher::instance().AddEvent(event);
-				}
+				EventDispatcher::instance().AddEvent(event);
 			}
 			return;
 		}
 		} // End switch case
 	} // End receive()
+
+	Entity PickingSystem::PickObject()
+	{
+		PickingManager::instance().GenerateViewPortAABB(CameraManager::instance().GetCameraPos(), CameraManager::instance().GetCameraZoom());
+		const AABB& viewportArea = PickingManager::instance().GetViewPortArea();
+		Vec2 cursor = PickingManager::instance().GetWorldCursor();
+
+		// If cursor is in the viewport area, proceed.
+		if (CollisionManager::instance().DiscretePointVsAABB(cursor, viewportArea))
+		{
+			int pickedEntity = -1;
+			int highestZ = 0;
+
+			// Go through every transform component
+			for (Entity entity : m_entities)
+			{
+				//Skip all non UI entities
+				//Skip all cursor entities (crosshair)
+				//Skip inactive UI entities
+				if (!g_engine.m_coordinator.ComponentExists<UIComponent>(entity) ||
+					g_engine.m_coordinator.ComponentExists<CursorComponent>(entity) ||
+					!g_engine.m_coordinator.GetComponent<UIComponent>(entity).getIsActive())
+					continue;
+
+				TransformComponent& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
+				Vec2 pos = trans.GetPosition();
+
+				// If entity is in the viewport area
+				if (CollisionManager::instance().DiscretePointVsAABB(pos, viewportArea))
+				{
+					// Generate the transform aabb of the entity
+					PickingManager::instance().GenerateMeshAABB(trans);
+					const AABB& pickArea = trans.GetPickArea();
+
+					// Check if cursor is on the entity
+					if (CollisionManager::instance().DiscretePointVsAABB(cursor, pickArea))
+					{
+						if (trans.GetZ() >= highestZ)
+						{
+							highestZ = trans.GetZ();
+							pickedEntity = entity;
+						}
+					}
+				}
+			}
+
+			if (pickedEntity >= 0)
+			{
+				return pickedEntity;
+			}
+		}
+
+		return MAX_ENTITIES;
+	}
 } // End namespace Rogue

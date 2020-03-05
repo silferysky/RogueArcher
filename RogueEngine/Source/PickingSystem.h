@@ -31,5 +31,7 @@ namespace Rogue
 		void Update() override;
 		void Shutdown() override;
 		void Receive(Event& ev) override;
+
+		Entity PickObject();
 	};
 }

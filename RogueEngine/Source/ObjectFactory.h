@@ -65,6 +65,8 @@ namespace Rogue
 		size_t m_maxFileCount;
 		std::map<std::string, std::tuple<Signature, std::string, std::string>> m_archetypes;
 
+		Entity m_firstLoadedEntity;
+
 	};
 
 	//MACROS FOR OBJECT FACTORY
