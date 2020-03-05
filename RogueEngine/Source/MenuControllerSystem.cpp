@@ -238,12 +238,19 @@ namespace Rogue
 
 		case EventType::EvKeyTriggered:
 		{
-			//Statement here to make sure all commands only apply if game is not running
+			KeyTriggeredEvent& keytriggeredevent = dynamic_cast<KeyTriggeredEvent&>(ev);
+			KeyPress keycode = keytriggeredevent.GetKeyCode();
+
+			if (keycode == KeyPress::KeyF5)
+				g_engine.m_coordinator.ToggleEditorIsRunning();
+
+			if (keycode == KeyPress::KeyF6)
+				g_engine.ToggleVSync();
+
+			//Statement here to make sure all commands below only apply if game is not running
 			if (!g_engine.m_coordinator.GetGameState())
 				return;
 
-			KeyTriggeredEvent& keytriggeredevent = dynamic_cast<KeyTriggeredEvent&>(ev);
-			KeyPress keycode = keytriggeredevent.GetKeyCode();
 			if (g_engine.GetIsFocused())
 			{
 				if (ev.GetEventCat() & EventCatCombinedInput)
@@ -262,12 +269,6 @@ namespace Rogue
 						//g_engine.SetGameIsRunning(false);
 					ResumeGame();
 				}
-
-				if (keycode == KeyPress::KeyF5)
-					g_engine.m_coordinator.ToggleEditorIsRunning();
-
-				if (keycode == KeyPress::KeyF6)
-					g_engine.ToggleVSync();
 
 				/*if (keycode == KeyPress::Numpad0 && m_entities.size() > 0)
 					g_engine.m_coordinator.clone(*m_entities.begin());
