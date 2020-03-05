@@ -676,6 +676,9 @@
     <ClInclude Include="Source\GamePlayEnding.h">
       <Filter>RogueEngine\Systems\AI\Script Types\Gameplay</Filter>
     </ClInclude>
+    <ClInclude Include="Source\ProgressBar.h">
+      <Filter>RogueEngine\Systems\AI\Script Types\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -1085,6 +1088,9 @@
     </ClCompile>
     <ClCompile Include="Source\GamePlayEnding.cpp">
       <Filter>RogueEngine\Systems\AI\Script Types\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ProgressBar.cpp">
+      <Filter>RogueEngine\Systems\AI\Script Types\UI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

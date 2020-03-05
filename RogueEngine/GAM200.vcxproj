@@ -52,6 +52,7 @@
     <ClInclude Include="Source\LightComponent.h" />
     <ClInclude Include="Source\LightingSystem.h" />
     <ClInclude Include="Source\LightsFlicker.h" />
+    <ClInclude Include="Source\ProgressBar.h" />
     <ClInclude Include="Source\SoulCollectible.h" />
     <ClInclude Include="Source\LayerManager.h" />
     <ClInclude Include="Source\CollisionSystem.h" />
@@ -281,6 +282,7 @@
     <ClCompile Include="Source\PlayerControllerComponent.cpp" />
     <ClCompile Include="Source\PlayerControllerSystem.cpp" />
     <ClCompile Include="Source\Polygon.cpp" />
+    <ClCompile Include="Source\ProgressBar.cpp" />
     <ClCompile Include="Source\RigidbodyComponent.cpp" />
     <ClCompile Include="Source\RotatableComponent.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
