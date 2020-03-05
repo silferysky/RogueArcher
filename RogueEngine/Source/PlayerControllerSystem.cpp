@@ -854,7 +854,7 @@ namespace Rogue
 
 	void PlayerControllerSystem::Hitchhike(Entity ent)
 	{
-		if (ent != MAX_ENTITIES)
+		if (ent != MAX_ENTITIES && g_engine.m_coordinator.GetHierarchyInfo(ent).m_tag == "Hitchhike")
 		{
 			SetPlayerParent(ent);
 			PLAYER_STATUS.SetTeleportCharge(3.0f);
