@@ -1,0 +1,15 @@
+{
+    "MaxEntityCount": 1,
+    "EntityCount": 1,
+    "CameraMinX": -1490.0,
+    "CameraMinY": -400.0,
+    "CameraMaxX": 1360.0,
+    "CameraMaxY": 650.0,
+    "CameraZoom": 0.7200000286102295,
+    "Tileset": "",
+    "StartPosX": 0,
+    "StartPosY": 0,
+    "Signature0": 5,
+    "Entity0": "Name{Game Object 0}|Tag{}|Sprite{Resources/Assets/DefaultSprite.png;1;1;1;1;}||Transform{0;0;100;100;0;0}|||||||||||||||||||||",
+    "EntityParent0": 65535
+}

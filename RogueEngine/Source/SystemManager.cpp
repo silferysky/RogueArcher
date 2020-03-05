@@ -34,8 +34,8 @@ namespace Rogue
 	// Note: Debug draw system currently doesn't update here.
 	void SystemManager::UpdateSystems()
 	{
-		std::cout << "Is Transiting: " << m_transitionLevel << std::endl;
-		std::cout << "Transition Time Left " << m_transitionTime << std::endl;
+		//std::cout << "Is Transiting: " << m_transitionLevel << std::endl;
+		//std::cout << "Transition Time Left " << m_transitionTime << std::endl;
 		if (m_transitionLevel && TransitFinish())
 		{
 			ImGuiTileSet::instance().ClearTileset();
