@@ -291,6 +291,25 @@ namespace Rogue
 		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, GetWindowWidth(handle), GetWindowHeight(handle));
 	}
 
+	bool GraphicsSystem::FadeAllEntities()
+	{
+		bool allFaded = true;
+
+		for (auto& entity : m_entities)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(entity);
+
+			auto colourFilter = sprite.getFilter();
+
+			sprite.setFilter(glm::vec4(colourFilter.r, colourFilter.g, colourFilter.b, colourFilter.a - 0.001));
+
+			if (sprite.getFilter().a)
+				allFaded = false;
+		}
+
+		return allFaded;
+	}
+
 	GLuint& GraphicsSystem::getFBO()
 	{
 		return m_FBO;
