@@ -26,9 +26,9 @@ namespace Rogue
 {
 	void ImGuiEditorHierarchy::DisplayHierarchyParent(HierarchyInfo& objInfo)
 	{
-		if (ImGui::Selectable(objInfo.m_objectName.c_str(), objInfo.m_selected, ImGuiSelectableFlags_AllowDoubleClick))
+		if(ImGui::Selectable(objInfo.m_objectName.c_str(), objInfo.m_selected, ImGuiSelectableFlags_AllowDoubleClick))
 		{
-			if (ImGui::IsMouseClicked(0))
+			if (ImGui::IsItemClicked(0))
 			{
 				objInfo.m_selected = !objInfo.m_selected;
 				Entity temp = objInfo.m_Entity;
@@ -68,7 +68,7 @@ namespace Rogue
 			displayName << "\\" << childHierarchy.m_objectName;
 			if (ImGui::Selectable(displayName.str().c_str(), childHierarchy.m_selected, ImGuiSelectableFlags_AllowDoubleClick))
 			{
-				if (ImGui::IsMouseClicked(0))
+				if (ImGui::IsItemClicked(0))
 				{
 					childHierarchy.m_selected = !childHierarchy.m_selected;
 					Entity temp = childHierarchy.m_Entity;

@@ -38,6 +38,7 @@ Technology is prohibited.
 #include "PlayerControllerSystem.h"
 #include "MenuControllerSystem.h"
 #include "EditorSettings.h"
+#include "PickingSystem.h"
 
 namespace Rogue
 {
@@ -436,6 +437,11 @@ namespace Rogue
 		bool IsTransitFinish() const
 		{
 			m_systemManager->TransitFinish();
+		}
+
+		Entity PickEntity() const
+		{
+			return m_systemManager->GetSystem<PickingSystem>()->PickObject();
 		}
 	};
 }

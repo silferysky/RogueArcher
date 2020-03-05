@@ -34,8 +34,8 @@ namespace Rogue
 	// Note: Debug draw system currently doesn't update here.
 	void SystemManager::UpdateSystems()
 	{
-		std::cout << "Is Transiting: " << m_transitionLevel << std::endl;
-		std::cout << "Transition Time Left " << m_transitionTime << std::endl;
+		//std::cout << "Is Transiting: " << m_transitionLevel << std::endl;
+		//std::cout << "Transition Time Left " << m_transitionTime << std::endl;
 		if (m_transitionLevel && TransitFinish())
 		{
 			ImGuiTileSet::instance().ClearTileset();
@@ -161,25 +161,25 @@ namespace Rogue
 				g_engine.m_coordinator.EndTimeSystem("Physics System");
 			}
 			
-			g_engine.m_coordinator.InitTimeSystem("Circle Collision System");
-			UpdateSystem(SystemID::id_CIRCLECOLLISIONSYSTEM);
-			g_engine.m_coordinator.EndTimeSystem("Circle Collision System");
-
+			//g_engine.m_coordinator.InitTimeSystem("Circle Collision System");
+			//UpdateSystem(SystemID::id_CIRCLECOLLISIONSYSTEM);
+			//g_engine.m_coordinator.EndTimeSystem("Circle Collision System");
+			
 			g_engine.m_coordinator.InitTimeSystem("Box Collision System");
 			UpdateSystem(SystemID::id_BOXCOLLISIONSYSTEM);
 			g_engine.m_coordinator.EndTimeSystem("Box Collision System");
-
-			g_engine.m_coordinator.InitTimeSystem("Collision System");
-			UpdateSystem(SystemID::id_COLLISIONSYSTEM);
-			g_engine.m_coordinator.EndTimeSystem("Collision System");
+			
+			//g_engine.m_coordinator.InitTimeSystem("Collision System");
+			//UpdateSystem(SystemID::id_COLLISIONSYSTEM);
+			//g_engine.m_coordinator.EndTimeSystem("Collision System");
 		}
 		
 		if (!m_gameIsPaused && m_gameIsRunning)
 			Timer::instance().GetSystemTimes()["Physics System"] *= step;
 		
-		Timer::instance().GetSystemTimes()["Circle Collision System"] *= step;
+		//Timer::instance().GetSystemTimes()["Circle Collision System"] *= step;
 		Timer::instance().GetSystemTimes()["Box Collision System"] *= step;
-		Timer::instance().GetSystemTimes()["Collision System"] *= step;
+		//Timer::instance().GetSystemTimes()["Collision System"] *= step;
 
 		// Fire events for collisions
 		EventDispatcher::instance().Update();

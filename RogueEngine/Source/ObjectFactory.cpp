@@ -69,7 +69,6 @@ namespace Rogue
 
 		//For Player character
 		PLAYER_STATUS.SetStartingPos(Vec2(level["StartPosX"].GetFloat(), level["StartPosY"].GetFloat()));
-		CAMERA_MANAGER.SetCameraPos({ level["StartPosX"].GetFloat(), level["StartPosY"].GetFloat(), 0.0f });
 
 		for (Entity entity = 0; entity < entCount; ++entity)
 		{
@@ -132,6 +131,7 @@ namespace Rogue
 		if (loadedQueue.size())
 		{
 			Entity firstLoadedEnt = loadedQueue.front();
+			m_firstLoadedEntity = firstLoadedEnt;
 			while (loadedQueue.size())
 			{
 				Entity loadedEnt = loadedQueue.front();
@@ -178,6 +178,8 @@ namespace Rogue
 		//	//RE_INFO("HI");
 		//}
 
+		//Set at end to ensure no weird camera panning
+		CAMERA_MANAGER.SetCameraPos({ level["StartPosX"].GetFloat(), level["StartPosY"].GetFloat(), 0.0f });
 
 		RE_INFO("LEVEL LOADED");
 		debugStr << entCount << " ENTITIES LOADED";
@@ -193,12 +195,15 @@ namespace Rogue
 		//Camera Serialization
 		Vec2 cameraMin = CameraManager::instance().GetCameraMin();
 		Vec2 cameraMax = CameraManager::instance().GetCameraMax();
+		Vec2 cameraStart = PLAYER_STATUS.GetStartingPos();
 		float cameraZoom = CameraManager::instance().GetLevelCameraZoom();
 		RESerialiser::WriteToFile(fileName, "CameraMinX", &cameraMin.x);
 		RESerialiser::WriteToFile(fileName, "CameraMinY", &cameraMin.y);
 		RESerialiser::WriteToFile(fileName, "CameraMaxX", &cameraMax.x);
 		RESerialiser::WriteToFile(fileName, "CameraMaxY", &cameraMax.y);
 		RESerialiser::WriteToFile(fileName, "CameraZoom", &cameraZoom);
+		RESerialiser::WriteToFile(fileName, "StartPosX", &cameraStart.x);
+		RESerialiser::WriteToFile(fileName, "StartPosY", &cameraStart.y);
 
 		SaveTileset(fileName);
 
@@ -218,7 +223,7 @@ namespace Rogue
 		bool writingBackground = true;
 		entCount = 0; //Reset entCount for saving loop
 
-		Entity firstEnt = g_engine.m_coordinator.GetActiveObjects().front();
+		Entity firstEnt = m_firstLoadedEntity;//g_engine.m_coordinator.GetActiveObjects().front();
 		for (Entity& curEntity : g_engine.m_coordinator.GetActiveObjects())
 		{
 			if (skipCount)
@@ -265,7 +270,7 @@ namespace Rogue
 			int parent = static_cast<int>(parentValue);
 			if (parentValue != MAX_ENTITIES)
 			{
-				parentValue -= firstEnt + g_engine.m_coordinator.GetSystem<MenuControllerSystem>()->GetUIMenuObjsSize();
+				parentValue -= m_firstLoadedEntity;//static_cast<size_t>(firstEnt) + g_engine.m_coordinator.GetSystem<MenuControllerSystem>()->GetUIMenuObjsSize();
 				parent = static_cast<int>(parentValue);
 			}
 			RESerialiser::WriteToFile(fileName, strstream.str().c_str(), &parent);

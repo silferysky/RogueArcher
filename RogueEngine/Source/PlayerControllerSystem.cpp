@@ -273,23 +273,7 @@ namespace Rogue
 
 			EntHitchhikeEvent& event = dynamic_cast<EntHitchhikeEvent&>(ev);
 
-			if (event.GetEntityID() != MAX_ENTITIES)
-			{
-				if (g_engine.m_coordinator.GetHierarchyInfo(event.GetEntityID()).m_tag != "Hitchhike")
-					return;
-
-				SetPlayerParent(event.GetEntityID());
-				if (g_engine.m_coordinator.ComponentExists<ChildComponent>(PLAYER_STATUS.GetPlayerEntity()))
-				{
-					auto& player = g_engine.m_coordinator.GetComponent<ChildComponent>(PLAYER_STATUS.GetPlayerEntity());
-					player.SetLocalDirty();
-					//player.SetGlobalDirty();
-				}
-			}
-			else
-			{
-				ResetPlayerParent();
-			}
+			Hitchhike(event.GetEntityID());
 			break;
 		}
 
@@ -526,7 +510,10 @@ namespace Rogue
 			{
 				if (keycode == KeyPress::MB1)
 				{
-					if (!m_timedEntities.size() && PLAYER_STATUS.GetInLightDur() < 0.0f && 
+					Entity pickedEntity = g_engine.m_coordinator.PickEntity();
+					if (pickedEntity != MAX_ENTITIES && PLAYER_STATUS.GetHitchhikedEntity() == MAX_ENTITIES/*&& g_engine.m_coordinator.GetHierarchyInfo(pickedEntity).m_tag == "Hitchhike"*/)
+						Hitchhike(pickedEntity);
+					else if (!m_timedEntities.size() && PLAYER_STATUS.GetInLightDur() < 0.0f && 
 						PLAYER_STATUS.GetTeleportDelay() < 0.0f && 
 						(PLAYER_STATUS.GetTeleportCharge() >= 1.0f || PLAYER_STATUS.GetInfiniteJumps()))
 					{
@@ -535,7 +522,9 @@ namespace Rogue
 						//if (player.m_grounded)
 						//	PLAYER_STATUS.SetTeleportCharge(PLAYER_STATUS.GetMaxTeleportCharge());
 						if (PLAYER_STATUS.IsPlayerActive())
+						{
 							Teleport();
+						}
 						m_ignoreFrameEvent = true;
 					}
 					//if (PLAYER_STATUS.ShowIndicator())
@@ -861,6 +850,25 @@ namespace Rogue
 
 		//AudioManager::instance().loadSound("Resources/Sounds/[Shoot Projectile]SCI-FI-WHOOSH_GEN-HDF-20864.ogg", 0.86f, false).Play();
 		//AudioManager::instance().loadSound("Resources/Sounds/[Ela Appear]SCI-FI-WHOOSH_GEN-HDF-20870.ogg", 0.3f, false).Play();
+	}
+
+	void PlayerControllerSystem::Hitchhike(Entity ent)
+	{
+		if (ent != MAX_ENTITIES && g_engine.m_coordinator.GetHierarchyInfo(ent).m_tag == "Hitchhike")
+		{
+			SetPlayerParent(ent);
+			PLAYER_STATUS.SetTeleportCharge(3.0f);
+			if (g_engine.m_coordinator.ComponentExists<ChildComponent>(PLAYER_STATUS.GetPlayerEntity()))
+			{
+				auto& player = g_engine.m_coordinator.GetComponent<ChildComponent>(PLAYER_STATUS.GetPlayerEntity());
+				player.SetLocalDirty();
+				//player.SetGlobalDirty();
+			}
+		}
+		else
+		{
+			ResetPlayerParent();
+		}
 	}
 
 	Vec2 PlayerControllerSystem::GetTeleportRaycast()
