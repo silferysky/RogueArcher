@@ -24,6 +24,7 @@ Technology is prohibited.
 #include "KeyEvent.h"
 #include "FontSystem.h"
 #include "LightingSystem.h"
+#include "EditorTileSet.h"
 
 namespace Rogue
 {
@@ -79,7 +80,6 @@ namespace Rogue
 		m_foregroundTransformLocation = glGetUniformLocation(m_foregroundShader.GetShader(), "transform");
 		m_foregroundFilterLocation = glGetUniformLocation(m_foregroundShader.GetShader(), "colourFilter");
 
-		
 		GenerateQuadPrimitive(m_VBO, m_VAO, m_EBO);
 		GenerateFrameQuad(m_frameVAO, m_frameVBO);
 
@@ -172,6 +172,13 @@ namespace Rogue
 
 		glBindBuffer(GL_UNIFORM_BUFFER, m_uboMatrices);
 		glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::mat4), glm::value_ptr(g_engine.GetProjMat()));
+
+		/* for (auto tile : ImGuiTileSet::instance().GetTileSet())
+		{
+			auto entity = tile.m_tileId;
+
+			instancedDraw(entity);
+		} */
 
 		// For all entities
 		for (auto pair : m_drawQueue)

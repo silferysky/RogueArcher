@@ -588,4 +588,9 @@ namespace Rogue
 		//	g_engine.m_coordinator.AddComponent<BoxCollider2DComponent>(tileEntity, BoxCollider2DComponent());
 		//}
 	}
+
+	std::vector<Tile>& ImGuiTileSet::GetTileSet()
+	{
+		return m_GlobalTileSet;
+	}
 }
