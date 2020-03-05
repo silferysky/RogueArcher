@@ -265,7 +265,7 @@ namespace Rogue
 			int parent = static_cast<int>(parentValue);
 			if (parentValue != MAX_ENTITIES)
 			{
-				parentValue -= firstEnt;
+				parentValue -= firstEnt + g_engine.m_coordinator.GetSystem<MenuControllerSystem>()->GetUIMenuObjsSize();
 				parent = static_cast<int>(parentValue);
 			}
 			RESerialiser::WriteToFile(fileName, strstream.str().c_str(), &parent);
