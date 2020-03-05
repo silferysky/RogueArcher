@@ -129,7 +129,7 @@ namespace Rogue
 		{
 			auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
 
-			if (rigidbody.getIsStatic()) // Skip static bodies
+			if (rigidbody.getIsStatic() || !rigidbody.m_componentIsActive) // Skip static bodies
 				continue;
 
 			auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);

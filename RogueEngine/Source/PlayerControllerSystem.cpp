@@ -285,10 +285,6 @@ namespace Rogue
 					player.SetLocalDirty();
 					//player.SetGlobalDirty();
 				}
-				if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(PLAYER_STATUS.GetPlayerEntity()))
-				{
-					auto& player = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(PLAYER_STATUS.GetPlayerEntity());	
-				}
 			}
 			else
 			{
@@ -831,14 +827,7 @@ namespace Rogue
 		Vec2 calculatedPos = GetTeleportRaycast();
 
 		CreateTeleportEvent(calculatedPos);
-
-		if (PLAYER_STATUS.GetHitchhikedEntity() != MAX_ENTITIES)
-		{
-			ParentResetEvent parentReset(*m_entities.begin());
-			parentReset.SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
-			EventDispatcher::instance().AddEvent(parentReset);
-			PLAYER_STATUS.SetHitchhikeEntity(MAX_ENTITIES);
-		}
+		ResetPlayerParent();
 
 		//ParentTransformEvent& parentTransform = new ParentTransformEvent(*m_entities.begin(), true);
 		//parentTransform->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
@@ -985,6 +974,13 @@ namespace Rogue
 	{
 		if (!m_entities.size())
 			return;
+
+		if (g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(PLAYER_STATUS.GetPlayerEntity()))
+		{
+			auto& player = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(PLAYER_STATUS.GetPlayerEntity());
+			player.m_componentIsActive = false;
+		}
+
 		ParentSetEvent parent(newParent, *m_entities.begin());
 		parent.SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
 		EventDispatcher::instance().AddEvent(parent);
@@ -995,6 +991,13 @@ namespace Rogue
 	{
 		if (PLAYER_STATUS.GetHitchhikedEntity() != MAX_ENTITIES)
 		{
+
+			if (g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(PLAYER_STATUS.GetPlayerEntity()))
+			{
+				auto& player = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(PLAYER_STATUS.GetPlayerEntity());
+				player.m_componentIsActive = true;
+			}
+
 			ParentResetEvent parentReset(*m_entities.begin());
 			parentReset.SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
 			EventDispatcher::instance().AddEvent(parentReset);
