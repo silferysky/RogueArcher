@@ -76,6 +76,8 @@ namespace Rogue
 		void UseFrameBuffer();
 		void UpdateFrameBuffer();
 
+		bool FadeAllEntities();
+
 		GLuint& getFBO();
 		GLuint& getUBOMatrices();
 		Shader& getShader();

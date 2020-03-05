@@ -46,6 +46,7 @@ namespace Rogue
 		Gameplay_Ending,
 		Lights_Flicker,
 		UI_HoverOverButton,
+		UI_ProgressBar,
 		Obj_Fade,
 		AI_Last
 	};

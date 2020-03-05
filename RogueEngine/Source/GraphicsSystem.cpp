@@ -301,7 +301,8 @@ namespace Rogue
 
 			auto colourFilter = sprite.getFilter();
 
-			sprite.setFilter(glm::vec4(colourFilter.r, colourFilter.g, colourFilter.b, colourFilter.a - 0.001));
+			if (colourFilter.a)
+				sprite.setFilter(glm::vec4(colourFilter.r, colourFilter.g, colourFilter.b, colourFilter.a - 0.001));
 
 			if (sprite.getFilter().a)
 				allFaded = false;
