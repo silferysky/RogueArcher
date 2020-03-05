@@ -27,6 +27,8 @@ Technology is prohibited.
 #if defined(DEBUG) | defined(_DEBUG)
 	#define ENABLE_LOGGER 
 	#define ENABLE_ASSERT
+#else
+	#define ENABLE_LOGGER
 #endif
 
 namespace Rogue
