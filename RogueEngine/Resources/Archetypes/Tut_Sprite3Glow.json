@@ -1,0 +1,5 @@
+{
+    "Signature": 532695,
+    "Entity": "Name{Tut_Sprite3Glow}|Tag{}|Sprite{Resources\\Assets\\TutorialTeleGlow.png;1;1;1;0;}|Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-1197.21;-282;354.25;349.28;0;5}||BoxCollider{5;31;127;194;TRIGGER}||LogicComponent{6;0;1;0}|StatsComponent{0;0;0;0;0;;0;}||||||Collider{BOX;1;4294967295;}||||||FADE{1;0;}||||",
+    "Children": ""
+}

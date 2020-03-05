@@ -1,0 +1,5 @@
+{
+    "Signature": 8406,
+    "Entity": "Name{DeathBox}|Tag{}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{1143.3;-771.769;100;100;0;0}||BoxCollider{-20;-24;1688;32;TRIGGER}||LogicComponent{11;0;1;0}|StatsComponent{0;0;0;0;0;;0;}||||||Collider{BOX;1;4294967295;}||||||||||",
+    "Children": ""
+}
