@@ -69,7 +69,6 @@ namespace Rogue
 
 		//For Player character
 		PLAYER_STATUS.SetStartingPos(Vec2(level["StartPosX"].GetFloat(), level["StartPosY"].GetFloat()));
-		CAMERA_MANAGER.SetCameraPos({ level["StartPosX"].GetFloat(), level["StartPosY"].GetFloat(), 0.0f });
 
 		for (Entity entity = 0; entity < entCount; ++entity)
 		{
@@ -178,6 +177,8 @@ namespace Rogue
 		//	//RE_INFO("HI");
 		//}
 
+		//Set at end to ensure no weird camera panning
+		CAMERA_MANAGER.SetCameraPos({ level["StartPosX"].GetFloat(), level["StartPosY"].GetFloat(), 0.0f });
 
 		RE_INFO("LEVEL LOADED");
 		debugStr << entCount << " ENTITIES LOADED";

@@ -168,9 +168,10 @@ namespace Rogue
 			// Get the cursor's world position
 			Vec2 cursor = PickingManager::instance().GetWorldCursor();
 
-			int pickedEntity = PickObject();
-			if (pickedEntity == MAX_ENTITIES)
-				pickedEntity = -1;
+			Entity temp = PickObject();
+			int pickedEntity = -1;
+			if (temp != MAX_ENTITIES)
+				pickedEntity = static_cast<int>(temp);
 
 			// Send EntityPickedEvent
 			if (pickedEntity >= 0)
