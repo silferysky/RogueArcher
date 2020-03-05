@@ -177,7 +177,7 @@ namespace Rogue
 				}
 			}
 		}
-		else if (!m_worldCamera && g_engine.m_coordinator.GetEditorIsRunning())
+		else if (m_worldCamera && g_engine.m_coordinator.GetEditorIsRunning())
 		{
 			for (auto& i : m_currentVector)
 			{
