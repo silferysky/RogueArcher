@@ -57,6 +57,7 @@ namespace Rogue
 	private:
 		void CreateBallAttack();
 		void Teleport();
+		void Hitchhike(Entity ent);
 		Vec2 GetTeleportRaycast();
 		void ToggleMode();
 

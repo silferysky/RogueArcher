@@ -699,7 +699,7 @@ namespace Rogue
 		}
 
 		bool m_worldCamera = g_engine.m_coordinator.GetSystem<CameraSystem>()->GetWorldCamera();
-		ImGui::Checkbox("Toggle World Camera?", &m_worldCamera);
+		ImGui::Checkbox("Toggle Editor Camera?", &m_worldCamera);
 		g_engine.m_coordinator.GetSystem<CameraSystem>()->SetWorldCamera(m_worldCamera);
 
 		float m_cameraZoom = CameraManager::instance().GetCameraZoom();
@@ -711,12 +711,12 @@ namespace Rogue
 
 		Vec2 m_startCameraPos = PLAYER_STATUS.GetStartingPos();
 
-		if (m_worldCamera)
+		/* if (m_worldCamera)
 		{
 			m_cameraPos.x = 0.0f;
 			m_cameraPos.y = 0.0f;
 			m_cameraZoom = 1.630f;
-		}
+		} */
 
 		ImGui::DragFloat("Camera X", &m_cameraPos.x, 1.0f, -10000.0f, 10000.0f);
 		ImGui::DragFloat("Camera Y", &m_cameraPos.y, 1.0f, -10000.0f, 10000.0f);

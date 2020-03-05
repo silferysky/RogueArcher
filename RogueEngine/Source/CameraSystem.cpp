@@ -23,7 +23,7 @@ Technology is prohibited.
 #include "GraphicsEvent.h"
 #include "CameraManager.h"
 #include "PickingManager.h"
-
+#include "EditorViewport.h"
 namespace Rogue
 {
 	//-------------------------------------------------------//
@@ -33,7 +33,7 @@ namespace Rogue
 	CameraSystem::CameraSystem()
 		: System(SystemID::id_CAMERASYSTEM), m_worldCamera{ false }, m_worldUp{ 0.0f, 1.0f, 0.0f },
 		m_centerPosition{ Vec2(0.0f, 0.0f) }, m_cameraFront{ 0.0f, 0.0f, -1.0f }, m_cameraUp{}, m_cameraRight{},
-		m_cameraShake{}
+		m_cameraShake{}, m_currentVector{ g_engine.m_coordinator.GetActiveObjects() }
 	{}
 
 	void CameraSystem::Init()
@@ -67,10 +67,6 @@ namespace Rogue
 	void CameraSystem::ToggleWorldCamera()
 	{
 		m_worldCamera = !m_worldCamera;
-
-		// Reset camera position to center
-		if (m_worldCamera)
-			ResetCamera();
 	}
 
 	glm::vec3 CameraSystem::GetCameraFront() const
@@ -178,6 +174,19 @@ namespace Rogue
 					//glm::vec3(transformPos.x + shakeOffset.x, transformPos.y + shakeOffset.y, 0.0f);
 
 					break;
+				}
+			}
+		}
+		else if (m_worldCamera && g_engine.m_coordinator.GetEditorIsRunning())
+		{
+			for (auto& i : m_currentVector)
+			{
+				HierarchyInfo& objInfo = g_engine.m_coordinator.GetHierarchyInfo(i);
+				if (objInfo.m_selected == true)
+				{
+					Vec2 position = g_engine.m_coordinator.GetComponent<TransformComponent>(i).GetPosition();
+					glm::vec3 camerapos = glm::vec3(position.x, position.y, 0.0f);
+					CameraManager::instance().SetCameraPos(camerapos);
 				}
 			}
 		}
