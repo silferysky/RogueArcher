@@ -120,6 +120,7 @@ namespace Rogue
 		// texture coord attribute
 		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (const  void*)(7 * sizeof(float)));
 		glEnableVertexAttribArray(2);
+
 		//  normal
 		//glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 12 * sizeof(float), (const  void*)(9 * sizeof(float)));
 		//glEnableVertexAttribArray(3);
