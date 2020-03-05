@@ -55,7 +55,7 @@ namespace Rogue
 				if(ImGui::Selectable(i.first.c_str(), i.second.first, ImGuiSelectableFlags_AllowDoubleClick))
 				{
 					std::string temp = i.first;
-					if (ImGui::IsMouseDoubleClicked(0) || ImGui::IsMouseClicked(0))
+					if (ImGui::IsItemClicked(0) || ImGui::IsMouseClicked(0))
 					{
 						i.second.first = !i.second.first;
 						for (auto& i : m_updateData)
