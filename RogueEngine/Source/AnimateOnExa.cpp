@@ -48,9 +48,10 @@ namespace Rogue
 						animate->get().setIsAnimating(true);
 
 						// set parent to disappear
-						if (Entity m_parent = g_engine.m_coordinator.TryGetComponent<ChildComponent>(m_entity)->get().GetParent())
+						if (auto childOpt = g_engine.m_coordinator.TryGetComponent<ChildComponent>(m_entity))
 						{
-							if (auto parentSprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(m_parent))
+							Entity parent = childOpt->get().GetParent();
+							if (auto parentSprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(parent))
 							{
 								glm::vec4 parentFilter = parentSprite->get().getFilter();
 								parentFilter.a = 0.0f;
@@ -67,9 +68,11 @@ namespace Rogue
 					// not animating and not transparent
 				{
 					//set parent to appear
-					if (Entity m_parent = g_engine.m_coordinator.TryGetComponent<ChildComponent>(m_entity)->get().GetParent())
+					if (auto childOpt = g_engine.m_coordinator.TryGetComponent<ChildComponent>(m_entity))
 					{
-						if (auto parentSprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(m_parent))
+						Entity parent = childOpt->get().GetParent();
+
+						if (auto parentSprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(parent))
 						{
 							glm::vec4 parentFilter = parentSprite->get().getFilter();
 							parentFilter.a = 1.0f;
