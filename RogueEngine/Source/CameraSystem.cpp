@@ -177,19 +177,19 @@ namespace Rogue
 				}
 			}
 		}
-		else if (m_worldCamera && g_engine.m_coordinator.GetEditorIsRunning())
-		{
-			for (auto& i : m_currentVector)
-			{
-				HierarchyInfo& objInfo = g_engine.m_coordinator.GetHierarchyInfo(i);
-				if (objInfo.m_selected == true)
-				{
-					Vec2 position = g_engine.m_coordinator.GetComponent<TransformComponent>(i).GetPosition();
-					glm::vec3 camerapos = glm::vec3(position.x, position.y, 0.0f);
-					CameraManager::instance().SetCameraPos(camerapos);
-				}
-			}
-		}
+		//else if (m_worldCamera && g_engine.m_coordinator.GetEditorIsRunning())
+		//{
+		//	for (auto& i : m_currentVector)
+		//	{
+		//		HierarchyInfo& objInfo = g_engine.m_coordinator.GetHierarchyInfo(i);
+		//		if (objInfo.m_selected == true)
+		//		{
+		//			Vec2 position = g_engine.m_coordinator.GetComponent<TransformComponent>(i).GetPosition();
+		//			glm::vec3 camerapos = glm::vec3(position.x, position.y, 0.0f);
+		//			CameraManager::instance().SetCameraPos(camerapos);
+		//		}
+		//	}
+		//}
 
 		g_engine.m_coordinator.EndTimeSystem("Camera System");
 	}
