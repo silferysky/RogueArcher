@@ -155,6 +155,9 @@
     <Filter Include="RogueEngine\Systems\Graphics\Foreground">
       <UniqueIdentifier>{08b5b499-0003-4f77-8409-07cc78391bd7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="RogueEditor\EditorFiles\Deprecated">
+      <UniqueIdentifier>{51a8207e-6fe0-45e0-aa96-199df01e77ca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Resource.h">
@@ -283,13 +286,7 @@
     <ClInclude Include="Source\LogicSystem.h">
       <Filter>RogueEngine\Systems\AI</Filter>
     </ClInclude>
-    <ClInclude Include="Source\EditorComponent.h">
-      <Filter>RogueEditor\EditorFiles</Filter>
-    </ClInclude>
     <ClInclude Include="Source\EditorConsole.h">
-      <Filter>RogueEditor\EditorFiles</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\EditorEdit.h">
       <Filter>RogueEditor\EditorFiles</Filter>
     </ClInclude>
     <ClInclude Include="Source\EditorFile.h">
@@ -679,6 +676,12 @@
     <ClInclude Include="Source\ProgressBar.h">
       <Filter>RogueEngine\Systems\AI\Script Types\UI</Filter>
     </ClInclude>
+    <ClInclude Include="Source\EditorComponent.h">
+      <Filter>RogueEditor\EditorFiles\Deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EditorEdit.h">
+      <Filter>RogueEditor\EditorFiles\Deprecated</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -747,13 +750,7 @@
     <ClCompile Include="Source\LogicSystem.cpp">
       <Filter>RogueEngine\Systems\AI</Filter>
     </ClCompile>
-    <ClCompile Include="Source\EditorComponent.cpp">
-      <Filter>RogueEditor\EditorFiles</Filter>
-    </ClCompile>
     <ClCompile Include="Source\EditorConsole.cpp">
-      <Filter>RogueEditor\EditorFiles</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\EditorEdit.cpp">
       <Filter>RogueEditor\EditorFiles</Filter>
     </ClCompile>
     <ClCompile Include="Source\EditorGameObject.cpp">
@@ -1091,6 +1088,12 @@
     </ClCompile>
     <ClCompile Include="Source\ProgressBar.cpp">
       <Filter>RogueEngine\Systems\AI\Script Types\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EditorComponent.cpp">
+      <Filter>RogueEditor\EditorFiles\Deprecated</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EditorEdit.cpp">
+      <Filter>RogueEditor\EditorFiles\Deprecated</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

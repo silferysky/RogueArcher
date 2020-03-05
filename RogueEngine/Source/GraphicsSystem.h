@@ -58,9 +58,9 @@ namespace Rogue
 		float m_playerX = 1.0f;
 
 		//instancing
-		int entityCount;
-		glm::mat4* modelMatrices;
-		GLuint m_instanceBuffer;
+		// int entityCount;
+		// glm::mat4* modelMatrices;
+		// GLuint m_instanceBuffer;
 
 		std::multimap<int, Entity> m_drawQueue;
 

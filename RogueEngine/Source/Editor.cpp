@@ -169,8 +169,6 @@ namespace Rogue
 		g_engine.m_coordinator.SetSystemSignature<Editor>(signature);
 		REGISTER_LISTENER(SystemID::id_EDITOR, Editor::Receive);
 		EditorManager::instance().AddEditorWindow<ImGuiEditorFile>("File");
-		EditorManager::instance().AddEditorWindow<ImGuiEditorEdit>("Edit");
-		EditorManager::instance().AddEditorWindow<ImGuiComponent>("Component");
 		EditorManager::instance().AddEditorWindow<ImGuiGameObject>("Game Object");
 		EditorManager::instance().AddEditorWindow<ImGuiEditorHierarchy>("Hierarchy");
 		EditorManager::instance().AddEditorWindow<ImGuiInspector>("Inspector");

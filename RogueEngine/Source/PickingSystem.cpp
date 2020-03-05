@@ -94,11 +94,6 @@ namespace Rogue
 							!g_engine.m_coordinator.GetComponent<UIComponent>(entity).getIsActive())
 							continue;
 					}
-					else if (key.GetKeyCode() == KeyPress::KeyR)
-					{
-						if (!g_engine.m_coordinator.ComponentExists<LogicComponent>(entity))
-							continue;
-					}
 
 					TransformComponent& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
 					Vec2 pos = trans.GetPosition();

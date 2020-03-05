@@ -4,7 +4,7 @@
 
 namespace Rogue
 {
-	struct Tile
+	struct Tile // 30 bytes!!
 		: public ISerializable
 	{
 		std::string m_texturename;
@@ -54,10 +54,10 @@ namespace Rogue
 		Texture m_currentTexture = { 0 };
 		std::string m_currentPath = "None";
 		
-
 		int m_currentmode = 0;
 
 	public:
+		std::vector<Tile>& GetTileSet();
 
 		virtual std::string Serialize() override;
 		virtual void Deserialize(std::string_view deserializeStr) override;

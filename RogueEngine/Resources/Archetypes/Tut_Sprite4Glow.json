@@ -1,0 +1,5 @@
+{
+    "Signature": 532695,
+    "Entity": "Name{Tut_Sprite4Glow}|Tag{}|Sprite{Resources/Assets/TutorialToggleGlow.png;1;1;1;0;}|Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-706.069;-2.53522;142;84;0;5}||BoxCollider{0;-62;450;271;TRIGGER}||LogicComponent{6;0;1;0}|StatsComponent{0;0;0;0;0;;0;}||||||Collider{BOX;1;4294967295;}||||||FADE{1;0;}||||",
+    "Children": ""
+}
