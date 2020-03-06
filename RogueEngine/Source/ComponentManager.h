@@ -44,9 +44,9 @@ namespace Rogue
 		}
 
 		template<typename TComponent>
-		void AddComponent(Entity entity, TComponent&& component)
+		void AddComponent(Entity entity, TComponent component)
 		{
-			GetComponentArray<TComponent>()->InsertData( entity, std::move(component) );
+			GetComponentArray<TComponent>()->InsertData( entity, component );
 		}
 
 		template<typename TComponent>

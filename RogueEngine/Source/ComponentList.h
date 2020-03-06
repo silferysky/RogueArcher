@@ -41,6 +41,7 @@ Technology is prohibited.
 #include "LightComponent.h"
 #include "ForegroundComponent.h"
 #include "ChildComponent.h" // THis is not to be initialized by ObjectFactory
+#include "TileComponent.h" // Same ^
 
 namespace Rogue
 {
@@ -68,8 +69,9 @@ namespace Rogue
 		FADE,
 		LIGHT,
 		FOREGROUND,
-
+		
 		CHILD,
+		TILE, 
 		LASTCOMP
 	};
 }

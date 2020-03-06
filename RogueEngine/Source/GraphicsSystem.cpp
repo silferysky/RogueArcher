@@ -81,15 +81,16 @@ namespace Rogue
 		m_foregroundFilterLocation = glGetUniformLocation(m_foregroundShader.GetShader(), "colourFilter");
 
 		GenerateQuadPrimitive(m_VBO, m_VAO, m_EBO);
+		GenerateQuadPrimitive(m_instancedVBO, m_instancedVAO, m_instancedEBO);
 		GenerateFrameQuad(m_frameVAO, m_frameVBO);
 
-		// entityCount = 0;
-		// modelMatrices = new glm::mat4[2048];
-		// glGenBuffers(1, &m_instanceBuffer);
-		// glBindBuffer(GL_ARRAY_BUFFER, m_instanceBuffer);
+		entityCount = 0;
+		//modelMatrices = new glm::mat4[2048];
+		//glGenBuffers(1, &m_instanceBuffer);
+		//glBindBuffer(GL_ARRAY_BUFFER, m_instanceBuffer);
 		// glBufferData(GL_ARRAY_BUFFER, 2048 * sizeof(glm::mat4), &modelMatrices[0], GL_STATIC_DRAW);
 
-		/*glBindVertexArray(m_VAO);
+		/*glBindVertexArray(m_instancedVAO);
 		// also set instance data
 		GLsizei vec4Size = sizeof(glm::vec4);
 		glEnableVertexAttribArray(3);
@@ -114,7 +115,6 @@ namespace Rogue
 
 		m_pCamera = g_engine.m_coordinator.GetSystem<CameraSystem>();
 
-
 		// OpenGL version
 		std::cout << glGetString(GL_VERSION) << std::endl;
 	}
@@ -135,15 +135,11 @@ namespace Rogue
 
 		glBindFramebuffer(GL_FRAMEBUFFER, m_FBO);
 
-		//auto msg = g_engine.GetWindowMessage();
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		// clear the buffer
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		UpdateFrameBuffer();
-		//if (TranslateMessage(&msg) == WM_SIZE || TranslateMessage(&msg) == WM_DISPLAYCHANGE)
-		//{
-		//}
 
 		glUseProgram(m_shader.GetShader());
 		glBindVertexArray(m_VAO);
@@ -157,7 +153,7 @@ namespace Rogue
 		{
 			auto& entity = pair.second;
 
-			if (!g_engine.m_coordinator.ComponentExists<ForegroundComponent>(entity))
+			//if (!g_engine.m_coordinator.ComponentExists<TileComponent>(entity))
 				draw(entity);
 		}
 
@@ -173,21 +169,16 @@ namespace Rogue
 		glBindBuffer(GL_UNIFORM_BUFFER, m_uboMatrices);
 		glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::mat4), glm::value_ptr(g_engine.GetProjMat()));
 
-		/* for (auto tile : ImGuiTileSet::instance().GetTileSet())
-		{
-			auto entity = tile.m_tileId;
-
-			instancedDraw(entity);
-		} */
-
 		// For all entities
 		for (auto pair : m_drawQueue)
 		{
 			auto& entity = pair.second;
 
-			if (g_engine.m_coordinator.ComponentExists<ForegroundComponent>(entity))
-				drawForeground(entity);
+			//if (g_engine.m_coordinator.ComponentExists<TileComponent>(entity))
+				//drawInstanced(entity);
 		}
+
+		//glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 2048);
 
 		glBindBuffer(GL_UNIFORM_BUFFER, 0);
 		glUseProgram(0);
@@ -202,7 +193,7 @@ namespace Rogue
 
 		UseFrameBuffer();
 
-		// entityCount = 0;
+		entityCount = 0;
 
 		g_engine.m_coordinator.EndTimeSystem("Graphics System");
 	}
@@ -242,7 +233,6 @@ namespace Rogue
 		// model to world, world to view, view to projection
 		glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(viewMat));
 
-		// modelMatrices[entityCount] = transformMat;
 		glUniformMatrix4fv(m_transformLocation, 1, GL_FALSE, glm::value_ptr(transformMat));
 		
 		// rgb filtering
@@ -250,16 +240,9 @@ namespace Rogue
 
 		// Draw the Mesh
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-
-		//glBindBuffer(GL_ARRAY_BUFFER, m_instanceBuffer);
-		//glBufferData(GL_ARRAY_BUFFER, 2048 * sizeof(glm::mat4), &modelMatrices[0], GL_STATIC_DRAW);
-
-		//glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 2048);
-
-		// ++entityCount;
 	}
 
-	void GraphicsSystem::drawForeground(Entity& entity)
+	void GraphicsSystem::drawInstanced(Entity& entity)
 	{
 		auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(entity);
 		auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
@@ -277,6 +260,8 @@ namespace Rogue
 		UpdateTextureCoordsY(sprite.getTexCoordMinY(), sprite.getTexCoordMaxY());
 		// model to world, world to view, view to projection
 		glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(viewMat));
+
+		// modelMatrices[entityCount] = transformMat;
 		glUniformMatrix4fv(m_foregroundTransformLocation, 1, GL_FALSE, glm::value_ptr(transformMat));
 
 		// rgb filtering
@@ -284,6 +269,11 @@ namespace Rogue
 
 		// Draw the Mesh
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+		//glBindBuffer(GL_ARRAY_BUFFER, m_instanceBuffer);
+		//glBufferData(GL_ARRAY_BUFFER, 2048 * sizeof(glm::mat4), &modelMatrices[0], GL_STATIC_DRAW);
+
+		// ++entityCount;
 	}
 
 	void GraphicsSystem::Receive(Event& ev)

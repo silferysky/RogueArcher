@@ -150,9 +150,9 @@ namespace Rogue
 		}
 
 		template<typename TComponent>
-		void AddComponent(Entity entity, TComponent&& component)
+		void AddComponent(Entity entity, TComponent component)
 		{
-			m_componentManager->AddComponent<TComponent>( entity, std::move(component) );
+			m_componentManager->AddComponent<TComponent>( entity, component );
 
 			auto signature = m_entityManager->GetSignature(entity);
 			signature.set(m_componentManager->GetComponentType<TComponent>(), true);

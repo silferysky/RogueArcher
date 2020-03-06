@@ -694,6 +694,9 @@
     <ClInclude Include="Source\EditorViewport.h">
       <Filter>RogueEditor\EditorFiles\Main Windows</Filter>
     </ClInclude>
+    <ClInclude Include="Source\TileComponent.h">
+      <Filter>RogueEditor\EditorFiles\</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
