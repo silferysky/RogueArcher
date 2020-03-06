@@ -864,10 +864,22 @@ namespace Rogue
 				player.SetLocalDirty();
 				//player.SetGlobalDirty();
 			}
+			if (g_engine.m_coordinator.ComponentExists<BoxCollider2DComponent>(PLAYER_STATUS.GetPlayerEntity()))
+			{
+				auto& player = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(PLAYER_STATUS.GetPlayerEntity());
+				player.SetCollisionMode(CollisionMode::e_trigger);
+				//player.SetGlobalDirty();
+			}
 		}
 		else
 		{
 			ResetPlayerParent();
+			if (g_engine.m_coordinator.ComponentExists<BoxCollider2DComponent>(PLAYER_STATUS.GetPlayerEntity()))
+			{
+				auto& player = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(PLAYER_STATUS.GetPlayerEntity());
+				player.SetCollisionMode(CollisionMode::e_awake);
+				//player.SetGlobalDirty();
+			}
 		}
 	}
 
