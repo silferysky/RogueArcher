@@ -1,6 +1,6 @@
 {
     "MaxEntityCount": 140,
-    "EntityCount": 139,
+    "EntityCount": 140,
     "CameraMinX": -1220.0,
     "CameraMinY": -910.0,
     "CameraMaxX": 1340.0,
@@ -148,7 +148,7 @@
     "Signature136": 65732,
     "Signature137": 65732,
     "Signature138": 65732,
-    "Signature139": 8454340,
+    "Signature139": 8214,
     "Entity0": "Name{Game Object 0}|Tag{}|Sprite{Resources\\Assets\\GuideVegetationLevel.png;1;0.99999;0.99999;1;}||Transform{35;-35;4064;2580;0;0}||||||||||||||||||||||",
     "Entity1": "Name{Collision1}|Tag{Ground}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-1537;213.495;100;100;0;0}||BoxCollider{0;0;700;245;AWAKE}|||||||||Collider{BOX;1;4294967295;}|||||||||||",
     "Entity2": "Name{Collision2}|Tag{Ground}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-1417;180.505;100;100;0;0}||BoxCollider{0;0;703;193;AWAKE}|||||||||Collider{BOX;1;4294967295;}|||||||||||",
@@ -288,7 +288,7 @@
     "Entity136": "Name{Ela Particle Emitter}|Tag{}|||Transform{-1242.25;458.25;61;61;0;13}||||LogicComponent{18;0;1;0}|StatsComponent{0;0;0;0;0;;0;}|||||||||Particle Emitter{-11;-24;18;23;10;10;0;0;0.001;0;0;0.5;1;0;1;Resources/Assets/ParticleEla.png;12;}||||||||",
     "Entity137": "Name{Exa Death Particle}|Tag{}|||Transform{-1242.25;458.25;100;100;0;0}||||LogicComponent{19;0;1;0}|StatsComponent{0;0;0;0;0;;0;}|||||||||Particle Emitter{0;0;25;60;10;10;7;11;1;129;86;2;1;0;0;Resources/Assets/ParticleExa.png;13;}||||||||",
     "Entity138": "Name{Ela Death Particle}|Tag{}|||Transform{-1242.25;458.25;100;100;0;0}||||LogicComponent{20;0;1;0}|StatsComponent{0;0;0;0;0;;0;}|||||||||Particle Emitter{0;0;25;60;10;10;7;11;1;129;86;2;1;0;0;Resources/Assets/ParticleEla.png;13;}||||||||",
-    "Entity139": "Name{Ela Death Particle}|Tag{}|||Transform{-1242.25;458.25;100;100;0;0}||||LogicComponent{20;0;1;0}|StatsComponent{0;0;0;0;0;;0;}|||||||||Particle Emitter{0;0;25;60;10;10;7;11;1;129;86;2;1;0;0;Resources/Assets/ParticleEla.png;13;}||||||||",
+    "Entity139": "Name{Collision62}|Tag{Ground}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-59;-290.495;100;100;0;0}||BoxCollider{0;0;72;46;AWAKE}|||||||||Collider{BOX;1;4294967295;}|||||||||||",
     "EntityParent0": 65535,
     "EntityParent1": 65535,
     "EntityParent2": 65535,
@@ -428,5 +428,5 @@
     "EntityParent136": 65535,
     "EntityParent137": 65535,
     "EntityParent138": 65535,
-    "EntityParent139": 2539
+    "EntityParent139": 65535
 }
