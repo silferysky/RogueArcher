@@ -274,15 +274,27 @@ namespace Rogue
 
 	void PlayerStatusManager::ChangePlayerSprite()
 	{
-		if (m_isLightMode)
+		if (m_isLightMode && m_hitchhikedEntity == MAX_ENTITIES)
 		{
 			EntChangeSpriteEvent ev(m_entity, "Resources\\Assets\\ExaIdle.png");
 			ev.SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
 			EventDispatcher::instance().AddEvent(ev);
 		}
-		else
+		else if (!m_isLightMode && m_hitchhikedEntity == MAX_ENTITIES)
 		{
 			EntChangeSpriteEvent ev(m_entity, "Resources\\Assets\\ElaIdle.png");
+			ev.SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
+			EventDispatcher::instance().AddEvent(ev);
+		}
+		else if (m_isLightMode) //&& m_hitchhikedEntity != MAX_ENTITIES
+		{
+			EntChangeSpriteEvent ev(m_entity, "Resources\\Assets\\ExaIdleHitch.png");
+			ev.SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
+			EventDispatcher::instance().AddEvent(ev);
+		}
+		else //!light mode, Hitchhiked != MAX_ENTITIES
+		{
+			EntChangeSpriteEvent ev(m_entity, "Resources\\Assets\\ElaIdleHitch.png");
 			ev.SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
 			EventDispatcher::instance().AddEvent(ev);
 		}

@@ -511,7 +511,7 @@ namespace Rogue
 				if (keycode == KeyPress::MB1)
 				{
 					Entity pickedEntity = g_engine.m_coordinator.PickEntity();
-					if (pickedEntity != MAX_ENTITIES && PLAYER_STATUS.GetHitchhikedEntity() == MAX_ENTITIES/*&& g_engine.m_coordinator.GetHierarchyInfo(pickedEntity).m_tag == "Hitchhike"*/)
+					if (pickedEntity != MAX_ENTITIES && PLAYER_STATUS.GetHitchhikedEntity() != MAX_ENTITIES/*&& g_engine.m_coordinator.GetHierarchyInfo(pickedEntity).m_tag == "Hitchhike"*/)
 						Hitchhike(pickedEntity);
 					else if (!m_timedEntities.size() && PLAYER_STATUS.GetInLightDur() < 0.0f && 
 						PLAYER_STATUS.GetTeleportDelay() < 0.0f && 
@@ -524,6 +524,7 @@ namespace Rogue
 						if (PLAYER_STATUS.IsPlayerActive())
 						{
 							Teleport();
+							Hitchhike(MAX_ENTITIES);
 						}
 						m_ignoreFrameEvent = true;
 					}
@@ -551,6 +552,7 @@ namespace Rogue
 				else if (keycode == KeyPress::KeySpace)
 				{
 					AudioManager::instance().loadSound("Resources/Sounds/jump.ogg", 0.3f, false).Play(1.0f);
+					Hitchhike(MAX_ENTITIES);
 					for (Entity entity : m_entities)
 					{
 						PlayerControllerComponent& player = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity);
@@ -881,6 +883,8 @@ namespace Rogue
 				//player.SetGlobalDirty();
 			}
 		}
+
+		PLAYER_STATUS.ChangePlayerSprite();
 	}
 
 	Vec2 PlayerControllerSystem::GetTeleportRaycast()
@@ -1011,7 +1015,6 @@ namespace Rogue
 	{
 		if (PLAYER_STATUS.GetHitchhikedEntity() != MAX_ENTITIES)
 		{
-
 			if (g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(PLAYER_STATUS.GetPlayerEntity()))
 			{
 				auto& player = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(PLAYER_STATUS.GetPlayerEntity());

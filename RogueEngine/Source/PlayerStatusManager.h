@@ -68,6 +68,9 @@ namespace Rogue
 		void SetHitchhikeEntity(Entity ent);
 		Entity GetHitchhikedEntity() const;
 
+		//For modifiying sprite based on state
+		void ChangePlayerSprite();
+
 		//Checkpoint
 		void SetCheckpoint(Vec2 checkpoint);
 		Vec2 GetCheckpoint() const;
@@ -85,7 +88,6 @@ namespace Rogue
 
 	private:
 
-		void ChangePlayerSprite();
 
 		size_t m_runCount;
 
