@@ -1,6 +1,7 @@
 #pragma once
 #include "Precompiled.h"
 #include "REEditor.h"
+#include "TileMapComponent.h"
 
 namespace Rogue
 {
@@ -17,7 +18,7 @@ namespace Rogue
 		float m_texCoordMaxY = 1.0f;
 		Texture m_tileTexture = { 0 };
 		ImVec4 m_bordercolor = { 1.0f,1.0f,1.0f,0.5f };
-
+	
 		virtual std::string Serialize() override;
 		virtual void Deserialize(std::string_view deserializeStr) override;
 	};
@@ -30,6 +31,8 @@ namespace Rogue
 
 	class ImGuiTileSet : public IEditable, public ISerializable
 	{
+	public:
+		using TileMap = std::vector<TrueTile>;
 	private:
 		std::vector<Tile> m_GlobalTileSet;
 		std::vector<Tile> m_TileSet;
@@ -55,21 +58,28 @@ namespace Rogue
 		std::string m_currentPath = "None";
 		
 		int m_currentmode = 0;
+		TileMap* m_pTileMap;
 
 	public:
 		std::vector<Tile>& GetTileSet();
 
-		virtual std::string Serialize() override;
-		virtual void Deserialize(std::string_view deserializeStr) override;
+		virtual std::string Serialize() override final;
+		virtual void Deserialize(std::string_view deserializeStr) override final;
+		
 		static ImGuiTileSet& instance()
 		{
 			static ImGuiTileSet instance;
 			return instance;
 		}
+		
 		ImGuiTileSet();
 		~ImGuiTileSet() = default;
-		Entity Create2DSprite(Vec2 position, Vec2 scale, std::string_view tilepath,bool iscollision);
+		
+		Entity Create2DSprite(Vec2 position, Vec2 scale, std::string_view tilepath);
 		void ClearTileset();
+		
+		void SaveTileMap(TileMap* globalMap);
+
 		virtual void Init() override final;
 		virtual void Update() override final;
 		virtual void Shutdown() override final;

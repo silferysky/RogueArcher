@@ -153,7 +153,7 @@ namespace Rogue
 		{
 			auto& entity = pair.second;
 
-			//if (!g_engine.m_coordinator.ComponentExists<TileComponent>(entity))
+			//if (!g_engine.m_coordinator.ComponentExists<TileMapComponent>(entity))
 				draw(entity);
 		}
 
@@ -174,7 +174,7 @@ namespace Rogue
 		{
 			auto& entity = pair.second;
 
-			//if (g_engine.m_coordinator.ComponentExists<TileComponent>(entity))
+			//if (g_engine.m_coordinator.ComponentExists<TileMapComponent>(entity))
 				//drawInstanced(entity);
 		}
 
