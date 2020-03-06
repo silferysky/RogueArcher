@@ -1,0 +1,5 @@
+{
+    "Signature": 8922583,
+    "Entity": "Name{Game Object 102}|Tag{}|Sprite{Resources\\Assets\\BonusSoul.png;1;1;1;1;}|Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-1657.35;964.306;51;51;0;57}||BoxCollider{-1;-2;-25;-7;TRIGGER}||LogicComponent{13;0;1;0}|StatsComponent{0;0;0;0;0;;0;}|Animation{8;0;0.1;1;1;1;}||Audio{Resources/Sounds/soul_hum.ogg;755;0.2;1;1;}|||Collider{BOX;1;4294967295;}||||||FADE{1;1;}|||||",
+    "Children": ""
+}
