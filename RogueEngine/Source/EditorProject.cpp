@@ -54,16 +54,17 @@ namespace Rogue
 			{
 				if(ImGui::Selectable(i.first.c_str(), i.second.first, ImGuiSelectableFlags_AllowDoubleClick))
 				{
-					std::string temp = i.first;
-					if (ImGui::IsItemClicked(0) || ImGui::IsMouseClicked(0))
+					
+				}
+				std::string temp = i.first;
+				if (ImGui::IsItemClicked(0))
+				{
+					i.second.first = !i.second.first;
+					for (auto& i : m_updateData)
 					{
-						i.second.first = !i.second.first;
-						for (auto& i : m_updateData)
-						{
-							if (temp == i.first)
-								continue;
-							i.second.first = false;
-						}
+						if (temp == i.first)
+							continue;
+						i.second.first = false;
 					}
 				}
 			}

@@ -1,0 +1,5 @@
+{
+    "Signature": 532951,
+    "Entity": "Name{Checkpoint 1}|Tag{}|Sprite{Resources\\Assets\\ObjectiveArrow.png;1;1;1;1;}|Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-15;74.579;100;100;0;4}||BoxCollider{0;64;18;157;TRIGGER}||LogicComponent{12;0;1;0}|StatsComponent{0;0;0;0;0;;0;}|Animation{8;0;0.1;1;0;1;}|||||Collider{BOX;1;4294967295;}||||||FADE{1;1;}||||",
+    "Children": ""
+}

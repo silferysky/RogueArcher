@@ -21,6 +21,7 @@ Technology is prohibited.
 #include "EventDispatcher.h"
 #include "EditorEvent.h"
 #include "ParentEvent.h"
+#include "CameraManager.h"
 
 namespace Rogue
 {
@@ -28,19 +29,30 @@ namespace Rogue
 	{
 		if(ImGui::Selectable(objInfo.m_objectName.c_str(), objInfo.m_selected, ImGuiSelectableFlags_AllowDoubleClick))
 		{
-			if (ImGui::IsItemClicked(0))
+
+		}
+		if (ImGui::IsItemClicked(0))
+		{
+			objInfo.m_selected = !objInfo.m_selected;
+			Entity temp = objInfo.m_Entity;
+			for (auto& i : m_currentVector)
 			{
-				objInfo.m_selected = !objInfo.m_selected;
-				Entity temp = objInfo.m_Entity;
-				for (auto& i : m_currentVector)
+				if (i == temp)
 				{
-					if (i == temp)
-						continue;
-					else
+					if (g_engine.m_coordinator.GetHierarchyInfo(i).m_selected)
 					{
-						g_engine.m_coordinator.GetHierarchyInfo(i).m_selected = false;
+						Vec2 position = g_engine.m_coordinator.GetComponent<TransformComponent>(i).GetPosition();
+						glm::vec3 camerapos = glm::vec3(position.x, position.y, 0.0f);
+						CameraManager::instance().SetCameraPos(camerapos);
 					}
+					continue;
 				}
+
+				else
+				{
+					g_engine.m_coordinator.GetHierarchyInfo(i).m_selected = false;
+				}
+
 			}
 		}
 		if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
@@ -68,18 +80,29 @@ namespace Rogue
 			displayName << "\\" << childHierarchy.m_objectName;
 			if (ImGui::Selectable(displayName.str().c_str(), childHierarchy.m_selected, ImGuiSelectableFlags_AllowDoubleClick))
 			{
-				if (ImGui::IsItemClicked(0))
+
+			}
+
+			if (ImGui::IsItemClicked(0))
+			{
+				childHierarchy.m_selected = !childHierarchy.m_selected;
+				Entity temp = childHierarchy.m_Entity;
+
+				for (auto& i : m_currentVector)
 				{
-					childHierarchy.m_selected = !childHierarchy.m_selected;
-					Entity temp = childHierarchy.m_Entity;
-					for (auto& i : m_currentVector)
-					{	
-						if (i == temp)
-							continue;
-						else
+					if (i == temp)
+					{
+						if (g_engine.m_coordinator.GetHierarchyInfo(i).m_selected)
 						{
-							g_engine.m_coordinator.GetHierarchyInfo(i).m_selected = false;
+							Vec2 position = g_engine.m_coordinator.GetComponent<TransformComponent>(i).GetPosition();
+							glm::vec3 camerapos = glm::vec3(position.x, position.y, 0.0f);
+							CameraManager::instance().SetCameraPos(camerapos);
 						}
+						continue;
+					}
+					else
+					{
+						g_engine.m_coordinator.GetHierarchyInfo(i).m_selected = false;
 					}
 				}
 			}

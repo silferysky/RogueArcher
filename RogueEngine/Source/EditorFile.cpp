@@ -49,6 +49,7 @@ namespace Rogue
 					sceneManager.ClearAllEntities();
 
 					//Creating new scene
+					g_engine.m_coordinator.GetSystem<MenuControllerSystem>()->ClearMenuObjs();
 					sceneManager.IncrementSceneIterator();
 					sceneManager.Create2DSprite();
 
