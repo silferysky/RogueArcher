@@ -218,8 +218,10 @@ namespace Rogue
 		ImGui::PushItemWidth(75);
 		ImGui::DragFloat("Zoom Delay", &m_zoomDelay, 1.0f, 0.0f, 1000.0f);
 
+		int tempZoomCount = static_cast<int>(m_zoomCount);
 		ImGui::PushItemWidth(75);
-		ImGui::DragInt("Zoom Count", &m_zoomCount, 1.0f, 0, 20);
+		ImGui::DragInt("Zoom Count", &tempZoomCount, 1.0f, 0, 20);
+		m_zoomCount = static_cast<unsigned>(tempZoomCount);
 
 		static char newLevelPath[128];
 		ImGui::PushItemWidth(75);
