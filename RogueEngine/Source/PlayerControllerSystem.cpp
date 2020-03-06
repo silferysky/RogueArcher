@@ -387,6 +387,8 @@ namespace Rogue
 						// Reset boolean for grounded
 						if (!PLAYER_STATUS.HasJumped())
 						{
+							AudioManager::instance().loadSound("Resources/Sounds/jump.ogg", 0.3f, false).Play(1.0f);
+							Hitchhike(MAX_ENTITIES);
 							player.m_grounded = false;
 							PLAYER_STATUS.SetHasJumped(true);
 							player.m_jumpTimer = PLAYER_STATUS.GetJumpMaxTimer();
@@ -547,18 +549,6 @@ namespace Rogue
 					auto& ctrler = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(*m_entities.begin());
 
 					ctrler.SetMoveState(MoveState::e_stop);
-				}
-
-				else if (keycode == KeyPress::KeySpace)
-				{
-					AudioManager::instance().loadSound("Resources/Sounds/jump.ogg", 0.3f, false).Play(1.0f);
-					Hitchhike(MAX_ENTITIES);
-					for (Entity entity : m_entities)
-					{
-						PlayerControllerComponent& player = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity);
-						
-						player.m_grounded = false;
-					}
 				}
 			}
 			
