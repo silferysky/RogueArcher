@@ -72,4 +72,20 @@ namespace Rogue
 	private:
 		Entity m_entity;
 	};
+
+	class ZoomEvent : public Event
+	{
+	public:
+		SET_EVENT_CATEGORY(EventCatGraphics);
+		SET_EVENT_TYPE(EvZoom);
+
+		ZoomEvent(float factor, float duration)
+			: m_factor{ factor }, m_duration{ duration }{}
+
+		inline float GetFactor() const { return m_factor; }
+		inline float GetDuration() const { return m_duration; }
+
+	private:
+		float m_factor, m_duration;
+	};
 }

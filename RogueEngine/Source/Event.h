@@ -83,6 +83,7 @@ namespace Rogue
 		EvEntityChangeSprite,
 		EvEntityChangeRGBA,
 		EvEntityResetToCamera,
+		EvZoom, 
 
 		EvParentSet,
 		EvParentReset,
