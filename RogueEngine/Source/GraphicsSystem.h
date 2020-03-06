@@ -51,6 +51,9 @@ namespace Rogue
 		GLint m_transformLocation;
 		GLint m_filterLocation;
 
+		GLuint m_instancedVAO;
+		GLuint m_instancedVBO;
+		GLuint m_instancedEBO;
 		GLint m_foregroundTransformLocation;
 		GLint m_foregroundFilterLocation;
 
@@ -58,7 +61,7 @@ namespace Rogue
 		float m_playerX = 1.0f;
 
 		//instancing
-		// int entityCount;
+		int entityCount;
 		// glm::mat4* modelMatrices;
 		// GLuint m_instanceBuffer;
 
@@ -74,7 +77,7 @@ namespace Rogue
 		void Shutdown() override;
 
 		void draw(Entity& entity);
-		void drawForeground(Entity& entity);
+		void drawInstanced(Entity& entity);
 
 		void Receive(Event& ev);
 
