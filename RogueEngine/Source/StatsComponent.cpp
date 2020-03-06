@@ -110,6 +110,26 @@ namespace Rogue
 		return m_nextLevel;
 	}
 
+	void StatsComponent::SetzoomValue(float zoom)
+	{
+		m_zoomValue = zoom;
+	}
+
+	float StatsComponent::GetzoomValue() const
+	{
+		return m_zoomValue;
+	}
+
+	void StatsComponent::SetZoomDuration(float dur)
+	{
+		m_zoomDuration = dur;
+	}
+
+	float StatsComponent::GetZoomDuration() const
+	{
+		return m_zoomDuration;
+	}
+
 	std::string StatsComponent::Serialize()
 	{
 		//Health, speed, attack range, sight range
@@ -126,6 +146,9 @@ namespace Rogue
 		{
 			ss << vec.x << ";" << vec.y << ";";
 		}
+
+		ss << m_zoomValue << ";";
+		ss << m_zoomDuration << ";";
 
 		return ss.str();
 	}
@@ -157,7 +180,11 @@ namespace Rogue
 			std::getline(ss, s2, ';');
 			m_waypoints.push_back(Vec2(std::stof(s1), std::stof(s2)));
 		}
-		
+
+		if (std::getline(ss, s1, ';'))
+			m_zoomValue = std::stof(s1);
+		if (std::getline(ss, s1, ';'))
+			m_zoomDuration = std::stof(s1);
 	}
 
 	void StatsComponent::DisplayOnInspector()
@@ -177,6 +204,12 @@ namespace Rogue
 
 		ImGui::PushItemWidth(75);
 		ImGui::Checkbox("Patrolling", &m_isPatrolling);
+
+		ImGui::PushItemWidth(75);
+		ImGui::DragFloat("Zoom Factor", &m_zoomValue, 1.0f, 0.0f, 1000.0f);
+
+		ImGui::PushItemWidth(75);
+		ImGui::DragFloat("Zoom Duration", &m_zoomDuration, 1.0f, 0.0f, 10.0f);
 
 		static char newLevelPath[128];
 		ImGui::PushItemWidth(75);

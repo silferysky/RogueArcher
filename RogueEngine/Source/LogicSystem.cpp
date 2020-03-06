@@ -47,6 +47,7 @@ Technology is prohibited.
 #include "ActivateOnDeathEla.h"
 #include "ActivateOnDeathExa.h"
 #include "LightsFlicker.h"
+#include "TriggerZoom.h"
 
 namespace Rogue
 {
@@ -325,6 +326,12 @@ namespace Rogue
 				{
 					LightsFlicker newAI(entities, logicComponent, statsComponent);
 					AddLogicInterface(entities, std::make_shared<LightsFlicker>(newAI));
+					break;
+				}
+				case AIType::Trigger_Zoom:
+				{
+					TriggerZoom newAI(entities, logicComponent, statsComponent, statsComponent.GetzoomValue(), statsComponent.GetZoomDuration());
+					AddLogicInterface(entities, std::make_shared<TriggerZoom>(newAI));
 					break;
 				}
 				case AIType::AI_Static:
