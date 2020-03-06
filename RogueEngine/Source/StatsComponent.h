@@ -83,5 +83,7 @@ namespace Rogue
 		//For camera zoom
 		float m_zoomValue;
 		float m_zoomDuration;
+		float m_zoomDelay;
+		unsigned m_zoomCount;
 	};
 }

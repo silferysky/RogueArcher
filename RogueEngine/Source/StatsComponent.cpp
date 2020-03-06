@@ -185,6 +185,10 @@ namespace Rogue
 			m_zoomValue = std::stof(s1);
 		if (std::getline(ss, s1, ';'))
 			m_zoomDuration = std::stof(s1);
+		if (std::getline(ss, s1, ';'))
+			m_zoomDelay = std::stof(s1);
+		if (std::getline(ss, s1, ';'))
+			m_zoomCount = std::stoi(s1);
 	}
 
 	void StatsComponent::DisplayOnInspector()
@@ -210,6 +214,12 @@ namespace Rogue
 
 		ImGui::PushItemWidth(75);
 		ImGui::DragFloat("Zoom Duration", &m_zoomDuration, 1.0f, 0.0f, 10.0f);
+
+		ImGui::PushItemWidth(75);
+		ImGui::DragFloat("Zoom Delay", &m_zoomDelay, 1.0f, 0.0f, 1000.0f);
+
+		ImGui::PushItemWidth(75);
+		ImGui::DragInt("Zoom Count", &m_zoomCount, 1.0f, 0, 20);
 
 		static char newLevelPath[128];
 		ImGui::PushItemWidth(75);
