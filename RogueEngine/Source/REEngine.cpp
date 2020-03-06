@@ -120,6 +120,7 @@ namespace Rogue
 		m_coordinator.RegisterComponent<LightComponent>();
 		m_coordinator.RegisterComponent<ForegroundComponent>();
 		//This is a component that isn't directly serialized/deserialized
+		m_coordinator.RegisterComponent<TileComponent>();
 		m_coordinator.RegisterComponent<ChildComponent>();
 	}
 

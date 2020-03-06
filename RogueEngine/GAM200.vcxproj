@@ -145,6 +145,7 @@
     <ClInclude Include="Source\TeleAnimation.h" />
     <ClInclude Include="Source\TextComponent.h" />
     <ClInclude Include="Source\TextureManager.h" />
+    <ClInclude Include="Source\TileComponent.h" />
     <ClInclude Include="Source\TransformComponent.h" />
     <ClInclude Include="Source\AppEvent.h" />
     <ClInclude Include="Source\MemoryManager.h" />

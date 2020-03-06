@@ -679,6 +679,9 @@
     <ClInclude Include="Source\ProgressBar.h">
       <Filter>RogueEngine\Systems\AI\Script Types\UI</Filter>
     </ClInclude>
+    <ClInclude Include="Source\TileComponent.h">
+      <Filter>RogueEditor\EditorFiles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">

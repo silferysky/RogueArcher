@@ -24,6 +24,7 @@ namespace Rogue
 	public:
 		virtual std::string Serialize() = 0;
 		virtual void Deserialize(std::string_view deserializeStr) = 0;
-		virtual void DisplayOnInspector() {};
+		virtual void DisplayOnInspector() {}
+		virtual ~ISerializable() {}
 	};
 }
