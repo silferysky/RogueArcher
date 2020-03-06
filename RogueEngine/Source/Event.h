@@ -66,6 +66,9 @@ namespace Rogue
 		EvEntityHitchhike,
 		EvEntityHover,
 
+		EvFreezeControls,
+		EvUnfreezeControls,
+
 		EvResetGame,
 
 		EvOnCollisionEnter,

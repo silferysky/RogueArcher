@@ -68,6 +68,10 @@ namespace Rogue
 		if (PLAYER_STATUS.GetFreezeControlTimer() > 0.0f)
 		{
 			PLAYER_STATUS.SetFreezeControlTimer(PLAYER_STATUS.GetFreezeControlTimer() - g_deltaTime * g_engine.GetTimeScale());
+			if (PLAYER_STATUS.GetFreezeControlTimer() <= 0.0f)
+			{
+				UnfreezeControlComponentUpdates();
+			}
 		}
 
 		//PlayerControllerComponent& player = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(PLAYER_STATUS.GetPlayerEntity());
@@ -266,6 +270,20 @@ namespace Rogue
 			PLAYER_STATUS.Reset();
 			break;
 		}
+
+		case EventType::EvFreezeControls:
+		{
+			//No need to set timer, since is being called by PlayerStatusManager
+			FreezeControlComponentUpdates();
+			break;
+		}
+		
+		case EventType::EvUnfreezeControls:
+		{
+			UnfreezeControlComponentUpdates();
+			break;
+		}
+
 		case EventType::EvEntityHitchhike:
 		{
 			if (PLAYER_STATUS.GetPlayerEntity() == MAX_ENTITIES)
@@ -981,6 +999,30 @@ namespace Rogue
 					playerCollider.SetMask(darkPos, false);
 				}
 			}
+		}
+	}
+
+	void PlayerControllerSystem::FreezeControlComponentUpdates()
+	{
+		if (auto boxCollider = g_engine.m_coordinator.TryGetComponent<BoxCollider2DComponent>(PLAYER_STATUS.GetPlayerEntity()))
+		{
+			boxCollider->get().SetCollisionMode(CollisionMode::e_asleep);
+		}
+		if (auto rigidbody = g_engine.m_coordinator.TryGetComponent<RigidbodyComponent>(PLAYER_STATUS.GetPlayerEntity()))
+		{
+			rigidbody->get().setIsStatic(true);
+		}
+	}
+
+	void PlayerControllerSystem::UnfreezeControlComponentUpdates()
+	{
+		if (auto boxCollider = g_engine.m_coordinator.TryGetComponent<BoxCollider2DComponent>(PLAYER_STATUS.GetPlayerEntity()))
+		{
+			boxCollider->get().SetCollisionMode(CollisionMode::e_awake);
+		}
+		if (auto rigidbody = g_engine.m_coordinator.TryGetComponent<RigidbodyComponent>(PLAYER_STATUS.GetPlayerEntity()))
+		{
+			rigidbody->get().setIsStatic(false);
 		}
 	}
 

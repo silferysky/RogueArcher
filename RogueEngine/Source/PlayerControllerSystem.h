@@ -61,6 +61,9 @@ namespace Rogue
 		Vec2 GetTeleportRaycast();
 		void ToggleMode();
 
+		void FreezeControlComponentUpdates();
+		void UnfreezeControlComponentUpdates();
+
 		//Macros to help Player do call events faster
 		void SetPlayerParent(Entity newParent);
 		void ResetPlayerParent();

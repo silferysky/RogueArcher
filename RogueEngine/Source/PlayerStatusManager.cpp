@@ -92,6 +92,9 @@ namespace Rogue
 	void PlayerStatusManager::SetFreezeControlTimer(float time)
 	{
 		m_freezeControlDuration = time;
+		FreezeControlEvent freeze{ MAX_ENTITIES };
+		freeze.SetSystemReceivers(static_cast<int>(SystemID::id_PLAYERCONTROLLERSYSTEM));
+		EventDispatcher::instance().AddEvent(freeze);
 	}
 
 	float PlayerStatusManager::GetFreezeControlTimer() const
@@ -102,11 +105,19 @@ namespace Rogue
 	void PlayerStatusManager::FreezeControls()
 	{
 		m_freezeControlDuration = 10000.0f;
+
+		FreezeControlEvent freeze{ MAX_ENTITIES };
+		freeze.SetSystemReceivers(static_cast<int>(SystemID::id_PLAYERCONTROLLERSYSTEM));
+		EventDispatcher::instance().AddEvent(freeze);
 	}
 
 	void PlayerStatusManager::UnfreezeControls()
 	{
 		m_freezeControlDuration = -1.0f;
+
+		UnfreezeControlEvent unfreeze{ MAX_ENTITIES };
+		unfreeze.SetSystemReceivers(static_cast<int>(SystemID::id_PLAYERCONTROLLERSYSTEM));
+		EventDispatcher::instance().AddEvent(unfreeze);
 	}
 
 	void PlayerStatusManager::SetHasJumped(bool jumped)
