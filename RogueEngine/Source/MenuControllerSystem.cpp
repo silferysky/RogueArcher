@@ -365,7 +365,10 @@ namespace Rogue
 			else
 			{
 				if (g_engine.m_coordinator.ComponentExists<ChildComponent>(ent))
+				{
 					g_engine.m_coordinator.GetComponent<ChildComponent>(ent).SetGlobalDirty();
+					g_engine.m_coordinator.ApplyParentChildCorrection(ent);
+				}
 			}
 
 			//Do not do last item (ControlHelp)

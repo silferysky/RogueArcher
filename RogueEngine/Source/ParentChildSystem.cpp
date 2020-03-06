@@ -326,6 +326,59 @@ namespace Rogue
 		newVector.clear();
 	}
 
+	void ParentChildSystem::ApplyParentChildTransform(Entity entity)
+	{
+		auto& childComponent = g_engine.m_coordinator.GetComponent<ChildComponent>(entity);
+
+		if (childComponent.GetParent() == MAX_ENTITIES || !g_engine.m_coordinator.ComponentExists<TransformComponent>(childComponent.GetParent()))
+			return;
+
+		auto& transComponent = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
+		auto& parentTransformComponent = g_engine.m_coordinator.GetComponent<TransformComponent>(childComponent.GetParent());
+
+		//Local values is "corrupted", need to fix
+		if (childComponent.IsLocalDirty())
+		{
+			childComponent.SetPosition(transComponent.GetPosition() - parentTransformComponent.GetPosition());
+			childComponent.SetPositionZ(transComponent.GetZ() - parentTransformComponent.GetZ());
+			childComponent.SetScale(Vec2(transComponent.GetScale().x / parentTransformComponent.GetScale().x, transComponent.GetScale().y / parentTransformComponent.GetScale().y));
+			childComponent.SetRotation(transComponent.GetRotation() - parentTransformComponent.GetRotation());
+			childComponent.ResetLocalDirty();
+		}
+
+		//Global values is "corrupted", need to fix
+		else if (childComponent.IsGlobalDirty())
+		{
+			transComponent.setPosition(childComponent.GetPosition() + parentTransformComponent.GetPosition());
+			transComponent.setZ(childComponent.GetPositionZ() + parentTransformComponent.GetZ());
+			transComponent.setScale(Vec2(childComponent.GetScale().x * parentTransformComponent.GetScale().x, childComponent.GetScale().y * parentTransformComponent.GetScale().y));
+			transComponent.setRotation(childComponent.GetRotation() + parentTransformComponent.GetRotation());
+
+			std::vector<Entity> toUpdate;
+			AddChildToVector(toUpdate, entity);
+			for (auto& ent : toUpdate)
+				g_engine.m_coordinator.GetComponent<ChildComponent>(ent).SetGlobalDirty();
+
+			toUpdate.clear();
+
+			childComponent.ResetGlobalDirty();
+		}
+		//Following only happens if no local or global changes, but you just want to update it
+		else if (childComponent.IsFollowing())
+		{
+			transComponent.setPosition(childComponent.GetPosition() + parentTransformComponent.GetPosition());
+			transComponent.setZ(childComponent.GetPositionZ() + parentTransformComponent.GetZ());
+			transComponent.setScale(Vec2(childComponent.GetScale().x * parentTransformComponent.GetScale().x, childComponent.GetScale().y * parentTransformComponent.GetScale().y));
+			transComponent.setRotation(childComponent.GetRotation() + parentTransformComponent.GetRotation());
+		}
+
+		if (transComponent.GetScale().x == 0.0f)
+			transComponent.setScale(Vec2(1.0f, transComponent.GetScale().y));
+		if (transComponent.GetScale().y == 0.0f)
+			transComponent.setScale(Vec2(transComponent.GetScale().x, 1.0f));
+
+	}
+
 	bool ParentChildSystem::CheckValidReassign(Entity newParent, Entity child)
 	{
 		//Safety catch

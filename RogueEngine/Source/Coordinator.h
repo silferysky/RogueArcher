@@ -39,6 +39,7 @@ Technology is prohibited.
 #include "MenuControllerSystem.h"
 #include "EditorSettings.h"
 #include "PickingSystem.h"
+#include "ParentChildSystem.h"
 
 namespace Rogue
 {
@@ -442,6 +443,11 @@ namespace Rogue
 		Entity PickEntity() const
 		{
 			return m_systemManager->GetSystem<PickingSystem>()->PickObject();
+		}
+
+		void ApplyParentChildCorrection(Entity entity)
+		{
+			m_systemManager->GetSystem<ParentChildSystem>()->ApplyParentChildTransform(entity);
 		}
 	};
 }
