@@ -864,6 +864,24 @@ namespace Rogue
 
 	void PlayerControllerSystem::Hitchhike(Entity ent)
 	{
+		if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(PLAYER_STATUS.GetPlayerEntity()))
+		{
+			Vec2 initialPos = trans->get().GetPosition();
+			Vec2 endPos = PickingManager::instance().GetWorldCursor();
+			std::cout << "Actual Distance" << Vec2SqDistance(initialPos, endPos) << std::endl;
+			std::cout << "Calc Distance" << trans->get().GetScale().x * trans->get().GetScale().x * 9 << std::endl;
+
+			if (Vec2SqDistance(initialPos, endPos) > (trans->get().GetScale().x * 3)* (trans->get().GetScale().x * 3))
+			{
+				std::cout << "Too Far" << std::endl;
+				return;
+			}
+		}
+		else //Cannot check transform properly, so this doesn't work
+		{
+			return;
+		}
+
 		if (ent != MAX_ENTITIES && g_engine.m_coordinator.GetHierarchyInfo(ent).m_tag == "Hitchhike")
 		{
 			SetPlayerParent(ent);
