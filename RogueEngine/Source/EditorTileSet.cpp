@@ -156,7 +156,6 @@ namespace Rogue
 			}
 			
 			m_TileSet.push_back(tileset);
-
 			if (m_minX > m_maxX && m_minY < m_maxY)
 			{
 				m_minX = viewportArea.getMin().x;
@@ -192,9 +191,9 @@ namespace Rogue
 				ImVec2 imageSize;
 				imageSize.x = 20.0f;
 				imageSize.y = 20.0f;
-				int temp = m_tilesWidth;
-				int width = m_tilesWidth;
-				for (auto& i : m_TileSet)
+				int temp = ImGuiTileSet::instance().m_tilesWidth;
+				int width = ImGuiTileSet::instance().m_tilesWidth;
+				for (auto& i : ImGuiTileSet::instance().m_TileSet)
 				{	
 					if (width > 0)
 					{
