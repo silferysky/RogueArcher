@@ -36,7 +36,7 @@ namespace Rogue
 	{
 		//std::cout << "Is Transiting: " << m_transitionLevel << std::endl;
 		//std::cout << "Transition Time Left " << m_transitionTime << std::endl;
-		if (m_transitionLevel && TransitFinish())
+		if (m_transitionLevel && m_transitionTime <= 0.0f)
 		{
 			ImGuiTileSet::instance().ClearTileset();
 			SceneManager::instance().LoadLevel(m_transitionString.c_str());
@@ -147,7 +147,7 @@ namespace Rogue
 
 	bool SystemManager::TransitFinish() const
 	{
-		return m_transitionTime < 0.0f;
+		return !m_transitionLevel;
 	}
 
 	void SystemManager::FixedUpdate()

@@ -445,6 +445,11 @@ namespace Rogue
 			return m_systemManager->TransitFinish();
 		}
 
+		void ResumeMenuButtons()
+		{
+			GetSystem<MenuControllerSystem>()->ResumeGame();
+		}
+
 		Entity PickEntity() const
 		{
 			return m_systemManager->GetSystem<PickingSystem>()->PickObject();
