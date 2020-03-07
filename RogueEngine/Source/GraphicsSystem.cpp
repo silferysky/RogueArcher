@@ -174,8 +174,10 @@ namespace Rogue
 		{
 			auto& entity = pair.second;
 
-			//if (g_engine.m_coordinator.ComponentExists<TileMapComponent>(entity))
-				//drawInstanced(entity);
+			if (!g_engine.m_coordinator.ComponentExists<TileMapComponent>(entity))
+				draw(entity);
+			else
+				drawTilemap(entity);
 		}
 
 		//glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 2048);
@@ -274,6 +276,39 @@ namespace Rogue
 		//glBufferData(GL_ARRAY_BUFFER, 2048 * sizeof(glm::mat4), &modelMatrices[0], GL_STATIC_DRAW);
 
 		// ++entityCount;
+	}
+
+	void GraphicsSystem::drawTilemap(Entity& entity)
+	{
+		auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(entity);
+		auto texture = sprite.getTexture();
+		glBindTexture(GL_TEXTURE_2D, texture.m_texture);
+
+		auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
+		auto& tileMap = g_engine.m_coordinator.GetComponent<TileMapComponent>(entity).GetTileMap();
+
+		for (auto tile : tileMap) // each tile in the tilemap
+		{
+			glm::mat4 transformMat = glm::mat4(1.0f);
+			glm::mat4 viewMat;
+
+			transformMat = glm::translate(transformMat, { tile.m_tilePos.x, tile.m_tilePos.y, 1.0f });
+			transformMat = glm::rotate(transformMat, transform.GetRotation(), glm::vec3(0.0f, 0.0f, 1.0f));
+			transformMat = glm::scale(transformMat, glm::vec3(transform.GetScale().x, transform.GetScale().y, 1.0f));
+
+			UpdateTextureCoords(tile.m_min.x, tile.m_max.x);
+			UpdateTextureCoordsY(tile.m_min.y, tile.m_max.y);
+
+			// model to world, world to view, view to projection
+			glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(m_pCamera->GetViewMatrix()));
+			glUniformMatrix4fv(m_transformLocation, 1, GL_FALSE, glm::value_ptr(transformMat));
+
+			// rgb filtering
+			glUniform4fv(m_filterLocation, 1, glm::value_ptr(sprite.getFilter()));
+
+			// Draw the Mesh
+			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		}
 	}
 
 	void GraphicsSystem::Receive(Event& ev)
