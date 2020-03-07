@@ -60,7 +60,7 @@ namespace Rogue
 			Entity id = REAvailableEntities.front();
 			REAvailableEntities.pop();
 			++REActiveEntityCount;
-
+			//std::cout << REActiveEntityCount << std::endl;
 
 			//std::stringstream out;
 			//out << "Entities created. Current active entities: " << REActiveEntityCount;

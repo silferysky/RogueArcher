@@ -85,6 +85,7 @@ namespace Rogue
 
 		void draw(Entity& entity);
 		void drawInstanced(Entity& entity);
+		void drawTilemap(Entity& entity);
 
 		void Receive(Event& ev);
 

@@ -694,7 +694,6 @@
     <ClInclude Include="Source\EditorViewport.h">
       <Filter>RogueEditor\EditorFiles\Main Windows</Filter>
     </ClInclude>
-    <ClInclude Include="Source\TileComponent.h" />
     <ClInclude Include="Source\TransitionObject.h">
       <Filter>RogueEngine\Systems\AI\Script Types\Trigger</Filter>
     </ClInclude>

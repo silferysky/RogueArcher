@@ -120,7 +120,7 @@ namespace Rogue
 		m_coordinator.RegisterComponent<LightComponent>();
 		m_coordinator.RegisterComponent<ForegroundComponent>();
 		//This is a component that isn't directly serialized/deserialized
-		m_coordinator.RegisterComponent<TileComponent>();
+		m_coordinator.RegisterComponent<TileMapComponent>();
 		m_coordinator.RegisterComponent<ChildComponent>();
 	}
 
@@ -157,7 +157,7 @@ namespace Rogue
 		//Ensures program closes properly 
 		SetConsoleCtrlHandler(CtrlHandler, true);
 
-		setVSync(true);
+		setVSync(false);
 
 		// Register all components
 		RegisterComponents();
@@ -178,7 +178,6 @@ namespace Rogue
 		while (m_gameIsRunning)
 		{
 			g_deltaTime = std::chrono::duration_cast<std::chrono::microseconds>(m_loopEnd - m_loopStart).count() / Timer::s_microsecPerSec;
-
 			m_loopStart = mainLoopTimer.now();
 
 			m_stepCount = 0;

@@ -46,6 +46,7 @@ namespace Rogue
 		id_LIGHTINGSYSTEM,
 		id_PARENTCHILDSYSTEM,
 		id_EDITOR,
+		id_TILEMAPSYSTEM,
 
 		// Unused
 		id_MEMORYMANAGER,
