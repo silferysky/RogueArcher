@@ -6,21 +6,21 @@
 namespace Rogue
 {
 	struct Tile // 30 bytes!!
-		: public ISerializable
+		//: public ISerializable
 	{
 		std::string m_texturename;
-		Entity m_tileId = 0;
+		//Entity m_tileId = 0;
 		Vec2 m_tilePos;
-		bool m_collision = false;
+		//bool m_collision = false;
 		float m_texCoordMinX = 0.0f;
 		float m_texCoordMaxX = 1.0f;
 		float m_texCoordMinY = 0.0f;
 		float m_texCoordMaxY = 1.0f;
 		Texture m_tileTexture = { 0 };
-		ImVec4 m_bordercolor = { 1.0f,1.0f,1.0f,0.5f };
+		//ImVec4 m_bordercolor = { 1.0f,1.0f,1.0f,0.5f };
 	
-		virtual std::string Serialize() override;
-		virtual void Deserialize(std::string_view deserializeStr) override;
+		std::string Serialize();
+		void Deserialize(std::string_view deserializeStr);
 	};
 
 	enum Mode
@@ -58,7 +58,7 @@ namespace Rogue
 		std::string m_currentPath = "None";
 		
 		int m_currentmode = 0;
-		TileMap* m_pTileMap;
+		Entity m_tileMapEnt;
 
 	public:
 		std::vector<Tile>& GetTileSet();
@@ -78,7 +78,7 @@ namespace Rogue
 		Entity Create2DSprite(Vec2 position, Vec2 scale, std::string_view tilepath);
 		void ClearTileset();
 		
-		void SaveTileMap(TileMap* globalMap);
+		void SaveTileMap(TileMap& globalMap);
 
 		virtual void Init() override final;
 		virtual void Update() override final;

@@ -8,9 +8,25 @@ namespace Rogue
 {
 	std::string ImGuiTileSet::Serialize()
 	{
+		auto tilemapCompOpt = g_engine.m_coordinator.TryGetComponent<TileMapComponent>(m_tileMapEnt);
+		auto spriteOpt = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(m_tileMapEnt);
+		auto transOpt = g_engine.m_coordinator.TryGetComponent<TransformComponent>(m_tileMapEnt);
+		
+		if (!tilemapCompOpt || !spriteOpt || !transOpt)
+			return std::string();
+
+		TileMapComponent& tilemapComp = tilemapCompOpt->get();
+		SpriteComponent& sprite = spriteOpt->get();
+		TransformComponent& transform = transOpt->get();
+
 		std::ostringstream oss;
 
-		int tiles = 0;
+		oss << sprite.getTexturePath() << "| Tiles: ";
+
+		for (TrueTile& trueTile : tilemapComp.GetTileMap())
+		{
+			oss << trueTile.Serialize() << "|";
+		}
 
 		//for (auto& tile : m_GlobalTileSet)
 		//{
@@ -27,8 +43,9 @@ namespace Rogue
 		//}
 
 
+
 		std::stringstream ss;
-		ss << "Size of vector: " << m_GlobalTileSet.size() << "\nSerialized tiles: " << tiles;
+		ss << "Size of vector: " << tilemapComp.GetTileMap().size();
 		RE_INFO(ss.str());
 
 		return oss.str();
@@ -40,6 +57,7 @@ namespace Rogue
 		std::string str;
 
 		m_GlobalTileSet.clear();
+
 		while (std::getline(iss, str, '|'))
 		{
 			Tile tile;
@@ -47,6 +65,23 @@ namespace Rogue
 
 			if(tile.m_texturename != "" && tile.m_texturename != "Resources\\Assets\\tile.png")
 				m_GlobalTileSet.push_back(tile);
+		}
+
+		if(m_GlobalTileSet.size())
+			m_currentPath = m_GlobalTileSet.front().m_texturename;
+
+		m_tileMapEnt = ImGuiTileSet::instance().Create2DSprite(Vec2(0.0f, 0.0f), Vec2(61, 61), m_currentPath);
+		TileMapComponent& tilemapComp = g_engine.m_coordinator.CreateComponent<TileMapComponent>(m_tileMapEnt);
+		TileMap& tilemap = tilemapComp.GetTileMap();
+
+		for (Tile tile : m_GlobalTileSet)
+		{
+			TrueTile trueTile;
+			trueTile.m_tilePos = tile.m_tilePos;
+			trueTile.m_min = Vec2(tile.m_texCoordMinX, tile.m_texCoordMinY);
+			trueTile.m_max = Vec2(tile.m_texCoordMaxX, tile.m_texCoordMaxY);
+
+			tilemap.emplace_back(trueTile);
 		}
 	}
 
@@ -59,10 +94,8 @@ namespace Rogue
 
 	void ImGuiTileSet::Init()
 	{
-		if (m_TileSet.size())
-		{
-			m_TileSet.clear();
-		}
+		m_TileSet.clear();
+
 		const AABB& viewportArea = PickingManager::instance().GetViewPortArea();
 		m_minX = viewportArea.getMin().x;
 		m_minY = viewportArea.getMin().y;
@@ -79,7 +112,7 @@ namespace Rogue
 			tileset.m_texturename = "Resources\\Assets\\tile.png";
 			tileset.m_tileTexture = TextureManager::instance().loadTexture("Resources\\Assets\\tile.png");
 			tileset.m_tileTexture.m_data = 0;
-			tileset.m_tileId = 0;
+			//tileset.m_tileId = 0;
 			m_currentTileX = round(m_minX / m_tileSize) * m_tileSize ;
 			tileset.m_tilePos.x = m_currentTileX;
 			m_currentTileY = round(m_maxY / m_tileSize) * m_tileSize ;
@@ -139,9 +172,9 @@ namespace Rogue
 				ImVec2 imageSize;
 				imageSize.x = 20.0f;
 				imageSize.y = 20.0f;
-				int temp = ImGuiTileSet::instance().m_tilesWidth;
-				int width = ImGuiTileSet::instance().m_tilesWidth;
-				for (auto& i : ImGuiTileSet::instance().m_TileSet)
+				int temp = m_tilesWidth;
+				int width = m_tilesWidth;
+				for (auto& i : m_TileSet)
 				{	
 					if (width > 0)
 					{
@@ -376,9 +409,11 @@ namespace Rogue
 				//		m_globalcheck = false;
 				//		m_hasTextureChanged = false;
 				//	}
-					if(m_pTileMap)
-						SaveTileMap(m_pTileMap);
-
+					if (auto tilemapOpt = g_engine.m_coordinator.TryGetComponent<TileMapComponent>(m_tileMapEnt))
+					{
+						// Can only support 1 tilemap for now
+						SaveTileMap(tilemapOpt->get().GetTileMap());
+					}
 					std::string file = SceneManager::instance().getCurrentFileName().c_str();
 					SceneManager::instance().SaveTileset(file.c_str());
 				}
@@ -424,11 +459,15 @@ namespace Rogue
 
 	void ImGuiTileSet::ClearTileset()
 	{
-		for (auto& tile : m_GlobalTileSet)
-		{
-			g_engine.m_coordinator.AddToDeleteQueue(tile.m_tileId);
-		}
-
+		//for (auto& tile : m_GlobalTileSet)
+		//{
+		//	g_engine.m_coordinator.AddToDeleteQueue(tile.m_tileId);
+		//}
+		auto tilemapOpt = g_engine.m_coordinator.TryGetComponent<TileMapComponent>(m_tileMapEnt);
+		
+		if(tilemapOpt)
+			tilemapOpt->get().GetTileMap().clear();
+			
 		m_TileSet.clear();
 		m_GlobalTileSet.clear();
 	}
@@ -436,11 +475,12 @@ namespace Rogue
 
 	std::string Tile::Serialize()
 	{
-		std::ostringstream oss;
-		oss << m_tilePos.x << "," << m_tilePos.y << ";";
-		oss << m_texCoordMinX << "," << m_texCoordMaxX << "," << m_texCoordMinY << "," << m_texCoordMaxY << ";";
-
-		return oss.str();
+		return std::string();
+		//std::ostringstream oss;
+		//oss << m_tilePos.x << "," << m_tilePos.y << ";";
+		//oss << m_texCoordMinX << "," << m_texCoordMaxX << "," << m_texCoordMinY << "," << m_texCoordMaxY << ";";
+		//
+		//return oss.str();
 	}
 
 	void Tile::Deserialize(std::string_view deserializeStr)
@@ -486,44 +526,49 @@ namespace Rogue
 		//Collison
 		if (std::getline(iss, str, ';'))
 		{
-			m_collision = std::stoi(str);
+			//m_collision = 
+			std::stoi(str);
 		}
 
 		//BorderColor
 		if (std::getline(iss, str, ','))
 		{
-			m_bordercolor.w = std::stof(str);
+			//m_bordercolor.w = 
+			std::stof(str);
 		}
 		if (std::getline(iss, str, ','))
 		{
-			m_bordercolor.x = std::stof(str);
+			//m_bordercolor.x = 
+			std::stof(str);
 		}
 		if (std::getline(iss, str, ','))
 		{
-			m_bordercolor.y = std::stof(str);
+			//m_bordercolor.y = 
+			std::stof(str);
 		}
 		if (std::getline(iss, str, ';'))
 		{
-			m_bordercolor.z = std::stof(str);
+			//m_bordercolor.z = 
+			std::stof(str);
 		}
 
 		//Creating a sprite
-		if (m_texturename != "Resources\\Assets\\tile.png" && m_texturename != "")
-		{
-			//std::cout << "Create: " << m_texturename << std::endl;
-			Entity ent = ImGuiTileSet::instance().Create2DSprite(m_tilePos, Vec2(61, 61), m_texturename);
-			m_tileId = ent;
-			if (auto spriteOpt = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(ent))
-			{
-				SpriteComponent& sprite = spriteOpt->get();
-				sprite.setTexCoordMinX(m_texCoordMinX);
-				sprite.setTexCoordMinY(m_texCoordMinY);
-				sprite.setTexCoordMaxX(m_texCoordMaxX);
-				sprite.setTexCoordMaxY(m_texCoordMaxY);
-			}
-
-			g_engine.m_coordinator.AddComponent(ent, TileMapComponent());
-		}
+		//if (m_texturename != "Resources\\Assets\\tile.png" && m_texturename != "")
+		//{
+		//	//std::cout << "Create: " << m_texturename << std::endl;
+		//	//Entity ent = ImGuiTileSet::instance().Create2DSprite(m_tilePos, Vec2(61, 61), m_texturename);
+		//	//m_tileId = ent;
+		//	if (auto spriteOpt = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(ent))
+		//	{
+		//		SpriteComponent& sprite = spriteOpt->get();
+		//		sprite.setTexCoordMinX(m_texCoordMinX);
+		//		sprite.setTexCoordMinY(m_texCoordMinY);
+		//		sprite.setTexCoordMaxX(m_texCoordMaxX);
+		//		sprite.setTexCoordMaxY(m_texCoordMaxY);
+		//	}
+		//
+		//	g_engine.m_coordinator.AddComponent(ent, TileMapComponent());
+		//}
 
 		//Entity tileEntity = g_engine.m_coordinator.CreateEntity();
 
@@ -545,7 +590,7 @@ namespace Rogue
 		return m_GlobalTileSet;
 	}
 
-	void ImGuiTileSet::SaveTileMap(TileMap* globalMap)
+	void ImGuiTileSet::SaveTileMap(TileMap& globalMap)
 	{
 		for (Tile& tile : m_TileSet)
 		{
@@ -553,7 +598,7 @@ namespace Rogue
 			if (tile.m_texturename == "Resources\\Assets\\tile.png")
 				continue;
 
-			for (TrueTile& globalTile : *globalMap)
+			for (TrueTile& globalTile : globalMap)
 			{
 				//find global tile
 				if (tile.m_tilePos.x == globalTile.m_tilePos.x && tile.m_tilePos.y == globalTile.m_tilePos.y)
@@ -580,7 +625,7 @@ namespace Rogue
 			newTile.m_min.y = tile.m_texCoordMinY;
 			newTile.m_max.y = tile.m_texCoordMaxY;
 
-			globalMap->emplace_back(newTile);
+			globalMap.emplace_back(newTile);
 			
 		}
 	}

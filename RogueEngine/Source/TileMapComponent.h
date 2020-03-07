@@ -1,5 +1,6 @@
 #pragma once
 #include "BaseComponent.h"
+#include "REMath.h"
 
 namespace Rogue
 {
@@ -11,6 +12,16 @@ namespace Rogue
 		// UV coordinates
 		Vec2 m_min;
 		Vec2 m_max;
+
+
+		std::string Serialize()
+		{
+			std::ostringstream oss;
+			oss << m_tilePos.x << "," << m_tilePos.y << ";";
+			oss << m_min.x << "," << m_max.x << "," << m_min.y << "," << m_max.y << ";";
+		
+			return oss.str();
+		}
 	};
 
 	class TileMapComponent : BaseComponent
@@ -23,6 +34,5 @@ namespace Rogue
 		void Deserialize(std::string_view deserializeStr) {}
 
 		std::vector<TrueTile>& GetTileMap() { return m_tilemap; }
-		TrueTile&
 	};
 }
