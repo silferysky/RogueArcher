@@ -245,15 +245,16 @@ namespace Rogue
 				tempFilter.a *= m_currentFadeFactor;
 				glUniform4fv(m_filterLocation, 1, glm::value_ptr(tempFilter));
 
-				if (m_isFadingOut)
+				//Split to make sure it still prints one more frame when currentFadeFactor is < 0
+				if (m_isFadingOut && m_currentFadeFactor < 0.0f)
+				{
+					m_isFadingOut = false;
+					g_engine.m_coordinator.SetTransition(true);
+					g_engine.m_coordinator.ResumeMenuButtons();
+				}
+				else if (m_isFadingOut)
 				{
 					m_currentFadeFactor -= m_fadeFactor; //* g_fixedDeltaTime;
-					if (m_currentFadeFactor < 0.0f)
-					{
-						m_isFadingOut = false;
-						g_engine.m_coordinator.SetTransition(true);
-						g_engine.m_coordinator.ResumeMenuButtons();
-					}
 				}
 				else
 				{
