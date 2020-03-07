@@ -433,6 +433,13 @@ namespace Rogue
 						// Can only support 1 tilemap for now
 						SaveTileMap(tilemapOpt->get().GetTileMap());
 					}
+					else
+					{
+						m_tileMapEnt = Create2DSprite(Vec2(0.0f, 0.0f), Vec2(61, 61), m_currentPath);
+						auto& tilemap = g_engine.m_coordinator.CreateComponent<TileMapComponent>(m_tileMapEnt);
+
+						SaveTileMap(tilemap.GetTileMap());
+					}
 					std::string file = SceneManager::instance().getCurrentFileName().c_str();
 					SceneManager::instance().SaveTileset(file.c_str());
 				}
