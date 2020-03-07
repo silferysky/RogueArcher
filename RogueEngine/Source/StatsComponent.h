@@ -55,6 +55,11 @@ namespace Rogue
 		void SetTransitionLevel(const char* nextLevelStr);
 		std::string& GetTransitionLevel();
 
+		void SetzoomValue(float zoom);
+		float GetzoomValue() const;
+		void SetZoomDuration(float dur);
+		float GetZoomDuration() const;
+
 		//From BaseComponent
 		std::string Serialize() override;
 		void Deserialize(std::string_view toDeserialize) override;
@@ -74,5 +79,11 @@ namespace Rogue
 
 		std::vector<Vec2> m_waypoints;	//Waypoints if need to patrol
 		std::string m_nextLevel;
+
+		//For camera zoom
+		float m_zoomValue;
+		float m_zoomDuration;
+		float m_zoomDelay;
+		unsigned m_zoomCount;
 	};
 }

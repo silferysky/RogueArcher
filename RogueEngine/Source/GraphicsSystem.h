@@ -68,6 +68,13 @@ namespace Rogue
 		std::multimap<int, Entity> m_drawQueue;
 
 		bool InitializeOpenGL();
+		
+		//For Fade In/Out
+		float m_fadeFactor = 0.001f;		//Value to fade out by
+		float m_currentFadeFactor = 1.0f;	//Current value of fadedness
+		bool m_isFading = false;			//Whether the Fade in/Fade out will be called
+		bool m_isFadingOut = true;			//Whether it is fading in or out
+
 	public:
 		GraphicsSystem();
 		~GraphicsSystem() = default;

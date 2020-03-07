@@ -66,6 +66,9 @@ namespace Rogue
 		EvEntityHitchhike,
 		EvEntityHover,
 
+		EvFreezeControls,
+		EvUnfreezeControls,
+
 		EvResetGame,
 
 		EvOnCollisionEnter,
@@ -80,6 +83,7 @@ namespace Rogue
 		EvEntityChangeSprite,
 		EvEntityChangeRGBA,
 		EvEntityResetToCamera,
+		EvZoom, 
 
 		EvParentSet,
 		EvParentReset,

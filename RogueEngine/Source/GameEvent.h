@@ -320,4 +320,22 @@ namespace Rogue
 		EntResetToCameraEvent(Entity _id)
 			: EntityEvent(_id) {}
 	};
+
+	class FreezeControlEvent : public EntityEvent
+	{
+	public:
+		SET_EVENT_TYPE(EvFreezeControls);
+
+		FreezeControlEvent(Entity _id)
+			: EntityEvent(_id) {}
+	};
+
+	class UnfreezeControlEvent : public EntityEvent
+	{
+	public:
+		SET_EVENT_TYPE(EvUnfreezeControls);
+
+		UnfreezeControlEvent(Entity _id)
+			: EntityEvent(_id) {}
+	};
 }

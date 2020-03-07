@@ -48,6 +48,7 @@ namespace Rogue
 		UI_ProgressBar,
 		Gameplay_Ending,
 		Obj_Fade,
+		Trigger_Zoom,
 		AI_Last
 	};
 

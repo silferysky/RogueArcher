@@ -22,6 +22,7 @@ Technology is prohibited.
 #include "REMath.h"
 #include "EventDispatcher.h"
 #include "KeyEvent.h"
+#include "GraphicsEvent.h"
 #include "FontSystem.h"
 #include "LightingSystem.h"
 #include "EditorTileSet.h"
@@ -237,8 +238,37 @@ namespace Rogue
 
 		glUniformMatrix4fv(m_transformLocation, 1, GL_FALSE, glm::value_ptr(transformMat));
 		
-		// rgb filtering
-		glUniform4fv(m_filterLocation, 1, glm::value_ptr(sprite.getFilter()));
+		if (g_engine.m_coordinator.IsTransitFinish())
+		{
+			if (m_isFading)
+			{
+				std::cout << "Current Fade Factor" << m_currentFadeFactor << std::endl;
+				auto tempFilter = sprite.getFilter();
+				tempFilter.a *= m_currentFadeFactor;
+				glUniform4fv(m_filterLocation, 1, glm::value_ptr(tempFilter));
+
+				//Split to make sure it still prints one more frame when currentFadeFactor is < 0
+				if (m_isFadingOut && m_currentFadeFactor < 0.0f)
+				{
+					m_isFadingOut = false;
+					g_engine.m_coordinator.SetTransition(true);
+					g_engine.m_coordinator.ResumeMenuButtons();
+				}
+				else if (m_isFadingOut)
+				{
+					m_currentFadeFactor -= m_fadeFactor; //* g_fixedDeltaTime;
+				}
+				else
+				{
+					m_currentFadeFactor += m_fadeFactor;// *g_fixedDeltaTime;
+					if (m_currentFadeFactor > 1.0f)
+						m_isFading = false;
+				}
+			}
+			else
+				// rgb filtering
+				glUniform4fv(m_filterLocation, 1, glm::value_ptr(sprite.getFilter()));
+		}
 
 		// Draw the Mesh
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
@@ -326,6 +356,25 @@ namespace Rogue
 			m_playerX = EvEntMove.GetVecMovement().x;
 
 			return;
+		}
+		case EventType::EvFade:
+		{
+			FadeEvent& fadeEvent = dynamic_cast<FadeEvent&>(ev);
+
+			if (fadeEvent.GetEntityToFade() == MAX_ENTITIES)
+			{
+				m_isFading = true;
+				m_isFadingOut = true;
+				m_currentFadeFactor = 1.0f;
+				if (fadeEvent.GetFadeFactor() != 0.0f)
+					m_fadeFactor = fadeEvent.GetFadeFactor();
+				else
+					m_fadeFactor = 1.0f; //Default is instant
+			}
+			else
+			{
+				//Individual fade event not implemented
+			}
 		}
 		default:
 		{

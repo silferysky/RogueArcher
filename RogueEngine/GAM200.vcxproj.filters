@@ -170,6 +170,9 @@
     <Filter Include="RogueEditor\EditorFiles\Main Windows">
       <UniqueIdentifier>{22e6d313-a754-446d-bcf2-e584e0be6dd5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="RogueEngine\Systems\AI\Script Types\Trigger">
+      <UniqueIdentifier>{842bfbfe-8895-4878-a60f-3182b3139b47}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Resource.h">
@@ -562,9 +565,6 @@
     <ClInclude Include="Source\ScriptComponent.h">
       <Filter>RogueEngine\Systems\AI\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Source\TransitionObject.h">
-      <Filter>RogueEngine\Systems\AI\Script Types</Filter>
-    </ClInclude>
     <ClInclude Include="Source\FadeObject.h">
       <Filter>RogueEngine\Systems\AI\Script Types</Filter>
     </ClInclude>
@@ -694,8 +694,12 @@
     <ClInclude Include="Source\EditorViewport.h">
       <Filter>RogueEditor\EditorFiles\Main Windows</Filter>
     </ClInclude>
-    <ClInclude Include="Source\TileComponent.h">
-      <Filter>RogueEditor\EditorFiles\</Filter>
+    <ClInclude Include="Source\TileComponent.h" />
+    <ClInclude Include="Source\TransitionObject.h">
+      <Filter>RogueEngine\Systems\AI\Script Types\Trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TriggerZoom.h">
+      <Filter>RogueEngine\Systems\AI\Script Types\Trigger</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -981,9 +985,6 @@
     <ClCompile Include="Source\ScriptComponent.cpp">
       <Filter>RogueEngine\Systems\AI\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Source\TransitionObject.cpp">
-      <Filter>RogueEngine\Systems\AI\Script Types</Filter>
-    </ClCompile>
     <ClCompile Include="Source\FadeObject.cpp">
       <Filter>RogueEngine\Systems\AI\Script Types</Filter>
     </ClCompile>
@@ -1109,6 +1110,12 @@
     </ClCompile>
     <ClCompile Include="Source\EditorViewport.cpp">
       <Filter>RogueEditor\EditorFiles\Main Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TransitionObject.cpp">
+      <Filter>RogueEngine\Systems\AI\Script Types\Trigger</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TriggerZoom.cpp">
+      <Filter>RogueEngine\Systems\AI\Script Types\Trigger</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
