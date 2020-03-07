@@ -71,11 +71,15 @@ namespace Rogue
 		int GetPickedEntity() const { return m_pickedEntity; }
 		void SetPickedEntity(int entity) { m_pickedEntity = entity; }
 
+		void setTileSetOpen(bool open)
+		{
+			m_isTileSetOpen = open;
+		}
 	private:
 		std::vector<std::shared_ptr<IEditable>> m_WindowsVector;
 		std::unordered_map<std::string, std::shared_ptr<IEditable>> m_WindowsMap;
 		float RETime = 0.0f;
-
+		bool m_isTileSetOpen;
 		int m_pickedEntity;
 
 	};

@@ -23,7 +23,7 @@ namespace Rogue
 {
 	static ImGuiDockNodeFlags opt_flags = ImGuiDockNodeFlags_None;
 	EditorManager::EditorManager() :
-		m_pickedEntity{ -1 }
+		m_pickedEntity{ -1 },m_isTileSetOpen(0)
 	{}
 
 	void EditorManager::Init()
@@ -85,6 +85,11 @@ namespace Rogue
 		for (auto& i : m_WindowsVector)
 		{
 			i->Update();
+		}
+
+		if (m_isTileSetOpen)
+		{
+			ImGuiTileSet::instance().Update();
 		}
 
 		ImGui::End();

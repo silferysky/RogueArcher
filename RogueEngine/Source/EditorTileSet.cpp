@@ -3,6 +3,7 @@
 #include "REEngine.h"
 #include "PickingManager.h"
 #include "Logger.h"
+#include "EditorManager.h"
 
 #define OLD_SERIALIZATION 0
 
@@ -173,6 +174,7 @@ namespace Rogue
 		{
 			EditorManager::instance().RemoveEditorWindow<ImGuiTileSet>("TileSet");
 			ImGuiInspector::instance().ReduceTileInstanceCount();
+			EditorManager::instance().setTileSetOpen(false);
 		}
 		else
 		{
@@ -468,7 +470,6 @@ namespace Rogue
 	void ImGuiTileSet::Shutdown()
 	{
 		m_TileSet.clear();
-
 	}
 
 	Entity ImGuiTileSet::Create2DSprite(Vec2 position, Vec2 scale, std::string_view tilepath)
