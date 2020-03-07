@@ -435,9 +435,14 @@ namespace Rogue
 			m_systemManager->SetTransitionLevel(levelName, transitTime);
 		}
 
+		void SetTransition(bool transition = true)
+		{
+			m_systemManager->SetTransition(transition);
+		}
+
 		bool IsTransitFinish() const
 		{
-			m_systemManager->TransitFinish();
+			return m_systemManager->TransitFinish();
 		}
 
 		Entity PickEntity() const

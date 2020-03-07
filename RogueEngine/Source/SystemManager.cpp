@@ -136,9 +136,13 @@ namespace Rogue
 
 	void SystemManager::SetTransitionLevel(std::string_view levelName, float transitionTime)
 	{
-		m_transitionLevel = true;
 		m_transitionString = levelName.data();
 		m_transitionTime = transitionTime;
+	}
+
+	void SystemManager::SetTransition(bool transition)
+	{
+		m_transitionLevel = transition;
 	}
 
 	bool SystemManager::TransitFinish() const

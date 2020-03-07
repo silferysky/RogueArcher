@@ -64,13 +64,15 @@ namespace Rogue
 		SET_EVENT_CATEGORY(EventCatGraphics);
 		SET_EVENT_TYPE(EvFade);
 
-		FadeEvent(Entity ent) : 
-			m_entity{ ent } {}
+		FadeEvent(Entity ent, float factor) : 
+			m_entity{ ent }, m_factor{ factor } {}
 
 		inline Entity GetEntityToFade() const { return m_entity; }
+		inline float GetFadeFactor() const { return m_factor; }
 
 	private:
 		Entity m_entity;
+		float m_factor;
 	};
 
 	class ZoomEvent : public Event

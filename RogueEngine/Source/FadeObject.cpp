@@ -24,7 +24,7 @@ namespace Rogue
 		m_timer += g_deltaTime * g_engine.GetTimeScale();
 		if (m_timer > m_maxTimer)
 		{
-			FadeEvent ev (m_entity);
+			FadeEvent ev (m_entity, m_maxTimer);
 			ev.SetSystemReceivers(static_cast<int>(SystemID::id_FADESYSTEM));
 			EventDispatcher::instance().AddEvent(ev);
 

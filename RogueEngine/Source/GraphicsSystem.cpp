@@ -238,20 +238,26 @@ namespace Rogue
 		
 		if (m_isFading)
 		{
+			std::cout << "Current Fade Factor" << m_currentFadeFactor << std::endl;
+			auto tempFilter = sprite.getFilter();
+			tempFilter.a *= m_currentFadeFactor;
+			glUniform4fv(m_filterLocation, 1, glm::value_ptr(tempFilter));
+
 			if (m_isFadingOut)
 			{
 				m_currentFadeFactor -= m_fadeFactor;
 				if (m_currentFadeFactor < 0.0f)
+				{
 					m_isFadingOut = false;
+					g_engine.m_coordinator.SetTransition(true);
+				}
 			}
 			else
 			{
 				m_currentFadeFactor += m_fadeFactor;
 				if (m_currentFadeFactor > 1.0f)
-					m_isFadingOut = true;
+					m_isFading = false;
 			}
-
-			glUniform4fv(m_filterLocation, 1, glm::value_ptr(sprite.getFilter() * m_currentFadeFactor));
 		}
 		else
 		// rgb filtering
@@ -319,6 +325,11 @@ namespace Rogue
 			{
 				m_isFading = true;
 				m_isFadingOut = true;
+				m_currentFadeFactor = 1.0f;
+				if (fadeEvent.GetFadeFactor() != 0.0f)
+					m_fadeFactor = fadeEvent.GetFadeFactor();
+				else
+					m_fadeFactor = 1.0f; //Default is instant
 			}
 			else
 			{

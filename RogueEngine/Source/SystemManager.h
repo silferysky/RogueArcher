@@ -233,8 +233,8 @@ namespace Rogue
 			return m_stepFrames;
 		}
 
-		void SetTransitionLevel(std::string_view levelName, float transitTime);
-
+		void SetTransitionLevel(std::string_view levelName, float transitTime);	//Setting Transition Level, but not transitioning yet
+		void SetTransition(bool transition = true);								//Actually telling system to transition
 		bool TransitFinish() const;
 
 	private:

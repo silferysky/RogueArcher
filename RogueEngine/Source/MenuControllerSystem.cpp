@@ -159,10 +159,16 @@ namespace Rogue
 				{
 					ResumeGame();
 					ClearMenuObjs();
-					SceneManager& sceneManager = SceneManager::instance();
-					sceneManager.LoadLevel("Level 12.json");
+					//SceneManager& sceneManager = SceneManager::instance();
+					//sceneManager.LoadLevel("Level 12.json");
+					g_engine.m_coordinator.SetTransitionLevel("Level 12.json", 0.0f);
+					//g_engine.m_coordinator.SetTransition(true);
 					g_engine.m_coordinator.SetGameState(true);
 					PLAYER_STATUS.SetIndicatorStatus(true);
+
+					FadeEvent ev = FadeEvent(MAX_ENTITIES, 0.001f);
+					ev.SetSystemReceivers(static_cast<int>(SystemID::id_GRAPHICSSYSTEM));
+					EventDispatcher::instance().AddEvent(ev);
 				}
 				//Exit from Main Menu. Cannot exit from game
 				else if (hierarchyObj.m_objectName == "QuitBtn")
@@ -179,8 +185,12 @@ namespace Rogue
 				else if (hierarchyObj.m_objectName == "MainMenu_Btn")
 				{
 					ResumeGame();
-					SceneManager& sceneManager = SceneManager::instance();
-					sceneManager.LoadLevel("Level 1.json");
+					g_engine.m_coordinator.SetTransitionLevel("Level 1.json", 0.0f);
+					FadeEvent ev = FadeEvent(MAX_ENTITIES, 0.001f);
+					ev.SetSystemReceivers(static_cast<int>(SystemID::id_GRAPHICSSYSTEM));
+					EventDispatcher::instance().AddEvent(ev);
+					//SceneManager& sceneManager = SceneManager::instance();
+					//sceneManager.LoadLevel("Level 1.json");
 					PLAYER_STATUS.SetIndicatorStatus(false);
 				}
 				else if (hierarchyObj.m_objectName == "ControlHelp")
