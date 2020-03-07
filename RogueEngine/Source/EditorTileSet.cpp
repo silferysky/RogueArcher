@@ -70,11 +70,11 @@ namespace Rogue
 		if(m_GlobalTileSet.size())
 			m_currentPath = m_GlobalTileSet.front().m_texturename;
 
-		m_tileMapEnt = ImGuiTileSet::instance().Create2DSprite(Vec2(0.0f, 0.0f), Vec2(61, 61), m_currentPath);
+		m_tileMapEnt = Create2DSprite(Vec2(0.0f, 0.0f), Vec2(61, 61), m_currentPath);
 		TileMapComponent& tilemapComp = g_engine.m_coordinator.CreateComponent<TileMapComponent>(m_tileMapEnt);
 		TileMap& tilemap = tilemapComp.GetTileMap();
 
-		for (Tile tile : m_GlobalTileSet)
+		for (Tile& tile : m_GlobalTileSet)
 		{
 			TrueTile trueTile;
 			trueTile.m_tilePos = tile.m_tilePos;
@@ -86,9 +86,10 @@ namespace Rogue
 	}
 
 	ImGuiTileSet::ImGuiTileSet() :m_TileSet(), m_GlobalTileSet(),
-		m_minY(0),m_minX(0),m_maxX(0),m_maxY(0),m_tileSize(61),m_tilesHeight(0),
-		m_tilesWidth(0),m_currentTileX(0),m_currentTileY(0),m_openWindow(true), m_isCollision(false),
-		m_check(true), m_firstclicked(false), m_globalcheck(false), m_deleteTile(false),m_hasTextureChanged(false),m_groundtag(false)
+		m_minY(0), m_minX(0), m_maxX(0), m_maxY(0), m_tileSize(61), m_tilesHeight(0),
+		m_tilesWidth(0), m_currentTileX(0), m_currentTileY(0), m_openWindow(true), m_isCollision(false),
+		m_check(true), m_firstclicked(false), m_globalcheck(false), m_deleteTile(false), m_hasTextureChanged(false), m_groundtag(false),
+		m_tileMapEnt(-1)
 	{
 	}
 
@@ -463,11 +464,8 @@ namespace Rogue
 		//{
 		//	g_engine.m_coordinator.AddToDeleteQueue(tile.m_tileId);
 		//}
-		auto tilemapOpt = g_engine.m_coordinator.TryGetComponent<TileMapComponent>(m_tileMapEnt);
 		
-		if(tilemapOpt)
-			tilemapOpt->get().GetTileMap().clear();
-			
+		g_engine.m_coordinator.DestroyEntity(m_tileMapEnt);
 		m_TileSet.clear();
 		m_GlobalTileSet.clear();
 	}

@@ -285,6 +285,10 @@ namespace Rogue
 	{
 		rapidjson::Document level = RESerialiser::DeserialiseFromFile(fileName);
 		std::string tilesetSerialized = level["Tileset"].GetString();
+
+		if (tilesetSerialized == "")
+			return;
+
 		ImGuiTileSet::instance().Deserialize(tilesetSerialized);
 	}
 

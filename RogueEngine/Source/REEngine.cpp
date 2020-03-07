@@ -157,7 +157,7 @@ namespace Rogue
 		//Ensures program closes properly 
 		SetConsoleCtrlHandler(CtrlHandler, true);
 
-		setVSync(true);
+		setVSync(false);
 
 		// Register all components
 		RegisterComponents();

@@ -26,6 +26,7 @@ Technology is prohibited.
 #include "PlayerStatusManager.h"
 #include "GameEvent.h"
 #include "PlayerStatusManager.h"
+#include "EditorTileSet.h"
 
 namespace Rogue
 {
@@ -65,6 +66,7 @@ namespace Rogue
 		g_engine.m_coordinator.GetSystem<AudioSystem>()->ShutdownSounds();
 		AudioManager::instance().ClearAudioMap();
 		g_engine.m_coordinator.DestroyAllEntity();
+		ImGuiTileSet::instance().ClearTileset();
 		ClearActiveEntities();
 	}
 

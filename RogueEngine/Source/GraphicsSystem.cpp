@@ -154,8 +154,10 @@ namespace Rogue
 		{
 			auto& entity = pair.second;
 
-			//if (!g_engine.m_coordinator.ComponentExists<TileMapComponent>(entity))
+			if (!g_engine.m_coordinator.ComponentExists<TileMapComponent>(entity))
 				draw(entity);
+			else
+				drawTilemap(entity);
 		}
 
 		glBindBuffer(GL_UNIFORM_BUFFER, 0);
@@ -170,16 +172,16 @@ namespace Rogue
 		glBindBuffer(GL_UNIFORM_BUFFER, m_uboMatrices);
 		glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::mat4), glm::value_ptr(g_engine.GetProjMat()));
 
-		// For all entities
-		for (auto pair : m_drawQueue)
-		{
-			auto& entity = pair.second;
-
-			if (!g_engine.m_coordinator.ComponentExists<TileMapComponent>(entity))
-				draw(entity);
-			else
-				drawTilemap(entity);
-		}
+		//// For all entities
+		//for (auto pair : m_drawQueue)
+		//{
+		//	auto& entity = pair.second;
+		//
+		//	if (!g_engine.m_coordinator.ComponentExists<TileMapComponent>(entity))
+		//		draw(entity);
+		//	else
+		//		drawTilemap(entity);
+		//}
 
 		//glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 2048);
 
@@ -316,6 +318,8 @@ namespace Rogue
 
 		auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
 		auto& tileMap = g_engine.m_coordinator.GetComponent<TileMapComponent>(entity).GetTileMap();
+
+		std::cout << "Tiles: " << tileMap.size() << std::endl;
 
 		for (auto tile : tileMap) // each tile in the tilemap
 		{
