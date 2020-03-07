@@ -4,24 +4,24 @@
 #include "PickingManager.h"
 #include "Logger.h"
 
+#define OLD_SERIALIZATION 0
+
 namespace Rogue
 {
 	std::string ImGuiTileSet::Serialize()
 	{
 		auto tilemapCompOpt = g_engine.m_coordinator.TryGetComponent<TileMapComponent>(m_tileMapEnt);
 		auto spriteOpt = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(m_tileMapEnt);
-		auto transOpt = g_engine.m_coordinator.TryGetComponent<TransformComponent>(m_tileMapEnt);
 		
-		if (!tilemapCompOpt || !spriteOpt || !transOpt)
+		if (!tilemapCompOpt || !spriteOpt)
 			return std::string();
 
 		TileMapComponent& tilemapComp = tilemapCompOpt->get();
 		SpriteComponent& sprite = spriteOpt->get();
-		TransformComponent& transform = transOpt->get();
 
 		std::ostringstream oss;
 
-		oss << sprite.getTexturePath() << "| Tiles: ";
+		oss << sprite.getTexturePath() << "|";
 
 		for (TrueTile& trueTile : tilemapComp.GetTileMap())
 		{
@@ -42,8 +42,6 @@ namespace Rogue
 		//	RE_INFO(texture.str());
 		//}
 
-
-
 		std::stringstream ss;
 		ss << "Size of vector: " << tilemapComp.GetTileMap().size();
 		RE_INFO(ss.str());
@@ -56,6 +54,7 @@ namespace Rogue
 		std::istringstream iss(deserializeStr.data());
 		std::string str;
 
+#if OLD_SERIALIZATION
 		m_GlobalTileSet.clear();
 
 		while (std::getline(iss, str, '|'))
@@ -63,11 +62,11 @@ namespace Rogue
 			Tile tile;
 			tile.Deserialize(str);
 
-			if(tile.m_texturename != "" && tile.m_texturename != "Resources\\Assets\\tile.png")
+			if (tile.m_texturename != "" && tile.m_texturename != "Resources\\Assets\\tile.png")
 				m_GlobalTileSet.push_back(tile);
 		}
 
-		if(m_GlobalTileSet.size())
+		if (m_GlobalTileSet.size())
 			m_currentPath = m_GlobalTileSet.front().m_texturename;
 
 		m_tileMapEnt = Create2DSprite(Vec2(0.0f, 0.0f), Vec2(61, 61), m_currentPath);
@@ -83,6 +82,26 @@ namespace Rogue
 
 			tilemap.emplace_back(trueTile);
 		}
+#else
+		// Deserialize the texture first
+		if (std::getline(iss, str, '|'))
+			m_currentPath = str;
+
+		m_currentTexture = TextureManager::instance().loadTexture(m_currentPath.c_str());
+
+		m_tileMapEnt = Create2DSprite(Vec2(0.0f, 0.0f), Vec2(61, 61), m_currentPath);
+		TileMapComponent& tilemapComp = g_engine.m_coordinator.CreateComponent<TileMapComponent>(m_tileMapEnt);
+		TileMap& tilemap = tilemapComp.GetTileMap();
+
+		// Deserialize each tile and push into tilemap
+		while (std::getline(iss, str, '|'))
+		{
+			TrueTile trueTile;
+			trueTile.Deserialize(str);
+
+			tilemap.emplace_back(trueTile);
+		}
+#endif
 	}
 
 	ImGuiTileSet::ImGuiTileSet() :m_TileSet(), m_GlobalTileSet(),

@@ -7,12 +7,12 @@
     "CameraMaxY": 0.0,
     "CameraZoom": 0.8600000143051148,
     "Tileset": "",
-    "StartPosX": 0,
-    "StartPosY": 0,
+    "StartPosX": 0.0,
+    "StartPosY": 0.0,
     "Signature0": 2053,
     "Signature1": 2053,
-    "Entity0": "Name{HowtoPlay}|Tag{}|Sprite{Resources\\Assets\\HowToPlay.png;1;1;1;1;}||Transform{0;0;1600;900;0;0}|||||||||UI{1;}|||||||||||",
-    "Entity1": "Name{BackToMenu_Btn}|Tag{}|Sprite{Resources\\Assets\\Back_Btn.png;1;1;1;1;}||Transform{719.376;-406.694;200;120;0;0}|||||||||UI{1;}|||||||||||",
+    "Entity0": "Name{HowtoPlay}|Tag{}|Sprite{Resources\\Assets\\HowToPlay.png;1;1;1;1;}||Transform{0;0;1600;900;0;0}|||||||||UI{1;}|||||||||||||",
+    "Entity1": "Name{BackToMenu_Btn}|Tag{}|Sprite{Resources\\Assets\\Back_Btn.png;1;1;1;1;}||Transform{719.376;-406.694;200;120;0;0}|||||||||UI{1;}|||||||||||||",
     "EntityParent0": 65535,
     "EntityParent1": 65535
 }

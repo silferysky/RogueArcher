@@ -13,14 +13,37 @@ namespace Rogue
 		Vec2 m_min;
 		Vec2 m_max;
 
-
 		std::string Serialize()
 		{
 			std::ostringstream oss;
 			oss << m_tilePos.x << "," << m_tilePos.y << ";";
-			oss << m_min.x << "," << m_max.x << "," << m_min.y << "," << m_max.y << ";";
+			oss << m_min.x << "," << m_max.x << ";" << m_min.y << "," << m_max.y << ";";
 		
 			return oss.str();
+		}
+
+		void Deserialize(std::string deserializedString)
+		{
+			std::istringstream iss(deserializedString.data());
+			std::string str;
+
+			if (std::getline(iss, str, ','))
+				m_tilePos.x = std::stof(str);
+
+			if (std::getline(iss, str, ';'))
+				m_tilePos.y = std::stof(str);
+
+			if (std::getline(iss, str, ','))
+				m_min.x = std::stof(str);
+
+			if (std::getline(iss, str, ';'))
+				m_max.x = std::stof(str);
+
+			if (std::getline(iss, str, ','))
+				m_min.y = std::stof(str);
+
+			if (std::getline(iss, str, ';'))
+				m_max.y = std::stof(str);
 		}
 	};
 
