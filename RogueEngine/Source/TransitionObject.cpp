@@ -18,6 +18,7 @@ Technology is prohibited.
 #include "Precompiled.h"
 #include "TransitionObject.h"
 #include "Main.h"
+#include "GraphicsEvent.h"
 
 namespace Rogue
 {
@@ -31,8 +32,9 @@ namespace Rogue
 			PLAYER_STATUS.SetIndicatorStatus(false);
 			g_engine.m_coordinator.SetTransitionLevel(m_levelToLoad.c_str(), 1.0f);
 
-			//SceneManager& sceneManager = SceneManager::instance();
-			//sceneManager.LoadLevel(m_levelToLoad.c_str());
+			FadeEvent ev = FadeEvent(MAX_ENTITIES);
+			ev.SetSystemReceivers(static_cast<int>(SystemID::id_GRAPHICSSYSTEM));
+			EventDispatcher::instance().AddEvent(ev);
 		}
 	}
 	std::string& TransitionObject::GetTransitionLevelName()

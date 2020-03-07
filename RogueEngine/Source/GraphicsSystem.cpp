@@ -22,6 +22,7 @@ Technology is prohibited.
 #include "REMath.h"
 #include "EventDispatcher.h"
 #include "KeyEvent.h"
+#include "GraphicsEvent.h"
 #include "FontSystem.h"
 #include "LightingSystem.h"
 #include "EditorTileSet.h"
@@ -235,8 +236,26 @@ namespace Rogue
 
 		glUniformMatrix4fv(m_transformLocation, 1, GL_FALSE, glm::value_ptr(transformMat));
 		
+		if (m_isFading)
+		{
+			if (m_isFadingOut)
+			{
+				m_currentFadeFactor -= m_fadeFactor;
+				if (m_currentFadeFactor < 0.0f)
+					m_isFadingOut = false;
+			}
+			else
+			{
+				m_currentFadeFactor += m_fadeFactor;
+				if (m_currentFadeFactor > 1.0f)
+					m_isFadingOut = true;
+			}
+
+			glUniform4fv(m_filterLocation, 1, glm::value_ptr(sprite.getFilter() * m_currentFadeFactor));
+		}
+		else
 		// rgb filtering
-		glUniform4fv(m_filterLocation, 1, glm::value_ptr(sprite.getFilter()));
+			glUniform4fv(m_filterLocation, 1, glm::value_ptr(sprite.getFilter()));
 
 		// Draw the Mesh
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
@@ -291,6 +310,20 @@ namespace Rogue
 			m_playerX = EvEntMove.GetVecMovement().x;
 
 			return;
+		}
+		case EventType::EvFade:
+		{
+			FadeEvent& fadeEvent = dynamic_cast<FadeEvent&>(ev);
+
+			if (fadeEvent.GetEntityToFade() == MAX_ENTITIES)
+			{
+				m_isFading = true;
+				m_isFadingOut = true;
+			}
+			else
+			{
+				//Individual fade event not implemented
+			}
 		}
 		default:
 		{
