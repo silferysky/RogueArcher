@@ -100,11 +100,19 @@ namespace Rogue
 		{
 			if (PLAYER_STATUS.GetIndicator() == MAX_ENTITIES && PLAYER_STATUS.GetPlayerEntity() != MAX_ENTITIES)
 			{
-				PLAYER_STATUS.SetIndicator(g_engine.m_coordinator.CloneArchetypes("Indicator", false));
+				PLAYER_STATUS.SetIndicator(g_engine.m_coordinator.CloneArchetypes("Indicator", true));
+				PLAYER_STATUS.SetHitchhikeIndicator(g_engine.m_coordinator.CloneArchetypes("IndicatorHitchhike", true));
 
-				ParentSetEvent parent(*m_entities.begin(), PLAYER_STATUS.GetIndicator());
-				parent.SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
-				EventDispatcher::instance().AddEvent(parent);
+				if (m_entities.size())
+				{
+					ParentSetEvent parent(*m_entities.begin(), PLAYER_STATUS.GetIndicator());
+					parent.SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+					EventDispatcher::instance().AddEvent(parent);
+
+					ParentSetEvent hitchhikeParent(*m_entities.begin(), PLAYER_STATUS.GetHitchhikeIndicator());
+					hitchhikeParent.SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+					EventDispatcher::instance().AddEvent(hitchhikeParent);
+				}
 
 				//Resetting some values
 				PLAYER_STATUS.SetInfiniteJumps(false);
@@ -158,7 +166,31 @@ namespace Rogue
 					//	transform.setScale(transform.GetScale() * -1);
 					//}
 				}
+
+				//For Hitchhiking Indicator
+				if (PLAYER_STATUS.GetHitchhikeIndicator() != MAX_ENTITIES &&
+					g_engine.m_coordinator.ComponentExists<ChildComponent>(PLAYER_STATUS.GetHitchhikeIndicator()) &&
+					g_engine.m_coordinator.ComponentExists<TransformComponent>(PLAYER_STATUS.GetHitchhikeIndicator()))
+				{
+					Entity toDrawAtEntity = GetEntityRaycasted();
+
+					if (toDrawAtEntity != MAX_ENTITIES)
+					{
+						if (auto entTrans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(toDrawAtEntity))
+						{
+							//std::cout << "Entity is " << toDrawAtEntity << std::endl;
+							//std::cout << "Entity Transform " << g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetHitchhikedEntity()).GetPosition().x << "," << g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetHitchhikedEntity()).GetPosition().y << std::endl;
+							g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetHitchhikedEntity()).setPosition(entTrans->get().GetPosition());
+							g_engine.m_coordinator.GetComponent<ChildComponent>(PLAYER_STATUS.GetHitchhikedEntity()).SetLocalDirty();
+							g_engine.m_coordinator.GetComponent<ChildComponent>(PLAYER_STATUS.GetHitchhikedEntity()).ResetGlobalDirty(); 
+							
+							//std::cout << "Entity Transform " << entTrans->get().GetPosition().x << "," << entTrans->get().GetPosition().y << std::endl;
+						}
+					}
+				}
 			}
+
+
 		}
 
 		if (m_teleports.size())
@@ -248,6 +280,12 @@ namespace Rogue
 			{
 				g_engine.m_coordinator.AddToDeleteQueue(PLAYER_STATUS.GetIndicator());
 				PLAYER_STATUS.SetIndicator(MAX_ENTITIES);
+			}
+			//Deleting IndicatorHitchhike entity
+			if (PLAYER_STATUS.GetHitchhikeIndicator() != MAX_ENTITIES)
+			{
+				g_engine.m_coordinator.AddToDeleteQueue(PLAYER_STATUS.GetHitchhikeIndicator());
+				PLAYER_STATUS.SetHitchhikeIndicator(MAX_ENTITIES);
 			}
 
 			PLAYER_STATUS.SetIndicatorStatus();
@@ -991,6 +1029,84 @@ namespace Rogue
 			}
 		}
 		return calculatedPos;
+	}
+
+	Entity PlayerControllerSystem::GetEntityRaycasted()
+	{
+		TransformComponent& playerTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin());
+		Vec2 initialPos = playerTransform.GetPosition();
+		Vec2 endPos = PickingManager::instance().GetWorldCursor();
+		Vec2 cursor = endPos;
+		Vec2 calculatedPos = initialPos;
+		Entity calculatedEntity = MAX_ENTITIES;
+
+		//Calculating max cursor distance value
+		cursor -= initialPos;
+		Vec2Normalize(cursor, cursor);
+		cursor *= playerTransform.GetScale().x * 3;
+		cursor += initialPos;
+
+		//Prevent going past cursor when clicking close
+		//if (Vec2SqDistance(initialPos, endPos) < Vec2SqDistance(initialPos, cursor))
+		//	cursor = endPos;
+
+		for (size_t checkCount = 0; checkCount < 3; ++checkCount)
+		{
+			calculatedPos += ((cursor - initialPos) / 3);
+		}
+
+		const std::set<Entity>& boxEntities = g_engine.m_coordinator.GetSystem<BoxCollisionSystem>()->GetEntitySet();
+		BoxCollider2DComponent& playerCollider = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(*m_entities.begin());
+		ColliderComponent& playerGCollider = g_engine.m_coordinator.GetComponent<ColliderComponent>(*m_entities.begin());
+		LineSegment teleportLine = LineSegment(playerTransform.GetPosition(), calculatedPos);
+		Vec2 teleportVec = calculatedPos - playerTransform.GetPosition();
+
+		for (Entity entity : boxEntities)
+		{
+			if (entity == *m_entities.begin())
+				continue;
+
+			BoxCollider2DComponent& boxCollider = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(entity);
+			if (boxCollider.GetCollisionMode() != CollisionMode::e_awake)
+				continue;
+
+			ColliderComponent& boxGCollider = g_engine.m_coordinator.GetComponent<ColliderComponent>(entity);
+
+			if (!CollisionManager::instance().FilterColliders(playerGCollider.GetCollisionMask(), boxGCollider.GetCollisionCat()) ||
+				!CollisionManager::instance().FilterColliders(boxGCollider.GetCollisionMask(), playerGCollider.GetCollisionCat()))
+				continue;
+
+			TransformComponent& boxTrans = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
+
+			//DebugDrawBall(boxCollider.m_aabb, boxTrans);
+			//DebugDrawArrow(teleportLine);
+
+			if (CollisionManager::instance().DiscreteLineVsAABB(teleportLine, boxCollider.m_aabb))
+			{
+				Vec2 boxPos = CollisionManager::instance().GetColliderPosition(boxCollider.m_aabb, boxTrans);
+
+				std::array<LineSegment, 4> edges = CollisionManager::instance().GenerateEdges(boxCollider.m_aabb);
+
+				float smallestT = 1.0f;
+				float t = smallestT;
+
+				for (LineSegment edge : edges)
+				{
+					t = Vec2DotProduct(Vec2(edge.m_pt0 - playerTransform.GetPosition()), edge.m_normal) /
+						Vec2DotProduct(teleportVec, edge.m_normal);
+
+					if (t > 0.0f && t < smallestT)
+						smallestT = t;
+				}
+
+				calculatedEntity = entity;
+				calculatedPos = playerTransform.GetPosition() + smallestT * teleportVec;
+
+				teleportLine = LineSegment(playerTransform.GetPosition(), calculatedPos);
+				teleportVec = calculatedPos - playerTransform.GetPosition();
+			}
+		}
+		return calculatedEntity;
 	}
 
 	void PlayerControllerSystem::ToggleMode()

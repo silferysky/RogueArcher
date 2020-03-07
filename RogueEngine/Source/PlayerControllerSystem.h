@@ -59,6 +59,7 @@ namespace Rogue
 		void Teleport();
 		void Hitchhike(Entity ent);
 		Vec2 GetTeleportRaycast();
+		Entity GetEntityRaycasted();
 		void ToggleMode();
 
 		void FreezeControlComponentUpdates();

@@ -238,6 +238,16 @@ namespace Rogue
 		return m_hitchhikedEntity;
 	}
 
+	void PlayerStatusManager::SetHitchhikeIndicator(Entity ent)
+	{
+		m_hitchhikeIndicator = ent;
+	}
+
+	Entity PlayerStatusManager::GetHitchhikeIndicator() const
+	{
+		return m_hitchhikeIndicator;
+	}
+
 	void PlayerStatusManager::SetCheckpoint(Vec2 checkpoint)
 	{
 		m_checkpoint = checkpoint;

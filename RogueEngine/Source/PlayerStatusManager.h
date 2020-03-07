@@ -67,6 +67,8 @@ namespace Rogue
 		//Hitchhike
 		void SetHitchhikeEntity(Entity ent);
 		Entity GetHitchhikedEntity() const;
+		void SetHitchhikeIndicator(Entity ent);
+		Entity GetHitchhikeIndicator() const;
 
 		//For modifiying sprite based on state
 		void ChangePlayerSprite();
@@ -119,6 +121,7 @@ namespace Rogue
 
 		//Hitchhiking mechanic
 		Entity m_hitchhikedEntity;
+		Entity m_hitchhikeIndicator;
 
 		//Checkpoint
 		Vec2 m_checkpoint;
