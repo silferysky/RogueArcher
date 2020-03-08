@@ -179,10 +179,15 @@ namespace Rogue
 						if (auto entTrans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(toDrawAtEntity))
 						{
 							HierarchyInfo& entInfo = g_engine.m_coordinator.GetHierarchyInfo(toDrawAtEntity);
+							TransformComponent& hitchhikeeTrans = entTrans->get();
 
 							if (entInfo.m_tag == "Hitchhike" || entInfo.m_tag == "hitchhike")
 							{
-								g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetHitchhikeIndicator()).setPosition(entTrans->get().GetPosition());
+								TransformComponent& indicatorTrans = g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetHitchhikeIndicator());
+								
+								indicatorTrans.setPosition(hitchhikeeTrans.GetPosition());
+								indicatorTrans.setScale(Vec2(75.0f, 75.0f));
+								indicatorTrans.setZ(hitchhikeeTrans.GetZ());
 							}
 						}
 					}
