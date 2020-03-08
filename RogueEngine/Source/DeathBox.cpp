@@ -38,6 +38,7 @@ namespace Rogue
 				{
 					PLAYER_STATUS.SetIndicatorStatus(false);
 					g_engine.m_coordinator.AddToDeleteQueue(PLAYER_STATUS.GetIndicator());
+					g_engine.m_coordinator.AddToDeleteQueue(PLAYER_STATUS.GetHitchhikeIndicator());
 					PLAYER_STATUS.SetIndicator(MAX_ENTITIES);
 					PLAYER_STATUS.SetHitchhikeIndicator(MAX_ENTITIES);
 				}
