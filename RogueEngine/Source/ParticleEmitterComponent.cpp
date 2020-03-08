@@ -30,6 +30,10 @@ namespace Rogue
 		ImGui::Checkbox("Active?", &m_isActive);
 		SetIsActive(m_isActive);
 
+		ImGui::PushItemWidth(75);
+		ImGui::Checkbox("Reversed?", &m_isReversed);
+		SetIsReversed(m_isReversed);
+
 		bool m_isContinuous = GetIsContinuous();
 
 		ImGui::PushItemWidth(75);
@@ -286,6 +290,16 @@ namespace Rogue
 		return m_spread;
 	}
 
+	void ParticleEmitterComponent::SetIsReversed(const bool isReversed)
+	{
+		m_isReversed = isReversed;
+	}
+
+	bool ParticleEmitterComponent::GetIsReversed() const
+	{
+		return m_isReversed;
+	}
+
 	void ParticleEmitterComponent::SetTexturePath(std::string_view texturePath)
 	{
 		m_texturePath.assign(texturePath);
@@ -312,6 +326,7 @@ namespace Rogue
 		ss << m_isContinuous << ";";
 		ss << m_texturePath << ";";
 		ss << m_particleZ << ";";
+		ss << m_isReversed << ";";
 
 		return ss.str();
 	}
@@ -367,6 +382,9 @@ namespace Rogue
 				break;
 			case 12:
 				SetParticleZ(std::stoi(s1));
+				break;
+			case 13:
+				SetIsReversed(std::stof(s1));
 				break;
 			default:
 				break;

@@ -167,7 +167,7 @@ namespace Rogue
 		glBindVertexArray(0); //Reset
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-		glUseProgram(m_foregroundShader.GetShader());
+		/* glUseProgram(m_foregroundShader.GetShader());
 		glBindVertexArray(m_VAO);
 		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 
@@ -190,9 +190,9 @@ namespace Rogue
 		glBindBuffer(GL_UNIFORM_BUFFER, 0);
 		glUseProgram(0);
 		glBindVertexArray(0); //Reset
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindBuffer(GL_ARRAY_BUFFER, 0); */
 
-		//g_engine.m_coordinator.GetSystem<LightingSystem>()->TrueUpdate();
+		g_engine.m_coordinator.GetSystem<LightingSystem>()->TrueUpdate();
 		g_engine.m_coordinator.GetSystem<FontSystem>()->TrueUpdate();
 		g_engine.m_coordinator.GetSystem<DebugDrawSystem>()->TrueUpdate();
 

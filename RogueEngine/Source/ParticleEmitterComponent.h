@@ -39,6 +39,8 @@ namespace Rogue
 		Vec2 m_positionalOffset;
 		Vec2 m_spread;
 
+		bool m_isReversed;
+
 		std::string m_texturePath;
 	public:
 		ParticleEmitterComponent() = default;
@@ -79,6 +81,9 @@ namespace Rogue
 
 		void SetSpread(const Vec2 spread);
 		Vec2 GetSpread() const;
+
+		void SetIsReversed(const bool isReversed);
+		bool GetIsReversed() const;
 
 		void SetTexturePath(std::string_view texturePath);
 		std::string_view GetTexturePath() const;

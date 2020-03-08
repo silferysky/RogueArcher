@@ -356,10 +356,10 @@ namespace Rogue
 
 				if (event.GetEntityID() == PLAYER_STATUS.GetPlayerEntity())
 				{
-					if (PLAYER_STATUS.GetLightStatus())
-						AudioManager::instance().loadSound("Resources/Sounds/LightChange.ogg", 0.3f, false).Play();
-					else
-						AudioManager::instance().loadSound("Resources/Sounds/DarkChange.ogg", 0.3f, false).Play();
+					//if (PLAYER_STATUS.GetLightStatus())
+						//AudioManager::instance().loadSound("Resources/Sounds/LightChange.ogg", 0.3f, false).Play();
+					//else
+						//AudioManager::instance().loadSound("Resources/Sounds/DarkChange.ogg", 0.3f, false).Play();
 				}
 			}
 
@@ -443,7 +443,7 @@ namespace Rogue
 						// Reset boolean for grounded
 						if (!PLAYER_STATUS.HasJumped())
 						{
-							AudioManager::instance().loadSound("Resources/Sounds/jump.ogg", 0.3f, false).Play(1.0f);
+							// AudioManager::instance().loadSound("Resources/Sounds/jump.ogg", 0.3f, false).Play(1.0f);
 							Hitchhike(MAX_ENTITIES);
 							player.m_grounded = false;
 							PLAYER_STATUS.SetHasJumped(true);

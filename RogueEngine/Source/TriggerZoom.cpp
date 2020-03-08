@@ -1,6 +1,6 @@
 #include "Precompiled.h"
 #include "TriggerZoom.h"
-//#include "CameraManager.h"
+#include "CameraManager.h"
 #include "Main.h"
 
 namespace Rogue
@@ -22,16 +22,16 @@ namespace Rogue
 		if (!m_isZooming || m_doCount == 0)
 			return;
 
-		float cameraZoom = 0.0f;//CameraManager::instance().GetCameraZoom();
+		float cameraZoom = CameraManager::instance().GetCameraZoom();
 
 		//If waiting for delay
 		if (m_zoomTimer < m_zoomDelay)
 		{
 			m_zoomTimer += g_deltaTime; //* g_engine.GetTimeScale();
 		}
-		else//if (m_zoomTimer >= m_zoomDelay)
+		else if (m_zoomTimer >= m_zoomDelay)
 		{
-			//CameraManager::instance().SetCameraZoom(cameraZoom + m_zoomFactor);
+			CameraManager::instance().SetCameraZoom(cameraZoom + m_zoomFactor);
 
 			//If the zoom is at the end
 			if (std::abs(cameraZoom - m_zoomValueFinal) < 0.001f)
@@ -63,7 +63,7 @@ namespace Rogue
 			return;
 
 		m_isZooming = true;
-		//m_zoomValueInit = CameraManager::instance().GetCameraZoom();
+		m_zoomValueInit = CameraManager::instance().GetCameraZoom();
 		m_zoomFactor = (m_zoomValueFinal - m_zoomValueInit) / m_zoomDuration;
 	}
 }
