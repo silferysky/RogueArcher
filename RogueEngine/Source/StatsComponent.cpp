@@ -149,6 +149,8 @@ namespace Rogue
 
 		ss << m_zoomValue << ";";
 		ss << m_zoomDuration << ";";
+		ss << m_zoomDelay << ";";
+		ss << m_zoomCount << ";";
 
 		return ss.str();
 	}
