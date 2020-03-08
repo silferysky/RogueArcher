@@ -49,6 +49,14 @@ namespace Rogue
 	//building line segment
 	void BuildLineSegment(LineSegment& lineSegment, const Vec2& pos, float scale, float dir);
 
+	template <typename T>
+	T REAbs(T value)
+	{
+		return 0 < value ?
+			value :
+			value * -1;
+	}
+
 	// Absolute
 	float REAbs(float x);
 

@@ -328,8 +328,6 @@ namespace Rogue
 
 		glUniform2f(m_uvScaleLocation, tileComp.GetUVScale().x, tileComp.GetUVScale().y);
 
-		std::cout << "Tiles: " << tileMap.size() << std::endl;
-
 		for (auto tile : tileMap) // each tile in the tilemap
 		{
 			glm::mat4 transformMat = glm::mat4(1.0f);
