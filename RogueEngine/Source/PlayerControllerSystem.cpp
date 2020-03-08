@@ -194,8 +194,6 @@ namespace Rogue
 					}
 				}
 			}
-
-
 		}
 
 		if (m_teleports.size())
