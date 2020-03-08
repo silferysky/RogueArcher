@@ -3,6 +3,7 @@
 #include "REEngine.h"
 #include "PickingManager.h"
 #include "Logger.h"
+#include "EditorManager.h"
 
 #define OLD_SERIALIZATION 0
 
@@ -125,6 +126,14 @@ namespace Rogue
 		m_tilesWidth = 0;
 		m_tilesHeight = 0;
 		m_check = true;
+		m_openWindow = true;
+
+		TileMapComponent* pTilemap = nullptr;
+
+		if (m_tileMapEnt != -1)
+			pTilemap = &g_engine.m_coordinator.GetComponent<TileMapComponent>(m_tileMapEnt);
+		else
+			pTilemap = &g_engine.m_coordinator.CreateComponent<TileMapComponent>(m_tileMapEnt);
 
 		while (m_minX < m_maxX)
 		{
@@ -133,29 +142,38 @@ namespace Rogue
 			tileset.m_tileTexture = TextureManager::instance().loadTexture("Resources\\Assets\\tile.png");
 			tileset.m_tileTexture.m_data = 0;
 			//tileset.m_tileId = 0;
-			m_currentTileX = round(m_minX / m_tileSize) * m_tileSize ;
+			m_currentTileX = round(m_minX / m_tileSize) * m_tileSize;
 			tileset.m_tilePos.x = m_currentTileX;
-			m_currentTileY = round(m_maxY / m_tileSize) * m_tileSize ;
+			m_currentTileY = round(m_maxY / m_tileSize) * m_tileSize;
 			tileset.m_tilePos.y = m_currentTileY;
 			m_minX += m_tileSize;
 			if (m_check)
 			{
 				++m_tilesWidth;
 			}
-			for (auto& i : ImGuiTileSet::instance().m_GlobalTileSet)
+
+			if (pTilemap)
 			{
-				if (i.m_tilePos.x == m_currentTileX && i.m_tilePos.y == m_currentTileY)
+				for (TrueTile trueTile : pTilemap->GetTileMap())
 				{
-					tileset.m_texCoordMinX = i.m_texCoordMinX;
-					tileset.m_texCoordMaxX = i.m_texCoordMaxX;
-					tileset.m_texCoordMinY = i.m_texCoordMinY;
-					tileset.m_texCoordMaxY = i.m_texCoordMaxY;
-					m_globalcheck = true;
-					break;
+					if (trueTile.m_tilePos.x == m_currentTileX && trueTile.m_tilePos.y == m_currentTileY)
+					{
+						tileset.m_texCoordMinX = trueTile.m_min.x;
+						tileset.m_texCoordMaxX = trueTile.m_max.x;
+						tileset.m_texCoordMinY = trueTile.m_min.y;
+						tileset.m_texCoordMaxY = trueTile.m_max.y;
+
+						tileset.m_texturename = m_currentPath;
+						tileset.m_tileTexture = m_currentTexture;
+
+						m_globalcheck = true;
+						break;
+					}
 				}
 			}
 			
-			m_TileSet.push_back(tileset);
+			m_TileSet.emplace_back(tileset);
+
 			if (m_minX > m_maxX && m_minY < m_maxY)
 			{
 				m_minX = viewportArea.getMin().x;
@@ -171,8 +189,9 @@ namespace Rogue
 	{
 		if (!m_openWindow)
 		{
-			EditorManager::instance().RemoveEditorWindow<ImGuiTileSet>("TileSet");
+			//EditorManager::instance().RemoveEditorWindow<ImGuiTileSet>("TileSet");
 			ImGuiInspector::instance().ReduceTileInstanceCount();
+			EditorManager::instance().setTileSetOpen(false);
 		}
 		else
 		{
@@ -191,9 +210,9 @@ namespace Rogue
 				ImVec2 imageSize;
 				imageSize.x = 20.0f;
 				imageSize.y = 20.0f;
-				int temp = ImGuiTileSet::instance().m_tilesWidth;
-				int width = ImGuiTileSet::instance().m_tilesWidth;
-				for (auto& i : ImGuiTileSet::instance().m_TileSet)
+				int temp = m_tilesWidth;
+				int width = m_tilesWidth;
+				for (auto& i : m_TileSet)
 				{	
 					if (width > 0)
 					{
@@ -205,16 +224,20 @@ namespace Rogue
 						width = temp;
 					}
 					--width;
-					ImGui::Image(reinterpret_cast<ImTextureID>(static_cast<unsigned long long>(m_currentTexture.m_texture)),
+					ImGui::Image(reinterpret_cast<ImTextureID>(static_cast<unsigned long long>(i.m_tileTexture.m_texture)),
 						ImVec2(imageSize.x, imageSize.y),
 						ImVec2(i.m_texCoordMinX, i.m_texCoordMaxY),
 						ImVec2(i.m_texCoordMaxX, i.m_texCoordMinY),
-						ImVec4(1,1, 1, 1), { 1.0f, 1.0f, 1.0f, 0.5f });
+						ImVec4(1,1, 1, 1),
+						ImVec4(1.0f, 1.0f, 1.0f, 0.5f));
 
 					if (ImGui::IsItemClicked(0))
 					{
 						if (m_deleteTile)
 						{
+							i.m_tileTexture = TextureManager::instance().loadTexture("Resources\\Assets\\tile.png");
+							i.m_texturename = "Resources\\Assets\\tile.png";
+
 							if (m_currentmode == Mode::Drag)
 							{
 								if (!m_firstclicked)
@@ -234,6 +257,10 @@ namespace Rogue
 							i.m_texCoordMaxX = m_maxX;
 							i.m_texCoordMinY = m_minY;
 							i.m_texCoordMaxY = m_maxY;
+
+							i.m_texturename = m_currentPath;
+							i.m_tileTexture = m_currentTexture;
+							
 							if (m_currentmode == Mode::Drag)
 							{
 								if (!m_firstclicked)
@@ -253,6 +280,9 @@ namespace Rogue
 						{
 							if (ImGui::IsItemHovered() && m_firstclicked && m_currentPath != "Resources\\Assets\\tile.png")
 							{
+								i.m_texturename = m_currentPath;
+								i.m_tileTexture = m_currentTexture;
+
 								i.m_texCoordMinX = m_minX;
 								i.m_texCoordMaxX = m_maxX;
 								i.m_texCoordMinY = m_minY;
@@ -361,9 +391,9 @@ namespace Rogue
 
 				if (ImGui::Button("Save current TileSet"))
 				{
-				//	for (auto& i : ImGuiTileSet::instance().m_TileSet)
+				//	for (auto& i : m_TileSet)
 				//	{
-				//		for (auto& j : ImGuiTileSet::instance().m_GlobalTileSet)
+				//		for (auto& j : m_GlobalTileSet)
 				//		{
 				//			//find global tile
 				//			if (i.m_tilePos.x == j.m_tilePos.x && i.m_tilePos.y == j.m_tilePos.y)
@@ -422,16 +452,25 @@ namespace Rogue
 				//		//		sprite.setTexCoordMaxX(i.m_texCoordMaxX);
 				//		//		sprite.setTexCoordMinY(i.m_texCoordMinY);
 				//		//		sprite.setTexCoordMaxY(i.m_texCoordMaxY);
-				//		//		ImGuiTileSet::instance().m_GlobalTileSet.push_back(i);
+				//		//		m_GlobalTileSet.push_back(i);
 				//		//	}
 				//		//}
 				//		m_globalcheck = false;
 				//		m_hasTextureChanged = false;
 				//	}
-					if (auto tilemapOpt = g_engine.m_coordinator.TryGetComponent<TileMapComponent>(m_tileMapEnt))
+					if (m_tileMapEnt != -1)
 					{
+						auto& tilemap = g_engine.m_coordinator.GetComponent<TileMapComponent>(m_tileMapEnt);
+
 						// Can only support 1 tilemap for now
-						SaveTileMap(tilemapOpt->get().GetTileMap());
+						SaveTileMap(tilemap.GetTileMap());
+					}
+					else
+					{
+						m_tileMapEnt = Create2DSprite(Vec2(0.0f, 0.0f), Vec2(61, 61), m_currentPath);
+						auto& tilemap = g_engine.m_coordinator.CreateComponent<TileMapComponent>(m_tileMapEnt);
+
+						SaveTileMap(tilemap.GetTileMap());
 					}
 					std::string file = SceneManager::instance().getCurrentFileName().c_str();
 					SceneManager::instance().SaveTileset(file.c_str());
@@ -461,7 +500,6 @@ namespace Rogue
 	void ImGuiTileSet::Shutdown()
 	{
 		m_TileSet.clear();
-
 	}
 
 	Entity ImGuiTileSet::Create2DSprite(Vec2 position, Vec2 scale, std::string_view tilepath)
@@ -572,7 +610,7 @@ namespace Rogue
 		//if (m_texturename != "Resources\\Assets\\tile.png" && m_texturename != "")
 		//{
 		//	//std::cout << "Create: " << m_texturename << std::endl;
-		//	//Entity ent = ImGuiTileSet::instance().Create2DSprite(m_tilePos, Vec2(61, 61), m_texturename);
+		//	//Entity ent = Create2DSprite(m_tilePos, Vec2(61, 61), m_texturename);
 		//	//m_tileId = ent;
 		//	if (auto spriteOpt = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(ent))
 		//	{
@@ -608,41 +646,55 @@ namespace Rogue
 
 	void ImGuiTileSet::SaveTileMap(TileMap& globalMap)
 	{
+		std::vector<TileMap::iterator> deleteQueue;
+
 		for (Tile& tile : m_TileSet)
 		{
-			// Skip default tiles.
-			if (tile.m_texturename == "Resources\\Assets\\tile.png")
-				continue;
+			m_globalcheck = false;
 
-			for (TrueTile& globalTile : globalMap)
+			for (TileMap::iterator iTrueTile = globalMap.begin(); iTrueTile != globalMap.end(); ++iTrueTile)
 			{
 				//find global tile
-				if (tile.m_tilePos.x == globalTile.m_tilePos.x && tile.m_tilePos.y == globalTile.m_tilePos.y)
+				if (tile.m_tilePos.x == iTrueTile->m_tilePos.x && tile.m_tilePos.y == iTrueTile->m_tilePos.y)
 				{
 					m_globalcheck = true; // globalcheck means FOUND
 
-					// Add the coordinates to the global tile
-					globalTile.m_min.x = tile.m_texCoordMinX;
-					globalTile.m_max.x = tile.m_texCoordMaxX;
-					globalTile.m_min.y = tile.m_texCoordMinY;
-					globalTile.m_max.y = tile.m_texCoordMaxY;
-				
+					// Tile becomes invalidated (removed).
+					if (tile.m_texturename == "Resources\\Assets\\tile.png")
+					{
+						deleteQueue.emplace_back(iTrueTile);
+					}
+					else
+					{
+						// Add the coordinates to the global tile
+						iTrueTile->m_min.x = tile.m_texCoordMinX;
+						iTrueTile->m_max.x = tile.m_texCoordMaxX;
+						iTrueTile->m_min.y = tile.m_texCoordMinY;
+						iTrueTile->m_max.y = tile.m_texCoordMaxY;
+					}
 					break;
 				}
 			}
 			
-			if (m_globalcheck)
+			if (m_globalcheck || tile.m_texturename == "Resources\\Assets\\tile.png")
 				continue;
 
-			// If current tile does not exist in global tile set
+				// If current tile does not exist in global tile set
 			TrueTile newTile;
 			newTile.m_min.x = tile.m_texCoordMinX;
 			newTile.m_max.x = tile.m_texCoordMaxX;
 			newTile.m_min.y = tile.m_texCoordMinY;
 			newTile.m_max.y = tile.m_texCoordMaxY;
 
+			newTile.m_tilePos = tile.m_tilePos;
+
 			globalMap.emplace_back(newTile);
 			
+		}
+
+		for (TileMap::iterator it : deleteQueue)
+		{
+			globalMap.erase(it);
 		}
 	}
 }

@@ -758,8 +758,10 @@ namespace Rogue
 		{
 			if (!ImGuiInspector::instance().m_tileInstanceCount)
 			{
-				EditorManager::instance().AddEditorWindow<ImGuiTileSet>("TileSet");
+				
+				//EditorManager::instance().AddEditorWindow<ImGuiTileSet>("TileSet");
 				ImGuiTileSet::instance().Init();
+				EditorManager::instance().setTileSetOpen(true);
 				++ImGuiInspector::instance().m_tileInstanceCount;
 			}
 		}
