@@ -160,7 +160,7 @@
     "Entity72": "Name{EngravedTut5}|Tag{}|Sprite{Resources\\Assets\\TutorialHitchhike.png;0.323529;0.323526;0.323526;0.588235;}||Transform{-465;69;515.04;119.14;0;99}||||||||||||||||||||||",
     "Entity73": "Name{Tut_Sprite5Glow}|Tag{}|Sprite{Resources\\Assets\\TutorialHitchhikeGlow.png;1;1;1;0;}|Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-465;69;515.04;119.14;0;99}||BoxCollider{35;4;75;166;TRIGGER}||LogicComponent{6;0;1;0}|StatsComponent{0;0;0;0;0;;0;0;0;}||||||Collider{BOX;1;4294967295;}||||||FADE{1;0;}|||||",
     "Entity74": "Name{FG3}|Tag{}|Sprite{Resources\\Assets\\BG3-2.png;1;1;1;1;}||Transform{-530.011;68.2611;628.787;392.1;0;80}||||||||||||||||||||||",
-    "Entity75": "Name{Bat1}|Tag{HitchHike}|Sprite{Resources\\Assets\\Bat.png;1;1;1;1;}||Transform{8.78258;44.1468;161;74;0;80}||BoxCollider{0;0;0;0;AWAKE}||||Animation{4;0;0.1;1;1;1;}|||||Collider{BOX;1;4294967295;}|||||||||||",
+    "Entity75": "Name{Bat1}|Tag{HitchHike}|Sprite{Resources\\Assets\\Bat.png;1;1;1;1;}||Transform{8.78258;44.1468;161;74;0;80}||BoxCollider{0;0;0;0;TRIGGER}||||Animation{4;0;0.1;1;1;1;}|||||Collider{BOX;1;4294967295;}|||||||||||",
     "EntityParent0": 65535,
     "EntityParent1": 65535,
     "EntityParent2": 1,
