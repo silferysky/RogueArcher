@@ -50,6 +50,9 @@ namespace Rogue
 
 		GLint m_transformLocation;
 		GLint m_filterLocation;
+		
+		GLint m_uvScaleLocation;
+		GLint m_uvOffsetLocation;
 
 		GLuint m_instancedVAO;
 		GLuint m_instancedVBO;
