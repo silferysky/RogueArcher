@@ -259,8 +259,8 @@ namespace Rogue
 				PLAYER_STATUS.SetTeleportCharge(3.0f);
 
 			player.m_jumpTimer -= g_deltaTime * g_engine.GetTimeScale();
+			player.m_grounded = false;
 		}
-
 	}
 
 	void PlayerControllerSystem::Receive(Event& ev)
@@ -1035,28 +1035,29 @@ namespace Rogue
 		return calculatedPos;
 	}
 
+	// SOLELY tailored for hitchhiking.
 	Entity PlayerControllerSystem::GetEntityRaycasted()
 	{
 		TransformComponent& playerTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin());
 		Vec2 initialPos = playerTransform.GetPosition();
-		Vec2 endPos = PickingManager::instance().GetWorldCursor();
-		Vec2 cursor = endPos;
+		Vec2 cursor = PickingManager::instance().GetWorldCursor();
+		Vec2 endPos = cursor;
 		Vec2 calculatedPos = initialPos;
 		Entity calculatedEntity = MAX_ENTITIES;
 
 		//Calculating max cursor distance value
-		cursor -= initialPos;
-		Vec2Normalize(cursor, cursor);
-		cursor *= playerTransform.GetScale().x * 3;
-		cursor += initialPos;
-
-		//Prevent going past cursor when clicking close
-		//if (Vec2SqDistance(initialPos, endPos) < Vec2SqDistance(initialPos, cursor))
-		//	cursor = endPos;
+		endPos -= initialPos;
+		Vec2Normalize(endPos, endPos);
+		endPos *= playerTransform.GetScale().x * 3.0f;
+		endPos += initialPos;
+		
+		// Take the smaller of the cursor and max range.
+		if (Vec2SqDistance(cursor, initialPos) < Vec2SqDistance(endPos, initialPos))
+			endPos = cursor;
 
 		for (size_t checkCount = 0; checkCount < 3; ++checkCount)
 		{
-			calculatedPos += ((cursor - initialPos) / 3);
+			calculatedPos += ((endPos - initialPos) / 3);
 		}
 
 		const std::set<Entity>& boxEntities = g_engine.m_coordinator.GetSystem<BoxCollisionSystem>()->GetEntitySet();
@@ -1067,15 +1068,18 @@ namespace Rogue
 
 		for (Entity entity : boxEntities)
 		{
+			// Skip itself
 			if (entity == *m_entities.begin())
 				continue;
 
 			BoxCollider2DComponent& boxCollider = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(entity);
-			if (boxCollider.GetCollisionMode() != CollisionMode::e_trigger)
-				continue;
-
 			ColliderComponent& boxGCollider = g_engine.m_coordinator.GetComponent<ColliderComponent>(entity);
 
+			// Skip asleep colliders
+			if (boxCollider.GetCollisionMode() == CollisionMode::e_asleep)
+				continue;
+
+			// Filter layers
 			if (!CollisionManager::instance().FilterColliders(playerGCollider.GetCollisionMask(), boxGCollider.GetCollisionCat()) ||
 				!CollisionManager::instance().FilterColliders(boxGCollider.GetCollisionMask(), playerGCollider.GetCollisionCat()))
 				continue;
@@ -1099,10 +1103,21 @@ namespace Rogue
 					t = Vec2DotProduct(Vec2(edge.m_pt0 - playerTransform.GetPosition()), edge.m_normal) /
 						Vec2DotProduct(teleportVec, edge.m_normal);
 
+					// Only allow hitchhike triggers and colliders (Avoid regular triggers)
 					if (t > 0.0f && t < smallestT)
 					{
-						smallestT = t;
-						calculatedEntity = entity;
+						// Kena collider, no hitchhike available yet
+						if (boxCollider.GetCollisionMode() == CollisionMode::e_awake)
+						{
+							smallestT = t;
+							calculatedEntity = MAX_ENTITIES;
+						}
+						// Kena hitchhike trigger, hitchhike available.
+						if(g_engine.m_coordinator.GetHierarchyInfo(entity).m_tag == "Hitchhike")
+						{
+							smallestT = t;
+							calculatedEntity = entity;
+						}
 					}
 				}
 

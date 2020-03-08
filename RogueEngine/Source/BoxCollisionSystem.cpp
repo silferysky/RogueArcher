@@ -81,7 +81,7 @@ namespace Rogue
 			std::set<Entity>::iterator iNextEntity = iEntity;
 
 			// For each entity, the rest of the entities
-			for (iNextEntity; iNextEntity != m_entities.end(); ++iNextEntity)
+			for (++iNextEntity; iNextEntity != m_entities.end(); ++iNextEntity)
 			{
 				auto nextColliderOpt = g_engine.m_coordinator.TryGetComponent<ColliderComponent>(*iNextEntity);
 #if 1
@@ -134,9 +134,9 @@ namespace Rogue
 				// Remove exiting pairs and send exit events
 				CollisionManager::instance().CheckExitingCollidedPairs<BoxCollider2DComponent, BoxCollider2DComponent>(m_entities);
 			}
-			// Collision Impulse and Torque/Contact Resolution (Other resolutionsdone using trigger events: Other weird forces, rest, game logic)
-			CollisionManager::instance().ResolveManifolds();
 		}
+		// Collision Impulse and Torque/Contact Resolution (Other resolutionsdone using trigger events: Other weird forces, rest, game logic)
+		CollisionManager::instance().ResolveManifolds();
 	}
 
 	void BoxCollisionSystem::Receive(Event& ev)
