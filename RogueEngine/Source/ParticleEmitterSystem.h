@@ -51,5 +51,6 @@ namespace Rogue
 		void Shutdown() override;
 
 		void GenerateParticles(const Entity& entity);
+		void GenerateParticlesReversed(const Entity& entity);
 	};
 }
