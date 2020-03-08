@@ -60,6 +60,11 @@ namespace Rogue
 		void SetZoomDuration(float dur);
 		float GetZoomDuration() const;
 
+		void SetEmojiDelay(float delay);
+		float GetEmojiDelay() const;
+		void AddEmojiTexture(std::string texturePath);
+		std::vector<std::string> GetEmojiTextures() const;
+
 		//From BaseComponent
 		std::string Serialize() override;
 		void Deserialize(std::string_view toDeserialize) override;
@@ -85,5 +90,9 @@ namespace Rogue
 		float m_zoomDuration;
 		float m_zoomDelay;
 		unsigned m_zoomCount;
+
+		//For Emojis
+		std::vector<std::string> m_emojiTexture;
+		float m_emojiDelay;
 	};
 }

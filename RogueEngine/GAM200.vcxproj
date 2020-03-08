@@ -38,6 +38,7 @@
     <ClInclude Include="Source\ChildComponent.h" />
     <ClInclude Include="Source\CircleCollisionSystem.h" />
     <ClInclude Include="Source\ColliderComponent.h" />
+    <ClInclude Include="Source\EmojiScript.h" />
     <ClInclude Include="Source\ForegroundComponent.h" />
     <ClInclude Include="Source\GamePlayEnding.h" />
     <ClInclude Include="Source\HoverOverButton.h" />
@@ -209,6 +210,7 @@
     <ClCompile Include="Source\ChildComponent.cpp" />
     <ClCompile Include="Source\CircleCollisionSystem.cpp" />
     <ClCompile Include="Source\ColliderComponent.cpp" />
+    <ClCompile Include="Source\EmojiScript.cpp" />
     <ClCompile Include="Source\ForegroundComponent.cpp" />
     <ClCompile Include="Source\GamePlayEnding.cpp" />
     <ClCompile Include="Source\HoverOverButton.cpp" />

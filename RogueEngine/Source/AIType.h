@@ -49,6 +49,7 @@ namespace Rogue
 		Gameplay_Ending,
 		Obj_Fade,
 		Trigger_Zoom,
+		EmojiScript,
 		AI_Last
 	};
 

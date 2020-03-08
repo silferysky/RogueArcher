@@ -48,6 +48,7 @@ Technology is prohibited.
 #include "ActivateOnDeathExa.h"
 #include "LightsFlicker.h"
 #include "TriggerZoom.h"
+#include "EmojiScript.h"
 
 namespace Rogue
 {
@@ -332,6 +333,12 @@ namespace Rogue
 				{
 					TriggerZoom newAI(entities, logicComponent, statsComponent, statsComponent.GetzoomValue(), statsComponent.GetZoomDuration());
 					AddLogicInterface(entities, std::make_shared<TriggerZoom>(newAI));
+					break;
+				}
+				case AIType::EmojiScript:
+				{
+					EmojiScript newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<EmojiScript>(newAI));
 					break;
 				}
 				case AIType::AI_Static:

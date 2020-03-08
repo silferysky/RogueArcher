@@ -130,6 +130,26 @@ namespace Rogue
 		return m_zoomDuration;
 	}
 
+	void StatsComponent::SetEmojiDelay(float delay)
+	{
+		m_emojiDelay = delay;
+	}
+
+	float StatsComponent::GetEmojiDelay() const
+	{
+		return m_emojiDelay;
+	}
+
+	void StatsComponent::AddEmojiTexture(std::string texturePath)
+	{
+		m_emojiTexture.push_back(texturePath);
+	}
+
+	std::vector<std::string> StatsComponent::GetEmojiTextures() const
+	{
+		return m_emojiTexture;
+	}
+
 	std::string StatsComponent::Serialize()
 	{
 		//Health, speed, attack range, sight range
@@ -151,6 +171,14 @@ namespace Rogue
 		ss << m_zoomDuration << ";";
 		ss << m_zoomDelay << ";";
 		ss << m_zoomCount << ";";
+
+		ss << m_emojiDelay << ";";
+		ss << m_emojiTexture.size() << ";";
+
+		for (auto emojiTex : m_emojiTexture)
+		{
+			ss << emojiTex << ";";
+		}
 
 		return ss.str();
 	}
@@ -191,6 +219,20 @@ namespace Rogue
 			m_zoomDelay = std::stof(s1);
 		if (std::getline(ss, s1, ';'))
 			m_zoomCount = std::stoi(s1);
+
+
+		if (std::getline(ss, s1, ';'))
+			m_emojiDelay = std::stof(s1);
+
+		count = 0;
+		if (std::getline(ss, s1, ';'))
+			count = std::stoi(s1);
+
+		for (size_t i = 0; i < count; ++i)
+		{
+			if (std::getline(ss, s1, ';'))
+				m_emojiTexture.push_back(s1);
+		}
 	}
 
 	void StatsComponent::DisplayOnInspector()
@@ -225,6 +267,34 @@ namespace Rogue
 		ImGui::DragInt("Zoom Count", &tempZoomCount, 1.0f, 0, 20);
 		m_zoomCount = static_cast<unsigned>(tempZoomCount);
 
+		std::ostringstream ostrstream;
+		size_t count = 1;
+
+		static char emojiPath[128];
+		for (auto& emojiStr : m_emojiTexture)
+		{
+			ostrstream.clear();
+			ostrstream.str("");
+			ostrstream << "Emoji Texture " << count << ": " << emojiStr;
+			ImGui::TextWrapped(ostrstream.str().c_str());
+				
+			++count;
+		}
+		
+		ImGui::InputText("                  ", emojiPath, 128);
+		ImGui::TextWrapped("Emoji Texture");
+
+		if (ImGui::Button("Add new Emoji Texture"))
+		{
+			AddEmojiTexture(emojiPath);
+		}
+		
+		if (ImGui::Button("Remove last Emoji Texture"))
+		{ 
+			m_emojiTexture.pop_back();
+		}
+
+
 		static char newLevelPath[128];
 		ImGui::PushItemWidth(75);
 		ImGui::TextWrapped("Next Transition Level");
@@ -239,8 +309,9 @@ namespace Rogue
 			SetTransitionLevel(newLevelPath);
 		}
 
-		std::ostringstream ostrstream;
-		size_t count = 1;
+		ostrstream.clear();
+		ostrstream.str("");
+		count = 1;
 		for (Vec2& waypoint : m_waypoints)
 		{
 			ostrstream.clear();

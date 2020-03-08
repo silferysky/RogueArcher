@@ -709,6 +709,9 @@
     <ClInclude Include="Source\TileMapSystem.h">
       <Filter>RogueEditor\EditorFiles\Main Windows\Tile Set</Filter>
     </ClInclude>
+    <ClInclude Include="Source\EmojiScript.h">
+      <Filter>RogueEngine\Systems\AI\Script Types\Trigger</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -1130,6 +1133,9 @@
     </ClCompile>
     <ClCompile Include="Source\TileMapComponent.cpp">
       <Filter>RogueEditor\EditorFiles\Main Windows\Tile Set</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EmojiScript.cpp">
+      <Filter>RogueEngine\Systems\AI\Script Types\Trigger</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
