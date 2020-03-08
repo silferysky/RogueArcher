@@ -17,7 +17,6 @@ Technology is prohibited.
 /* End Header **************************************************************************/
 
 #pragma once
-#include "Main.h"
 #include "REEditor.h"
 #include "IEditable.h"
 

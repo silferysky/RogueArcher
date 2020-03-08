@@ -17,7 +17,7 @@ Technology is prohibited.
 /* End Header **************************************************************************/
 #include "Precompiled.h"
 #include "TransitionObject.h"
-#include "Main.h"
+//#include "Main.h"
 #include "GraphicsEvent.h"
 
 namespace Rogue

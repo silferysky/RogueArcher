@@ -17,7 +17,6 @@ Technology is prohibited.
 /* End Header **************************************************************************/
 #include "Precompiled.h"
 #include "EditorViewport.h"
-#include "Main.h"
 #include "PickingManager.h"
 #include "CameraManager.h"
 #include "REMath.h"

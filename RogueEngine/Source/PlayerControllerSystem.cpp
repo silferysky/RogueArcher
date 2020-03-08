@@ -302,7 +302,7 @@ namespace Rogue
 			//for (auto entity : m_entities)
 			//	g_engine.m_coordinator.AddToDeleteQueue(entity);
 
-			if (m_entities.size() > 1)
+			if (m_entities.size() > 0)
 				g_engine.m_coordinator.AddToDeleteQueue(*m_entities.begin());
 
 			PLAYER_STATUS.Reset();
@@ -463,7 +463,7 @@ namespace Rogue
 					if (!PLAYER_STATUS.ShowIndicator())
 					{
 						g_engine.m_coordinator.AddToDeleteQueue(PLAYER_STATUS.GetIndicator());
-						
+						g_engine.m_coordinator.AddToDeleteQueue(PLAYER_STATUS.GetHitchhikedEntity());
 					}
 				}
 
@@ -1096,10 +1096,12 @@ namespace Rogue
 						Vec2DotProduct(teleportVec, edge.m_normal);
 
 					if (t > 0.0f && t < smallestT)
+					{
 						smallestT = t;
+						calculatedEntity = entity;
+					}
 				}
 
-				calculatedEntity = entity;
 				calculatedPos = playerTransform.GetPosition() + smallestT * teleportVec;
 
 				teleportLine = LineSegment(playerTransform.GetPosition(), calculatedPos);

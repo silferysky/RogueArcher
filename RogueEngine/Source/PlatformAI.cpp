@@ -1,6 +1,5 @@
 #include "Precompiled.h"
 #include "PlatformAI.h"
-#include "Main.h"
 #include "EventDispatcher.h"
 #include "GameEvent.h"
 

@@ -1128,5 +1128,8 @@
     <ClCompile Include="Source\TileMapSystem.cpp">
       <Filter>RogueEditor\EditorFiles\Main Windows\Tile Set</Filter>
     </ClCompile>
+    <ClCompile Include="Source\TileMapComponent.cpp">
+      <Filter>RogueEditor\EditorFiles\Main Windows\Tile Set</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,7 +1,7 @@
 #include "Precompiled.h"
 #include "SoulCollectible.h"
 #include "PlayerStatusManager.h"
-#include "Main.h"	//For g_deltaTime and coordinator
+////#include "Main.h"	//For g_deltaTime and coordinator
 
 namespace Rogue
 {

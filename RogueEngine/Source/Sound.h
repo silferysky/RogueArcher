@@ -18,6 +18,10 @@ Technology is prohibited.
 #pragma once
 #include "Vector2D.h"
 
+// FMOD Headers
+#include "fmod.hpp"
+#include "fmod_errors.h"
+
 namespace Rogue
 {
 	struct Sound

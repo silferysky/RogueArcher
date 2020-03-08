@@ -1,7 +1,7 @@
 #include "Precompiled.h"
 #include "GamePlayEnding.h"
 #include "PlayerStatusManager.h"
-#include "Main.h"
+//#include "Main.h"
 #include "GraphicsEvent.h"
 namespace Rogue
 {

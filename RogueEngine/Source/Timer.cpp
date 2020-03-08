@@ -16,7 +16,6 @@ Technology is prohibited.
 */
 /* End Header **************************************************************************/
 #include "Precompiled.h"
-#include "Main.h"
 #include "Timer.h"
 
 namespace Rogue
