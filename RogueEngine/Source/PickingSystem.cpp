@@ -131,21 +131,6 @@ namespace Rogue
 						EventDispatcher::instance().AddEvent(event);
 					}
 				}
-				else if (key.GetKeyCode() == KeyPress::KeyR)
-				{
-					if (pickedEntity >= 0)
-					{
-						EntHitchhikeEvent event(static_cast<Entity>(pickedEntity));
-						event.SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
-						EventDispatcher::instance().AddEvent(event);
-					}
-					else
-					{
-						EntHitchhikeEvent event(static_cast<Entity>(MAX_ENTITIES));
-						event.SetSystemReceivers((int)SystemID::id_PLAYERCONTROLLERSYSTEM);
-						EventDispatcher::instance().AddEvent(event);
-					}
-				}
 			}
 			return;
 		}
