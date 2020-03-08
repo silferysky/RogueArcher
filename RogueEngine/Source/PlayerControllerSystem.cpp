@@ -109,9 +109,9 @@ namespace Rogue
 					parent.SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
 					EventDispatcher::instance().AddEvent(parent);
 
-					ParentSetEvent hitchhikeParent(*m_entities.begin(), PLAYER_STATUS.GetHitchhikeIndicator());
-					hitchhikeParent.SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
-					EventDispatcher::instance().AddEvent(hitchhikeParent);
+					//ParentSetEvent hitchhikeParent(*m_entities.begin(), PLAYER_STATUS.GetHitchhikeIndicator());
+					//hitchhikeParent.SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+					//EventDispatcher::instance().AddEvent(hitchhikeParent);
 				}
 
 				//Resetting some values
@@ -169,28 +169,38 @@ namespace Rogue
 
 				//For Hitchhiking Indicator
 				if (PLAYER_STATUS.GetHitchhikeIndicator() != MAX_ENTITIES &&
-					g_engine.m_coordinator.ComponentExists<ChildComponent>(PLAYER_STATUS.GetHitchhikeIndicator()) &&
 					g_engine.m_coordinator.ComponentExists<TransformComponent>(PLAYER_STATUS.GetHitchhikeIndicator()))
 				{
 					Entity toDrawAtEntity = GetEntityRaycasted();
-
+					//std::cout << "Entity is " << toDrawAtEntity << std::endl;
+				
 					if (toDrawAtEntity != MAX_ENTITIES)
 					{
 						if (auto entTrans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(toDrawAtEntity))
 						{
-							//std::cout << "Entity is " << toDrawAtEntity << std::endl;
-							//std::cout << "Entity Transform " << g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetHitchhikedEntity()).GetPosition().x << "," << g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetHitchhikedEntity()).GetPosition().y << std::endl;
-							g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetHitchhikedEntity()).setPosition(entTrans->get().GetPosition());
-							g_engine.m_coordinator.GetComponent<ChildComponent>(PLAYER_STATUS.GetHitchhikedEntity()).SetLocalDirty();
-							g_engine.m_coordinator.GetComponent<ChildComponent>(PLAYER_STATUS.GetHitchhikedEntity()).ResetGlobalDirty(); 
-							
-							//std::cout << "Entity Transform " << entTrans->get().GetPosition().x << "," << entTrans->get().GetPosition().y << std::endl;
+							HierarchyInfo& entInfo = g_engine.m_coordinator.GetHierarchyInfo(toDrawAtEntity);
+							TransformComponent& hitchhikeeTrans = entTrans->get();
+
+							if (entInfo.m_tag == "Hitchhike" || entInfo.m_tag == "hitchhike")
+							{
+								TransformComponent& indicatorTrans = g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetHitchhikeIndicator());
+								
+								indicatorTrans.setPosition(hitchhikeeTrans.GetPosition());
+								indicatorTrans.setScale(Vec2(75.0f, 75.0f));
+								indicatorTrans.setZ(hitchhikeeTrans.GetZ());
+							}
 						}
+					}
+					else
+					{
+						//std::cout << "Entity is " << toDrawAtEntity << std::endl;
+						//std::cout << "Entity Transform " << g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetHitchhikedEntity()).GetPosition().x << "," << g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetHitchhikedEntity()).GetPosition().y << std::endl;
+						g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetHitchhikeIndicator()).setPosition(Vec2(10000.0f, 10000.0f));
+				
+						//std::cout << "Entity Transform " << entTrans->get().GetPosition().x << "," << entTrans->get().GetPosition().y << std::endl;
 					}
 				}
 			}
-
-
 		}
 
 		if (m_teleports.size())
@@ -302,7 +312,7 @@ namespace Rogue
 			//for (auto entity : m_entities)
 			//	g_engine.m_coordinator.AddToDeleteQueue(entity);
 
-			if (m_entities.size() > 1)
+			if (m_entities.size() > 0)
 				g_engine.m_coordinator.AddToDeleteQueue(*m_entities.begin());
 
 			PLAYER_STATUS.Reset();
@@ -353,14 +363,6 @@ namespace Rogue
 				SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(event.GetEntityID());
 				//sprite.setTexture(event.GetFile().c_str());
 				sprite.setTexturePath(event.GetPath().c_str());
-
-				if (event.GetEntityID() == PLAYER_STATUS.GetPlayerEntity())
-				{
-					//if (PLAYER_STATUS.GetLightStatus())
-						//AudioManager::instance().loadSound("Resources/Sounds/LightChange.ogg", 0.3f, false).Play();
-					//else
-						//AudioManager::instance().loadSound("Resources/Sounds/DarkChange.ogg", 0.3f, false).Play();
-				}
 			}
 
 			return;
@@ -443,7 +445,7 @@ namespace Rogue
 						// Reset boolean for grounded
 						if (!PLAYER_STATUS.HasJumped())
 						{
-							// AudioManager::instance().loadSound("Resources/Sounds/jump.ogg", 0.3f, false).Play(1.0f);
+							AudioManager::instance().loadSound("Resources/Sounds/jump.ogg", 0.3f, false).Play(1.0f);
 							Hitchhike(MAX_ENTITIES);
 							player.m_grounded = false;
 							PLAYER_STATUS.SetHasJumped(true);
@@ -463,7 +465,7 @@ namespace Rogue
 					if (!PLAYER_STATUS.ShowIndicator())
 					{
 						g_engine.m_coordinator.AddToDeleteQueue(PLAYER_STATUS.GetIndicator());
-						
+						g_engine.m_coordinator.AddToDeleteQueue(PLAYER_STATUS.GetHitchhikedEntity());
 					}
 				}
 
@@ -1067,7 +1069,7 @@ namespace Rogue
 				continue;
 
 			BoxCollider2DComponent& boxCollider = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(entity);
-			if (boxCollider.GetCollisionMode() != CollisionMode::e_awake)
+			if (boxCollider.GetCollisionMode() != CollisionMode::e_trigger)
 				continue;
 
 			ColliderComponent& boxGCollider = g_engine.m_coordinator.GetComponent<ColliderComponent>(entity);
@@ -1096,10 +1098,12 @@ namespace Rogue
 						Vec2DotProduct(teleportVec, edge.m_normal);
 
 					if (t > 0.0f && t < smallestT)
+					{
 						smallestT = t;
+						calculatedEntity = entity;
+					}
 				}
 
-				calculatedEntity = entity;
 				calculatedPos = playerTransform.GetPosition() + smallestT * teleportVec;
 
 				teleportLine = LineSegment(playerTransform.GetPosition(), calculatedPos);
@@ -1112,6 +1116,12 @@ namespace Rogue
 	void PlayerControllerSystem::ToggleMode()
 	{
 		PLAYER_STATUS.ToggleLightStatus();
+
+		if (PLAYER_STATUS.GetLightStatus())
+			AudioManager::instance().loadSound("Resources/Sounds/LightChange.ogg", 0.3f, false).Play();
+		else
+			AudioManager::instance().loadSound("Resources/Sounds/DarkChange.ogg", 0.3f, false).Play();
+
 		for (Entity player : m_entities)
 		{
 			if (g_engine.m_coordinator.ComponentExists<ColliderComponent>(player))

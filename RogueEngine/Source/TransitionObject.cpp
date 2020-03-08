@@ -17,7 +17,7 @@ Technology is prohibited.
 /* End Header **************************************************************************/
 #include "Precompiled.h"
 #include "TransitionObject.h"
-#include "Main.h"
+//#include "Main.h"
 #include "GraphicsEvent.h"
 
 namespace Rogue
@@ -32,7 +32,7 @@ namespace Rogue
 			PLAYER_STATUS.SetIndicatorStatus(false);
 			g_engine.m_coordinator.SetTransitionLevel(m_levelToLoad.c_str(), 0.0f); //2nd value doesn't matter anymore probably
 
-			FadeEvent ev = FadeEvent(MAX_ENTITIES, 0.001f);
+			FadeEvent ev = FadeEvent(MAX_ENTITIES, 1.0f);
 			ev.SetSystemReceivers(static_cast<int>(SystemID::id_GRAPHICSSYSTEM));
 			EventDispatcher::instance().AddEvent(ev);
 		}

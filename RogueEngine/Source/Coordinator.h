@@ -459,5 +459,10 @@ namespace Rogue
 		{
 			m_systemManager->GetSystem<ParentChildSystem>()->ApplyParentChildTransform(entity);
 		}
+
+		void ResetEntityQueue()
+		{
+			m_entityManager->ResetEntityQueue();
+		}
 	};
 }

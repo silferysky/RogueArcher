@@ -44,7 +44,7 @@ namespace Rogue
 
 	void ParticleEmitterSystem::Update()
 	{
-		g_engine.m_coordinator.InitTimeSystem("Particle Emitter System");
+		//g_engine.m_coordinator.InitTimeSystem("Particle Emitter System");
 
 		for (auto entity : m_entities)
 		{
@@ -62,7 +62,7 @@ namespace Rogue
 				pEmitter.SetIsActive(false);
 		}
 
-		g_engine.m_coordinator.EndTimeSystem("Particle Emitter System");
+		//g_engine.m_coordinator.EndTimeSystem("Particle Emitter System");
 	}
 
 	void ParticleEmitterSystem::Receive(Event& ev)

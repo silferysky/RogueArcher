@@ -41,12 +41,17 @@ namespace Rogue
 	public:
 		EntityManager()
 		{
+			Init();
+		}
+		
+		void Init()
+		{
 			for (Entity entity = 0; entity < MAX_ENTITIES; ++entity)
 			{
 				REAvailableEntities.push(entity);
 			}
 		}
-		
+
 		Entity CreateEntity()
 		{
 			// Take an ID from the front of the queue
@@ -134,5 +139,12 @@ namespace Rogue
 			return m_currentActiveObjects;
 		}
 
+		void ResetEntityQueue()
+		{
+			while (REAvailableEntities.size())
+				REAvailableEntities.pop();
+
+			Init();
+		}
 	};
 }

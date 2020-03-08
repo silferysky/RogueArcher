@@ -263,11 +263,11 @@ namespace Rogue
 				}
 				else if (m_isFadingOut)
 				{
-					m_currentFadeFactor -= m_fadeFactor; //* g_fixedDeltaTime;
+					m_currentFadeFactor -= m_fadeFactor * g_deltaTime;
 				}
 				else
 				{
-					m_currentFadeFactor += m_fadeFactor;// *g_fixedDeltaTime;
+					m_currentFadeFactor += m_fadeFactor * g_deltaTime;
 					if (m_currentFadeFactor > 1.0f)
 						m_isFading = false;
 				}
@@ -327,8 +327,6 @@ namespace Rogue
 		auto& tileMap = tileComp.GetTileMap();
 
 		glUniform2f(m_uvScaleLocation, tileComp.GetUVScale().x, tileComp.GetUVScale().y);
-
-		std::cout << "Tiles: " << tileMap.size() << std::endl;
 
 		for (auto tile : tileMap) // each tile in the tilemap
 		{

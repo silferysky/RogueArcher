@@ -17,7 +17,7 @@ Technology is prohibited.
 /* End Header **************************************************************************/
 #include "Precompiled.h"
 #include "Manifold.h"
-#include "Main.h"
+ 
 #include "CollisionManager.h"
 
 namespace Rogue

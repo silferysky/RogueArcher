@@ -27,7 +27,6 @@
 #include "MaskingSystem.h"
 #include "FadeSystem.h"
 #include "Editor.h"
-#include "Main.h"
 
 namespace Rogue
 {
@@ -84,18 +83,10 @@ namespace Rogue
 		// System updates that are before fixed updates are placed here.
 		UpdateSystem(SystemID::id_INPUTMANAGER);
 
-		// Fire events for input
-		EventDispatcher::instance().Update();
-
 		//Skip these systems if game is paused or not running
 		if (!m_gameIsPaused && m_gameIsRunning)
 		{
 			UpdateSystem(SystemID::id_LOGICSYSTEM);
-			UpdateSystem(SystemID::id_PARTICLESYSTEM);
-			UpdateSystem(SystemID::id_PARTICLEEMITTERSYSTEM);
-
-			// Fire events for logic/AI/scripts
-			EventDispatcher::instance().Update();
 		}
 
 		UpdateSystem(SystemID::id_CURSORSYSTEM);
@@ -105,9 +96,6 @@ namespace Rogue
 
 		FixedUpdate();
 		Update();
-
-		// If placed before ^, will cause memory leak.
-		EventDispatcher::instance().Update();
 	}
 
 	void SystemManager::Update()
@@ -163,6 +151,14 @@ namespace Rogue
 				g_engine.m_coordinator.InitTimeSystem("Physics System");
 				UpdateSystem(SystemID::id_PHYSICSSYSTEM);
 				g_engine.m_coordinator.EndTimeSystem("Physics System");
+
+				g_engine.m_coordinator.InitTimeSystem("Particle System");
+				UpdateSystem(SystemID::id_PARTICLESYSTEM);
+				g_engine.m_coordinator.EndTimeSystem("Particle System");
+
+				g_engine.m_coordinator.InitTimeSystem("Particle Emitter System");
+				UpdateSystem(SystemID::id_PARTICLEEMITTERSYSTEM);
+				g_engine.m_coordinator.EndTimeSystem("Particle Emitter System");
 			}
 			
 			//g_engine.m_coordinator.InitTimeSystem("Circle Collision System");

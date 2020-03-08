@@ -306,6 +306,7 @@
     <ClCompile Include="Source\TeleAnimation.cpp" />
     <ClCompile Include="Source\TextComponent.cpp" />
     <ClCompile Include="Source\TextureManager.cpp" />
+    <ClCompile Include="Source\TileMapComponent.cpp" />
     <ClCompile Include="Source\TileMapSystem.cpp" />
     <ClCompile Include="Source\TransformComponent.cpp" />
     <ClCompile Include="Source\Config.cpp" />

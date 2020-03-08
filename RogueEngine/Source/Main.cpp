@@ -22,7 +22,6 @@ Technology is prohibited.
 */
 /* End Header **************************************************************************/
 #include "Precompiled.h"
-#include "Main.h"
 
 Rogue::REEngine g_engine;
 float g_deltaTime;
