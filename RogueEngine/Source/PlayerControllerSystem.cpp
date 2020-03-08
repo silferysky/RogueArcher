@@ -358,14 +358,6 @@ namespace Rogue
 				SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(event.GetEntityID());
 				//sprite.setTexture(event.GetFile().c_str());
 				sprite.setTexturePath(event.GetPath().c_str());
-
-				if (event.GetEntityID() == PLAYER_STATUS.GetPlayerEntity())
-				{
-					if (PLAYER_STATUS.GetLightStatus())
-						AudioManager::instance().loadSound("Resources/Sounds/LightChange.ogg", 0.3f, false).Play();
-					else
-						AudioManager::instance().loadSound("Resources/Sounds/DarkChange.ogg", 0.3f, false).Play();
-				}
 			}
 
 			return;
@@ -1119,6 +1111,12 @@ namespace Rogue
 	void PlayerControllerSystem::ToggleMode()
 	{
 		PLAYER_STATUS.ToggleLightStatus();
+
+		if (PLAYER_STATUS.GetLightStatus())
+			AudioManager::instance().loadSound("Resources/Sounds/LightChange.ogg", 0.3f, false).Play();
+		else
+			AudioManager::instance().loadSound("Resources/Sounds/DarkChange.ogg", 0.3f, false).Play();
+
 		for (Entity player : m_entities)
 		{
 			if (g_engine.m_coordinator.ComponentExists<ColliderComponent>(player))
