@@ -39,7 +39,8 @@ namespace Rogue
 			{
 				m_waypoints.push_back(waypoint);
 			}
-			m_nextPoint.push(*stats.getWaypoints().begin());
+			if(stats.getWaypoints().size())
+				m_nextPoint.push(*stats.getWaypoints().begin());
 		}
 
 		if (g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(m_entity))
