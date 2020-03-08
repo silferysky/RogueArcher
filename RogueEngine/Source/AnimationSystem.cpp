@@ -87,11 +87,17 @@ namespace Rogue
 			animate->setCurrentFrame(static_cast<int>(currentFrame));
 		}
 
-		double min = currentFrame / totalFrames;
-		double max = ++currentFrame / totalFrames;
+		//double min = currentFrame / totalFrames;
+		//double max = ++currentFrame / totalFrames;
 
-		sprite->setTexCoordMinX(static_cast<float>(min));
-		sprite->setTexCoordMaxX(static_cast<float>(max));
+		//sprite->setTexCoordMinX(static_cast<float>(min));
+		//sprite->setTexCoordMaxX(static_cast<float>(max));
+
+		double offset = currentFrame++ / totalFrames;
+		double scale = 1.0f / totalFrames;
+
+		sprite->setTexCoordOffsetX(static_cast<float>(offset));
+		sprite->setTexCoordScaleX(static_cast<float>(scale));
 
 		if (animate->getIsAnimating())
 			animate->setCurrentFrame(static_cast<int>(currentFrame));
@@ -123,11 +129,17 @@ namespace Rogue
 			animate->setCurrentFrame(static_cast<int>(currentFrame));
 		}
 
-		double min = (currentFrame - 1) / totalFrames;
-		double max = currentFrame-- / totalFrames;
+		//double min = (currentFrame - 1) / totalFrames;
+		//double max = currentFrame-- / totalFrames;
 
-		sprite->setTexCoordMinX(static_cast<float>(min));
-		sprite->setTexCoordMaxX(static_cast<float>(max));
+		//sprite->setTexCoordMinX(static_cast<float>(min));
+		//sprite->setTexCoordMaxX(static_cast<float>(max));
+
+		double offset = --currentFrame / totalFrames;
+		double scale = 1.0f / totalFrames;
+
+		sprite->setTexCoordOffsetX(static_cast<float>(offset));
+		sprite->setTexCoordScaleX(static_cast<float>(scale));
 
 		if (animate->getIsAnimating())
 			animate->setCurrentFrame(static_cast<int>(currentFrame));

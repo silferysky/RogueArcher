@@ -77,6 +77,8 @@ namespace Rogue
 
 		m_transformLocation = glGetUniformLocation(m_shader.GetShader(), "transform");
 		m_filterLocation = glGetUniformLocation(m_shader.GetShader(), "colourFilter");
+		m_uvScaleLocation = glGetUniformLocation(m_shader.GetShader(), "uvScale");
+		m_uvOffsetLocation = glGetUniformLocation(m_shader.GetShader(), "uvOffset");
 
 		m_foregroundTransformLocation = glGetUniformLocation(m_foregroundShader.GetShader(), "transform");
 		m_foregroundFilterLocation = glGetUniformLocation(m_foregroundShader.GetShader(), "colourFilter");
@@ -226,8 +228,11 @@ namespace Rogue
 		transformMat = glm::scale(transformMat, glm::vec3(transform.GetScale().x, transform.GetScale().y, 1.0f));
 
 		glBindTexture(GL_TEXTURE_2D, texture.m_texture);
-		UpdateTextureCoords(sprite.getTexCoordMinX(), sprite.getTexCoordMaxX());
-		UpdateTextureCoordsY(sprite.getTexCoordMinY(), sprite.getTexCoordMaxY());
+		//UpdateTextureCoords(sprite.getTexCoordMinX(), sprite.getTexCoordMaxX());
+		//UpdateTextureCoordsY(sprite.getTexCoordMinY(), sprite.getTexCoordMaxY());
+
+		glUniform2f(m_uvScaleLocation, sprite.getTexCoordScale().x, sprite.getTexCoordScale().y);
+		glUniform2f(m_uvOffsetLocation, sprite.getTexCoordOffset().x, sprite.getTexCoordOffset().y);
 
 		// Parallax
 		if (g_engine.m_coordinator.ComponentExists<BackgroundComponent>(entity))
@@ -292,6 +297,7 @@ namespace Rogue
 		glBindTexture(GL_TEXTURE_2D, texture.m_texture);
 		UpdateTextureCoords(sprite.getTexCoordMinX(), sprite.getTexCoordMaxX());
 		UpdateTextureCoordsY(sprite.getTexCoordMinY(), sprite.getTexCoordMaxY());
+
 		// model to world, world to view, view to projection
 		glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(viewMat));
 
@@ -317,7 +323,10 @@ namespace Rogue
 		glBindTexture(GL_TEXTURE_2D, texture.m_texture);
 
 		auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
-		auto& tileMap = g_engine.m_coordinator.GetComponent<TileMapComponent>(entity).GetTileMap();
+		auto& tileComp = g_engine.m_coordinator.GetComponent<TileMapComponent>(entity);
+		auto& tileMap = tileComp.GetTileMap();
+
+		glUniform2f(m_uvScaleLocation, tileComp.GetUVScale().x, tileComp.GetUVScale().y);
 
 		std::cout << "Tiles: " << tileMap.size() << std::endl;
 
@@ -330,8 +339,10 @@ namespace Rogue
 			transformMat = glm::rotate(transformMat, transform.GetRotation(), glm::vec3(0.0f, 0.0f, 1.0f));
 			transformMat = glm::scale(transformMat, glm::vec3(transform.GetScale().x, transform.GetScale().y, 1.0f));
 
-			UpdateTextureCoords(tile.m_min.x, tile.m_max.x);
-			UpdateTextureCoordsY(tile.m_min.y, tile.m_max.y);
+			//UpdateTextureCoords(tile.m_min.x, tile.m_max.x);
+			//UpdateTextureCoordsY(tile.m_min.y, tile.m_max.y);
+
+			glUniform2f(m_uvOffsetLocation, tile.m_min.x, tile.m_min.y);
 
 			// model to world, world to view, view to projection
 			glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(m_pCamera->GetViewMatrix()));

@@ -18,8 +18,8 @@ layout (std140) uniform Matrices
 };
 
 uniform mat4 transform;
-// uniform vec2 uvScale;
-// uniform vec2 uvOffset; 
+uniform vec2 uvScale;
+uniform vec2 uvOffset; 
 
 void main()
 {
@@ -32,9 +32,9 @@ void main()
   TexCoord = vec2(aTexCoord.x, aTexCoord.y);
   
   // Calculate the scale of the texture coordinates
-  // TexCoord.x *= uvScale.x;
-  // TexCoord.y *= uvScale.y;
+  TexCoord.x *= uvScale.x;
+  TexCoord.y *= uvScale.y;
 
   // Offset current texture coordinates
-  // TexCoord += uvCoordsOffset; 
+  TexCoord += uvOffset; 
 }
