@@ -34,7 +34,7 @@ namespace Rogue
 	public:
 		using TileMap = std::vector<TrueTile>;
 	private:
-		std::vector<Tile> m_GlobalTileSet;
+		//std::vector<Tile> m_GlobalTileSet;
 		std::vector<Tile> m_TileSet;
 		bool m_openWindow;
 		bool m_isCollision;
@@ -60,8 +60,9 @@ namespace Rogue
 		int m_currentmode = 0;
 		Entity m_tileMapEnt;
 
+		void SaveTileMap(TileMap& globalMap);
 	public:
-		std::vector<Tile>& GetTileSet();
+		//std::vector<Tile>& GetTileSet();
 
 		virtual std::string Serialize() override final;
 		virtual void Deserialize(std::string_view deserializeStr) override final;
@@ -78,7 +79,6 @@ namespace Rogue
 		Entity Create2DSprite(Vec2 position, Vec2 scale, std::string_view tilepath);
 		void ClearTileset();
 		
-		void SaveTileMap(TileMap& globalMap);
 
 		virtual void Init() override final;
 		virtual void Update() override final;
