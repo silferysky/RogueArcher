@@ -189,7 +189,7 @@ namespace Rogue
 				percent = 1.0f / percent;
 #endif			//if (percent < noise)
 			{
-				std::cout << "FPS: " << fps << std::endl;
+				//std::cout << "FPS: " << fps << std::endl;
 			}
 			m_stepCount = 0;
 

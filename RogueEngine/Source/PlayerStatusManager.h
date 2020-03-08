@@ -69,6 +69,8 @@ namespace Rogue
 		Entity GetHitchhikedEntity() const;
 		void SetHitchhikeIndicator(Entity ent);
 		Entity GetHitchhikeIndicator() const;
+		void SetHitchhikableEntity(Entity ent);
+		Entity GetHitchhikableEntity();
 
 		//For modifiying sprite based on state
 		void ChangePlayerSprite();
@@ -120,6 +122,7 @@ namespace Rogue
 		bool m_isLightMode;
 
 		//Hitchhiking mechanic
+		Entity m_hitchhikableEntity;
 		Entity m_hitchhikedEntity;
 		Entity m_hitchhikeIndicator;
 

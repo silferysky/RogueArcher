@@ -8,24 +8,25 @@ namespace Rogue
 	PlayerStatusManager::PlayerStatusManager() :
 		m_runCount{ 0 },
 		m_entity{ MAX_ENTITIES },
-		m_indicator{MAX_ENTITIES},
-		m_playerStartPos{Vec2(0,0)},
+		m_indicator{ MAX_ENTITIES },
+		m_playerStartPos{ Vec2(0,0) },
 		m_isActive{ true },
 		m_freezeControlDuration{ -1.0f },
 		m_isLightMode{ true },
 		m_hasJumped{ false },
-		m_moveLeft {false},
-		m_indicatorShown{true},
-		m_death{false},
-		m_maxJumpTimer{0.5f},
+		m_moveLeft{ false },
+		m_indicatorShown{ true },
+		m_death{ false },
+		m_maxJumpTimer{ 0.5f },
 		m_hitchhikedEntity{ MAX_ENTITIES },
-		m_inLightDur{0.0f},
-		m_maxTeleportCharge {3.0f},
+		m_hitchhikableEntity{ MAX_ENTITIES },
+		m_inLightDur{ 0.0f },
+		m_maxTeleportCharge{ 3.0f },
 		m_teleportCharge{ 3.0f },
-		m_teleportDelayTimer {0.0f},
-		m_startingPos{0.0f, 0.0f},
-		m_checkpoint{0.0f, 0.0f},
-		m_soulsCollected{0},
+		m_teleportDelayTimer{ 0.0f },
+		m_startingPos{ 0.0f, 0.0f },
+		m_checkpoint{ 0.0f, 0.0f },
+		m_soulsCollected{ 0 },
 		m_infiniteJumps{ false }
 	{
 	}
@@ -39,6 +40,7 @@ namespace Rogue
 		m_indicatorShown = true;
 		m_death = false;
 		m_hitchhikedEntity = MAX_ENTITIES;
+		m_hitchhikableEntity = MAX_ENTITIES;
 		m_inLightDur = 0.0f;
 		m_teleportCharge = 3.0f;
 		m_teleportDelayTimer = 0.0f;
@@ -246,6 +248,16 @@ namespace Rogue
 	Entity PlayerStatusManager::GetHitchhikeIndicator() const
 	{
 		return m_hitchhikeIndicator;
+	}
+
+	void PlayerStatusManager::SetHitchhikableEntity(Entity ent)
+	{
+		m_hitchhikableEntity = ent;
+	}
+
+	Entity PlayerStatusManager::GetHitchhikableEntity()
+	{
+		return m_hitchhikableEntity;
 	}
 
 	void PlayerStatusManager::SetCheckpoint(Vec2 checkpoint)
