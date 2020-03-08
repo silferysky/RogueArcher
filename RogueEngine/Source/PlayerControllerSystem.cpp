@@ -170,8 +170,7 @@ namespace Rogue
 				//For Hitchhiking Indicator
 				if (PLAYER_STATUS.GetHitchhikeIndicator() != MAX_ENTITIES &&
 					g_engine.m_coordinator.ComponentExists<ChildComponent>(PLAYER_STATUS.GetHitchhikeIndicator()) &&
-					g_engine.m_coordinator.ComponentExists<TransformComponent>(PLAYER_STATUS.GetHitchhikeIndicator()) &&
-					g_engine.m_coordinator.ComponentExists<UIComponent>(PLAYER_STATUS.GetHitchhikeIndicator()))
+					g_engine.m_coordinator.ComponentExists<TransformComponent>(PLAYER_STATUS.GetHitchhikeIndicator()))
 				{
 					Entity toDrawAtEntity = GetEntityRaycasted();
 
@@ -183,15 +182,10 @@ namespace Rogue
 							//std::cout << "Entity Transform " << g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetHitchhikedEntity()).GetPosition().x << "," << g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetHitchhikedEntity()).GetPosition().y << std::endl;
 							g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetHitchhikedEntity()).setPosition(entTrans->get().GetPosition());
 							g_engine.m_coordinator.GetComponent<ChildComponent>(PLAYER_STATUS.GetHitchhikedEntity()).SetLocalDirty();
-							g_engine.m_coordinator.GetComponent<ChildComponent>(PLAYER_STATUS.GetHitchhikedEntity()).ResetGlobalDirty();
-							g_engine.m_coordinator.GetComponent<UIComponent>(PLAYER_STATUS.GetHitchhikedEntity()).setIsActive(true);
+							g_engine.m_coordinator.GetComponent<ChildComponent>(PLAYER_STATUS.GetHitchhikedEntity()).ResetGlobalDirty(); 
 							
 							//std::cout << "Entity Transform " << entTrans->get().GetPosition().x << "," << entTrans->get().GetPosition().y << std::endl;
 						}
-					}
-					else
-					{
-						g_engine.m_coordinator.GetComponent<UIComponent>(PLAYER_STATUS.GetHitchhikedEntity()).setIsActive(false);
 					}
 				}
 			}
