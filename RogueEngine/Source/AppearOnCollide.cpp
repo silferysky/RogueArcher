@@ -1,6 +1,6 @@
 #include "Precompiled.h"
 #include "AppearOnCollide.h"
-#include "Main.h"	//For g_deltaTime and coordinator
+//#include "Main.h"	//For g_deltaTime and coordinator
 
 namespace Rogue
 {

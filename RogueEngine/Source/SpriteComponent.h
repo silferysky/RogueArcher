@@ -34,6 +34,9 @@ namespace Rogue
 		float m_texCoordMinY = 0.0f;
 		float m_texCoordMaxY = 1.0f;
 
+		Vec2 m_texCoordScale = { 1.0f, 1.0f };
+		Vec2 m_texCoordOffset = { 0.0f, 0.0f };
+
 		glm::vec4 m_filter = { 1.0f, 1.0f, 1.0f, 1.0f };
 	public:
 		SpriteComponent() = default;
@@ -53,6 +56,14 @@ namespace Rogue
 
 		void setTexCoordMaxY(const float& texCoordMaxY);
 		float getTexCoordMaxY() const;
+
+		void setTexCoordScaleX(const float& texCoordScaleX);
+		void setTexCoordScaleY(const float& texCoordScaleY);
+		Vec2 getTexCoordScale() const;
+
+		void setTexCoordOffsetX(const float& texCoordOffsetX);
+		void setTexCoordOffsetY(const float& texCoordOffsetY);
+		Vec2 getTexCoordOffset() const;
 
 		void setTexturePath(std::string_view texturePath);
 		std::string_view getTexturePath() const;

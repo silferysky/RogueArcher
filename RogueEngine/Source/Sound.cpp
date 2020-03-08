@@ -19,7 +19,6 @@ Technology is prohibited.
 #include "Precompiled.h"
 #include "Sound.h"
 #include "Logger.h"
-#include "Main.h"
 #include "FMODHelper.h"
 
 namespace Rogue

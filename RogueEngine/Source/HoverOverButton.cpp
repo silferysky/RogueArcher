@@ -2,7 +2,7 @@
 #include "HoverOverButton.h"
 #include "CollisionManager.h"
 #include "PickingManager.h"
-#include "Main.h"	//For g_deltaTime and coordinator
+//#include "Main.h"	//For g_deltaTime and coordinator
 
 namespace Rogue
 {

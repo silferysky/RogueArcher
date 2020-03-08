@@ -173,6 +173,9 @@
     <Filter Include="RogueEngine\Systems\AI\Script Types\Trigger">
       <UniqueIdentifier>{842bfbfe-8895-4878-a60f-3182b3139b47}</UniqueIdentifier>
     </Filter>
+    <Filter Include="RogueEditor\EditorFiles\Main Windows\Tile Set">
+      <UniqueIdentifier>{7afe4e21-e2ce-4ee0-88fb-4a1164547d2c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Resource.h">
@@ -688,9 +691,6 @@
     <ClInclude Include="Source\EditorProject.h">
       <Filter>RogueEditor\EditorFiles\Main Windows</Filter>
     </ClInclude>
-    <ClInclude Include="Source\EditorTileSet.h">
-      <Filter>RogueEditor\EditorFiles\Main Windows</Filter>
-    </ClInclude>
     <ClInclude Include="Source\EditorViewport.h">
       <Filter>RogueEditor\EditorFiles\Main Windows</Filter>
     </ClInclude>
@@ -699,6 +699,15 @@
     </ClInclude>
     <ClInclude Include="Source\TriggerZoom.h">
       <Filter>RogueEngine\Systems\AI\Script Types\Trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EditorTileSet.h">
+      <Filter>RogueEditor\EditorFiles\Main Windows\Tile Set</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TileMapComponent.h">
+      <Filter>RogueEditor\EditorFiles\Main Windows\Tile Set</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TileMapSystem.h">
+      <Filter>RogueEditor\EditorFiles\Main Windows\Tile Set</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1104,9 +1113,6 @@
     <ClCompile Include="Source\EditorProject.cpp">
       <Filter>RogueEditor\EditorFiles\Main Windows</Filter>
     </ClCompile>
-    <ClCompile Include="Source\EditorTileSet.cpp">
-      <Filter>RogueEditor\EditorFiles\Main Windows</Filter>
-    </ClCompile>
     <ClCompile Include="Source\EditorViewport.cpp">
       <Filter>RogueEditor\EditorFiles\Main Windows</Filter>
     </ClCompile>
@@ -1115,6 +1121,15 @@
     </ClCompile>
     <ClCompile Include="Source\TriggerZoom.cpp">
       <Filter>RogueEngine\Systems\AI\Script Types\Trigger</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EditorTileSet.cpp">
+      <Filter>RogueEditor\EditorFiles\Main Windows\Tile Set</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TileMapSystem.cpp">
+      <Filter>RogueEditor\EditorFiles\Main Windows\Tile Set</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TileMapComponent.cpp">
+      <Filter>RogueEditor\EditorFiles\Main Windows\Tile Set</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

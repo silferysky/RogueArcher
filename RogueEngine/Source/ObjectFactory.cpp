@@ -18,7 +18,6 @@ Technology is prohibited.
 #pragma once
 #include "Precompiled.h"
 
-#include "Main.h"
 #include "ObjectFactory.h"
 #include "Types.h"
 #include "logger.h"

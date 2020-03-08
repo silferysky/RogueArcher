@@ -18,7 +18,6 @@ Technology is prohibited.
 #include "Precompiled.h"
 #include "ScriptComponent.h"
 #include "Logger.h"
-#include "Main.h"
 #include "PlayerStatusManager.h"
 #include "GameEvent.h"
 

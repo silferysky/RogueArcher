@@ -1,7 +1,7 @@
 #include "Precompiled.h"
 #include "TriggerZoom.h"
 //#include "CameraManager.h"
-#include "Main.h"
+//#include "Main.h"
 
 namespace Rogue
 {

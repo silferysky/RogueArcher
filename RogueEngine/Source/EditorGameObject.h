@@ -18,7 +18,7 @@ Technology is prohibited.
 #pragma once
 #include "IEditable.h"
 #include "REEngine.h"
-#include "Main.h"
+
 namespace Rogue
 {
 	class ImGuiGameObject : public IEditable

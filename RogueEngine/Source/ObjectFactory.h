@@ -16,7 +16,6 @@ Technology is prohibited.
 */
 /* End Header **************************************************************************/
 #pragma once
-#include "Main.h"
 
 #define FILETYPE_LEVEL 0
 #define FILETYPE_ARCHETYPE 1

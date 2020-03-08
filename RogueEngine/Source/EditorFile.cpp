@@ -18,7 +18,6 @@ Technology is prohibited.
 #include "Precompiled.h"
 #include "EditorFile.h"
 #include "EditorTileSet.h"
-#include "Main.h"
 
 namespace Rogue
 {

@@ -83,6 +83,36 @@ namespace Rogue
 		return m_texCoordMaxY;
 	}
 
+	void SpriteComponent::setTexCoordScaleX(const float& texCoordScaleX)
+	{
+		m_texCoordScale.x = texCoordScaleX;
+	}
+
+	void SpriteComponent::setTexCoordScaleY(const float& texCoordScaleY)
+	{
+		m_texCoordScale.x = texCoordScaleY;
+	}
+
+	Vec2 SpriteComponent::getTexCoordScale() const
+	{
+		return m_texCoordScale;
+	}
+
+	void SpriteComponent::setTexCoordOffsetX(const float& texCoordOffsetX)
+	{
+		m_texCoordOffset.x = texCoordOffsetX;
+	}
+
+	void SpriteComponent::setTexCoordOffsetY(const float& texCoordOffsetY)
+	{
+		m_texCoordOffset.y = texCoordOffsetY;
+	}
+
+	Vec2 SpriteComponent::getTexCoordOffset() const
+	{
+		return m_texCoordOffset;
+	}
+
 	glm::vec4& SpriteComponent::getFilter()
 	{
 		return m_filter;

@@ -17,7 +17,6 @@ Technology is prohibited.
 /* End Header **************************************************************************/
 #include "Precompiled.h"
 #include "PatrolAI.h"
-#include "Main.h"
 #include "ParentEvent.h"
 
 namespace Rogue
