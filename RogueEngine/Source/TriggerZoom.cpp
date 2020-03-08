@@ -1,6 +1,6 @@
 #include "Precompiled.h"
 #include "TriggerZoom.h"
-//#include "CameraManager.h"
+#include "CameraManager.h"
 //#include "Main.h"
 
 namespace Rogue
@@ -13,7 +13,7 @@ namespace Rogue
 			m_zoomValueFinal{ zoomValue }, 
 			m_zoomValueInit {0.0f},
 			m_zoomDuration{ zoomDuration },
-			m_zoomTimer{m_zoomDelay},
+			m_zoomTimer{zoomDelay},
 			m_zoomDelay {zoomDelay},
 			m_zoomFactor {0.001f}{}
 
@@ -22,7 +22,7 @@ namespace Rogue
 		if (!m_isZooming || m_doCount == 0)
 			return;
 
-		float cameraZoom = 0.0f;//CameraManager::instance().GetCameraZoom();
+		float cameraZoom = CameraManager::instance().GetCameraZoom();
 
 		//If waiting for delay
 		if (m_zoomTimer < m_zoomDelay)
@@ -31,11 +31,11 @@ namespace Rogue
 		}
 		else//if (m_zoomTimer >= m_zoomDelay)
 		{
-			//CameraManager::instance().SetCameraZoom(cameraZoom + m_zoomFactor);
-
 			//If the zoom is at the end
 			if (std::abs(cameraZoom - m_zoomValueFinal) < 0.001f)
 			{
+				CameraManager::instance().SetCameraZoom(m_zoomValueFinal);
+
 				//Counter check
 				if (m_returning)
 					--m_doCount;
@@ -52,7 +52,11 @@ namespace Rogue
 				float tempZoom = m_zoomValueFinal;
 				m_zoomValueFinal = m_zoomValueInit;
 				m_zoomValueInit = tempZoom;
-				m_zoomFactor = (m_zoomValueFinal - m_zoomValueInit) / m_zoomDuration;
+				m_zoomFactor = (m_zoomValueFinal - m_zoomValueInit) / m_zoomDuration / 60.0f;
+			}
+			else
+			{
+				CameraManager::instance().SetCameraZoom(cameraZoom + m_zoomFactor);
 			}
 		}
 	}
@@ -63,7 +67,7 @@ namespace Rogue
 			return;
 
 		m_isZooming = true;
-		//m_zoomValueInit = CameraManager::instance().GetCameraZoom();
-		m_zoomFactor = (m_zoomValueFinal - m_zoomValueInit) / m_zoomDuration;
+		m_zoomValueInit = CameraManager::instance().GetCameraZoom();
+		m_zoomFactor = (m_zoomValueFinal - m_zoomValueInit) / m_zoomDuration / 60.0f;
 	}
 }
