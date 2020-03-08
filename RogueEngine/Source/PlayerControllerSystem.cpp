@@ -172,24 +172,26 @@ namespace Rogue
 					g_engine.m_coordinator.ComponentExists<TransformComponent>(PLAYER_STATUS.GetHitchhikeIndicator()))
 				{
 					Entity toDrawAtEntity = GetEntityRaycasted();
-					std::cout << "Entity is " << toDrawAtEntity << std::endl;
-
+					//std::cout << "Entity is " << toDrawAtEntity << std::endl;
+				
 					if (toDrawAtEntity != MAX_ENTITIES)
 					{
 						if (auto entTrans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(toDrawAtEntity))
 						{
-							//std::cout << "Entity Transform " << g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetHitchhikedEntity()).GetPosition().x << "," << g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetHitchhikedEntity()).GetPosition().y << std::endl;
-							g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetHitchhikedEntity()).setPosition(entTrans->get().GetPosition());
-							
-							//std::cout << "Entity Transform " << entTrans->get().GetPosition().x << "," << entTrans->get().GetPosition().y << std::endl;
+							HierarchyInfo& entInfo = g_engine.m_coordinator.GetHierarchyInfo(toDrawAtEntity);
+
+							if (entInfo.m_tag == "Hitchhike" || entInfo.m_tag == "hitchhike")
+							{
+								g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetHitchhikeIndicator()).setPosition(entTrans->get().GetPosition());
+							}
 						}
 					}
 					else
 					{
 						//std::cout << "Entity is " << toDrawAtEntity << std::endl;
 						//std::cout << "Entity Transform " << g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetHitchhikedEntity()).GetPosition().x << "," << g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetHitchhikedEntity()).GetPosition().y << std::endl;
-						g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetHitchhikedEntity()).setPosition(Vec2(10000.0f, 10000.0f));
-
+						g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetHitchhikeIndicator()).setPosition(Vec2(10000.0f, 10000.0f));
+				
 						//std::cout << "Entity Transform " << entTrans->get().GetPosition().x << "," << entTrans->get().GetPosition().y << std::endl;
 					}
 				}
