@@ -172,13 +172,24 @@ namespace Rogue
 	void REEngine::Update()
 	{
 		m_stepCount = 0;
-		Timer::ChronoClock mainLoopTimer;
+		static Timer::ChronoClock mainLoopTimer;
+		const float noise = 0.5f;
+		static float fps = 60.0f;
 
 		while (m_gameIsRunning)
 		{
 			g_deltaTime = std::chrono::duration_cast<std::chrono::microseconds>(m_loopEnd - m_loopStart).count() / Timer::s_microsecPerSec;
 			m_loopStart = mainLoopTimer.now();
+			
 
+			float realFps = 1.0f / g_deltaTime;
+#if 0			float percent = realFps / fps;
+			if (percent > 1.0f)
+				percent = 1.0f / percent;
+#endif			//if (percent < noise)
+			{
+				std::cout << "FPS: " << fps << std::endl;
+			}
 			m_stepCount = 0;
 
 			m_accumulatedTime += g_deltaTime;
