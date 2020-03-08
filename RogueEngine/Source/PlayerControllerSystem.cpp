@@ -1096,10 +1096,12 @@ namespace Rogue
 						Vec2DotProduct(teleportVec, edge.m_normal);
 
 					if (t > 0.0f && t < smallestT)
+					{
 						smallestT = t;
+						calculatedEntity = entity;
+					}
 				}
 
-				calculatedEntity = entity;
 				calculatedPos = playerTransform.GetPosition() + smallestT * teleportVec;
 
 				teleportLine = LineSegment(playerTransform.GetPosition(), calculatedPos);
