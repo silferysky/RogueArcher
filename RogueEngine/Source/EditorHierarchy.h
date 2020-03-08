@@ -18,7 +18,6 @@ Technology is prohibited.
 #pragma once
 #include "IEditable.h"
 #include "REEngine.h"
-#include "Main.h"
 #include "EditorHierarchyInfo.h"
 #include "EventDispatcher.h"
 #include "KeyEvent.h"

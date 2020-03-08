@@ -1,7 +1,7 @@
 #include "Precompiled.h"
 #include "ActivateOnDeathExa.h"
 #include "PlayerStatusManager.h"
-#include "Main.h"	//For g_deltaTime and coordinator
+////#include "Main.h"	//For g_deltaTime and coordinator
 
 namespace Rogue
 {

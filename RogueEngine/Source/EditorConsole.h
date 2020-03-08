@@ -18,7 +18,6 @@ Technology is prohibited.
 #pragma once
 #include "IEditable.h"
 #include "Timer.h"
-#include "Main.h"
 
 namespace Rogue
 {

@@ -29,7 +29,6 @@ Technology is prohibited.
 #include "EventDispatcher.h"
 #include "CollisionManager.h"
 #include "ChildComponent.h"
-#include "Main.h"
 #include "EditorTileSet.h"
 namespace Rogue
 {

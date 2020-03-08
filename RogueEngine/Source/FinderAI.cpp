@@ -17,7 +17,6 @@ Technology is prohibited.
 /* End Header **************************************************************************/
 #include "Precompiled.h"
 #include "FinderAI.h"
-#include "Main.h"
 
 namespace Rogue
 {

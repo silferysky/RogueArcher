@@ -17,7 +17,7 @@ Technology is prohibited.
 /* End Header **************************************************************************/
 #pragma once
 #include "IEditable.h"
-#include "Main.h"
+
 namespace Rogue
 {
 	class ImGuiEditorFile : public IEditable

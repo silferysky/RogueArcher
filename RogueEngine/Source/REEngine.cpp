@@ -28,7 +28,6 @@ Technology is prohibited.
 #include "REEngine.h"
 #include "GLHelper.hpp"
 #include "ComponentList.h"
-#include "Main.h"
 #include "Editor.h"
 #include "VSync.h"
 #include "CameraManager.h"

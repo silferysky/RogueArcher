@@ -27,7 +27,6 @@
 #include "MaskingSystem.h"
 #include "FadeSystem.h"
 #include "Editor.h"
-#include "Main.h"
 
 namespace Rogue
 {
