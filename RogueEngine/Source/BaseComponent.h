@@ -17,7 +17,6 @@ Technology is prohibited.
 /* End Header **************************************************************************/
 #pragma once
 #include "ISerializable.h"
-#include "EditorInspector.h"
 
 namespace Rogue
 {

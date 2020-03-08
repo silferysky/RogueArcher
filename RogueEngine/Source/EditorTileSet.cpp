@@ -105,7 +105,7 @@ namespace Rogue
 #endif
 	}
 
-	ImGuiTileSet::ImGuiTileSet() :m_TileSet(), m_GlobalTileSet(),
+	ImGuiTileSet::ImGuiTileSet() :m_TileSet(),
 		m_minY(0), m_minX(0), m_maxX(0), m_maxY(0), m_tileSize(61), m_tilesHeight(0),
 		m_tilesWidth(0), m_currentTileX(0), m_currentTileY(0), m_openWindow(true), m_isCollision(false),
 		m_check(true), m_firstclicked(false), m_globalcheck(false), m_deleteTile(false), m_hasTextureChanged(false), m_groundtag(false),
@@ -523,7 +523,7 @@ namespace Rogue
 		
 		g_engine.m_coordinator.DestroyEntity(m_tileMapEnt);
 		m_TileSet.clear();
-		m_GlobalTileSet.clear();
+		//m_GlobalTileSet.clear();
 	}
 
 
@@ -639,10 +639,10 @@ namespace Rogue
 		//}
 	}
 
-	std::vector<Tile>& ImGuiTileSet::GetTileSet()
-	{
-		return m_GlobalTileSet;
-	}
+	//std::vector<Tile>& ImGuiTileSet::GetTileSet()
+	//{
+	//	return m_GlobalTileSet;
+	//}
 
 	void ImGuiTileSet::SaveTileMap(TileMap& globalMap)
 	{

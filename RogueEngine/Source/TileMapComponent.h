@@ -47,15 +47,22 @@ namespace Rogue
 		}
 	};
 
-	class TileMapComponent : BaseComponent
+	class TileMapComponent : public BaseComponent
 	{
+		Vec2 m_UVScale;
 		std::vector<TrueTile> m_tilemap;
-
 	public:
-		// Does nothing. Cao ni ma
-		std::string Serialize() { return std::string(); }
-		void Deserialize(std::string_view deserializeStr) {}
+		TileMapComponent() :
+			m_UVScale{0.2f, 0.2f}
+		{}
 
-		std::vector<TrueTile>& GetTileMap() { return m_tilemap; }
+		// Does nothing. Cao ni ma
+		std::string Serialize()								{ return std::string(); }
+		void Deserialize(std::string_view deserializeStr)	{}
+
+		std::vector<TrueTile>& GetTileMap()					{ return m_tilemap; }
+		Vec2 GetUVScale() const								{ return m_UVScale; }
+
+		void SetUVScale(Vec2 scale)							{ m_UVScale = scale; }
 	};
 }
