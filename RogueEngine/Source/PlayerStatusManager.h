@@ -86,6 +86,10 @@ namespace Rogue
 		unsigned GetSoulsCollected() const;
 		void IncrementSoulsCollected();
 
+		//Ending
+		void SetEnding(bool ending);
+		bool GetEnding() const;
+
 		//Cheats
 		void SetInfiniteJumps(bool infinite = true);
 		bool GetInfiniteJumps() const;
@@ -132,6 +136,9 @@ namespace Rogue
 
 		// Collectibles
 		unsigned m_soulsCollected;
+
+		//ending
+		bool m_isEnding;
 
 		bool m_infiniteJumps;
 	};

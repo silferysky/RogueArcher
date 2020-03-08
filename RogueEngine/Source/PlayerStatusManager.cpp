@@ -283,6 +283,7 @@ namespace Rogue
 	void PlayerStatusManager::SetSoulsCollected(unsigned soulsCollected)
 	{
 		m_soulsCollected = soulsCollected;
+
 	}
 
 	unsigned PlayerStatusManager::GetSoulsCollected() const
@@ -293,6 +294,16 @@ namespace Rogue
 	void PlayerStatusManager::IncrementSoulsCollected()
 	{
 		++m_soulsCollected;
+	}
+
+	void PlayerStatusManager::SetEnding(bool ending)
+	{
+		m_isEnding = ending;
+	}
+
+	bool PlayerStatusManager::GetEnding() const
+	{
+		return m_isEnding;
 	}
 
 	void PlayerStatusManager::SetInfiniteJumps(bool infinite)
