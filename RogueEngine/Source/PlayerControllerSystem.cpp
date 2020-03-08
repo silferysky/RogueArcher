@@ -177,7 +177,6 @@ namespace Rogue
 
 					if (toDrawAtEntity != MAX_ENTITIES)
 					{
-						g_engine.m_coordinator.GetComponent<UIComponent>(PLAYER_STATUS.GetHitchhikedEntity()).setIsActive(true);
 						if (auto entTrans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(toDrawAtEntity))
 						{
 							//std::cout << "Entity is " << toDrawAtEntity << std::endl;
@@ -185,6 +184,7 @@ namespace Rogue
 							g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetHitchhikedEntity()).setPosition(entTrans->get().GetPosition());
 							g_engine.m_coordinator.GetComponent<ChildComponent>(PLAYER_STATUS.GetHitchhikedEntity()).SetLocalDirty();
 							g_engine.m_coordinator.GetComponent<ChildComponent>(PLAYER_STATUS.GetHitchhikedEntity()).ResetGlobalDirty();
+							g_engine.m_coordinator.GetComponent<UIComponent>(PLAYER_STATUS.GetHitchhikedEntity()).setIsActive(true);
 							
 							//std::cout << "Entity Transform " << entTrans->get().GetPosition().x << "," << entTrans->get().GetPosition().y << std::endl;
 						}
