@@ -52,7 +52,7 @@ namespace Rogue
 				float tempZoom = m_zoomValueFinal;
 				m_zoomValueFinal = m_zoomValueInit;
 				m_zoomValueInit = tempZoom;
-				m_zoomFactor = (m_zoomValueFinal - m_zoomValueInit) / m_zoomDuration;
+				m_zoomFactor = (m_zoomValueFinal - m_zoomValueInit) / m_zoomDuration / 60.0f;
 			}
 			else
 			{
@@ -68,6 +68,6 @@ namespace Rogue
 
 		m_isZooming = true;
 		m_zoomValueInit = CameraManager::instance().GetCameraZoom();
-		m_zoomFactor = (m_zoomValueFinal - m_zoomValueInit) / m_zoomDuration;
+		m_zoomFactor = (m_zoomValueFinal - m_zoomValueInit) / m_zoomDuration / 60.0f;
 	}
 }
