@@ -147,13 +147,6 @@ namespace Rogue
 			Entity particle = g_engine.m_coordinator.Clone(unitParticle, false);
 			TransformComponent& particleTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(particle);
 
-			double a = static_cast<double>(rand() * 2) * PI;
-			double r = spread.x * sqrt(rand());
-
-			float x = r * cos(a);
-			float y = r * sin(a);
-
-			particleTransform.setPosition(Vec2(x + positionalOffset.x, y + positionalOffset.y));
 			particleTransform.setScale(scale);
 			particleTransform.setZ(particleZ);
 
@@ -168,14 +161,16 @@ namespace Rogue
 			velocity.y = RandFloat() * 1000 * velocityFactor.y * sin(angle);
 
 			RigidbodyComponent& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(particle);
-			rigidbody.addForce(-velocity);
+			rigidbody.addForce(velocity);
 
-			double SqDistance = Vec2SqDistance(pos, particleTransform.GetPosition());
-			double SqVelocity = velocity.x * velocity.x + velocity.y * velocity.y;
-			double lifetime = sqrt(SqDistance / SqVelocity);
+			float lifetime = RandFloat(pEmitter.GetLifetimeLimit());
 
 			ParticleComponent& particleComp = g_engine.m_coordinator.CreateComponent<ParticleComponent>(particle);
 			particleComp.SetLifetime(lifetime);
+
+			Vec2 position = Vec2(pos.x + velocity.x * lifetime, pos.y + velocity.y * lifetime);
+
+			particleTransform.setPosition(position);
 		}
 
 		g_engine.m_coordinator.AddToDeleteQueue(unitParticle);
