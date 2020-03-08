@@ -183,7 +183,8 @@ namespace Rogue
 			
 
 			float realFps = 1.0f / g_deltaTime;
-#if 0			float percent = realFps / fps;
+#if 1		
+			float percent = realFps / fps;
 			if (percent > 1.0f)
 				percent = 1.0f / percent;
 #endif			//if (percent < noise)

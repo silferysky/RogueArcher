@@ -39,19 +39,19 @@ namespace Rogue
 
 	void ParticleSystem::Update()
 	{
-		g_engine.m_coordinator.InitTimeSystem("Particle System");
+		//g_engine.m_coordinator.InitTimeSystem("Particle System");
 
 		for (auto entity : m_entities)
 		{
 			auto& particle = g_engine.m_coordinator.GetComponent<ParticleComponent>(entity);
 
-			particle.Update(g_deltaTime);
+			particle.Update(g_fixedDeltaTime);
 
 			if (particle.GetLifetime() <= 0)
 				g_engine.m_coordinator.AddToDeleteQueue(entity);
 		}
 
-		g_engine.m_coordinator.EndTimeSystem("Particle System");
+		//g_engine.m_coordinator.EndTimeSystem("Particle System");
 	}
 
 	void ParticleSystem::Receive(Event& ev)

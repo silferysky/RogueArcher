@@ -89,6 +89,7 @@ namespace Rogue
 	void SceneManager::LoadLevel(const std::string& fileName)
 	{
 		auto start = Timer::instance().GetCurrTime();
+
 		if (PLAYER_STATUS.GetPlayerEntity() != MAX_ENTITIES)
 		{
 			//Telling PlayerControllerSystem to do full reset
@@ -100,6 +101,8 @@ namespace Rogue
 		//Setting up
 		setCurrentFileName(fileName);
 		ClearAllEntities();
+
+		g_engine.m_coordinator.ResetEntityQueue();
 
 		CameraManager::instance().SetCameraPos(glm::vec3());
 		std::shared_ptr<MenuControllerSystem> menuControl = g_engine.m_coordinator.GetSystem<MenuControllerSystem>();
