@@ -21,6 +21,7 @@ namespace Rogue
 	{
 		if (PlayerStatusManager::instance().GetEnding())
 		{
+			g_engine.m_coordinator.GetSystem<CameraSystem>()->setIsActive(true);
 			m_timer += g_deltaTime * g_engine.GetTimeScale();
 			//Freeze Player Controls			
 			m_souls = PLAYER_STATUS.GetSoulsCollected();
@@ -90,6 +91,7 @@ namespace Rogue
 			CameraShakeEvent shake(20.0f);
 			shake.SetSystemReceivers(static_cast<int>(SystemID::id_CAMERASYSTEM));
 			EventDispatcher::instance().AddEvent(shake);
+			
 			PlayerStatusManager::instance().SetEnding(true);
 		}
 	}
