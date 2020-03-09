@@ -164,7 +164,7 @@ namespace Rogue
 		const char* aiType[] = { "Static", "Patrol", "Finder", "Trigger",  "Platform", "Transition", "Appear on Collide", "Disappear on Collide", 
 			"UI Tele Charge 1", "UI Tele Charge 2", "UI Tele Charge 3", "Death", "Checkpoint", "Soul Collectible", "Teleport Animation", 
 			"Animate on Exa", "Animate on Ela", "Activate on Exa", "Activate on Ela", "Activate on Exa Death", "Activate on Ela Death", "Lights Flicker", 
-			"UI Hover Over Button", "UI Progress Bar", "Gameplay Ending", "Object Fade", "Zoom Trigger", "Emoji Script" };
+			"UI Hover Over Button", "UI Progress Bar", "Gameplay Ending", "Object Fade", "Zoom Trigger", "Emoji Script", "Trigger Emoji And Zoom" };
 		const char* aiState[] = { "Idle", "Chase", "Patrol"};
 		int tempInt = static_cast<int>(m_AIType);
 
