@@ -149,7 +149,7 @@ namespace Rogue
 		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 
 		glBindBuffer(GL_UNIFORM_BUFFER, m_uboMatrices);
-		glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::mat4), glm::value_ptr(g_engine.GetProjMat()));
+		//glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::mat4), glm::value_ptr(g_engine.GetProjMat()));
 
 		// For all entities
 		for (auto pair : m_drawQueue)
@@ -235,10 +235,10 @@ namespace Rogue
 		glUniform2f(m_uvOffsetLocation, sprite.getTexCoordOffset().x, sprite.getTexCoordOffset().y);
 
 		// Parallax
-		if (g_engine.m_coordinator.ComponentExists<BackgroundComponent>(entity))
+		/* if (g_engine.m_coordinator.ComponentExists<BackgroundComponent>(entity))
 			viewMat = m_pCamera->GetViewMatrix(g_engine.m_coordinator.GetComponent<BackgroundComponent>(entity).GetParallax());
 		else
-			viewMat = m_pCamera->GetViewMatrix();
+			viewMat = m_pCamera->GetViewMatrix(); */
 
 		// model to world, world to view, view to projection
 		// glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(viewMat));
@@ -299,7 +299,7 @@ namespace Rogue
 		UpdateTextureCoordsY(sprite.getTexCoordMinY(), sprite.getTexCoordMaxY());
 
 		// model to world, world to view, view to projection
-		glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(viewMat));
+		//glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(viewMat));
 
 		// modelMatrices[entityCount] = transformMat;
 		glUniformMatrix4fv(m_foregroundTransformLocation, 1, GL_FALSE, glm::value_ptr(transformMat));
