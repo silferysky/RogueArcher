@@ -149,7 +149,7 @@ namespace Rogue
 				}
 				
 				//For all cases of "How to Play" (Main Menu and Pause Screens)
-				if (hierarchyObj.m_objectName == "HowToPlay" || hierarchyObj.m_objectName == "HowToPlayBtn")
+				if (hierarchyObj.m_objectName == "HowToPlay" || hierarchyObj.m_objectName == "HowToPlayBtn" || hierarchyObj.m_objectName == "ControlsBtn")
 				{
 					ToggleControlHelpMenu();
 					AudioManager::instance().loadSound("Resources/Sounds/button.ogg", 0.3f, false).Play();
@@ -172,6 +172,29 @@ namespace Rogue
 					g_engine.m_coordinator.SetGameState(true);
 					PLAYER_STATUS.SetIndicatorStatus(true);
 				}
+				//CreditsBtn toggles Credits to be on
+				else if (hierarchyObj.m_objectName == "CreditsBtn")
+				{
+					for (auto ent : m_entities)
+					{
+						if (g_engine.m_coordinator.GetHierarchyInfo(ent).m_objectName == "Credits")
+						{
+							if (auto UI = g_engine.m_coordinator.TryGetComponent<UIComponent>(ent))
+							{
+								UI->get().setIsActive(true);
+							}
+							break;
+						}
+					}
+				}
+				//If click on Credits, just turn it off
+				else if (hierarchyObj.m_objectName == "Credits")
+				{
+					if (auto UI = g_engine.m_coordinator.TryGetComponent<UIComponent>(hierarchyObj.m_Entity))
+					{
+						UI->get().setIsActive(false);
+					}
+				}
 				//Exit from Main Menu. Cannot exit from game
 				else if (hierarchyObj.m_objectName == "QuitBtn")
 				{
@@ -186,7 +209,7 @@ namespace Rogue
 				//Exit to Main menu
 				else if (hierarchyObj.m_objectName == "MainMenu_Btn")
 				{
-					g_engine.m_coordinator.SetTransitionLevel("Level 1.json", 0.0f);
+					g_engine.m_coordinator.SetTransitionLevel("Level 20.json", 0.0f);
 					FadeEvent ev = FadeEvent(MAX_ENTITIES, 1.0f);
 					ev.SetSystemReceivers(static_cast<int>(SystemID::id_GRAPHICSSYSTEM));
 					EventDispatcher::instance().AddEvent(ev);

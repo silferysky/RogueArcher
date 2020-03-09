@@ -49,6 +49,7 @@ Technology is prohibited.
 #include "LightsFlicker.h"
 #include "EmojiScript.h"
 #include "EmojiAndZoomScript.h" //Trigger zoom also
+#include "GamePlayEnding.h"
 
 namespace Rogue
 {
@@ -321,6 +322,8 @@ namespace Rogue
 				}
 				case AIType::Gameplay_Ending:
 				{
+					GamePlayEnding newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<GamePlayEnding>(newAI));
 					break;
 				}
 				case AIType::Lights_Flicker:

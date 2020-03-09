@@ -181,7 +181,7 @@ namespace Rogue
 		ImGui::DragFloat("##TransformScaleX", &m_scale.x, 1.0f, 0.0f, 100000.0f);
 		if (ImGui::IsItemDeactivated())
 			m_modified = true;
-		ImGui::SameLine(0.0f, 36.0f);
+		ImGui::SameLine();
 		ImGui::DragFloat("##TransformScaleY", &m_scale.y, 1.0f, 0.0f, 100000.0f);
 		if (ImGui::IsItemDeactivated())
 			m_modified = true;
