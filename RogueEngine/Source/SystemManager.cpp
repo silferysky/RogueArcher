@@ -111,7 +111,6 @@ namespace Rogue
 		}
 
 		UpdateSystem(SystemID::id_FONTSYSTEM);
-		UpdateSystem(SystemID::id_CAMERASYSTEM);
 		UpdateSystem(SystemID::id_AUDIOSYSTEM);
 		UpdateSystem(SystemID::id_UISYSTEM);
 		UpdateSystem(SystemID::id_LIGHTINGSYSTEM);
@@ -148,10 +147,6 @@ namespace Rogue
 			// Only run physics if game is running
 			if (!m_gameIsPaused && m_gameIsRunning)
 			{
-				g_engine.m_coordinator.InitTimeSystem("Physics System");
-				UpdateSystem(SystemID::id_PHYSICSSYSTEM);
-				g_engine.m_coordinator.EndTimeSystem("Physics System");
-
 				g_engine.m_coordinator.InitTimeSystem("Particle System");
 				UpdateSystem(SystemID::id_PARTICLESYSTEM);
 				g_engine.m_coordinator.EndTimeSystem("Particle System");
@@ -159,6 +154,10 @@ namespace Rogue
 				g_engine.m_coordinator.InitTimeSystem("Particle Emitter System");
 				UpdateSystem(SystemID::id_PARTICLEEMITTERSYSTEM);
 				g_engine.m_coordinator.EndTimeSystem("Particle Emitter System");
+
+				g_engine.m_coordinator.InitTimeSystem("Physics System");
+				UpdateSystem(SystemID::id_PHYSICSSYSTEM);
+				g_engine.m_coordinator.EndTimeSystem("Physics System");
 			}
 			
 			//g_engine.m_coordinator.InitTimeSystem("Circle Collision System");
@@ -168,7 +167,11 @@ namespace Rogue
 			g_engine.m_coordinator.InitTimeSystem("Box Collision System");
 			UpdateSystem(SystemID::id_BOXCOLLISIONSYSTEM);
 			g_engine.m_coordinator.EndTimeSystem("Box Collision System");
-			
+
+			g_engine.m_coordinator.InitTimeSystem("Camera System");
+			UpdateSystem(SystemID::id_CAMERASYSTEM);
+			g_engine.m_coordinator.EndTimeSystem("Camera System");
+
 			//g_engine.m_coordinator.InitTimeSystem("Collision System");
 			//UpdateSystem(SystemID::id_COLLISIONSYSTEM);
 			//g_engine.m_coordinator.EndTimeSystem("Collision System");
@@ -180,6 +183,7 @@ namespace Rogue
 		//Timer::instance().GetSystemTimes()["Circle Collision System"] *= step;
 		Timer::instance().GetSystemTimes()["Box Collision System"] *= step;
 		//Timer::instance().GetSystemTimes()["Collision System"] *= step;
+		Timer::instance().GetSystemTimes()["Camera System"] *= step;
 
 		// Fire events for collisions
 		EventDispatcher::instance().Update();

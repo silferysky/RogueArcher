@@ -5,17 +5,17 @@
 
 namespace Rogue
 {
-	TriggerZoom::TriggerZoom(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent, float zoomValue, float zoomDuration, float zoomDelay, unsigned doCount)
+	TriggerZoom::TriggerZoom(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent)
 		: ScriptComponent(entity, logicComponent, statsComponent), 
 			m_isZooming {false},
 			m_returning {false},
-			m_doCount {doCount},
-			m_zoomValueFinal{ zoomValue }, 
+			m_doCount { statsComponent.GetZoomCount()},
+			m_zoomValueFinal{ statsComponent.GetZoomValue() }, 
 			m_zoomValueInit {0.0f},
-			m_zoomDuration{ zoomDuration },
-			m_zoomTimer{zoomDelay},
-			m_zoomDelay {zoomDelay},
-			m_zoomFactor {0.001f}{}
+			m_zoomDuration{ statsComponent.GetZoomDuration() },
+			m_zoomTimer{ statsComponent.GetZoomDelay()},
+			m_zoomDelay { statsComponent.GetZoomDelay() },
+			m_zoomFactor {0.001f} {}
 
 	void TriggerZoom::AIIdleUpdate()
 	{
@@ -23,11 +23,12 @@ namespace Rogue
 			return;
 
 		float cameraZoom = CameraManager::instance().GetCameraZoom();
-
+		//std::cout << "Zoom Timer: " << m_zoomTimer << std::endl;
+		//std::cout << "Zoom Delay: " << m_zoomDelay << std::endl;
 		//If waiting for delay
 		if (m_zoomTimer < m_zoomDelay)
 		{
-			m_zoomTimer += g_deltaTime; //* g_engine.GetTimeScale();
+			m_zoomTimer += g_deltaTime * g_engine.GetTimeScale();
 		}
 		else//if (m_zoomTimer >= m_zoomDelay)
 		{

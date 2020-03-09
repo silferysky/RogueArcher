@@ -55,10 +55,14 @@ namespace Rogue
 		void SetTransitionLevel(const char* nextLevelStr);
 		std::string& GetTransitionLevel();
 
-		void SetzoomValue(float zoom);
-		float GetzoomValue() const;
+		void SetZoomValue(float zoom);
+		float GetZoomValue() const;
 		void SetZoomDuration(float dur);
 		float GetZoomDuration() const;
+		void SetZoomDelay(float delay);
+		float GetZoomDelay() const;
+		void SetZoomCount(unsigned count);
+		unsigned GetZoomCount() const;
 
 		void SetEmojiDelay(float delay);
 		float GetEmojiDelay() const;

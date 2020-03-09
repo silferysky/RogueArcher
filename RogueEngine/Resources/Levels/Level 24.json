@@ -1,0 +1,15 @@
+{
+    "MaxEntityCount": 1,
+    "EntityCount": 1,
+    "CameraMinX": 0.0,
+    "CameraMinY": 0.0,
+    "CameraMaxX": 0.0,
+    "CameraMaxY": 0.0,
+    "CameraZoom": 0.800000011920929,
+    "Tileset": "",
+    "StartPosX": 0.0,
+    "StartPosY": 0.0,
+    "Signature0": 5,
+    "Entity0": "Name{CreditsPage}|Tag{}|Sprite{Resources\\Assets\\Credits.png;1;1;1;1;}||Transform{0;0;1600;900;0;0}||||||||||||||||||||||",
+    "EntityParent0": 65535
+}

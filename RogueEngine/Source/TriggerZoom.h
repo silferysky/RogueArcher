@@ -7,7 +7,7 @@ namespace Rogue
 		: public ScriptComponent
 	{
 	public:
-		TriggerZoom(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent, float zoomValue = 1.0f, float zoomDuration = 1.0f, float zoomDelay = 1.0f, unsigned repeatCount = 1);
+		TriggerZoom(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent);
 
 		void AIIdleUpdate() override;
 

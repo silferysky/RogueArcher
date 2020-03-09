@@ -42,6 +42,7 @@ namespace Rogue
 	{
 	public:
 		using ForceVector = std::vector<ForceInfo>;
+		const float c_stopFactor = 10.0f;
 	private:
 		ForceVector m_forceInfos;
 	public:

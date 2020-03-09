@@ -65,6 +65,7 @@ namespace Rogue
 			PLAYER_STATUS.SetPlayerEntity(*m_entities.begin());
 		}
 
+		//std::cout << "Freeze Timer: " << PLAYER_STATUS.GetFreezeControlTimer() << std::endl;
 		if (PLAYER_STATUS.GetFreezeControlTimer() > 0.0f)
 		{
 			PLAYER_STATUS.SetFreezeControlTimer(PLAYER_STATUS.GetFreezeControlTimer() - g_deltaTime * g_engine.GetTimeScale());
@@ -190,6 +191,10 @@ namespace Rogue
 								indicatorTrans.setZ(hitchhikeeTrans.GetZ());
 								PLAYER_STATUS.SetHitchhikableEntity(toDrawAtEntity); // Save the hitchhikee's entity
 							}
+							else
+							{
+								PLAYER_STATUS.SetHitchhikableEntity(MAX_ENTITIES);
+							}
 						}
 					}
 					else
@@ -237,8 +242,6 @@ namespace Rogue
 			}
 		}*/
 
-		const float c_stopFactor = 10.0f;
-
 		for (Entity entity : m_entities)
 		{
 			auto& player = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity);
@@ -252,8 +255,11 @@ namespace Rogue
 				break;
 			}
 
-			if (player.GetMoveState() == MoveState::e_stop)
-				ForceManager::instance().RegisterForce(entity, Vec2(rigidbody.getVelocity().x * -c_stopFactor, 0.0f));
+			for (int i = 0; i < g_engine.GetStepCount(); ++i)
+			{
+				if (player.GetMoveState() == MoveState::e_stop)
+					ForceManager::instance().RegisterForce(entity, Vec2(rigidbody.getVelocity().x * -ForceManager::instance().c_stopFactor, 0.0f));
+			}
 				
 			if (player.m_grounded)
 				PLAYER_STATUS.SetTeleportCharge(3.0f);
@@ -301,6 +307,7 @@ namespace Rogue
 			}
 
 			PLAYER_STATUS.SetIndicatorStatus();
+			PLAYER_STATUS.UnfreezeControls();
 
 			////Safety check to make sure level exists
 			//if (!PLAYER_STATUS.GetRunCount())
@@ -919,7 +926,7 @@ namespace Rogue
 				//std::cout << "Calc Distance" << trans->get().GetScale().x * trans->get().GetScale().x * 9 << std::endl;
 
 				//If distance to hitchhike is > Hitchhike range * Slight bonus to "extend" range
-				if (Vec2SqDistance(initialPos, endPos) > (trans->get().GetScale().x * 3)* (trans->get().GetScale().x * 3) * 1.5f)
+				if (Vec2SqDistance(initialPos, endPos) > (trans->get().GetScale().x * 3)* (trans->get().GetScale().x * 3))
 				{
 					//std::cout << "Too Far" << std::endl;
 					return;
@@ -1052,9 +1059,9 @@ namespace Rogue
 		endPos *= playerTransform.GetScale().x * 3.0f;
 		endPos += initialPos;
 		
-		// Take the smaller of the cursor and max range.
-		if (Vec2SqDistance(cursor, initialPos) < Vec2SqDistance(endPos, initialPos))
-			endPos = cursor;
+		//// Take the smaller of the cursor and max range.
+		//if (Vec2SqDistance(cursor, initialPos) < Vec2SqDistance(endPos, initialPos))
+		//	endPos = cursor;
 
 		for (size_t checkCount = 0; checkCount < 3; ++checkCount)
 		{

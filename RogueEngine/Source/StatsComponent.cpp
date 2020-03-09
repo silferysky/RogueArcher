@@ -110,12 +110,12 @@ namespace Rogue
 		return m_nextLevel;
 	}
 
-	void StatsComponent::SetzoomValue(float zoom)
+	void StatsComponent::SetZoomValue(float zoom)
 	{
 		m_zoomValue = zoom;
 	}
 
-	float StatsComponent::GetzoomValue() const
+	float StatsComponent::GetZoomValue() const
 	{
 		return m_zoomValue;
 	}
@@ -128,6 +128,26 @@ namespace Rogue
 	float StatsComponent::GetZoomDuration() const
 	{
 		return m_zoomDuration;
+	}
+
+	void StatsComponent::SetZoomDelay(float delay)
+	{
+		m_zoomDelay = delay;
+	}
+
+	float StatsComponent::GetZoomDelay() const
+	{
+		return m_zoomDelay;
+	}
+
+	void StatsComponent::SetZoomCount(unsigned count)
+	{
+		m_zoomCount = count;
+	}
+
+	unsigned StatsComponent::GetZoomCount() const
+	{
+		return m_zoomCount;
 	}
 
 	void StatsComponent::SetEmojiDelay(float delay)

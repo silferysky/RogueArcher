@@ -337,7 +337,7 @@ namespace Rogue
 				}
 				case AIType::Trigger_Zoom:
 				{
-					TriggerZoom newAI(entities, logicComponent, statsComponent, statsComponent.GetzoomValue(), statsComponent.GetZoomDuration());
+					TriggerZoom newAI(entities, logicComponent, statsComponent);
 					AddLogicInterface(entities, std::make_shared<TriggerZoom>(newAI));
 					break;
 				}

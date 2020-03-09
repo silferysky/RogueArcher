@@ -35,6 +35,8 @@ namespace Rogue
 	{
 		m_entity = MAX_ENTITIES;
 		m_indicator = MAX_ENTITIES;
+		m_isActive = true;
+		m_freezeControlDuration = -1.0f;
 		m_isLightMode = true;
 		m_hasJumped = false;
 		m_indicatorShown = true;

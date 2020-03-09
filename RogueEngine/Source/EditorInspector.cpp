@@ -63,7 +63,7 @@ namespace Rogue
 					ImGui::TextDisabled("New Name");
 					ImGui::SameLine();
 					ImGui::PushItemWidth(75);
-					if(ImGui::InputText("                  ", buffer, 32, ImGuiInputTextFlags_EnterReturnsTrue))
+					if(ImGui::InputText("##HierachyInfo", buffer, 32, ImGuiInputTextFlags_EnterReturnsTrue))
 					{
 						if (!buffer)
 						{
@@ -87,7 +87,7 @@ namespace Rogue
 					ImGui::TextDisabled("%s",infoObj.m_tag.c_str());
 					ImGui::TextDisabled("New Tag Name");
 					ImGui::SameLine();
-					if (ImGui::InputText("               ", tagging, 64, ImGuiInputTextFlags_EnterReturnsTrue))
+					if (ImGui::InputText("##Tagging", tagging, 64, ImGuiInputTextFlags_EnterReturnsTrue))
 					{
 						infoObj.m_tag = tagging;
 						memset(tagging, 0, 64);
