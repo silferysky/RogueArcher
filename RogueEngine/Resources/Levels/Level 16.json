@@ -1,6 +1,6 @@
 {
-    "MaxEntityCount": 83,
-    "EntityCount": 83,
+    "MaxEntityCount": 84,
+    "EntityCount": 84,
     "CameraMinX": -900.0,
     "CameraMinY": -400.0,
     "CameraMaxX": 1500.0,
@@ -92,6 +92,7 @@
     "Signature80": 5,
     "Signature81": 5,
     "Signature82": 8407,
+    "Signature83": 261,
     "Entity0": "Name{Collision1}|Tag{Ground}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-1861;62;100;100;0;0}||BoxCollider{0;0;1105;319;AWAKE}|||||||||Collider{BOX;1;4294967295;}|||||||||||",
     "Entity1": "Name{Collision2}|Tag{Ground}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-1436;245;100;100;0;0}||BoxCollider{0;0;1105;72;AWAKE}|||||||||Collider{BOX;1;4294967295;}|||||||||||",
     "Entity2": "Name{Collision3}|Tag{Ground}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-1861;-609;100;100;0;0}||BoxCollider{0;0;1105;319;AWAKE}|||||||||Collider{BOX;1;4294967295;}|||||||||||",
@@ -175,6 +176,7 @@
     "Entity80": "Name{Deco7}|Tag{}|Sprite{Resources\\Assets\\Stalagmite2.png;0.416667;1;0.434027;1;}||Transform{-1459.43;-355.233;-114.719;121.759;0;90}||||||||||||||||||||||",
     "Entity81": "Name{Game Object 92}|Tag{}|Sprite{Resources\\Assets\\Stalagmite.png;0.416667;1;0.434027;1;}||Transform{-1527.54;-410.205;63.9364;71.6231;0;110}||||||||||||||||||||||",
     "Entity82": "Name{TriggerEnd}|Tag{}|Sprite{Resources/Assets/;1;1;1;1;}|Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{336.487;336.674;384;237;0;0}||BoxCollider{0;0;0;0;TRIGGER}||LogicComponent{24;0;1;0}|StatsComponent{0;0;0;0;0;;0;0;0;0;0;0;0;}||||||Collider{BOX;1;4294967295;}|||||||||||",
+    "Entity83": "Name{Slot1}|Tag{}|Sprite{Resources\\Assets\\ArtifactSoul.png;1;1;1;1;}||Transform{135.29;424.884;100;100;0;92}||||||Animation{6;0;0.1;1;0;0;}||||||||||||||||",
     "EntityParent0": 65535,
     "EntityParent1": 65535,
     "EntityParent2": 65535,
@@ -257,5 +259,6 @@
     "EntityParent79": 65535,
     "EntityParent80": 65535,
     "EntityParent81": 65535,
-    "EntityParent82": 65535
+    "EntityParent82": 65535,
+    "EntityParent83": 65535
 }
