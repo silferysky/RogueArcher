@@ -1,0 +1,21 @@
+{
+    "MaxEntityCount": 3,
+    "EntityCount": 3,
+    "CameraMinX": 0.0,
+    "CameraMinY": 0.0,
+    "CameraMaxX": 0.0,
+    "CameraMaxY": 0.0,
+    "CameraZoom": 0.800000011920929,
+    "Tileset": "",
+    "StartPosX": 0.0,
+    "StartPosY": 0.0,
+    "Signature0": 5,
+    "Signature1": 5,
+    "Signature2": 5,
+    "Entity0": "Name{CfmExit_Title}|Tag{}|Sprite{Resources\\Assets\\MenuExitGame.png;1;1;1;1;}||Transform{0;100;707;95;0;0}||||||||||||||||||||||",
+    "Entity1": "Name{YesBtn}|Tag{}|Sprite{Resources\\Assets\\MenuButtonYes.png;1;1;1;1;}||Transform{-156;-149;133;190;0;0}||||||||||||||||||||||",
+    "Entity2": "Name{NoBtn}|Tag{}|Sprite{Resources\\Assets\\MenuButtonNo.png;1;1;1;1;}||Transform{164;-158;131;169;0;0}||||||||||||||||||||||",
+    "EntityParent0": 65535,
+    "EntityParent1": 65535,
+    "EntityParent2": 65535
+}
