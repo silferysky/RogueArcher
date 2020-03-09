@@ -7,7 +7,7 @@ namespace Rogue
 		: TriggerZoom(entity, logicComponent, statsComponent),
 		m_activated{ false },
 		m_delayBetweenEmojis{ statsComponent.GetEmojiDelay() },
-		m_timer{ 0.0f }
+		m_timer{ statsComponent.GetZoomDuration() }
 	{
 		m_delayBetweenEmojis = m_statsComponent->GetEmojiDelay();
 
@@ -57,7 +57,7 @@ namespace Rogue
 			return;
 
 		m_activated = true;
-		m_timer = 0.0f;			//Set to 0.0f so 1st image will instantly show
+		m_timer = m_statsComponent->GetZoomDuration();			//Set to Zoom duration so wait for zoom to be finished
 		PLAYER_STATUS.FreezeControls();
 	}
 }
