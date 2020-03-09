@@ -86,12 +86,10 @@ namespace Rogue
 					//Skip clauses
 					if (key.GetKeyCode() == KeyPress::MB1)
 					{
-						//Skip all non UI entities
 						//Skip all cursor entities (crosshair)
 						//Skip inactive UI entities
-						if (!g_engine.m_coordinator.ComponentExists<UIComponent>(entity) ||
-							g_engine.m_coordinator.ComponentExists<CursorComponent>(entity) ||
-							!g_engine.m_coordinator.GetComponent<UIComponent>(entity).getIsActive())
+						if (g_engine.m_coordinator.ComponentExists<CursorComponent>(entity) ||
+							(g_engine.m_coordinator.ComponentExists<UIComponent>(entity) && !g_engine.m_coordinator.GetComponent<UIComponent>(entity).getIsActive()))
 							continue;
 					}
 
