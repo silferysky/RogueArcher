@@ -268,7 +268,14 @@ namespace Rogue
 			Signature newEntitySignature = m_entityManager->GetSignature(existingEntity);
 			m_entityManager->SetSignature(clonedEntity, newEntitySignature);
 			m_systemManager->EntitySignatureChanged(clonedEntity, newEntitySignature);
-			SceneManager::instance().AddToActiveEntities(clonedEntity, createHierarchy);
+			
+			//SceneManager::instance().AddToActiveEntities(clonedEntity, createHierarchy);
+			if (createHierarchy)
+			{
+				HierarchyInfo& toCloneHierarchy = GetHierarchyInfo(existingEntity);
+				HierarchyInfo newInfo = HierarchyInfo(clonedEntity, toCloneHierarchy.m_objectName, toCloneHierarchy.m_tag, toCloneHierarchy.m_archetypeName);
+				std::swap(newInfo, GetHierarchyInfo(clonedEntity));
+			}
 
 			return clonedEntity;
 		}
