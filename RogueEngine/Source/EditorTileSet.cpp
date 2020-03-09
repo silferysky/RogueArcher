@@ -521,7 +521,7 @@ namespace Rogue
 		//	g_engine.m_coordinator.AddToDeleteQueue(tile.m_tileId);
 		//}
 		
-		g_engine.m_coordinator.DestroyEntity(m_tileMapEnt);
+		//g_engine.m_coordinator.AddToDeleteQueue(m_tileMapEnt);
 		m_TileSet.clear();
 		//m_GlobalTileSet.clear();
 	}
