@@ -49,6 +49,9 @@ namespace Rogue
 
 	void EmojiScript::OnTriggerEnter(Entity otherEnt)
 	{
+		if (otherEnt != PLAYER_STATUS.GetPlayerEntity())
+			return;
+
 		m_activated = true;
 		m_timer = 0.0f;			//Set to 0.0f so 1st image will instantly show
 	}
