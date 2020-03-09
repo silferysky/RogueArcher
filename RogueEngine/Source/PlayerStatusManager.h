@@ -69,6 +69,8 @@ namespace Rogue
 		Entity GetHitchhikedEntity() const;
 		void SetHitchhikeIndicator(Entity ent);
 		Entity GetHitchhikeIndicator() const;
+		void SetHitchhikableEntity(Entity ent);
+		Entity GetHitchhikableEntity();
 
 		//For modifiying sprite based on state
 		void ChangePlayerSprite();
@@ -83,6 +85,10 @@ namespace Rogue
 		void SetSoulsCollected(unsigned soulsCollected);
 		unsigned GetSoulsCollected() const;
 		void IncrementSoulsCollected();
+
+		//Ending
+		void SetEnding(bool ending);
+		bool GetEnding() const;
 
 		//Cheats
 		void SetInfiniteJumps(bool infinite = true);
@@ -120,6 +126,7 @@ namespace Rogue
 		bool m_isLightMode;
 
 		//Hitchhiking mechanic
+		Entity m_hitchhikableEntity;
 		Entity m_hitchhikedEntity;
 		Entity m_hitchhikeIndicator;
 
@@ -129,6 +136,9 @@ namespace Rogue
 
 		// Collectibles
 		unsigned m_soulsCollected;
+
+		//ending
+		bool m_isEnding;
 
 		bool m_infiniteJumps;
 	};

@@ -50,6 +50,7 @@ namespace Rogue
 		Obj_Fade,
 		Trigger_Zoom,
 		EmojiScript,
+
 		AI_Last
 	};
 

@@ -31,7 +31,19 @@ namespace Rogue
 				if (PLAYER_STATUS.GetPlayerEntity() != MAX_ENTITIES && g_engine.m_coordinator.ComponentExists<SpriteComponent>(PlayerStatusManager::instance().GetPlayerEntity()))
 				{
 					if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(m_other))
-						sprite->get().setFilter(glm::vec4(sprite->get().getFilter().r, sprite->get().getFilter().g, sprite->get().getFilter().b, 0.0f));
+					{
+						auto& filter = sprite->get().getFilter();
+						sprite->get().setFilter(glm::vec4(filter.r, filter.g, filter.b, 0.0f));
+						 for (auto& child : g_engine.m_coordinator.GetHierarchyInfo(m_other).m_children)
+						{
+							 if (g_engine.m_coordinator.GetHierarchyInfo(child).m_tag == "TeleCharge")
+							 {
+								 auto childSprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(child);
+								 auto& childFilter = childSprite->get().getFilter();
+								 childSprite->get().setFilter(glm::vec4(childFilter.r, childFilter.g, childFilter.b, 0.0f));
+							 }
+						}
+					}
 				}
 
 				if (PLAYER_STATUS.GetIndicator() != MAX_ENTITIES)
@@ -54,7 +66,19 @@ namespace Rogue
 				if (PLAYER_STATUS.GetPlayerEntity() != MAX_ENTITIES)
 				{
 					if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(PLAYER_STATUS.GetPlayerEntity()))
-						sprite->get().setFilter(glm::vec4(sprite->get().getFilter().r, sprite->get().getFilter().g, sprite->get().getFilter().b, 1.0f));
+					{
+						auto& filter = sprite->get().getFilter();
+						sprite->get().setFilter(glm::vec4(filter.r, filter.g, filter.b, 1.0f));
+						for (auto& child : g_engine.m_coordinator.GetHierarchyInfo(PLAYER_STATUS.GetPlayerEntity()).m_children)
+						{
+							if (g_engine.m_coordinator.GetHierarchyInfo(child).m_tag == "TeleCharge")
+							{
+								auto childSprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(child);
+								auto& childFilter = childSprite->get().getFilter();
+								childSprite->get().setFilter(glm::vec4(childFilter.r, childFilter.g, childFilter.b, 1.0f));
+							}
+						} 
+					}
 				}
 
 				PLAYER_STATUS.SetIndicatorStatus(true);

@@ -53,7 +53,10 @@ namespace Rogue
 			if (!pEmitter.GetIsActive())
 				continue;
 
-			GenerateParticles(entity);
+			if (pEmitter.GetIsReversed())
+				GenerateParticlesReversed(entity);
+			else
+				GenerateParticles(entity);
 
 			if (!pEmitter.GetIsContinuous())
 				pEmitter.SetIsActive(false);
@@ -75,6 +78,7 @@ namespace Rogue
 		unitParticle = g_engine.m_coordinator.CloneArchetypes("Particle", false);
 		auto& pEmitter = g_engine.m_coordinator.GetComponent<ParticleEmitterComponent>(entity);
 		auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
+		Vec2 pos = transform.GetPosition();
 		const float& magnitude = pEmitter.GetMagnitude();
 		const Vec2& scale = pEmitter.GetScale();
 		const Vec2& velocityFactor = pEmitter.GetVelocity();
@@ -93,7 +97,6 @@ namespace Rogue
 			Entity particle = g_engine.m_coordinator.Clone(unitParticle, false);
 
 			TransformComponent& particleTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(particle);
-			Vec2 pos = transform.GetPosition();
 
 			particleTransform.setPosition(Vec2(pos.x + positionalOffset.x + RandFloat(spread.x), pos.y + positionalOffset.y + RandFloat(spread.y)));
 			particleTransform.setScale(scale);
@@ -115,6 +118,59 @@ namespace Rogue
 			ParticleComponent& particleComp = g_engine.m_coordinator.CreateComponent<ParticleComponent>(particle);
 			particleComp.SetLifetime(RandFloat(pEmitter.GetLifetimeLimit()));
 			particleComp.SetIsFading(RandFloat(isFading));
+		}
+
+		g_engine.m_coordinator.AddToDeleteQueue(unitParticle);
+	}
+
+	void ParticleEmitterSystem::GenerateParticlesReversed(const Entity& entity)
+	{
+		unitParticle = g_engine.m_coordinator.CloneArchetypes("Particle", false);
+		auto& pEmitter = g_engine.m_coordinator.GetComponent<ParticleEmitterComponent>(entity);
+		auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
+		Vec2 pos = transform.GetPosition();
+		const float& magnitude = pEmitter.GetMagnitude();
+		const Vec2& scale = pEmitter.GetScale();
+		const Vec2& velocityFactor = pEmitter.GetVelocity();
+		const Vec2& positionalOffset = pEmitter.GetPositionalOffset();
+		const Vec2& spread = pEmitter.GetSpread();
+		const bool& isFading = pEmitter.GetIsFading();
+		const int& particleZ = pEmitter.GetParticleZ();
+
+		SpriteComponent& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(unitParticle);
+		sprite.setTexturePath(pEmitter.GetTexturePath().data());
+
+		float timeScale = g_engine.GetTimeScale();
+
+		for (int i = 0; i < magnitude * timeScale; ++i)
+		{
+			Entity particle = g_engine.m_coordinator.Clone(unitParticle, false);
+			TransformComponent& particleTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(particle);
+
+			particleTransform.setScale(scale);
+			particleTransform.setZ(particleZ);
+
+			double arc = pEmitter.GetArc() / 2.0;
+			float maxAngle = static_cast<float>((static_cast<double>(pEmitter.GetAngle()) + arc)* PI / 180.0);
+			float minAngle = static_cast<float>((static_cast<double>(pEmitter.GetAngle()) - arc)* PI / 180.0);
+
+			float angle = RandFloat(minAngle, maxAngle);
+
+			Vec2 velocity;
+			velocity.x = RandFloat() * 1000 * velocityFactor.x * cos(angle);
+			velocity.y = RandFloat() * 1000 * velocityFactor.y * sin(angle);
+
+			RigidbodyComponent& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(particle);
+			rigidbody.addForce(velocity);
+
+			float lifetime = RandFloat(pEmitter.GetLifetimeLimit());
+
+			ParticleComponent& particleComp = g_engine.m_coordinator.CreateComponent<ParticleComponent>(particle);
+			particleComp.SetLifetime(lifetime);
+
+			Vec2 position = Vec2(pos.x + velocity.x * lifetime, pos.y + velocity.y * lifetime);
+
+			particleTransform.setPosition(position);
 		}
 
 		g_engine.m_coordinator.AddToDeleteQueue(unitParticle);

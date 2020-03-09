@@ -172,29 +172,39 @@ namespace Rogue
 					g_engine.m_coordinator.ComponentExists<TransformComponent>(PLAYER_STATUS.GetHitchhikeIndicator()))
 				{
 					Entity toDrawAtEntity = GetEntityRaycasted();
-					std::cout << "Entity is " << toDrawAtEntity << std::endl;
-
+					//std::cout << "Entity is " << toDrawAtEntity << std::endl;
+				
 					if (toDrawAtEntity != MAX_ENTITIES)
 					{
 						if (auto entTrans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(toDrawAtEntity))
 						{
-							//std::cout << "Entity Transform " << g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetHitchhikedEntity()).GetPosition().x << "," << g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetHitchhikedEntity()).GetPosition().y << std::endl;
-							g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetHitchhikedEntity()).setPosition(entTrans->get().GetPosition());
-							
-							//std::cout << "Entity Transform " << entTrans->get().GetPosition().x << "," << entTrans->get().GetPosition().y << std::endl;
+							HierarchyInfo& entInfo = g_engine.m_coordinator.GetHierarchyInfo(toDrawAtEntity);
+							TransformComponent& hitchhikeeTrans = entTrans->get();
+
+							if (entInfo.m_tag == "Hitchhike" || entInfo.m_tag == "hitchhike")
+							{
+								TransformComponent& indicatorTrans = g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetHitchhikeIndicator());
+								
+								indicatorTrans.setPosition(hitchhikeeTrans.GetPosition());
+								indicatorTrans.setScale(Vec2(75.0f, 75.0f));
+								indicatorTrans.setZ(hitchhikeeTrans.GetZ());
+								PLAYER_STATUS.SetHitchhikableEntity(toDrawAtEntity); // Save the hitchhikee's entity
+							}
 						}
 					}
 					else
 					{
 						//std::cout << "Entity is " << toDrawAtEntity << std::endl;
 						//std::cout << "Entity Transform " << g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetHitchhikedEntity()).GetPosition().x << "," << g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetHitchhikedEntity()).GetPosition().y << std::endl;
-						g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetHitchhikedEntity()).setPosition(Vec2(10000.0f, 10000.0f));
-
+						g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetHitchhikeIndicator()).setPosition(Vec2(10000.0f, 10000.0f));
+						PLAYER_STATUS.SetHitchhikableEntity(MAX_ENTITIES);
 						//std::cout << "Entity Transform " << entTrans->get().GetPosition().x << "," << entTrans->get().GetPosition().y << std::endl;
 					}
 				}
 			}
 		}
+
+		std::cout << PLAYER_STATUS.GetHitchhikableEntity() << std::endl;
 
 		if (m_teleports.size())
 		{
@@ -244,14 +254,13 @@ namespace Rogue
 
 			if (player.GetMoveState() == MoveState::e_stop)
 				ForceManager::instance().RegisterForce(entity, Vec2(rigidbody.getVelocity().x * -c_stopFactor, 0.0f));
-				//rigidbody.addForce(Vec2(rigidbody.getVelocity().x * -c_stopFactor, 0.0f));
-
+				
 			if (player.m_grounded)
 				PLAYER_STATUS.SetTeleportCharge(3.0f);
 
 			player.m_jumpTimer -= g_deltaTime * g_engine.GetTimeScale();
+			player.m_grounded = false;
 		}
-
 	}
 
 	void PlayerControllerSystem::Receive(Event& ev)
@@ -563,9 +572,8 @@ namespace Rogue
 			{
 				if (keycode == KeyPress::MB1)
 				{
-					Entity pickedEntity = g_engine.m_coordinator.PickEntity();
-					if (pickedEntity != MAX_ENTITIES && PLAYER_STATUS.GetHitchhikedEntity() != MAX_ENTITIES/*&& g_engine.m_coordinator.GetHierarchyInfo(pickedEntity).m_tag == "Hitchhike"*/)
-						Hitchhike(pickedEntity);
+					if (PLAYER_STATUS.GetHitchhikableEntity() != MAX_ENTITIES && PLAYER_STATUS.GetHitchhikedEntity() == MAX_ENTITIES/*&& g_engine.m_coordinator.GetHierarchyInfo(pickedEntity).m_tag == "Hitchhike"*/)
+						Hitchhike(PLAYER_STATUS.GetHitchhikableEntity());
 					else if (!m_timedEntities.size() && PLAYER_STATUS.GetInLightDur() < 0.0f && 
 						PLAYER_STATUS.GetTeleportDelay() < 0.0f && 
 						(PLAYER_STATUS.GetTeleportCharge() >= 1.0f || PLAYER_STATUS.GetInfiniteJumps()))
@@ -576,8 +584,8 @@ namespace Rogue
 						//	PLAYER_STATUS.SetTeleportCharge(PLAYER_STATUS.GetMaxTeleportCharge());
 						if (PLAYER_STATUS.IsPlayerActive())
 						{
-							Teleport();
 							Hitchhike(MAX_ENTITIES);
+							Teleport();
 						}
 						m_ignoreFrameEvent = true;
 					}
@@ -897,6 +905,7 @@ namespace Rogue
 
 	void PlayerControllerSystem::Hitchhike(Entity ent)
 	{
+		//std::cout << "Ent: " << ent << std::endl;
 		if (ent != MAX_ENTITIES && g_engine.m_coordinator.GetHierarchyInfo(ent).m_tag == "Hitchhike")
 		{
 			std::cout << "Object is " << g_engine.m_coordinator.GetHierarchyInfo(ent).m_objectName << std::endl;
@@ -1026,28 +1035,29 @@ namespace Rogue
 		return calculatedPos;
 	}
 
+	// SOLELY tailored for hitchhiking.
 	Entity PlayerControllerSystem::GetEntityRaycasted()
 	{
 		TransformComponent& playerTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin());
 		Vec2 initialPos = playerTransform.GetPosition();
-		Vec2 endPos = PickingManager::instance().GetWorldCursor();
-		Vec2 cursor = endPos;
+		Vec2 cursor = PickingManager::instance().GetWorldCursor();
+		Vec2 endPos = cursor;
 		Vec2 calculatedPos = initialPos;
 		Entity calculatedEntity = MAX_ENTITIES;
 
 		//Calculating max cursor distance value
-		cursor -= initialPos;
-		Vec2Normalize(cursor, cursor);
-		cursor *= playerTransform.GetScale().x * 3;
-		cursor += initialPos;
-
-		//Prevent going past cursor when clicking close
-		//if (Vec2SqDistance(initialPos, endPos) < Vec2SqDistance(initialPos, cursor))
-		//	cursor = endPos;
+		endPos -= initialPos;
+		Vec2Normalize(endPos, endPos);
+		endPos *= playerTransform.GetScale().x * 3.0f;
+		endPos += initialPos;
+		
+		// Take the smaller of the cursor and max range.
+		if (Vec2SqDistance(cursor, initialPos) < Vec2SqDistance(endPos, initialPos))
+			endPos = cursor;
 
 		for (size_t checkCount = 0; checkCount < 3; ++checkCount)
 		{
-			calculatedPos += ((cursor - initialPos) / 3);
+			calculatedPos += ((endPos - initialPos) / 3);
 		}
 
 		const std::set<Entity>& boxEntities = g_engine.m_coordinator.GetSystem<BoxCollisionSystem>()->GetEntitySet();
@@ -1058,15 +1068,18 @@ namespace Rogue
 
 		for (Entity entity : boxEntities)
 		{
+			// Skip itself
 			if (entity == *m_entities.begin())
 				continue;
 
 			BoxCollider2DComponent& boxCollider = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(entity);
-			if (boxCollider.GetCollisionMode() != CollisionMode::e_trigger)
-				continue;
-
 			ColliderComponent& boxGCollider = g_engine.m_coordinator.GetComponent<ColliderComponent>(entity);
 
+			// Skip asleep colliders
+			if (boxCollider.GetCollisionMode() == CollisionMode::e_asleep)
+				continue;
+
+			// Filter layers
 			if (!CollisionManager::instance().FilterColliders(playerGCollider.GetCollisionMask(), boxGCollider.GetCollisionCat()) ||
 				!CollisionManager::instance().FilterColliders(boxGCollider.GetCollisionMask(), playerGCollider.GetCollisionCat()))
 				continue;
@@ -1090,10 +1103,21 @@ namespace Rogue
 					t = Vec2DotProduct(Vec2(edge.m_pt0 - playerTransform.GetPosition()), edge.m_normal) /
 						Vec2DotProduct(teleportVec, edge.m_normal);
 
+					// Only allow hitchhike triggers and colliders (Avoid regular triggers)
 					if (t > 0.0f && t < smallestT)
 					{
-						smallestT = t;
-						calculatedEntity = entity;
+						// Kena collider, no hitchhike available yet
+						if (boxCollider.GetCollisionMode() == CollisionMode::e_awake)
+						{
+							smallestT = t;
+							calculatedEntity = MAX_ENTITIES;
+						}
+						// Kena hitchhike trigger, hitchhike available.
+						if(g_engine.m_coordinator.GetHierarchyInfo(entity).m_tag == "Hitchhike")
+						{
+							smallestT = t;
+							calculatedEntity = entity;
+						}
 					}
 				}
 
