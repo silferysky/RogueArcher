@@ -95,7 +95,9 @@ namespace Rogue
 
 		Entity CreateEntity()
 		{
-			return m_entityManager->CreateEntity();
+			Entity ent = m_entityManager->CreateEntity();
+			GetActiveObjects().push_back(ent);
+			return ent;
 		}
 
 		void DestroyEntity(Entity entity)
@@ -117,7 +119,7 @@ namespace Rogue
 			while (GetActiveObjects().size())
 			{
 				DestroyEntity(GetActiveObjects().back());
-				GetActiveObjects().pop_back();
+				//GetActiveObjects().pop_back();
 			}
 
 			SceneManager::instance().ResetObjectIterator();
@@ -318,7 +320,6 @@ namespace Rogue
 				//Actual deleting
 				RemoveHierarchyInfo(entity);
 				DestroyEntity(entity);
-				m_entityManager->RemoveEntityFromActiveObjects(entity);
 			}
 
 			m_deleteQueue.clear();
