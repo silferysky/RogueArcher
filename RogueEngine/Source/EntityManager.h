@@ -82,8 +82,10 @@ namespace Rogue
 			RESignatures[entity].reset();
 
 			// Put the destroyed ID at the back of the queue
+			RemoveEntityFromActiveObjects(entity);
 			REAvailableEntities.push(entity);
 			--REActiveEntityCount;
+			
 
 			std::stringstream out;
 			out << "Entities Destroyed. Current active entities: " << REActiveEntityCount;
