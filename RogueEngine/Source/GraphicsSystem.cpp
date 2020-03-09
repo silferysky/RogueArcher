@@ -263,11 +263,11 @@ namespace Rogue
 				}
 				else if (m_isFadingOut)
 				{
-					m_currentFadeFactor -= m_fadeFactor * g_deltaTime;
+					m_currentFadeFactor -= m_fadeFactor * g_fixedDeltaTime;
 				}
 				else
 				{
-					m_currentFadeFactor += m_fadeFactor * g_deltaTime;
+					m_currentFadeFactor += m_fadeFactor * g_fixedDeltaTime;
 					if (m_currentFadeFactor > 1.0f)
 						m_isFading = false;
 				}
