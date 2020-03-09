@@ -65,6 +65,7 @@ namespace Rogue
 			PLAYER_STATUS.SetPlayerEntity(*m_entities.begin());
 		}
 
+		//std::cout << "Freeze Timer: " << PLAYER_STATUS.GetFreezeControlTimer() << std::endl;
 		if (PLAYER_STATUS.GetFreezeControlTimer() > 0.0f)
 		{
 			PLAYER_STATUS.SetFreezeControlTimer(PLAYER_STATUS.GetFreezeControlTimer() - g_deltaTime * g_engine.GetTimeScale());
@@ -919,7 +920,7 @@ namespace Rogue
 				//std::cout << "Calc Distance" << trans->get().GetScale().x * trans->get().GetScale().x * 9 << std::endl;
 
 				//If distance to hitchhike is > Hitchhike range * Slight bonus to "extend" range
-				if (Vec2SqDistance(initialPos, endPos) > (trans->get().GetScale().x * 3)* (trans->get().GetScale().x * 3) * 1.5f)
+				if (Vec2SqDistance(initialPos, endPos) > (trans->get().GetScale().x * 3)* (trans->get().GetScale().x * 3))
 				{
 					//std::cout << "Too Far" << std::endl;
 					return;
