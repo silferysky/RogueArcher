@@ -259,7 +259,7 @@ namespace Rogue
 				PLAYER_STATUS.SetTeleportCharge(3.0f);
 
 			player.m_jumpTimer -= g_deltaTime * g_engine.GetTimeScale();
-			player.m_grounded = false;
+			//player.m_grounded = false;
 		}
 	}
 
