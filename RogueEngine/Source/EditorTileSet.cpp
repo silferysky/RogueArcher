@@ -522,6 +522,10 @@ namespace Rogue
 		//}
 		
 		//g_engine.m_coordinator.AddToDeleteQueue(m_tileMapEnt);
+		if (m_tileMapEnt != -1 || m_tileMapEnt != MAX_ENTITIES)
+		{
+			g_engine.m_coordinator.DestroyEntity(m_tileMapEnt);
+		}
 		m_TileSet.clear();
 		//m_GlobalTileSet.clear();
 	}
