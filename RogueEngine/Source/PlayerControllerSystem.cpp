@@ -319,7 +319,7 @@ namespace Rogue
 			//if (m_entities.size() > 1)
 			//	g_engine.m_coordinator.AddToDeleteQueue(*m_entities.begin());
 
-			//PLAYER_STATUS.Reset();
+			PLAYER_STATUS.Reset();
 			break;
 		}
 
