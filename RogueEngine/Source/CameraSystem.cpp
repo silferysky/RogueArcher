@@ -111,7 +111,6 @@ namespace Rogue
 
 	void CameraSystem::Update()
 	{
-		g_engine.m_coordinator.InitTimeSystem("Camera System");
 		//m_cameraShake.SetShake(13.0f);
 
 		if (m_isActive)
@@ -159,10 +158,10 @@ namespace Rogue
 						//{
 							// Do not move the camera for too small distances
 						if (deltaX > 0.5 || deltaX < -0.5)
-							position.x += static_cast<int>(deltaX) * m_cameraLerp * g_deltaTime;
+							position.x += static_cast<int>(deltaX) * m_cameraLerp * g_fixedDeltaTime;
 
 						if (deltaY > 0.5 || deltaY < -0.5)
-							position.y += static_cast<int>(deltaY) * m_cameraLerp * g_deltaTime;
+							position.y += static_cast<int>(deltaY) * m_cameraLerp * g_fixedDeltaTime;
 						//}
 					}
 					else
@@ -191,7 +190,6 @@ namespace Rogue
 		//	}
 		//}
 
-		g_engine.m_coordinator.EndTimeSystem("Camera System");
 	}
 
 	void CameraSystem::Receive(Event& ev)

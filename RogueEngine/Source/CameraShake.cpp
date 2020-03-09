@@ -27,7 +27,7 @@ namespace Rogue
 
 	void CameraShake::Update()
 	{
-		m_duration += g_deltaTime; //* g_engine.GetTimeScale();
+		m_duration += g_fixedDeltaTime; //* g_engine.GetTimeScale();
 
 		//Updates the angle and shake magnitude when time every ShakeInterval seconds
 		if (m_duration > m_shakeInterval && m_currentShakeMagnitude > 0) 
