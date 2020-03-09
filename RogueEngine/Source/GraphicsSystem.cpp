@@ -241,7 +241,7 @@ namespace Rogue
 			viewMat = m_pCamera->GetViewMatrix();
 
 		// model to world, world to view, view to projection
-		glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(viewMat));
+		// glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(viewMat));
 
 		glUniformMatrix4fv(m_transformLocation, 1, GL_FALSE, glm::value_ptr(transformMat));
 		
@@ -343,7 +343,7 @@ namespace Rogue
 			glUniform2f(m_uvOffsetLocation, tile.m_min.x, tile.m_min.y);
 
 			// model to world, world to view, view to projection
-			glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(m_pCamera->GetViewMatrix()));
+			// glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(m_pCamera->GetViewMatrix()));
 			glUniformMatrix4fv(m_transformLocation, 1, GL_FALSE, glm::value_ptr(transformMat));
 
 			// rgb filtering
