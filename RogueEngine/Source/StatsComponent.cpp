@@ -254,7 +254,7 @@ namespace Rogue
 		ImGui::Checkbox("Patrolling", &m_isPatrolling);
 
 		ImGui::PushItemWidth(75);
-		ImGui::DragFloat("Zoom Factor", &m_zoomValue, 1.0f, 0.0f, 1000.0f);
+		ImGui::DragFloat("Zoom Value", &m_zoomValue, 1.0f, 0.0f, 1000.0f);
 
 		ImGui::PushItemWidth(75);
 		ImGui::DragFloat("Zoom Duration", &m_zoomDuration, 1.0f, 0.0f, 10.0f);
