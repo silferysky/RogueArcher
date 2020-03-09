@@ -125,7 +125,9 @@ namespace Rogue
 			{
 				float systemTime = iter.second;
 				systemTime /= Timer::s_microsecPerSec; // Convert systemTime from microsec to seconds
-				systemTime = systemTime / g_deltaTime * 100.0f;
+				
+				if(g_deltaTime)
+					systemTime = systemTime / g_deltaTime * 100.0f;
 				//std::cout << (g_engine.m_coordinator.getcurrentState()) << std::endl;
 
 				if (std::string(iter.first) == highestSystem)

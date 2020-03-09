@@ -109,7 +109,7 @@ namespace Rogue
 		m_minY(0), m_minX(0), m_maxX(0), m_maxY(0), m_tileSize(61), m_tilesHeight(0),
 		m_tilesWidth(0), m_currentTileX(0), m_currentTileY(0), m_openWindow(true), m_isCollision(false),
 		m_check(true), m_firstclicked(false), m_globalcheck(false), m_deleteTile(false), m_hasTextureChanged(false), m_groundtag(false),
-		m_tileMapEnt(-1)
+		m_tileMapEnt(MAX_ENTITIES)
 	{
 	}
 
@@ -458,7 +458,7 @@ namespace Rogue
 				//		m_globalcheck = false;
 				//		m_hasTextureChanged = false;
 				//	}
-					if (m_tileMapEnt != -1)
+					if (m_tileMapEnt != MAX_ENTITIES)
 					{
 						auto& tilemap = g_engine.m_coordinator.GetComponent<TileMapComponent>(m_tileMapEnt);
 
@@ -522,7 +522,7 @@ namespace Rogue
 		//}
 		
 		//g_engine.m_coordinator.AddToDeleteQueue(m_tileMapEnt);
-		if (m_tileMapEnt != -1 || m_tileMapEnt != MAX_ENTITIES)
+		if (m_tileMapEnt != MAX_ENTITIES)
 		{
 			g_engine.m_coordinator.DestroyEntity(m_tileMapEnt);
 		}
