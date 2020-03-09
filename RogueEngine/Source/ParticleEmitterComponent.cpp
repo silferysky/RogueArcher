@@ -71,35 +71,35 @@ namespace Rogue
 		ImGui::Text("Particle Scale    ");
 		ImGui::SameLine();
 		ImGui::PushItemWidth(75);
-		ImGui::DragFloat("           ", &m_scale.x, 1.0f, 0.0f, 100000.0f);
+		ImGui::DragFloat("##ParticleX", &m_scale.x, 1.0f, 0.0f, 100000.0f);
 		ImGui::SameLine(0.0f, 36.0f);
-		ImGui::DragFloat("            ", &m_scale.y, 1.0f, 0.0f, 100000.0f);
+		ImGui::DragFloat("##ParticleY", &m_scale.y, 1.0f, 0.0f, 100000.0f);
 
 		ImGui::Text("Particle Positional Offset Range");
 		ImGui::SameLine();
 		ImGui::PushItemWidth(75);
-		ImGui::DragFloat("     ", &m_positionalOffset.x);
+		ImGui::DragFloat("##PositionOffsetX", &m_positionalOffset.x);
 		ImGui::SameLine();
 		ImGui::PushItemWidth(75);
-		ImGui::DragFloat("      ", &m_positionalOffset.y);
+		ImGui::DragFloat("##PositionOffsetY", &m_positionalOffset.y);
 		ImGui::PushItemWidth(50);
 
 		ImGui::Text("Particle Spread");
 		ImGui::SameLine();
 		ImGui::PushItemWidth(75);
-		ImGui::DragFloat("         ", &m_spread.x);
+		ImGui::DragFloat("##ParticleSpreadX", &m_spread.x);
 		ImGui::SameLine();
 		ImGui::PushItemWidth(75);
-		ImGui::DragFloat("          ", &m_spread.y);
+		ImGui::DragFloat("##ParticleSpreadY", &m_spread.y);
 		ImGui::PushItemWidth(50);
 
 		ImGui::Text("Particle Velocity Factor");
 		ImGui::SameLine();
 		ImGui::PushItemWidth(75);
-		ImGui::DragFloat("       ", &m_velocityFactor.x);
+		ImGui::DragFloat("##VelocityFactorX", &m_velocityFactor.x);
 		ImGui::SameLine();
 		ImGui::PushItemWidth(75);
-		ImGui::DragFloat("        ", &m_velocityFactor.y);
+		ImGui::DragFloat("##VelocityFactorY", &m_velocityFactor.y);
 		ImGui::PushItemWidth(50);
 
 		if (ImGui::IsItemHovered())

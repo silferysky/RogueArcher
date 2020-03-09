@@ -63,10 +63,10 @@ namespace Rogue
 		ImGui::Text("Camera Offset");
 		ImGui::SameLine();
 		ImGui::PushItemWidth(75);
-		ImGui::DragFloat("     ", &m_offset.x);
+		ImGui::DragFloat("##OffsetX", &m_offset.x);
 		ImGui::SameLine();
 		ImGui::PushItemWidth(75);
-		ImGui::DragFloat("      ", &m_offset.y);
+		ImGui::DragFloat("##OffsetY", &m_offset.y);
 	}
 
 	void CameraComponent::setIsActive(const bool& isActive)

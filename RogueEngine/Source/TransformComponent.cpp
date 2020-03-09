@@ -153,18 +153,18 @@ namespace Rogue
 		ImGui::Text("Translate");
 		ImGui::SameLine();
 		ImGui::PushItemWidth(75);
-		ImGui::DragFloat("     ", &m_position.x);
+		ImGui::DragFloat("##TransformX", &m_position.x);
 		if (ImGui::IsItemDeactivated())
 			m_modified = true;
 		ImGui::SameLine();
 		ImGui::PushItemWidth(75);
-		ImGui::DragFloat("      ", &m_position.y);
+		ImGui::DragFloat("##TransformY", &m_position.y);
 		if (ImGui::IsItemDeactivated())
 			m_modified = true;
 
 		ImGui::Text("Z Value  ");
 		ImGui::SameLine();
-		ImGui::DragInt("    ", &m_fakeZ, 1.0f, -100000, 100000);
+		ImGui::DragInt("##TransformZ", &m_fakeZ, 1.0f, -100000, 100000);
 		if (ImGui::IsItemDeactivated())
 			m_modified = true;
 
@@ -178,17 +178,17 @@ namespace Rogue
 		ImGui::Text("Scale    ");
 		ImGui::SameLine();
 		ImGui::PushItemWidth(75);
-		ImGui::DragFloat(" ", &m_scale.x, 1.0f, 0.0f, 100000.0f);
+		ImGui::DragFloat("##TransformScaleX", &m_scale.x, 1.0f, 0.0f, 100000.0f);
 		if (ImGui::IsItemDeactivated())
 			m_modified = true;
 		ImGui::SameLine(0.0f, 36.0f);
-		ImGui::DragFloat("  ", &m_scale.y, 1.0f, 0.0f, 100000.0f);
+		ImGui::DragFloat("##TransformScaleY", &m_scale.y, 1.0f, 0.0f, 100000.0f);
 		if (ImGui::IsItemDeactivated())
 			m_modified = true;
 
 		ImGui::Text("Rotation ");
 		ImGui::SameLine();
-		ImGui::DragFloat("   ", &m_rotation, 0.1f, 0.0f, 6.28f);
+		ImGui::DragFloat("##TransformRotation", &m_rotation, 0.1f, 0.0f, 6.28f);
 		if (ImGui::IsItemDeactivated())
 			m_modified = true;
 

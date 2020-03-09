@@ -38,8 +38,6 @@ namespace Rogue
 
 				}
 
-
-
 				if (auto fade = g_engine.m_coordinator.TryGetComponent<FadeComponent>(m_entity))
 				{
 					fade->get().setIsActive(true);
