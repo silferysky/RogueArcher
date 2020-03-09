@@ -4,9 +4,9 @@
 namespace Rogue
 {
 	EmojiAndZoomScript::EmojiAndZoomScript(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent)
-		: TriggerZoom(entity, logicComponent, statsComponent, statsComponent.GetzoomValue(), statsComponent.GetZoomDuration()),
+		: TriggerZoom(entity, logicComponent, statsComponent),
 		m_activated{ false },
-		m_delayBetweenEmojis{ 1.0f },
+		m_delayBetweenEmojis{ statsComponent.GetEmojiDelay() },
 		m_timer{ 0.0f }
 	{
 		m_delayBetweenEmojis = m_statsComponent->GetEmojiDelay();
