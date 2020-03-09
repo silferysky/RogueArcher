@@ -270,6 +270,9 @@ namespace Rogue
 		std::ostringstream ostrstream;
 		size_t count = 1;
 
+		ImGui::PushItemWidth(75);
+		ImGui::DragFloat("Emoji Delay", &m_emojiDelay, 1.0f, 0, 100);
+
 		static char emojiPath[128];
 		for (auto& emojiStr : m_emojiTexture)
 		{
@@ -280,9 +283,11 @@ namespace Rogue
 				
 			++count;
 		}
-		
-		ImGui::InputText("                  ", emojiPath, 128);
+
 		ImGui::TextWrapped("Emoji Texture");
+		ImGui::SameLine();
+		ImGui::InputText("                      ", emojiPath, 128);
+		ImGui::PushItemWidth(75);
 
 		if (ImGui::Button("Add new Emoji Texture"))
 		{

@@ -204,7 +204,7 @@ namespace Rogue
 			}
 		}
 
-		std::cout << PLAYER_STATUS.GetHitchhikableEntity() << std::endl;
+		//std::cout << PLAYER_STATUS.GetHitchhikableEntity() << std::endl;
 
 		if (m_teleports.size())
 		{
@@ -909,25 +909,25 @@ namespace Rogue
 		//std::cout << "Ent: " << ent << std::endl;
 		if (ent != MAX_ENTITIES && g_engine.m_coordinator.GetHierarchyInfo(ent).m_tag == "Hitchhike")
 		{
-			std::cout << "Object is " << g_engine.m_coordinator.GetHierarchyInfo(ent).m_objectName << std::endl;
+			//std::cout << "Object is " << g_engine.m_coordinator.GetHierarchyInfo(ent).m_objectName << std::endl;
 
 			if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(PLAYER_STATUS.GetPlayerEntity()))
 			{
 				Vec2 initialPos = trans->get().GetPosition();
 				Vec2 endPos = PickingManager::instance().GetWorldCursor();
-				std::cout << "Actual Distance" << Vec2SqDistance(initialPos, endPos) << std::endl;
-				std::cout << "Calc Distance" << trans->get().GetScale().x * trans->get().GetScale().x * 9 << std::endl;
+				//std::cout << "Actual Distance" << Vec2SqDistance(initialPos, endPos) << std::endl;
+				//std::cout << "Calc Distance" << trans->get().GetScale().x * trans->get().GetScale().x * 9 << std::endl;
 
 				//If distance to hitchhike is > Hitchhike range * Slight bonus to "extend" range
 				if (Vec2SqDistance(initialPos, endPos) > (trans->get().GetScale().x * 3)* (trans->get().GetScale().x * 3) * 1.5f)
 				{
-					std::cout << "Too Far" << std::endl;
+					//std::cout << "Too Far" << std::endl;
 					return;
 				}
 			}
 			else //Cannot check transform properly, so this doesn't work
 			{
-				std::cout << "No Transform" << std::endl;
+				//std::cout << "No Transform" << std::endl;
 				return;
 			}
 

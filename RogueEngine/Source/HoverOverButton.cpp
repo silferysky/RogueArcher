@@ -29,7 +29,7 @@ namespace Rogue
 				// put the hover logic here: stuff like play a sound, change the button colour etc...
 				//auto sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_entity);
 
-				std::cout << "Hovering!" << std::endl;
+				//std::cout << "Hovering!" << std::endl;
 			}
 			else
 			{

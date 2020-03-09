@@ -249,7 +249,7 @@ namespace Rogue
 		{
 			if (m_isFading)
 			{
-				std::cout << "Current Fade Factor" << m_currentFadeFactor << std::endl;
+				//std::cout << "Current Fade Factor" << m_currentFadeFactor << std::endl;
 				auto tempFilter = sprite.getFilter();
 				tempFilter.a *= m_currentFadeFactor;
 				glUniform4fv(m_filterLocation, 1, glm::value_ptr(tempFilter));
