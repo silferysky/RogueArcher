@@ -548,22 +548,6 @@ namespace Rogue
 						}
 						ImGui::EndPopup(); 
 						
-						if (ImGui::BeginMenu("Scripts"))
-						{
-							if (ImGui::MenuItem("Patrol AI", nullptr, false, !g_engine.m_coordinator.ComponentExists<CircleCollider2DComponent>(i)))
-							{
-							}
-
-							if (ImGui::MenuItem("Finder AI", nullptr, false, !g_engine.m_coordinator.ComponentExists<BoxCollider2DComponent>(i)))
-							{
-							}
-
-							if (ImGui::MenuItem("Trigger AI", nullptr, false, !g_engine.m_coordinator.ComponentExists<BoxCollider2DComponent>(i)))
-							{
-							}
-
-							ImGui::EndMenu();
-						}
 					}
 					if (ImGui::BeginPopup("Delete Component"))
 					{
