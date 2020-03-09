@@ -23,12 +23,13 @@ namespace Rogue
 			return;
 
 		float cameraZoom = CameraManager::instance().GetCameraZoom();
-		//std::cout << "Zoom Timer: " << m_zoomTimer << std::endl;
+		std::cout << "Zoom Timer: " << m_zoomDelay - m_zoomTimer << std::endl;
 		//std::cout << "Zoom Delay: " << m_zoomDelay << std::endl;
+
 		//If waiting for delay
 		if (m_zoomTimer < m_zoomDelay)
 		{
-			m_zoomTimer += g_deltaTime * g_engine.GetTimeScale();
+			m_zoomTimer += g_fixedDeltaTime;
 		}
 		else//if (m_zoomTimer >= m_zoomDelay)
 		{
@@ -69,6 +70,7 @@ namespace Rogue
 
 		m_isZooming = true;
 		m_zoomValueInit = CameraManager::instance().GetCameraZoom();
-		m_zoomFactor = (m_zoomValueFinal - m_zoomValueInit) / m_zoomDuration / 60.0f;
+		m_zoomFactor = (m_zoomValueFinal - m_zoomValueInit) / m_zoomDuration * g_fixedDeltaTime;
+		//m_zoomTimer = m_zoomDelay;
 	}
 }
