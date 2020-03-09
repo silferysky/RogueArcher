@@ -294,10 +294,11 @@ namespace Rogue
 			AddEmojiTexture(emojiPath);
 		}
 		
-		if (ImGui::Button("Remove last Emoji Texture"))
-		{ 
-			m_emojiTexture.pop_back();
-		}
+		if (m_emojiTexture.size())
+			if (ImGui::Button("Remove last Emoji Texture"))
+			{ 
+				m_emojiTexture.pop_back();
+			}
 
 
 		static char newLevelPath[128];
