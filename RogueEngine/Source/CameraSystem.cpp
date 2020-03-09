@@ -237,7 +237,8 @@ namespace Rogue
 					auto& cameraManager = CameraManager::instance();
 					auto cameraPos = cameraManager.GetCameraPos();
 
-					cameraPos.x -= 10.0f;
+					for(int i = 0; i < g_engine.GetStepCount(); ++i)
+						cameraPos.x -= 10.0f;
 
 					cameraManager.SetCameraPos(cameraPos);
 				}
@@ -247,7 +248,8 @@ namespace Rogue
 					auto& cameraManager = CameraManager::instance();
 					auto cameraPos = cameraManager.GetCameraPos();
 
-					cameraPos.x += 10.0f;
+					for (int i = 0; i < g_engine.GetStepCount(); ++i)
+						cameraPos.x += 10.0f;
 
 					cameraManager.SetCameraPos(cameraPos);
 				}
@@ -257,7 +259,8 @@ namespace Rogue
 					auto& cameraManager = CameraManager::instance();
 					auto cameraPos = cameraManager.GetCameraPos();
 
-					cameraPos.y += 10.0f;
+					for (int i = 0; i < g_engine.GetStepCount(); ++i)
+						cameraPos.y += 10.0f;
 
 					cameraManager.SetCameraPos(cameraPos);
 				}
@@ -267,7 +270,8 @@ namespace Rogue
 					auto& cameraManager = CameraManager::instance();
 					auto cameraPos = cameraManager.GetCameraPos();
 
-					cameraPos.y -= 10.0f;
+					for (int i = 0; i < g_engine.GetStepCount(); ++i)
+						cameraPos.y -= 10.0f;
 
 					cameraManager.SetCameraPos(cameraPos);
 				}
