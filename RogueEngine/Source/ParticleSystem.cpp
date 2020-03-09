@@ -45,7 +45,7 @@ namespace Rogue
 		{
 			auto& particle = g_engine.m_coordinator.GetComponent<ParticleComponent>(entity);
 
-			particle.Update(g_fixedDeltaTime);
+			particle.Update(g_fixedDeltaTime * g_engine.GetTimeScale());
 
 			if (particle.GetLifetime() <= 0)
 				g_engine.m_coordinator.AddToDeleteQueue(entity);

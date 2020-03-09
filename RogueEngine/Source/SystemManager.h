@@ -258,5 +258,6 @@ namespace Rogue
 		void Update();
 
 		void UpdateSystem(SystemID id) { m_systems[static_cast<int>(id)].second->Update(); }
+		void FixedUpdateSystem(SystemID id, const char* systemName);
 	};
 }

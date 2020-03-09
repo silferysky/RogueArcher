@@ -172,14 +172,14 @@ namespace Rogue
 				if (PLAYER_STATUS.GetHitchhikeIndicator() != MAX_ENTITIES &&
 					g_engine.m_coordinator.ComponentExists<TransformComponent>(PLAYER_STATUS.GetHitchhikeIndicator()))
 				{
-					Entity toDrawAtEntity = GetEntityRaycasted();
-					//std::cout << "Entity is " << toDrawAtEntity << std::endl;
+					PLAYER_STATUS.SetHitchhikableEntity(GetEntityRaycasted());
+					Entity hitchhikee = PLAYER_STATUS.GetHitchhikableEntity();
 				
-					if (toDrawAtEntity != MAX_ENTITIES)
+					if (hitchhikee != MAX_ENTITIES)
 					{
-						if (auto entTrans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(toDrawAtEntity))
+						if (auto entTrans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(hitchhikee))
 						{
-							HierarchyInfo& entInfo = g_engine.m_coordinator.GetHierarchyInfo(toDrawAtEntity);
+							HierarchyInfo& entInfo = g_engine.m_coordinator.GetHierarchyInfo(hitchhikee);
 							TransformComponent& hitchhikeeTrans = entTrans->get();
 
 							if (entInfo.m_tag == "Hitchhike" || entInfo.m_tag == "hitchhike")
@@ -189,7 +189,7 @@ namespace Rogue
 								indicatorTrans.setPosition(hitchhikeeTrans.GetPosition());
 								indicatorTrans.setScale(Vec2(75.0f, 75.0f));
 								indicatorTrans.setZ(hitchhikeeTrans.GetZ());
-								PLAYER_STATUS.SetHitchhikableEntity(toDrawAtEntity); // Save the hitchhikee's entity
+								PLAYER_STATUS.SetHitchhikableEntity(hitchhikee); // Save the hitchhikee's entity
 							}
 							else
 							{

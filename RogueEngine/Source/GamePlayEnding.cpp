@@ -4,7 +4,7 @@
 //#include "Main.h"
 #include "GraphicsEvent.h"
 #include "CameraManager.h"
-
+#include "CameraSystem.h"
 namespace Rogue
 {
 	GamePlayEnding::GamePlayEnding(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent)
@@ -22,14 +22,7 @@ namespace Rogue
 		if (PlayerStatusManager::instance().GetEnding())
 		{
 			m_timer += g_deltaTime * g_engine.GetTimeScale();
-			//Freeze Player Controls
-			PLAYER_STATUS.FreezeControls();
-			//Zoom out slightly
-			CameraManager::instance().SetCameraZoom(CameraManager::instance().GetCameraZoom() - 1.0f);
-			//Camera shake 2 seconds
-			CameraShakeEvent shake(20.0f);
-			shake.SetSystemReceivers(static_cast<int>(SystemID::id_CAMERASYSTEM));
-			EventDispatcher::instance().AddEvent(shake);
+			//Freeze Player Controls			
 			m_souls = PLAYER_STATUS.GetSoulsCollected();
 			if (m_souls < 7)
 			{
@@ -51,33 +44,37 @@ namespace Rogue
 			//8. <Fade in/out 3 secs, display statement on top of the camera>
 			if (m_timer < 3.0f)
 			{
-
+				
 			}
 			//9. < Fade in 3 secs, display choice input statement on top of the camera >
-			else if (m_timer < 6.0f)
-			{
-
-			}
-			//11.  <Inputted, Fade out choice input statement 3 secs and remove the input image>
-			else if (m_timer < 9.0f)
-			{
-
-			}
-			//12. < Fade in Black image to cover the camera, 3 secs >
-			else if (m_timer < 12.0f)
-			{
-
-			}
-			//13.<Fade in/out cutscenes according to ED1/2, 3 secs respectively for each cutscene duration>
-			else if (m_timer < 15.0f)
-			{
-
-			}
+			//else if (m_timer < 6.0f)
+			//{
+			//
+			//}
+			////11.  <Inputted, Fade out choice input statement 3 secs and remove the input image>
+			//else if (m_timer < 9.0f)
+			//{
+			//
+			//}
+			////12. < Fade in Black image to cover the camera, 3 secs >
+			//else if (m_timer < 12.0f)
+			//{
+			//
+			//}
+			////13.<Fade in/out cutscenes according to ED1/2, 3 secs respectively for each cutscene duration>
+			//else if (m_timer < 15.0f)
+			//{
+			//
+			//}
 			//14.<Fade in Black image to cover the camera, 3 secs>
-			else if (m_timer < 18.0f)
+			else
 			{
 				m_timer = 0.0f;
+				PLAYER_STATUS.UnfreezeControls();
+				CameraManager::instance().SetCameraZoom(CameraManager::instance().GetCameraZoom() - 0.2f);
+				PlayerStatusManager::instance().SetEnding(false);
 			}
+			
 		}
 	}
 
@@ -85,6 +82,14 @@ namespace Rogue
 	{
 		if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(other))
 		{
+			PLAYER_STATUS.FreezeControls();
+			g_engine.m_coordinator.GetSystem<CameraSystem>()->setIsActive(false);
+			//Zoom out slightly
+			CameraManager::instance().SetCameraZoom(CameraManager::instance().GetCameraZoom() + 0.2f);
+			//Camera shake 2 seconds
+			CameraShakeEvent shake(20.0f);
+			shake.SetSystemReceivers(static_cast<int>(SystemID::id_CAMERASYSTEM));
+			EventDispatcher::instance().AddEvent(shake);
 			PlayerStatusManager::instance().SetEnding(true);
 		}
 	}
