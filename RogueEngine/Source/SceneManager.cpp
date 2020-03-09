@@ -42,7 +42,7 @@ namespace Rogue
 
 	SceneManager::~SceneManager()
 	{
-		ClearActiveEntities();
+		//ClearActiveEntities();
 	}
 
 	std::string SceneManager::getCurrentFileName() const
@@ -58,7 +58,6 @@ namespace Rogue
 	void SceneManager::ClearActiveEntities()
 	{
 		g_engine.m_coordinator.GetActiveObjects().clear();
-		g_engine.m_coordinator.GetSystem<LogicSystem>()->ClearLogicInterface();
 	}
 
 	void SceneManager::ClearAllEntities()
@@ -67,7 +66,8 @@ namespace Rogue
 		AudioManager::instance().ClearAudioMap();
 		g_engine.m_coordinator.DestroyAllEntity();
 		ImGuiTileSet::instance().ClearTileset();
-		ClearActiveEntities();
+		g_engine.m_coordinator.GetSystem<LogicSystem>()->ClearLogicInterface();
+		//ClearActiveEntities();
 	}
 
 	void SceneManager::LoadLevelFiles(const char* fileName)
@@ -137,6 +137,9 @@ namespace Rogue
 		std::ostringstream ostrstream;
 		ostrstream << "Resources/Levels/" << fileName;
 		int size = static_cast<int>(g_engine.m_coordinator.GetActiveObjects().size() - menuControl->GetUIMenuObjsSize());
+		if (ImGuiTileSet::instance().GetTileMapEnt() != MAX_ENTITIES)
+			--size;
+
 		if (m_objectFactory->CheckFileTooSmall(FILETYPE_LEVEL, size))
 			if (size > 0)
 				BasicIO::WriteLevelJsonFile(ostrstream.str().c_str(), size);
@@ -314,7 +317,7 @@ namespace Rogue
 
 		if (createHierarchy)
 		{
-			g_engine.m_coordinator.GetActiveObjects().push_back(newEnt);
+			//g_engine.m_coordinator.GetActiveObjects().push_back(newEnt);
 			std::ostringstream strstream;
 			strstream << "Game Object " << m_objectIterator++;
 			HierarchyInfo newInfo(newEnt, strstream.str());
@@ -352,7 +355,7 @@ namespace Rogue
 		strstream << "Game Object " << m_objectIterator++;
 		HierarchyInfo newInfo(newEnt, strstream.str());
 		newInfo.m_selected = true;
-		g_engine.m_coordinator.GetActiveObjects().push_back(newEnt);
+		//g_engine.m_coordinator.GetActiveObjects().push_back(newEnt);
 		g_engine.m_coordinator.GetHierarchyInfo(newEnt) = newInfo;
 		return newEnt;
 	}
@@ -365,7 +368,7 @@ namespace Rogue
 		strstream << "Camera " << m_cameraIterator++;
 		HierarchyInfo newInfo(newEnt, strstream.str());
 		newInfo.m_selected = true;
-		g_engine.m_coordinator.GetActiveObjects().push_back(newEnt);
+		//g_engine.m_coordinator.GetActiveObjects().push_back(newEnt);
 		g_engine.m_coordinator.GetHierarchyInfo(newEnt) = newInfo;
 
 		return newEnt;

@@ -7,7 +7,7 @@ namespace Rogue
 		: TriggerZoom(entity, logicComponent, statsComponent),
 		m_activated{ false },
 		m_delayBetweenEmojis{ statsComponent.GetEmojiDelay() },
-		m_timer{ 0.0f }
+		m_timer{ statsComponent.GetZoomDuration() }
 	{
 		m_delayBetweenEmojis = m_statsComponent->GetEmojiDelay();
 
@@ -25,15 +25,15 @@ namespace Rogue
 		if (!m_activated || m_emojiTextures.size() == 0)
 			return;
 
-		m_timer -= g_deltaTime * g_engine.GetTimeScale();
-		//std::cout << "Timer: " << m_timer << std::endl;
+		m_timer -= g_fixedDeltaTime;
+		std::cout << "Emoji Timer: " << m_timer << std::endl;
 
 		if (m_timer < 0.0f)
 		{
 			//std::cout << "Swapping Sprites" << std::endl;
 			if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(m_entity))
 			{
-				std::cout << "Init Sprite " << sprite->get().getTexturePath();
+				//std::cout << "Init Sprite " << sprite->get().getTexturePath();
 				std::ostringstream oss;
 				oss << "Resources\\Assets\\" << m_emojiTextures.front();
 				sprite->get().setTexturePath(oss.str());
@@ -57,7 +57,7 @@ namespace Rogue
 			return;
 
 		m_activated = true;
-		m_timer = 0.0f;			//Set to 0.0f so 1st image will instantly show
+		m_timer = m_statsComponent->GetZoomDuration();			//Set to Zoom duration so wait for zoom to be finished
 		PLAYER_STATUS.FreezeControls();
 	}
 }

@@ -24,8 +24,6 @@ namespace Rogue
 
 	void FadeSystem::Update()
 	{
-		g_engine.m_coordinator.InitTimeSystem("Fade System");
-
 		// For all entities
 		for (auto entity : m_entities)
 		{
@@ -41,7 +39,7 @@ namespace Rogue
 			if (fade.getIsFadingIn())
 			{
 				if (colourFilter.a <= 1)
-					colourFilter.a += 0.01f * fade.getFadeVelocity();
+					colourFilter.a += 0.01f * fade.getFadeVelocity() * g_fixedDeltaTime;
 				else
 				{
 					colourFilter.a = 1.0f;
@@ -49,7 +47,7 @@ namespace Rogue
 				}
 			}
 			else if (colourFilter.a > 0)
-				colourFilter.a -= 0.01f * fade.getFadeVelocity();
+				colourFilter.a -= 0.01f * fade.getFadeVelocity() * g_fixedDeltaTime;
 			else
 			{
 				colourFilter.a = 0.0f;
@@ -59,8 +57,6 @@ namespace Rogue
 			sprite.setFilter(colourFilter);
 
 		}
-
-		g_engine.m_coordinator.EndTimeSystem("Fade System");
 	}
 
 	void FadeSystem::Shutdown()

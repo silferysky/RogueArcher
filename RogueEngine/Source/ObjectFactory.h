@@ -65,7 +65,7 @@ namespace Rogue
 		std::map<std::string, std::tuple<Signature, std::string, std::string>> m_archetypes;
 
 		Entity m_firstLoadedEntity;
-
+		Entity m_tilesetEntity = MAX_ENTITIES;
 	};
 
 	//MACROS FOR OBJECT FACTORY
@@ -78,7 +78,6 @@ namespace Rogue
 
 	//MACROS (HIERARCHY)
 #define CREATE_HIERARCHY_OBJ(entityValue, name, tag, archetypeName, parent)		HierarchyInfo newInfo(entityValue, name, tag, archetypeName, parent); \
-																				g_engine.m_coordinator.GetActiveObjects().push_back(entityValue); \
 																				g_engine.m_coordinator.GetHierarchyInfo(entityValue) = newInfo; \
 																				SceneManager::instance().IncrementObjectIterator();
 

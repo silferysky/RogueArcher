@@ -83,7 +83,7 @@ namespace Rogue
 
 	void AnimationComponent::updateTimer()
 	{
-		m_timer += g_deltaTime * g_engine.GetTimeScale();
+		m_timer += g_fixedDeltaTime * g_engine.GetTimeScale();
 	}
 
 	void AnimationComponent::setTimer(const float& timer)

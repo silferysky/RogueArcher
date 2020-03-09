@@ -258,5 +258,11 @@ namespace Rogue
 		void Update();
 
 		void UpdateSystem(SystemID id) { m_systems[static_cast<int>(id)].second->Update(); }
+		void FixedUpdateSystem(SystemID id, const char* systemName)
+		{ 
+			g_engine.m_coordinator.InitTimeSystem(systemName);
+			UpdateSystem(id);
+			g_engine.m_coordinator.EndTimeSystem(systemName);
+		}
 	};
 }

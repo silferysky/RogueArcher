@@ -814,7 +814,7 @@ namespace Rogue
 		EventDispatcher::instance().AddEvent(event);
 	}
 
-	void PlayerControllerSystem::CreateBallAttack()
+	/*void PlayerControllerSystem::CreateBallAttack()
 	{
 		for (Entity entity : m_entities)
 		{
@@ -856,7 +856,7 @@ namespace Rogue
 			AddToTimedEntities(ball, 0.8f);
 			break;
 		}
-	}
+	}*/
 
 	void PlayerControllerSystem::Teleport()
 	{
@@ -1243,7 +1243,7 @@ namespace Rogue
 		}
 	}
 
-	void PlayerControllerSystem::DebugDrawBall(const BaseCollider& box, const TransformComponent& trans) const
+	/*void PlayerControllerSystem::DebugDrawBall(const BaseCollider& box, const TransformComponent& trans) const
 	{
 		std::ostringstream strstream;
 		Entity ball = g_engine.m_coordinator.CreateEntity();
@@ -1266,7 +1266,7 @@ namespace Rogue
 		g_engine.m_coordinator.GetActiveObjects().push_back(ball);
 		g_engine.m_coordinator.GetHierarchyInfo(ball) = newInfo;
 
-	}
+	}*/
 
 	void PlayerControllerSystem::DebugDrawArrow(const LineSegment& teleportLine) const
 	{
@@ -1282,7 +1282,6 @@ namespace Rogue
 		lsprite.Deserialize("Resources/Assets/Arrow.png;1;1;1;1;1");
 
 		HierarchyInfo nnewInfo(line, "Line", "line");
-		g_engine.m_coordinator.GetActiveObjects().push_back(line);
 		g_engine.m_coordinator.GetHierarchyInfo(line) = nnewInfo;
 	}
 

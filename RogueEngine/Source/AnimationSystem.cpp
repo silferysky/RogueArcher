@@ -40,8 +40,6 @@ namespace Rogue
 
 	void AnimationSystem::Update()
 	{
-		g_engine.m_coordinator.InitTimeSystem("Animation System");
-
 		// For all entities
 		for (auto entity : m_entities)
 		{
@@ -57,8 +55,6 @@ namespace Rogue
 			else
 				UpdateTextureReversed(&animate, &sprite);
 		}
-
-		g_engine.m_coordinator.EndTimeSystem("Animation System");
 	}
 
 	void AnimationSystem::UpdateTexture(AnimationComponent* animate, SpriteComponent* sprite)

@@ -79,6 +79,7 @@ namespace Rogue
 		Entity Create2DSprite(Vec2 position, Vec2 scale, std::string_view tilepath);
 		void ClearTileset();
 		
+		inline Entity GetTileMapEnt() { return m_tileMapEnt; }
 
 		virtual void Init() override final;
 		virtual void Update() override final;
