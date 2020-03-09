@@ -59,6 +59,9 @@ namespace Rogue
 		//For Entity Count
 		m_maxEntityCount = level["MaxEntityCount"].GetInt();
 		Entity entCount = level["EntityCount"].GetInt();
+
+		//For Tile Set
+		LoadTileset(fileName);
 		
 		//For Parent/Child iterator
 		std::queue<Entity> loadedQueue;
@@ -174,9 +177,6 @@ namespace Rogue
 		//	//RE_INFO("HI");
 		//}
 
-		//For Tile Set
-		LoadTileset(fileName);
-
 		//Set at end to ensure no weird camera panning
 		CAMERA_MANAGER.SetCameraPos({ level["StartPosX"].GetFloat(), level["StartPosY"].GetFloat(), 0.0f });
 
@@ -206,10 +206,12 @@ namespace Rogue
 
 		SaveTileset(fileName);
 
-		Entity entCount = 0;
-		size_t skipCount = 0; //No need to skip MenuControllerSystem's UI since they are not created as activeobjects
-		skipCount = g_engine.m_coordinator.GetSystem<MenuControllerSystem>()->GetUIMenuObjsSize();
-		entCount = static_cast<Entity>(g_engine.m_coordinator.GetActiveObjects().size() - skipCount);
+		size_t skipCount = g_engine.m_coordinator.GetSystem<MenuControllerSystem>()->GetUIMenuObjsSize();
+
+		if (ImGuiTileSet::instance().GetTileMapEnt() != MAX_ENTITIES)
+			++skipCount;
+
+		Entity entCount = static_cast<Entity>(g_engine.m_coordinator.GetActiveObjects().size() - skipCount);
 
 		/*size_t skipCount = g_engine.m_coordinator.GetSystem<MenuControllerSystem>()->GetUIMenuObjsSize();
 		if (g_engine.m_coordinator.GetActiveObjects().size() - skipCount > 0)

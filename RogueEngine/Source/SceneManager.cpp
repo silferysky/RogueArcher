@@ -137,6 +137,9 @@ namespace Rogue
 		std::ostringstream ostrstream;
 		ostrstream << "Resources/Levels/" << fileName;
 		int size = static_cast<int>(g_engine.m_coordinator.GetActiveObjects().size() - menuControl->GetUIMenuObjsSize());
+		if (ImGuiTileSet::instance().GetTileMapEnt() != MAX_ENTITIES)
+			--size;
+
 		if (m_objectFactory->CheckFileTooSmall(FILETYPE_LEVEL, size))
 			if (size > 0)
 				BasicIO::WriteLevelJsonFile(ostrstream.str().c_str(), size);
