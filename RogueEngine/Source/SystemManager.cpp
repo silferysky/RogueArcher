@@ -113,6 +113,7 @@ namespace Rogue
 			UpdateSystem(SystemID::id_EDITOR);
 	}
 
+
 	void SystemManager::FixedUpdate()
 	{
 		// Fixed update
@@ -149,6 +150,13 @@ namespace Rogue
 		Timer::instance().GetSystemTimes()["Box Collision System"] *= step;
 		//Timer::instance().GetSystemTimes()["Collision System"] *= step;
 		Timer::instance().GetSystemTimes()["Camera System"] *= step;
+	}
+
+	void SystemManager::FixedUpdateSystem(SystemID id, const char* systemName)
+	{
+		g_engine.m_coordinator.InitTimeSystem(systemName);
+		UpdateSystem(id);
+		g_engine.m_coordinator.EndTimeSystem(systemName);
 	}
 
 	void SystemManager::SetTransitionLevel(std::string_view levelName, float transitionTime)
