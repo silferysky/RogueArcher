@@ -1,6 +1,6 @@
 {
-    "MaxEntityCount": 86,
-    "EntityCount": 86,
+    "MaxEntityCount": 87,
+    "EntityCount": 87,
     "CameraMinX": -900.0,
     "CameraMinY": -400.0,
     "CameraMaxX": 1500.0,
@@ -95,6 +95,7 @@
     "Signature83": 261,
     "Signature84": 261,
     "Signature85": 261,
+    "Signature86": 1029,
     "Entity0": "Name{Collision1}|Tag{Ground}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-1861;62;100;100;0;0}||BoxCollider{0;0;1105;319;AWAKE}|||||||||Collider{BOX;1;4294967295;}|||||||||||",
     "Entity1": "Name{Collision2}|Tag{Ground}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-1436;245;100;100;0;0}||BoxCollider{0;0;1105;72;AWAKE}|||||||||Collider{BOX;1;4294967295;}|||||||||||",
     "Entity2": "Name{Collision3}|Tag{Ground}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-1861;-609;100;100;0;0}||BoxCollider{0;0;1105;319;AWAKE}|||||||||Collider{BOX;1;4294967295;}|||||||||||",
@@ -181,6 +182,7 @@
     "Entity83": "Name{Slot1}|Tag{slots}|Sprite{Resources\\Assets\\ArtifactSoul.png;1;1;1;1;}||Transform{140.85;479.303;79;174;0;0}||||||Animation{6;0;0.1;1;0;0;}||||||||||||||||",
     "Entity84": "Name{Slot2}|Tag{slots}|Sprite{Resources\\Assets\\ArtifactSoul.png;1;1;1;1;}||Transform{339.691;373.489;79;174;0;0}||||||Animation{6;0;0.1;1;0;0;}||||||||||||||||",
     "Entity85": "Name{Slot3}|Tag{slots}|Sprite{Resources\\Assets\\ArtifactSoul.png;1;1;1;1;}||Transform{537.336;481.931;79;174;0;0}||||||Animation{6;0;0.1;1;0;0;}||||||||||||||||",
+    "Entity86": "Name{Ambience}|Tag{}|Sprite{Resources/Assets/DefaultSprite.png;1;1;1;1;}||Transform{0;0;100;100;0;0}||||||||Audio{Resources\\Sounds\\Hub.ogg;1;0.24;1;0;}||||||||||||||",
     "EntityParent0": 65535,
     "EntityParent1": 65535,
     "EntityParent2": 65535,
@@ -266,5 +268,6 @@
     "EntityParent82": 65535,
     "EntityParent83": 65535,
     "EntityParent84": 65535,
-    "EntityParent85": 65535
+    "EntityParent85": 65535,
+    "EntityParent86": 65535
 }
