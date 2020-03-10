@@ -25,12 +25,7 @@ namespace Rogue
 	{
 		if (isUndo)
 		{
-			if (m_undoStack.empty())
-			{
-				return;
-			}
 			EditorEvent& editorEv = m_undoStack.back();
-			
 			editorEv.SetIsUndo(true);
 			
 			switch (editorEv.GetEventType())
