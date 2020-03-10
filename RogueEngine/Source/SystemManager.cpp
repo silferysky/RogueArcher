@@ -104,7 +104,6 @@ namespace Rogue
 		UpdateSystem(SystemID::id_MASKINGSYSTEM);
 		UpdateSystem(SystemID::id_FONTSYSTEM);
 		UpdateSystem(SystemID::id_AUDIOSYSTEM);
-		UpdateSystem(SystemID::id_UISYSTEM);
 		UpdateSystem(SystemID::id_LIGHTINGSYSTEM);
 		UpdateSystem(SystemID::id_PARENTCHILDSYSTEM);
 
@@ -135,6 +134,7 @@ namespace Rogue
 			FixedUpdateSystem(SystemID::id_BOXCOLLISIONSYSTEM, "Box Collision System");
 			//FixedUpdateSystem(SystemID::id_COLLISIONSYSTEM, "Collision System");
 			FixedUpdateSystem(SystemID::id_CAMERASYSTEM, "Camera System");
+			FixedUpdateSystem(SystemID::id_UISYSTEM, "UI System");
 		}
 		
 		if (!m_gameIsPaused && m_gameIsRunning)

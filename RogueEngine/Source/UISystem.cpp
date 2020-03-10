@@ -54,7 +54,7 @@ namespace Rogue
 			position.x += static_cast<int>((m_newCameraPos.x - m_oldCameraPos.x));
 			position.y += static_cast<int>((m_newCameraPos.y - m_oldCameraPos.y));
 
-			//transform.setPosition(position);
+			transform.setPosition(position);
 		}
 
 		m_oldCameraPos = m_newCameraPos;
