@@ -17,23 +17,25 @@ namespace Rogue
 
 	void ProgressBar::AIIdleUpdate()
 	{
-		float completionPercentage = PlayerStatusManager::instance().GetTeleportCharge() / 100;
-
 		if (auto transform = g_engine.m_coordinator.TryGetComponent<TransformComponent>(m_entity))
 		{
-			float pixelRatio = 282.5f / GetWindowWidth(g_engine.GetWindowHandler()); // ratio of the asset in comparison to the screen
+			float completionPercentage = PlayerStatusManager::instance().GetSoulsCollected() / 2.0f;
 
-			transform->get().setScale(Vec2(transform->get().GetScale().x * completionPercentage * 0.01, transform->get().GetScale().y));
+			int width = GetWindowWidth(g_engine.GetWindowHandler());
+
+			float pixelRatio = (565.0f / static_cast<float>(GetWindowWidth(g_engine.GetWindowHandler()))); // ratio of the asset in comparison to the screen
+
+			transform->get().setScale(Vec2(282.5f * completionPercentage, transform->get().GetScale().y));
 
 			float difference = pixelRatio * (completionPercentage - m_oldScale) / 2.0f;
 
 			// Bar offset
 			if (difference > 0)
-				transform->get().setPosition(Vec2(transform->get().GetPosition().x + difference, transform->get().GetPosition().y));
-			else if (difference < 0)
 				transform->get().setPosition(Vec2(transform->get().GetPosition().x - difference, transform->get().GetPosition().y));
-		}
+			else if (difference < 0)
+				transform->get().setPosition(Vec2(transform->get().GetPosition().x + difference, transform->get().GetPosition().y));
 
-		m_oldScale = completionPercentage; // keep track of old scale
+			m_oldScale = completionPercentage; // keep track of old scale
+		}
 	}
 }
