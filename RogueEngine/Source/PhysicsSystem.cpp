@@ -123,6 +123,8 @@ namespace Rogue
 		// Add relevant forces to each rigidbody
 		ForceManager::instance().ApplyAllForces();
 
+		std::cout << "Timescale: " << g_engine.GetTimeScale() << std::endl;
+
 		// For all entities
 		std::set<Entity>::iterator iEntity;
 		for (iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)

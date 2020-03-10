@@ -258,9 +258,6 @@ namespace Rogue
 				PLAYER_STATUS.SetTeleportCharge(3.0f);
 
 			player.m_jumpTimer -= g_deltaTime * g_engine.GetTimeScale();
-			//player.m_grounded = false;
-
-			std::cout << "Hitchhikable entity: " << PLAYER_STATUS.GetHitchhikableEntity() << std::endl;
 		}
 	}
 
@@ -450,7 +447,7 @@ namespace Rogue
 						// Reset boolean for grounded
 						if (!PLAYER_STATUS.HasJumped())
 						{
-							AudioManager::instance().loadSound("Resources/Sounds/jump.ogg", 0.3f, false).Play(1.0f);
+							AudioManager::instance().loadSound("Resources/Sounds/jump.ogg", 0.3f, false).Play(0.5f);
 							Hitchhike(MAX_ENTITIES);
 							player.m_grounded = false;
 							PLAYER_STATUS.SetHasJumped(true);
@@ -893,9 +890,9 @@ namespace Rogue
 		if (g_engine.m_coordinator.ComponentExists<AnimationComponent>(*m_entities.begin()))
 			g_engine.m_coordinator.GetComponent<AnimationComponent>(*m_entities.begin()).setIsAnimating(true);
 
-		if (PLAYER_STATUS.GetTeleportCharge() == 3)
+		if (PLAYER_STATUS.GetTeleportCharge() == 2)
 			AudioManager::instance().loadSound("Resources/Sounds/Teleport3.ogg", 0.3f, false).Play();
-		else if (PLAYER_STATUS.GetTeleportCharge() == 2)
+		else if (PLAYER_STATUS.GetTeleportCharge() == 1)
 			AudioManager::instance().loadSound("Resources/Sounds/Teleport2.ogg", 0.3f, false).Play();
 		else
 			AudioManager::instance().loadSound("Resources/Sounds/teleport1.ogg", 0.3f, false).Play();		
@@ -1179,8 +1176,8 @@ namespace Rogue
 		if (g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(PLAYER_STATUS.GetPlayerEntity()))
 		{
 			ForceManager::instance().ResetPhysics(PLAYER_STATUS.GetPlayerEntity());
-			g_engine.SetTimeScale(1.0f);
-		}
+		}	
+		g_engine.SetTimeScale(1.0f);
 	}
 
 	void PlayerControllerSystem::UnfreezeControlComponentUpdates()

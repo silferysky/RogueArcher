@@ -186,7 +186,7 @@ namespace Rogue
 		template <typename TComponent>
 		std::optional<std::reference_wrapper<TComponent>> TryGetComponent(Entity entity)
 		{
-			if (entity >= MAX_ENTITIES || !ComponentExists<TComponent>(entity))
+			if (!ComponentExists<TComponent>(entity))
 				return std::nullopt;
 			else
 				return std::optional<std::reference_wrapper<TComponent>>(GetComponent<TComponent>(entity));
@@ -232,7 +232,7 @@ namespace Rogue
 		template <typename TComponent>
 		bool ComponentExists(Entity entity)
 		{
-			return m_entityManager->GetSignature(entity).test(GetComponentType<TComponent>());
+			return entity < MAX_ENTITIES && m_entityManager->GetSignature(entity).test(GetComponentType<TComponent>());
 		}
 
 		void InitTimeSystem(const char* system)

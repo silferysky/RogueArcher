@@ -64,7 +64,7 @@ namespace Rogue
 		if (m_entities.size() == 0)
 			return;
 
-		glUseProgram(m_shader.GetShader());
+		/* glUseProgram(m_shader.GetShader());
 		glBindVertexArray(m_VAO);
 		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 		glBindBuffer(GL_UNIFORM_BUFFER, m_uboMatrices);
@@ -82,10 +82,10 @@ namespace Rogue
 		glBindBuffer(GL_UNIFORM_BUFFER, 0);
 		glUseProgram(0);
 		glBindVertexArray(0); //Reset
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindBuffer(GL_ARRAY_BUFFER, 0); */
 
 		glUseProgram(m_graphicsShader.GetShader());
-		glUniform1i(glGetUniformLocation(m_graphicsShader.GetShader(), "TOTAL_LIGHTS"), totalLights);
+		glUniform1i(glGetUniformLocation(m_graphicsShader.GetShader(), "numLights"), totalLights);
 
 		// For all entities
 		for (auto entity : m_entities)
@@ -94,6 +94,8 @@ namespace Rogue
 		}
 
 		glUseProgram(0);
+
+		totalLights = 0;
 
 		//g_engine.m_coordinator.EndTimeSystem("Lighting System");
 	}
