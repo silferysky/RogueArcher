@@ -232,7 +232,7 @@ namespace Rogue
 		return m_isLightMode;
 	}
 
-	void PlayerStatusManager::SetHitchhikeEntity(Entity hitchhiked)
+	void PlayerStatusManager::SetHitchhikedEntity(Entity hitchhiked)
 	{
 		m_hitchhikedEntity = hitchhiked;
 	}
