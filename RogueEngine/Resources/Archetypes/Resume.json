@@ -1,5 +1,5 @@
 {
     "Signature": 2053,
-    "Entity": "Name{Resume}|Tag{}|Sprite{Resources/Assets/ResumeBtn.png;1;1;1;1001}||Transform{0;90;550;150;0;1001}|||||||||UI{0;}|||||||",
+    "Entity": "Name{Resume}|Tag{}|Sprite{Resources/Assets/MenuButtonResume.png;1;1;1;1001}||Transform{0;-61;239;309;0;1001}|||||||||UI{0;}|||||||",
 		"Children": ""
 }
