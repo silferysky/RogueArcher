@@ -41,39 +41,79 @@ namespace Rogue
 			//8. <Fade in/out 3 secs, display statement on top of the camera>
 			if (m_timer < 3.0f)
 			{
-				//for (HierarchyInfo& info : g_engine.m_coordinator.GetHierarchyInfoArray())
-				//{
-				//	if (info.m_tag == "slots")
-				//	{
-				//		auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
-				//		transform.setZ(0);
-				//	}
-				//}
+				for (HierarchyInfo& info : g_engine.m_coordinator.GetHierarchyInfoArray())
+				{
+					if (info.m_tag == "DoorUp")
+					{
+						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+						transform.setPosition(Vec2{ transform.GetPosition().x,transform.GetPosition().y + 0.2f });
+					}
+					if (info.m_tag == "DoorDown")
+					{
+						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+						transform.setPosition(Vec2{ transform.GetPosition().x,transform.GetPosition().y - 0.2f });
+					}
+					if (info.m_tag == "DoorLeft")
+					{
+						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+						transform.setPosition(Vec2{ transform.GetPosition().x - 0.2f,transform.GetPosition().y });
+					}
+					if (info.m_tag == "DoorRight")
+					{
+						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+						transform.setPosition(Vec2{ transform.GetPosition().x + 0.2f,transform.GetPosition().y });
+					}
+				}
+
 				FadeEvent ev = FadeEvent(MAX_ENTITIES, 0.5f, false);
 				ev.SetSystemReceivers(static_cast<int>(SystemID::id_GRAPHICSSYSTEM));
 				EventDispatcher::instance().AddEvent(ev);
 			}
 			//9. < Fade in 3 secs, display choice input statement on top of the camera >
-			//else if (m_timer < 6.0f)
-			//{
-			//
-			//}
-			////11.  <Inputted, Fade out choice input statement 3 secs and remove the input image>
-			//else if (m_timer < 9.0f)
-			//{
-			//
-			//}
-			////12. < Fade in Black image to cover the camera, 3 secs >
-			//else if (m_timer < 12.0f)
-			//{
-			//
-			//}
-			////13.<Fade in/out cutscenes according to ED1/2, 3 secs respectively for each cutscene duration>
-			//else if (m_timer < 15.0f)
-			//{
-			//
-			//}
-			//14.<Fade in Black image to cover the camera, 3 secs>
+			else if (m_timer < 10.0f)
+			{
+				for (HierarchyInfo& info : g_engine.m_coordinator.GetHierarchyInfoArray())
+				{
+					if (info.m_tag == "ElaTitle")
+					{
+						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+						transform.setPosition(Vec2{ transform.GetPosition().x + 0.2f,transform.GetPosition().y });
+					}
+					if (info.m_tag == "ElaA")
+					{
+						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+						transform.setPosition(Vec2{ transform.GetPosition().x + 0.2f,transform.GetPosition().y });
+						transform.setZ(101);
+					}
+					if (info.m_tag == "ExaTitle")
+					{
+						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+						transform.setPosition(Vec2{ transform.GetPosition().x - 0.2f,transform.GetPosition().y });
+					}
+					if (info.m_tag == "ExaA")
+					{
+						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+						transform.setPosition(Vec2{ transform.GetPosition().x - 0.2f,transform.GetPosition().y });
+						transform.setZ(101);
+					}
+				}
+			}
+			else if (m_timer < 13.0f)
+			{
+				for (HierarchyInfo& info : g_engine.m_coordinator.GetHierarchyInfoArray())
+				{
+					if (info.m_tag == "ElaTitle")
+					{
+						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(info.m_Entity);
+						sprite.setTexturePath("Resources/Assets/EndingEventEla.png");
+					}
+					if (info.m_tag == "ElaA")
+					{
+						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+						transform.setZ(0);
+					}
+				}
+			}
 			else
 			{
 				m_timer = 0.0f;
@@ -86,7 +126,7 @@ namespace Rogue
 						transform.setZ(0);
 					}
 				}
-				CameraManager::instance().SetCameraZoom(CameraManager::instance().GetCameraZoom() - 0.2f);
+				CameraManager::instance().SetCameraZoom(CameraManager::instance().GetCameraZoom());
 				PlayerStatusManager::instance().SetEnding(false);
 			}
 			
@@ -100,7 +140,7 @@ namespace Rogue
 			PLAYER_STATUS.FreezeControls();
 			g_engine.m_coordinator.GetSystem<CameraSystem>()->setIsActive(false);
 			//Zoom out slightly
-			CameraManager::instance().SetCameraZoom(CameraManager::instance().GetCameraZoom() + 0.2f);
+			CameraManager::instance().SetCameraZoom(CameraManager::instance().GetCameraZoom() + 0.5f);
 			//Camera shake 2 seconds
 			CameraShakeEvent shake(20.0f);
 			shake.SetSystemReceivers(static_cast<int>(SystemID::id_CAMERASYSTEM));
