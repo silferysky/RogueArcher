@@ -163,7 +163,7 @@ namespace Rogue
 					g_engine.m_coordinator.SetTransitionLevel("Level 12.json", 0.0f);
 					//g_engine.m_coordinator.SetTransition(true);
 
-					FadeEvent ev = FadeEvent(MAX_ENTITIES, 1.0f);
+					FadeEvent ev = FadeEvent(MAX_ENTITIES, 0.5f);
 					ev.SetSystemReceivers(static_cast<int>(SystemID::id_GRAPHICSSYSTEM));
 					EventDispatcher::instance().AddEvent(ev);
 
@@ -210,7 +210,7 @@ namespace Rogue
 				else if (hierarchyObj.m_objectName == "MainMenu_Btn")
 				{
 					g_engine.m_coordinator.SetTransitionLevel("Level 20.json", 0.0f);
-					FadeEvent ev = FadeEvent(MAX_ENTITIES, 1.0f);
+					FadeEvent ev = FadeEvent(MAX_ENTITIES, 0.5f);
 					ev.SetSystemReceivers(static_cast<int>(SystemID::id_GRAPHICSSYSTEM));
 					EventDispatcher::instance().AddEvent(ev);
 					//SceneManager& sceneManager = SceneManager::instance();
