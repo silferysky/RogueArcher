@@ -58,6 +58,7 @@ namespace Rogue
 
 		void RegisterForce(Entity entity, const Vec2& force, float lifetime = 0.0166666f);
 		void RemoveForce(Entity entity);
+		void ResetPhysics(Entity entity);
 	};
 
 }

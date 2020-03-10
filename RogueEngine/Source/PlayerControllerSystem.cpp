@@ -1176,9 +1176,9 @@ namespace Rogue
 		{
 			boxCollider->get().SetCollisionMode(CollisionMode::e_asleep);
 		}
-		if (auto rigidbody = g_engine.m_coordinator.TryGetComponent<RigidbodyComponent>(PLAYER_STATUS.GetPlayerEntity()))
+		if (g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(PLAYER_STATUS.GetPlayerEntity()))
 		{
-			rigidbody->get().setIsStatic(true);
+			ForceManager::instance().ResetPhysics(PLAYER_STATUS.GetPlayerEntity());
 		}
 	}
 
@@ -1190,7 +1190,7 @@ namespace Rogue
 		}
 		if (auto rigidbody = g_engine.m_coordinator.TryGetComponent<RigidbodyComponent>(PLAYER_STATUS.GetPlayerEntity()))
 		{
-			rigidbody->get().setIsStatic(false);
+			//rigidbody->get().setIsStatic(false);
 		}
 	}
 
