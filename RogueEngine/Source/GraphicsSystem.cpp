@@ -258,8 +258,12 @@ namespace Rogue
 				if (m_isFadingOut && m_currentFadeFactor < 0.0f)
 				{
 					m_isFadingOut = false;
-					g_engine.m_coordinator.SetTransition(true);
-					g_engine.m_coordinator.ResumeMenuButtons();
+					if (m_transitingAfterFade)
+					{
+						g_engine.m_coordinator.SetTransition(true);
+						m_transitingAfterFade = false;
+						g_engine.m_coordinator.ResumeMenuButtons();
+					}
 				}
 				else if (m_isFadingOut)
 				{
@@ -379,6 +383,7 @@ namespace Rogue
 				m_isFading = true;
 				m_isFadingOut = true;
 				m_currentFadeFactor = 1.0f;
+				m_transitingAfterFade = fadeEvent.GetTransitAfterFade();
 				if (fadeEvent.GetFadeFactor() != 0.0f)
 					m_fadeFactor = fadeEvent.GetFadeFactor();
 				else
