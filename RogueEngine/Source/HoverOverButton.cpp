@@ -9,6 +9,10 @@ namespace Rogue
 	HoverOverButton::HoverOverButton(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent)
 		: ScriptComponent(entity, logicComponent, statsComponent)
 	{
+		if (auto transform = g_engine.m_coordinator.TryGetComponent<TransformComponent>(entity))
+		{
+			m_originalScale = transform->get().GetScale();
+		}
 	}
 
 	void HoverOverButton::AIActiveStateUpdate()
@@ -20,21 +24,17 @@ namespace Rogue
 	{
 		if (auto transform = g_engine.m_coordinator.TryGetComponent<TransformComponent>(m_entity))
 		{
-
-			PickingManager::instance().GenerateMeshAABB(transform->get());
+			auto transformOpt = transform->get();
+			PickingManager::instance().GenerateMeshAABB(transformOpt);
 
 			// cursor is on the button
-			if (CollisionManager::instance().DiscretePointVsAABB(PickingManager::instance().GetWorldCursor(), transform->get().GetPickArea()))
+			if (CollisionManager::instance().DiscretePointVsAABB(PickingManager::instance().GetWorldCursor(), transformOpt.GetPickArea()))
 			{
-				// put the hover logic here: stuff like play a sound, change the button colour etc...
-				//auto sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_entity);
-
-				//std::cout << "Hovering!" << std::endl;
+				transformOpt.setScale(m_originalScale * 1.50f);
 			}
 			else
 			{
-				// revert the hover logic
-				//auto sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_entity);
+				transformOpt.setScale(m_originalScale);
 			}
 		}
 	}

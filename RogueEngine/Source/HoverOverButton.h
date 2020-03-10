@@ -11,5 +11,7 @@ namespace Rogue
 
 		virtual void AIActiveStateUpdate() override;
 		virtual void AIIdleUpdate() override;
+	private:
+		Vec2 m_originalScale;
 	};
 }

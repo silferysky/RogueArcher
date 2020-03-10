@@ -73,7 +73,7 @@ namespace Rogue
 		for (auto entity : m_entities)
 		{
 			++totalLights;
-			AddLights(entity);
+			// AddLights(entity);
 
 			if (!g_engine.m_coordinator.GetGameState())
 				draw(entity);
