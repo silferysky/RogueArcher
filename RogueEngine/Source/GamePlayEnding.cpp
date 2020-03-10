@@ -30,28 +30,28 @@ namespace Rogue
 			}
 			m_timer += g_deltaTime * g_engine.GetTimeScale();
 			//Freeze Player Controls			
-			m_souls = PLAYER_STATUS.GetSoulsCollected();
-			if (m_souls < 7)
-			{
-				if (auto camera = g_engine.m_coordinator.TryGetComponent<CameraComponent>(m_entity))
-				{
-
-				}
-
-				if (auto fade = g_engine.m_coordinator.TryGetComponent<FadeComponent>(m_entity))
-				{
-					fade->get().setIsActive(true);
-					fade->get().setIsFadingIn(false);
-				}
-			}
-			else
-			{
-
-			}
+			//m_souls = PLAYER_STATUS.GetSoulsCollected();
+			//if (m_souls < 7)
+			//{
+			//}
+			//else
+			//{
+			//
+			//}
 			//8. <Fade in/out 3 secs, display statement on top of the camera>
 			if (m_timer < 3.0f)
 			{
-				
+				//for (HierarchyInfo& info : g_engine.m_coordinator.GetHierarchyInfoArray())
+				//{
+				//	if (info.m_tag == "slots")
+				//	{
+				//		auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+				//		transform.setZ(0);
+				//	}
+				//}
+				FadeEvent ev = FadeEvent(MAX_ENTITIES, 0.5f, false);
+				ev.SetSystemReceivers(static_cast<int>(SystemID::id_GRAPHICSSYSTEM));
+				EventDispatcher::instance().AddEvent(ev);
 			}
 			//9. < Fade in 3 secs, display choice input statement on top of the camera >
 			//else if (m_timer < 6.0f)
