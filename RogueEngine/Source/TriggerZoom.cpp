@@ -29,7 +29,7 @@ namespace Rogue
 		//If waiting for delay
 		if (m_zoomTimer < m_zoomDelay)
 		{
-			m_zoomTimer += g_fixedDeltaTime;
+			m_zoomTimer += g_deltaTime;
 		}
 		else//if (m_zoomTimer >= m_zoomDelay)
 		{
@@ -70,7 +70,7 @@ namespace Rogue
 
 		m_isZooming = true;
 		m_zoomValueInit = CameraManager::instance().GetCameraZoom();
-		m_zoomFactor = (m_zoomValueFinal - m_zoomValueInit) / m_zoomDuration * g_fixedDeltaTime;
+		m_zoomFactor = (m_zoomValueFinal - m_zoomValueInit) / m_zoomDuration * g_deltaTime;
 		//m_zoomTimer = m_zoomDelay;
 	}
 }
