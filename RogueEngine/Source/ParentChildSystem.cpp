@@ -387,19 +387,21 @@ namespace Rogue
 
 		bool isValid = true;
 		HierarchyInfo it = g_engine.m_coordinator.GetHierarchyInfo(newParent);
+		int count = 0;
 
 		//If newParent is child, or assigning to self, it is invalid
 		if (it.m_Entity == child || child == newParent)
 			isValid = false;
 
 		//Doing a check if any of parent's parents is the child value
-		while (isValid && it.m_parent != MAX_ENTITIES)
+		while (isValid && it.m_parent != MAX_ENTITIES && count < 10)
 		{
 			if (it.m_parent == child)
 			{
 				isValid = false;
 			}
 			it = g_engine.m_coordinator.GetHierarchyInfo(it.m_parent);
+			++count;
 		}
 
 		return isValid;
