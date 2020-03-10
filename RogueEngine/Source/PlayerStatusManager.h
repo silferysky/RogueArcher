@@ -65,7 +65,7 @@ namespace Rogue
 		bool GetLightStatus() const;
 
 		//Hitchhike
-		void SetHitchhikeEntity(Entity ent);
+		void SetHitchhikedEntity(Entity ent);
 		Entity GetHitchhikedEntity() const;
 		void SetHitchhikeIndicator(Entity ent);
 		Entity GetHitchhikeIndicator() const;
