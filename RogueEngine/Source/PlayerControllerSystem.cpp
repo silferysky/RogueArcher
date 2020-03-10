@@ -383,10 +383,10 @@ namespace Rogue
 				else if (keycode == KeyPress::KeyF6)
 					g_engine.ToggleVSync();
 
-				//else if (PLAYER_STATUS.GetFreezeControlTimer() > 0.0f)
-				//{
-				//	return;
-				//}
+				else if (PLAYER_STATUS.GetFreezeControlTimer() > 0.0f)
+				{
+					return;
+				}
 				
 				else if (keycode == KeyPress::KeyZ)
 				{
@@ -1076,8 +1076,8 @@ namespace Rogue
 			ColliderComponent& boxGCollider = g_engine.m_coordinator.GetComponent<ColliderComponent>(entity);
 
 			// Skip asleep colliders
-			if (boxCollider.GetCollisionMode() == CollisionMode::e_asleep)
-				continue;
+			//if (boxCollider.GetCollisionMode() == CollisionMode::e_asleep)
+			//	continue;
 
 			// Filter layers
 			if (!CollisionManager::instance().FilterColliders(playerGCollider.GetCollisionMask(), boxGCollider.GetCollisionCat()) ||
@@ -1171,7 +1171,7 @@ namespace Rogue
 	{
 		if (auto boxCollider = g_engine.m_coordinator.TryGetComponent<BoxCollider2DComponent>(PLAYER_STATUS.GetPlayerEntity()))
 		{
-			boxCollider->get().SetCollisionMode(CollisionMode::e_asleep);
+			//boxCollider->get().SetCollisionMode(CollisionMode::e_asleep);
 		}
 		if (g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(PLAYER_STATUS.GetPlayerEntity()))
 		{
@@ -1184,7 +1184,7 @@ namespace Rogue
 	{
 		if (auto boxCollider = g_engine.m_coordinator.TryGetComponent<BoxCollider2DComponent>(PLAYER_STATUS.GetPlayerEntity()))
 		{
-			boxCollider->get().SetCollisionMode(CollisionMode::e_awake);
+			//boxCollider->get().SetCollisionMode(CollisionMode::e_awake);
 		}
 		if (auto rigidbody = g_engine.m_coordinator.TryGetComponent<RigidbodyComponent>(PLAYER_STATUS.GetPlayerEntity()))
 		{

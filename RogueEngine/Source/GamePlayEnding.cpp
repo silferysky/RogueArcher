@@ -126,7 +126,7 @@ namespace Rogue
 						transform.setZ(0);
 					}
 				}
-				CameraManager::instance().SetCameraZoom(CameraManager::instance().GetCameraZoom());
+				CameraManager::instance().SetCameraZoom(CameraManager::instance().GetCameraZoom() + 0.5f);
 				PlayerStatusManager::instance().SetEnding(false);
 			}
 			

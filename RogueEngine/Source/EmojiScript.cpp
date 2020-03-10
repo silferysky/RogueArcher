@@ -29,7 +29,7 @@ namespace Rogue
 		if (!m_activated || m_finished)
 			return;
 
-		m_timer -= g_fixedDeltaTime;
+		m_timer -= g_deltaTime;
 		//std::cout << "Emoji Timer: " << m_timer << std::endl;
 
 		if (m_timer < 0.0f)
