@@ -93,7 +93,7 @@ namespace Rogue
 	void ForceManager::ResetPhysics(Entity entity)
 	{
 		// Reset force, acceleration, velocity
-		RemoveForce(entity);
+		//RemoveForce(entity);
 
 		auto& body = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
 		body.setAcceleration(Vec2());

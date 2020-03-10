@@ -115,9 +115,11 @@ namespace Rogue
 
 		HierarchyInfo& GetHierarchyInfo(Entity entity)
 		{
-
 			RE_ASSERT(entity < MAX_ENTITIES, "Entity out of range.");
+			
 			return m_entityInfo[entity];
+
+			//throw;
 		}
 
 		std::array<HierarchyInfo, MAX_ENTITIES>& GetHierarchyInfoArray()
