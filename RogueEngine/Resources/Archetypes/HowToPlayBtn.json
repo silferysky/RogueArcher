@@ -1,5 +1,5 @@
 {
     "Signature": 2053,
-    "Entity": "Name{HowToPlayBtn}|Tag{}|Sprite{Resources\\Assets\\How to play.png;1;1;1;1}||Transform{0;-17;300;60;0;1002}|||||||||UI{0;}|||||||",
+    "Entity": "Name{HowToPlayBtn}|Tag{}|Sprite{Resources\\Assets\\MenuButtonControls.png;1;1;1;1}||Transform{-182;-243;133;190;0;1002}|||||||||UI{0;}|||||||",
 		"Children": ""
 }

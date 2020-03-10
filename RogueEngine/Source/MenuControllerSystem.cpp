@@ -111,28 +111,31 @@ namespace Rogue
 							//break;
 						case 0: //Crosshair
 							break;
-						case 1: //MainMenu_Bg
+						case 1: //PausedTexture
+							hierarchyObj.m_objectName = "PausedTexture";
+							break;
+						case 2: //MainMenu_Bg
 							hierarchyObj.m_objectName = "MainMenu_Bg";
 							break;
-						case 2: //HowToPlayBtn
+						case 3: //HowToPlayBtn
 							hierarchyObj.m_objectName = "HowToPlayBtn";
 							break;
-						case 3: //MainMenu_Btn
+						case 4: //MainMenu_Btn
 							hierarchyObj.m_objectName = "MainMenu_Btn";
 							break;
-						case 4: //Resume
+						case 5: //Resume
 							hierarchyObj.m_objectName = "Resume";
 							break;
-						case 5: //QuitBtn
+						case 6: //QuitBtn
 							hierarchyObj.m_objectName = "Quit";
 							break;
-						case 6: //HowToPlay
+						case 7: //HowToPlay
 							hierarchyObj.m_objectName = "HowToPlay";
 							break;
-						case 7: //YesBtn
+						case 8: //YesBtn
 							hierarchyObj.m_objectName = "YesBtn";
 							break;
-						case 8: //NoBtn
+						case 9: //NoBtn
 							hierarchyObj.m_objectName = "NoBtn";
 							break;
 						}
@@ -338,6 +341,7 @@ namespace Rogue
 	void MenuControllerSystem::InitPauseMenu()
 	{
 		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("crosshair", false));
+		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("PausedTexture", false));
 		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("MainMenu_Bg", false));
 		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("HowToPlayBtn", false));
 		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("MainMenu_Btn", false));

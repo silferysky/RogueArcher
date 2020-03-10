@@ -39,14 +39,29 @@ namespace Rogue
 			{
 				m_waypoints.push_back(waypoint);
 			}
-			if(stats.getWaypoints().size())
-				m_nextPoint.push(*stats.getWaypoints().begin());
+			if (stats.getWaypoints().size())
+			{
+				if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(m_entity))
+				{
+					trans->get().setPosition(*stats.getWaypoints().begin());
+				}
+
+				if (stats.getWaypoints().size() > 1)
+				{
+					m_nextPoint.push(*(stats.getWaypoints().begin() + 1));
+				}
+				else
+				{
+					m_nextPoint.push(*stats.getWaypoints().begin());
+				}
+			}
 		}
 
 		if (g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(m_entity))
 		{
 			g_engine.m_coordinator.GetComponent<RigidbodyComponent>(m_entity).setIsStatic(true);
 		}
+
 		m_patrolDelay = 2.0f;
 		m_delay = 0.0f;
 	}
