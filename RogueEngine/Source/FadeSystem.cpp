@@ -39,7 +39,7 @@ namespace Rogue
 			if (fade.getIsFadingIn())
 			{
 				if (colourFilter.a <= 1)
-					colourFilter.a += 0.01f * fade.getFadeVelocity() * g_fixedDeltaTime;
+					colourFilter.a += 0.01f * fade.getFadeVelocity() * g_fixedDeltaTime * 150.0f;
 				else
 				{
 					colourFilter.a = 1.0f;
@@ -47,7 +47,7 @@ namespace Rogue
 				}
 			}
 			else if (colourFilter.a > 0)
-				colourFilter.a -= 0.01f * fade.getFadeVelocity() * g_fixedDeltaTime;
+				colourFilter.a -= 0.01f * fade.getFadeVelocity() * g_fixedDeltaTime * 150.0f;
 			else
 			{
 				colourFilter.a = 0.0f;
