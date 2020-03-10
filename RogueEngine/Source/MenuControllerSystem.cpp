@@ -106,33 +106,33 @@ namespace Rogue
 						AudioManager::instance().loadSound("Resources/Sounds/button.ogg", 0.3f, false).Play();
 						switch (it)
 						{
-						case 0: //MenuParent
-						case 8: //ConfirmBtnParent
+						//case 0: //MenuParent
+						//case 8: //ConfirmBtnParent
+							//break;
+						case 0: //Crosshair
 							break;
-						case 1: //Crosshair
-							break;
-						case 2: //MainMenu_Bg
+						case 1: //MainMenu_Bg
 							hierarchyObj.m_objectName = "MainMenu_Bg";
 							break;
-						case 3: //HowToPlayBtn
+						case 2: //HowToPlayBtn
 							hierarchyObj.m_objectName = "HowToPlayBtn";
 							break;
-						case 4: //MainMenu_Btn
+						case 3: //MainMenu_Btn
 							hierarchyObj.m_objectName = "MainMenu_Btn";
 							break;
-						case 5: //Resume
+						case 4: //Resume
 							hierarchyObj.m_objectName = "Resume";
 							break;
-						case 6: //QuitBtn
+						case 5: //QuitBtn
 							hierarchyObj.m_objectName = "Quit";
 							break;
-						case 7: //HowToPlay
+						case 6: //HowToPlay
 							hierarchyObj.m_objectName = "HowToPlay";
 							break;
-						case 9: //YesBtn
+						case 7: //YesBtn
 							hierarchyObj.m_objectName = "YesBtn";
 							break;
-						case 10: //NoBtn
+						case 8: //NoBtn
 							hierarchyObj.m_objectName = "NoBtn";
 							break;
 						}
@@ -337,28 +337,28 @@ namespace Rogue
 
 	void MenuControllerSystem::InitPauseMenu()
 	{
-		//m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("crosshair", true));
-		//m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("MainMenu_Bg", true));
-		//m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("HowToPlayBtn", true));
-		//m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("MainMenu_Btn", true));
-		//m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("Resume", true));
-		//m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("QuitBtn", true));
-		//m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("HowToPlay", true));
+		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("crosshair", false));
+		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("MainMenu_Bg", false));
+		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("HowToPlayBtn", false));
+		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("MainMenu_Btn", false));
+		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("Resume", false));
+		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("QuitBtn", false));
+		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("HowToPlay", false));
 
-		//m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("YesBtn", true));
-		//m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("NoBtn", true));
+		m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("YesBtn", false));
+		m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("NoBtn", false));
 
-		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("MenuUI", true));
-		for (auto& child : g_engine.m_coordinator.GetHierarchyInfo(m_menuObjs.front()).m_children)
-		{
-			m_menuObjs.push_back(child);
-		}
+		//m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("MenuUI", true));
+		//for (auto& child : g_engine.m_coordinator.GetHierarchyInfo(m_menuObjs.front()).m_children)
+		//{
+		//	m_menuObjs.push_back(child);
+		//}
 
-		m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("MenuConfirmUI", true));
-		for (auto& child : g_engine.m_coordinator.GetHierarchyInfo(m_confirmQuitEnt.front()).m_children)
-		{
-			m_confirmQuitEnt.push_back(child);
-		}
+		//m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("MenuConfirmUI", true));
+		//for (auto& child : g_engine.m_coordinator.GetHierarchyInfo(m_confirmQuitEnt.front()).m_children)
+		//{
+		//	m_confirmQuitEnt.push_back(child);
+		//}
 
 		SetUIMenuObjs(false);
 	}
