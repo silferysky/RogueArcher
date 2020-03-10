@@ -78,6 +78,14 @@ namespace Rogue
 			{
 				m_timer = 0.0f;
 				PLAYER_STATUS.UnfreezeControls();
+				for (HierarchyInfo& info : g_engine.m_coordinator.GetHierarchyInfoArray())
+				{
+					if (info.m_tag == "slots")
+					{
+						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+						transform.setZ(0);
+					}
+				}
 				CameraManager::instance().SetCameraZoom(CameraManager::instance().GetCameraZoom() - 0.2f);
 				PlayerStatusManager::instance().SetEnding(false);
 			}
