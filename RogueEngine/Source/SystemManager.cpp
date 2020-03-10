@@ -128,13 +128,13 @@ namespace Rogue
 				FixedUpdateSystem(SystemID::id_PHYSICSSYSTEM, "Physics System");
 				FixedUpdateSystem(SystemID::id_FADESYSTEM, "Fade System");
 				FixedUpdateSystem(SystemID::id_ANIMATIONSYSTEM, "Animation System");
+				FixedUpdateSystem(SystemID::id_UISYSTEM, "UI System");
 			}
 			
 			//FixedUpdateSystem(SystemID::id_CIRCLECOLLISIONSYSTEM, "Circle Collision System");
 			FixedUpdateSystem(SystemID::id_BOXCOLLISIONSYSTEM, "Box Collision System");
 			//FixedUpdateSystem(SystemID::id_COLLISIONSYSTEM, "Collision System");
 			FixedUpdateSystem(SystemID::id_CAMERASYSTEM, "Camera System");
-			FixedUpdateSystem(SystemID::id_UISYSTEM, "UI System");
 		}
 		
 		if (!m_gameIsPaused && m_gameIsRunning)
@@ -144,6 +144,7 @@ namespace Rogue
 			Timer::instance().GetSystemTimes()["Particle Emitter System"] *= step;
 			Timer::instance().GetSystemTimes()["Fade System"] *= step;
 			Timer::instance().GetSystemTimes()["Animation System"] *= step;
+			Timer::instance().GetSystemTimes()["UI System"] *= step;
 		}
 
 		//Timer::instance().GetSystemTimes()["Circle Collision System"] *= step;
