@@ -304,7 +304,7 @@ namespace Rogue
 				HierarchyInfo& entInfo = GetHierarchyInfo(entity);
 				for (auto& child : entInfo.m_children)
 				{
-					GetHierarchyInfo(child).m_parent = entInfo.m_parent;
+					GetHierarchyInfo(child).m_parent = MAX_ENTITIES;
 					childrenToDelete.push_back(child);
 				}
 				GetHierarchyInfo(entity).m_children.clear();
