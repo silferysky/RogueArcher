@@ -77,6 +77,7 @@ namespace Rogue
 		float m_currentFadeFactor = 1.0f;	//Current value of fadedness
 		bool m_isFading = false;			//Whether the Fade in/Fade out will be called
 		bool m_isFadingOut = true;			//Whether it is fading in or out
+		bool m_transitingAfterFade = false;	//Whether it will transition after fading
 
 	public:
 		GraphicsSystem();
