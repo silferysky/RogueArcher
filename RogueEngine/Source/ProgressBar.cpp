@@ -25,6 +25,7 @@ namespace Rogue
 
 			float pixelRatio = (565.0f / static_cast<float>(GetWindowWidth(g_engine.GetWindowHandler()))); // ratio of the asset in comparison to the screen
 
+			// translate by half of (1 - completionPercentage)
 			transform->get().setScale(Vec2(282.5f * completionPercentage, transform->get().GetScale().y));
 
 			float difference = pixelRatio * (completionPercentage - m_oldScale) / 2.0f;
