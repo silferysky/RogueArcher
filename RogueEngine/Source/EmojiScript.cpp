@@ -6,7 +6,8 @@ namespace Rogue
 	EmojiScript::EmojiScript(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent)
 		: ScriptComponent(entity, logicComponent, statsComponent),
 		m_activated{ false },
-		m_delayBetweenEmojis { 1.0f },
+		m_finished{ false },
+		m_delayBetweenEmojis { statsComponent.GetEmojiDelay() },
 		m_timer {0.0f}
 	{
 		LogicInit();
@@ -24,23 +25,31 @@ namespace Rogue
 
 	void EmojiScript::AIIdleUpdate()
 	{
-		if (!m_activated || m_emojiTextures.size() == 0)
+		//This part is copied from EmojiScript
+		if (!m_activated || m_finished)
 			return;
 
-		m_timer -= g_deltaTime * g_engine.GetTimeScale();
-		//std::cout << "Timer: " << m_timer << std::endl;
+		m_timer -= g_fixedDeltaTime;
+		//std::cout << "Emoji Timer: " << m_timer << std::endl;
 
 		if (m_timer < 0.0f)
 		{
-			std::cout << "Swapping Sprites" << std::endl;
-			if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(m_entity))
+			//If no textures left
+			if (!m_emojiTextures.size())
 			{
-				std::cout << "Init Sprite " << sprite->get().getTexturePath();
+				m_finished = true;
+				PLAYER_STATUS.UnfreezeControls();
+				return;
+			}
+			//std::cout << "Swapping Sprites" << std::endl;
+			else if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(m_entity))
+			{
+				//std::cout << "Init Sprite " << sprite->get().getTexturePath();
 				std::ostringstream oss;
 				oss << "Resources\\Assets\\" << m_emojiTextures.front();
 				sprite->get().setTexturePath(oss.str());
 				m_emojiTextures.pop();
-				std::cout << "End Sprite " << sprite->get().getTexturePath() << std::endl;
+				//std::cout << "End Sprite " << sprite->get().getTexturePath() << std::endl;
 			}
 
 			m_timer = m_delayBetweenEmojis;
@@ -49,11 +58,11 @@ namespace Rogue
 
 	void EmojiScript::OnTriggerEnter(Entity otherEnt)
 	{
-		if (otherEnt != PLAYER_STATUS.GetPlayerEntity())
+		if (otherEnt != PLAYER_STATUS.GetPlayerEntity() || m_activated)
 			return;
 
 		m_activated = true;
-		m_timer = 0.0f;			//Set to 0.0f so 1st image will instantly show
+		m_timer = 0.0f;
 	}
 
 }
