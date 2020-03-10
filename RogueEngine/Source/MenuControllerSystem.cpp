@@ -132,10 +132,13 @@ namespace Rogue
 						case 7: //HowToPlay
 							hierarchyObj.m_objectName = "HowToPlay";
 							break;
-						case 8: //YesBtn
+						case 8: //ExitGame
+							hierarchyObj.m_objectName = "ExitGame";
+							break;
+						case 9: //YesBtn
 							hierarchyObj.m_objectName = "YesBtn";
 							break;
-						case 9: //NoBtn
+						case 10: //NoBtn
 							hierarchyObj.m_objectName = "NoBtn";
 							break;
 						}
@@ -341,14 +344,15 @@ namespace Rogue
 	void MenuControllerSystem::InitPauseMenu()
 	{
 		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("crosshair", false));
-		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("PausedTexture", false));
 		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("MainMenu_Bg", false));
+		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("PausedTexture", false));
 		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("HowToPlayBtn", false));
 		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("MainMenu_Btn", false));
 		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("Resume", false));
 		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("QuitBtn", false));
 		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("HowToPlay", false));
 
+		m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("ExitBtn", false));
 		m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("YesBtn", false));
 		m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("NoBtn", false));
 
@@ -470,22 +474,22 @@ namespace Rogue
 
 	void MenuControllerSystem::ToggleQuitButtonObj()
 	{
+		for (Entity ent : m_menuObjs)
+		{
+			if (ent == m_menuObjs.back() || ent == *(m_menuObjs.begin() + 1))
+				continue;
+
+			if (auto ui = g_engine.m_coordinator.TryGetComponent<UIComponent>(ent))
+			{
+				ui->get().setIsActive(!ui->get().getIsActive());
+			}
+		}
+
 		for (Entity ent : m_confirmQuitEnt)
 			//Setting Quit button display to true
-			if (g_engine.m_coordinator.ComponentExists<UIComponent>(ent))
+			if (auto ui = g_engine.m_coordinator.TryGetComponent<UIComponent>(ent))
 			{
-				UIComponent& ui = g_engine.m_coordinator.GetComponent<UIComponent>(ent);
-				ui.setIsActive(!ui.getIsActive());
-
-				//if (g_engine.m_coordinator.ComponentExists<TransformComponent>(ent))
-				//{
-				//	glm::vec3 cameraPos = CameraManager::instance().GetCameraPos();
-				//	TransformComponent& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(ent);
-				//	if (!ui.getIsActive())
-				//		transform.setPosition(Vec2(transform.GetPosition().x - cameraPos.x, transform.GetPosition().y - cameraPos.y));
-				//	else
-				//		transform.setPosition(Vec2(transform.GetPosition().x + cameraPos.x, transform.GetPosition().y + cameraPos.y));
-				//}
+				ui->get().setIsActive(!ui->get().getIsActive());
 			}
 	}
 
