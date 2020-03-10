@@ -258,9 +258,6 @@ namespace Rogue
 				PLAYER_STATUS.SetTeleportCharge(3.0f);
 
 			player.m_jumpTimer -= g_deltaTime * g_engine.GetTimeScale();
-			//player.m_grounded = false;
-
-			std::cout << "Hitchhikable entity: " << PLAYER_STATUS.GetHitchhikableEntity() << std::endl;
 		}
 	}
 
@@ -1179,8 +1176,8 @@ namespace Rogue
 		if (g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(PLAYER_STATUS.GetPlayerEntity()))
 		{
 			ForceManager::instance().ResetPhysics(PLAYER_STATUS.GetPlayerEntity());
-			g_engine.SetTimeScale(1.0f);
-		}
+		}	
+		g_engine.SetTimeScale(1.0f);
 	}
 
 	void PlayerControllerSystem::UnfreezeControlComponentUpdates()
