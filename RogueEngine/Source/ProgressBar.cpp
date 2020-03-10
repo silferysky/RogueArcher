@@ -1,6 +1,7 @@
 #include "Precompiled.h"
 #include "ProgressBar.h"
 #include "PlayerStatusManager.h"
+#include "UISystem.h"
 //#include "Main.h"	//For g_deltaTime and coordinator
 
 namespace Rogue
@@ -8,6 +9,10 @@ namespace Rogue
 	ProgressBar::ProgressBar(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent)
 		: ScriptComponent(entity, logicComponent, statsComponent), m_oldScale{}
 	{
+		if (auto transform = g_engine.m_coordinator.TryGetComponent<TransformComponent>(entity))
+		{
+			transform->get().setScale(Vec2(0.0f, transform->get().GetScale().y));
+		}
 	}
 
 	void ProgressBar::AIActiveStateUpdate()
@@ -17,26 +22,34 @@ namespace Rogue
 
 	void ProgressBar::AIIdleUpdate()
 	{
-		if (auto transform = g_engine.m_coordinator.TryGetComponent<TransformComponent>(m_entity))
+		float completionPercentage = PlayerStatusManager::instance().GetSoulsCollected() / 4.0f;
+
+		if (m_oldScale != completionPercentage)
 		{
-			float completionPercentage = PlayerStatusManager::instance().GetSoulsCollected() / 2.0f;
+			if (auto transform = g_engine.m_coordinator.TryGetComponent<TransformComponent>(m_entity))
+			{
+				auto positon = transform->get().GetPosition();
 
-			int width = GetWindowWidth(g_engine.GetWindowHandler());
+				// 282.5 is the scale of the full bar
+				transform->get().setScale(Vec2(282.5f * completionPercentage, transform->get().GetScale().y));
 
-			float pixelRatio = (565.0f / static_cast<float>(GetWindowWidth(g_engine.GetWindowHandler()))); // ratio of the asset in comparison to the screen
+				// recenter the bar by reverting the changes to position
+				if (m_difference < 0)
+					transform->get().setPosition(Vec2(positon.x - m_difference, positon.y));
+				else if (m_difference > 0)
+					transform->get().setPosition(Vec2(positon.x + m_difference, positon.y));
 
-			// translate by half of (1 - completionPercentage)
-			transform->get().setScale(Vec2(282.5f * completionPercentage, transform->get().GetScale().y));
+				// translate by half of (1 - completionPercentage)
+				m_difference = 282.5f * 0.5f * (1 - completionPercentage);
 
-			float difference = pixelRatio * (completionPercentage - m_oldScale) / 2.0f;
+				// Bar offset
+				if (m_difference > 0)
+					transform->get().setPosition(Vec2(positon.x - m_difference, positon.y));
+				else if (m_difference < 0)
+					transform->get().setPosition(Vec2(positon.x + m_difference, positon.y));
 
-			// Bar offset
-			if (difference > 0)
-				transform->get().setPosition(Vec2(transform->get().GetPosition().x - difference, transform->get().GetPosition().y));
-			else if (difference < 0)
-				transform->get().setPosition(Vec2(transform->get().GetPosition().x + difference, transform->get().GetPosition().y));
-
-			m_oldScale = completionPercentage; // keep track of old scale
+				m_oldScale = completionPercentage; // keep track of old scale
+			}
 		}
 	}
 }

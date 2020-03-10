@@ -13,5 +13,6 @@ namespace Rogue
 		virtual void AIIdleUpdate() override;
 	private:
 		float m_oldScale;
+		float m_difference;
 	};
 }

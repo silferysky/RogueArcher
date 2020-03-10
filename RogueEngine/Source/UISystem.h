@@ -26,6 +26,8 @@ namespace Rogue
 	{
 		glm::vec3 m_oldCameraPos;
 		glm::vec3 m_newCameraPos;
+
+		glm::vec3 m_difference;
 	public:
 		UISystem();
 		~UISystem() = default;
@@ -37,5 +39,6 @@ namespace Rogue
 		void Receive(Event& ev);
 
 		void SetOldCameraPos(const glm::vec3& oldCameraPos);
+		glm::vec3 GetDifference() const;
 	};
 }
