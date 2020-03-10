@@ -23,10 +23,22 @@ Technology is prohibited.
 #include "ComponentList.h"
 #include "CameraSystem.h"
 
+
 namespace Rogue
 {
 	class Timer;
 	class SpriteComponent;
+
+	struct LightProperites
+	{
+		glm::vec3 position;
+		float radius;
+
+		float ambient;
+		float specular;
+
+		glm::vec4 tint;
+	};
 
 	class LightingSystem : public System, public EventListener
 	{
@@ -39,15 +51,19 @@ namespace Rogue
 
 		// Uniform Buffer Object
 		GLuint m_uboMatrices;
+		GLuint m_uboLights;
 
 		GLint m_transformLocation;
 		GLint m_totalLightsLocation;
+		GLint m_LightsLocation;
 
 		std::shared_ptr<CameraSystem> m_pCamera;
 
+		LightProperites lights[100];
 		unsigned totalLights = 0;
 
 		void draw(Entity& entity);
+		void AddLights(Entity& entity);
 		void UpdateShader(Entity& entity);
 	public:
 		LightingSystem();

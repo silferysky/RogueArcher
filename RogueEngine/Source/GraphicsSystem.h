@@ -54,6 +54,8 @@ namespace Rogue
 		GLint m_uvScaleLocation;
 		GLint m_uvOffsetLocation;
 
+		GLint m_totalLightsLocation;
+
 		GLuint m_instancedVAO;
 		GLuint m_instancedVBO;
 		GLuint m_instancedEBO;

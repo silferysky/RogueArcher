@@ -80,6 +80,8 @@ namespace Rogue
 		m_uvScaleLocation = glGetUniformLocation(m_shader.GetShader(), "uvScale");
 		m_uvOffsetLocation = glGetUniformLocation(m_shader.GetShader(), "uvOffset");
 
+		m_totalLightsLocation = glGetUniformLocation(m_shader.GetShader(), "numLights");
+
 		m_foregroundTransformLocation = glGetUniformLocation(m_foregroundShader.GetShader(), "transform");
 		m_foregroundFilterLocation = glGetUniformLocation(m_foregroundShader.GetShader(), "colourFilter");
 
@@ -161,6 +163,8 @@ namespace Rogue
 			else
 				drawTilemap(entity);
 		}
+
+		glUniform1i(m_totalLightsLocation, 0);
 
 		glBindBuffer(GL_UNIFORM_BUFFER, 0);
 		glUseProgram(0);

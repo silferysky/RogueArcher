@@ -23,8 +23,6 @@ namespace Rogue
 
 		m_shader = g_engine.m_coordinator.loadShader("Lighting Shader");
 
-		GLint m_uniformBlockIndex = glGetUniformBlockIndex(m_shader.GetShader(), "Matrices");
-		glUniformBlockBinding(m_shader.GetShader(), m_uniformBlockIndex, 0);
 		m_uboMatrices = g_engine.m_coordinator.GetSystem<Rogue::GraphicsSystem>()->getUBOMatrices();
 
 		m_transformLocation = glGetUniformLocation(m_shader.GetShader(), "transform");
@@ -32,7 +30,7 @@ namespace Rogue
 		m_pCamera = g_engine.m_coordinator.GetSystem<CameraSystem>();
 		m_graphicsShader = g_engine.m_coordinator.GetSystem<GraphicsSystem>()->getShader();
 
-		m_totalLightsLocation = glGetUniformLocation(m_graphicsShader.GetShader(), "totalLights");
+		m_totalLightsLocation = glGetUniformLocation(m_graphicsShader.GetShader(), "numLights");
 
 		GenerateQuadPrimitive(m_VBO, m_VAO, m_EBO);
 	}
@@ -64,7 +62,7 @@ namespace Rogue
 		if (m_entities.size() == 0)
 			return;
 
-		/* glUseProgram(m_shader.GetShader());
+		glUseProgram(m_shader.GetShader());
 		glBindVertexArray(m_VAO);
 		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 		glBindBuffer(GL_UNIFORM_BUFFER, m_uboMatrices);
@@ -75,6 +73,8 @@ namespace Rogue
 		for (auto entity : m_entities)
 		{
 			++totalLights;
+			AddLights(entity);
+
 			if (!g_engine.m_coordinator.GetGameState())
 				draw(entity);
 		}
@@ -82,10 +82,10 @@ namespace Rogue
 		glBindBuffer(GL_UNIFORM_BUFFER, 0);
 		glUseProgram(0);
 		glBindVertexArray(0); //Reset
-		glBindBuffer(GL_ARRAY_BUFFER, 0); */
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 		glUseProgram(m_graphicsShader.GetShader());
-		glUniform1i(glGetUniformLocation(m_graphicsShader.GetShader(), "numLights"), totalLights);
+		glUniform1i(m_totalLightsLocation, totalLights);
 
 		// For all entities
 		for (auto entity : m_entities)
@@ -95,9 +95,23 @@ namespace Rogue
 
 		glUseProgram(0);
 
-		totalLights = 0;
-
 		//g_engine.m_coordinator.EndTimeSystem("Lighting System");
+	}
+
+	void LightingSystem::AddLights(Entity& entity)
+	{
+		auto& light = g_engine.m_coordinator.GetComponent<LightComponent>(entity);
+		auto position = g_engine.m_coordinator.GetComponent<TransformComponent>(entity).GetPosition();
+
+		LightProperites newLight;
+
+		newLight.position = { position.x, position.y, 1.0f };
+		newLight.ambient = light.getAmbientFactor();
+		newLight.specular = light.getSpecularFactor();
+		newLight.radius = light.getRadius();
+		newLight.tint = light.getTint();
+
+		lights[totalLights] = newLight;
 	}
 
 	void LightingSystem::UpdateShader(Entity& entity)
