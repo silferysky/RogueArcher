@@ -44,6 +44,8 @@ namespace Rogue
 		g_engine.m_coordinator.InitTimeSystem("UI System");
 		m_newCameraPos = CameraManager::instance().GetCameraPos();
 
+		glm::vec3 difference = m_newCameraPos - m_oldCameraPos;
+
 		// For all entities
 		for (auto entity : m_entities)
 		{
@@ -51,8 +53,8 @@ namespace Rogue
 
 			Vec2 position = transform.GetPosition();
 
-			position.x += static_cast<int>((m_newCameraPos.x - m_oldCameraPos.x));
-			position.y += static_cast<int>((m_newCameraPos.y - m_oldCameraPos.y));
+			position.x += static_cast<int>(difference.x);
+			position.y += static_cast<int>(difference.y);
 
 			transform.setPosition(position);
 		}
@@ -60,6 +62,11 @@ namespace Rogue
 		m_oldCameraPos = m_newCameraPos;
 
 		g_engine.m_coordinator.EndTimeSystem("UI System");
+	}
+
+	void UISystem::SetOldCameraPos(const glm::vec3& oldCameraPos)
+	{
+		m_oldCameraPos = oldCameraPos;
 	}
 
 	void UISystem::Shutdown()

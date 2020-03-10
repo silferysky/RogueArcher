@@ -31,6 +31,7 @@ Technology is prohibited.
 #include "EditorHierarchy.h"
 #include "PlayerStatusManager.h"
 #include "EditorTileSet.h"
+#include "UISystem.h"
 
 namespace Rogue
 {
@@ -180,6 +181,7 @@ namespace Rogue
 
 		//Set at end to ensure no weird camera panning
 		CAMERA_MANAGER.SetCameraPos({ level["StartPosX"].GetFloat(), level["StartPosY"].GetFloat(), 0.0f });
+		g_engine.m_coordinator.GetSystem<UISystem>()->SetOldCameraPos(CAMERA_MANAGER.GetCameraPos());
 
 		RE_INFO("LEVEL LOADED");
 		debugStr << entCount << " ENTITIES LOADED";

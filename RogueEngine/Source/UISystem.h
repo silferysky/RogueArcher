@@ -35,5 +35,7 @@ namespace Rogue
 		void Shutdown() override;
 
 		void Receive(Event& ev);
+
+		void SetOldCameraPos(const glm::vec3& oldCameraPos);
 	};
 }
