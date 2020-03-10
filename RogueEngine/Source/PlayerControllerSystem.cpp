@@ -1179,6 +1179,7 @@ namespace Rogue
 		if (g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(PLAYER_STATUS.GetPlayerEntity()))
 		{
 			ForceManager::instance().ResetPhysics(PLAYER_STATUS.GetPlayerEntity());
+			g_engine.SetTimeScale(1.0f);
 		}
 	}
 
