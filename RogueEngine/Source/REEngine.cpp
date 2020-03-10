@@ -24,7 +24,7 @@ Technology is prohibited.
 
 #include "Precompiled.h"
 #include "Logger.h"
-#include "EventDispatcher.h" // TODO: Move to Engine::Update() as a singleton.
+#include "EventDispatcher.h"
 #include "REEngine.h"
 #include "GLHelper.hpp"
 #include "ComponentList.h"
@@ -33,7 +33,7 @@ Technology is prohibited.
 #include "CameraManager.h"
 
 // Systems
-#include "InputManager.h"	// Should probably rename to input SYSTEM
+#include "InputManager.h"
 #include "PhysicsSystem.h"
 #include "CollisionTagSystem.h"
 #include "CircleCollisionSystem.h"
@@ -118,9 +118,15 @@ namespace Rogue
 		m_coordinator.RegisterComponent<FadeComponent>();
 		m_coordinator.RegisterComponent<LightComponent>();
 		m_coordinator.RegisterComponent<ForegroundComponent>();
+
 		//This is a component that isn't directly serialized/deserialized
 		m_coordinator.RegisterComponent<TileMapComponent>();
 		m_coordinator.RegisterComponent<ChildComponent>();
+
+		//==================================================
+		// MAX_COMPONENTS: 32
+		// CURRENT NO.: 24
+		//==================================================
 	}
 
 	void REEngine::Init()
@@ -128,19 +134,25 @@ namespace Rogue
 		config.ConfigInit();
 		g_fixedDeltaTime = 1 / 60.0f;
 
+#if	INIT_CONSOLE
 		AllocConsole();
 		(void)freopen("CONIN$", "r", stdin);
 		(void)freopen("CONOUT$", "w", stdout);
 		(void)freopen("CONOUT$", "w", stderr);
-
+#endif
+#if INIT_FULLSCREEN
+		SetWindowLongPtr(hWnd, GWL_STYLE, WS_VISIBLE | WS_POPUP);
+		SetWindowPos(hWnd, HWND_TOP, 0, 0, GetSystemMetrics(SM_CXSCREEN),
+		GetSystemMetrics(SM_CYSCREEN), SWP_FRAMECHANGED);
+#endif
+#if INIT_CURSOR
+		ShowCursor(true);
+#else
+		ShowCursor(false);
+#endif
 		hWnd = CreateOpenGLWindow(const_cast<char*>(config.GetTitle().c_str()), config.GetX(), config.GetY(),
 			config.GetWidth(), config.GetHeight(), 0, config.GetFlags());
-		
-		// set full screen
-		//SetWindowLongPtr(hWnd, GWL_STYLE, WS_VISIBLE | WS_POPUP);
-		//SetWindowPos(hWnd, HWND_TOP, 0, 0, GetSystemMetrics(SM_CXSCREEN),
-		//GetSystemMetrics(SM_CYSCREEN), SWP_FRAMECHANGED);
-		//ShowCursor(false);
+
 
 		if (hWnd == NULL)
 			exit(1);
@@ -156,7 +168,11 @@ namespace Rogue
 		//Ensures program closes properly 
 		SetConsoleCtrlHandler(CtrlHandler, true);
 
+#if INIT_VSYNC
+		setVSync(true);
+#else
 		setVSync(false);
+#endif
 
 		// Register all components
 		RegisterComponents();
@@ -173,24 +189,12 @@ namespace Rogue
 	{
 		m_stepCount = 0;
 		static Timer::ChronoClock mainLoopTimer;
-		const float noise = 0.5f;
-		static float fps = 60.0f;
-
+		
 		while (m_gameIsRunning)
 		{
 			g_deltaTime = std::chrono::duration_cast<std::chrono::microseconds>(m_loopEnd - m_loopStart).count() / Timer::s_microsecPerSec;
 			m_loopStart = mainLoopTimer.now();
 			
-
-			float realFps = 1.0f / g_deltaTime;
-#if 1		
-			float percent = realFps / fps;
-			if (percent > 1.0f)
-				percent = 1.0f / percent;
-#endif			//if (percent < noise)
-			{
-				//std::cout << "FPS: " << fps << std::endl;
-			}
 			m_stepCount = 0;
 
 			m_accumulatedTime += g_deltaTime;
@@ -215,7 +219,7 @@ namespace Rogue
 
 			m_coordinator.Update();
 
-			m_dimensions = Vec2{ m_size, aspect_ratio * m_size } * 0.5 * CameraManager::instance().GetCameraZoom();
+			m_dimensions = Vec2{ m_size, aspect_ratio * m_size } * 0.5f * CameraManager::instance().GetCameraZoom();
 			m_projMat = glm::ortho(-m_dimensions.x, m_dimensions.x, -m_dimensions.y, m_dimensions.y, -24.0f, 24.0f);
 			
 			m_loopEnd = mainLoopTimer.now();

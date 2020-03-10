@@ -22,10 +22,34 @@ Technology is prohibited.
 */
 /* End Header **************************************************************************/
 #pragma once
+
+#define DEMO_MODE 0
+
+#if DEMO_MODE
+#define INIT_FULLSCREEN 1
+#define INIT_VSYNC 1
+#define INIT_CONSOLE 0
+#define INIT_CURSOR 0
+#define INIT_EDITOR 0
+#else
+#define INIT_FULLSCREEN 0
+#define INIT_VSYNC 1
+#define INIT_CONSOLE 1
+#define INIT_CURSOR 1
+#define INIT_EDITOR 1
+#endif
+
+#if defined(DEBUG) | defined(_DEBUG)
+#define ENABLE_LOGGER 0
+#define ENABLE_ASSERT 0
+#else
+#define ENABLE_LOGGER 0
+#define ENABLE_ASSERT 1
+#endif
+
 #include "Coordinator.h"
 #include "Config.h"
 #include "Vector2D.h"
-
 namespace Rogue
 {
 	class REConfig;

@@ -55,35 +55,6 @@ namespace Rogue
 		std::istringstream iss(deserializeStr.data());
 		std::string str;
 
-#if OLD_SERIALIZATION
-		m_GlobalTileSet.clear();
-
-		while (std::getline(iss, str, '|'))
-		{
-			Tile tile;
-			tile.Deserialize(str);
-
-			if (tile.m_texturename != "" && tile.m_texturename != "Resources\\Assets\\tile.png")
-				m_GlobalTileSet.push_back(tile);
-		}
-
-		if (m_GlobalTileSet.size())
-			m_currentPath = m_GlobalTileSet.front().m_texturename;
-
-		m_tileMapEnt = Create2DSprite(Vec2(0.0f, 0.0f), Vec2(61, 61), m_currentPath);
-		TileMapComponent& tilemapComp = g_engine.m_coordinator.CreateComponent<TileMapComponent>(m_tileMapEnt);
-		TileMap& tilemap = tilemapComp.GetTileMap();
-
-		for (Tile& tile : m_GlobalTileSet)
-		{
-			TrueTile trueTile;
-			trueTile.m_tilePos = tile.m_tilePos;
-			trueTile.m_min = Vec2(tile.m_texCoordMinX, tile.m_texCoordMinY);
-			trueTile.m_max = Vec2(tile.m_texCoordMaxX, tile.m_texCoordMaxY);
-
-			tilemap.emplace_back(trueTile);
-		}
-#else
 		// Deserialize the texture first
 		if (std::getline(iss, str, '|'))
 			m_currentPath = str;
@@ -102,7 +73,6 @@ namespace Rogue
 
 			tilemap.emplace_back(trueTile);
 		}
-#endif
 	}
 
 	ImGuiTileSet::ImGuiTileSet() :m_TileSet(),
@@ -130,7 +100,7 @@ namespace Rogue
 
 		TileMapComponent* pTilemap = nullptr;
 
-		if (m_tileMapEnt != -1)
+		if (m_tileMapEnt != MAX_ENTITIES)
 			pTilemap = &g_engine.m_coordinator.GetComponent<TileMapComponent>(m_tileMapEnt);
 		else
 			pTilemap = &g_engine.m_coordinator.CreateComponent<TileMapComponent>(m_tileMapEnt);

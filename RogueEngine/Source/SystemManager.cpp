@@ -35,6 +35,7 @@ namespace Rogue
 	{
 		//std::cout << "Is Transiting: " << m_transitionLevel << std::endl;
 		//std::cout << "Transition Time Left " << m_transitionTime << std::endl;
+		
 		if (m_transitionLevel && m_transitionTime <= 0.0f)
 		{
 			ImGuiTileSet::instance().ClearTileset();

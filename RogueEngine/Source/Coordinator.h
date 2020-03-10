@@ -49,13 +49,14 @@ namespace Rogue
 		std::unique_ptr<EntityManager> m_entityManager;
 		std::unique_ptr<SystemManager> m_systemManager;
 		std::vector<Entity> m_deleteQueue;
+		std::vector<Entity> m_childrenToDelete;
 
 	public:
 		Coordinator() :
 			m_entityManager{ std::make_unique<EntityManager>() },
 			m_componentManager{ std::make_unique<ComponentManager>() },
 			m_systemManager{ std::make_unique<SystemManager>() },
-			m_deleteQueue{}
+			m_deleteQueue{ 1 } // Reserve
 		{}
 
 		void Init()
@@ -85,7 +86,7 @@ namespace Rogue
 			// Update the core systems
 			m_systemManager->UpdateSystems();
 
-			DeleteEntities();
+			ClearDeleteQueue();
 		}
 
 		void Shutdown()
@@ -96,31 +97,60 @@ namespace Rogue
 		Entity CreateEntity()
 		{
 			Entity ent = m_entityManager->CreateEntity();
-			GetActiveObjects().push_back(ent);
 			return ent;
 		}
 
 		void DestroyEntity(Entity entity)
 		{
+			HierarchyInfo& entInfo = GetHierarchyInfo(entity);
+
+			//Removing Children
+			for (auto& child : entInfo.m_children)
+			{
+				GetHierarchyInfo(child).m_parent = MAX_ENTITIES;
+				DestroyEntity(child);
+			}
+			entInfo.m_children.clear();
+
+			//Erasing from Parent
+			Entity parentEnt = entInfo.m_parent;
+			if (parentEnt != MAX_ENTITIES)
+			{
+				HierarchyInfo& parentInfo = GetHierarchyInfo(parentEnt);
+				auto it = std::find(std::begin(parentInfo.m_children), std::end(parentInfo.m_children), entity);
+
+				if (it != std::end(parentInfo.m_children))
+				{
+					parentInfo.m_children.erase(it);
+				}
+			}
+
+			//Erasing in Scripts
+			GetSystem<LogicSystem>()->RemoveLogicInterface(entity);
+
+			//Actual deleting
 			m_entityManager->DestroyEntity(entity);
 
 			m_componentManager->EntityDestroyed(entity);
 
 			m_systemManager->EntityDestroyed(entity);
+		}
 
-			//m_systemManager->DeassignTag(entity);
+		void ClearDeleteQueue()
+		{
+			for (Entity entity : m_deleteQueue)
+				DestroyEntity(entity);
 		}
 
 		void DestroyAllEntity()
 		{
 			m_systemManager->GetSystem<MenuControllerSystem>()->ClearMenuObjs();
 			m_systemManager->GetSystem<LogicSystem>()->ClearLogicInterface();
-
-			while (GetActiveObjects().size())
-			{
-				DestroyEntity(GetActiveObjects().back());
-				//GetActiveObjects().pop_back();
-			}
+			
+			auto& activeObjectsVector = GetActiveObjects();
+			
+			while (activeObjectsVector.size())
+				DestroyEntity(activeObjectsVector.back());
 
 			SceneManager::instance().ResetObjectIterator();
 		}
@@ -146,9 +176,11 @@ namespace Rogue
 			const char* typeName = typeid(TComponent).name();
 			m_componentManager->RegisterComponent<TComponent>();
 
+#if ENABLE_LOGGER
 			std::stringstream output;
 			output << typeName << " registered!";
-			//RE_CORE_INFO(output.str());
+			RE_CORE_INFO(output.str());
+#endif
 		}
 
 		template<typename TComponent>
@@ -167,7 +199,6 @@ namespace Rogue
 		template<typename TComponent>
 		void RemoveComponent(Entity entity)
 		{
-			std::cout << "component removed from entity" << std::endl;
 			m_componentManager->RemoveComponent<TComponent>(entity);
 
 			auto signature = m_entityManager->GetSignature(entity);
@@ -232,7 +263,7 @@ namespace Rogue
 		template <typename TComponent>
 		bool ComponentExists(Entity entity)
 		{
-			return entity < MAX_ENTITIES && m_entityManager->GetSignature(entity).test(GetComponentType<TComponent>());
+			return entity != MAX_ENTITIES && m_entityManager->GetSignature(entity).test(GetComponentType<TComponent>());
 		}
 
 		void InitTimeSystem(const char* system)
@@ -292,48 +323,7 @@ namespace Rogue
 
 		void AddToDeleteQueue(const Entity& entity)
 		{
-			m_deleteQueue.push_back(entity);
-		}
-
-		void DeleteEntities()
-		{
-			std::vector<Entity> childrenToDelete;
-			for (auto& entity : m_deleteQueue)
-			{
-				//Removing Children
-				HierarchyInfo& entInfo = GetHierarchyInfo(entity);
-				for (auto& child : entInfo.m_children)
-				{
-					GetHierarchyInfo(child).m_parent = MAX_ENTITIES;
-					childrenToDelete.push_back(child);
-				}
-				GetHierarchyInfo(entity).m_children.clear();
-				
-				//Erasing from Parent
-				Entity parentEnt = GetHierarchyInfo(entity).m_parent;
-				if (parentEnt != MAX_ENTITIES)
-				{
-					HierarchyInfo& parentInfo = GetHierarchyInfo(parentEnt);
-					auto it = std::find(std::begin(parentInfo.m_children), std::end(parentInfo.m_children), entity);
-					if (it != std::end(parentInfo.m_children))
-					{
-						parentInfo.m_children.erase(it);
-					}
-				}
-
-				//Erasing in Scripts
-				GetSystem<LogicSystem>()->RemoveLogicInterface(entity);
-
-				//Actual deleting
-				RemoveHierarchyInfo(entity);
-				DestroyEntity(entity);
-			}
-
-			m_deleteQueue.clear();
-			for (Entity child : childrenToDelete)
-			{
-				m_deleteQueue.push_back(child);
-			}
+			m_deleteQueue.emplace_back(entity);
 		}
 
 		EntityManager& GetEntityManager() const
@@ -355,7 +345,7 @@ namespace Rogue
 		}
 		std::vector <Entity>& GetActiveObjects() const
 		{
-			return m_entityManager->m_getActiveObjects();
+			return m_entityManager->GetActiveObjects();
 		}
 
 		HierarchyInfo& GetHierarchyInfo(Entity ent)

@@ -84,7 +84,8 @@ namespace Rogue
 					{
 						if (g_engine.m_coordinator.GetHierarchyInfo(i).m_selected == true)
 						{
-							SceneManager::instance().DeleteActiveEntity(i);
+							//SceneManager::instance().DeleteActiveEntity(i);
+							g_engine.m_coordinator.DestroyEntity(i);
 						}
 					}
 				}

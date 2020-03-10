@@ -119,10 +119,11 @@ namespace Rogue
 				CREATE_HIERARCHY_OBJ(curEnt, readstr, tagstr, "", loadedQueue.front() + entityParent);
 			}
 
-
+#if ENABLE_LOGGER
 			debugStr << "Entity " << curEnt << "'s Signature: " << g_engine.m_coordinator.GetEntityManager().GetSignature(curEnt).to_ulong();
 			RE_INFO(debugStr.str());
 			CLEARSTR(debugStr);
+#endif
 		}
 
 		//TODO: Doing archetype loading
@@ -137,9 +138,12 @@ namespace Rogue
 			{
 				Entity loadedEnt = loadedQueue.front();
 				HierarchyInfo& childInfo = g_engine.m_coordinator.GetHierarchyInfo(loadedEnt);
+				
+#if ENABLE_LOGGER
 				//debugStr << "Entity " << childInfo.m_Entity << ":" << childInfo.m_objectName << " has parent " << childInfo.m_parent;
 				//RE_INFO(debugStr.str());
 				//CLEARSTR(debugStr);
+#endif
 
 				//Check if parent of itself or  out of bounds (AKA parent is default value)
 				if (childInfo.m_parent == loadedEnt || childInfo.m_parent > loadedEnt + loadedQueue.size() || childInfo.m_parent < firstLoadedEnt || childInfo.m_parent == MAX_ENTITIES)
@@ -156,9 +160,11 @@ namespace Rogue
 
 				HierarchyInfo& parentInfo = g_engine.m_coordinator.GetHierarchyInfo(childInfo.m_parent);
 				//parentInfo.m_children.push_back(loadedEnt);
+#if ENABLE_LOGGER
 				debugStr << "Entity " << parentInfo.m_Entity << ":" << parentInfo.m_objectName << " has child " << loadedEnt;
 				RE_INFO(debugStr.str());
 				CLEARSTR(debugStr);
+#endif
 			}
 		}
 		//for (; entityIt != entityEnd; ++entityIt)
@@ -183,9 +189,11 @@ namespace Rogue
 		CAMERA_MANAGER.SetCameraPos({ level["StartPosX"].GetFloat(), level["StartPosY"].GetFloat(), 0.0f });
 		g_engine.m_coordinator.GetSystem<UISystem>()->SetOldCameraPos(CAMERA_MANAGER.GetCameraPos());
 
+#if ENABLE_LOGGER
 		RE_INFO("LEVEL LOADED");
 		debugStr << entCount << " ENTITIES LOADED";
 		RE_INFO(debugStr.str());
+#endif
 	}
 
 	void ObjectFactory::SaveLevel(const char* fileName)
@@ -281,8 +289,9 @@ namespace Rogue
 
 			++entCount;
 		}
-
+#if ENABLE_LOGGER
 		RE_INFO("LEVEL SAVED");
+#endif
 	}
 
 	void ObjectFactory::LoadTileset(const char* fileName)
@@ -416,7 +425,7 @@ namespace Rogue
 		//		break;
 		//	}
 		//}
-		HierarchyInfo info = g_engine.m_coordinator.GetHierarchyInfo(archetypeEntity);
+		HierarchyInfo& info = g_engine.m_coordinator.GetHierarchyInfo(archetypeEntity);
 		int signatureInInt = static_cast<int>(g_engine.m_coordinator.GetEntityManager().GetSignature(archetypeEntity).to_ulong());
 		
 		//Safety check if entity not found

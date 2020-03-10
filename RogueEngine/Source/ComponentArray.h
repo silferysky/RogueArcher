@@ -74,7 +74,6 @@ namespace Rogue
 
 		TComponent& GetData(Entity entity)
 		{
-
 			RE_ASSERT(m_entityToIndexMap.find(entity) != m_entityToIndexMap.end(), "Retrieving non-existent component.");
 			return m_componentArray[m_entityToIndexMap[entity]];
 		}

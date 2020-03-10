@@ -118,7 +118,7 @@ namespace Rogue
 				// Send EntityPickedEvent
 				if (key.GetKeyCode() == KeyPress::MB1)
 				{
-					if (pickedEntity >= 0 && pickedEntity < MAX_ENTITIES)
+					if (pickedEntity >= 0 && pickedEntity != MAX_ENTITIES)
 					{
 						auto& info = g_engine.m_coordinator.GetHierarchyInfo(pickedEntity);
 
@@ -217,7 +217,7 @@ namespace Rogue
 				}
 			}
 
-			if (pickedEntity >= 0 && pickedEntity < MAX_ENTITIES)
+			if (pickedEntity >= 0 && pickedEntity != MAX_ENTITIES)
 			{
 				auto& info = g_engine.m_coordinator.GetHierarchyInfo(pickedEntity);
 				

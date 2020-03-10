@@ -41,9 +41,9 @@ namespace Rogue
 		void RegisterSystem()
 		{
 			std::type_index typeName = GetTypeIndex<T>();
+			
 			auto i = std::find_if(m_systems.begin(), m_systems.end(),
 				[&typeName](const std::pair<std::type_index, std::shared_ptr<System>>& element) { return element.first == typeName; });
-
 
 			RE_ASSERT(i == m_systems.end(), "Registering system more than once.");
 
@@ -58,7 +58,6 @@ namespace Rogue
 
 			auto i = std::find_if(m_systems.begin(), m_systems.end(),
 				[&SystemName](const std::pair<std::type_index, std::shared_ptr<System>>& element) { return element.first == SystemName; });
-
 
 			RE_ASSERT(i != m_systems.end(), "System not found!")
 
@@ -101,15 +100,19 @@ namespace Rogue
 
 				system->m_entities.erase(entity);
 
+#if ENABLE_LOGGER
 				std::stringstream str;
 				str << "Entity " << entity << " Removed from " << pair.first.name();
-				//RE_CORE_INFO(str.str());
+				RE_CORE_INFO(str.str());
+#endif
 			}
 		}
 
 		void EntitySignatureChanged(Entity entity, Signature entitySignature)
 		{
+#if ENABLE_LOGGER
 			std::stringstream out;
+#endif
 
 			// Notify each system that an entity's signature changed
 			for (auto const& pair : m_systems)
@@ -118,25 +121,22 @@ namespace Rogue
 				std::shared_ptr<System> system = pair.second;
 				std::unordered_map<std::type_index, Signature>::iterator i = m_signatures.find(type);
 
-
-				RE_ASSERT(i != m_signatures.end(), "System signature not found! Please set an empty sig if your system does not require any component");
+				RE_ASSERT(i != m_signatures.end(), "System signature not found! Please set an empty signature if your system does not require any component");
 				
 				Signature systemSignature = i->second;
 
-
 				// Entity signature matches system signature - insert into set
+#if ENABLE_LOGGER
 				if ((entitySignature & systemSignature) == systemSignature)
 				{
 					if (system->m_entities.insert(entity).second)
 					{
-
 						CLEARSTRING(out);
 						out << "Entity " << entity << " added to " << type.name();
 						RE_CORE_INFO(out.str());
 					}
 					else
 					{
-
 						CLEARSTRING(out);
 						out << "Entity " << entity << " exists in " << type.name();
 						RE_CORE_INFO(out.str());
@@ -159,8 +159,11 @@ namespace Rogue
 						out << "Entity " << entity << " not added to " << type.name();
 						RE_CORE_INFO(out.str());
 					}
+#endif
 					system->m_entities.erase(entity);
+#if ENABLE_LOGGER
 				}
+#endif
 			}
 		}
 
@@ -242,10 +245,19 @@ namespace Rogue
 		std::vector<std::pair<std::type_index, std::shared_ptr<System>>> m_systems;
 		bool m_gameIsRunning = false;
 		bool m_gameIsPaused = false;
-		bool m_editorIsRunning = true;
 		bool m_stepOnce = false;
 		bool m_gameModeChanged = false;
+
+#if INIT_EDITOR
+		bool m_editorIsRunning = true;
+#else
+		bool m_editorIsRunning = false;
+#endif
+#if INIT_CURSOR
 		bool m_showCursor = true;
+#else
+		bool m_showCursor = false;
+#endif
 
 		bool m_transitionLevel = false;
 		float m_transitionTime = 0.0f;

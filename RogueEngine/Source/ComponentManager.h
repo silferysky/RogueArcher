@@ -37,8 +37,8 @@ namespace Rogue
 		void RegisterComponent()
 		{
 			// Create a ComponentArray pointer and add it to the component arrays vector
-			if (m_componentArrays.size() < GetComponentType<TComponent>() + 1)
-				m_componentArrays.resize(GetComponentType<TComponent>() + 1);
+			if (m_componentArrays.size() < GetComponentType<TComponent>() + 1L)
+				m_componentArrays.resize(GetComponentType<TComponent>() + 1L);
 
 			m_componentArrays[GetComponentType<TComponent>()] = std::make_shared<ComponentArray<TComponent>>();
 		}

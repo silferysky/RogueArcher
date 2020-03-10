@@ -24,14 +24,6 @@ Technology is prohibited.
 
 #define CONSOLE_SIZE 100
 
-#if defined(DEBUG) | defined(_DEBUG)
-	#define ENABLE_LOGGER 
-	#define ENABLE_ASSERT
-#else
-	#define ENABLE_LOGGER
-	#define ENABLE_ASSERT
-#endif
-
 namespace Rogue
 {
 	class Logger
@@ -65,7 +57,7 @@ namespace Rogue
 //MACROs
 
 //Core Logger
-#ifdef ENABLE_LOGGER
+#if ENABLE_LOGGER
 	#define RE_CORE_TRACE(TFirst, ...)		Logger::instance().GetCoreFileLogger()->trace(TFirst);		Logger::AddStringToConsole(TFirst)
 
 	#define RE_CORE_INFO(TFirst, ...)		Logger::instance().GetCoreFileLogger()->info(TFirst);		Logger::AddStringToConsole(TFirst)
@@ -100,7 +92,7 @@ namespace Rogue
 
 //Assert Logging
 //Uncommented version does not provide a readable message, but commented version (if statement) will run in both modes
-#ifdef ENABLE_ASSERT
+#if ENABLE_ASSERT
 	#define RE_ASSERT(args, msg)	Logger::instance().AssertArgs(args, msg); if(args == 0) { RE_CORE_ERROR(msg);	assert(args && msg); }
 #else
 	#define RE_ASSERT(args, msg)

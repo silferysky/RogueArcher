@@ -27,15 +27,26 @@ namespace Rogue
 		std::string m_objectName;
 		std::string m_tag;
 		std::string m_archetypeName;
-		bool m_selected = false;
-		Entity m_Entity = MAX_ENTITIES;
+		bool m_selected;
+		Entity m_Entity;
 
-		Entity m_parent = MAX_ENTITIES;
+		Entity m_parent;
 		std::vector<Entity> m_children;
 
-		HierarchyInfo() = default;
-		HierarchyInfo(Entity entity, std::string_view name, std::string_view tag = "", std::string_view archetypeName = "", Entity parentEnt = MAX_ENTITIES)
-			: m_Entity{ entity }, m_objectName{ name }, m_tag{ tag }, m_archetypeName{archetypeName}, m_parent{ parentEnt }, m_children{ std::vector<Entity>{} }{}
+		HierarchyInfo(Entity entity = MAX_ENTITIES,
+			std::string_view name = "",
+			std::string_view tag = "",
+			std::string_view archetypeName = "",
+			Entity parentEnt = MAX_ENTITIES) :
+			
+			m_Entity{ entity }, 
+			m_objectName{ name }, 
+			m_tag{ tag }, 
+			m_archetypeName{archetypeName}, 
+			m_parent{ parentEnt }, 
+			m_children{ },
+			m_selected{ false }
+		{}
 	};
 
 	class DirectoryInfo
@@ -46,7 +57,13 @@ namespace Rogue
 		std::string m_fileType;
 		bool m_selected = false;
 		int m_level = 0;
+
 		DirectoryInfo() = default;
-		DirectoryInfo(std::string_view path,std::string_view name,int level,std::string_view type) : m_filePath(path),m_fileName(name),m_level(level),m_fileType(type) {}
+		DirectoryInfo(std::string_view path, std::string_view name, int level, std::string_view type) :
+			m_filePath(path),
+			m_fileName(name),
+			m_level(level),
+			m_fileType(type)
+		{}
 	};
 }
