@@ -18,6 +18,7 @@ namespace Rogue
 
 	private:
 		bool m_activated;
+		bool m_finished;
 		std::queue<std::string> m_emojiTextures;
 		float m_delayBetweenEmojis;
 		float m_timer;

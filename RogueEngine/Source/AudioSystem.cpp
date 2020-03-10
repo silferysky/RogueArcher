@@ -84,7 +84,7 @@ namespace Rogue
 			if (!aEmitter.getIsScaling())
 				continue;
 
-			if (g_engine.m_coordinator.ComponentExists<TransformComponent>(m_trackingTarget))
+			if (g_engine.m_coordinator.ComponentExists<TransformComponent>(m_trackingTarget) && g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(m_trackingTarget))
 			{
 				auto sound = aEmitter.getSound();
 				Vec2 targetPos = g_engine.m_coordinator.GetComponent<TransformComponent>(m_trackingTarget).GetPosition();

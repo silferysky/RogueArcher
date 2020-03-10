@@ -160,7 +160,7 @@ namespace Rogue
 					ClearMenuObjs();
 					//SceneManager& sceneManager = SceneManager::instance();
 					//sceneManager.LoadLevel("Level 12.json");
-					g_engine.m_coordinator.SetTransitionLevel("Level 12.json", 0.0f);
+					g_engine.m_coordinator.SetTransitionLevel("Level 10.json", 0.0f);
 					//g_engine.m_coordinator.SetTransition(true);
 
 					FadeEvent ev = FadeEvent(MAX_ENTITIES, 0.5f);

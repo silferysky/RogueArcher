@@ -118,8 +118,14 @@ namespace Rogue
 				// Send EntityPickedEvent
 				if (key.GetKeyCode() == KeyPress::MB1)
 				{
-					if (pickedEntity >= 0)
+					if (pickedEntity >= 0 && pickedEntity < MAX_ENTITIES)
 					{
+						auto& info = g_engine.m_coordinator.GetHierarchyInfo(pickedEntity);
+
+						// If parent exists
+						if (info.m_parent != MAX_ENTITIES)
+							pickedEntity = info.m_parent; // Choose the parent instead
+
 						EntPickedEvent event{ static_cast<Entity>(pickedEntity) };
 
 						if (g_engine.m_coordinator.GetEditorIsRunning() && !g_engine.m_coordinator.GetGameState())
@@ -211,8 +217,14 @@ namespace Rogue
 				}
 			}
 
-			if (pickedEntity >= 0)
+			if (pickedEntity >= 0 && pickedEntity < MAX_ENTITIES)
 			{
+				auto& info = g_engine.m_coordinator.GetHierarchyInfo(pickedEntity);
+				
+				// If parent exists
+				if (info.m_parent != MAX_ENTITIES)
+					pickedEntity = info.m_parent; // Choose the parent instead
+					
 				return pickedEntity;
 			}
 		}

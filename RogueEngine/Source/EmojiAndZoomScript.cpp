@@ -26,7 +26,7 @@ namespace Rogue
 		if (!m_activated || m_finished)
 			return;
 
-		m_timer -= g_fixedDeltaTime;
+		m_timer -= g_deltaTime;
 		//std::cout << "Emoji Timer: " << m_timer << std::endl;
 
 		if (m_timer < 0.0f)
@@ -44,6 +44,10 @@ namespace Rogue
 				//std::cout << "Init Sprite " << sprite->get().getTexturePath();
 				std::ostringstream oss;
 				oss << "Resources\\Assets\\" << m_emojiTextures.front();
+
+				if (!m_emojiTextures.size())
+					oss << "Blank.png";
+
 				sprite->get().setTexturePath(oss.str());
 				m_emojiTextures.pop();
 				//std::cout << "End Sprite " << sprite->get().getTexturePath() << std::endl;

@@ -130,7 +130,7 @@ namespace Rogue
 					Vec2 vecOfChange = Vec2(g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin()).GetPosition() - calculatedPos);
 
 					//For Position
-					if (Vec2Length(vecOfChange) > 200.0f)
+					if (Vec2Length(vecOfChange) > 100.0f)
 					{
 						transform.setPosition(calculatedPos + vecOfChange / 2);
 					}
@@ -138,10 +138,11 @@ namespace Rogue
 					{
 						Vec2 length;
 						Vec2Normalize(length, vecOfChange);
-						length *= 200;
+						length *= 100.0f;
 						transform.setPosition(calculatedPos + length / 2);
 					}
 
+					//For Scale
 					int dir = 1;
 					if (vecOfChange.x < 0)
 						dir *= -1;
@@ -150,7 +151,6 @@ namespace Rogue
 
 					transform.setScale(Vec2(dir * transform.GetScale().x, transform.GetScale().y));
 
-					//For Scale
 					//if (/*vecOfChange.x < 200.0f &&*/ vecOfChange.x > 0.0f)
 					//{
 					//	transform.setScale(Vec2(-1 * transform.GetScale().x, transform.GetScale().y));
@@ -172,7 +172,7 @@ namespace Rogue
 				if (PLAYER_STATUS.GetHitchhikeIndicator() != MAX_ENTITIES &&
 					g_engine.m_coordinator.ComponentExists<TransformComponent>(PLAYER_STATUS.GetHitchhikeIndicator()))
 				{
-					PLAYER_STATUS.SetHitchhikableEntity(GetEntityRaycasted());
+					PLAYER_STATUS.SetHitchhikableEntity(HitchhikeRaycast());
 					Entity hitchhikee = PLAYER_STATUS.GetHitchhikableEntity();
 				
 					if (hitchhikee != MAX_ENTITIES)
@@ -181,20 +181,13 @@ namespace Rogue
 						{
 							HierarchyInfo& entInfo = g_engine.m_coordinator.GetHierarchyInfo(hitchhikee);
 							TransformComponent& hitchhikeeTrans = entTrans->get();
+							TransformComponent& indicatorTrans = g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetHitchhikeIndicator());
 
-							if (entInfo.m_tag == "Hitchhike" || entInfo.m_tag == "hitchhike")
-							{
-								TransformComponent& indicatorTrans = g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetHitchhikeIndicator());
-								
-								indicatorTrans.setPosition(hitchhikeeTrans.GetPosition());
-								indicatorTrans.setScale(Vec2(75.0f, 75.0f));
-								indicatorTrans.setZ(hitchhikeeTrans.GetZ());
-								PLAYER_STATUS.SetHitchhikableEntity(hitchhikee); // Save the hitchhikee's entity
-							}
-							else
-							{
-								PLAYER_STATUS.SetHitchhikableEntity(MAX_ENTITIES);
-							}
+							indicatorTrans.setPosition(hitchhikeeTrans.GetPosition());
+							indicatorTrans.setScale(Vec2(75.0f, 75.0f));
+							indicatorTrans.setZ(hitchhikeeTrans.GetZ());
+							PLAYER_STATUS.SetHitchhikableEntity(hitchhikee); // Save the hitchhikee's entity
+
 						}
 					}
 					else
@@ -266,6 +259,8 @@ namespace Rogue
 
 			player.m_jumpTimer -= g_deltaTime * g_engine.GetTimeScale();
 			//player.m_grounded = false;
+
+			std::cout << "Hitchhikable entity: " << PLAYER_STATUS.GetHitchhikableEntity() << std::endl;
 		}
 	}
 
@@ -288,7 +283,7 @@ namespace Rogue
 			ResetGameEvent& reset = dynamic_cast<ResetGameEvent&>(ev);
 
 			PLAYER_STATUS.SetPlayerEntity(MAX_ENTITIES);
-			PLAYER_STATUS.SetHitchhikeEntity(MAX_ENTITIES);
+			PLAYER_STATUS.SetHitchhikedEntity(MAX_ENTITIES);
 
 			//Deleting teleport entities
 			ClearTeleportEntities();
@@ -349,7 +344,7 @@ namespace Rogue
 
 			EntHitchhikeEvent& event = dynamic_cast<EntHitchhikeEvent&>(ev);
 
-			Hitchhike(event.GetEntityID());
+			//Hitchhike(event.GetEntityID());
 			break;
 		}
 
@@ -707,7 +702,7 @@ namespace Rogue
 				//		//ParentSetEvent& parent = new ParentSetEvent(infoA.m_Entity, entity);
 				//		//parent->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
 				//		//EventDispatcher::instance().AddEvent(parent);
-				//		//PLAYER_STATUS.SetHitchhikeEntity(infoA.m_Entity);
+				//		//PLAYER_STATUS.SetHitchhikedEntity(infoA.m_Entity);
 				//		//m_ignoreFrameEvent = true;
 				//	}
 				//	else //if (infoB.m_tag == "Platform")
@@ -715,7 +710,7 @@ namespace Rogue
 				//		//ParentSetEvent& parent = new ParentSetEvent(infoB.m_Entity, entity);
 				//		//parent->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
 				//		//EventDispatcher::instance().AddEvent(parent);
-				//		//PLAYER_STATUS.SetHitchhikeEntity(infoB.m_Entity);
+				//		//PLAYER_STATUS.SetHitchhikedEntity(infoB.m_Entity);
 				//		//m_ignoreFrameEvent = true;
 				//	}
 				//}
@@ -918,25 +913,25 @@ namespace Rogue
 		{
 			//std::cout << "Object is " << g_engine.m_coordinator.GetHierarchyInfo(ent).m_objectName << std::endl;
 
-			if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(PLAYER_STATUS.GetPlayerEntity()))
-			{
-				Vec2 initialPos = trans->get().GetPosition();
-				Vec2 endPos = PickingManager::instance().GetWorldCursor();
-				//std::cout << "Actual Distance" << Vec2SqDistance(initialPos, endPos) << std::endl;
-				//std::cout << "Calc Distance" << trans->get().GetScale().x * trans->get().GetScale().x * 9 << std::endl;
-
-				//If distance to hitchhike is > Hitchhike range * Slight bonus to "extend" range
-				if (Vec2SqDistance(initialPos, endPos) > (trans->get().GetScale().x * 3)* (trans->get().GetScale().x * 3))
-				{
-					//std::cout << "Too Far" << std::endl;
-					return;
-				}
-			}
-			else //Cannot check transform properly, so this doesn't work
-			{
-				//std::cout << "No Transform" << std::endl;
-				return;
-			}
+			//if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(PLAYER_STATUS.GetPlayerEntity()))
+			//{
+			//	Vec2 initialPos = trans->get().GetPosition();
+			//	Vec2 endPos = PickingManager::instance().GetWorldCursor();
+			//	//std::cout << "Actual Distance" << Vec2SqDistance(initialPos, endPos) << std::endl;
+			//	//std::cout << "Calc Distance" << trans->get().GetScale().x * trans->get().GetScale().x * 9 << std::endl;
+			//
+			//	//If distance to hitchhike is > Hitchhike range * Slight bonus to "extend" range (No need)
+			//	//if (Vec2SqDistance(initialPos, endPos) > (trans->get().GetScale().x * 3)* (trans->get().GetScale().x * 3))
+			//	//{
+			//	//	//std::cout << "Too Far" << std::endl;
+			//	//	return;
+			//	//}
+			//}
+			//else //Cannot check transform properly, so this doesn't work
+			//{
+			//	//std::cout << "No Transform" << std::endl;
+			//	return;
+			//}
 
 			SetPlayerParent(ent);
 			PLAYER_STATUS.SetTeleportCharge(3.0f);
@@ -978,7 +973,7 @@ namespace Rogue
 		//Calculating max cursor distance value
 		cursor -= initialPos;
 		Vec2Normalize(cursor, cursor);
-		cursor *= playerTransform.GetScale().x * 3;
+		cursor *= playerTransform.GetScale().x * 3.0f;
 		cursor += initialPos;
 
 		//Prevent going past cursor when clicking close
@@ -1044,7 +1039,7 @@ namespace Rogue
 	}
 
 	// SOLELY tailored for hitchhiking.
-	Entity PlayerControllerSystem::GetEntityRaycasted()
+	Entity PlayerControllerSystem::HitchhikeRaycast()
 	{
 		TransformComponent& playerTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin());
 		Vec2 initialPos = playerTransform.GetPosition();
@@ -1181,9 +1176,10 @@ namespace Rogue
 		{
 			boxCollider->get().SetCollisionMode(CollisionMode::e_asleep);
 		}
-		if (auto rigidbody = g_engine.m_coordinator.TryGetComponent<RigidbodyComponent>(PLAYER_STATUS.GetPlayerEntity()))
+		if (g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(PLAYER_STATUS.GetPlayerEntity()))
 		{
-			rigidbody->get().setIsStatic(true);
+			ForceManager::instance().ResetPhysics(PLAYER_STATUS.GetPlayerEntity());
+			g_engine.SetTimeScale(1.0f);
 		}
 	}
 
@@ -1195,7 +1191,7 @@ namespace Rogue
 		}
 		if (auto rigidbody = g_engine.m_coordinator.TryGetComponent<RigidbodyComponent>(PLAYER_STATUS.GetPlayerEntity()))
 		{
-			rigidbody->get().setIsStatic(false);
+			//rigidbody->get().setIsStatic(false);
 		}
 	}
 
@@ -1213,7 +1209,7 @@ namespace Rogue
 		ParentSetEvent parent(newParent, *m_entities.begin());
 		parent.SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
 		EventDispatcher::instance().AddEvent(parent);
-		PLAYER_STATUS.SetHitchhikeEntity(newParent);
+		PLAYER_STATUS.SetHitchhikedEntity(newParent);
 	}
 
 	void PlayerControllerSystem::ResetPlayerParent()
@@ -1229,7 +1225,7 @@ namespace Rogue
 			ParentResetEvent parentReset(*m_entities.begin());
 			parentReset.SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
 			EventDispatcher::instance().AddEvent(parentReset);
-			PLAYER_STATUS.SetHitchhikeEntity(MAX_ENTITIES);
+			PLAYER_STATUS.SetHitchhikedEntity(MAX_ENTITIES);
 		}
 	}
 
