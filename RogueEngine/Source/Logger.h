@@ -29,6 +29,7 @@ Technology is prohibited.
 	#define ENABLE_ASSERT
 #else
 	#define ENABLE_LOGGER
+	#define ENABLE_ASSERT
 #endif
 
 namespace Rogue

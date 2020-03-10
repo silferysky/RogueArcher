@@ -5,6 +5,8 @@
 #include "GraphicsEvent.h"
 #include "CameraManager.h"
 #include "CameraSystem.h"
+#include "InputManager.h"
+
 namespace Rogue
 {
 	GamePlayEnding::GamePlayEnding(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent)
@@ -22,6 +24,10 @@ namespace Rogue
 		if (PlayerStatusManager::instance().GetEnding())
 		{
 			g_engine.m_coordinator.GetSystem<CameraSystem>()->setIsActive(true);
+			if(g_engine.m_coordinator.GetSystem<InputManager>()->KeyDown(KeyPress::KeyA))
+			{
+				
+			}
 			m_timer += g_deltaTime * g_engine.GetTimeScale();
 			//Freeze Player Controls			
 			m_souls = PLAYER_STATUS.GetSoulsCollected();
@@ -91,7 +97,14 @@ namespace Rogue
 			CameraShakeEvent shake(20.0f);
 			shake.SetSystemReceivers(static_cast<int>(SystemID::id_CAMERASYSTEM));
 			EventDispatcher::instance().AddEvent(shake);
-			
+			for (HierarchyInfo& info : g_engine.m_coordinator.GetHierarchyInfoArray())
+			{			
+				if (info.m_tag == "slots")
+				{
+					auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+					transform.setZ(100);
+				}
+			}
 			PlayerStatusManager::instance().SetEnding(true);
 		}
 	}

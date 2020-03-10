@@ -23,7 +23,7 @@ namespace Rogue
 			return;
 
 		float cameraZoom = CameraManager::instance().GetCameraZoom();
-		std::cout << "Zoom Timer: " << m_zoomDelay - m_zoomTimer << std::endl;
+		//std::cout << "Zoom Timer: " << m_zoomDelay - m_zoomTimer << std::endl;
 		//std::cout << "Zoom Delay: " << m_zoomDelay << std::endl;
 
 		//If waiting for delay

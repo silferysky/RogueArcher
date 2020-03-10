@@ -186,10 +186,10 @@ namespace Rogue
 		template <typename TComponent>
 		std::optional<std::reference_wrapper<TComponent>> TryGetComponent(Entity entity)
 		{
-			if (ComponentExists<TComponent>(entity))
-				return std::optional<std::reference_wrapper<TComponent>>(GetComponent<TComponent>(entity));
-			else
+			if (entity >= MAX_ENTITIES || !ComponentExists<TComponent>(entity))
 				return std::nullopt;
+			else
+				return std::optional<std::reference_wrapper<TComponent>>(GetComponent<TComponent>(entity));
 		}
 
 		template<typename TComponent>
