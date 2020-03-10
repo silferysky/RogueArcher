@@ -394,8 +394,12 @@ namespace Rogue
 			isValid = false;
 
 		//Doing a check if any of parent's parents is the child value
-		while (isValid && it.m_parent != MAX_ENTITIES && count < 10)
+		while (isValid && it.m_parent != MAX_ENTITIES)
 		{
+			if (count > 10)
+			{
+				isValid = false;
+			}
 			if (it.m_parent == child)
 			{
 				isValid = false;
