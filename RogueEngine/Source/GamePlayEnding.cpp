@@ -41,14 +41,30 @@ namespace Rogue
 			//8. <Fade in/out 3 secs, display statement on top of the camera>
 			if (m_timer < 3.0f)
 			{
-				//for (HierarchyInfo& info : g_engine.m_coordinator.GetHierarchyInfoArray())
-				//{
-				//	if (info.m_tag == "slots")
-				//	{
-				//		auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
-				//		transform.setZ(0);
-				//	}
-				//}
+				for (HierarchyInfo& info : g_engine.m_coordinator.GetHierarchyInfoArray())
+				{
+					if (info.m_tag == "DoorUp")
+					{
+						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+						transform.setPosition(Vec2{ transform.GetPosition().x,transform.GetPosition().y + 0.2f });
+					}
+					if (info.m_tag == "DoorDown")
+					{
+						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+						transform.setPosition(Vec2{ transform.GetPosition().x,transform.GetPosition().y - 0.2f });
+					}
+					if (info.m_tag == "DoorLeft")
+					{
+						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+						transform.setPosition(Vec2{ transform.GetPosition().x - 0.2f,transform.GetPosition().y });
+					}
+					if (info.m_tag == "DoorRight")
+					{
+						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+						transform.setPosition(Vec2{ transform.GetPosition().x + 0.2f,transform.GetPosition().y });
+					}
+				}
+
 				FadeEvent ev = FadeEvent(MAX_ENTITIES, 0.5f, false);
 				ev.SetSystemReceivers(static_cast<int>(SystemID::id_GRAPHICSSYSTEM));
 				EventDispatcher::instance().AddEvent(ev);
