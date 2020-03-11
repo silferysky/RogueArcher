@@ -7,11 +7,12 @@
 namespace Rogue
 {
 	ProgressBar::ProgressBar(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent)
-		: ScriptComponent(entity, logicComponent, statsComponent), m_oldScale{}
+		: ScriptComponent(entity, logicComponent, statsComponent), m_oldScale{}, m_difference{}
 	{
 		if (auto transform = g_engine.m_coordinator.TryGetComponent<TransformComponent>(entity))
 		{
-			transform->get().setScale(Vec2(0.0f, transform->get().GetScale().y));
+			auto& transformOpt = transform->get();
+			transformOpt.setScale(Vec2(0.0f, transformOpt.GetScale().y));
 		}
 	}
 
@@ -38,6 +39,8 @@ namespace Rogue
 					transform->get().setPosition(Vec2(positon.x - m_difference, positon.y));
 				else if (m_difference > 0)
 					transform->get().setPosition(Vec2(positon.x + m_difference, positon.y));
+
+				positon = transform->get().GetPosition();
 
 				// translate by half of (1 - completionPercentage)
 				m_difference = 282.5f * 0.5f * (1 - completionPercentage);

@@ -24,13 +24,13 @@ namespace Rogue
 	{
 		if (auto transform = g_engine.m_coordinator.TryGetComponent<TransformComponent>(m_entity))
 		{
-			auto transformOpt = transform->get();
+			auto& transformOpt = transform->get();
 			PickingManager::instance().GenerateMeshAABB(transformOpt);
 
 			// cursor is on the button
 			if (CollisionManager::instance().DiscretePointVsAABB(PickingManager::instance().GetWorldCursor(), transformOpt.GetPickArea()))
 			{
-				transformOpt.setScale(m_originalScale * 1.50f);
+				transformOpt.setScale(m_originalScale * 1.15f);
 			}
 			else
 			{
