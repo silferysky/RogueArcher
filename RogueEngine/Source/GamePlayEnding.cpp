@@ -205,7 +205,7 @@ namespace Rogue
 		{
 			//Freeze Player Controls			
 			m_souls = PLAYER_STATUS.GetSoulsCollected();
-			if (m_souls < 1)
+			if (m_souls > 1)
 			{
 				PLAYER_STATUS.FreezeControls();
 				g_engine.m_coordinator.GetSystem<CameraSystem>()->setIsActive(false);
