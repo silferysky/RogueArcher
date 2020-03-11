@@ -35,6 +35,11 @@ namespace Rogue
 			{
 				for (HierarchyInfo& info : g_engine.m_coordinator.GetHierarchyInfoArray())
 				{
+					if (info.m_tag == "ObjectiveTxt")
+					{
+						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+						transform.setZ(0);
+					}
 					if (info.m_tag == "DoorUp")
 					{
 						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
