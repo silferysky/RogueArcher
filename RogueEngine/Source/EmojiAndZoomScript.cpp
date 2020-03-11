@@ -43,10 +43,10 @@ namespace Rogue
 			{
 				//std::cout << "Init Sprite " << sprite->get().getTexturePath();
 				std::ostringstream oss;
-				oss << "Resources\\Assets\\" << m_emojiTextures.front();
-
-				if (!m_emojiTextures.size())
-					oss << "Blank.png";
+				if (m_emojiTextures.size())
+					oss << "Resources\\Assets\\" << m_emojiTextures.front();
+				else
+					oss << "Resources\\Assets\\Blank.png";
 
 				sprite->get().setTexturePath(oss.str());
 				m_emojiTextures.pop();
