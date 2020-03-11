@@ -69,8 +69,6 @@ namespace Rogue
 					if (info.m_tag == "ElaTitle")
 					{
 						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(info.m_Entity);
-						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
-						transform.setPosition(Vec2{ transform.GetPosition().x + 0.4f,transform.GetPosition().y });
 						sprite.setFilter(glm::vec4(sprite.getFilter().r, sprite.getFilter().g, sprite.getFilter().b, sprite.getFilter().a + 0.1f));
 					}
 					if (info.m_tag == "ElaA")
@@ -78,27 +76,62 @@ namespace Rogue
 						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(info.m_Entity);
 						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
 						sprite.setFilter(glm::vec4(sprite.getFilter().r, sprite.getFilter().g, sprite.getFilter().b, sprite.getFilter().a + 0.1f));
-						transform.setPosition(Vec2{ transform.GetPosition().x + 0.4f,transform.GetPosition().y });
-						transform.setZ(101);
+						//transform.setZ(101);
 					}
 					if (info.m_tag == "ExaTitle")
 					{
 						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(info.m_Entity);
-						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
-						transform.setPosition(Vec2{ transform.GetPosition().x - 0.4f,transform.GetPosition().y });
 						sprite.setFilter(glm::vec4(sprite.getFilter().r, sprite.getFilter().g, sprite.getFilter().b, sprite.getFilter().a + 0.1f));
 					}
 					if (info.m_tag == "ExaA")
 					{
 						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(info.m_Entity);
 						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
-						transform.setPosition(Vec2{ transform.GetPosition().x - 0.4f,transform.GetPosition().y });
 						sprite.setFilter(glm::vec4(sprite.getFilter().r, sprite.getFilter().g, sprite.getFilter().b, sprite.getFilter().a + 0.1f));
-						transform.setZ(101);
+						//transform.setZ(101);
 					}
 				}
 			}
 			else if (m_timer < 9.0f)
+			{
+				for (HierarchyInfo& info : g_engine.m_coordinator.GetHierarchyInfoArray())
+				{
+					if (info.m_tag == "Sacrifice")
+					{
+						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(info.m_Entity);
+						sprite.setFilter(glm::vec4(sprite.getFilter().r, sprite.getFilter().g, sprite.getFilter().b, sprite.getFilter().a + 0.1f));
+					}
+				}
+			}
+			else if (m_timer < 12.0)
+			{
+				for (HierarchyInfo& info : g_engine.m_coordinator.GetHierarchyInfoArray())
+				{
+					if (info.m_tag == "ElaTitle")
+					{
+						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+						transform.setPosition(Vec2{ transform.GetPosition().x + 0.4f,transform.GetPosition().y });
+					}
+					if (info.m_tag == "ElaA")
+					{
+						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+						transform.setPosition(Vec2{ transform.GetPosition().x + 0.4f,transform.GetPosition().y });
+						transform.setZ(101);
+					}
+					if (info.m_tag == "ExaTitle")
+					{
+						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+						transform.setPosition(Vec2{ transform.GetPosition().x - 0.4f,transform.GetPosition().y });
+					}
+					if (info.m_tag == "ExaA")
+					{
+						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+						transform.setPosition(Vec2{ transform.GetPosition().x - 0.4f,transform.GetPosition().y });
+						transform.setZ(101);
+					}
+				}
+			}
+			else if (m_timer < 15.0f)
 			{
 				for (HierarchyInfo& info : g_engine.m_coordinator.GetHierarchyInfoArray())
 				{
