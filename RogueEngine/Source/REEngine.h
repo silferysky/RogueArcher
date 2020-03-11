@@ -43,7 +43,7 @@ Technology is prohibited.
 #define ENABLE_LOGGER 0
 #define ENABLE_ASSERT 0
 #else
-#define ENABLE_LOGGER 0
+#define ENABLE_LOGGER 1
 #define ENABLE_ASSERT 1
 #endif
 

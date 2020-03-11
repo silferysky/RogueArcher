@@ -434,7 +434,7 @@ namespace Rogue
 
 		for (auto& child : info.m_children)
 		{
-			HierarchyInfo& obj = g_engine.m_coordinator.GetHierarchyInfo(child);
+			HierarchyInfo obj = g_engine.m_coordinator.GetHierarchyInfo(child);
 			SaveArchetype(obj.m_objectName, obj.m_Entity);
 			childstrstream << obj.m_objectName << ";";
 		}
