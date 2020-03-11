@@ -35,25 +35,30 @@ namespace Rogue
 			{
 				for (HierarchyInfo& info : g_engine.m_coordinator.GetHierarchyInfoArray())
 				{
+					if (info.m_tag == "ObjectiveTxt")
+					{
+						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+						transform.setZ(0);
+					}
 					if (info.m_tag == "DoorUp")
 					{
 						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
-						transform.setPosition(Vec2{ transform.GetPosition().x,transform.GetPosition().y + 0.1f });
+						transform.setPosition(Vec2{ transform.GetPosition().x,transform.GetPosition().y + 0.6f });
 					}
 					if (info.m_tag == "DoorDown")
 					{
 						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
-						transform.setPosition(Vec2{ transform.GetPosition().x,transform.GetPosition().y - 0.1f });
+						transform.setPosition(Vec2{ transform.GetPosition().x,transform.GetPosition().y - 0.6f });
 					}
 					if (info.m_tag == "DoorLeft")
 					{
 						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
-						transform.setPosition(Vec2{ transform.GetPosition().x - 0.1f,transform.GetPosition().y });
+						transform.setPosition(Vec2{ transform.GetPosition().x - 0.6f,transform.GetPosition().y });
 					}
 					if (info.m_tag == "DoorRight")
 					{
 						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
-						transform.setPosition(Vec2{ transform.GetPosition().x + 0.1f,transform.GetPosition().y });
+						transform.setPosition(Vec2{ transform.GetPosition().x + 0.6f,transform.GetPosition().y });
 					}
 				}
 
@@ -68,25 +73,27 @@ namespace Rogue
 				{
 					if (info.m_tag == "ElaTitle")
 					{
-						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
-						transform.setPosition(Vec2{ transform.GetPosition().x + 0.1f,transform.GetPosition().y });
+						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(info.m_Entity);
+						sprite.setFilter(glm::vec4(sprite.getFilter().r, sprite.getFilter().g, sprite.getFilter().b, sprite.getFilter().a + 0.1f));
 					}
 					if (info.m_tag == "ElaA")
 					{
+						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(info.m_Entity);
 						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
-						transform.setPosition(Vec2{ transform.GetPosition().x + 0.1f,transform.GetPosition().y });
-						transform.setZ(101);
+						sprite.setFilter(glm::vec4(sprite.getFilter().r, sprite.getFilter().g, sprite.getFilter().b, sprite.getFilter().a + 0.1f));
+						//transform.setZ(101);
 					}
 					if (info.m_tag == "ExaTitle")
 					{
-						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
-						transform.setPosition(Vec2{ transform.GetPosition().x - 0.1f,transform.GetPosition().y });
+						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(info.m_Entity);
+						sprite.setFilter(glm::vec4(sprite.getFilter().r, sprite.getFilter().g, sprite.getFilter().b, sprite.getFilter().a + 0.1f));
 					}
 					if (info.m_tag == "ExaA")
 					{
+						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(info.m_Entity);
 						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
-						transform.setPosition(Vec2{ transform.GetPosition().x - 0.1f,transform.GetPosition().y });
-						transform.setZ(101);
+						sprite.setFilter(glm::vec4(sprite.getFilter().r, sprite.getFilter().g, sprite.getFilter().b, sprite.getFilter().a + 0.1f));
+						//transform.setZ(101);
 					}
 				}
 			}
@@ -94,13 +101,54 @@ namespace Rogue
 			{
 				for (HierarchyInfo& info : g_engine.m_coordinator.GetHierarchyInfoArray())
 				{
+					if (info.m_tag == "Sacrifice")
+					{
+						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(info.m_Entity);
+						sprite.setFilter(glm::vec4(sprite.getFilter().r, sprite.getFilter().g, sprite.getFilter().b, sprite.getFilter().a + 0.1f));
+					}
+				}
+			}
+			else if (m_timer < 12.0)
+			{
+				for (HierarchyInfo& info : g_engine.m_coordinator.GetHierarchyInfoArray())
+				{
+					if (info.m_tag == "ElaTitle")
+					{
+						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+						transform.setPosition(Vec2{ transform.GetPosition().x + 0.4f,transform.GetPosition().y });
+					}
+					if (info.m_tag == "ElaA")
+					{
+						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+						transform.setPosition(Vec2{ transform.GetPosition().x + 0.4f,transform.GetPosition().y });
+						transform.setZ(101);
+					}
+					if (info.m_tag == "ExaTitle")
+					{
+						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+						transform.setPosition(Vec2{ transform.GetPosition().x - 0.4f,transform.GetPosition().y });
+					}
+					if (info.m_tag == "ExaA")
+					{
+						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+						transform.setPosition(Vec2{ transform.GetPosition().x - 0.4f,transform.GetPosition().y });
+						transform.setZ(101);
+					}
+				}
+			}
+			else if (m_timer < 15.0f)
+			{
+				for (HierarchyInfo& info : g_engine.m_coordinator.GetHierarchyInfoArray())
+				{
 					if (info.m_tag == "ElaTitle")
 					{
 						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(info.m_Entity);
 						sprite.setTexturePath("Resources/Assets/EndingEventEla.png");
+						//sprite.setFilter(glm::vec4(255, 255, 255, sprite.getFilter().a + 0.1f));
 					}
 					if (info.m_tag == "ElaA")
 					{
+						//auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(info.m_Entity);
 						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
 						transform.setZ(0);
 					}
@@ -110,14 +158,14 @@ namespace Rogue
 			{
 				m_timer = 0.0f;
 				PLAYER_STATUS.UnfreezeControls();
-				for (HierarchyInfo& info : g_engine.m_coordinator.GetHierarchyInfoArray())
-				{
-					if (info.m_tag == "slots")
-					{
-						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
-						transform.setZ(0);
-					}
-				}
+				//for (HierarchyInfo& info : g_engine.m_coordinator.GetHierarchyInfoArray())
+				//{
+				//	if (info.m_tag == "slots")
+				//	{
+				//		auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+				//		transform.setZ(0);
+				//	}
+				//}
 				//CameraManager::instance().SetCameraZoom(CameraManager::instance().GetCameraZoom() + 0.5f);
 				PlayerStatusManager::instance().SetEnding(false);
 			}
@@ -131,7 +179,7 @@ namespace Rogue
 		{
 			//Freeze Player Controls			
 			m_souls = PLAYER_STATUS.GetSoulsCollected();
-			if (m_souls < 1)
+			if (m_souls > 1)
 			{
 				PLAYER_STATUS.FreezeControls();
 				g_engine.m_coordinator.GetSystem<CameraSystem>()->setIsActive(false);

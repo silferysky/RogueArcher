@@ -134,7 +134,7 @@ namespace Rogue
 			
 			//FixedUpdateSystem(SystemID::id_CIRCLECOLLISIONSYSTEM, "Circle Collision System");
 			FixedUpdateSystem(SystemID::id_BOXCOLLISIONSYSTEM, "Box Collision System");
-			//FixedUpdateSystem(SystemID::id_COLLISIONSYSTEM, "Collision System");
+			FixedUpdateSystem(SystemID::id_COLLISIONSYSTEM, "Collision System");
 			FixedUpdateSystem(SystemID::id_CAMERASYSTEM, "Camera System");
 		}
 		
