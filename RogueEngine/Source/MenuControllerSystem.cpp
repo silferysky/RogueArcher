@@ -411,18 +411,57 @@ namespace Rogue
 
 	void MenuControllerSystem::ToggleUIMenuObjs()
 	{
+		bool movingToPos = true;
+		if (m_menuObjs.size())
+			if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(*m_menuObjs.begin()))
+			{
+				movingToPos = sprite->get().m_componentIsActive;
+			}
+
 		for (Entity ent : m_menuObjs)
 		{
+			//Safety check
+			auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(ent);
+			if (!sprite)
+				continue;
+
+			if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(ent))
+			{
+				if (movingToPos)
+				{
+					trans->get().setPosition(Vec2(trans->get().GetPosition().x - CAMERA_MANAGER.GetCameraPos().x, trans->get().GetPosition().y - CAMERA_MANAGER.GetCameraPos().y));
+				}
+				else
+				{
+					trans->get().setPosition(Vec2(trans->get().GetPosition().x + CAMERA_MANAGER.GetCameraPos().x, trans->get().GetPosition().y + CAMERA_MANAGER.GetCameraPos().y));
+				}
+			}
+		
 			//Do not do last item (ControlHelp)
 			if (ent == m_menuObjs.back())
-				return;
+				continue;
 
-			//Safety check
-			if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(ent))
+			sprite->get().m_componentIsActive = !sprite->get().m_componentIsActive;
+
+			if (auto ui = g_engine.m_coordinator.TryGetComponent<UIComponent>(ent))
 			{
-				sprite->get().m_componentIsActive = !sprite->get().m_componentIsActive;
+				ui->get().setIsActive(!ui->get().getIsActive());
 			}
-			
+		}
+
+		for (Entity ent : m_confirmQuitEnt)
+		{
+			if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(ent))
+			{
+				if (movingToPos)
+				{
+					trans->get().setPosition(Vec2(trans->get().GetPosition().x - CAMERA_MANAGER.GetCameraPos().x, trans->get().GetPosition().y - CAMERA_MANAGER.GetCameraPos().y));
+				}
+				else
+				{
+					trans->get().setPosition(Vec2(trans->get().GetPosition().x + CAMERA_MANAGER.GetCameraPos().x, trans->get().GetPosition().y + CAMERA_MANAGER.GetCameraPos().y));
+				}
+			}
 		}
 	}
 
@@ -492,11 +531,17 @@ namespace Rogue
 		}
 
 		for (Entity ent : m_confirmQuitEnt)
+		{
 			//Setting Quit button display to true
 			if (auto ui = g_engine.m_coordinator.TryGetComponent<UIComponent>(ent))
 			{
 				ui->get().setIsActive(!ui->get().getIsActive());
 			}
+			if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(ent))
+			{
+				sprite->get().m_componentIsActive = !sprite->get().m_componentIsActive;
+			}
+		}
 	}
 
 	size_t MenuControllerSystem::GetUIMenuObjsSize()
