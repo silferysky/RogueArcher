@@ -412,8 +412,8 @@ namespace Rogue
 	void MenuControllerSystem::ToggleUIMenuObjs()
 	{
 		bool movingToPos = true;
-		if (m_menuObjs.size())
-			if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(*m_menuObjs.begin()))
+		if (m_menuObjs.size() > 1)
+			if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(*(m_menuObjs.begin() + 1)))
 			{
 				movingToPos = sprite->get().m_componentIsActive;
 			}
@@ -441,7 +441,7 @@ namespace Rogue
 				}
 			}
 		
-			//Do not do last item (ControlHelp)
+			//Do not toggle last item (ControlHelp)
 			if (ent == m_menuObjs.back())
 				continue;
 
