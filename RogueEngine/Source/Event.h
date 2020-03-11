@@ -173,8 +173,8 @@ namespace Rogue
 
 
 	protected:
-		EventCategory	eventCat;				//Event Category as based on the EventCategory enum
-		EventType		eventType;				//Specific event type
+		EventCategory	eventCat{};				//Event Category as based on the EventCategory enum
+		EventType		eventType{};				//Specific event type
 		bool			isHandled = false;		//If event is handled or not
 		std::bitset<(int)SystemID::id_LASTSYS>	m_systemsToReceive;		//Denotes which system receives this eevnt
 	};

@@ -25,7 +25,7 @@ Technology is prohibited.
 namespace Rogue
 {
 	ImGuiEditorViewport::ImGuiEditorViewport() :
-		m_currentVector{ g_engine.m_coordinator.GetActiveObjects() }, m_CurrentGizmoOperation{ ImGuizmo::TRANSLATE }
+		m_currentVector{ g_engine.m_coordinator.GetActiveObjects() }, m_CurrentGizmoOperation{ ImGuizmo::TRANSLATE }, m_CurrentGizmoMode{ }
 	{
 	}
 	void ImGuiEditorViewport::Init()

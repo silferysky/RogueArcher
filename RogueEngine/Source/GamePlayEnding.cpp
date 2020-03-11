@@ -10,7 +10,7 @@
 namespace Rogue
 {
 	GamePlayEnding::GamePlayEnding(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent)
-		: ScriptComponent(entity, logicComponent, statsComponent)
+		: ScriptComponent(entity, logicComponent, statsComponent), m_souls{0}, m_timer{0.0f}
 	{
 	}
 
@@ -231,6 +231,14 @@ namespace Rogue
 						transform.setZ(0);
 						auto& camera = g_engine.m_coordinator.GetComponent<CameraComponent>(info.m_Entity);
 						camera.setIsActive(false);
+					}
+
+					if (info.m_tag == "indicator")
+					{
+						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(info.m_Entity);
+						//hide indicator
+						auto& filter = sprite.getFilter();
+						sprite.setFilter({ filter.r, filter.g, filter.b, 0 });
 					}
 
 					if (info.m_tag == "ExaClone")

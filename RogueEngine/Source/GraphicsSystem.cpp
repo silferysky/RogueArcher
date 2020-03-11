@@ -32,9 +32,13 @@ namespace Rogue
 	GraphicsSystem::GraphicsSystem()
 		: System(SystemID::id_GRAPHICSSYSTEM), m_VAO{ 0 }, m_VBO{ 0 }, m_EBO{ 0 },
 		m_FBO{ 0 }, m_texColourBuffer{ 0 }, m_RBO{ 0 },
-		m_screenShader{ }, m_shader{ }, 
+		m_screenShader{ }, m_shader{ }, m_foregroundShader{ },
 		m_transformLocation{ 0 }, m_filterLocation{ 0 },
-		m_frameVAO{ 0 }, m_frameVBO{ 0 }
+		m_uvScaleLocation{ 0 }, m_uvOffsetLocation{ 0 },
+		m_frameVAO{ 0 }, m_frameVBO{ 0 },
+		m_foregroundTransformLocation{ 0 }, m_foregroundViewLocation{ 0 }, m_foregroundProjectionLocation{ 0 },
+		m_foregrounduvScaleLocation{ 0 }, m_foregrounduvOffsetLocation{ 0 }, m_foregroundFilterLocation{ 0 },
+		m_uboMatrices{ 0 }, m_totalLightsLocation{ 0 }
 	{}
 
 	// Public member functions 
@@ -90,10 +94,10 @@ namespace Rogue
 		m_foregrounduvOffsetLocation = glGetUniformLocation(m_foregroundShader.GetShader(), "uvOffset");
 
 		GenerateQuadPrimitive(m_VBO, m_VAO, m_EBO);
-		GenerateQuadPrimitive(m_instancedVBO, m_instancedVAO, m_instancedEBO);
+		//GenerateQuadPrimitive(m_instancedVBO, m_instancedVAO, m_instancedEBO);
 		GenerateFrameQuad(m_frameVAO, m_frameVBO);
 
-		entityCount = 0;
+		//entityCount = 0;
 		//modelMatrices = new glm::mat4[2048];
 		//glGenBuffers(1, &m_instanceBuffer);
 		//glBindBuffer(GL_ARRAY_BUFFER, m_instanceBuffer);
@@ -211,7 +215,7 @@ namespace Rogue
 
 		UseFrameBuffer();
 
-		entityCount = 0;
+		//entityCount = 0;
 
 		g_engine.m_coordinator.EndTimeSystem("Graphics System");
 	}
@@ -229,7 +233,7 @@ namespace Rogue
 			return;
 
 		glm::mat4 transformMat = glm::mat4(1.0f);
-		glm::mat4 viewMat;
+		//glm::mat4 viewMat;
 		auto texture = sprite.getTexture();
 
 		transformMat = glm::translate(transformMat, { transform.GetPosition().x, transform.GetPosition().y, 1.0f });
@@ -385,7 +389,7 @@ namespace Rogue
 		for (auto tile : tileMap) // each tile in the tilemap
 		{
 			glm::mat4 transformMat = glm::mat4(1.0f);
-			glm::mat4 viewMat;
+			//glm::mat4 viewMat;
 
 			transformMat = glm::translate(transformMat, { tile.m_tilePos.x, tile.m_tilePos.y, 1.0f });
 			transformMat = glm::rotate(transformMat, transform.GetRotation(), glm::vec3(0.0f, 0.0f, 1.0f));

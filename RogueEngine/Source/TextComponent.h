@@ -24,8 +24,8 @@ namespace Rogue
 { 
 	class TextComponent: public BaseComponent
 	{
-		glm::vec4 m_colour;
-		std::string m_words;
+		glm::vec4 m_colour{};
+		std::string m_words{};
 	public:
 		void SetColour(const glm::vec4& colour);
 		glm::vec4& GetColour();

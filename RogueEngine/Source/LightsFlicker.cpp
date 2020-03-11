@@ -22,8 +22,8 @@ namespace Rogue
 		{
 			if (auto light = g_engine.m_coordinator.TryGetComponent<LightComponent>(m_entity))
 			{
-				light->get().setAmbientFactor(rand() / (RAND_MAX / 17));
-				light->get().setSpecularFactor(rand() / (RAND_MAX / 17));
+				light->get().setAmbientFactor(static_cast<float>(rand() / (RAND_MAX / 17)));
+				light->get().setSpecularFactor(static_cast<float>(rand() / (RAND_MAX / 17)));
 
 				m_timer = 0.0f;
 			}

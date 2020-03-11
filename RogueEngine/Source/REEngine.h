@@ -23,7 +23,7 @@ Technology is prohibited.
 /* End Header **************************************************************************/
 #pragma once
 
-#define DEMO_MODE 1
+#define DEMO_MODE 0
 
 #if DEMO_MODE
 	#define INIT_FULLSCREEN 1
@@ -33,11 +33,11 @@ Technology is prohibited.
 	#define INIT_EDITOR 0
 	#define INIT_PLAY 1
 #else
-	#define INIT_FULLSCREEN 1
+	#define INIT_FULLSCREEN 0
 	#define INIT_VSYNC 0
 	#define INIT_CONSOLE 1
 	#define INIT_CURSOR 1
-	#define INIT_EDITOR 0
+	#define INIT_EDITOR 1
 	#define INIT_PLAY 0
 #endif
 

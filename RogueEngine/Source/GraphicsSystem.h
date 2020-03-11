@@ -56,9 +56,9 @@ namespace Rogue
 
 		GLint m_totalLightsLocation;
 
-		GLuint m_instancedVAO;
+		/* GLuint m_instancedVAO;
 		GLuint m_instancedVBO;
-		GLuint m_instancedEBO;
+		GLuint m_instancedEBO; */
 
 		GLint m_foregroundProjectionLocation;
 		GLint m_foregroundViewLocation;
@@ -72,9 +72,9 @@ namespace Rogue
 		float m_playerX = 1.0f;
 
 		//instancing
-		int entityCount;
-		glm::mat4* modelMatrices;
-		GLuint m_instanceBuffer;
+		//int entityCount;
+		//glm::mat4* modelMatrices;
+		//GLuint m_instanceBuffer;
 
 		std::multimap<int, Entity> m_drawQueue;
 
