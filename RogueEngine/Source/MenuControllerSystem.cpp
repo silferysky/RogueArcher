@@ -420,6 +420,10 @@ namespace Rogue
 
 		for (Entity ent : m_menuObjs)
 		{
+			//Skip crosshair
+			if (ent == m_menuObjs.front())
+				continue;
+
 			//Safety check
 			auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(ent);
 			if (!sprite)
@@ -469,6 +473,10 @@ namespace Rogue
 	{
 		for (Entity ent : m_menuObjs)
 		{
+			//Skip crosshair
+			if (ent == m_menuObjs.front())
+				continue;
+
 			//Safety check
 			if (g_engine.m_coordinator.ComponentExists<UIComponent>(ent))
 			{
@@ -521,7 +529,7 @@ namespace Rogue
 	{
 		for (Entity ent : m_menuObjs)
 		{
-			if (ent == m_menuObjs.back() || ent == *(m_menuObjs.begin() + 1))
+			if (ent == m_menuObjs.front() || ent == m_menuObjs.back() || ent == *(m_menuObjs.begin() + 1))
 				continue;
 
 			if (auto ui = g_engine.m_coordinator.TryGetComponent<UIComponent>(ent))
