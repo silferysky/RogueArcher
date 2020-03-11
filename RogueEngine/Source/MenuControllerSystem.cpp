@@ -356,6 +356,21 @@ namespace Rogue
 		m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("YesBtn", true));
 		m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("NoBtn", true));
 
+		for (auto& menuEnt : m_menuObjs)
+		{
+			if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(menuEnt))
+			{
+				m_menuObjsTransforms.push_back(trans->get().GetPosition());
+			}
+		}
+		for (auto& menuEnt : m_confirmQuitEnt)
+		{
+			if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(menuEnt))
+			{
+				m_menuObjsTransforms.push_back(trans->get().GetPosition());
+			}
+		}
+		
 		////For camera correctness
 		//for (auto& menuEnt : m_menuObjs)
 		//{
@@ -412,20 +427,19 @@ namespace Rogue
 	void MenuControllerSystem::ToggleUIMenuObjs()
 	{
 		bool movingToPos = true;
-		if (m_menuObjs.size() > 1)
-			if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(*(m_menuObjs.begin() + 1)))
+		if (m_menuObjs.size())
+			if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(*m_menuObjs.begin()))
 			{
 				movingToPos = sprite->get().m_componentIsActive;
 			}
 
+		auto itr = m_menuObjsTransforms.begin();
+
 		for (Entity ent : m_menuObjs)
 		{
-			//Skip crosshair
-			if (ent == m_menuObjs.front())
-				continue;
-
 			//Safety check
 			auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(ent);
+
 			if (!sprite)
 				continue;
 
@@ -433,15 +447,19 @@ namespace Rogue
 			{
 				if (movingToPos)
 				{
-					trans->get().setPosition(Vec2(trans->get().GetPosition().x - CAMERA_MANAGER.GetCameraPos().x, trans->get().GetPosition().y - CAMERA_MANAGER.GetCameraPos().y));
+					trans->get().setPosition(Vec2((*itr).x - CAMERA_MANAGER.GetCameraPos().x, (*itr).y - CAMERA_MANAGER.GetCameraPos().y));
+					*itr = trans->get().GetPosition();
+					++itr;
 				}
 				else
 				{
-					trans->get().setPosition(Vec2(trans->get().GetPosition().x + CAMERA_MANAGER.GetCameraPos().x, trans->get().GetPosition().y + CAMERA_MANAGER.GetCameraPos().y));
+					trans->get().setPosition(Vec2((*itr).x + CAMERA_MANAGER.GetCameraPos().x, (*itr).y + CAMERA_MANAGER.GetCameraPos().y));
+					*itr = trans->get().GetPosition();
+					++itr;
 				}
 			}
 		
-			//Do not toggle last item (ControlHelp)
+			//Do not do last item (ControlHelp)
 			if (ent == m_menuObjs.back())
 				continue;
 
@@ -473,10 +491,6 @@ namespace Rogue
 	{
 		for (Entity ent : m_menuObjs)
 		{
-			//Skip crosshair
-			if (ent == m_menuObjs.front())
-				continue;
-
 			//Safety check
 			if (g_engine.m_coordinator.ComponentExists<UIComponent>(ent))
 			{
@@ -529,7 +543,7 @@ namespace Rogue
 	{
 		for (Entity ent : m_menuObjs)
 		{
-			if (ent == m_menuObjs.front() || ent == m_menuObjs.back() || ent == *(m_menuObjs.begin() + 1))
+			if (ent == m_menuObjs.back() || ent == *(m_menuObjs.begin() + 1))
 				continue;
 
 			if (auto ui = g_engine.m_coordinator.TryGetComponent<UIComponent>(ent))
