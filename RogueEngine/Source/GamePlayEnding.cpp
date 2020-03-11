@@ -43,22 +43,22 @@ namespace Rogue
 					if (info.m_tag == "DoorUp")
 					{
 						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
-						transform.setPosition(Vec2{ transform.GetPosition().x,transform.GetPosition().y + 0.6f });
+						transform.setPosition(Vec2{ transform.GetPosition().x,transform.GetPosition().y + 1.6f });
 					}
 					if (info.m_tag == "DoorDown")
 					{
 						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
-						transform.setPosition(Vec2{ transform.GetPosition().x,transform.GetPosition().y - 0.6f });
+						transform.setPosition(Vec2{ transform.GetPosition().x,transform.GetPosition().y - 1.6f });
 					}
 					if (info.m_tag == "DoorLeft")
 					{
 						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
-						transform.setPosition(Vec2{ transform.GetPosition().x - 0.6f,transform.GetPosition().y });
+						transform.setPosition(Vec2{ transform.GetPosition().x - 1.6f,transform.GetPosition().y });
 					}
 					if (info.m_tag == "DoorRight")
 					{
 						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
-						transform.setPosition(Vec2{ transform.GetPosition().x + 0.6f,transform.GetPosition().y });
+						transform.setPosition(Vec2{ transform.GetPosition().x + 1.6f,transform.GetPosition().y });
 					}
 				}
 
@@ -115,35 +115,35 @@ namespace Rogue
 					if (info.m_tag == "ElaTitle")
 					{
 						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
-						transform.setPosition(Vec2{ transform.GetPosition().x + 0.4f,transform.GetPosition().y });
+						transform.setPosition(Vec2{ transform.GetPosition().x + 1.4f,transform.GetPosition().y });
 					}
 					if (info.m_tag == "ElaA")
 					{
 						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
-						transform.setPosition(Vec2{ transform.GetPosition().x + 0.4f,transform.GetPosition().y });
+						transform.setPosition(Vec2{ transform.GetPosition().x + 1.4f,transform.GetPosition().y });
 						transform.setZ(101);
 					}
 					if (info.m_tag == "ExaTitle")
 					{
 						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
-						transform.setPosition(Vec2{ transform.GetPosition().x - 0.4f,transform.GetPosition().y });
+						transform.setPosition(Vec2{ transform.GetPosition().x - 1.4f,transform.GetPosition().y });
 					}
 					if (info.m_tag == "ExaA")
 					{
 						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
-						transform.setPosition(Vec2{ transform.GetPosition().x - 0.4f,transform.GetPosition().y });
+						transform.setPosition(Vec2{ transform.GetPosition().x - 1.4f,transform.GetPosition().y });
 						transform.setZ(101);
 					}
 					if (info.m_tag == "ExaClone")
 					{
 						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
-						transform.setPosition(Vec2{ transform.GetPosition().x - 1.6f,transform.GetPosition().y });
+						transform.setPosition(Vec2{ transform.GetPosition().x - 1.5f,transform.GetPosition().y });
 					}
 					if (info.m_tag == "ElaClone")
 					{
 						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
 						transform.setZ(102);
-						transform.setPosition(Vec2{ transform.GetPosition().x + 1.6f,transform.GetPosition().y });
+						transform.setPosition(Vec2{ transform.GetPosition().x + 1.5f,transform.GetPosition().y });
 					}
 
 				}

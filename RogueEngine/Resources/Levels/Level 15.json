@@ -1,6 +1,6 @@
 {
-    "MaxEntityCount": 250,
-    "EntityCount": 250,
+    "MaxEntityCount": 252,
+    "EntityCount": 252,
     "CameraMinX": -1000.0,
     "CameraMinY": -940.0,
     "CameraMaxX": 1360.0,
@@ -259,6 +259,8 @@
     "Signature247": 532951,
     "Signature248": 8214,
     "Signature249": 8214,
+    "Signature250": 2053,
+    "Signature251": 2245,
     "Entity0": "Name{Collision9}|Tag{Ground}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-578;-576.495;100;100;0;0}||BoxCollider{0;0;13;247;AWAKE}|||||||||Collider{BOX;1;4294967295;}|||||||||||",
     "Entity1": "Name{Collision10}|Tag{}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-733;-751.495;100;100;0;0}||BoxCollider{0;0;74;32;AWAKE}|||||||||Collider{BOX;1;4294967295;}|||||||||||",
     "Entity2": "Name{Collision11}|Tag{Ground}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-487;-642.495;100;100;0;0}||BoxCollider{0;0;70;10;AWAKE}|||||||||Collider{BOX;1;4294967295;}|||||||||||",
@@ -394,7 +396,7 @@
     "Entity132": "Name{Game Object 163}|Tag{}|Sprite{Resources\\Assets\\VegetationSunflowerDeco.png;1;1;1;1;}||Transform{844.768;267.21;65;100;0;5}||||||||||||||||||||||",
     "Entity133": "Name{Game Object 164}|Tag{}|Sprite{Resources\\Assets\\VegetationRoseDeco.png;1;1;1;1;}||Transform{1354;275.947;65;100;0;5}||||||||||||||||||||||",
     "Entity134": "Name{Game Object 165}|Tag{}|Sprite{Resources\\Assets\\VegetationRoseDeco.png;1;1;1;1;}||Transform{-1077.17;340.744;65;100;0;5}||||||||||||||||||||||",
-    "Entity135": "Name{Ambience}|Tag{}|Sprite{Resources/Assets/DefaultSprite.png;1;1;1;1;}||Transform{0;0;100;100;0;0}||||||||Audio{Resources\\Sounds\\JungleAmbience.ogg;1;0.5;1;0;}||||||||||||||",
+    "Entity135": "Name{Ambience}|Tag{}|Sprite{Resources/Assets/DefaultSprite.png;1;1;1;1;}||Transform{0;0;100;100;0;0}||||||||Audio{Resources\\Sounds\\JungleAmbience.ogg;1;0.05;1;0;}||||||||||||||",
     "Entity136": "Name{Game Object 159}|Tag{}|Sprite{Resources\\Assets\\VegetationRoseDeco.png;1;1;1;1;}||Transform{-387.368;-588.034;65;100;0;5}||||||||||||||||||||||",
     "Entity137": "Name{Game Object 160}|Tag{}|Sprite{Resources\\Assets\\VegetationSunflowerDeco.png;1;1;1;1;}||Transform{844.768;267.21;65;100;0;5}||||||||||||||||||||||",
     "Entity138": "Name{Game Object 161}|Tag{}|Sprite{Resources\\Assets\\VegetationSunflowerDeco.png;1;1;1;1;}||Transform{-265.033;-467.678;-65;100;0;5}||||||||||||||||||||||",
@@ -509,6 +511,8 @@
     "Entity247": "Name{Checkpoint 3}|Tag{}|Sprite{Resources\\Assets\\ObjectiveArrow.png;1;1;1;1;}|Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-1190;460.579;100;100;0;99}||BoxCollider{0;11;18;65;TRIGGER}||LogicComponent{12;0;1;0}|StatsComponent{0;0;0;0;0;;0;0;0;0;0;0;0;}|Animation{8;0;0.1;1;0;1;}|||||Collider{BOX;1;4294967295;}||||||FADE{1;1;}|||||",
     "Entity248": "Name{Collision63}|Tag{Ground}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-711.95;-614.416;100;100;0;0}||BoxCollider{0;0;116;81;AWAKE}|||||||||Collider{BOX;1;4294967295;}|||||||||||",
     "Entity249": "Name{Collision64}|Tag{Ground}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-640.95;-659.416;100;100;0;0}||BoxCollider{0;0;116;81;AWAKE}|||||||||Collider{BOX;1;4294967295;}|||||||||||",
+    "Entity250": "Name{ProgressFrame}|Tag{}|Sprite{Resources\\Assets\\SoulCollectionUI.png;1;1;1;1;}||Transform{-475;942.57;355;82;0;17}|||||||||UI{1;}|||||||||||||",
+    "Entity251": "Name{ProgressBar}|Tag{}|Sprite{Resources\\Assets\\SoulCollectionBar.png;1;1;1;1;}||Transform{-475;922;282.5;14.5;0;8}||||LogicComponent{23;0;1;0}|StatsComponent{0;0;0;0;0;;0;0;0;0;0;0;0;}||||UI{1;}|||||||||||||",
     "EntityParent0": 65535,
     "EntityParent1": 65535,
     "EntityParent2": 65535,
@@ -758,5 +762,7 @@
     "EntityParent246": 65535,
     "EntityParent247": 65535,
     "EntityParent248": 65535,
-    "EntityParent249": 65535
+    "EntityParent249": 65535,
+    "EntityParent250": 65535,
+    "EntityParent251": 65535
 }
