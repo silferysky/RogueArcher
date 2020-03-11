@@ -229,6 +229,8 @@ namespace Rogue
 						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
 						//hide player
 						transform.setZ(0);
+						auto& camera = g_engine.m_coordinator.GetComponent<CameraComponent>(info.m_Entity);
+						camera.setIsActive(false);
 					}
 
 					if (info.m_tag == "ExaClone")
@@ -236,6 +238,12 @@ namespace Rogue
 						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
 						//show clone
 						transform.setZ(102);
+					}
+
+					if (info.m_tag == "Camera")
+					{
+						auto& camera = g_engine.m_coordinator.GetComponent<CameraComponent>(info.m_Entity);
+						camera.setIsActive(true);
 					}
 
 					//if (info.m_tag == "ElaClone")
