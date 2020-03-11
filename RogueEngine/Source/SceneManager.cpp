@@ -116,6 +116,9 @@ namespace Rogue
 		if (it == m_loadedLevels.end())
 			m_loadedLevels.push_back(std::string(fileName));
 
+		//std::shared_ptr<MenuControllerSystem> menuControl = g_engine.m_coordinator.GetSystem<MenuControllerSystem>();
+		//menuControl->InitPauseMenu();
+
 		g_engine.m_coordinator.SystemInits();
 		g_engine.m_coordinator.GetSystem<AudioSystem>()->TrueInit();
 		//g_engine.m_coordinator.ResetEvents();
