@@ -134,6 +134,18 @@ namespace Rogue
 						transform.setPosition(Vec2{ transform.GetPosition().x - 0.4f,transform.GetPosition().y });
 						transform.setZ(101);
 					}
+					if (info.m_tag == "ExaClone")
+					{
+						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+						transform.setPosition(Vec2{ transform.GetPosition().x - 0.5f,transform.GetPosition().y });
+					}
+					if (info.m_tag == "ElaClone")
+					{
+						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+						transform.setZ(102);
+						transform.setPosition(Vec2{ transform.GetPosition().x + 0.5f,transform.GetPosition().y });
+					}
+
 				}
 			}
 			else if (m_timer < 15.0f)
@@ -151,6 +163,20 @@ namespace Rogue
 						//auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(info.m_Entity);
 						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
 						transform.setZ(0);
+					}
+					if (info.m_tag == "ExaClone")
+					{
+						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(info.m_Entity);
+						auto& animation = g_engine.m_coordinator.GetComponent<AnimationComponent>(info.m_Entity);
+						sprite.setTexturePath("Resources/Assets/ExaResist.png");
+						animation.setFrames(4);
+					}
+					if (info.m_tag == "ElaClone")
+					{
+						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(info.m_Entity);
+						sprite.setTexturePath("Resources/Assets/ElaResist.png");
+						auto& animation = g_engine.m_coordinator.GetComponent<AnimationComponent>(info.m_Entity);
+						animation.setFrames(4);
 					}
 				}
 			}
@@ -179,7 +205,7 @@ namespace Rogue
 		{
 			//Freeze Player Controls			
 			m_souls = PLAYER_STATUS.GetSoulsCollected();
-			if (m_souls > 1)
+			if (m_souls < 1)
 			{
 				PLAYER_STATUS.FreezeControls();
 				g_engine.m_coordinator.GetSystem<CameraSystem>()->setIsActive(false);
@@ -194,8 +220,30 @@ namespace Rogue
 					if (info.m_tag == "slots")
 					{
 						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+						//show slots
 						transform.setZ(100);
 					}
+
+					if (info.m_tag == "Player")
+					{
+						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+						//hide player
+						transform.setZ(0);
+					}
+
+					if (info.m_tag == "ExaClone")
+					{
+						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+						//show clone
+						transform.setZ(102);
+					}
+
+					//if (info.m_tag == "ElaClone")
+					//{
+					//	auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+					//	//show clone
+					//	transform.setZ(102);
+					//}
 				}
 				PlayerStatusManager::instance().SetEnding(true);
 			}
