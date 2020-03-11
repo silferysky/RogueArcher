@@ -140,11 +140,6 @@ namespace Rogue
 		(void)freopen("CONOUT$", "w", stdout);
 		(void)freopen("CONOUT$", "w", stderr);
 #endif
-#if INIT_FULLSCREEN
-		SetWindowLongPtr(hWnd, GWL_STYLE, WS_VISIBLE | WS_POPUP);
-		SetWindowPos(hWnd, HWND_TOP, 0, 0, GetSystemMetrics(SM_CXSCREEN),
-		GetSystemMetrics(SM_CYSCREEN), SWP_FRAMECHANGED);
-#endif
 #if INIT_CURSOR
 		ShowCursor(true);
 #else
@@ -168,10 +163,19 @@ namespace Rogue
 		//Ensures program closes properly 
 		SetConsoleCtrlHandler(CtrlHandler, true);
 
+#if INIT_FULLSCREEN
+		SetWindowLongPtr(hWnd, GWL_STYLE, WS_VISIBLE | WS_POPUP);
+		SetWindowPos(hWnd, HWND_TOP, 0, 0, GetSystemMetrics(SM_CXSCREEN),
+			GetSystemMetrics(SM_CYSCREEN), SWP_FRAMECHANGED);
+#endif
 #if INIT_VSYNC
 		setVSync(true);
 #else
 		setVSync(false);
+#endif
+
+#if INIT_PLAY
+		m_coordinator.SetGameState(true);
 #endif
 
 		// Register all components

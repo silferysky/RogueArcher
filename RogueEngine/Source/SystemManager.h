@@ -126,11 +126,12 @@ namespace Rogue
 				Signature systemSignature = i->second;
 
 				// Entity signature matches system signature - insert into set
-#if ENABLE_LOGGER
+
 				if ((entitySignature & systemSignature) == systemSignature)
 				{
 					if (system->m_entities.insert(entity).second)
 					{
+#if ENABLE_LOGGER
 						CLEARSTRING(out);
 						out << "Entity " << entity << " added to " << type.name();
 						RE_CORE_INFO(out.str());
@@ -140,30 +141,28 @@ namespace Rogue
 						CLEARSTRING(out);
 						out << "Entity " << entity << " exists in " << type.name();
 						RE_CORE_INFO(out.str());
+#endif
 					}
 				}
 				// Entity signature does not match system signature - erase from set/don't add
 				else
 				{
+#if ENABLE_LOGGER
 					if (system->m_entities.find(entity) != system->m_entities.end()) // If entity exists
 					{
-
 						CLEARSTRING(out);
 						out << "Entity " << entity << " removed from " << type.name();
 						RE_CORE_INFO(out.str());
 					}
 					else
 					{
-
 						CLEARSTRING(out);
 						out << "Entity " << entity << " not added to " << type.name();
 						RE_CORE_INFO(out.str());
 					}
 #endif
 					system->m_entities.erase(entity);
-#if ENABLE_LOGGER
 				}
-#endif
 			}
 		}
 
