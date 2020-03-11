@@ -343,18 +343,27 @@ namespace Rogue
 
 	void MenuControllerSystem::InitPauseMenu()
 	{
-		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("crosshair", false));
-		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("MainMenu_Bg", false));
-		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("PausedTexture", false));
-		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("HowToPlayBtn", false));
-		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("MainMenu_Btn", false));
-		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("Resume", false));
-		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("QuitBtn", false));
-		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("HowToPlay", false));
+		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("crosshair", true));
+		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("MainMenu_Bg", true));
+		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("PausedTexture", true));
+		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("HowToPlayBtn", true));
+		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("MainMenu_Btn", true));
+		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("Resume", true));
+		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("QuitBtn", true));
+		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("HowToPlay", true));
 
-		m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("ExitBtn", false));
-		m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("YesBtn", false));
-		m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("NoBtn", false));
+		m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("ExitBtn", true));
+		m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("YesBtn", true));
+		m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("NoBtn", true));
+
+		//For camera correctness
+		for (auto& menuEnt : m_menuObjs)
+		{
+			if (auto menuTrans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(menuEnt))
+			{
+				menuTrans->get().setPosition(Vec2(menuTrans->get().GetPosition().x - CAMERA_MANAGER.GetCameraPos().x, menuTrans->get().GetPosition().y - CAMERA_MANAGER.GetCameraPos().y));
+			}
+		}
 
 		//m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("MenuUI", true));
 		//for (auto& child : g_engine.m_coordinator.GetHierarchyInfo(m_menuObjs.front()).m_children)
