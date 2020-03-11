@@ -29,6 +29,7 @@ namespace Rogue
 		std::vector<Entity> m_confirmQuitEnt;
 		bool m_confirmQuit;
 
+		std::vector<Vec2> m_menuObjsTransforms;
 	public:
 
 		MenuControllerSystem();
