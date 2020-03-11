@@ -14,5 +14,6 @@ namespace Rogue
 	private:
 		float m_oldScale;
 		float m_difference;
+		glm::vec3 m_oldPosition;
 	};
 }

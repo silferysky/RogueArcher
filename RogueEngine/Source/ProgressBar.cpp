@@ -7,11 +7,13 @@
 namespace Rogue
 {
 	ProgressBar::ProgressBar(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent)
-		: ScriptComponent(entity, logicComponent, statsComponent), m_oldScale{}
+		: ScriptComponent(entity, logicComponent, statsComponent), m_oldScale{}, m_difference{}
 	{
 		if (auto transform = g_engine.m_coordinator.TryGetComponent<TransformComponent>(entity))
 		{
-			transform->get().setScale(Vec2(0.0f, transform->get().GetScale().y));
+			auto& transformOpt = transform->get();
+			m_oldPosition = { transformOpt.GetPosition().x, transformOpt.GetPosition().y, 1.0f};
+			transformOpt.setScale(Vec2(0.0f, transformOpt.GetScale().y));
 		}
 	}
 
@@ -24,6 +26,8 @@ namespace Rogue
 	{
 		float completionPercentage = PlayerStatusManager::instance().GetSoulsCollected() / 4.0f;
 
+		m_oldPosition += g_engine.m_coordinator.GetSystem<UISystem>()->GetDifference();
+
 		if (m_oldScale != completionPercentage)
 		{
 			if (auto transform = g_engine.m_coordinator.TryGetComponent<TransformComponent>(m_entity))
@@ -33,14 +37,20 @@ namespace Rogue
 				// 282.5 is the scale of the full bar
 				transform->get().setScale(Vec2(282.5f * completionPercentage, transform->get().GetScale().y));
 
+
+				// translate by half of (1 - completionPercentage)
+				m_difference = 282.5f * 0.5f * (1 - completionPercentage);
+
+				if (m_difference < 0)
+					m_oldPosition.x -= m_difference;
+				else if (m_difference > 0)
+					m_oldPosition.x += m_difference;
+
 				// recenter the bar by reverting the changes to position
 				if (m_difference < 0)
 					transform->get().setPosition(Vec2(positon.x - m_difference, positon.y));
 				else if (m_difference > 0)
 					transform->get().setPosition(Vec2(positon.x + m_difference, positon.y));
-
-				// translate by half of (1 - completionPercentage)
-				m_difference = 282.5f * 0.5f * (1 - completionPercentage);
 
 				// Bar offset
 				if (m_difference > 0)
