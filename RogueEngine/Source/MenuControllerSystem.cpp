@@ -407,23 +407,23 @@ namespace Rogue
 	{
 		for (Entity ent : m_menuObjs)
 		{
-			if (ent == m_menuObjs.front())
-			{
-				Vec2 camera = Vec2(CameraManager::instance().GetCameraPos().x, CameraManager::instance().GetCameraPos().y);
+			//if (ent == m_menuObjs.front())
+			//{
+			//	Vec2 camera = Vec2(CameraManager::instance().GetCameraPos().x, CameraManager::instance().GetCameraPos().y);
 
-				if (m_menuObjs.size() && g_engine.m_coordinator.ComponentExists<TransformComponent>(m_menuObjs.front()))
-					g_engine.m_coordinator.GetComponent<TransformComponent>(m_menuObjs.front()).setPosition(camera);
-				if (m_confirmQuitEnt.size() && g_engine.m_coordinator.ComponentExists<TransformComponent>(m_confirmQuitEnt.front()))
-					g_engine.m_coordinator.GetComponent<TransformComponent>(m_confirmQuitEnt.front()).setPosition(camera);
-			}
-			else
-			{
-				if (g_engine.m_coordinator.ComponentExists<ChildComponent>(ent))
-				{
-					g_engine.m_coordinator.GetComponent<ChildComponent>(ent).SetGlobalDirty();
-					g_engine.m_coordinator.ApplyParentChildCorrection(ent);
-				}
-			}
+			//	if (m_menuObjs.size() && g_engine.m_coordinator.ComponentExists<TransformComponent>(m_menuObjs.front()))
+			//		g_engine.m_coordinator.GetComponent<TransformComponent>(m_menuObjs.front()).setPosition(camera);
+			//	if (m_confirmQuitEnt.size() && g_engine.m_coordinator.ComponentExists<TransformComponent>(m_confirmQuitEnt.front()))
+			//		g_engine.m_coordinator.GetComponent<TransformComponent>(m_confirmQuitEnt.front()).setPosition(camera);
+			//}
+			//else
+			//{
+			//	if (g_engine.m_coordinator.ComponentExists<ChildComponent>(ent))
+			//	{
+			//		g_engine.m_coordinator.GetComponent<ChildComponent>(ent).SetGlobalDirty();
+			//		g_engine.m_coordinator.ApplyParentChildCorrection(ent);
+			//	}
+			//}
 
 			//Do not do last item (ControlHelp)
 			if (ent == m_menuObjs.back())
