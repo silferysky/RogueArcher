@@ -137,13 +137,13 @@ namespace Rogue
 					if (info.m_tag == "ExaClone")
 					{
 						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
-						transform.setPosition(Vec2{ transform.GetPosition().x - 0.5f,transform.GetPosition().y });
+						transform.setPosition(Vec2{ transform.GetPosition().x - 1.6f,transform.GetPosition().y });
 					}
 					if (info.m_tag == "ElaClone")
 					{
 						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
 						transform.setZ(102);
-						transform.setPosition(Vec2{ transform.GetPosition().x + 0.5f,transform.GetPosition().y });
+						transform.setPosition(Vec2{ transform.GetPosition().x + 1.6f,transform.GetPosition().y });
 					}
 
 				}
