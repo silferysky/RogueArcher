@@ -59,8 +59,14 @@ namespace Rogue
 		GLuint m_instancedVAO;
 		GLuint m_instancedVBO;
 		GLuint m_instancedEBO;
+
+		GLint m_foregroundProjectionLocation;
+		GLint m_foregroundViewLocation;
 		GLint m_foregroundTransformLocation;
 		GLint m_foregroundFilterLocation;
+
+		GLint m_foregrounduvScaleLocation;
+		GLint m_foregrounduvOffsetLocation;
 
 		std::shared_ptr<CameraSystem> m_pCamera;
 		float m_playerX = 1.0f;

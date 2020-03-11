@@ -64,8 +64,8 @@ namespace Rogue
 		GLint m_uniformBlockIndex = glGetUniformBlockIndex(m_shader.GetShader(), "Matrices");
 		glUniformBlockBinding(m_shader.GetShader(), m_uniformBlockIndex, 0);
 
-		m_uniformBlockIndex = glGetUniformBlockIndex(m_foregroundShader.GetShader(), "Matrices");
-		glUniformBlockBinding(m_foregroundShader.GetShader(), m_uniformBlockIndex, 0);
+		/* m_uniformBlockIndex = glGetUniformBlockIndex(m_foregroundShader.GetShader(), "Matrices");
+		glUniformBlockBinding(m_foregroundShader.GetShader(), m_uniformBlockIndex, 0); */
 
 		// create uniform buffer
 		glGenBuffers(1, &m_uboMatrices);
@@ -83,7 +83,11 @@ namespace Rogue
 		m_totalLightsLocation = glGetUniformLocation(m_shader.GetShader(), "numLights");
 
 		m_foregroundTransformLocation = glGetUniformLocation(m_foregroundShader.GetShader(), "transform");
+		m_foregroundViewLocation = glGetUniformLocation(m_foregroundShader.GetShader(), "view");
+		m_foregroundProjectionLocation = glGetUniformLocation(m_foregroundShader.GetShader(), "projection");
 		m_foregroundFilterLocation = glGetUniformLocation(m_foregroundShader.GetShader(), "colourFilter");
+		m_foregrounduvScaleLocation = glGetUniformLocation(m_foregroundShader.GetShader(), "uvScale");
+		m_foregrounduvOffsetLocation = glGetUniformLocation(m_foregroundShader.GetShader(), "uvOffset");
 
 		GenerateQuadPrimitive(m_VBO, m_VAO, m_EBO);
 		GenerateQuadPrimitive(m_instancedVBO, m_instancedVAO, m_instancedEBO);
@@ -158,10 +162,13 @@ namespace Rogue
 		{
 			auto& entity = pair.second;
 
-			if (!g_engine.m_coordinator.ComponentExists<TileMapComponent>(entity))
-				draw(entity);
-			else
-				drawTilemap(entity);
+			if (!g_engine.m_coordinator.ComponentExists<UIComponent>(entity))
+			{
+				if (!g_engine.m_coordinator.ComponentExists<TileMapComponent>(entity))
+					draw(entity);
+				else
+					drawTilemap(entity);
+			}
 		}
 
 		glUniform1i(m_totalLightsLocation, 0);
@@ -171,30 +178,30 @@ namespace Rogue
 		glBindVertexArray(0); //Reset
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-		/* glUseProgram(m_foregroundShader.GetShader());
+		glUseProgram(m_foregroundShader.GetShader());
 		glBindVertexArray(m_VAO);
 		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 
-		glBindBuffer(GL_UNIFORM_BUFFER, m_uboMatrices);
-		glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::mat4), glm::value_ptr(g_engine.GetProjMat()));
+		glUniformMatrix4fv(m_foregroundProjectionLocation, 1, GL_FALSE, glm::value_ptr(g_engine.GetProjMat()));
 
-		//// For all entities
-		//for (auto pair : m_drawQueue)
-		//{
-		//	auto& entity = pair.second;
-		//
-		//	if (!g_engine.m_coordinator.ComponentExists<TileMapComponent>(entity))
-		//		draw(entity);
-		//	else
-		//		drawTilemap(entity);
-		//}
+		//glBindBuffer(GL_UNIFORM_BUFFER, m_uboMatrices);
+		//glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::mat4), glm::value_ptr(g_engine.GetProjMat()));
+
+		// For all entities
+		for (auto pair : m_drawQueue)
+		{
+			auto& entity = pair.second;
+		
+			if (g_engine.m_coordinator.ComponentExists<UIComponent>(entity))
+				drawInstanced(entity);
+		}
 
 		//glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 2048);
 
 		glBindBuffer(GL_UNIFORM_BUFFER, 0);
 		glUseProgram(0);
 		glBindVertexArray(0); //Reset
-		glBindBuffer(GL_ARRAY_BUFFER, 0); */
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 		g_engine.m_coordinator.GetSystem<LightingSystem>()->TrueUpdate();
 		g_engine.m_coordinator.GetSystem<FontSystem>()->TrueUpdate();
@@ -294,29 +301,65 @@ namespace Rogue
 
 	void GraphicsSystem::drawInstanced(Entity& entity)
 	{
+		if (g_engine.m_coordinator.ComponentExists<UIComponent>(entity) && !g_engine.m_coordinator.GetComponent<UIComponent>(entity).getIsActive())
+			return;
+
 		auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(entity);
 		auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
 
 		glm::mat4 transformMat = glm::mat4(1.0f);
-		glm::mat4 viewMat;
 		auto texture = sprite.getTexture();
 
-		transformMat = glm::translate(transformMat, { transform.GetPosition().x, transform.GetPosition().y,  1.0f });
+		transformMat = glm::translate(transformMat, { transform.GetPosition().x, transform.GetPosition().y, 1.0f });
 		transformMat = glm::rotate(transformMat, transform.GetRotation(), glm::vec3(0.0f, 0.0f, 1.0f));
 		transformMat = glm::scale(transformMat, glm::vec3(transform.GetScale().x, transform.GetScale().y, 1.0f));
 
 		glBindTexture(GL_TEXTURE_2D, texture.m_texture);
-		UpdateTextureCoords(sprite.getTexCoordMinX(), sprite.getTexCoordMaxX());
-		UpdateTextureCoordsY(sprite.getTexCoordMinY(), sprite.getTexCoordMaxY());
+		//UpdateTextureCoords(sprite.getTexCoordMinX(), sprite.getTexCoordMaxX());
+		//UpdateTextureCoordsY(sprite.getTexCoordMinY(), sprite.getTexCoordMaxY());
 
-		// model to world, world to view, view to projection
-		//glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(viewMat));
+		glm::mat4 viewMat = m_pCamera->GetViewMatrix();
+		glUniformMatrix4fv(m_foregroundViewLocation, 1, GL_FALSE, glm::value_ptr(viewMat));
 
-		// modelMatrices[entityCount] = transformMat;
+		glUniform2f(m_foregrounduvScaleLocation, sprite.getTexCoordScale().x, sprite.getTexCoordScale().y);
+		glUniform2f(m_foregrounduvOffsetLocation, sprite.getTexCoordOffset().x, sprite.getTexCoordOffset().y);
 		glUniformMatrix4fv(m_foregroundTransformLocation, 1, GL_FALSE, glm::value_ptr(transformMat));
 
-		// rgb filtering
-		glUniform4fv(m_foregroundFilterLocation, 1, glm::value_ptr(sprite.getFilter()));
+		if (g_engine.m_coordinator.IsTransitFinish())
+		{
+			if (m_isFading)
+			{
+				//std::cout << "Current Fade Factor" << m_currentFadeFactor << std::endl;
+				auto tempFilter = sprite.getFilter();
+				tempFilter.a *= m_currentFadeFactor;
+				glUniform4fv(m_filterLocation, 1, glm::value_ptr(tempFilter));
+
+				//Split to make sure it still prints one more frame when currentFadeFactor is < 0
+				if (m_isFadingOut && m_currentFadeFactor < 0.0f)
+				{
+					m_isFadingOut = false;
+					if (m_transitingAfterFade)
+					{
+						g_engine.m_coordinator.SetTransition(true);
+						m_transitingAfterFade = false;
+						g_engine.m_coordinator.ResumeMenuButtons();
+					}
+				}
+				else if (m_isFadingOut)
+				{
+					m_currentFadeFactor -= m_fadeFactor * g_deltaTime;
+				}
+				else
+				{
+					m_currentFadeFactor += m_fadeFactor * g_deltaTime;
+					if (m_currentFadeFactor > 1.0f)
+						m_isFading = false;
+				}
+			}
+			else
+				// rgb filtering
+				glUniform4fv(m_foregroundFilterLocation, 1, glm::value_ptr(sprite.getFilter()));
+		}
 
 		// Draw the Mesh
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);

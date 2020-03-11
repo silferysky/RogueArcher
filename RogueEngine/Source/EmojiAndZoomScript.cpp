@@ -16,6 +16,13 @@ namespace Rogue
 		{
 			m_emojiTextures.push(textureStr);
 		}
+
+		if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(m_entity))
+		{
+			auto filter = sprite->get().getFilter();
+			filter.a = 0.0f;
+			sprite->get().setFilter(filter);
+		}
 	}
 
 	void EmojiAndZoomScript::AIIdleUpdate()
@@ -36,6 +43,14 @@ namespace Rogue
 			{
 				m_finished = true;
 				PLAYER_STATUS.UnfreezeControls();
+
+				if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(m_entity))
+				{
+					auto filter = sprite->get().getFilter();
+					filter.a = 0.0f;
+					sprite->get().setFilter(filter);
+				}
+
 				return;
 			}
 			//std::cout << "Swapping Sprites" << std::endl;
@@ -44,13 +59,11 @@ namespace Rogue
 				//std::cout << "Init Sprite " << sprite->get().getTexturePath();
 				std::ostringstream oss;
 				if (m_emojiTextures.size())
+				{
 					oss << "Resources\\Assets\\" << m_emojiTextures.front();
-				else
-					oss << "Resources\\Assets\\Blank.png";
-
-				sprite->get().setTexturePath(oss.str());
-				m_emojiTextures.pop();
-				//std::cout << "End Sprite " << sprite->get().getTexturePath() << std::endl;
+					sprite->get().setTexturePath(oss.str());
+					m_emojiTextures.pop();
+				}
 			}
 
 			m_timer = m_delayBetweenEmojis;
@@ -64,6 +77,13 @@ namespace Rogue
 		//This aprt is copied from EmojiScript
 		if (otherEnt != PLAYER_STATUS.GetPlayerEntity() || m_activated)
 			return;
+
+		if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(m_entity))
+		{
+			auto filter = sprite->get().getFilter();
+			filter.a = 1.0f;
+			sprite->get().setFilter(filter);
+		}
 
 		m_activated = true;
 		m_timer = m_statsComponent->GetZoomDuration();			//Set to Zoom duration so wait for zoom to be finished

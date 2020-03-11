@@ -53,8 +53,8 @@ namespace Rogue
 
 			Vec2 position = transform.GetPosition();
 
-			position.x += static_cast<int>(m_difference.x);
-			position.y += static_cast<int>(m_difference.y);
+			position.x += m_difference.x;
+			position.y += m_difference.y;
 
 			transform.setPosition(position);
 		}

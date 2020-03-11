@@ -522,7 +522,7 @@ namespace Rogue
 						// Skip level
 						else if (keycode == KeyPress::KeyI)
 						{
-							if (SceneManager::instance().getCurrentFileName() == "Level 12.json")
+							if (SceneManager::instance().getCurrentFileName() == "Level 10.json")
 							{
 								if (g_engine.m_coordinator.ComponentExists<TransformComponent>(*iEntity))
 								{
@@ -540,7 +540,7 @@ namespace Rogue
 						// Reset level
 						else if (keycode == KeyPress::KeyO)
 						{
-							if (SceneManager::instance().getCurrentFileName() == "Level 12.json")
+							if (SceneManager::instance().getCurrentFileName() == "Level 10.json")
 							{
 								if (g_engine.m_coordinator.ComponentExists<TransformComponent>(*iEntity))
 								{
