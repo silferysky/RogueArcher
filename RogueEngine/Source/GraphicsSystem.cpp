@@ -225,6 +225,9 @@ namespace Rogue
 		auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(entity);
 		auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
 
+		if (!sprite.m_componentIsActive)
+			return;
+
 		glm::mat4 transformMat = glm::mat4(1.0f);
 		glm::mat4 viewMat;
 		auto texture = sprite.getTexture();

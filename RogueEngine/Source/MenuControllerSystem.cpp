@@ -112,10 +112,10 @@ namespace Rogue
 						case 0: //Crosshair
 							break;
 						case 1: //PausedTexture
-							hierarchyObj.m_objectName = "PausedTexture";
+							hierarchyObj.m_objectName = "MainMenu_Bg";
 							break;
 						case 2: //MainMenu_Bg
-							hierarchyObj.m_objectName = "MainMenu_Bg";
+							hierarchyObj.m_objectName = "PausedTexture";
 							break;
 						case 3: //HowToPlayBtn
 							hierarchyObj.m_objectName = "HowToPlayBtn";
@@ -356,14 +356,14 @@ namespace Rogue
 		m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("YesBtn", true));
 		m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("NoBtn", true));
 
-		//For camera correctness
-		for (auto& menuEnt : m_menuObjs)
-		{
-			if (auto menuTrans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(menuEnt))
-			{
-				menuTrans->get().setPosition(Vec2(menuTrans->get().GetPosition().x - CAMERA_MANAGER.GetCameraPos().x, menuTrans->get().GetPosition().y - CAMERA_MANAGER.GetCameraPos().y));
-			}
-		}
+		////For camera correctness
+		//for (auto& menuEnt : m_menuObjs)
+		//{
+		//	if (auto menuTrans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(menuEnt))
+		//	{
+		//		menuTrans->get().setPosition(Vec2(menuTrans->get().GetPosition().x - CAMERA_MANAGER.GetCameraPos().x, menuTrans->get().GetPosition().y - CAMERA_MANAGER.GetCameraPos().y));
+		//	}
+		//}
 
 		//m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("MenuUI", true));
 		//for (auto& child : g_engine.m_coordinator.GetHierarchyInfo(m_menuObjs.front()).m_children)
@@ -383,7 +383,7 @@ namespace Rogue
 	void MenuControllerSystem::ToggleControlHelpMenu()
 	{
 		//Toggle How to play only
-		if (m_entities.size())
+		if (m_menuObjs.size())
 		{
 			if (g_engine.m_coordinator.ComponentExists<UIComponent>(m_menuObjs.back()))
 			{
@@ -400,40 +400,67 @@ namespace Rogue
 				//		transform.setPosition(Vec2(transform.GetPosition().x + cameraPos.x, transform.GetPosition().y + cameraPos.y));
 				//}
 			}
+
+			if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(m_menuObjs.back()))
+			{
+				m_confirmQuit = false;
+				sprite->get().m_componentIsActive = !sprite->get().m_componentIsActive;
+			}
 		}
 	}
 
 	void MenuControllerSystem::ToggleUIMenuObjs()
 	{
+		bool movingToPos = true;
+		if (m_menuObjs.size())
+			if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(*m_menuObjs.begin()))
+			{
+				movingToPos = sprite->get().m_componentIsActive;
+			}
+
 		for (Entity ent : m_menuObjs)
 		{
-			//if (ent == m_menuObjs.front())
-			//{
-			//	Vec2 camera = Vec2(CameraManager::instance().GetCameraPos().x, CameraManager::instance().GetCameraPos().y);
+			//Safety check
+			auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(ent);
+			if (!sprite)
+				continue;
 
-			//	if (m_menuObjs.size() && g_engine.m_coordinator.ComponentExists<TransformComponent>(m_menuObjs.front()))
-			//		g_engine.m_coordinator.GetComponent<TransformComponent>(m_menuObjs.front()).setPosition(camera);
-			//	if (m_confirmQuitEnt.size() && g_engine.m_coordinator.ComponentExists<TransformComponent>(m_confirmQuitEnt.front()))
-			//		g_engine.m_coordinator.GetComponent<TransformComponent>(m_confirmQuitEnt.front()).setPosition(camera);
-			//}
-			//else
-			//{
-			//	if (g_engine.m_coordinator.ComponentExists<ChildComponent>(ent))
-			//	{
-			//		g_engine.m_coordinator.GetComponent<ChildComponent>(ent).SetGlobalDirty();
-			//		g_engine.m_coordinator.ApplyParentChildCorrection(ent);
-			//	}
-			//}
-
+			if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(ent))
+			{
+				if (movingToPos)
+				{
+					trans->get().setPosition(Vec2(trans->get().GetPosition().x - CAMERA_MANAGER.GetCameraPos().x, trans->get().GetPosition().y - CAMERA_MANAGER.GetCameraPos().y));
+				}
+				else
+				{
+					trans->get().setPosition(Vec2(trans->get().GetPosition().x + CAMERA_MANAGER.GetCameraPos().x, trans->get().GetPosition().y + CAMERA_MANAGER.GetCameraPos().y));
+				}
+			}
+		
 			//Do not do last item (ControlHelp)
 			if (ent == m_menuObjs.back())
-				return;
+				continue;
 
-			//Safety check
-			if (g_engine.m_coordinator.ComponentExists<UIComponent>(ent))
+			sprite->get().m_componentIsActive = !sprite->get().m_componentIsActive;
+
+			if (auto ui = g_engine.m_coordinator.TryGetComponent<UIComponent>(ent))
 			{
-				UIComponent& ui = g_engine.m_coordinator.GetComponent<UIComponent>(ent);
-				ui.setIsActive(!ui.getIsActive());
+				ui->get().setIsActive(!ui->get().getIsActive());
+			}
+		}
+
+		for (Entity ent : m_confirmQuitEnt)
+		{
+			if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(ent))
+			{
+				if (movingToPos)
+				{
+					trans->get().setPosition(Vec2(trans->get().GetPosition().x - CAMERA_MANAGER.GetCameraPos().x, trans->get().GetPosition().y - CAMERA_MANAGER.GetCameraPos().y));
+				}
+				else
+				{
+					trans->get().setPosition(Vec2(trans->get().GetPosition().x + CAMERA_MANAGER.GetCameraPos().x, trans->get().GetPosition().y + CAMERA_MANAGER.GetCameraPos().y));
+				}
 			}
 		}
 	}
@@ -458,6 +485,11 @@ namespace Rogue
 				//		transform.setPosition(Vec2(transform.GetPosition().x + cameraPos.x, transform.GetPosition().y + cameraPos.y));
 				//}
 			}
+
+			if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(ent))
+			{
+				sprite->get().m_componentIsActive = newActive;
+			}
 		}
 
 		for (Entity ent : m_confirmQuitEnt)
@@ -478,6 +510,10 @@ namespace Rogue
 				//		transform.setPosition(Vec2(transform.GetPosition().x + cameraPos.x, transform.GetPosition().y + cameraPos.y));
 				//}
 			}
+			if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(ent))
+			{
+				sprite->get().m_componentIsActive = newActive;
+			}
 		}
 	}
 
@@ -495,11 +531,17 @@ namespace Rogue
 		}
 
 		for (Entity ent : m_confirmQuitEnt)
+		{
 			//Setting Quit button display to true
 			if (auto ui = g_engine.m_coordinator.TryGetComponent<UIComponent>(ent))
 			{
 				ui->get().setIsActive(!ui->get().getIsActive());
 			}
+			if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(ent))
+			{
+				sprite->get().m_componentIsActive = !sprite->get().m_componentIsActive;
+			}
+		}
 	}
 
 	size_t MenuControllerSystem::GetUIMenuObjsSize()
