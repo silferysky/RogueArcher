@@ -156,11 +156,11 @@ namespace Rogue
 
 						//if (g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity).m_grounded)
 						//{
-							// Do not move the camera for too small distances
-						if (deltaX > 0.5 || deltaX < -0.5)
+						// Do not move the camera for too small distances
+						if (deltaX > 2.5 || deltaX < -2.5)
 							position.x += static_cast<int>(deltaX) * m_cameraLerp * g_fixedDeltaTime;
 
-						if (deltaY > 0.5 || deltaY < -0.5)
+						if (deltaY > 2.5 || deltaY < -2.5)
 							position.y += static_cast<int>(deltaY) * m_cameraLerp * g_fixedDeltaTime;
 						//}
 					}
