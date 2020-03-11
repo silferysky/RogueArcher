@@ -38,22 +38,22 @@ namespace Rogue
 					if (info.m_tag == "DoorUp")
 					{
 						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
-						transform.setPosition(Vec2{ transform.GetPosition().x,transform.GetPosition().y + 0.35f });
+						transform.setPosition(Vec2{ transform.GetPosition().x,transform.GetPosition().y + 0.6f });
 					}
 					if (info.m_tag == "DoorDown")
 					{
 						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
-						transform.setPosition(Vec2{ transform.GetPosition().x,transform.GetPosition().y - 0.35f });
+						transform.setPosition(Vec2{ transform.GetPosition().x,transform.GetPosition().y - 0.6f });
 					}
 					if (info.m_tag == "DoorLeft")
 					{
 						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
-						transform.setPosition(Vec2{ transform.GetPosition().x - 0.35f,transform.GetPosition().y });
+						transform.setPosition(Vec2{ transform.GetPosition().x - 0.6f,transform.GetPosition().y });
 					}
 					if (info.m_tag == "DoorRight")
 					{
 						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
-						transform.setPosition(Vec2{ transform.GetPosition().x + 0.35f,transform.GetPosition().y });
+						transform.setPosition(Vec2{ transform.GetPosition().x + 0.6f,transform.GetPosition().y });
 					}
 				}
 
@@ -153,14 +153,14 @@ namespace Rogue
 			{
 				m_timer = 0.0f;
 				PLAYER_STATUS.UnfreezeControls();
-				for (HierarchyInfo& info : g_engine.m_coordinator.GetHierarchyInfoArray())
-				{
-					if (info.m_tag == "slots")
-					{
-						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
-						transform.setZ(0);
-					}
-				}
+				//for (HierarchyInfo& info : g_engine.m_coordinator.GetHierarchyInfoArray())
+				//{
+				//	if (info.m_tag == "slots")
+				//	{
+				//		auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+				//		transform.setZ(0);
+				//	}
+				//}
 				//CameraManager::instance().SetCameraZoom(CameraManager::instance().GetCameraZoom() + 0.5f);
 				PlayerStatusManager::instance().SetEnding(false);
 			}
@@ -174,7 +174,7 @@ namespace Rogue
 		{
 			//Freeze Player Controls			
 			m_souls = PLAYER_STATUS.GetSoulsCollected();
-			if (m_souls < 1)
+			if (m_souls > 1)
 			{
 				PLAYER_STATUS.FreezeControls();
 				g_engine.m_coordinator.GetSystem<CameraSystem>()->setIsActive(false);
