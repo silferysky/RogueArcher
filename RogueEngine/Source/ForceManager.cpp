@@ -28,7 +28,7 @@ namespace Rogue
 
 	void ForceManager::Init()
 	{
-		m_forceInfos.reserve(16); // Reserve to an arbitruary good size to minimize simulation-time allocation
+		//m_forceInfos.reserve(16); // Reserve to an arbitruary good size to minimize simulation-time allocation
 	}
 
 	void ForceManager::UpdateAges()
@@ -48,16 +48,22 @@ namespace Rogue
 		// Move all safe elements to the front, returning iterator the "new end"
 		auto newEnd = std::remove_if(m_forceInfos.begin(), m_forceInfos.end(), [](ForceInfo& force)
 		{
-			return force.m_age >= force.m_lifetime;
+			return force.m_isActive == false;
 		});
-
+		
 		// Erase unwanted elements from new end to old end.
 		m_forceInfos.erase(newEnd, m_forceInfos.end());
+
+
 	}
 
 	void ForceManager::RegisterForce(Entity entity, const Vec2& force, float lifetime)
 	{
+		//if (REAbs(force.x) < RE_EPSILON && REAbs(force.y) < RE_EPSILON)
+		//	return;
+
 		m_forceInfos.emplace_back(ForceInfo{ entity, force, lifetime, true });
+		//PrintForceVector();
 	}
 
 	void ForceManager::ApplyAllForces()
@@ -75,7 +81,6 @@ namespace Rogue
 	// Remove all forces tied to entity
 	void ForceManager::RemoveForce(Entity entity)
 	{
-		
 		std::vector<ForceInfo>::iterator i;
 
 		for (i = m_forceInfos.begin(); i != m_forceInfos.cend(); ++i)
@@ -93,10 +98,27 @@ namespace Rogue
 	void ForceManager::ResetPhysics(Entity entity)
 	{
 		// Reset force, acceleration, velocity
-		//RemoveForce(entity);
+		RemoveForce(entity);
 
 		auto& body = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
 		body.setAcceleration(Vec2());
 		body.setVelocity(Vec2());
+	}
+
+	void ForceManager::PrintForceVector()
+	{
+		std::cout << "Size: " << m_forceInfos.size() << std::endl;
+
+		for (ForceInfo& force : m_forceInfos)
+		{
+			std::cout
+				<< "Entity: " << force.m_entity
+				<< " Force: " << force.m_force
+				<< " Age: " << force.m_age
+				<< " Lifetime: " << force.m_lifetime
+				<< " Is active: " << std::boolalpha << force.m_isActive
+				<< "\n========================================="
+				<< std::endl;
+		}
 	}
 }

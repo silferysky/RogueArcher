@@ -87,7 +87,7 @@ namespace Rogue
 
 		TriggerZoom::OnTriggerEnter(otherEnt);
 
-		//This aprt is copied from EmojiScript
+		//This part is copied from EmojiScript
 		if (otherEnt != PLAYER_STATUS.GetPlayerEntity() || m_activated)
 			return;
 

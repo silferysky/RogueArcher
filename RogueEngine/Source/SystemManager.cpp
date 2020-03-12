@@ -106,10 +106,10 @@ namespace Rogue
 			{
 				FixedUpdateSystem(SystemID::id_PARTICLESYSTEM, "Particle System");
 				FixedUpdateSystem(SystemID::id_PARTICLEEMITTERSYSTEM, "Particle Emitter System");
-				FixedUpdateSystem(SystemID::id_PHYSICSSYSTEM, "Physics System");
 				FixedUpdateSystem(SystemID::id_FADESYSTEM, "Fade System");
 				FixedUpdateSystem(SystemID::id_ANIMATIONSYSTEM, "Animation System");
 				FixedUpdateSystem(SystemID::id_UISYSTEM, "UI System");
+				FixedUpdateSystem(SystemID::id_PHYSICSSYSTEM, "Physics System");
 			}
 			
 			//FixedUpdateSystem(SystemID::id_CIRCLECOLLISIONSYSTEM, "Circle Collision System");
