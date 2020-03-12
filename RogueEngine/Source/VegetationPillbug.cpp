@@ -1,16 +1,16 @@
 #include "Precompiled.h"
-#include "VegetationBreakable.h"
+#include "VegetationPillbug.h"
 #include "PlayerStatusManager.h"
 //#include "Main.h"	//For g_deltaTime and coordinator
 
 namespace Rogue
 {
-	VegetationBreakable::VegetationBreakable(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent)
+	VegetationPillbug::VegetationPillbug(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent)
 		: ScriptComponent(entity, logicComponent, statsComponent)
 	{
 	}
 
-	void VegetationBreakable::AIActiveStateUpdate()
+	void VegetationPillbug::AIActiveStateUpdate()
 	{
 		if (m_entity == PLAYER_STATUS.GetHitchhikedEntity()) // if this entity has been hitchhiked onto
 		{
@@ -20,7 +20,7 @@ namespace Rogue
 		}
 	}
 
-	void VegetationBreakable::AIIdleUpdate()
+	void VegetationPillbug::AIIdleUpdate()
 	{
 
 	}
