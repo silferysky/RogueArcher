@@ -214,7 +214,7 @@ namespace Rogue
 
 		float gravScale = getGravityScale();
 		ImGui::PushItemWidth(75);
-		ImGui::SliderFloat("Gravity Scale", &gravScale, 0.0f, 2.0f);
+		ImGui::SliderFloat("Gravity Scale", &gravScale, 0.0f, 50.0f);
 		setGravityScale(gravScale);
 
 		float mass = getMass();

@@ -35,7 +35,7 @@ namespace Rogue
 
 	void VegetationPillbug::OnCollisionEnter(Entity other)
 	{
-		if (g_engine.m_coordinator.GetHierarchyInfo(other).m_tag == "ground")
+		if (g_engine.m_coordinator.GetHierarchyInfo(other).m_tag == "Ground")
 		{
 			if (m_entity == PLAYER_STATUS.GetHitchhikedEntity()) // if player is still attached
 				g_engine.m_coordinator.GetSystem<PlayerControllerSystem>()->ResetPlayerParent();
