@@ -176,14 +176,23 @@
     <Filter Include="RogueEngine\Systems\AI\Script Types\Game">
       <UniqueIdentifier>{34f57ff7-c234-4e04-acdc-e548db4bc778}</UniqueIdentifier>
     </Filter>
-    <Filter Include="RogueEngine\Systems\AI\Script Types\Game\Exa/Ela Scripts">
+    <Filter Include="RogueEngine\Systems\AI\Script Types\Game\Amethyst Seas">
+      <UniqueIdentifier>{b65d5a9f-ccb0-4053-8223-ca66ee67c32f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RogueEngine\Systems\AI\Script Types\Game\Exa/Ela">
       <UniqueIdentifier>{542e6089-b374-4b17-8008-d8beaaa35b3f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="RogueEngine\Systems\AI\Script Types\Game\General Gameplay Scripts">
+    <Filter Include="RogueEngine\Systems\AI\Script Types\Game\General Gameplay">
       <UniqueIdentifier>{28eb60b4-cd02-4e46-80cb-050024dfff29}</UniqueIdentifier>
     </Filter>
-    <Filter Include="RogueEngine\Systems\AI\Script Types\Game\Ending Scripts">
+    <Filter Include="RogueEngine\Systems\AI\Script Types\Game\Endings">
       <UniqueIdentifier>{9b669ed2-3682-413d-8875-1368628a31ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RogueEngine\Systems\AI\Script Types\Game\Crystal Caverns">
+      <UniqueIdentifier>{76301b52-54ff-4388-911d-cc7e299c92f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RogueEngine\Systems\AI\Script Types\Game\Verdant Forest">
+      <UniqueIdentifier>{99a2195e-e924-443f-ac9f-327b601ad52c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -692,37 +701,40 @@
       <Filter>RogueEngine\Systems\AI\Script Types\Trigger</Filter>
     </ClInclude>
     <ClInclude Include="Source\ActivateOnDeathEla.h">
-      <Filter>RogueEngine\Systems\AI\Script Types\Game\Exa/Ela Scripts</Filter>
+      <Filter>RogueEngine\Systems\AI\Script Types\Game\Exa/Ela</Filter>
     </ClInclude>
     <ClInclude Include="Source\ActivateOnDeathExa.h">
-      <Filter>RogueEngine\Systems\AI\Script Types\Game\Exa/Ela Scripts</Filter>
+      <Filter>RogueEngine\Systems\AI\Script Types\Game\Exa/Ela</Filter>
     </ClInclude>
     <ClInclude Include="Source\ActivateOnEla.h">
-      <Filter>RogueEngine\Systems\AI\Script Types\Game\Exa/Ela Scripts</Filter>
+      <Filter>RogueEngine\Systems\AI\Script Types\Game\Exa/Ela</Filter>
     </ClInclude>
     <ClInclude Include="Source\ActivateOnExa.h">
-      <Filter>RogueEngine\Systems\AI\Script Types\Game\Exa/Ela Scripts</Filter>
+      <Filter>RogueEngine\Systems\AI\Script Types\Game\Exa/Ela</Filter>
     </ClInclude>
     <ClInclude Include="Source\AnimateOnEla.h">
-      <Filter>RogueEngine\Systems\AI\Script Types\Game\Exa/Ela Scripts</Filter>
+      <Filter>RogueEngine\Systems\AI\Script Types\Game\Exa/Ela</Filter>
     </ClInclude>
     <ClInclude Include="Source\AnimateOnExa.h">
-      <Filter>RogueEngine\Systems\AI\Script Types\Game\Exa/Ela Scripts</Filter>
+      <Filter>RogueEngine\Systems\AI\Script Types\Game\Exa/Ela</Filter>
     </ClInclude>
     <ClInclude Include="Source\TeleAnimation.h">
-      <Filter>RogueEngine\Systems\AI\Script Types\Game\Exa/Ela Scripts</Filter>
+      <Filter>RogueEngine\Systems\AI\Script Types\Game\Exa/Ela</Filter>
     </ClInclude>
     <ClInclude Include="Source\Checkpoint.h">
-      <Filter>RogueEngine\Systems\AI\Script Types\Game\General Gameplay Scripts</Filter>
+      <Filter>RogueEngine\Systems\AI\Script Types\Game\General Gameplay</Filter>
     </ClInclude>
     <ClInclude Include="Source\DeathBox.h">
-      <Filter>RogueEngine\Systems\AI\Script Types\Game\General Gameplay Scripts</Filter>
+      <Filter>RogueEngine\Systems\AI\Script Types\Game\General Gameplay</Filter>
     </ClInclude>
     <ClInclude Include="Source\SoulCollectible.h">
-      <Filter>RogueEngine\Systems\AI\Script Types\Game\General Gameplay Scripts</Filter>
+      <Filter>RogueEngine\Systems\AI\Script Types\Game\General Gameplay</Filter>
     </ClInclude>
     <ClInclude Include="Source\GamePlayEnding.h">
-      <Filter>RogueEngine\Systems\AI\Script Types\Game\Ending Scripts</Filter>
+      <Filter>RogueEngine\Systems\AI\Script Types\Game\Endings</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\VegetationBreakable.h">
+      <Filter>RogueEngine\Systems\AI\Script Types\Game\Verdant Forest</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1120,37 +1132,40 @@
       <Filter>RogueEngine\Systems\AI\Script Types\Trigger</Filter>
     </ClCompile>
     <ClCompile Include="Source\ActivateOnDeathEla.cpp">
-      <Filter>RogueEngine\Systems\AI\Script Types\Game\Exa/Ela Scripts</Filter>
+      <Filter>RogueEngine\Systems\AI\Script Types\Game\Exa/Ela</Filter>
     </ClCompile>
     <ClCompile Include="Source\ActivateOnDeathExa.cpp">
-      <Filter>RogueEngine\Systems\AI\Script Types\Game\Exa/Ela Scripts</Filter>
+      <Filter>RogueEngine\Systems\AI\Script Types\Game\Exa/Ela</Filter>
     </ClCompile>
     <ClCompile Include="Source\ActivateOnEla.cpp">
-      <Filter>RogueEngine\Systems\AI\Script Types\Game\Exa/Ela Scripts</Filter>
+      <Filter>RogueEngine\Systems\AI\Script Types\Game\Exa/Ela</Filter>
     </ClCompile>
     <ClCompile Include="Source\ActivateOnExa.cpp">
-      <Filter>RogueEngine\Systems\AI\Script Types\Game\Exa/Ela Scripts</Filter>
+      <Filter>RogueEngine\Systems\AI\Script Types\Game\Exa/Ela</Filter>
     </ClCompile>
     <ClCompile Include="Source\AnimateOnEla.cpp">
-      <Filter>RogueEngine\Systems\AI\Script Types\Game\Exa/Ela Scripts</Filter>
+      <Filter>RogueEngine\Systems\AI\Script Types\Game\Exa/Ela</Filter>
     </ClCompile>
     <ClCompile Include="Source\AnimateOnExa.cpp">
-      <Filter>RogueEngine\Systems\AI\Script Types\Game\Exa/Ela Scripts</Filter>
+      <Filter>RogueEngine\Systems\AI\Script Types\Game\Exa/Ela</Filter>
     </ClCompile>
     <ClCompile Include="Source\TeleAnimation.cpp">
-      <Filter>RogueEngine\Systems\AI\Script Types\Game\Exa/Ela Scripts</Filter>
+      <Filter>RogueEngine\Systems\AI\Script Types\Game\Exa/Ela</Filter>
     </ClCompile>
     <ClCompile Include="Source\Checkpoint.cpp">
-      <Filter>RogueEngine\Systems\AI\Script Types\Game\General Gameplay Scripts</Filter>
+      <Filter>RogueEngine\Systems\AI\Script Types\Game\General Gameplay</Filter>
     </ClCompile>
     <ClCompile Include="Source\DeathBox.cpp">
-      <Filter>RogueEngine\Systems\AI\Script Types\Game\General Gameplay Scripts</Filter>
+      <Filter>RogueEngine\Systems\AI\Script Types\Game\General Gameplay</Filter>
     </ClCompile>
     <ClCompile Include="Source\SoulCollectible.cpp">
-      <Filter>RogueEngine\Systems\AI\Script Types\Game\General Gameplay Scripts</Filter>
+      <Filter>RogueEngine\Systems\AI\Script Types\Game\General Gameplay</Filter>
     </ClCompile>
     <ClCompile Include="Source\GamePlayEnding.cpp">
-      <Filter>RogueEngine\Systems\AI\Script Types\Game\Ending Scripts</Filter>
+      <Filter>RogueEngine\Systems\AI\Script Types\Game\Endings</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\VegetationBreakable.cpp">
+      <Filter>RogueEngine\Systems\AI\Script Types\Game\Verdant Forest</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
