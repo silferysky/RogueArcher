@@ -217,12 +217,7 @@ namespace Rogue
 
 		SaveTileset(fileName);
 
-		size_t skipCount = g_engine.m_coordinator.GetSystem<MenuControllerSystem>()->GetUIMenuObjsSize();
-
-		if (ImGuiTileSet::instance().GetTileMapEnt() != MAX_ENTITIES)
-			++skipCount;
-
-		Entity entCount = static_cast<Entity>(g_engine.m_coordinator.GetActiveObjects().size() - skipCount);
+		Entity entCount = static_cast<Entity>(SceneManager::instance().GetEntToSaveInLevel());
 
 		/*size_t skipCount = g_engine.m_coordinator.GetSystem<MenuControllerSystem>()->GetUIMenuObjsSize();
 		if (g_engine.m_coordinator.GetActiveObjects().size() - skipCount > 0)
@@ -231,37 +226,24 @@ namespace Rogue
 		EntityManager* em = &g_engine.m_coordinator.GetEntityManager();
 		int intVar = static_cast<int>(entCount);
 		RESerialiser::WriteToFile(fileName, "EntityCount", &intVar);
-
-		bool writingBackground = true;
+		
 		entCount = 0; //Reset entCount for saving loop
+		std::set<Entity> EntSet;
 
-		Entity firstEnt = m_firstLoadedEntity;//g_engine.m_coordinator.GetActiveObjects().front();
 		for (Entity& curEntity : g_engine.m_coordinator.GetActiveObjects())
 		{
-			if (skipCount)
-			{
-				--skipCount;
+			//Skip all entities without save component
+			if (!g_engine.m_coordinator.ComponentExists<SaveComponent>(curEntity))
 				continue;
-			}
-			HierarchyInfo& curHierarchy = g_engine.m_coordinator.GetHierarchyInfo(curEntity);
-			//Background layer is unique
-			/*if (writingBackground)
-			{
-				if (g_engine.m_coordinator.ComponentExists<SpriteComponent>(curEntity))
-				{
-					std::string backgroundStr(g_engine.m_coordinator.GetComponent<SpriteComponent>(curEntity).Serialize());
-					RESerialiser::WriteToFile(fileName, "BackgroundTexture", backgroundStr.c_str());
-				}
 
-				writingBackground = false;
-				continue;
-			}*/
+			EntSet.insert(curEntity);
+			HierarchyInfo& curHierarchy = g_engine.m_coordinator.GetHierarchyInfo(curEntity);
 
 			Signature currentSignature = em->GetSignature(curEntity);
 			currentSignature.reset(COMPONENTID::CHILD);
+			currentSignature.reset(COMPONENTID::TILE);
+			currentSignature.reset(COMPONENTID::SAVE);
 
-			//cstr will go out of scope if you choose to do strstream.str().c_str()
-			//This is the proper (Non macro) way of setting the string
 			CLEARSTR(strstream);
 			strstream << "Signature" << entCount;
 			SETSSTOSTR(strstream);
@@ -607,7 +589,7 @@ namespace Rogue
 
 	}
 
-	Entity ObjectFactory::Clone(const char* archetype, bool createHierarchy)
+	Entity ObjectFactory::Clone(const char* archetype, bool createHierarchy, bool hasSaveComponent)
 	{
 		//If the key exists
 		if (m_archetypes.count(archetype))
@@ -627,11 +609,20 @@ namespace Rogue
 			std::getline(istrstream, tagDeserialized, '}');
 			//And get the rest of the details
 			std::getline(istrstream, toDeserialise);
-			FactoryLoadComponent(curEnt, curSignature, toDeserialise);
+			FactoryLoadComponent(curEnt, curSignature, toDeserialise, hasSaveComponent);
 
 			if (createHierarchy)
 			{
 				CREATE_HIERARCHY_OBJ(curEnt, ostrstream.str(), tagDeserialized, archetype, MAX_ENTITIES);
+			}
+
+			if (hasSaveComponent)
+			{
+				//If no save component, make a save component
+				if (!g_engine.m_coordinator.ComponentExists<SaveComponent>(curEnt))
+				{
+					g_engine.m_coordinator.AddComponent(curEnt, SaveComponent());
+				}
 			}
 
 			//For Children
@@ -640,7 +631,7 @@ namespace Rogue
 			std::istringstream childrenstream(std::get<2>(m_archetypes[archetype]));
 			while (std::getline(childrenstream, temp, ';'))
 			{
-				Entity childEnt = Clone(temp.c_str(), createHierarchy);
+				Entity childEnt = Clone(temp.c_str(), createHierarchy, hasSaveComponent);
 				if (createHierarchy)
 				{
 					ParentSetEvent parentEv(curEnt, childEnt);
@@ -838,7 +829,7 @@ namespace Rogue
 		return m_archetypes;
 	}
 
-	void ObjectFactory::FactoryLoadComponent(Entity curEnt, Signature signature, std::string_view value)
+	void ObjectFactory::FactoryLoadComponent(Entity curEnt, Signature signature, std::string_view value, bool createSaveComponent)
 	{
 		std::istringstream istrstream(value.data());
 		std::string readstr;
@@ -965,13 +956,18 @@ namespace Rogue
 					}
 					default:
 					{
-
+#if ENABLE_LOGGER
 						RE_CORE_WARN("OUT OF BOUNDS INDEX TO CLONE");
-
+#endif
 						break;
 					}
-				}
-			}
+				} //End Switch
+			} //End Signature Test check
+		} //End For loop
+
+		if (createSaveComponent)
+		{
+			g_engine.m_coordinator.AddComponent<SaveComponent>(curEnt, SaveComponent());
 		}
 	}
 

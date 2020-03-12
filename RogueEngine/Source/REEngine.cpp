@@ -122,6 +122,7 @@ namespace Rogue
 		//This is a component that isn't directly serialized/deserialized
 		m_coordinator.RegisterComponent<TileMapComponent>();
 		m_coordinator.RegisterComponent<ChildComponent>();
+		m_coordinator.RegisterComponent<SaveComponent>();
 
 		//==================================================
 		// MAX_COMPONENTS: 32

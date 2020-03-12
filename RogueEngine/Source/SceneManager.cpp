@@ -86,6 +86,19 @@ namespace Rogue
 		m_objectFactory->SaveLevelFiles(ostrstream.str().c_str());
 	}
 
+	size_t SceneManager::GetEntToSaveInLevel() const
+	{
+		size_t entCount = 0;
+
+		for (auto& ent : g_engine.m_coordinator.GetActiveObjects())
+		{
+			if (g_engine.m_coordinator.ComponentExists<SaveComponent>(ent))
+				++entCount;
+		}
+
+		return entCount;
+	}
+
 	void SceneManager::LoadLevel(const std::string& fileName)
 	{
 		auto start = Timer::instance().GetCurrTime();
@@ -139,9 +152,7 @@ namespace Rogue
 		std::shared_ptr<MenuControllerSystem> menuControl = g_engine.m_coordinator.GetSystem<MenuControllerSystem>();
 		std::ostringstream ostrstream;
 		ostrstream << "Resources/Levels/" << fileName;
-		int size = static_cast<int>(g_engine.m_coordinator.GetActiveObjects().size() - menuControl->GetUIMenuObjsSize());
-		if (ImGuiTileSet::instance().GetTileMapEnt() != MAX_ENTITIES)
-			--size;
+		int size = static_cast<int>(GetEntToSaveInLevel());
 
 		if (m_objectFactory->CheckFileTooSmall(FILETYPE_LEVEL, size))
 			if (size > 0)
@@ -242,9 +253,9 @@ namespace Rogue
 		//MOVE_OBJECTFACTORY_TO_SCENEMANAGER;
 	}
 
-	Entity SceneManager::Clone(const char* archetype, bool createHierarchy)
+	Entity SceneManager::Clone(const char* archetype, bool createHierarchy, bool hasSaveComponent)
 	{
-		return m_objectFactory->Clone(archetype, createHierarchy);
+		return m_objectFactory->Clone(archetype, createHierarchy, hasSaveComponent);
 		//MOVE_OBJECTFACTORY_TO_SCENEMANAGER;
 	}
 
