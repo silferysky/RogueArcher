@@ -168,12 +168,7 @@ namespace Rogue
 	{
 		//RE_INFO("TRIGGER ENTER");
 		auto& hierarchyObj = g_engine.m_coordinator.GetHierarchyInfo(otherEnt);
-		if (hierarchyObj.m_objectName == "Ball")
-		{
-			//ClearTimedEntities already deletes entity
-			g_engine.m_coordinator.ClearTimedEntities();
-		}
-		else if (hierarchyObj.m_objectName == "Player")
+		if (hierarchyObj.m_objectName == "Player")
 		{
 			PLAYER_STATUS.SetInLightDur();
 		}

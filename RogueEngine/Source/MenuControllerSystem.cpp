@@ -343,18 +343,18 @@ namespace Rogue
 
 	void MenuControllerSystem::InitPauseMenu()
 	{
-		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("crosshair", true));
-		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("MainMenu_Bg", true));
-		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("PausedTexture", true));
-		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("HowToPlayBtn", true));
-		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("MainMenu_Btn", true));
-		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("Resume", true));
-		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("QuitBtn", true));
-		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("HowToPlay", true));
+		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("crosshair", true, false));
+		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("MainMenu_Bg", true, false));
+		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("PausedTexture", true, false));
+		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("HowToPlayBtn", true, false));
+		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("MainMenu_Btn", true, false));
+		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("Resume", true, false));
+		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("QuitBtn", true, false));
+		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("HowToPlay", true, false));
 
-		m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("ExitBtn", true));
-		m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("YesBtn", true));
-		m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("NoBtn", true));
+		m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("ExitBtn", true, false));
+		m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("YesBtn", true, false));
+		m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("NoBtn", true, false));
 
 		for (auto& menuEnt : m_menuObjs)
 		{

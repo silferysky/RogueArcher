@@ -52,6 +52,7 @@ namespace Rogue
 		void LoadLevelFiles(const char* fileName);
 		void SaveLevelFiles(const char* fileName);
 
+		size_t GetEntToSaveInLevel() const;
 		void LoadLevel(const std::string& fileName);
 		void SaveLevel(const char* fileName);
 		void SaveAndLoadLevel();
@@ -65,8 +66,7 @@ namespace Rogue
 		void RemoveArchetype(std::string_view archetypeEntity);
 		void UpdateArchetype(const char* archetypeName, Entity archetypeEntity);
 
-		void Clone(Entity toClone);
-		Entity Clone(const char* archetype, bool createHierarchy = true);
+		Entity Clone(const char* archetype, bool createHierarchy = true, bool hasSaveComponent = true);
 
 
 		std::vector<std::string> GetLoadedLevels() const;

@@ -56,6 +56,13 @@ namespace Rogue
 			//std::cout << "Swapping Sprites" << std::endl;
 			else if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(m_entity))
 			{
+				if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(m_entity))
+				{
+					auto filter = sprite->get().getFilter();
+					filter.a = 1.0f;
+					sprite->get().setFilter(filter);
+				}
+
 				//std::cout << "Init Sprite " << sprite->get().getTexturePath();
 				std::ostringstream oss;
 				if (m_emojiTextures.size())
@@ -77,13 +84,6 @@ namespace Rogue
 		//This aprt is copied from EmojiScript
 		if (otherEnt != PLAYER_STATUS.GetPlayerEntity() || m_activated)
 			return;
-
-		if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(m_entity))
-		{
-			auto filter = sprite->get().getFilter();
-			filter.a = 1.0f;
-			sprite->get().setFilter(filter);
-		}
 
 		m_activated = true;
 		m_timer = m_statsComponent->GetZoomDuration();			//Set to Zoom duration so wait for zoom to be finished
