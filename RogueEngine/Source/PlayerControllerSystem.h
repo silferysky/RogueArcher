@@ -46,7 +46,7 @@ namespace Rogue
 		void Shutdown() override;
 
 		void CreateTeleportEvent(Vec2 newPosition);
-
+		void ResetPlayerParent();
 	private:
 		void Teleport();
 		void Hitchhike(Entity ent);
@@ -59,7 +59,6 @@ namespace Rogue
 
 		//Macros to help Player do call events faster
 		void SetPlayerParent(Entity newParent);
-		void ResetPlayerParent();
 		void MovingPlayer();
 
 		void DebugDrawArrow(const LineSegment& line) const;
