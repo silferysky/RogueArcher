@@ -216,14 +216,7 @@ namespace Rogue
 		for (Entity entity : m_entities)
 		{
 			auto& player = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity);
-			auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
 
-			for (int i = 0; i < g_engine.GetStepCount(); ++i)
-			{
-				if (player.GetMoveState() == MoveState::e_stop)
-					ForceManager::instance().RegisterForce(entity, Vec2(rigidbody.getVelocity().x * -ForceManager::instance().c_stopFactor, 0.0f));
-			}
-				
 			if (player.m_grounded)
 				PLAYER_STATUS.SetTeleportCharge(3.0f);
 
@@ -364,7 +357,7 @@ namespace Rogue
 				{
 					return;
 				}
-				//
+				
 				//else if (keycode == KeyPress::KeyZ)
 				//{
 				//	PLAYER_STATUS.SetFreezeControlTimer(10.0f);
@@ -414,7 +407,7 @@ namespace Rogue
 						if (!player.m_grounded || player.m_jumpTimer > 0.0f || PLAYER_STATUS.HasJumped())
 							return;
 
-						ForceManager::instance().RegisterForce(*iEntity, Vec2(0.0f, 35000.0f));
+						ForceManager::instance().RegisterForce(*iEntity, Vec2(0.0f, 15000.0f));
 
 						// Reset boolean for grounded
 						if (!PLAYER_STATUS.HasJumped())
@@ -449,8 +442,9 @@ namespace Rogue
 		case EventType::EvKeyPressed:
 		{
 			if (PLAYER_STATUS.GetFreezeControlTimer() > 0.0f)
+			{
 				return;
-
+			}
 			KeyPressEvent& EvPressKey = dynamic_cast<KeyPressEvent&>(ev);
 			KeyPress keycode = EvPressKey.GetKeyCode();
 			for (std::set<Entity>::iterator iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
@@ -532,8 +526,9 @@ namespace Rogue
 				return;
 
 			if (PLAYER_STATUS.GetFreezeControlTimer() > 0.0f)
+			{
 				return;
-
+			}
 			if (g_engine.GetIsFocused())
 			{
 				if (keycode == KeyPress::MB1)
@@ -1015,27 +1010,30 @@ namespace Rogue
 
 	void PlayerControllerSystem::FreezeControlComponentUpdates()
 	{
-		if (auto boxCollider = g_engine.m_coordinator.TryGetComponent<BoxCollider2DComponent>(PLAYER_STATUS.GetPlayerEntity()))
+		if (auto playerOpt = g_engine.m_coordinator.TryGetComponent<PlayerControllerComponent>(*m_entities.begin()))
 		{
-			//boxCollider->get().SetCollisionMode(CollisionMode::e_asleep);
+			playerOpt->get().SetMoveState(MoveState::e_stop);
 		}
-		if (g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(PLAYER_STATUS.GetPlayerEntity()))
-		{
-			ForceManager::instance().ResetPhysics(PLAYER_STATUS.GetPlayerEntity());
-		}	
-		g_engine.SetTimeScale(1.0f);
+		//if (auto boxCollider = g_engine.m_coordinator.TryGetComponent<BoxCollider2DComponent>(PLAYER_STATUS.GetPlayerEntity()))
+		//{
+		//	//boxCollider->get().SetCollisionMode(CollisionMode::e_asleep);
+		//}
+		//if (g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(PLAYER_STATUS.GetPlayerEntity()))
+		//{
+		//	ForceManager::instance().ResetPhysics(PLAYER_STATUS.GetPlayerEntity());
+		//}	
 	}
 
 	void PlayerControllerSystem::UnfreezeControlComponentUpdates()
 	{
-		if (auto boxCollider = g_engine.m_coordinator.TryGetComponent<BoxCollider2DComponent>(PLAYER_STATUS.GetPlayerEntity()))
-		{
-			//boxCollider->get().SetCollisionMode(CollisionMode::e_awake);
-		}
-		if (auto rigidbody = g_engine.m_coordinator.TryGetComponent<RigidbodyComponent>(PLAYER_STATUS.GetPlayerEntity()))
-		{
-			//rigidbody->get().setIsStatic(false);
-		}
+		//if (auto boxCollider = g_engine.m_coordinator.TryGetComponent<BoxCollider2DComponent>(PLAYER_STATUS.GetPlayerEntity()))
+		//{
+		//	//boxCollider->get().SetCollisionMode(CollisionMode::e_awake);
+		//}
+		//if (auto rigidbody = g_engine.m_coordinator.TryGetComponent<RigidbodyComponent>(PLAYER_STATUS.GetPlayerEntity()))
+		//{
+		//	//rigidbody->get().setIsStatic(false);
+		//}
 	}
 
 	void PlayerControllerSystem::SetPlayerParent(Entity newParent)

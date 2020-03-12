@@ -112,7 +112,7 @@ namespace Rogue
 		
 		// Set physics system signature.
 		g_engine.m_coordinator.SetSystemSignature<PhysicsSystem>(signature);
-		m_gravity = Vec2{ 0.0f, -1500.0f };
+		m_gravity = Vec2{ 0.0f, -1250.0f };
 
 		// Initialize Force Manager.
 		ForceManager::instance().Init();
@@ -132,7 +132,12 @@ namespace Rogue
 			if (rigidbody.getIsStatic() || !rigidbody.m_componentIsActive) // Skip static bodies
 				continue;
 
-			auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
+			// Stop player
+			if (auto playerOpt = g_engine.m_coordinator.TryGetComponent<PlayerControllerComponent>(*iEntity))
+				if (playerOpt->get().GetMoveState() == MoveState::e_stop)
+					ForceManager::instance().RegisterForce(*iEntity, Vec2(rigidbody.getVelocity().x * -ForceManager::instance().c_stopFactor, 0.0f));
+			
+					auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
 
 			// Update positions
 			Integrate(rigidbody, transform);
@@ -160,6 +165,9 @@ namespace Rogue
 		case EventType::EvKeyTriggered:
 		{
 			KeyTriggeredEvent& EvTriggeredKey = dynamic_cast<KeyTriggeredEvent&>(ev);
+			
+			if(EvTriggeredKey.GetKeyCode() == KeyPress::MB2)
+				ForceManager::instance().PrintForceVector();
 
 			//if (EvTriggeredKey.GetKeyCode() == KeyPress::Numpad9)
 			//	allowGravity = allowGravity ? false : true;
@@ -207,15 +215,11 @@ namespace Rogue
 
 			if (g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(EvEntTeleport.GetEntityID()))
 			{
-				RigidbodyComponent& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(EvEntTeleport.GetEntityID());
-				rigidbody.setVelocity(Vec2());
-				rigidbody.setAcceleration(Vec2());
-				ForceManager::instance().RemoveForce(EvEntTeleport.GetEntityID());
+				ForceManager::instance().ResetPhysics(EvEntTeleport.GetEntityID());
 
 				oldPos = EvEntTeleport.GetVecMovement() - oldPos;
 				Vec2Normalize(oldPos, oldPos);
-				ForceManager::instance().RegisterForce(EvEntTeleport.GetEntityID(), oldPos * 2000, 0.1f);
-				//ForceManager::instance().AddForce(EvEntTeleport->GetEntityID(), rigidbody);
+				ForceManager::instance().RegisterForce(EvEntTeleport.GetEntityID(), oldPos * 11000.0f);
 			}
 
 			return;

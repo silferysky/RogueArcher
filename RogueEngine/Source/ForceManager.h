@@ -35,7 +35,7 @@ namespace Rogue
 		Vec2 m_force;
 		bool m_isActive;
 
-		ForceInfo(Entity entity, const Vec2& force, float lifetime = 0.016666666f, bool isActive = false);
+		ForceInfo(Entity entity, const Vec2& force, float lifetime = 1 / 60.0f, bool isActive = false);
 	};
 
 	class ForceManager
@@ -56,9 +56,10 @@ namespace Rogue
 		void ApplyAllForces(); 
 		void UpdateAges();
 
-		void RegisterForce(Entity entity, const Vec2& force, float lifetime = 0.0166666f);
+		void RegisterForce(Entity entity, const Vec2& force, float lifetime = 1 / 60.0f);
 		void RemoveForce(Entity entity);
 		void ResetPhysics(Entity entity);
+		void PrintForceVector();
 	};
 
 }
