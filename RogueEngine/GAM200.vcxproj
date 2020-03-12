@@ -38,6 +38,7 @@
     <ClInclude Include="Source\ChildComponent.h" />
     <ClInclude Include="Source\CircleCollisionSystem.h" />
     <ClInclude Include="Source\ColliderComponent.h" />
+    <ClInclude Include="Source\CoralClam.h" />
     <ClInclude Include="Source\EmojiAndZoomScript.h" />
     <ClInclude Include="Source\EmojiScript.h" />
     <ClInclude Include="Source\ForegroundComponent.h" />
@@ -298,6 +299,7 @@
     <ClCompile Include="Source\SaveComponent.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
     <ClCompile Include="Source\ScriptComponent.cpp" />
+    <ClCompile Include="Source\CoralClam.cpp" />
     <ClCompile Include="Source\Shader.cpp" />
     <ClCompile Include="Source\FontSystem.cpp" />
     <ClCompile Include="Source\Sound.cpp" />
