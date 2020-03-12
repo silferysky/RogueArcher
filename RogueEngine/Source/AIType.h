@@ -54,6 +54,7 @@ namespace Rogue
 		Vegetation_Pillbug,
 		Vegetation_Breakable,
 		Coral_Clam,
+		Coral_BubbleTransporter,
 
 		AI_Last
 	};
