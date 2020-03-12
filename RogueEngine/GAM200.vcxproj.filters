@@ -715,6 +715,9 @@
     <ClInclude Include="Source\EmojiAndZoomScript.h">
       <Filter>RogueEngine\Systems\AI\Script Types\Trigger</Filter>
     </ClInclude>
+    <ClInclude Include="Source\SaveComponent.h">
+      <Filter>RogueEngine\Core\ECS</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -1142,6 +1145,9 @@
     </ClCompile>
     <ClCompile Include="Source\EmojiAndZoomScript.cpp">
       <Filter>RogueEngine\Systems\AI\Script Types\Trigger</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SaveComponent.cpp">
+      <Filter>RogueEngine\Core\ECS</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

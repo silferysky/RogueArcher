@@ -42,6 +42,7 @@ Technology is prohibited.
 #include "ForegroundComponent.h"
 #include "ChildComponent.h" // THis is not to be initialized by ObjectFactory
 #include "TileMapComponent.h" // Same ^
+#include "SaveComponent.h"
 
 namespace Rogue
 {
@@ -72,6 +73,7 @@ namespace Rogue
 		
 		CHILD,
 		TILE, 
+		SAVE,
 		LASTCOMP
 	};
 }

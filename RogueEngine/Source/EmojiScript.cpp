@@ -38,11 +38,23 @@ namespace Rogue
 			if (!m_emojiTextures.size())
 			{
 				m_finished = true;
+				if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(m_entity))
+				{
+					auto filter = sprite->get().getFilter();
+					filter.a = 0.0f;
+					sprite->get().setFilter(filter);
+				}
 				return;
 			}
 			//std::cout << "Swapping Sprites" << std::endl;
 			else if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(m_entity))
 			{
+				if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(m_entity))
+				{
+					auto filter = sprite->get().getFilter();
+					filter.a = 1.0f;
+					sprite->get().setFilter(filter);
+				}
 				//std::cout << "Init Sprite " << sprite->get().getTexturePath();
 				std::ostringstream oss;
 				oss << "Resources\\Assets\\" << m_emojiTextures.front();

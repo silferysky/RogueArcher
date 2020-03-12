@@ -250,9 +250,9 @@ namespace Rogue
 			return Timer::instance().GetSystemTimes();
 		}
 
-		Entity CloneArchetypes(const char* archetype, bool createHierarchy = true)
+		Entity CloneArchetypes(const char* archetype, bool createHierarchy = true, bool hasSaveComponent = true)
 		{
-			return SceneManager::instance().Clone(archetype, createHierarchy);
+			return SceneManager::instance().Clone(archetype, createHierarchy, hasSaveComponent);
 		}
 
 		void SaveArchetype(const char* archetype, Entity archetypeID)
@@ -283,11 +283,6 @@ namespace Rogue
 		void ResetEvents()
 		{
 			EventDispatcher::instance().ResetEvents();
-		}
-
-		void ClearTimedEntities()
-		{
-			GetSystem<PlayerControllerSystem>()->ClearTimedEntities();
 		}
 
 		void AddToDeleteQueue(const Entity& entity)
