@@ -737,6 +737,9 @@
     <ClInclude Include="Source\VegetationPillbug.h">
       <Filter>RogueEngine\Systems\AI\Script Types\Game\Verdant Forest</Filter>
     </ClInclude>
+    <ClInclude Include="Source\VegetationBreakable.h">
+      <Filter>RogueEngine\Systems\AI\Script Types\Game\Verdant Forest</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -1167,6 +1170,9 @@
     </ClCompile>
     <ClCompile Include="Source\SaveComponent.cpp" />
     <ClCompile Include="Source\VegetationPillbug.cpp">
+      <Filter>RogueEngine\Systems\AI\Script Types\Game\Verdant Forest</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\VegetationBreakable.cpp">
       <Filter>RogueEngine\Systems\AI\Script Types\Game\Verdant Forest</Filter>
     </ClCompile>
   </ItemGroup>

@@ -51,6 +51,8 @@ namespace Rogue
 		Trigger_Zoom,
 		EmojiScript,
 		TriggerEmojiAndZoom,
+		Vegetation_Pillbug,
+		Vegetation_Breakable,
 
 		AI_Last
 	};

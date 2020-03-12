@@ -189,6 +189,7 @@
     <ClInclude Include="Source\UIComponent.h" />
     <ClInclude Include="Source\UISystem.h" />
     <ClInclude Include="Source\Vector2D.h" />
+    <ClInclude Include="Source\VegetationBreakable.h" />
     <ClInclude Include="Source\VegetationPillbug.h" />
     <ClInclude Include="Source\VSync.h" />
     <ClInclude Include="Source\WindowHelper.h" />
@@ -337,6 +338,7 @@
     <ClCompile Include="Source\UIComponent.cpp" />
     <ClCompile Include="Source\UISystem.cpp" />
     <ClCompile Include="Source\Vector2D.cpp" />
+    <ClCompile Include="Source\VegetationBreakable.cpp" />
     <ClCompile Include="Source\VegetationPillbug.cpp" />
     <ClCompile Include="Source\VSync.cpp" />
     <ClCompile Include="Source\WindowHelper.cpp" />

@@ -1,6 +1,6 @@
 {
-    "MaxEntityCount": 252,
-    "EntityCount": 252,
+    "MaxEntityCount": 253,
+    "EntityCount": 253,
     "CameraMinX": -1000.0,
     "CameraMinY": -940.0,
     "CameraMaxX": 1360.0,
@@ -261,6 +261,7 @@
     "Signature249": 8214,
     "Signature250": 2053,
     "Signature251": 2245,
+    "Signature252": 8471,
     "Entity0": "Name{Collision9}|Tag{Ground}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-578;-576.495;100;100;0;0}||BoxCollider{0;0;13;247;AWAKE}|||||||||Collider{BOX;1;4294967295;}||||||||||||",
     "Entity1": "Name{Collision10}|Tag{}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-733;-751.495;100;100;0;0}||BoxCollider{0;0;74;32;AWAKE}|||||||||Collider{BOX;1;4294967295;}||||||||||||",
     "Entity2": "Name{Collision11}|Tag{Ground}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-487;-642.495;100;100;0;0}||BoxCollider{0;0;70;10;AWAKE}|||||||||Collider{BOX;1;4294967295;}||||||||||||",
@@ -492,9 +493,9 @@
     "Entity228": "Name{GameObject 247}|Tag{}|Sprite{Resources\\Assets\\Deathfog.png;0.264706;0;0;1;}||Transform{213;571;507;90;0;102}|||||||||||||||||||||||",
     "Entity229": "Name{HitchHike}|Tag{Hitchhike}|Sprite{Resources\\Assets\\VegetationSpider.png;1;1;1;1;}|Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{202;1016.43;84;329;0;5}||BoxCollider{0;-110;-57;-148;TRIGGER}||LogicComponent{1;0;2;0;2}|StatsComponent{0;5;5;0;1;;2;202;1016.43;202;965.426;0;0;0;0;0;0;}|Animation{4;0;0.1;1;0;1;}|||||Collider{BOX;1;4294967295;}||||||||||||",
     "Entity230": "Name{HitchHike}|Tag{Hitchhike}|Sprite{Resources\\Assets\\VegetationSpider.png;1;1;1;1;}|Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-64;954;84;329;0;5}||BoxCollider{0;-48;-53;-144;TRIGGER}||LogicComponent{1;0;2;0;2}|StatsComponent{0;5;5;0;1;;2;-64;954;-64;1028.43;0;0;0;0;0;0;}|Animation{4;0;0.1;1;0;1;}|||||Collider{BOX;1;4294967295;}||||||||||||",
-    "Entity231": "Name{HitchHike}|Tag{Hitchhike}|Sprite{Resources\\Assets\\VegetationDragonFly.png;1;1;1;1;}|Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-374;-769;100;100;0;5}||BoxCollider{0;0;-64;-58;TRIGGER}||LogicComponent{1;0;2;0;2}|StatsComponent{0;2.5;5;0;1;;2;-374;-769;-178.99;-769;0;0;0;0;0;0;}|Animation{4;0;0.1;1;0;1;}|||||Collider{BOX;1;4294967295;}||||||||||||",
-    "Entity232": "Name{HitchHike}|Tag{Hitchhike}|Sprite{Resources\\Assets\\VegetationDragonFly.png;1;1;1;1;}|Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{913;-754;-100;100;0;5}||BoxCollider{0;0;-64;-58;TRIGGER}||LogicComponent{1;0;2;0;2}|StatsComponent{0;2.5;5;0;1;;2;913;-754;797.01;-754;0;0;0;0;0;0;}|Animation{4;0;0.1;1;0;1;}|||||Collider{BOX;1;4294967295;}||||||||||||",
-    "Entity233": "Name{HitchHike}|Tag{Hitchhike}|Sprite{Resources\\Assets\\VegetationDragonFly.png;1;1;1;1;}|Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-189;-911.574;100;100;0;5}||BoxCollider{0;0;-64;-58;TRIGGER}||LogicComponent{1;0;2;0;2}|StatsComponent{0;2.5;5;0;1;;2;-189;-911.574;-430;-911.574;0;0;0;0;0;0;}|Animation{4;0;0.1;1;0;1;}|||||Collider{BOX;1;4294967295;}||||||||||||",
+    "Entity231": "Name{HitchHike}|Tag{Hitchhike}|Sprite{Resources\\Assets\\VegetationDragonFly.png;1;1;1;1;}|Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-374;-769;100;-100;0;5}||BoxCollider{0;0;-64;-58;TRIGGER}||LogicComponent{1;0;2;0;2}|StatsComponent{0;2.5;5;0;1;;2;-374;-769;-178.99;-769;0;0;0;0;0;0;}|Animation{4;0;0.1;1;0;1;}|||||Collider{BOX;1;4294967295;}||||||||||||",
+    "Entity232": "Name{HitchHike}|Tag{Hitchhike}|Sprite{Resources\\Assets\\VegetationDragonFly.png;1;1;1;1;}|Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{913;-754;-100;-100;0;5}||BoxCollider{0;0;-64;-58;TRIGGER}||LogicComponent{1;0;2;0;2}|StatsComponent{0;2.5;5;0;1;;2;913;-754;797.01;-754;0;0;0;0;0;0;}|Animation{4;0;0.1;1;0;1;}|||||Collider{BOX;1;4294967295;}||||||||||||",
+    "Entity233": "Name{HitchHike}|Tag{Hitchhike}|Sprite{Resources\\Assets\\VegetationDragonFly.png;1;1;1;1;}|Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-189;-911.574;100;-100;0;5}||BoxCollider{0;0;-64;-58;TRIGGER}||LogicComponent{1;0;2;0;2}|StatsComponent{0;2.5;5;0;1;;2;-189;-911.574;-430;-911.574;0;0;0;0;0;0;}|Animation{4;0;0.1;1;0;1;}|||||Collider{BOX;1;4294967295;}||||||||||||",
     "Entity234": "Name{PlayerNew}|Tag{Player}|Sprite{Resources\\Assets\\ExaIdle.png;1;1;1;1;}|Rigidbody{0;0;0;0;1;1;0;1;0.5;0.1;0.01;}|Transform{-1565.79;438.627;61;61;0;13}||BoxCollider{0;-2;-15;-5;AWAKE}|PlayerController{0;0.2;350;10;}|||Animation{8;0;0.1;1;0;1;}|Camera{0;0;1;100;1;}||||Collider{BOX;2;4294967293;}||||||||||||",
     "Entity235": "Name{TeleCharge1}|Tag{}|Sprite{Resources\\Assets\\TeleChargeIndicator.png;1;1;1;1;}||Transform{-1588.49;401.217;25;25;0;100}||||LogicComponent{8;0;1;0}|StatsComponent{0;0;0;0;0;;0;0;0;0;0;0;0;}|Animation{4;2;0.1;1;0;1;}|||||||||||FADE{4;1;}||||||",
     "Entity236": "Name{TeleCharge2}|Tag{}|Sprite{Resources\\Assets\\TeleChargeIndicator.png;1;1;1;1;}||Transform{-1565.49;393.217;25;25;0;100}||||LogicComponent{9;0;1;0}|StatsComponent{0;0;0;0;0;;0;0;0;0;0;0;0;}|Animation{4;0;0.1;1;1;1;}|||||||||||FADE{4;1;}||||||",
@@ -513,6 +514,7 @@
     "Entity249": "Name{Collision64}|Tag{Ground}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-640.95;-659.416;100;100;0;0}||BoxCollider{0;0;116;81;AWAKE}|||||||||Collider{BOX;1;4294967295;}||||||||||||",
     "Entity250": "Name{ProgressFrame}|Tag{}|Sprite{Resources\\Assets\\SoulCollectionUI.png;1;1;1;1;}||Transform{-475;942.57;355;82;0;17}|||||||||UI{1;}||||||||||||||",
     "Entity251": "Name{ProgressBar}|Tag{}|Sprite{Resources\\Assets\\SoulCollectionBar.png;1;1;1;1;}||Transform{-475;922;0;14.5;0;8}||||LogicComponent{23;0;1;0}|StatsComponent{0;0;0;0;0;;0;0;0;0;0;0;0;}||||UI{1;}||||||||||||||",
+    "Entity252": "Name{Game Object 263}|Tag{Hitchhike}|Sprite{Resources\\Assets\\VegetationPillbugIdle.png;1;1;1;1;}|Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-1357;685;100;100;0;0}||BoxCollider{0;0;0;0;TRIGGER}||||Animation{4;0;0.1;1;0;1;}|||||Collider{BOX;1;4294967295;}||||||||||||",
     "EntityParent0": 65535,
     "EntityParent1": 65535,
     "EntityParent2": 65535,
@@ -764,5 +766,6 @@
     "EntityParent248": 65535,
     "EntityParent249": 65535,
     "EntityParent250": 65535,
-    "EntityParent251": 65535
+    "EntityParent251": 65535,
+    "EntityParent252": 65535
 }
