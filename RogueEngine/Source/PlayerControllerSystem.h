@@ -45,17 +45,12 @@ namespace Rogue
 		void Receive(Event& ev) override;
 		void Shutdown() override;
 
-		std::vector<TimedEntity> GetTimedEntities() const;
-		void AddToTimedEntities(TimedEntity newEnt);
-		void AddToTimedEntities(Entity entity, float duration = 1.0f);
-		void ClearTimedEntities();
 		void ClearTeleportEntities();
 		void ClearTeleportEntities(Entity ent);
 
 		void CreateTeleportEvent(Vec2 newPosition);
 
 	private:
-		void CreateBallAttack();
 		void Teleport();
 		void Hitchhike(Entity ent);
 		Vec2 GetTeleportRaycast();
@@ -70,10 +65,8 @@ namespace Rogue
 		void ResetPlayerParent();
 		void MovingPlayer();
 
-		void DebugDrawBall(const BaseCollider& box, const TransformComponent& trans) const;
 		void DebugDrawArrow(const LineSegment& line) const;
 
-		std::vector<TimedEntity> m_timedEntities;
 		std::vector<TimedEntity> m_teleports;
 		bool m_ignoreFrameEvent;
 	};

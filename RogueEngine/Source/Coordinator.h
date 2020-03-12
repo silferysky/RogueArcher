@@ -285,11 +285,6 @@ namespace Rogue
 			EventDispatcher::instance().ResetEvents();
 		}
 
-		void ClearTimedEntities()
-		{
-			GetSystem<PlayerControllerSystem>()->ClearTimedEntities();
-		}
-
 		void AddToDeleteQueue(const Entity& entity)
 		{
 			m_deleteQueue.push_back(entity);
