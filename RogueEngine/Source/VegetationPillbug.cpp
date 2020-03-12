@@ -38,7 +38,7 @@ namespace Rogue
 		if (g_engine.m_coordinator.GetHierarchyInfo(other).m_tag == "Ground")
 		{
 			if (m_entity == PLAYER_STATUS.GetHitchhikedEntity()) // if player is still attached
-				g_engine.m_coordinator.GetSystem<PlayerControllerSystem>()->ResetPlayerParent();
+				g_engine.m_coordinator.GetSystem<PlayerControllerSystem>()->Hitchhike(MAX_ENTITIES); // Proper way to get out of hitchhike
 
 			g_engine.m_coordinator.AddToDeleteQueue(m_entity);
 		}

@@ -46,10 +46,9 @@ namespace Rogue
 		void Shutdown() override;
 
 		void CreateTeleportEvent(Vec2 newPosition);
-		void ResetPlayerParent();
+		void Hitchhike(Entity ent);
 	private:
 		void Teleport();
-		void Hitchhike(Entity ent);
 		Vec2 GetTeleportRaycast();
 		Entity HitchhikeRaycast();
 		void ToggleMode();
@@ -58,6 +57,7 @@ namespace Rogue
 		void UnfreezeControlComponentUpdates();
 
 		//Macros to help Player do call events faster
+		void ResetPlayerParent();
 		void SetPlayerParent(Entity newParent);
 		void MovingPlayer();
 
