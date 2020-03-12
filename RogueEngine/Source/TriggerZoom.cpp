@@ -15,7 +15,9 @@ namespace Rogue
 			m_zoomDuration{ statsComponent.GetZoomDuration() },
 			m_zoomTimer{ statsComponent.GetZoomDelay()},
 			m_zoomDelay { statsComponent.GetZoomDelay() },
-			m_zoomFactor {0.001f} {}
+			m_zoomFactor {0.001f}
+	{}
+			
 
 	void TriggerZoom::AIIdleUpdate()
 	{
@@ -34,7 +36,7 @@ namespace Rogue
 		else//if (m_zoomTimer >= m_zoomDelay)
 		{
 			//If the zoom is at the end
-			if (std::abs(cameraZoom - m_zoomValueFinal) < 0.001f)
+			if ((m_zoomFactor < 0.0f && cameraZoom < m_zoomValueFinal) || (m_zoomFactor > 0.0f && cameraZoom > m_zoomValueFinal))
 			{
 				CameraManager::instance().SetCameraZoom(m_zoomValueFinal);
 

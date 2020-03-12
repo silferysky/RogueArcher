@@ -217,14 +217,6 @@ namespace Rogue
 		{
 			auto& player = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity);
 			auto& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
-				
-			if (PLAYER_STATUS.GetHitchhikedEntity() != MAX_ENTITIES)
-			{
-				auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
-				auto& parentTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetHitchhikedEntity());
-				transform.setPosition(parentTransform.GetPosition());
-				break;
-			}
 
 			for (int i = 0; i < g_engine.GetStepCount(); ++i)
 			{
