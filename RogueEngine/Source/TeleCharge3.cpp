@@ -12,6 +12,8 @@ namespace Rogue
 
 	void TeleCharge3::AIActiveStateUpdate()
 	{
+		if (!g_engine.m_coordinator.GameIsActive())
+			return;
 		m_logicComponent->SetActiveStateBit(static_cast<size_t>(AIState::AIState_Idle));
 	}
 

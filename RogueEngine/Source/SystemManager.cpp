@@ -83,12 +83,7 @@ namespace Rogue
 
 		// System updates that are before fixed updates are placed here.
 		UpdateSystem(SystemID::id_INPUTMANAGER);
-
-		//Skip these systems if game is paused or not running
-		if (!m_gameIsPaused && m_gameIsRunning)
-		{
-			UpdateSystem(SystemID::id_LOGICSYSTEM);
-		}
+		UpdateSystem(SystemID::id_LOGICSYSTEM);
 
 
 		UpdateSystem(SystemID::id_CURSORSYSTEM);

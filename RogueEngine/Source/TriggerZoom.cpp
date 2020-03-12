@@ -21,6 +21,9 @@ namespace Rogue
 
 	void TriggerZoom::AIIdleUpdate()
 	{
+		if (!g_engine.m_coordinator.GameIsActive())
+			return;
+
 		if (!m_isZooming || m_doCount == 0)
 			return;
 
@@ -67,6 +70,9 @@ namespace Rogue
 
 	void TriggerZoom::OnTriggerEnter(Entity otherEnt)
 	{
+		if (!g_engine.m_coordinator.GameIsActive())
+			return;
+
 		if (otherEnt != PLAYER_STATUS.GetPlayerEntity())
 			return;
 

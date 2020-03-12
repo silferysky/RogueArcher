@@ -73,6 +73,9 @@ namespace Rogue
 
 	void EmojiScript::OnTriggerEnter(Entity otherEnt)
 	{
+		if (!g_engine.m_coordinator.GameIsActive())
+			return;
+
 		if (otherEnt != PLAYER_STATUS.GetPlayerEntity() || m_activated)
 			return;
 

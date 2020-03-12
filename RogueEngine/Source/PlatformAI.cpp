@@ -24,6 +24,9 @@ namespace Rogue
 
 	void PlatformAI::AIPatrolUpdate()
 	{
+		if (!g_engine.m_coordinator.GameIsActive())
+			return;
+
 		if (PLAYER_STATUS.GetPlayerEntity() == MAX_ENTITIES)
 			return;
 

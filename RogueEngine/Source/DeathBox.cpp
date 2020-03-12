@@ -19,6 +19,9 @@ namespace Rogue
 
 	void DeathBox::AIIdleUpdate()
 	{
+		if (!g_engine.m_coordinator.GameIsActive())
+			return;
+
 		if (PlayerStatusManager::instance().GetDeath())
 		{
 			m_timer += g_deltaTime * g_engine.GetTimeScale();
@@ -88,6 +91,9 @@ namespace Rogue
 
 	void DeathBox::OnTriggerEnter(Entity other)
 	{
+		if (!g_engine.m_coordinator.GameIsActive())
+			return;
+
 		if (auto player = g_engine.m_coordinator.TryGetComponent<PlayerControllerComponent>(other))
 		{
 			//g_engine.m_coordinator.GetSystem<CameraSystem>()->setIsActive(false);

@@ -12,6 +12,9 @@ namespace Rogue
 
 	void VegetationPillbug::AIActiveStateUpdate()
 	{
+		if (!g_engine.m_coordinator.GameIsActive())
+			return;
+
 		if (m_entity == PLAYER_STATUS.GetHitchhikedEntity()) // if this entity has been hitchhiked onto
 		{
 			g_engine.m_coordinator.GetComponent<RigidbodyComponent>(m_entity).setIsStatic(false); // switch off the rigidbody
@@ -22,6 +25,5 @@ namespace Rogue
 
 	void VegetationPillbug::AIIdleUpdate()
 	{
-
 	}
 }
