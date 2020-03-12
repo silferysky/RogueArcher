@@ -38,6 +38,10 @@ namespace Rogue
 		void Update();
 		void Shutdown();
 
+		int GetTileInstanceCount() const;
+		void ReduceTileInstanceCount();
+		void IncreaseTileInstanceCount();
+
 		ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
 		template<typename T>
@@ -80,7 +84,7 @@ namespace Rogue
 		float RETime = 0.0f;
 		bool m_isTileSetOpen;
 		int m_pickedEntity;
-
+		int m_tileInstanceCount;
 	};
 
 }

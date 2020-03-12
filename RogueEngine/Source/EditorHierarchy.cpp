@@ -248,7 +248,7 @@ namespace Rogue
 			int pickedEntity = EditorManager::instance().GetPickedEntity();
 
 			// If there's any picked entity
-			if (pickedEntity >= 0)
+			if (pickedEntity < MAX_ENTITIES)
 			{
 				if (pickedEntity == i)
 				{
@@ -266,7 +266,7 @@ namespace Rogue
 							g_engine.m_coordinator.GetHierarchyInfo(hierarchyInfo).m_selected = false;
 					}
 					
-					EditorManager::instance().SetPickedEntity(-1);
+					EditorManager::instance().SetPickedEntity(MAX_ENTITIES);
 				}
 			}
 
