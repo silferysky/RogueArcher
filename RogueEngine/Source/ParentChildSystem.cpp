@@ -360,6 +360,7 @@ namespace Rogue
 		ChildComponent& childComp = g_engine.m_coordinator.GetComponent<ChildComponent>(child);
 		childComp.SetLocalDirty();
 		childComp.SetParent(newParent);
+		ApplyParentChildTransform(child);
 
 		//Reassigning in Hierarchy Objects
 		HierarchyInfo& childInfo = g_engine.m_coordinator.GetHierarchyInfo(child);

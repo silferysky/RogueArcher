@@ -138,7 +138,7 @@ namespace Rogue
 			if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(player))
 			{
 				std::string lastLevelLoaded = PLAYER_STATUS.GetLastLevel().data();
-				std::cout << lastLevelLoaded << std::endl;
+				//std::cout << lastLevelLoaded << std::endl;
 
 				//For Tutorial Level to Hub
 				if (lastLevelLoaded == "Level 10.json")
@@ -161,6 +161,27 @@ namespace Rogue
 				{
 					trans->get().setPosition(Vec2(-40.0f, -400.0f));
 				}
+				//From Main Menu to Tutorial
+				else if (lastLevelLoaded == "Level 20.json")
+				{
+					trans->get().setPosition(Vec2(-3532.46f, 756.053f));
+				}
+
+				Entity firstChild = g_engine.m_coordinator.GetHierarchyInfo(player).m_children.front();
+				TransformComponent& childTrans = g_engine.m_coordinator.GetComponent<TransformComponent>(firstChild);
+				std::cout << "FIRST CHILD TRANS " << childTrans.GetPosition().x << "," << childTrans.GetPosition().y << std::endl;
+
+				HierarchyInfo& playerInfo = g_engine.m_coordinator.GetHierarchyInfo(player);
+				for (auto entity : playerInfo.m_children)
+				{
+					if (auto child = g_engine.m_coordinator.TryGetComponent<ChildComponent>(entity))
+					{
+						child->get().SetGlobalDirty();
+						child->get().ResetLocalDirty();
+						g_engine.m_coordinator.ApplyParentChildCorrection(entity);
+					}
+				}
+				std::cout << "FIRST CHILD TRANS AFTER UPDATE" << childTrans.GetPosition().x << "," << childTrans.GetPosition().y << std::endl;
 			}
 
 		PLAYER_STATUS.SetLastLevel(fileName);
