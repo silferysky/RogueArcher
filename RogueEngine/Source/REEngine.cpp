@@ -213,8 +213,8 @@ namespace Rogue
 			// Avoid spiral of death and clamp dt, thus clamping
 			// how many times the UpdatePhysics can be called in
 			// a single game loop.
-			if (m_accumulatedTime > 0.2f)
-				m_accumulatedTime = 0.2f;
+		//	if (m_accumulatedTime > 0.2f)
+		//		m_accumulatedTime = 0.2f;
 
 			while (m_accumulatedTime >= g_fixedDeltaTime)
 			{
@@ -224,7 +224,7 @@ namespace Rogue
 
 			m_coordinator.Update();
 
-			m_dimensions = Vec2{ m_size, aspect_ratio * m_size } *0.5f * CameraManager::instance().GetCameraZoom();
+			m_dimensions = Vec2{ m_size, aspect_ratio * m_size };// * 0.5f * CameraManager::instance().GetCameraZoom();
 			m_projMat = glm::ortho(-m_dimensions.x, m_dimensions.x, -m_dimensions.y, m_dimensions.y, -24.0f, 24.0f);
 			
 			m_loopEnd = mainLoopTimer.now();
