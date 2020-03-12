@@ -44,6 +44,16 @@ namespace Rogue
 		}
 		return *this;
 	}
+
+	CollisionMode CircleCollider2DComponent::GetCollisionMode() const
+	{
+		return m_collisionMode;
+	}
+
+	void CircleCollider2DComponent::SetCollisionMode(CollisionMode mode)
+	{
+		m_collisionMode = mode;
+	}
 	
 	bool CircleCollider2DComponent::GetIsCollided() const
 	{
@@ -68,6 +78,42 @@ namespace Rogue
 		ImGui::DragFloat("Center Offset X ", &centerOffset.x, 0.5f, -100000.0f, 100000.0f);
 		ImGui::DragFloat("Center Offset Y ", &centerOffset.y, 0.5f, -100000.0f, 100000.0f);
 		m_collider.setCenterOffSet(centerOffset);
+		
+		ImGui::PushItemWidth(75);
+
+		bool oldAsleep = (m_collisionMode == CollisionMode::e_asleep);
+		bool oldAwake = (m_collisionMode == CollisionMode::e_awake);
+		bool oldTrigger = (m_collisionMode == CollisionMode::e_trigger);
+
+		bool newAsleep = oldAsleep;
+		bool newAwake = oldAwake;
+		bool newTrigger = oldTrigger;
+
+		ImGui::Checkbox("Asleep", &newAsleep);
+		ImGui::Checkbox("Awake", &newAwake);
+		ImGui::Checkbox("Trigger", &newTrigger);
+
+		if (oldAsleep)
+		{
+			if (newAwake)
+				SetCollisionMode(CollisionMode::e_awake);
+			else if (newTrigger)
+				SetCollisionMode(CollisionMode::e_trigger);
+		}
+		else if (oldAwake)
+		{
+			if (newTrigger)
+				SetCollisionMode(CollisionMode::e_trigger);
+			else if (newAsleep)
+				SetCollisionMode(CollisionMode::e_asleep);
+		}
+		else if (oldTrigger)
+		{
+			if (newAwake)
+				SetCollisionMode(CollisionMode::e_awake);
+			else if (newAsleep)
+				SetCollisionMode(CollisionMode::e_asleep);
+		}
 	}
 
 	std::string CircleCollider2DComponent::Serialize()
@@ -81,6 +127,20 @@ namespace Rogue
 		ss << m_collider.getScaleOffSet().x << ";";
 		ss << m_collider.getScaleOffSet().y;
 
+		switch (m_collisionMode)
+		{
+		case CollisionMode::e_awake:
+			ss << "AWAKE";
+			break;
+
+		case CollisionMode::e_trigger:
+			ss << "TRIGGER";
+			break;
+
+		case CollisionMode::e_asleep:
+			ss << "ASLEEP";
+			break;
+		}
 		return ss.str();
 	}
 
@@ -113,5 +173,15 @@ namespace Rogue
 			y = stof(s1);
 
 		m_collider.setScaleOffSet(Vec2{ x, y });
+
+		if (std::getline(ss, s1, ';'))
+		{
+			if (s1 == "AWAKE")
+				m_collisionMode = CollisionMode::e_awake;
+			else if (s1 == "TRIGGER")
+				m_collisionMode = CollisionMode::e_trigger;
+			else if (s1 == "ASLEEP")
+				m_collisionMode = CollisionMode::e_asleep;
+		}
 	}
 }

@@ -57,6 +57,8 @@ namespace Rogue
 		//Collision handlers
 		// Might template this in future...
 		virtual void HandleCollision(EntCollisionOrTrigger<BoxCollider2DComponent, BoxCollider2DComponent>& ev);
+		//virtual void HandleCollision(EntCollisionOrTrigger<BoxCollider2DComponent, CircleCollider2DComponent>& ev);
+		//virtual void HandleCollision(EntCollisionOrTrigger<CircleCollider2DComponent, CircleCollider2DComponent>& ev);
 
 		virtual void OnCollisionEnter(Entity otherEnt);
 		virtual void OnCollisionStay(Entity otherEnt);

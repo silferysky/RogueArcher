@@ -25,6 +25,7 @@ namespace Rogue
 	class CircleCollider2DComponent
 		: public BaseComponent
 	{
+		CollisionMode m_collisionMode;
 		bool m_isCollided;
 	public:
 		CircleCollider2DComponent() = default;
@@ -38,6 +39,8 @@ namespace Rogue
 
 		BoundingCircle m_collider;
 
+		CollisionMode GetCollisionMode() const;
+		void SetCollisionMode(CollisionMode mode);
 		bool GetIsCollided() const;
 		void SetIsCollided(bool isCollided);
 
