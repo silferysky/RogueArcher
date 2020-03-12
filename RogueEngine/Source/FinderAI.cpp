@@ -25,6 +25,9 @@ namespace Rogue
 
 	void FinderAI::AIActiveStateUpdate()
 	{
+		if (!g_engine.m_coordinator.GameIsActive())
+			return;
+
 		AIDetect();
 		if (!m_nextPoint.empty())
 			m_logicComponent->SetActiveStateBit(static_cast<size_t>(AIState::AIState_Chase));

@@ -27,6 +27,9 @@ namespace Rogue
 
 	void TransitionObject::OnTriggerEnter(Entity other)
 	{
+		if (!g_engine.m_coordinator.GameIsActive())
+			return;
+
 		if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(other))
 		{
 			PLAYER_STATUS.SetIndicatorStatus(false);

@@ -129,6 +129,9 @@ namespace Rogue
 		if (it == m_loadedLevels.end())
 			m_loadedLevels.push_back(std::string(fileName));
 
+		//m_objectFactory->Clone("")
+
+		PLAYER_STATUS.SetLastLevel(fileName);
 		//std::shared_ptr<MenuControllerSystem> menuControl = g_engine.m_coordinator.GetSystem<MenuControllerSystem>();
 		//menuControl->InitPauseMenu();
 

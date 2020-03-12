@@ -86,6 +86,10 @@ namespace Rogue
 		unsigned GetSoulsCollected() const;
 		void IncrementSoulsCollected();
 
+		//Transition
+		void SetLastLevel(std::string_view str);
+		std::string_view GetLastLevel() const;
+
 		//Ending
 		void SetEnding(bool ending);
 		bool GetEnding() const;
@@ -136,6 +140,9 @@ namespace Rogue
 
 		// Collectibles
 		unsigned m_soulsCollected;
+
+		//Level Transition
+		std::string m_lastLevel;
 
 		//ending
 		bool m_isEnding;

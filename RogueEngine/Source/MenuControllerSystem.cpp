@@ -164,17 +164,12 @@ namespace Rogue
 				else if (hierarchyObj.m_objectName == "StartBtn")
 				{
 					ClearMenuObjs();
-					//SceneManager& sceneManager = SceneManager::instance();
-					//sceneManager.LoadLevel("Level 12.json");
 					g_engine.m_coordinator.SetTransitionLevel("Level 10.json", 0.0f);
-					//g_engine.m_coordinator.SetTransition(true);
 
 					FadeEvent ev = FadeEvent(MAX_ENTITIES, 0.5f);
 					ev.SetSystemReceivers(static_cast<int>(SystemID::id_GRAPHICSSYSTEM));
 					EventDispatcher::instance().AddEvent(ev);
 
-					//Now done in Graphics after loading fin
-					//ResumeGame();
 					g_engine.m_coordinator.SetGameState(true);
 					PLAYER_STATUS.SetIndicatorStatus(true);
 				}
@@ -185,6 +180,7 @@ namespace Rogue
 					{
 						if (g_engine.m_coordinator.GetHierarchyInfo(ent).m_objectName == "Credits")
 						{
+							AudioManager::instance().loadSound("Resources/Sounds/button.ogg", 0.3f, false).Play();
 							if (auto UI = g_engine.m_coordinator.TryGetComponent<UIComponent>(ent))
 							{
 								UI->get().setIsActive(true);

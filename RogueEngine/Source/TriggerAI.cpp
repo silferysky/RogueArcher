@@ -25,6 +25,9 @@ namespace Rogue
 
 	void TriggerAI::OnTriggerEnter(Entity other)
 	{
+		if (!g_engine.m_coordinator.GameIsActive())
+			return;
+
 		auto& hierarchyObj = g_engine.m_coordinator.GetHierarchyInfo(other);
 
 		if (hierarchyObj.m_objectName != "Player" || m_isTriggered)

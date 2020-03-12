@@ -1,5 +1,5 @@
 {
-    "Signature": 4194757,
-    "Entity": "Name{Teleport Animation}|Tag{}|Sprite{Resources/Assets/TeleportSheet.png;1;1;1;1;}||Transform{-2813.04;702.985;100;100;0;82}||||LogicComponent{14;0;1;0}|StatsComponent{0;0;0;0;0;;0;}|Animation{9;0;0.05;0;0;1;}|||||||||||||||",
+    "Signature": 453,
+    "Entity": "Name{Teleport Animation}|Tag{}|Sprite{Resources/Assets/TeleportSheet.png;1;1;1;1;}||Transform{-3532.46;756.053;100;100;0;170}||||LogicComponent{14;0;1;0}|StatsComponent{0;0;0;0;0;;0;0;0;0;0;0;0;}|Animation{9;0;0.05;0;0;1;}|||||||||||||||||",
     "Children": ""
 }

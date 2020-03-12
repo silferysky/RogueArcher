@@ -10,12 +10,15 @@
 namespace Rogue
 {
 	GamePlayEnding::GamePlayEnding(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent)
-		: ScriptComponent(entity, logicComponent, statsComponent), m_souls{0}, m_timer{0.0f}
+		: ScriptComponent(entity, logicComponent, statsComponent), m_souls{ 0 }, m_timer{ 0.0f }, m_activated{ false }
 	{
 	}
 
 	void GamePlayEnding::AIActiveStateUpdate()
 	{
+		if (!g_engine.m_coordinator.GameIsActive())
+			return;
+
 		m_logicComponent->SetActiveStateBit(static_cast<size_t>(AIState::AIState_Idle));
 	}
 
@@ -201,6 +204,12 @@ namespace Rogue
 
 	void GamePlayEnding::OnTriggerEnter(Entity other)
 	{
+		if (!g_engine.m_coordinator.GameIsActive())
+			return;
+
+		if (m_activated)
+			return;
+
 		if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(other))
 		{
 			//Freeze Player Controls			
@@ -262,6 +271,7 @@ namespace Rogue
 					//}
 				}
 				PlayerStatusManager::instance().SetEnding(true);
+				m_activated = true;
 			}
 			
 		}

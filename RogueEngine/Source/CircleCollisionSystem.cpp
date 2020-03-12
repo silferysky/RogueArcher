@@ -45,30 +45,48 @@ namespace Rogue
 	void CircleCollisionSystem::Update()
 	{
 		std::set<Entity>::iterator iEntity;
+
+		// Update colliders and partition them.
 		for (iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
 		{
 			auto& currTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
-			auto& currBoundingCircle = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(*iEntity);
+			auto& currCircleCollider = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(*iEntity);
 
-			// Colliders updated.
-			CollisionManager::instance().UpdateBoundingCircle(currBoundingCircle.m_collider, currTransform);
+			// Skip asleep colliders
+			//if (currCircleCollider.GetCollisionMode() == CollisionMode::e_asleep)
+			//	continue;
 
-			// Spatial partitioning conducted in main collision system.
+			// Update collider
+			CollisionManager::instance().UpdateBoundingCircle(currCircleCollider.m_collider, currTransform);
+
+			// Conduct spatial partitioning
 		}
 
+		// Test for collisions
+		// Loop through entities
 		for (iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
 		{
-			auto& currCollider = g_engine.m_coordinator.GetComponent<ColliderComponent>(*iEntity);
+			auto currColliderOpt = g_engine.m_coordinator.TryGetComponent<ColliderComponent>(*iEntity);
+#if 1
+			RE_ASSERT(static_cast<bool>(currColliderOpt), "Entity doesn't have ColliderComponent");
+
+#endif
+			auto& currCollider = currColliderOpt->get();
 			auto& currRigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
 			auto& currTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
-			auto& currBoundingCircle = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(*iEntity);
-		
-			// Test Circle Collisions
+			auto& currCircleCollider = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(*iEntity);
+
+			// Test AABB/OBB Collision
 			std::set<Entity>::iterator iNextEntity = iEntity;
 
-			for (iNextEntity++; iNextEntity != m_entities.end(); ++iNextEntity)
+			// For each entity, the rest of the entities
+			for (++iNextEntity; iNextEntity != m_entities.end(); ++iNextEntity)
 			{
-				auto& nextCollider = g_engine.m_coordinator.GetComponent<ColliderComponent>(*iNextEntity);
+				auto nextColliderOpt = g_engine.m_coordinator.TryGetComponent<ColliderComponent>(*iNextEntity);
+#if 1
+				RE_ASSERT(static_cast<bool>(nextColliderOpt), "Entity doesn't have ColliderComponent");
+#endif
+				auto& nextCollider = nextColliderOpt->get();
 
 				// Filter colliders
 				if (!CollisionManager::instance().FilterColliders(currCollider.GetCollisionMask(), nextCollider.GetCollisionCat()) ||
@@ -77,41 +95,50 @@ namespace Rogue
 
 				auto& nextRigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iNextEntity);
 
+				// Skip if both static.
 				if (currRigidbody.getIsStatic() && nextRigidbody.getIsStatic())
 					continue;
 
+				auto& nextCircleCollider = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(*iNextEntity);
+
+				// Skip asleep colliders.
+				//if (nextCircleCollider.GetCollisionMode() == CollisionMode::e_asleep)
+				//	continue;
+
 				auto& nextTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iNextEntity);
-				auto& nextBoundingCircle = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(*iNextEntity);
 
-				if (CollisionManager::instance().DiscreteCircleVsCircle(currBoundingCircle.m_collider, nextBoundingCircle.m_collider))
+				// Test for AABBs vs AABBs
+				if (CollisionManager::instance().DiscreteCircleVsCircle(nextCircleCollider.m_collider, nextCircleCollider.m_collider))
 				{
-					// If A and/or B is/are a trigger(s), dispatch trigger event(s).
-					/*if (currBoundingCircle.GetCollisionMode() == CollisionMode::e_trigger)
-					{
-						EntTriggerEnterEvent& ev = new EntTriggerEnterEvent{ *iEntity, *iNextEntity };
-						ev.SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
-						EventDispatcher::instance().AddEvent(ev);
+					CollisionInfo<CircleCollider2DComponent> infoA(*iEntity, currCircleCollider, currRigidbody, currTransform);
+					CollisionInfo<CircleCollider2DComponent> infoB(*iNextEntity, nextCircleCollider, nextRigidbody, nextTransform);
 
-						continue;
+					// Set booleans for both colliders/triggers
+					currCircleCollider.SetIsCollided(true);
+					nextCircleCollider.SetIsCollided(true);
+
+					if (CollisionManager::instance().InsertBoxPair(*iEntity, *iNextEntity))
+					{
+						CollisionManager::instance().SendEnterEvents(infoA, infoB);
 					}
-					if (nextBoundingCircle.GetCollisionMode() == CollisionMode::e_trigger)
+					else
 					{
-						EntTriggerEnterEvent& ev = new EntTriggerEnterEvent{ *iNextEntity, *iEntity };
-						ev.SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
-						EventDispatcher::instance().AddEvent(ev);
+						CollisionManager::instance().SendStayEvents(infoA, infoB);
+					}
 
+					// If at least one of them is a trigger, skip resolution
+					if (currCircleCollider.GetCollisionMode() == CollisionMode::e_trigger || nextCircleCollider.GetCollisionMode() == CollisionMode::e_trigger)
 						continue;
-					}*/
-					CollisionManager::instance().InsertCirclePair(*iEntity, *iNextEntity);
+
+					// Generate manifolds from collided pairs
+					CollisionManager::instance().GenerateManifoldCirclevsCircle(*iEntity, *iNextEntity);
 				}
+				// Remove exiting pairs and send exit events
+				//CollisionManager::instance().CheckExitingCollidedPairs<CircleCollider2DComponent, CircleCollider2DComponent>(m_entities);
 			}
-
-			// Generate manifolds from collided pairs
-			CollisionManager::instance().GenerateCircleManifolds();
-
-			// Collision Response (Contact, forces, rest, Impulse, Torque)
-			CollisionManager::instance().ResolveManifolds();
 		}
+		// Collision Impulse and Torque/Contact Resolution (Other resolutionsdone using trigger events: Other weird forces, rest, game logic)
+		CollisionManager::instance().ResolveManifolds();
 	}
 
 	void CircleCollisionSystem::Receive(Event& ev)

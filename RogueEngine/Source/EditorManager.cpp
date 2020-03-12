@@ -23,7 +23,7 @@ namespace Rogue
 {
 	static ImGuiDockNodeFlags opt_flags = ImGuiDockNodeFlags_None;
 	EditorManager::EditorManager() :
-		m_pickedEntity{ -1 },m_isTileSetOpen(0)
+		m_pickedEntity{ MAX_ENTITIES },m_isTileSetOpen(0), m_tileInstanceCount(0)
 	{}
 
 	void EditorManager::Init()
@@ -110,6 +110,19 @@ namespace Rogue
 		ImGui_ImplOpenGL3_Shutdown();
 		ImGui_ImplWin32_Shutdown();
 		ImGui::DestroyContext();
+	}
+
+	int EditorManager::GetTileInstanceCount() const
+	{
+		return m_tileInstanceCount;
+	}
+	void EditorManager::ReduceTileInstanceCount()
+	{
+		--m_tileInstanceCount;
+	}
+	void EditorManager::IncreaseTileInstanceCount()
+	{
+		++m_tileInstanceCount;
 	}
 }
 	

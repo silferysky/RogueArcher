@@ -160,7 +160,7 @@ namespace Rogue
 		if (!m_openWindow)
 		{
 			//EditorManager::instance().RemoveEditorWindow<ImGuiTileSet>("TileSet");
-			ImGuiInspector::instance().ReduceTileInstanceCount();
+			EditorManager::instance().ReduceTileInstanceCount();
 			EditorManager::instance().setTileSetOpen(false);
 		}
 		else

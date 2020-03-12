@@ -1,5 +1,5 @@
 {
-    "Signature": 4719045,
-    "Entity": "Name{TeleCharge3}|Tag{}|Sprite{Resources\\Assets\\TeleChargeIndicator.png;1;1;1;1;}||Transform{-2789.74;668.285;25;25;0;100}||||LogicComponent{10;0;1;0}|StatsComponent{0;0;0;0;0;;0;}|Animation{4;0;0.1;1;2;1;}|||||||||||FADE{4;1;}||||",
+    "Signature": 524741,
+    "Entity": "Name{TeleCharge3}|Tag{TeleCharge}|Sprite{Resources\\Assets\\TeleChargeIndicator.png;1;1;1;1;}||Transform{-3509.16;720.648;25;25;0;188}||||LogicComponent{10;0;1;0}|StatsComponent{0;0;0;0;0;;0;0;0;0;0;0;0;}|Animation{4;0;0.1;1;2;1;}|||||||||||FADE{4;1;}||||||",
     "Children": ""
 }

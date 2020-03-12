@@ -74,10 +74,9 @@ namespace Rogue
 				if (!CollisionManager::instance().FilterColliders(currCollider.GetCollisionMask(), nextCollider.GetCollisionCat()) ||
 					!CollisionManager::instance().FilterColliders(currCollider.GetCollisionCat(), nextCollider.GetCollisionMask()))
 				{
-					//RE_INFO("~~~~~~");
 					continue;
 				}
-					
+
 				TransformComponent& nextTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iNextEntity);
 
 				nextColliderType = nextCollider.GetShape()->GetType();
@@ -86,32 +85,71 @@ namespace Rogue
 				{
 					auto& circleA = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(*iEntity);
 					auto& boxB = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iNextEntity);
-					
+
 					if (CollisionManager::instance().DiscreteCircleVsAABB(circleA.m_collider, boxB.m_aabb))
 					{
-						RE_INFO("CircleA BoxB Colliding!");
-						CollisionManager::instance().InsertDiffPair(*iNextEntity, *iEntity);
+						CollisionInfo<CircleCollider2DComponent> infoA(*iEntity, circleA, currRigidbody, currTransform);
+						CollisionInfo<BoxCollider2DComponent> infoB(*iNextEntity, boxB, nextRigidbody, nextTransform);
+
+						// Set booleans for both colliders/triggers
+						circleA.SetIsCollided(true);
+						boxB.SetIsCollided(true);
+
+						if (CollisionManager::instance().InsertBoxPair(*iEntity, *iNextEntity))
+						{
+							CollisionManager::instance().SendEnterEvents(infoA, infoB);
+						}
+						else
+						{
+							CollisionManager::instance().SendStayEvents(infoA, infoB);
+						}
+
+						// If at least one of them is a trigger, skip resolution
+						if (circleA.GetCollisionMode() == CollisionMode::e_trigger || boxB.GetCollisionMode() == CollisionMode::e_trigger)
+							continue;
+
+						// Generate manifolds from collided pairs
+						CollisionManager::instance().GenerateManifoldCirclevsAABB(*iEntity, *iNextEntity);
 					}
 				}
 				else if (currColliderType == Shape::Type::e_box && nextColliderType == Shape::Type::e_circle)
 				{
 					auto& boxA = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iEntity);
 					auto& circleB = g_engine.m_coordinator.GetComponent<CircleCollider2DComponent>(*iNextEntity);
-				
+
 					if (CollisionManager::instance().DiscreteAABBVsCircle(boxA.m_aabb, circleB.m_collider))
 					{
-						RE_INFO("CircleB BoxA Colliding!");
-						CollisionManager::instance().InsertDiffPair(*iEntity, *iNextEntity);
+						CollisionInfo<BoxCollider2DComponent> infoA(*iEntity, boxA, currRigidbody, currTransform);
+						CollisionInfo<CircleCollider2DComponent> infoB(*iNextEntity, circleB, nextRigidbody, nextTransform);
+
+						// Set booleans for both colliders/triggers
+						boxA.SetIsCollided(true);
+						circleB.SetIsCollided(true);
+
+						if (CollisionManager::instance().InsertBoxPair(*iEntity, *iNextEntity))
+						{
+							CollisionManager::instance().SendEnterEvents(infoA, infoB);
+						}
+						else
+						{
+							CollisionManager::instance().SendStayEvents(infoA, infoB);
+						}
+
+						// If at least one of them is a trigger, skip resolution
+						if (boxA.GetCollisionMode() == CollisionMode::e_trigger || circleB.GetCollisionMode() == CollisionMode::e_trigger)
+							continue;
+
+						// Generate manifolds from collided pairs
+						CollisionManager::instance().GenerateManifoldAABBvsCircle(*iEntity, *iNextEntity);
 					}
 				}
 			}
 
-			// Generate manifolds from collided pairs
-			CollisionManager::instance().GenerateDiffManifolds();
+			// Remove exiting pairs and send exit events
+			//CollisionManager::instance().CheckExitingCollidedPairs<CircleCollider2DComponent, BoxCollider2DComponent>(m_entities);
 
 			// Collision Response (Contact, forces, rest, Impulse, Torque)
 			CollisionManager::instance().ResolveManifolds();
-
 		}
 	}
 

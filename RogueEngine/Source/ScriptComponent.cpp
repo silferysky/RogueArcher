@@ -101,7 +101,7 @@ namespace Rogue
 		//RE_INFO("COLLISION ENTER");
 	}
 
-	// Might template this in future...
+	// Function overloading for different colliders
 	void ScriptComponent::HandleCollision(EntCollisionOrTrigger<BoxCollider2DComponent, BoxCollider2DComponent>& ev)
 	{
 		switch (ev.GetEventType())

@@ -9,6 +9,7 @@ namespace Rogue
 		m_runCount{ 0 },
 		m_entity{ MAX_ENTITIES },
 		m_indicator{ MAX_ENTITIES },
+		m_hitchhikeIndicator{ MAX_ENTITIES },
 		m_playerStartPos{ Vec2(0,0) },
 		m_isActive{ true },
 		m_freezeControlDuration{ -1.0f },
@@ -27,6 +28,8 @@ namespace Rogue
 		m_startingPos{ 0.0f, 0.0f },
 		m_checkpoint{ 0.0f, 0.0f },
 		m_soulsCollected{ 0 },
+		m_lastLevel { "None"},
+		m_isEnding{ false },
 		m_infiniteJumps{ false }
 	{
 	}
@@ -296,6 +299,16 @@ namespace Rogue
 	void PlayerStatusManager::IncrementSoulsCollected()
 	{
 		++m_soulsCollected;
+	}
+
+	void PlayerStatusManager::SetLastLevel(std::string_view str)
+	{
+		m_lastLevel = str.data();
+	}
+
+	std::string_view PlayerStatusManager::GetLastLevel() const
+	{
+		return m_lastLevel;
 	}
 
 	void PlayerStatusManager::SetEnding(bool ending)

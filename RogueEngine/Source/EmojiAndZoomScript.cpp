@@ -27,6 +27,9 @@ namespace Rogue
 
 	void EmojiAndZoomScript::AIIdleUpdate()
 	{
+		if (!g_engine.m_coordinator.GameIsActive())
+			return;
+
 		TriggerZoom::AIIdleUpdate(); 
 		
 		//This part is copied from EmojiScript
@@ -79,6 +82,9 @@ namespace Rogue
 	
 	void EmojiAndZoomScript::OnTriggerEnter(Entity otherEnt)
 	{
+		if (!g_engine.m_coordinator.GameIsActive())
+			return;
+
 		TriggerZoom::OnTriggerEnter(otherEnt);
 
 		//This aprt is copied from EmojiScript
