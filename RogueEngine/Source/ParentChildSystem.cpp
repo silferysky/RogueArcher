@@ -259,6 +259,9 @@ namespace Rogue
 
 	void ParentChildSystem::ApplyParentChildTransform(Entity entity)
 	{
+		if (!g_engine.m_coordinator.ComponentExists<ChildComponent>(entity))
+			return;
+
 		auto& childComponent = g_engine.m_coordinator.GetComponent<ChildComponent>(entity);
 
 		if (childComponent.GetParent() == MAX_ENTITIES || !g_engine.m_coordinator.ComponentExists<TransformComponent>(childComponent.GetParent()))
