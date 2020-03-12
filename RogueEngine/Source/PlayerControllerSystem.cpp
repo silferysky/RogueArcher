@@ -151,21 +151,8 @@ namespace Rogue
 
 					transform.setScale(Vec2(dir * transform.GetScale().x, transform.GetScale().y));
 
-					//if (/*vecOfChange.x < 200.0f &&*/ vecOfChange.x > 0.0f)
-					//{
-					//	transform.setScale(Vec2(-1 * transform.GetScale().x, transform.GetScale().y));
-					//}
-					//else// if (/*vecOfChange.x > -200.0f && */vecOfChange.x < 0.0f)
-					//{
-					//	//transform.setScale(Vec2(transform.GetScale().x, transform.GetScale().y));
-					//}
-
 					//For Rotation
 					transform.setRotation(atan(vecOfChange.y / vecOfChange.x));
-					//if (vecOfChange.x < 0.0f)
-					//{
-					//	transform.setScale(transform.GetScale() * -1);
-					//}
 				}
 
 				//For Hitchhiking Indicator
@@ -175,28 +162,34 @@ namespace Rogue
 					PLAYER_STATUS.SetHitchhikableEntity(HitchhikeRaycast());
 					Entity hitchhikee = PLAYER_STATUS.GetHitchhikableEntity();
 				
+					// If hitchhikee is not MAX_ENTITIES, it will have transform and boxcollider
 					if (hitchhikee != MAX_ENTITIES)
 					{
-						if (auto entTrans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(hitchhikee))
+						TransformComponent& hitchhikeeTrans = g_engine.m_coordinator.GetComponent<TransformComponent>(hitchhikee);
+						TransformComponent& indicatorTrans = g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetHitchhikeIndicator());
+
+						if (auto boxOpt = g_engine.m_coordinator.TryGetComponent<BoxCollider2DComponent>(hitchhikee))
 						{
-							HierarchyInfo& entInfo = g_engine.m_coordinator.GetHierarchyInfo(hitchhikee);
-							TransformComponent& hitchhikeeTrans = entTrans->get();
-							TransformComponent& indicatorTrans = g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetHitchhikeIndicator());
+							// Hitchhike on hitchhikee's trigger
+							BoxCollider2DComponent& box = boxOpt->get();
+							Vec2 hitchColliderPos = CollisionManager::instance().GetColliderPosition(box.m_aabb, hitchhikeeTrans);
 
-							indicatorTrans.setPosition(hitchhikeeTrans.GetPosition());
-							indicatorTrans.setScale(Vec2(75.0f, 75.0f));
-							indicatorTrans.setZ(hitchhikeeTrans.GetZ());
-							PLAYER_STATUS.SetHitchhikableEntity(hitchhikee); // Save the hitchhikee's entity
-
+							indicatorTrans.setPosition(hitchColliderPos);
 						}
+						else
+						{
+							// In case somehow the hitchhikee doesn't have a box collider.
+							indicatorTrans.setPosition(hitchhikeeTrans.GetPosition());
+						}
+						
+						indicatorTrans.setScale(Vec2(75.0f, 75.0f));
+						indicatorTrans.setZ(hitchhikeeTrans.GetZ());	
+						PLAYER_STATUS.SetHitchhikableEntity(hitchhikee); // Save the hitchhikee's entity
 					}
 					else
 					{
-						//std::cout << "Entity is " << toDrawAtEntity << std::endl;
-						//std::cout << "Entity Transform " << g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetHitchhikedEntity()).GetPosition().x << "," << g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetHitchhikedEntity()).GetPosition().y << std::endl;
 						g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetHitchhikeIndicator()).setPosition(Vec2(10000.0f, 10000.0f));
 						PLAYER_STATUS.SetHitchhikableEntity(MAX_ENTITIES);
-						//std::cout << "Entity Transform " << entTrans->get().GetPosition().x << "," << entTrans->get().GetPosition().y << std::endl;
 					}
 				}
 			}
@@ -270,6 +263,22 @@ namespace Rogue
 		//	return;
 		//}
 
+		if (ev.GetEventType() == EventType::EvKeyTriggered)
+		{
+			KeyTriggeredEvent& keytriggeredevent = dynamic_cast<KeyTriggeredEvent&>(ev);
+			KeyPress keycode = keytriggeredevent.GetKeyCode();
+
+			if (g_engine.GetIsFocused())
+			{
+				if (keycode == KeyPress::KeyF5)
+					g_engine.m_coordinator.ToggleEditorIsRunning();
+
+				else if (keycode == KeyPress::KeyF6)
+					g_engine.ToggleVSync();
+			}
+		}
+
+		// Return if no player.
 		if (m_entities.begin() == m_entities.end())
 			return;
 
@@ -377,13 +386,7 @@ namespace Rogue
 
 			if (g_engine.GetIsFocused())
 			{
-				if (keycode == KeyPress::KeyF5)
-					g_engine.m_coordinator.ToggleEditorIsRunning();
-
-				else if (keycode == KeyPress::KeyF6)
-					g_engine.ToggleVSync();
-
-				else if (PLAYER_STATUS.GetFreezeControlTimer() > 0.0f)
+				if (PLAYER_STATUS.GetFreezeControlTimer() > 0.0f)
 				{
 					return;
 				}
@@ -470,13 +473,7 @@ namespace Rogue
 						g_engine.m_coordinator.AddToDeleteQueue(PLAYER_STATUS.GetHitchhikedEntity());
 					}
 				}
-
-				//if (keycode == KeyPress::Numpad9)
-				//{
-				//	RE_ASSERT(false, "CRASH ON PURPOSE");
-				//}
 			}
-
 			return;
 
 		} //End KeyTriggered
@@ -905,6 +902,9 @@ namespace Rogue
 
 	void PlayerControllerSystem::Hitchhike(Entity ent)
 	{
+		if (m_entities.size() == 0)
+			return;
+
 		//std::cout << "Ent: " << ent << std::endl;
 		if (ent != MAX_ENTITIES && g_engine.m_coordinator.GetHierarchyInfo(ent).m_tag == "Hitchhike")
 		{
@@ -934,9 +934,20 @@ namespace Rogue
 			PLAYER_STATUS.SetTeleportCharge(3.0f);
 			if (g_engine.m_coordinator.ComponentExists<ChildComponent>(PLAYER_STATUS.GetPlayerEntity()))
 			{
+				if (auto hitchhikeBoxOpt = g_engine.m_coordinator.TryGetComponent<BoxCollider2DComponent>(ent))
+				{
+					TransformComponent& hitchhikeTrans = g_engine.m_coordinator.GetComponent<TransformComponent>(ent);
+					BoxCollider2DComponent& hitchhikeBox = hitchhikeBoxOpt->get();
+					TransformComponent& playerTrans = g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetPlayerEntity());
+					
+					playerTrans.setPosition(CollisionManager::instance().GetColliderPosition(hitchhikeBox.m_aabb, hitchhikeTrans));
+				}
+
 				auto& player = g_engine.m_coordinator.GetComponent<ChildComponent>(PLAYER_STATUS.GetPlayerEntity());
+
 				player.SetLocalDirty();
 				//player.SetGlobalDirty();
+
 			}
 			if (g_engine.m_coordinator.ComponentExists<BoxCollider2DComponent>(PLAYER_STATUS.GetPlayerEntity()))
 			{

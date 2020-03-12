@@ -32,6 +32,9 @@ namespace Rogue
 			auto& transComponent = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
 			auto& parentTransformComponent = g_engine.m_coordinator.GetComponent<TransformComponent>(childComponent.GetParent());
 
+			if (entity == PLAYER_STATUS.GetPlayerEntity())
+				PLAYER_STATUS.SetTeleportCharge(1);
+
 			//Local values is "corrupted", need to fix
 			if (childComponent.IsLocalDirty())
 			{
