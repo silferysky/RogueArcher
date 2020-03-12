@@ -97,8 +97,8 @@ namespace Rogue
 		{
 			if (PLAYER_STATUS.GetIndicator() == MAX_ENTITIES && PLAYER_STATUS.GetPlayerEntity() != MAX_ENTITIES)
 			{
-				PLAYER_STATUS.SetIndicator(g_engine.m_coordinator.CloneArchetypes("Indicator", true));
-				PLAYER_STATUS.SetHitchhikeIndicator(g_engine.m_coordinator.CloneArchetypes("IndicatorHitchhike", true));
+				PLAYER_STATUS.SetIndicator(g_engine.m_coordinator.CloneArchetypes("Indicator", true, false));
+				PLAYER_STATUS.SetHitchhikeIndicator(g_engine.m_coordinator.CloneArchetypes("IndicatorHitchhike", true, false));
 
 				if (m_entities.size())
 				{
@@ -728,19 +728,6 @@ namespace Rogue
 		//ParentTransformEvent& parentTransform = new ParentTransformEvent(*m_entities.begin(), true);
 		//parentTransform->SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
 		//EventDispatcher::instance().AddEvent(parentTransform);
-
-		//For teleport VFX
-		//TimedEntity ent(g_engine.m_coordinator.CloneArchetypes("TeleportSprite", false), 0.5f);
-		//m_teleports.push_back(ent);
-		//if (g_engine.m_coordinator.ComponentExists<TransformComponent>(m_teleports.back().m_entity))
-		//{
-		//	TransformComponent& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(m_teleports.back().m_entity);
-		//	Vec2 vecOfChange = Vec2(g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin()).GetPosition() - calculatedPos);
-		//	transform.setPosition(calculatedPos + vecOfChange/ 2);
-		//	transform.setRotation(atan(vecOfChange.y / vecOfChange.x));
-		//	//No need to set scale
-		//	//transform.setScale(Vec2(vecOfChange.x, vecOfChange.y));
-		//}
 
 		//For teleport SFX
 		if (g_engine.m_coordinator.ComponentExists<AnimationComponent>(*m_entities.begin()))

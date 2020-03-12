@@ -75,7 +75,7 @@ namespace Rogue
 
 	void ParticleEmitterSystem::GenerateParticles(const Entity& entity)
 	{
-		unitParticle = g_engine.m_coordinator.CloneArchetypes("Particle", false);
+		unitParticle = g_engine.m_coordinator.CloneArchetypes("Particle", false, false);
 		auto& pEmitter = g_engine.m_coordinator.GetComponent<ParticleEmitterComponent>(entity);
 		auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
 		Vec2 pos = transform.GetPosition();
