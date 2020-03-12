@@ -1092,31 +1092,6 @@ namespace Rogue
 		}
 	}
 
-	/*void PlayerControllerSystem::DebugDrawBall(const BaseCollider& box, const TransformComponent& trans) const
-	{
-		std::ostringstream strstream;
-		Entity ball = g_engine.m_coordinator.CreateEntity();
-		strstream
-			<< CollisionManager::instance().GetColliderPosition(box, trans).x << ";"
-			<< CollisionManager::instance().GetColliderPosition(box, trans).y << ";"
-			<< CollisionManager::instance().GetColliderScale(box, trans).x << ";"
-			<< CollisionManager::instance().GetColliderScale(box, trans).y << ";"
-			<< "0;"
-			<< "2";
-
-		TransformComponent& ballTransform = g_engine.m_coordinator.CreateComponent<TransformComponent>(ball);
-
-		ballTransform.Deserialize(strstream.str());
-
-		SpriteComponent& sprite = g_engine.m_coordinator.CreateComponent<SpriteComponent>(ball);
-		sprite.Deserialize("Resources/Assets/Projectile.png;1;1;1;1;0.1");
-
-		HierarchyInfo newInfo(ball, "Ball", "ball");
-		g_engine.m_coordinator.GetActiveObjects().push_back(ball);
-		g_engine.m_coordinator.GetHierarchyInfo(ball) = newInfo;
-
-	}*/
-
 	void PlayerControllerSystem::DebugDrawArrow(const LineSegment& teleportLine) const
 	{
 		Entity line = g_engine.m_coordinator.CreateEntity();

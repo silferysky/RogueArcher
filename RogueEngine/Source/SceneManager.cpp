@@ -247,12 +247,6 @@ namespace Rogue
 		//m_objectFactory->UpdateArchetype(archetypeName, archetypeEntity);
 	}
 
-	void SceneManager::Clone(Entity toClone)
-	{
-		m_objectFactory->Clone(toClone);
-		//MOVE_OBJECTFACTORY_TO_SCENEMANAGER;
-	}
-
 	Entity SceneManager::Clone(const char* archetype, bool createHierarchy, bool hasSaveComponent)
 	{
 		return m_objectFactory->Clone(archetype, createHierarchy, hasSaveComponent);
@@ -362,6 +356,8 @@ namespace Rogue
 			newEnt,
 			TransformComponent(Vec2{ 0.0f, 0.0f }, Vec2{ 100.0f, 100.0f }, 0.0f));
 
+		g_engine.m_coordinator.AddComponent<SaveComponent>(newEnt, SaveComponent());
+
 		auto& Sprite = g_engine.m_coordinator.CreateComponent<SpriteComponent>(newEnt);
 		Sprite.Deserialize("Resources/Assets/DefaultSprite.png;1;1;1;1;1");
 
@@ -377,6 +373,7 @@ namespace Rogue
 	{
 		Entity newEnt = g_engine.m_coordinator.CreateEntity();
 		g_engine.m_coordinator.AddComponent<CameraComponent>(newEnt,CameraComponent());
+		g_engine.m_coordinator.AddComponent<SaveComponent>(newEnt, SaveComponent());
 
 		std::ostringstream strstream;
 		strstream << "Camera " << m_cameraIterator++;

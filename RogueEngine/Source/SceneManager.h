@@ -66,7 +66,6 @@ namespace Rogue
 		void RemoveArchetype(std::string_view archetypeEntity);
 		void UpdateArchetype(const char* archetypeName, Entity archetypeEntity);
 
-		void Clone(Entity toClone);
 		Entity Clone(const char* archetype, bool createHierarchy = true, bool hasSaveComponent = true);
 
 
