@@ -743,6 +743,9 @@
     <ClInclude Include="Source\CoralClam.h">
       <Filter>RogueEngine\Systems\AI\Script Types\Game\Amethyst Seas</Filter>
     </ClInclude>
+    <ClInclude Include="Source\CoralBubbleTransporter.h">
+      <Filter>RogueEngine\Systems\AI\Script Types\Game\Amethyst Seas</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -1179,6 +1182,9 @@
       <Filter>RogueEngine\Systems\AI\Script Types\Game\Verdant Forest</Filter>
     </ClCompile>
     <ClCompile Include="Source\CoralClam.cpp">
+      <Filter>RogueEngine\Systems\AI\Script Types\Game\Amethyst Seas</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CoralBubbleTransporter.cpp">
       <Filter>RogueEngine\Systems\AI\Script Types\Game\Amethyst Seas</Filter>
     </ClCompile>
   </ItemGroup>

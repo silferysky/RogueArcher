@@ -1,6 +1,5 @@
 #include "Precompiled.h"
 #include "CoralClam.h"
-#include "PlayerStatusManager.h"
 //#include "Main.h"	//For g_deltaTime and coordinator
 
 namespace Rogue
