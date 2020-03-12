@@ -1,5 +1,5 @@
 {
-    "Signature": 4101,
-    "Entity": "Name{Cursor}|Tag{}|Sprite{Resources/Assets/crosshair.png;1;1;1;1}||Transform{1923.73;377.298;20;20;0;1100}||||||||||Cursor{0;0}||||||",
+    "Signature": 6149,
+    "Entity": "Name{Cursor}|Tag{}|Sprite{Resources/Assets/crosshair.png;1;1;1;1}||Transform{1923.73;377.298;20;20;0;1100}|||||||||UI{1;}|Cursor{0;0}||||||",
 		"Children": ""
 }

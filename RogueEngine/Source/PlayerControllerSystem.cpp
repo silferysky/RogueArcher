@@ -387,12 +387,12 @@ namespace Rogue
 				{
 					return;
 				}
-				
-				else if (keycode == KeyPress::KeyZ)
-				{
-					PLAYER_STATUS.SetFreezeControlTimer(10.0f);
-					return;
-				}
+				//
+				//else if (keycode == KeyPress::KeyZ)
+				//{
+				//	PLAYER_STATUS.SetFreezeControlTimer(10.0f);
+				//	return;
+				//}
 
 				else if (keycode == KeyPress::Key0)
 				{
