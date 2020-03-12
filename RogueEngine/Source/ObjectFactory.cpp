@@ -228,7 +228,6 @@ namespace Rogue
 		RESerialiser::WriteToFile(fileName, "EntityCount", &intVar);
 		
 		entCount = 0; //Reset entCount for saving loop
-		std::set<Entity> EntSet;
 
 		for (Entity& curEntity : g_engine.m_coordinator.GetActiveObjects())
 		{
@@ -236,7 +235,6 @@ namespace Rogue
 			if (!g_engine.m_coordinator.ComponentExists<SaveComponent>(curEntity))
 				continue;
 
-			EntSet.insert(curEntity);
 			HierarchyInfo& curHierarchy = g_engine.m_coordinator.GetHierarchyInfo(curEntity);
 
 			Signature currentSignature = em->GetSignature(curEntity);
