@@ -135,6 +135,27 @@ namespace Rogue
 		{
 			g_engine.m_coordinator.StepOnce();
 		}
+
+		ImGui::SameLine();
+		ImGui::PushItemWidth(75);
+		
+		if (ImGui::Button("Play Without Saving"))
+		{
+			if (!g_engine.m_coordinator.GetGameState())
+			{
+				CameraManager::instance().SetCameraZoom(CameraManager::instance().GetLevelCameraZoom());
+				CameraManager::instance().SetCameraPos(glm::vec3(PLAYER_STATUS.GetStartingPos().x, PLAYER_STATUS.GetStartingPos().y, CameraManager::instance().GetCameraPos().z));
+				g_engine.m_coordinator.SetGameState(true);
+				//ShowCursor(false);
+			}
+		}
+
+		if (ImGui::IsItemHovered())
+		{
+			ImGui::BeginTooltip();
+			ImGui::Text("Instantly plays the scene without saving");
+			ImGui::EndTooltip();
+		}
 		if (!g_engine.m_coordinator.GetGameState() || g_engine.m_coordinator.GetPauseState())
 		{
 			if (g_engine.GetIsFocused())

@@ -101,6 +101,8 @@ namespace Rogue
 
 		for (step = 0; step < g_engine.GetStepCount(); ++step)
 		{
+			FixedUpdateSystem(SystemID::id_PARENTCHILDSYSTEM, "Parent Child System");
+
 			// Only run physics if game is running
 			if (!m_gameIsPaused && m_gameIsRunning)
 			{
@@ -111,11 +113,10 @@ namespace Rogue
 				FixedUpdateSystem(SystemID::id_UISYSTEM, "UI System");
 				FixedUpdateSystem(SystemID::id_PHYSICSSYSTEM, "Physics System");
 			}
-			
+
 			//FixedUpdateSystem(SystemID::id_CIRCLECOLLISIONSYSTEM, "Circle Collision System");
 			FixedUpdateSystem(SystemID::id_BOXCOLLISIONSYSTEM, "Box Collision System");
 			//FixedUpdateSystem(SystemID::id_COLLISIONSYSTEM, "Collision System");
-			FixedUpdateSystem(SystemID::id_PARENTCHILDSYSTEM, "Parent Child System");
 			FixedUpdateSystem(SystemID::id_CAMERASYSTEM, "Camera System");
 		}
 		

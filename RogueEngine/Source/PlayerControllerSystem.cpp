@@ -760,6 +760,9 @@ namespace Rogue
 			//	return;
 			//}
 
+			PlayerControllerComponent& playerCtrl = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(PLAYER_STATUS.GetPlayerEntity());
+			playerCtrl.SetMoveState(MoveState::e_stop);
+
 			SetPlayerParent(ent);
 			PLAYER_STATUS.SetTeleportCharge(3.0f);
 			if (g_engine.m_coordinator.ComponentExists<ChildComponent>(PLAYER_STATUS.GetPlayerEntity()))
@@ -1014,14 +1017,6 @@ namespace Rogue
 		{
 			playerOpt->get().SetMoveState(MoveState::e_stop);
 		}
-		//if (auto boxCollider = g_engine.m_coordinator.TryGetComponent<BoxCollider2DComponent>(PLAYER_STATUS.GetPlayerEntity()))
-		//{
-		//	//boxCollider->get().SetCollisionMode(CollisionMode::e_asleep);
-		//}
-		//if (g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(PLAYER_STATUS.GetPlayerEntity()))
-		//{
-		//	ForceManager::instance().ResetPhysics(PLAYER_STATUS.GetPlayerEntity());
-		//}	
 	}
 
 	void PlayerControllerSystem::UnfreezeControlComponentUpdates()
