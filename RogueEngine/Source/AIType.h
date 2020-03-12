@@ -53,6 +53,7 @@ namespace Rogue
 		TriggerEmojiAndZoom,
 		Vegetation_Pillbug,
 		Vegetation_Breakable,
+		Coral_Clam,
 
 		AI_Last
 	};

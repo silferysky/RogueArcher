@@ -740,6 +740,9 @@
     <ClInclude Include="Source\VegetationBreakable.h">
       <Filter>RogueEngine\Systems\AI\Script Types\Game\Verdant Forest</Filter>
     </ClInclude>
+    <ClInclude Include="Source\CoralClam.h">
+      <Filter>RogueEngine\Systems\AI\Script Types\Game\Amethyst Seas</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -1174,6 +1177,9 @@
     </ClCompile>
     <ClCompile Include="Source\VegetationBreakable.cpp">
       <Filter>RogueEngine\Systems\AI\Script Types\Game\Verdant Forest</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CoralClam.cpp">
+      <Filter>RogueEngine\Systems\AI\Script Types\Game\Amethyst Seas</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
