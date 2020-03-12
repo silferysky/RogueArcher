@@ -90,8 +90,6 @@ namespace Rogue
 
 		if (!g_engine.m_coordinator.GameIsActive())
 		{
-			if (m_teleports.size())
-				ClearTeleportEntities();
 			return;
 		}
 
@@ -202,17 +200,6 @@ namespace Rogue
 
 		//std::cout << PLAYER_STATUS.GetHitchhikableEntity() << std::endl;
 
-		if (m_teleports.size())
-		{
-			for (TimedEntity& ent : m_teleports)
-			{
-				ent.m_durationLeft -= g_deltaTime * g_engine.GetTimeScale();
-
-				if (ent.m_durationLeft < 0.0f)
-					ClearTeleportEntities(ent.m_entity);
-			}
-		}
-
 		//Timers 
 		//if (PLAYER_STATUS.GetTeleportCharge() < PLAYER_STATUS.GetMaxTeleportCharge())
 			//PLAYER_STATUS.IncrementTeleportCharge(g_deltaTime * g_engine.GetTimeScale());
@@ -279,9 +266,6 @@ namespace Rogue
 
 			PLAYER_STATUS.SetPlayerEntity(MAX_ENTITIES);
 			PLAYER_STATUS.SetHitchhikedEntity(MAX_ENTITIES);
-
-			//Deleting teleport entities
-			ClearTeleportEntities();
 
 			//Deleting Indicator entity
 			if (PLAYER_STATUS.GetIndicator() != MAX_ENTITIES)
@@ -715,42 +699,6 @@ namespace Rogue
 	{
 	}
 
-	void PlayerControllerSystem::ClearTeleportEntities()
-	{
-		if (!m_teleports.size())
-			return;
-
-		auto& activeObjects = g_engine.m_coordinator.GetActiveObjects();
-		for (TimedEntity& entity : m_teleports)
-		{
-			g_engine.m_coordinator.DestroyEntity(entity.m_entity);
-
-			//for (auto iterator = activeObjects.begin(); iterator != activeObjects.end(); ++iterator)
-			//{
-			//	if (*iterator == m_teleports.begin()->m_entity)
-			//	{
-			//		activeObjects.erase(iterator);
-			//		break;
-			//	}
-			//}
-		}
-
-		m_teleports.clear();
-	}
-
-	void PlayerControllerSystem::ClearTeleportEntities(Entity ent)
-	{
-		for (auto it = m_teleports.begin(); it != m_teleports.end(); ++it)
-		{
-			if (it->m_entity == ent)
-			{
-				g_engine.m_coordinator.AddToDeleteQueue(it->m_entity);
-				m_teleports.erase(it);
-				return;
-			}
-		}
-	}
-
 	void PlayerControllerSystem::CreateTeleportEvent(Vec2 newPosition)
 	{
 		EntTeleportEvent event(*m_entities.begin(), newPosition);
@@ -782,17 +730,17 @@ namespace Rogue
 		//EventDispatcher::instance().AddEvent(parentTransform);
 
 		//For teleport VFX
-		TimedEntity ent(g_engine.m_coordinator.CloneArchetypes("TeleportSprite", false), 0.5f);
-		m_teleports.push_back(ent);
-		if (g_engine.m_coordinator.ComponentExists<TransformComponent>(m_teleports.back().m_entity))
-		{
-			TransformComponent& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(m_teleports.back().m_entity);
-			Vec2 vecOfChange = Vec2(g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin()).GetPosition() - calculatedPos);
-			transform.setPosition(calculatedPos + vecOfChange/ 2);
-			transform.setRotation(atan(vecOfChange.y / vecOfChange.x));
-			//No need to set scale
-			//transform.setScale(Vec2(vecOfChange.x, vecOfChange.y));
-		}
+		//TimedEntity ent(g_engine.m_coordinator.CloneArchetypes("TeleportSprite", false), 0.5f);
+		//m_teleports.push_back(ent);
+		//if (g_engine.m_coordinator.ComponentExists<TransformComponent>(m_teleports.back().m_entity))
+		//{
+		//	TransformComponent& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(m_teleports.back().m_entity);
+		//	Vec2 vecOfChange = Vec2(g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin()).GetPosition() - calculatedPos);
+		//	transform.setPosition(calculatedPos + vecOfChange/ 2);
+		//	transform.setRotation(atan(vecOfChange.y / vecOfChange.x));
+		//	//No need to set scale
+		//	//transform.setScale(Vec2(vecOfChange.x, vecOfChange.y));
+		//}
 
 		//For teleport SFX
 		if (g_engine.m_coordinator.ComponentExists<AnimationComponent>(*m_entities.begin()))

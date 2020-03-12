@@ -45,9 +45,6 @@ namespace Rogue
 		void Receive(Event& ev) override;
 		void Shutdown() override;
 
-		void ClearTeleportEntities();
-		void ClearTeleportEntities(Entity ent);
-
 		void CreateTeleportEvent(Vec2 newPosition);
 
 	private:
@@ -67,7 +64,6 @@ namespace Rogue
 
 		void DebugDrawArrow(const LineSegment& line) const;
 
-		std::vector<TimedEntity> m_teleports;
 		bool m_ignoreFrameEvent;
 	};
 }
