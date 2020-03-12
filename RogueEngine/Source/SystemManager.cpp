@@ -90,9 +90,18 @@ namespace Rogue
 			UpdateSystem(SystemID::id_LOGICSYSTEM);
 		}
 
+
 		UpdateSystem(SystemID::id_CURSORSYSTEM);
 		UpdateSystem(SystemID::id_PICKINGSYSTEM);
+		if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(PLAYER_STATUS.GetPlayerEntity()))
+		{
+			std::cout << "Player Position: " << trans->get().GetPosition() << std::endl;
+		}
 		UpdateSystem(SystemID::id_PLAYERCONTROLLERSYSTEM);
+		if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(PLAYER_STATUS.GetPlayerEntity()))
+		{
+			std::cout << "Player Position: " << trans->get().GetPosition() << std::endl;
+		}
 		UpdateSystem(SystemID::id_MENUCONTROLLERSYSTEM);
 
 		FixedUpdate();

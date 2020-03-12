@@ -42,8 +42,7 @@ namespace Rogue
 		void LoadLevelFiles(const char* fileName);
 		void SaveLevelFiles(const char* fileName);
 
-		void Clone(Entity toClone);
-		Entity Clone(const char* archetype, bool createHierarchy = true);
+		Entity Clone(const char* archetype, bool createHierarchy = true, bool hasSaveComponent = true);
 
 		bool CheckFileTooSmall(size_t type, size_t size);
 		void ResetMaxEntity();
@@ -57,7 +56,7 @@ namespace Rogue
 	private:
 
 		//Helper function
-		void FactoryLoadComponent(Entity curEnt, Signature signature, std::string_view value);
+		void FactoryLoadComponent(Entity curEnt, Signature signature, std::string_view value, bool createSaveComponent = true);
 
 		size_t m_maxEntityCount; //Represents max entity size of FILE (not level)
 		size_t m_maxArchetypeCount;
