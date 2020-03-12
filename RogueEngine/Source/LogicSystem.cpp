@@ -50,6 +50,8 @@ Technology is prohibited.
 #include "EmojiScript.h"
 #include "EmojiAndZoomScript.h" //Trigger zoom also
 #include "GamePlayEnding.h"
+#include "VegetationPillbug.h"
+#include "VegetationBreakable.h"
 
 namespace Rogue
 {
@@ -350,6 +352,18 @@ namespace Rogue
 					AddLogicInterface(entities, std::make_shared<EmojiScript>(newAI));
 					break;
 				}
+				case AIType::Vegetation_Pillbug:
+				{
+					VegetationPillbug newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<VegetationPillbug>(newAI));
+					break;
+				}
+				case AIType::Vegetation_Breakable:
+				{
+					VegetationBreakable newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<VegetationBreakable>(newAI));
+					break;
+				}
 				case AIType::AI_Static:
 				default:
 				{
@@ -357,6 +371,7 @@ namespace Rogue
 					AddLogicInterface(entities, std::make_shared<ScriptComponent>(newAI));
 					break;
 				}
+
 
 				}
 			}

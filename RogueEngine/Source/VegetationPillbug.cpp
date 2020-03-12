@@ -15,13 +15,29 @@ namespace Rogue
 		if (m_entity == PLAYER_STATUS.GetHitchhikedEntity()) // if this entity has been hitchhiked onto
 		{
 			g_engine.m_coordinator.GetComponent<RigidbodyComponent>(m_entity).setIsStatic(false); // switch off the rigidbody
-			g_engine.m_coordinator.GetComponent<AnimationComponent>(m_entity).setIsAnimating(true); // play the animation
+			g_engine.m_coordinator.GetComponent<SpriteComponent>(m_entity).setTexturePath("Resources/Assets/VegetationPillbugCurl.png");
+
+			auto& animation = g_engine.m_coordinator.GetComponent<AnimationComponent>(m_entity);
+			animation.setFrames(5);
+			g_engine.m_coordinator.GetComponent<AnimationComponent>(m_entity).setIsLooping(false); // play the animation only once
+
 			m_logicComponent->SetActiveStateBit(static_cast<size_t>(AIState::AIState_Idle));
 		}
 	}
 
-	void VegetationPillbug::AIIdleUpdate()
+	/* void VegetationPillbug::AIIdleUpdate()
 	{
+	} */
 
+
+	void VegetationPillbug::OnCollisionEnter(Entity other)
+	{
+		if (g_engine.m_coordinator.GetHierarchyInfo(other).m_tag == "ground")
+		{
+			if (m_entity == PLAYER_STATUS.GetHitchhikedEntity()) // if player is still attached
+				g_engine.m_coordinator.GetSystem<PlayerControllerSystem>()->ResetPlayerParent();
+
+			g_engine.m_coordinator.AddToDeleteQueue(m_entity);
+		}
 	}
 }
