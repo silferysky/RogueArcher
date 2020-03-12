@@ -85,38 +85,14 @@ namespace Rogue
 		UpdateSystem(SystemID::id_INPUTMANAGER);
 		UpdateSystem(SystemID::id_LOGICSYSTEM);
 
-
 		UpdateSystem(SystemID::id_CURSORSYSTEM);
 		UpdateSystem(SystemID::id_PICKINGSYSTEM);
-		if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(PLAYER_STATUS.GetPlayerEntity()))
-		{
-			std::cout << "Player Position: " << trans->get().GetPosition() << std::endl;
-		}
 		UpdateSystem(SystemID::id_PLAYERCONTROLLERSYSTEM);
-		if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(PLAYER_STATUS.GetPlayerEntity()))
-		{
-			std::cout << "Player Position: " << trans->get().GetPosition() << std::endl;
-		}
 		UpdateSystem(SystemID::id_MENUCONTROLLERSYSTEM);
 
 		FixedUpdate();
 		Update();
 	}
-
-	void SystemManager::Update()
-	{
-		UpdateSystem(SystemID::id_GRAPHICSSYSTEM);
-		UpdateSystem(SystemID::id_MASKINGSYSTEM);
-		UpdateSystem(SystemID::id_FONTSYSTEM);
-		UpdateSystem(SystemID::id_AUDIOSYSTEM);
-		UpdateSystem(SystemID::id_LIGHTINGSYSTEM);
-		UpdateSystem(SystemID::id_PARENTCHILDSYSTEM);
-
-		// Only run editor if editor is running.
-		if (m_editorIsRunning)
-			UpdateSystem(SystemID::id_EDITOR);
-	}
-
 
 	void SystemManager::FixedUpdate()
 	{
@@ -138,7 +114,8 @@ namespace Rogue
 			
 			//FixedUpdateSystem(SystemID::id_CIRCLECOLLISIONSYSTEM, "Circle Collision System");
 			FixedUpdateSystem(SystemID::id_BOXCOLLISIONSYSTEM, "Box Collision System");
-			FixedUpdateSystem(SystemID::id_COLLISIONSYSTEM, "Collision System");
+			//FixedUpdateSystem(SystemID::id_COLLISIONSYSTEM, "Collision System");
+			FixedUpdateSystem(SystemID::id_PARENTCHILDSYSTEM, "Parent Child System");
 			FixedUpdateSystem(SystemID::id_CAMERASYSTEM, "Camera System");
 		}
 		
@@ -154,8 +131,22 @@ namespace Rogue
 
 		//Timer::instance().GetSystemTimes()["Circle Collision System"] *= step;
 		Timer::instance().GetSystemTimes()["Box Collision System"] *= step;
+		Timer::instance().GetSystemTimes()["Parent Child System"] *= step;
 		//Timer::instance().GetSystemTimes()["Collision System"] *= step;
 		Timer::instance().GetSystemTimes()["Camera System"] *= step;
+	}
+
+	void SystemManager::Update()
+	{
+		UpdateSystem(SystemID::id_GRAPHICSSYSTEM);
+		UpdateSystem(SystemID::id_MASKINGSYSTEM);
+		UpdateSystem(SystemID::id_FONTSYSTEM);
+		UpdateSystem(SystemID::id_AUDIOSYSTEM);
+		UpdateSystem(SystemID::id_LIGHTINGSYSTEM);
+
+		// Only run editor if editor is running.
+		if (m_editorIsRunning)
+			UpdateSystem(SystemID::id_EDITOR);
 	}
 
 	void SystemManager::FixedUpdateSystem(SystemID id, const char* systemName)
