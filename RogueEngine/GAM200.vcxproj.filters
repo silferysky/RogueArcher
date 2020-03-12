@@ -733,7 +733,8 @@
     <ClInclude Include="Source\GamePlayEnding.h">
       <Filter>RogueEngine\Systems\AI\Script Types\Game\Endings</Filter>
     </ClInclude>
-    <ClInclude Include="Source\VegetationBreakable.h">
+    <ClInclude Include="Source\SaveComponent.h" />
+    <ClInclude Include="Source\VegetationPillbug.h">
       <Filter>RogueEngine\Systems\AI\Script Types\Game\Verdant Forest</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1164,7 +1165,8 @@
     <ClCompile Include="Source\GamePlayEnding.cpp">
       <Filter>RogueEngine\Systems\AI\Script Types\Game\Endings</Filter>
     </ClCompile>
-    <ClCompile Include="Source\VegetationBreakable.cpp">
+    <ClCompile Include="Source\SaveComponent.cpp" />
+    <ClCompile Include="Source\VegetationPillbug.cpp">
       <Filter>RogueEngine\Systems\AI\Script Types\Game\Verdant Forest</Filter>
     </ClCompile>
   </ItemGroup>
