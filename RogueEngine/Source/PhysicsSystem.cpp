@@ -112,7 +112,7 @@ namespace Rogue
 		
 		// Set physics system signature.
 		g_engine.m_coordinator.SetSystemSignature<PhysicsSystem>(signature);
-		m_gravity = Vec2{ 0.0f, -1500.0f };
+		m_gravity = Vec2{ 0.0f, -1250.0f };
 
 		// Initialize Force Manager.
 		ForceManager::instance().Init();
@@ -215,11 +215,11 @@ namespace Rogue
 
 			if (g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(EvEntTeleport.GetEntityID()))
 			{
-				//ForceManager::instance().ResetPhysics(EvEntTeleport.GetEntityID());
+				ForceManager::instance().ResetPhysics(EvEntTeleport.GetEntityID());
 
 				oldPos = EvEntTeleport.GetVecMovement() - oldPos;
 				Vec2Normalize(oldPos, oldPos);
-				ForceManager::instance().RegisterForce(EvEntTeleport.GetEntityID(), oldPos * 10000.0f);
+				ForceManager::instance().RegisterForce(EvEntTeleport.GetEntityID(), oldPos * 11000.0f);
 			}
 
 			return;

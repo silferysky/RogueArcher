@@ -1010,6 +1010,10 @@ namespace Rogue
 
 	void PlayerControllerSystem::FreezeControlComponentUpdates()
 	{
+		if (auto playerOpt = g_engine.m_coordinator.TryGetComponent<PlayerControllerComponent>(*m_entities.begin()))
+		{
+			playerOpt->get().SetMoveState(MoveState::e_stop);
+		}
 		//if (auto boxCollider = g_engine.m_coordinator.TryGetComponent<BoxCollider2DComponent>(PLAYER_STATUS.GetPlayerEntity()))
 		//{
 		//	//boxCollider->get().SetCollisionMode(CollisionMode::e_asleep);
