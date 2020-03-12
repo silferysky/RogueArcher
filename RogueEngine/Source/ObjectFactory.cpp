@@ -406,7 +406,11 @@ namespace Rogue
 		//	}
 		//}
 		HierarchyInfo& info = g_engine.m_coordinator.GetHierarchyInfo(archetypeEntity);
-		int signatureInInt = static_cast<int>(g_engine.m_coordinator.GetEntityManager().GetSignature(archetypeEntity).to_ulong());
+		Signature signature = g_engine.m_coordinator.GetEntityManager().GetSignature(archetypeEntity);
+		signature.reset(COMPONENTID::CHILD);
+		signature.reset(COMPONENTID::TILE);
+		signature.reset(COMPONENTID::SAVE);
+		int signatureInInt = static_cast<int>(signature.to_ulong());
 		
 		//Safety check if entity not found
 		if (signatureInInt == -1)
