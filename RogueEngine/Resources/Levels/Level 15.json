@@ -1,6 +1,6 @@
 {
-    "MaxEntityCount": 253,
-    "EntityCount": 253,
+    "MaxEntityCount": 254,
+    "EntityCount": 254,
     "CameraMinX": -1000.0,
     "CameraMinY": -940.0,
     "CameraMaxX": 1360.0,
@@ -262,6 +262,7 @@
     "Signature250": 2053,
     "Signature251": 2245,
     "Signature252": 8663,
+    "Signature253": 8407,
     "Entity0": "Name{Collision9}|Tag{Ground}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-578;-576.495;100;100;0;0}||BoxCollider{0;0;13;247;AWAKE}|||||||||Collider{BOX;1;4294967295;}||||||||||||",
     "Entity1": "Name{Collision10}|Tag{}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-733;-751.495;100;100;0;0}||BoxCollider{0;0;74;32;AWAKE}|||||||||Collider{BOX;1;4294967295;}||||||||||||",
     "Entity2": "Name{Collision11}|Tag{Ground}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-487;-642.495;100;100;0;0}||BoxCollider{0;0;70;10;AWAKE}|||||||||Collider{BOX;1;4294967295;}||||||||||||",
@@ -514,7 +515,8 @@
     "Entity249": "Name{Collision64}|Tag{Ground}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-640.95;-659.416;100;100;0;0}||BoxCollider{0;0;116;81;AWAKE}|||||||||Collider{BOX;1;4294967295;}||||||||||||",
     "Entity250": "Name{ProgressFrame}|Tag{}|Sprite{Resources\\Assets\\SoulCollectionUI.png;1;1;1;1;}||Transform{-475;942.57;355;82;0;17}|||||||||UI{1;}||||||||||||||",
     "Entity251": "Name{ProgressBar}|Tag{}|Sprite{Resources\\Assets\\SoulCollectionBar.png;1;1;1;1;}||Transform{-475;922;282.5;14.5;0;8}||||LogicComponent{23;0;1;0}|StatsComponent{0;0;0;0;0;;0;0;0;0;0;0;0;}||||UI{1;}||||||||||||||",
-    "Entity252": "Name{Game Object 263}|Tag{Hitchhike}|Sprite{Resources\\Assets\\VegetationPillbugIdle.png;1;1;1;1;}|Rigidbody{0;0;0;0;1;1;1;10.656;0.5;0.1;0.01;}|Transform{-1357;685;100;100;0;0}||BoxCollider{0;0;0;0;TRIGGER}||LogicComponent{29;1;2;0;2}|StatsComponent{0;0;0;0;0;;0;0;0;0;0;0;0;}|Animation{4;0;0.1;1;0;1;}|||||Collider{BOX;1;4294967295;}||||||||||||",
+    "Entity252": "Name{Pillbug}|Tag{Hitchhike}|Sprite{Resources\\Assets\\VegetationPillbugIdle.png;1;1;1;1;}|Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-1357;685;100;100;0;0}||BoxCollider{0;0;0;0;TRIGGER}||LogicComponent{29;1;2;0;2}|StatsComponent{0;0;0;0;0;;0;0;0;0;0;0;0;}|Animation{4;0;0.1;1;0;1;}|||||Collider{BOX;1;4294967295;}||||||||||||",
+    "Entity253": "Name{Boulder}|Tag{}|Sprite{Resources\\Assets\\VegetationBreakable1.png;1;1;1;1;}|Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-1355;440.803;100;100;0;0}||BoxCollider{0;0;11;-2;AWAKE}||LogicComponent{30;0;1;0}|StatsComponent{0;0;0;0;0;;0;0;0;0;0;0;0;}||||||Collider{BOX;1;4294967295;}||||||||||||",
     "EntityParent0": 65535,
     "EntityParent1": 65535,
     "EntityParent2": 65535,
@@ -767,5 +769,6 @@
     "EntityParent249": 65535,
     "EntityParent250": 65535,
     "EntityParent251": 65535,
-    "EntityParent252": 65535
+    "EntityParent252": 65535,
+    "EntityParent253": 65535
 }

@@ -22,7 +22,9 @@ namespace Rogue
 
 			auto& animation = g_engine.m_coordinator.GetComponent<AnimationComponent>(m_entity);
 			animation.setFrames(5);
-			g_engine.m_coordinator.GetComponent<AnimationComponent>(m_entity).setIsLooping(false); // play the animation only once
+			animation.setEndFrame(4);
+			animation.setIsLooping(false); // play the animation only once
+
 
 			m_logicComponent->SetActiveStateBit(static_cast<size_t>(AIState::AIState_Idle));
 		}
@@ -38,7 +40,7 @@ namespace Rogue
 		if (g_engine.m_coordinator.GetHierarchyInfo(other).m_tag == "Ground")
 		{
 			if (m_entity == PLAYER_STATUS.GetHitchhikedEntity()) // if player is still attached
-				g_engine.m_coordinator.GetSystem<PlayerControllerSystem>()->ResetPlayerParent();
+				g_engine.m_coordinator.GetSystem<PlayerControllerSystem>()->Hitchhike(MAX_ENTITIES); // Proper way to get out of hitchhike
 
 			g_engine.m_coordinator.AddToDeleteQueue(m_entity);
 		}

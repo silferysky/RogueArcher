@@ -143,18 +143,11 @@ namespace Rogue
 	void RigidbodyComponent::setIsStatic(bool set)
 	{
 		m_isStatic = set;
-		m_velocity = Vec2();
-		m_acceleration = Vec2();
-		m_accForce = Vec2();
 
 		if (set == true)
-		{
 			m_massData.m_invMass = 0.0f;
-		}
 		else
-		{
 			m_massData.m_invMass = 1.0f;
-		}
 }
 
 	void RigidbodyComponent::setBounciness(float bounce)
@@ -178,49 +171,40 @@ namespace Rogue
 
 		ImGui::Checkbox("Component Active", &m_componentIsActive);
 
-		bool isStatic = getIsStatic();
 		ImGui::PushItemWidth(75);
-		ImGui::Checkbox("Static?", &isStatic);
-		setIsStatic(isStatic);
+		ImGui::Checkbox("Static?", &m_isStatic);
 
-		Vec2 velocity = getVelocity();
-		ImGui::PushItemWidth(75);
-		ImGui::DragFloat("Velocity X", &velocity.x, 1.0f, -2000.0f, 2000.0f);
-		ImGui::PushItemWidth(75);
-		ImGui::DragFloat("Velocity Y", &velocity.y, 1.0f, -2000.0f, 2000.0f);
-		setVelocity(velocity);
+		if (m_isStatic)
+			m_massData.m_invMass = 0.0f;
+		else
+			m_massData.m_invMass = 1.0f;
 
-		Vec2 accel = getAcceleration();
 		ImGui::PushItemWidth(75);
-		ImGui::DragFloat("Acceleration X", &accel.x, 1.0f, -10000.0f, 10000.0f);
+		ImGui::DragFloat("Velocity X", &m_velocity.x, 1.0f, -2000.0f, 2000.0f);
 		ImGui::PushItemWidth(75);
-		ImGui::DragFloat("Acceleration Y", &accel.y, 1.0f, -10000.0f, 10000.0f);
-		setAcceleration(accel);
+		ImGui::DragFloat("Velocity Y", &m_velocity.y, 1.0f, -2000.0f, 2000.0f);
 
-		float friction = getFriction();
 		ImGui::PushItemWidth(75);
-		ImGui::SliderFloat("Friction", &friction, 0.0f, 1.0f);
-		setFriction(friction);
+		ImGui::DragFloat("Acceleration X", &m_acceleration.x, 1.0f, -10000.0f, 10000.0f);
+		ImGui::PushItemWidth(75);
+		ImGui::DragFloat("Acceleration Y", &m_acceleration.y, 1.0f, -10000.0f, 10000.0f);
 
-		float damping = getDamping();
 		ImGui::PushItemWidth(75);
-		ImGui::SliderFloat("Damping", &damping, 0.0f, 1.0f);
-		setDamping(damping);
+		ImGui::DragFloat("Friction", &m_friction, 1.0f, 0.0f, 1.0f);
 
-		float bounce = getBounciness();
 		ImGui::PushItemWidth(75);
-		ImGui::SliderFloat("Bounciness", &bounce, 0.0f, 1.0f);
-		setBounciness(bounce);
+		ImGui::DragFloat("Damping", &m_damping, 1.0f, 0.0f, 1.0f);
 
-		float gravScale = getGravityScale();
 		ImGui::PushItemWidth(75);
-		ImGui::SliderFloat("Gravity Scale", &gravScale, 0.0f, 50.0f);
-		setGravityScale(gravScale);
+		ImGui::DragFloat("Bounciness", &m_restitution, 1.0f, 0.0f, 1.0f);
 
-		float mass = getMass();
 		ImGui::PushItemWidth(75);
-		ImGui::DragFloat("Mass", &mass, 0.05f, 0.01f, 10000.0f);
-		setMass(mass);
+		ImGui::DragFloat("Gravity Scale", &m_gravityScale, 1.0f, 0.0f, 100.0f);
+
+		ImGui::PushItemWidth(75);
+		ImGui::DragFloat("Mass", &m_massData.m_mass, 0.05f, 0.01f, 10000.0f);
+
+		m_massData.m_invMass = 1 / m_massData.m_mass;
 	}
 
 	std::string RigidbodyComponent::Serialize()
