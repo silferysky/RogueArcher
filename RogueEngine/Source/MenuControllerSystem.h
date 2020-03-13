@@ -48,13 +48,13 @@ namespace Rogue
 
 		void ClearMenuObjs();
 		void InitPauseMenu();
-		void ToggleUIMenuObjs();
 		void SetUIMenuObjs(bool newActive);
 		size_t GetUIMenuObjsSize();
 		void ResumeGame();
 
 		void MoveMenuObjs();
 		void HandleMenuObjs();
+		void ResetMenuPositions();
 	};
 }
 
