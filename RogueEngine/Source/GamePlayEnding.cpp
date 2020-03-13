@@ -237,6 +237,18 @@ namespace Rogue
 						auto& animation = g_engine.m_coordinator.GetComponent<AnimationComponent>(info.m_Entity);
 						animation.setFrames(4);
 					}
+
+					if (info.m_tag == "AKey")
+					{
+						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+						transform.setZ(102);
+					}
+
+					if (info.m_tag == "DKey")
+					{
+						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+						transform.setZ(102);
+					}
 				}
 			}
 			else if (m_timer > 18.0f)
@@ -598,8 +610,8 @@ namespace Rogue
 		{
 			//Freeze Player Controls			
 			m_timer = 0.0f;
-			m_souls = PLAYER_STATUS.GetSoulsCollected();
-			if (m_souls < 1)
+			m_souls = PLAYER_STATUS.GetSoulsCollected()[CRYSTAL];
+			if (m_souls > 2)
 			{
 				PLAYER_STATUS.FreezeControls();
 				auto playerEnt = PlayerStatusManager::instance().GetPlayerEntity();
