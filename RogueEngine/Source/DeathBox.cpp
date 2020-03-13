@@ -27,13 +27,13 @@ namespace Rogue
 		{
 			// Enable player statuses
 			PLAYER_STATUS.SetDeath(false);
-			//m_died = false;
 			PLAYER_STATUS.UnfreezeControls();
+			m_triggered = false;
 			
 			if (auto transform = g_engine.m_coordinator.TryGetComponent<TransformComponent>(PLAYER_STATUS.GetPlayerEntity()))
 			{
 				transform->get().setPosition(PLAYER_STATUS.GetCheckpoint());
-				transform->get().setZ(101); // Prefab player's Z value.
+				transform->get().setZ(m_playerZ); // Prefab player's Z value.
 			}
 
 			// Reenable camera lerping after shake
@@ -64,7 +64,7 @@ namespace Rogue
 			// Player statuses
 			PLAYER_STATUS.FreezeControls();
 			PLAYER_STATUS.SetDeath(true);
-			//m_died = true;
+			m_triggered = true;
 			PLAYER_STATUS.DestroyIndicators(); // Indicators will spawn in PlayerControllerSystem update
 
 			// Play death sound
@@ -76,6 +76,7 @@ namespace Rogue
 
 			// Set player and children to be unseen
 			TransformComponent& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetPlayerEntity());
+			m_playerZ = trans.GetZ();
 			trans.setZ(-9999);
 		}
 	}
