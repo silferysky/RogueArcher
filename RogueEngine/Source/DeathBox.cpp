@@ -22,12 +22,15 @@ namespace Rogue
 		if (!m_triggered || !g_engine.m_coordinator.GameIsActive() || PLAYER_STATUS.GetPlayerEntity() == MAX_ENTITIES)
 			return;
 
+		g_engine.m_coordinator.GetSystem<CameraSystem>()->setIsActive(false);
+
 		// Once death timer has reached lifetime
 		if (m_age > m_lifetime)
 		{
 			// Enable player statuses
 			PLAYER_STATUS.SetDeath(false);
 			PLAYER_STATUS.UnfreezeControls();
+			g_engine.m_coordinator.GetSystem<CameraSystem>()->setIsActive(true);
 			m_triggered = false;
 			
 			if (auto transform = g_engine.m_coordinator.TryGetComponent<TransformComponent>(PLAYER_STATUS.GetPlayerEntity()))
