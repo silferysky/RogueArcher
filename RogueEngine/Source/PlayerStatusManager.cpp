@@ -30,7 +30,8 @@ namespace Rogue
 		m_soulsCollected{ 0 },
 		m_lastLevel { "None"},
 		m_isEnding{ false },
-		m_infiniteJumps{ false }
+		m_infiniteJumps{ false },
+		m_triggerOnce(false)
 	{
 	}
 
@@ -283,6 +284,16 @@ namespace Rogue
 	Vec2 PlayerStatusManager::GetStartingPos() const
 	{
 		return m_startingPos;
+	}
+
+	bool PlayerStatusManager::GetTriggerOnce() const
+	{
+		return m_triggerOnce;
+	}
+
+	void PlayerStatusManager::SetTriggerOnce(bool trigger)
+	{
+		m_triggerOnce = trigger;
 	}
 
 	void PlayerStatusManager::SetSoulsCollected(unsigned soulsCollected)

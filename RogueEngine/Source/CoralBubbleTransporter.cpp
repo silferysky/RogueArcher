@@ -138,7 +138,8 @@ namespace Rogue
 
 		if (m_statsComponent->GetIsPatrolling())
 			m_logicComponent->SetActiveStateBit(static_cast<size_t>(AIState::AIState_Patrol));
-		m_logicComponent->SetActiveStateBit(static_cast<size_t>(AIState::AIState_Idle));
+
+		//m_logicComponent->SetActiveStateBit(static_cast<size_t>(AIState::AIState_Idle));
 	}
 
 	void CoralBubbleTransporter::AIIdleUpdate()

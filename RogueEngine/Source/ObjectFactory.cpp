@@ -70,6 +70,7 @@ namespace Rogue
 
 		//For Player character
 		PLAYER_STATUS.SetStartingPos(Vec2(level["StartPosX"].GetFloat(), level["StartPosY"].GetFloat()));
+		PLAYER_STATUS.SetCheckpoint(PLAYER_STATUS.GetStartingPos());
 
 		for (Entity entity = 0; entity < entCount; ++entity)
 		{

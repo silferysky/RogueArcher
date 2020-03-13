@@ -84,7 +84,18 @@ namespace Rogue
 	{
 		if (!g_engine.m_coordinator.GameIsActive())
 			return;
-
+	
+		if (PLAYER_STATUS.GetTriggerOnce())
+		{
+			return;
+		}
+		if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(otherEnt))
+		{
+			if (g_engine.m_coordinator.GetHierarchyInfo(m_entity).m_tag == "TriggerOnce")
+			{
+				PLAYER_STATUS.SetTriggerOnce(true);
+			}
+		}
 		TriggerZoom::OnTriggerEnter(otherEnt);
 
 		//This part is copied from EmojiScript
