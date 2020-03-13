@@ -31,58 +31,43 @@ namespace Rogue
 
 		if (m_open == 0) // if open
 		{
-			if (m_timer < 0.40f) // animation has ended
-				boxCollider.SetCollisionMode(CollisionMode::e_trigger);
-			else
+			if (m_timer > 0.40f) // animation has ended
 			{
 				m_open = 1;
 				m_timer = 0.0f; // reset the timer 
-				//sprite.setTexturePath("Resources/Assets/CoralClamClose.png");
-				std::cout << "Closed!" << std::endl;
-				//animation.setCurrentFrame(0);
 				animation.setIsAnimating(false);
+				//boxCollider.SetCollisionMode(CollisionMode::e_trigger);
 			}
 		}
 		else if (m_open == 1)// not open
 		{
-			if (m_timer < 2.00f) // animation has ended
-				boxCollider.SetCollisionMode(CollisionMode::e_awake);
-			else
+			if (m_timer > 2.00f) // animation has ended
 			{
 				m_open = 2;
 				m_timer = 0.0f;
-				//sprite.setTexturePath("Resources/Assets/ElaResist.png");
-				std::cout << "Open!" << std::endl;
-				//setCurrentFrame(0);
 				animation.setIsAnimating(true);
+				boxCollider.SetCollisionMode(CollisionMode::e_trigger);
 			}
 		}
 		else if (m_open == 2)// not open
 		{
-			if (m_timer < 0.40f) // animation has ended
-				boxCollider.SetCollisionMode(CollisionMode::e_trigger);
-			else
+			if (m_timer > 0.40f) // animation has ended
 			{
 				m_open = 3;
 				m_timer = 0.0f;
-				//sprite.setTexturePath("Resources/Assets/ElaResist.png");
-				std::cout << "Open!" << std::endl;
-				//animation.setCurrentFrame(0);
 				animation.setIsAnimating(false);
+				//boxCollider.SetCollisionMode(CollisionMode::e_trigger);
 			}
 		}
 		else if (m_open == 3)// not open
 		{
-			if (m_timer < 2.00f) // animation has ended
-				boxCollider.SetCollisionMode(CollisionMode::e_awake);
-			else
+			if (m_timer > 2.00f) // animation has ended
 			{
 				m_open = 0;
 				m_timer = 0.0f;
-				//sprite.setTexturePath("Resources/Assets/ElaResist.png");
-				std::cout << "Open!" << std::endl;
 				animation.setCurrentFrame(0);
 				animation.setIsAnimating(true);
+				boxCollider.SetCollisionMode(CollisionMode::e_awake);
 			}
 		}
 	}
