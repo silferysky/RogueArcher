@@ -529,31 +529,54 @@ namespace Rogue
 						// Skip level
 						else if (keycode == KeyPress::KeyI)
 						{
-							if (SceneManager::instance().getCurrentFileName() == "Level 10.json")
+							if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(*iEntity))
 							{
-								if (g_engine.m_coordinator.ComponentExists<TransformComponent>(*iEntity))
+								//Tutorial
+								if (SceneManager::instance().getCurrentFileName() == "Level 10.json")
 								{
-									auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
-
-									trans.setPosition(Vec2(2300.0f, 350.0f));
+									trans->get().setPosition(Vec2(2130.0f, 300.0f));
+								}
+								//Forest
+								else if (SceneManager::instance().getCurrentFileName() == "Level 15.json")
+								{
+									trans->get().setPosition(Vec2(-1565.0f, 440.0f));
+								}
+								//Coral
+								else if (SceneManager::instance().getCurrentFileName() == "Level 18.json")
+								{
+									trans->get().setPosition(Vec2(-650.0f, -1175.0f));
+								}
+								//Mine
+								else if (SceneManager::instance().getCurrentFileName() == "Level 18.json")
+								{
+									trans->get().setPosition(Vec2(1180.0f, -735.0f));
 								}
 							}
 						}
-						else if (keycode == KeyPress::KeyS)
-						{
-							//ForceManager::instance().RegisterForce(*iEntity, -Vec2::s_unitY * playerX, g_fixedDeltaTime);
-						}
-
 						// Reset level
 						else if (keycode == KeyPress::KeyO)
 						{
-							if (SceneManager::instance().getCurrentFileName() == "Level 10.json")
+							if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(*iEntity))
 							{
-								if (g_engine.m_coordinator.ComponentExists<TransformComponent>(*iEntity))
+								//Tutorial
+								if (SceneManager::instance().getCurrentFileName() == "Level 10.json")
 								{
-									auto& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
-
-									trans.setPosition(Vec2(-2813.04f, 1103.46f));
+									trans->get().setPosition(Vec2(-3583.0f, 672.0f));
+								}
+								//Forest
+								else if (SceneManager::instance().getCurrentFileName() == "Level 15.json")
+								{
+									trans->get().setPosition(Vec2(-555.0f, 850.0f));
+								}
+								//Coral
+								else if (SceneManager::instance().getCurrentFileName() == "Level 18.json")
+								{
+									trans->get().setPosition(Vec2(-865.0f, 950.0f));
+								}
+								//Mine
+								else if (SceneManager::instance().getCurrentFileName() == "Level 18.json")
+								{
+									trans->get().setPosition(Vec2(-650.0f, -1175.0f));
 								}
 							}
 						}
