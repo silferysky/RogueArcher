@@ -44,6 +44,18 @@ namespace Rogue
 			g_engine.m_coordinator.GetComponent<RigidbodyComponent>(m_entity).setIsStatic(true);
 		}
 
+		if (auto collider = g_engine.m_coordinator.TryGetComponent<ColliderComponent>(m_entity))
+		{
+			int lightPos = -1;
+			int darkPos = -1;
+
+			lightPos = LayerManager::instance().GetLayerCategory("Light");
+			darkPos = LayerManager::instance().GetLayerCategory("Dark");
+
+			collider->get().ChangeLayer(darkPos);
+			collider->get().SetMask(lightPos);
+			collider->get().SetMask(darkPos, false);
+		}
 		SetCollisionColor();
 
 		m_patrolDelay = 2.0f;
@@ -64,7 +76,22 @@ namespace Rogue
 		{
 			m_delay -= g_engine.GetTimeScale() * g_deltaTime;
 			if (m_delay < 0.0f)
+			{
 				m_delay = 0.0f;
+
+				if (m_swapping)
+				{
+					g_engine.m_coordinator.GetSystem<PlayerControllerSystem>()->Hitchhike(MAX_ENTITIES);
+
+					if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(m_entity))
+					{
+						trans->get().setPosition(m_waypoints[0]);
+					}
+
+					SwapCollisionType();
+					SetCollisionColor();
+				}
+			}
 			return;
 		}
 
@@ -116,43 +143,40 @@ namespace Rogue
 			//At the very last waypoint
 			if (++m_currentPointIndex >= m_waypoints.size())
 			{
-				g_engine.m_coordinator.GetSystem<PlayerControllerSystem>()->Hitchhike(MAX_ENTITIES);
-				//g_engine.m_coordinator.AddToDeleteQueue(m_entity);
 				m_currentPointIndex = 1;
 
-				if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(m_entity))
-				{
-					trans->get().setPosition(m_waypoints[0]);
-				}
-
-				if (auto collider = g_engine.m_coordinator.TryGetComponent<ColliderComponent>(m_entity))
-				{
-					int lightPos = -1;
-					int darkPos = -1;
-
-					lightPos = LayerManager::instance().GetLayerCategory("Light");
-					darkPos = LayerManager::instance().GetLayerCategory("Dark");
-
-					//This is SWAPPING types, so specifically changing to opposite
-					if (collider->get().GetCollisionMask().test(lightPos))
-					{
-						collider->get().ChangeLayer(darkPos);
-						collider->get().SetMask(lightPos);
-						collider->get().SetMask(darkPos, false);
-					}
-					else
-					{
-						collider->get().ChangeLayer(lightPos);
-						collider->get().SetMask(darkPos);
-						collider->get().SetMask(lightPos, false);
-					}
-					SetCollisionColor();
-				}
+				m_swapping = true;
 			}
 
 			m_nextPoint.push(m_waypoints[m_currentPointIndex]);
 
 			m_delay = m_patrolDelay;
+		}
+	}
+
+	void CrystalElementBeetle::SwapCollisionType()
+	{
+		if (auto collider = g_engine.m_coordinator.TryGetComponent<ColliderComponent>(m_entity))
+		{
+			int lightPos = -1;
+			int darkPos = -1;
+
+			lightPos = LayerManager::instance().GetLayerCategory("Light");
+			darkPos = LayerManager::instance().GetLayerCategory("Dark");
+
+			//This is SWAPPING types, so specifically changing to opposite
+			if (collider->get().GetCollisionCat() == Light)
+			{
+				collider->get().ChangeLayer(darkPos);
+				collider->get().SetMask(lightPos);
+				collider->get().SetMask(darkPos, false);
+			}
+			else
+			{
+				collider->get().ChangeLayer(lightPos);
+				collider->get().SetMask(darkPos);
+				collider->get().SetMask(lightPos, false);
+			}
 		}
 	}
 
