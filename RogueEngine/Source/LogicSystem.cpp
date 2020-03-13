@@ -85,6 +85,8 @@ namespace Rogue
 		signature.set(g_engine.m_coordinator.GetComponentType<StatsComponent>());
 
 		g_engine.m_coordinator.SetSystemSignature<LogicSystem>(signature);
+
+		m_entityLogicMap.clear();
 	}
 
 	void LogicSystem::Update()

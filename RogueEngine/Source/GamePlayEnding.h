@@ -11,6 +11,10 @@ namespace Rogue
 		float m_movement = 15.0f;
 		bool m_moveleft;
 		bool m_moveright;
+		bool m_finalInput;
+		bool m_endingAPressed;
+		bool m_endingDPressed;
+		Entity m_finalSprite;
 	public:
 		GamePlayEnding(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent);
 		virtual void AIActiveStateUpdate() override;
