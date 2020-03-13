@@ -42,13 +42,28 @@ Technology is prohibited.
 #endif
 
 #if defined(DEBUG) | defined(_DEBUG)
-	#define ENABLE_LOGGER 0
-	#define ENABLE_ASSERT 0
+	#define ENABLE_LOGGER 1
+	#if ENABLE_LOGGER
+		#define ENABLE_CORE_LOGGING 1
+	#else
+	#define ENABLE_CORE_LOGGING 1
+	#endif
+	#define ENABLE_ASSERT 1
 #elif DEMO_MODE
 	#define ENABLE_LOGGER 0
+	#if ENABLE_LOGGER
+		#define ENABLE_CORE_LOGGING 0
+	#else
+		#define ENABLE_CORE_LOGGING 0 
+	#endif
 	#define ENABLE_ASSERT 0
 #else
 	#define ENABLE_LOGGER 1
+	#if ENABLE_LOGGER
+		#define ENABLE_CORE_LOGGING 0
+	#else
+		#define ENABLE_CORE_LOGGING 0
+	#endif
 	#define ENABLE_ASSERT 1
 #endif
 

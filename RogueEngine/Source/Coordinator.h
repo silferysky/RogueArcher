@@ -146,9 +146,11 @@ namespace Rogue
 			const char* typeName = typeid(TComponent).name();
 			m_componentManager->RegisterComponent<TComponent>();
 
+#if ENABLE_CORE_LOGGING
 			std::stringstream output;
 			output << typeName << " registered!";
-			//RE_CORE_INFO(output.str());
+			RE_CORE_INFO(output.str());
+#endif
 		}
 
 		template<typename TComponent>
@@ -167,7 +169,9 @@ namespace Rogue
 		template<typename TComponent>
 		void RemoveComponent(Entity entity)
 		{
+#if ENABLE_CORE_LOGGING
 			std::cout << "component removed from entity" << std::endl;
+#endif
 			m_componentManager->RemoveComponent<TComponent>(entity);
 
 			auto signature = m_entityManager->GetSignature(entity);

@@ -85,12 +85,12 @@ namespace Rogue
 			RemoveEntityFromActiveObjects(entity);
 			REAvailableEntities.push(entity);
 			--REActiveEntityCount;
-			
 
+#if ENABLE_CORE_LOGGING
 			std::stringstream out;
 			out << "Entities Destroyed. Current active entities: " << REActiveEntityCount;
-
 			RE_CORE_INFO(out.str());
+#endif
 		}
 
 		void RemoveEntityFromActiveObjects(Entity entity)
@@ -101,7 +101,6 @@ namespace Rogue
 
 		void SetSignature(Entity entity, Signature signature)
 		{
-
 			RE_ASSERT(entity < MAX_ENTITIES, "Entity out of range.");
 			RESignatures[entity] = signature;
 		}
@@ -118,8 +117,6 @@ namespace Rogue
 			RE_ASSERT(entity < MAX_ENTITIES, "Entity out of range.");
 			
 			return m_entityInfo[entity];
-
-			//throw;
 		}
 
 		std::array<HierarchyInfo, MAX_ENTITIES>& GetHierarchyInfoArray()
@@ -130,7 +127,6 @@ namespace Rogue
 		void RemoveHierarchyInfo(Entity ent)
 		{
 			m_entityInfo[ent] = HierarchyInfo();
-			//std::remove(m_entityInfo.begin(), m_entityInfo.end(), ent);
 		}
 
 		uint32_t GetActiveEntityCount()

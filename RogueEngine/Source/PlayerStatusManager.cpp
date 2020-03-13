@@ -183,6 +183,18 @@ namespace Rogue
 		return m_moveLeft;
 	}
 
+	void PlayerStatusManager::DestroyIndicators()
+	{
+		if (PLAYER_STATUS.GetIndicator() != MAX_ENTITIES)
+		{
+			PLAYER_STATUS.SetIndicatorStatus(false);
+			g_engine.m_coordinator.AddToDeleteQueue(PLAYER_STATUS.GetIndicator());
+			g_engine.m_coordinator.AddToDeleteQueue(PLAYER_STATUS.GetHitchhikeIndicator());
+			PLAYER_STATUS.SetIndicator(MAX_ENTITIES);
+			PLAYER_STATUS.SetHitchhikeIndicator(MAX_ENTITIES);
+		}
+	}
+
 	float PlayerStatusManager::GetTeleportCharge() const
 	{
 		return m_teleportCharge;

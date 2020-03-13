@@ -100,7 +100,7 @@ namespace Rogue
 
 				system->m_entities.erase(entity);
 
-#if ENABLE_LOGGER
+#if ENABLE_CORE_LOGGING
 				std::stringstream str;
 				str << "Entity " << entity << " Removed from " << pair.first.name();
 				RE_CORE_INFO(str.str());
@@ -110,7 +110,7 @@ namespace Rogue
 
 		void EntitySignatureChanged(Entity entity, Signature entitySignature)
 		{
-#if ENABLE_LOGGER
+#if ENABLE_CORE_LOGGING
 			std::stringstream out;
 #endif
 
@@ -131,7 +131,7 @@ namespace Rogue
 				{
 					if (system->m_entities.insert(entity).second)
 					{
-#if ENABLE_LOGGER
+#if ENABLE_CORE_LOGGING
 						CLEARSTRING(out);
 						out << "Entity " << entity << " added to " << type.name();
 						RE_CORE_INFO(out.str());
@@ -147,7 +147,7 @@ namespace Rogue
 				// Entity signature does not match system signature - erase from set/don't add
 				else
 				{
-#if ENABLE_LOGGER
+#if ENABLE_CORE_LOGGING
 					if (system->m_entities.find(entity) != system->m_entities.end()) // If entity exists
 					{
 						CLEARSTRING(out);
