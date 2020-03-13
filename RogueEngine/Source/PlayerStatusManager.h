@@ -87,8 +87,11 @@ namespace Rogue
 
 		//Collectibles
 		void SetSoulsCollected(unsigned soulsCollected);
-		unsigned GetSoulsCollected() const;
+		//unsigned GetSoulsCollected() const;
 		void IncrementSoulsCollected();
+
+		std::map<LEVEL, unsigned>& GetSoulsCollected();
+		std::map<LEVEL, unsigned>& GetTotalSouls();
 
 		unsigned GetSoulsCollected(LEVEL level) const;
 		void IncrementSoulsCollected(LEVEL level);

@@ -321,9 +321,19 @@ namespace Rogue
 
 	}
 
-	unsigned PlayerStatusManager::GetSoulsCollected() const
+	/* unsigned PlayerStatusManager::GetSoulsCollected() const
 	{
 		return m_soulsCollected;
+	} */
+
+	std::map<LEVEL, unsigned>& PlayerStatusManager::GetSoulsCollected()
+	{
+		return m_souls;
+	}
+
+	std::map<LEVEL, unsigned>& PlayerStatusManager::GetTotalSouls()
+	{
+		return m_totalSouls;
 	}
 
 	unsigned PlayerStatusManager::GetSoulsCollected(LEVEL level) const
