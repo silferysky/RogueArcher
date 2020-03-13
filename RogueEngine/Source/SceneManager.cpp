@@ -112,6 +112,7 @@ namespace Rogue
 		}
 
 		//Setting up
+		PLAYER_STATUS.SetLastLevel(getCurrentFileName());
 		setCurrentFileName(fileName);
 		ClearAllEntities();
 
@@ -129,7 +130,7 @@ namespace Rogue
 		if (it == m_loadedLevels.end())
 			m_loadedLevels.push_back(std::string(fileName));
 
-		Entity player = MAX_ENTITIES;
+		/*Entity player = MAX_ENTITIES;
 		
 		if (fileName != "Level 20.json")
 			player = m_objectFactory->Clone("FinalPlayer", true, false);
@@ -182,9 +183,8 @@ namespace Rogue
 					}
 				}
 				std::cout << "FIRST CHILD TRANS AFTER UPDATE" << childTrans.GetPosition().x << "," << childTrans.GetPosition().y << std::endl;
-			}
+			}*/
 
-		PLAYER_STATUS.SetLastLevel(fileName);
 		//std::shared_ptr<MenuControllerSystem> menuControl = g_engine.m_coordinator.GetSystem<MenuControllerSystem>();
 		//menuControl->InitPauseMenu();
 
