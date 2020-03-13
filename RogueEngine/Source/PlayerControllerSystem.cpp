@@ -146,16 +146,16 @@ namespace Rogue
 				PLAYER_STATUS.SetIndicator(g_engine.m_coordinator.CloneArchetypes("Indicator", true, false));
 				PLAYER_STATUS.SetHitchhikeIndicator(g_engine.m_coordinator.CloneArchetypes("IndicatorHitchhike", true, false));
 
-				if (m_entities.size())
-				{
-					ParentSetEvent parent(*m_entities.begin(), PLAYER_STATUS.GetIndicator());
-					parent.SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
-					EventDispatcher::instance().AddEvent(parent);
-
-					//ParentSetEvent hitchhikeParent(*m_entities.begin(), PLAYER_STATUS.GetHitchhikeIndicator());
+				//if (m_entities.size())
+				//{
+				//	ParentSetEvent parent(*m_entities.begin(), PLAYER_STATUS.GetIndicator());
+				//	parent.SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
+				//	EventDispatcher::instance().AddEvent(parent);
+				//
+				//	//ParentSetEvent hitchhikeParent(*m_entities.begin(), PLAYER_STATUS.GetHitchhikeIndicator());
 					//hitchhikeParent.SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
 					//EventDispatcher::instance().AddEvent(hitchhikeParent);
-				}
+				//}
 
 				//Resetting some values
 				PLAYER_STATUS.SetInfiniteJumps(false);
@@ -164,7 +164,7 @@ namespace Rogue
 			{
 				//If it reaches here, that means indicator exists already
 				if (PLAYER_STATUS.GetIndicator() != MAX_ENTITIES &&
-					g_engine.m_coordinator.ComponentExists<ChildComponent>(PLAYER_STATUS.GetIndicator()) &&
+					//g_engine.m_coordinator.ComponentExists<ChildComponent>(PLAYER_STATUS.GetIndicator()) &&
 					g_engine.m_coordinator.ComponentExists<TransformComponent>(PLAYER_STATUS.GetIndicator()))
 				{
 					Vec2 calculatedPos = GetTeleportRaycast();
@@ -453,7 +453,7 @@ namespace Rogue
 						if (!player.m_grounded || player.m_jumpTimer > 0.0f || PLAYER_STATUS.HasJumped())
 							return;
 
-						ForceManager::instance().RegisterForce(*iEntity, Vec2(0.0f, 15000.0f));
+						ForceManager::instance().RegisterForce(*iEntity, Vec2(0.0f, player.GetJumpSpeed()));
 
 						// Reset boolean for grounded
 						if (!PLAYER_STATUS.HasJumped())

@@ -47,6 +47,8 @@ namespace Rogue
 				m_shakeOffset = { 0,0 };
 			}
 		}
+		else if (!g_engine.m_coordinator.GetSystem<CameraSystem>()->getIsActive())
+			g_engine.m_coordinator.GetSystem<CameraSystem>()->setIsActive(true);
 	}
 
 	void CameraShake::SetShake(float magnitude)
