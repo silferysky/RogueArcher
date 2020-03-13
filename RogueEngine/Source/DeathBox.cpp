@@ -37,7 +37,7 @@ namespace Rogue
 			}
 
 			// Reenable camera lerping after shake
-			g_engine.m_coordinator.GetSystem<CameraSystem>()->setIsActive(true);
+			//g_engine.m_coordinator.GetSystem<CameraSystem>()->setIsActive(true);
 
 			// Respawn indicators
 			PLAYER_STATUS.SetIndicatorStatus(true);
@@ -56,10 +56,10 @@ namespace Rogue
 		if (other == PLAYER_STATUS.GetPlayerEntity())
 		{
 			// Shake camera
-			g_engine.m_coordinator.GetSystem<CameraSystem>()->setIsActive(false);
 			CameraShakeEvent shake(5.0f);
 			shake.SetSystemReceivers(static_cast<int>(SystemID::id_CAMERASYSTEM));
 			EventDispatcher::instance().AddEvent(shake);
+			g_engine.m_coordinator.GetSystem<CameraSystem>()->setIsActive(false);
 
 			// Player statuses
 			PLAYER_STATUS.FreezeControls();
