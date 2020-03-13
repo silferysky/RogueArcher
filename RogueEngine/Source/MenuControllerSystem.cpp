@@ -215,7 +215,7 @@ namespace Rogue
 					if (!m_menuObjs.size())
 						return;
 					AudioManager::instance().loadSound("Resources/Sounds/button.ogg", 0.3f, false).Play();
-					m_showControlMenu = true;
+					m_showControlMenu = false;
 
 					if (auto UI = g_engine.m_coordinator.TryGetComponent<UIComponent>(m_menuObjs.back()))
 					{
@@ -275,6 +275,7 @@ namespace Rogue
 				else if (hierarchyObj.m_objectName == "NoBtn")
 				{
 					m_confirmQuit = false;
+					m_showControlMenu = false;
 					HandleMenuObjs();
 				}
 			}
@@ -366,22 +367,6 @@ namespace Rogue
 		m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("YesBtn", true, false));
 		m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("NoBtn", true, false));
 
-		m_menuObjsTransforms.clear();
-
-		for (auto& menuEnt : m_menuObjs)
-		{
-			if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(menuEnt))
-			{
-				m_menuObjsTransforms.push_back(trans->get().GetPosition());
-			}
-		}
-		for (auto& menuEnt : m_confirmQuitEnt)
-		{
-			if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(menuEnt))
-			{
-				m_menuObjsTransforms.push_back(trans->get().GetPosition());
-			}
-		}
 		
 		////For camera correctness
 		//for (auto& menuEnt : m_menuObjs)
@@ -403,7 +388,7 @@ namespace Rogue
 		//{
 		//	m_confirmQuitEnt.push_back(child);
 		//}
-
+		ResetMenuPositions();
 		SetUIMenuObjs(false);
 	}
 
@@ -473,6 +458,8 @@ namespace Rogue
 		g_engine.SetTimeScale(1.0f);
 		m_confirmQuit = false;
 
+		m_showControlMenu = false;
+		//MoveMenuObjs();
 		HandleMenuObjs();
 	}
 
@@ -486,6 +473,10 @@ namespace Rogue
 		{
 			if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(ent))
 			{
+				if (ent == m_menuObjs.front() + 1)
+				{
+					std::cout << "INITIAL POS: " << trans->get().GetPosition().x << ";" << trans->get().GetPosition().y << std::endl;
+				}
 				if (movingToPos)
 				{
 					if (SceneManager::instance().getCurrentFileName() == "Level 16.json")
@@ -515,6 +506,10 @@ namespace Rogue
 						*itr = trans->get().GetPosition();
 						++itr;
 					}
+				}
+				if (ent == m_menuObjs.front() + 1)
+				{
+					std::cout << "END POS: " << trans->get().GetPosition().x << ";" << trans->get().GetPosition().y << std::endl;
 				}
 			}
 		}
@@ -694,6 +689,26 @@ namespace Rogue
 			}
 		}
 
+	}
+
+	void MenuControllerSystem::ResetMenuPositions()
+	{
+		m_menuObjsTransforms.clear();
+
+		for (auto& menuEnt : m_menuObjs)
+		{
+			if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(menuEnt))
+			{
+				m_menuObjsTransforms.push_back(trans->get().GetPosition());
+			}
+		}
+		for (auto& menuEnt : m_confirmQuitEnt)
+		{
+			if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(menuEnt))
+			{
+				m_menuObjsTransforms.push_back(trans->get().GetPosition());
+			}
+		}
 	}
 
 	void MenuControllerSystem::ClearMenuObjs()

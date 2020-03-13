@@ -551,6 +551,16 @@ namespace Rogue
 								{
 									trans->get().setPosition(Vec2(1180.0f, -735.0f));
 								}
+								HierarchyInfo& playerInfo = g_engine.m_coordinator.GetHierarchyInfo(PLAYER_STATUS.GetPlayerEntity());
+								for (auto entity : playerInfo.m_children)
+								{
+									if (auto child = g_engine.m_coordinator.TryGetComponent<ChildComponent>(entity))
+									{
+										child->get().SetGlobalDirty();
+										child->get().ResetLocalDirty();
+										g_engine.m_coordinator.ApplyParentChildCorrection(entity);
+									}
+								}
 							}
 						}
 						// Reset level
@@ -577,6 +587,17 @@ namespace Rogue
 								else if (SceneManager::instance().getCurrentFileName() == "Level 18.json")
 								{
 									trans->get().setPosition(Vec2(-650.0f, -1175.0f));
+								}
+
+								HierarchyInfo& playerInfo = g_engine.m_coordinator.GetHierarchyInfo(PLAYER_STATUS.GetPlayerEntity());
+								for (auto entity : playerInfo.m_children)
+								{
+									if (auto child = g_engine.m_coordinator.TryGetComponent<ChildComponent>(entity))
+									{
+										child->get().SetGlobalDirty();
+										child->get().ResetLocalDirty();
+										g_engine.m_coordinator.ApplyParentChildCorrection(entity);
+									}
 								}
 							}
 						}
