@@ -20,6 +20,7 @@ Technology is prohibited.
 #include <vector>
 #include <string>
 #include "Vector2D.h"
+#include "GameLevels.h"
 
 namespace Rogue
 {
@@ -69,6 +70,9 @@ namespace Rogue
 		void AddEmojiTexture(std::string texturePath);
 		std::vector<std::string> GetEmojiTextures() const;
 
+		void setLevel(LEVEL level);
+		LEVEL getLevel() const;
+
 		//From BaseComponent
 		std::string Serialize() override;
 		void Deserialize(std::string_view toDeserialize) override;
@@ -98,5 +102,7 @@ namespace Rogue
 		//For Emojis
 		std::vector<std::string> m_emojiTexture;
 		float m_emojiDelay;
+
+		LEVEL m_level;
 	};
 }

@@ -1,6 +1,7 @@
 #pragma once
 #include "Types.h"
 #include "Vector2D.h"
+#include "GameLevels.h"
 #define PLAYER_STATUS PlayerStatusManager::instance()
 
 namespace Rogue
@@ -88,6 +89,11 @@ namespace Rogue
 		unsigned GetSoulsCollected() const;
 		void IncrementSoulsCollected();
 
+		unsigned GetSoulsCollected(LEVEL level) const;
+		void IncrementSoulsCollected(LEVEL level);
+
+		unsigned GetTotalSouls(LEVEL level) const;
+
 		//Transition
 		void SetLastLevel(std::string_view str);
 		std::string_view GetLastLevel() const;
@@ -101,7 +107,8 @@ namespace Rogue
 		bool GetInfiniteJumps() const;
 
 	private:
-
+		std::map<LEVEL, unsigned> m_souls;
+		std::map<LEVEL, unsigned> m_totalSouls;
 
 		size_t m_runCount;
 

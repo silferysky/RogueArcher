@@ -24,7 +24,7 @@ namespace Rogue
 			}
 
 			g_engine.m_coordinator.loadSound("Resources/Sounds/soul_pickup.ogg", 0.3f, false).Play();
-			PlayerStatusManager::instance().IncrementSoulsCollected();
+			PlayerStatusManager::instance().IncrementSoulsCollected(m_statsComponent->getLevel());
 
 			if (auto audio = g_engine.m_coordinator.TryGetComponent<AudioEmitterComponent>(m_entity))
 			{
