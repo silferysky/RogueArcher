@@ -75,7 +75,7 @@ namespace Rogue
 
 		if (otherEnt != PLAYER_STATUS.GetPlayerEntity())
 			return;
-
+		
 		m_isZooming = true;
 		m_zoomValueInit = CameraManager::instance().GetCameraZoom();
 		m_zoomFactor = (m_zoomValueFinal - m_zoomValueInit) / m_zoomDuration * g_deltaTime;
