@@ -80,6 +80,8 @@ namespace Rogue
 		Vec2 GetCheckpoint() const;
 		void SetStartingPos(Vec2 startingPos);
 		Vec2 GetStartingPos() const;
+		bool GetTriggerOnce() const;
+		void SetTriggerOnce(bool trigger);
 
 		//Collectibles
 		void SetSoulsCollected(unsigned soulsCollected);
@@ -148,5 +150,7 @@ namespace Rogue
 		bool m_isEnding;
 
 		bool m_infiniteJumps;
+
+		bool m_triggerOnce;
 	};
 }
