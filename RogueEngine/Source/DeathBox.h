@@ -15,6 +15,5 @@ namespace Rogue
 		virtual void OnTriggerEnter(Entity other) override;
 	private:
 		float m_timer;
-		Entity m_other;
 	};
 }
