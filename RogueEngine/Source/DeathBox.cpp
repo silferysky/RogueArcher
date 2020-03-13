@@ -9,7 +9,7 @@ namespace Rogue
 {
 	DeathBox::DeathBox(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent) :
 		ScriptComponent(entity, logicComponent, statsComponent),
-		m_timer{ 0.0f }
+		m_age{ 0.0f }, m_lifetime{ 3.0f }, m_triggered{ false }, m_playerZ{ 100 }
 	{}
 
 	void DeathBox::AIActiveStateUpdate()
@@ -19,44 +19,32 @@ namespace Rogue
 
 	void DeathBox::AIIdleUpdate()
 	{
-		if (!g_engine.m_coordinator.GameIsActive() || PLAYER_STATUS.GetPlayerEntity() == MAX_ENTITIES || !PLAYER_STATUS.GetDeath())
+		if (!m_triggered || !g_engine.m_coordinator.GameIsActive() || PLAYER_STATUS.GetPlayerEntity() == MAX_ENTITIES)
 			return;
 
-		m_timer += g_deltaTime * g_engine.GetTimeScale();
-
-		if (m_timer >= 0.4592166f && m_timer < 2.0f)
+		// Once death timer has reached lifetime
+		if (m_age > m_lifetime)
 		{
-			if (auto transform = g_engine.m_coordinator.TryGetComponent<TransformComponent>(PLAYER_STATUS.GetPlayerEntity()))
-			{
-				transform->get().setZ(-9999); // Prefab player's Z value.
-			}
-			if (PLAYER_STATUS.GetIndicator() != MAX_ENTITIES)
-			{
-				PLAYER_STATUS.SetIndicatorStatus(false);
-				g_engine.m_coordinator.AddToDeleteQueue(PLAYER_STATUS.GetIndicator());
-				g_engine.m_coordinator.AddToDeleteQueue(PLAYER_STATUS.GetHitchhikeIndicator());
-				PLAYER_STATUS.SetIndicator(MAX_ENTITIES);
-				PLAYER_STATUS.SetHitchhikeIndicator(MAX_ENTITIES);
-			}
-			return;
-		}
-		
-		if (m_timer >= 2.0f)
-		{
+			// Enable player statuses
 			PLAYER_STATUS.SetDeath(false);
+			//m_died = false;
 			PLAYER_STATUS.UnfreezeControls();
-			m_timer = 0.0f;
-
+			
 			if (auto transform = g_engine.m_coordinator.TryGetComponent<TransformComponent>(PLAYER_STATUS.GetPlayerEntity()))
 			{
 				transform->get().setPosition(PLAYER_STATUS.GetCheckpoint());
 				transform->get().setZ(101); // Prefab player's Z value.
 			}
 
+			// Reenable camera lerping after shake
 			g_engine.m_coordinator.GetSystem<CameraSystem>()->setIsActive(true);
 
+			// Respawn indicators
 			PLAYER_STATUS.SetIndicatorStatus(true);
 		}
+
+		// Increment age by deltatime
+		m_age += g_deltaTime * g_engine.GetTimeScale();
 	}
 
 	void DeathBox::OnTriggerEnter(Entity other)
@@ -64,25 +52,31 @@ namespace Rogue
 		if (!g_engine.m_coordinator.GameIsActive())
 			return;
 
+		// If trigger hits player
 		if (other == PLAYER_STATUS.GetPlayerEntity())
 		{
+			// Shake camera
 			g_engine.m_coordinator.GetSystem<CameraSystem>()->setIsActive(false);
 			CameraShakeEvent shake(5.0f);
 			shake.SetSystemReceivers(static_cast<int>(SystemID::id_CAMERASYSTEM));
 			EventDispatcher::instance().AddEvent(shake);
 
+			// Player statuses
 			PLAYER_STATUS.FreezeControls();
 			PLAYER_STATUS.SetDeath(true);
+			//m_died = true;
+			PLAYER_STATUS.DestroyIndicators(); // Indicators will spawn in PlayerControllerSystem update
+
+			// Play death sound
 			g_engine.m_coordinator.loadSound("Resources/Sounds/die3.ogg", 0.3f, false).Play();
 
-			m_timer = 0.0f;
-			
-			if (other != MAX_ENTITIES)
-			{
-				TransformComponent& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetPlayerEntity());
+			// Start timer and set lifetime
+			m_age = 0.0f;
+			m_lifetime = 2.5f;
 
-				trans.setZ(-9999);
-			}
+			// Set player and children to be unseen
+			TransformComponent& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetPlayerEntity());
+			trans.setZ(-9999);
 		}
 	}
 }

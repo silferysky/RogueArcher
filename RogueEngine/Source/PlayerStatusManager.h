@@ -49,6 +49,7 @@ namespace Rogue
 		bool GetDeath() const;
 		void SetMoveLeft(bool isLeft);
 		bool GetMoveLeft() const;
+		void DestroyIndicators();
 
 		//Teleporting
 		float GetTeleportCharge() const;
