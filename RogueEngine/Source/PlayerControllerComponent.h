@@ -34,6 +34,8 @@ namespace Rogue
 		float m_moveSpeed;
 		float m_moveForceMultiplier;
 		float m_slowTime;
+		float m_jumpSpeed;
+
 		bool m_isActive;
 		MoveState m_moveState;
 
@@ -50,12 +52,14 @@ namespace Rogue
 		void SetMoveSpeed(float speed);
 		void SetMoveForceMultiplier(float multiplier);
 		void SetMoveState(MoveState state);
+		void SetJumpSpeed(float speed);
 		void SetIsActive(const bool& isActive);
 
 		bool GetIsActive() const;
 		float GetSlowTime() const;
 		float GetMoveSpeed() const;
 		float GetMoveForceMultiplier() const;
+		float GetJumpSpeed() const;
 		MoveState GetMoveState() const;
 
 		std::string Serialize() override;

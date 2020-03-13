@@ -22,7 +22,8 @@ Technology is prohibited.
 namespace Rogue
 {
 	PlayerControllerComponent::PlayerControllerComponent() :
-		m_moveSpeed{ 5000.0f }, m_slowTime{ 0.1f }, m_isActive{ true }, m_moveState{ MoveState::e_stop }, m_grounded{ false }, m_jumpTimer{ 0.1f }, m_moveForceMultiplier{10.0f}
+		m_moveSpeed{ 5000.0f }, m_slowTime{ 0.1f }, m_isActive{ true }, m_moveState{ MoveState::e_stop }, m_grounded{ false }, m_jumpTimer{ 0.1f }, m_moveForceMultiplier{10.0f},
+		m_jumpSpeed{ 15000.0f }
 	{}
 
 	void PlayerControllerComponent::DisplayOnInspector()
@@ -37,6 +38,9 @@ namespace Rogue
 
 		ImGui::PushItemWidth(75);
 		ImGui::DragFloat("Movement Force Multiplier", &m_moveForceMultiplier, 1.0f, 1.0f, 1000000.0f);
+
+		ImGui::PushItemWidth(75);
+		ImGui::DragFloat("Jump Speed", &m_jumpSpeed);
 	}
 
 	void PlayerControllerComponent::SetSlowTime(float slowTime)
@@ -59,6 +63,11 @@ namespace Rogue
 		m_moveState = state;
 	}
 
+	void PlayerControllerComponent::SetJumpSpeed(float speed)
+	{
+		m_jumpSpeed = speed;
+	}
+
 	float PlayerControllerComponent::GetSlowTime() const
 	{
 		return m_slowTime;
@@ -72,6 +81,11 @@ namespace Rogue
 	float PlayerControllerComponent::GetMoveForceMultiplier() const
 	{
 		return m_moveForceMultiplier;
+	}
+
+	float PlayerControllerComponent::GetJumpSpeed() const
+	{
+		return m_jumpSpeed;
 	}
 
 	MoveState PlayerControllerComponent::GetMoveState() const
@@ -96,6 +110,7 @@ namespace Rogue
 		ss << m_slowTime << ";";
 		ss << m_moveSpeed << ";";
 		ss << m_moveForceMultiplier << ";";
+		ss << m_jumpSpeed << ";";
 		return ss.str();
 	}
 
@@ -115,6 +130,9 @@ namespace Rogue
 
 		if (std::getline(ss, s1, ';'))
 			m_moveForceMultiplier = std::stof(s1);
+
+		if (std::getline(ss, s1, ';'))
+			m_jumpSpeed = std::stof(s1);
 	}
 
 }
