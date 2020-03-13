@@ -210,8 +210,6 @@ namespace Rogue
 			ss << emojiTex << ";";
 		}
 
-		ss << m_level << ";";
-
 		return ss.str();
 	}
 
@@ -265,9 +263,6 @@ namespace Rogue
 			if (std::getline(ss, s1, ';'))
 				m_emojiTexture.push_back(s1);
 		}
-
-		//std::getline(ss, s1, ';');
-		//m_level = static_cast<LEVEL>(std::stoi(s1));
 	}
 
 	void StatsComponent::DisplayOnInspector()
@@ -276,11 +271,10 @@ namespace Rogue
 		ImGui::PushItemWidth(75);
 		ImGui::DragInt("Health", &m_health, 1.0f, 0, 10);
 
-
-		//For Levels
 		const char* levelNames[] = { "Crystal Caverns", "Amethyst Seas", "Verdant Forest" };
 		int tempInt = static_cast<int>(m_level);
 
+		//For Levels
 		ImGui::Combo("Level", &tempInt, levelNames, IM_ARRAYSIZE(levelNames));
 		m_level = (LEVEL)tempInt;
 

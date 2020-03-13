@@ -4,9 +4,10 @@ namespace Rogue
 {
 	enum LEVEL
 	{
-		CRYSTAL = 0,
-		CORAL,
-		VEGETATION,
+		DEFAULT = 0,
+		CRYSTAL = 17,
+		CORAL = 18,
+		VEGETATION = 15,
 		LASTLEVEL
 	};
 }
