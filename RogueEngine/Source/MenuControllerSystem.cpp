@@ -192,6 +192,7 @@ namespace Rogue
 				//If click on Credits, just turn it off
 				else if (hierarchyObj.m_objectName == "Credits")
 				{
+					AudioManager::instance().loadSound("Resources/Sounds/button.ogg", 0.3f, false).Play();
 					if (auto UI = g_engine.m_coordinator.TryGetComponent<UIComponent>(hierarchyObj.m_Entity))
 					{
 						UI->get().setIsActive(false);
