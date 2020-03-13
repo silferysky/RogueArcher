@@ -407,10 +407,6 @@ namespace Rogue
 		SetUIMenuObjs(false);
 	}
 
-	void MenuControllerSystem::ToggleUIMenuObjs()
-	{
-	}
-
 	void MenuControllerSystem::SetUIMenuObjs(bool newActive)
 	{
 		for (Entity ent : m_menuObjs)

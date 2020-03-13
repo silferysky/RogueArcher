@@ -152,8 +152,8 @@ namespace Rogue
 							}
 							else
 							{
-								auto& childTrans = g_engine.m_coordinator.GetComponent<ChildComponent>(i);
-								childTrans.DisplayOnInspector();
+								if (auto childTrans = g_engine.m_coordinator.TryGetComponent<ChildComponent>(i))
+									childTrans->get().DisplayOnInspector();
 							}
 							if (ImGui::Button("Remove Component"))
 							{

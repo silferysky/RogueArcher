@@ -31,11 +31,13 @@ namespace Rogue
 		virtual void AIPatrolUpdate() override;
 	protected:
 
+		void SwapCollisionType();
 		void SetCollisionColor();
 
 		std::vector<Vec2> m_waypoints;
 		size_t m_currentPointIndex;
 		float m_patrolDelay;
 		float m_delay;
+		bool m_swapping;
 	};
 }
