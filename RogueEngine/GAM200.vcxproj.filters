@@ -746,6 +746,15 @@
     <ClInclude Include="Source\CoralBubbleTransporter.h">
       <Filter>RogueEngine\Systems\AI\Script Types\Game\Amethyst Seas</Filter>
     </ClInclude>
+    <ClInclude Include="Source\CrystalElementBeetle.h">
+      <Filter>RogueEngine\Systems\AI\Script Types\Game\Crystal Caverns</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CrystalMole.h">
+      <Filter>RogueEngine\Systems\AI\Script Types\Game\Crystal Caverns</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CoralElementBubble.h">
+      <Filter>RogueEngine\Systems\AI\Script Types\Game\Amethyst Seas</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -1185,6 +1194,15 @@
       <Filter>RogueEngine\Systems\AI\Script Types\Game\Amethyst Seas</Filter>
     </ClCompile>
     <ClCompile Include="Source\CoralBubbleTransporter.cpp">
+      <Filter>RogueEngine\Systems\AI\Script Types\Game\Amethyst Seas</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CrystalElementBeetle.cpp">
+      <Filter>RogueEngine\Systems\AI\Script Types\Game\Crystal Caverns</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CrystalMole.cpp">
+      <Filter>RogueEngine\Systems\AI\Script Types\Game\Crystal Caverns</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CoralElementBubble.cpp">
       <Filter>RogueEngine\Systems\AI\Script Types\Game\Amethyst Seas</Filter>
     </ClCompile>
   </ItemGroup>

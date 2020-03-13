@@ -126,11 +126,11 @@ namespace Rogue
 		case EvParentTransformUpdate:
 		{
 			ParentTransformEvent& parentEvent = dynamic_cast<ParentTransformEvent&>(ev);
-			
+
 			if (g_engine.m_coordinator.GetHierarchyInfo(parentEvent.GetParentEntity()).m_children.size() > 0)
 			{
 				std::vector<Entity> temp;
-				
+
 				//By right Parent don't need, since it will be set via Transform (AKA no need change since no child), or via ChildComponent
 				temp.push_back(parentEvent.GetParentEntity());
 				AddChildToVector(temp, parentEvent.GetParentEntity());
@@ -325,6 +325,9 @@ namespace Rogue
 
 	void ParentChildSystem::ApplyParentChildTransform(Entity entity)
 	{
+		if (!g_engine.m_coordinator.ComponentExists<ChildComponent>(entity))
+			return;
+
 		auto& childComponent = g_engine.m_coordinator.GetComponent<ChildComponent>(entity);
 
 		if (childComponent.GetParent() == MAX_ENTITIES || !g_engine.m_coordinator.ComponentExists<TransformComponent>(childComponent.GetParent()))
@@ -423,6 +426,7 @@ namespace Rogue
 		ChildComponent& childComp = g_engine.m_coordinator.GetComponent<ChildComponent>(child);
 		childComp.SetLocalDirty();
 		childComp.SetParent(newParent);
+		ApplyParentChildTransform(child);
 
 		//Reassigning in Hierarchy Objects
 		HierarchyInfo& childInfo = g_engine.m_coordinator.GetHierarchyInfo(child);
@@ -463,7 +467,7 @@ namespace Rogue
 		{
 			g_engine.m_coordinator.RemoveComponent<ChildComponent>(child);
 		}
-		
+
 		//Now doing the same for hierarchyinfo
 		HierarchyInfo& childHierarchy = g_engine.m_coordinator.GetHierarchyInfo(child);
 

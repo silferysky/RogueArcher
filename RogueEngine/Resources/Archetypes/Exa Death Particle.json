@@ -1,5 +1,5 @@
 {
     "Signature": 65732,
-    "Entity": "Name{Exa Death Particle}|Tag{}|||Transform{-3532.46;756.053;100;100;0;88}||||LogicComponent{19;0;1;0}|StatsComponent{0;0;0;0;0;;0;0;0;0;0;0;0;}|||||||||Particle Emitter{0;0;25;60;10;10;7;11;1;129;86;2;1;0;0;Resources/Assets/ParticleExa.png;13;0;}|||||||||",
+    "Entity": "Name{Exa Death Particle}|Tag{}|||Transform{0;0;100;100;0;88}||||LogicComponent{19;0;1;0}|StatsComponent{0;0;0;0;0;;0;0;0;0;0;0;0;}|||||||||Particle Emitter{0;0;25;60;10;10;7;11;1;129;86;2;1;0;0;Resources/Assets/ParticleExa.png;13;0;}|||||||||",
     "Children": ""
 }

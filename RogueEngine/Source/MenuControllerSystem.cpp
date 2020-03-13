@@ -29,7 +29,9 @@ namespace Rogue
 		:System(SystemID::id_MENUCONTROLLERSYSTEM), 
 		m_menuObjs{ std::vector<Entity>() }, 
 		m_confirmQuitEnt{ std::vector<Entity>() },
-		m_confirmQuit{ false }
+		m_confirmQuit{ false },
+		m_toMainMenu{ false },
+		m_showControlMenu{ false }
 	{
 	}
 
@@ -130,7 +132,7 @@ namespace Rogue
 							hierarchyObj.m_objectName = "Quit";
 							break;
 						case 7: //HowToPlay
-							hierarchyObj.m_objectName = "HowToPlay";
+							hierarchyObj.m_objectName = "ControlHelp";
 							break;
 						case 8: //ExitGame
 							hierarchyObj.m_objectName = "ExitGame";
@@ -154,14 +156,8 @@ namespace Rogue
 					hierarchyObj.m_Entity = entPicked.GetEntityID();
 				}
 				
-				//For all cases of "How to Play" (Main Menu and Pause Screens)
-				if (hierarchyObj.m_objectName == "HowToPlay" || hierarchyObj.m_objectName == "HowToPlayBtn" || hierarchyObj.m_objectName == "ControlsBtn")
-				{
-					ToggleControlHelpMenu();
-					AudioManager::instance().loadSound("Resources/Sounds/button.ogg", 0.3f, false).Play();
-				}
 				//Main Menu Start
-				else if (hierarchyObj.m_objectName == "StartBtn")
+				if (hierarchyObj.m_objectName == "StartBtn")
 				{
 					ClearMenuObjs();
 					g_engine.m_coordinator.SetTransitionLevel("Level 10.json", 0.0f);
@@ -172,8 +168,10 @@ namespace Rogue
 
 					g_engine.m_coordinator.SetGameState(true);
 					PLAYER_STATUS.SetIndicatorStatus(true);
+					HandleMenuObjs();
 				}
 				//CreditsBtn toggles Credits to be on
+				//This is standalone
 				else if (hierarchyObj.m_objectName == "CreditsBtn")
 				{
 					for (auto ent : m_entities)
@@ -192,21 +190,51 @@ namespace Rogue
 				//If click on Credits, just turn it off
 				else if (hierarchyObj.m_objectName == "Credits")
 				{
+					AudioManager::instance().loadSound("Resources/Sounds/button.ogg", 0.3f, false).Play();
 					if (auto UI = g_engine.m_coordinator.TryGetComponent<UIComponent>(hierarchyObj.m_Entity))
 					{
 						UI->get().setIsActive(false);
 					}
 				}
-				//Exit from Main Menu. Cannot exit from game
-				else if (hierarchyObj.m_objectName == "QuitBtn")
+				//For all cases of "How to Play" (Main Menu and Pause Screens)
+				else if (hierarchyObj.m_objectName == "HowToPlay" || hierarchyObj.m_objectName == "HowToPlayBtn" || hierarchyObj.m_objectName == "ControlsBtn")
 				{
-					g_engine.SetGameIsRunning(false);
+					if (!m_menuObjs.size())
+						return;
+					AudioManager::instance().loadSound("Resources/Sounds/button.ogg", 0.3f, false).Play();
+					m_showControlMenu = true;
+
+					if (auto UI = g_engine.m_coordinator.TryGetComponent<UIComponent>(m_menuObjs.back()))
+					{
+						UI->get().setIsActive(true);
+					}
 				}
+				else if (hierarchyObj.m_objectName == "ControlHelp")
+				{
+					if (!m_menuObjs.size())
+						return;
+					AudioManager::instance().loadSound("Resources/Sounds/button.ogg", 0.3f, false).Play();
+					m_showControlMenu = true;
+
+					if (auto UI = g_engine.m_coordinator.TryGetComponent<UIComponent>(m_menuObjs.back()))
+					{
+						UI->get().setIsActive(false);
+					}
+				}
+				//Exit from Main Menu. Cannot exit from game
+				//else if (hierarchyObj.m_objectName == "QuitBtn")
+				//{
+				//	g_engine.SetGameIsRunning(false);
+				//}
 				//Resuming game from paused game state
 				else if (hierarchyObj.m_objectName == "Resume")
 				{
-					ResumeGame();
+					//ResumeGame();
 					PLAYER_STATUS.SetIndicatorStatus(true);
+					m_confirmQuit = false;
+					g_engine.m_coordinator.SetPauseState(false);
+					g_engine.SetTimeScale(1.0f);
+					HandleMenuObjs();
 				}
 				//Exit to Main menu
 				else if (hierarchyObj.m_objectName == "MainMenu_Btn")
@@ -222,32 +250,11 @@ namespace Rogue
 					//ResumeGame();
 					PLAYER_STATUS.SetIndicatorStatus(false);
 				}
-				else if (hierarchyObj.m_objectName == "ControlHelp")
-				{
-					ToggleControlHelpMenu();
-					/*if (m_menuObjs.size())
-					{
-						auto& activeObjects = g_engine.m_coordinator.GetActiveObjects();
-						for (auto iterator = activeObjects.begin(); iterator != activeObjects.end(); ++iterator)
-						{
-							if (*iterator == m_menuObjs.back())
-							{
-								activeObjects.erase(iterator);
-								break;
-							}
-						}
-						g_engine.m_coordinator.DestroyEntity(m_menuObjs.back());
-						m_menuObjs.pop_back();
-					}*/
-				}
 				//For quit logic
-				else if (hierarchyObj.m_objectName == "Quit") 
+				else if (hierarchyObj.m_objectName == "Quit" || hierarchyObj.m_objectName == "QuitBtn") 
 				{
-					if (m_confirmQuit == false)
-					{
-						m_confirmQuit = true;
-						ToggleQuitButtonObj();
-					}
+					m_confirmQuit = true;
+					HandleMenuObjs();
 				}
 				else if (hierarchyObj.m_objectName == "YesBtn")
 				{
@@ -257,11 +264,8 @@ namespace Rogue
 				}
 				else if (hierarchyObj.m_objectName == "NoBtn")
 				{
-					if (m_confirmQuit)
-					{
-						m_confirmQuit = false;
-						ToggleQuitButtonObj();
-					}
+					m_confirmQuit = false;
+					HandleMenuObjs();
 				}
 			}
 
@@ -391,35 +395,6 @@ namespace Rogue
 		SetUIMenuObjs(false);
 	}
 
-	void MenuControllerSystem::ToggleControlHelpMenu()
-	{
-		//Toggle How to play only
-		if (m_menuObjs.size())
-		{
-			if (g_engine.m_coordinator.ComponentExists<UIComponent>(m_menuObjs.back()))
-			{
-				m_confirmQuit = false;
-				UIComponent& ui = g_engine.m_coordinator.GetComponent<UIComponent>(m_menuObjs.back());
-				ui.setIsActive(!ui.getIsActive());	
-				//if (g_engine.m_coordinator.ComponentExists<TransformComponent>(m_menuObjs.back()))
-				//{
-				//	glm::vec3 cameraPos = CameraManager::instance().GetCameraPos();
-				//	TransformComponent& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(m_menuObjs.back());
-				//	if (!ui.getIsActive())
-				//		transform.setPosition(Vec2(transform.GetPosition().x - cameraPos.x, transform.GetPosition().y - cameraPos.y));
-				//	else
-				//		transform.setPosition(Vec2(transform.GetPosition().x + cameraPos.x, transform.GetPosition().y + cameraPos.y));
-				//}
-			}
-
-			if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(m_menuObjs.back()))
-			{
-				m_confirmQuit = false;
-				sprite->get().m_componentIsActive = !sprite->get().m_componentIsActive;
-			}
-		}
-	}
-
 	void MenuControllerSystem::ToggleUIMenuObjs()
 	{
 		bool movingToPos = true;
@@ -531,37 +506,10 @@ namespace Rogue
 				//		transform.setPosition(Vec2(transform.GetPosition().x + cameraPos.x, transform.GetPosition().y + cameraPos.y));
 				//}
 			}
-			if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(ent))
-			{
-				sprite->get().m_componentIsActive = newActive;
-			}
-		}
-	}
-
-	void MenuControllerSystem::ToggleQuitButtonObj()
-	{
-		for (Entity ent : m_menuObjs)
-		{
-			if (ent == m_menuObjs.front() || ent == m_menuObjs.back() || ent == *(m_menuObjs.begin() + 1))
-				continue;
-
-			if (auto ui = g_engine.m_coordinator.TryGetComponent<UIComponent>(ent))
-			{
-				ui->get().setIsActive(!ui->get().getIsActive());
-			}
-		}
-
-		for (Entity ent : m_confirmQuitEnt)
-		{
-			//Setting Quit button display to true
-			if (auto ui = g_engine.m_coordinator.TryGetComponent<UIComponent>(ent))
-			{
-				ui->get().setIsActive(!ui->get().getIsActive());
-			}
-			if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(ent))
-			{
-				sprite->get().m_componentIsActive = !sprite->get().m_componentIsActive;
-			}
+			//if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(ent))
+			//{
+			//	sprite->get().m_componentIsActive = newActive;
+			//}
 		}
 	}
 
@@ -572,15 +520,150 @@ namespace Rogue
 
 	void MenuControllerSystem::ResumeGame()
 	{
-		if (m_confirmQuit)
-		{
-			ToggleQuitButtonObj();
-			m_confirmQuit = false;
-		}
-		ToggleUIMenuObjs();
-		//SetUIMenuObjs(false);
 		g_engine.m_coordinator.SetPauseState(false);
 		g_engine.SetTimeScale(1.0f);
+		m_confirmQuit = false;
+
+		HandleMenuObjs();
+	}
+
+	void MenuControllerSystem::HandleMenuObjs()
+	{
+		//If Game is Running
+		if (g_engine.GetGameIsRunning())
+		{
+			//If it isn't paused, and not in main menu
+			if (!g_engine.m_coordinator.GetPauseState() && SceneManager::instance().getCurrentFileName() != "Level 20.json")
+			{
+				for (auto& menuObj : m_menuObjs)
+				{
+					//Ignore crosshair
+					if (menuObj == m_menuObjs.front())
+						continue;
+
+					if (auto ui = g_engine.m_coordinator.TryGetComponent<UIComponent>(menuObj))
+					{
+						if (menuObj != m_menuObjs.back())
+							ui->get().setIsActive(false);
+						else //For control help only
+						{
+							ui->get().setIsActive(m_showControlMenu);
+						}
+					}
+				}
+				for (auto& menuObj : m_confirmQuitEnt)
+				{
+					if (auto ui = g_engine.m_coordinator.TryGetComponent<UIComponent>(menuObj))
+					{
+						ui->get().setIsActive(false);
+					}
+				}
+			}
+			else if (!g_engine.m_coordinator.GetPauseState() && SceneManager::instance().getCurrentFileName() == "Level 20.json")
+			{
+				for (auto& menuObj : m_menuObjs)
+				{
+					//Ignore crosshair
+					if (menuObj == m_menuObjs.front())
+						continue;
+
+					if (auto ui = g_engine.m_coordinator.TryGetComponent<UIComponent>(menuObj))
+					{
+						if (m_menuObjs.size() > 1 && menuObj == m_menuObjs.front() + 1)
+						{
+							ui->get().setIsActive(m_confirmQuit);
+						}
+						else if (menuObj != m_menuObjs.back())
+						{
+							ui->get().setIsActive(false);
+						}
+						else //For control help only
+						{
+							ui->get().setIsActive(false);
+						}
+					}
+				}
+				for (auto& menuObj : m_confirmQuitEnt)
+				{
+					if (auto ui = g_engine.m_coordinator.TryGetComponent<UIComponent>(menuObj))
+					{
+						ui->get().setIsActive(m_confirmQuit);
+					}
+				}
+			}
+			else //If it is paused
+			{
+				if (!m_confirmQuit) //If not in confirmation to quit screen
+				{
+					for (auto& menuObj : m_menuObjs)
+					{
+						//Ignore crosshair
+						if (menuObj == m_menuObjs.front())
+							continue;
+
+						if (auto ui = g_engine.m_coordinator.TryGetComponent<UIComponent>(menuObj))
+						{
+							if (menuObj != m_menuObjs.back())
+								ui->get().setIsActive(true);
+							else //For control help only
+								ui->get().setIsActive(m_showControlMenu);
+						}
+					}
+					for (auto& menuObj : m_confirmQuitEnt)
+					{
+						if (auto ui = g_engine.m_coordinator.TryGetComponent<UIComponent>(menuObj))
+						{
+							ui->get().setIsActive(false);
+						}
+					}
+				}
+				else
+				{
+					for (auto& menuObj : m_menuObjs)
+					{
+						//Ignore crosshair, background
+						if (menuObj == m_menuObjs.front() || menuObj == m_menuObjs.front() + 1)
+							continue;
+
+						if (auto ui = g_engine.m_coordinator.TryGetComponent<UIComponent>(menuObj))
+						{
+							if (menuObj != m_menuObjs.back())
+								ui->get().setIsActive(false);
+						}
+					}
+					for (auto& menuObj : m_confirmQuitEnt)
+					{
+						if (auto ui = g_engine.m_coordinator.TryGetComponent<UIComponent>(menuObj))
+						{
+							ui->get().setIsActive(true);
+						}
+					}
+				}
+			}
+		}
+		else //If Game not running
+		{
+			m_confirmQuit = false;
+			for (auto& menuObj : m_menuObjs)
+			{
+				//Ignore crosshair
+				if (menuObj == m_menuObjs.front())
+					continue;
+
+				if (auto ui = g_engine.m_coordinator.TryGetComponent<UIComponent>(menuObj))
+				{
+					ui->get().setIsActive(false);
+				}
+			}
+			for (auto& menuObj : m_confirmQuitEnt)
+			{
+				if (auto ui = g_engine.m_coordinator.TryGetComponent<UIComponent>(menuObj))
+				{
+					ui->get().setIsActive(false);
+				}
+			}
+		}
+
 	}
 
 	void MenuControllerSystem::ClearMenuObjs()

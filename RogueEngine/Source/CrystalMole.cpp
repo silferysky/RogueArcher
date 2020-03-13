@@ -1,18 +1,33 @@
+/* Start Header ************************************************************************/
+/*!
+\file           PatrolAI.cpp
+\project        Exale
+\author         Chan Wai Kit Terence, c.terence, 440005918 (100%)
+\par            c.terence\@digipen.edu
+\date           1 December,2019
+\brief          This file contains the function definitions for PatrolAI
+
+All content (C) 2019 DigiPen (SINGAPORE) Corporation, all rights
+reserved.
+
+Reproduction or disclosure of this file or its contents
+without the prior written consent of DigiPen Institute of
+Technology is prohibited.
+*/
+/* End Header **************************************************************************/
 #include "Precompiled.h"
-#include "CoralBubbleTransporter.h"
-#include "PlayerStatusManager.h"
+#include "CrystalMole.h"
 #include "ParentEvent.h"
-//#include "Main.h"	//For g_deltaTime and coordinator
 
 namespace Rogue
 {
-	CoralBubbleTransporter::CoralBubbleTransporter(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent)
-		: ScriptComponent(entity, logicComponent, statsComponent), m_currentPointIndex{ 0 }
+	CrystalMole::CrystalMole(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent)
+		: ScriptComponent(entity, logicComponent, statsComponent), m_currentPointIndex{0}
 	{
 		LogicInit();
 	}
 
-	void CoralBubbleTransporter::LogicInit()
+	void CrystalMole::LogicInit()
 	{
 		if (g_engine.m_coordinator.ComponentExists<StatsComponent>(m_entity))
 		{
@@ -48,7 +63,16 @@ namespace Rogue
 		m_delay = 0.0f;
 	}
 
-	void CoralBubbleTransporter::AIPatrolUpdate()
+	void CrystalMole::AIActiveStateUpdate()
+	{
+		if (!g_engine.m_coordinator.GameIsActive())
+			return;
+
+		m_logicComponent->SetActiveStateBit(static_cast<size_t>(AIState::AIState_Patrol));
+		m_logicComponent->SetActiveStateBit(static_cast<size_t>(AIState::AIState_Idle));
+	}
+
+	void CrystalMole::AIPatrolUpdate()
 	{
 		//Only can do waypoint patrol if 2 waypoints exist
 		//if (m_waypoints.size() < 2)
@@ -66,7 +90,7 @@ namespace Rogue
 		}
 
 		//Check if Transform component and Rigidbody exist
-		if (!(g_engine.m_coordinator.ComponentExists<TransformComponent>(m_entity) &&
+		if (!(g_engine.m_coordinator.ComponentExists<TransformComponent>(m_entity) && 
 			g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(m_entity) &&
 			m_statsComponent != nullptr))
 			return;
@@ -79,7 +103,7 @@ namespace Rogue
 
 		//Always move
 		Vec2 travelDistance, travelDistValue;
-
+		
 		if (m_nextPoint.size())
 			travelDistValue = m_nextPoint.front() - aiTransform.GetPosition();
 		else if (m_waypoints.size())
@@ -115,36 +139,6 @@ namespace Rogue
 			m_nextPoint.push(m_waypoints[m_currentPointIndex]);
 
 			m_delay = m_patrolDelay;
-		}
-
-		if (false) // eject player and delete itself
-		{
-			g_engine.m_coordinator.GetSystem<PlayerControllerSystem>()->Hitchhike(MAX_ENTITIES);
-			g_engine.m_coordinator.AddToDeleteQueue(m_entity);
-		}
-	}
-
-	void CoralBubbleTransporter::AIActiveStateUpdate()
-	{
-		if (!g_engine.m_coordinator.GameIsActive())
-			return;
-
-		if (m_statsComponent->GetIsPatrolling())
-			m_logicComponent->SetActiveStateBit(static_cast<size_t>(AIState::AIState_Patrol));
-		m_logicComponent->SetActiveStateBit(static_cast<size_t>(AIState::AIState_Idle));
-	}
-
-	void CoralBubbleTransporter::AIIdleUpdate()
-	{
-		
-	}
-
-	void CoralBubbleTransporter::OnTriggerEnter(Entity other)
-	{
-		if (other == PLAYER_STATUS.GetPlayerEntity())
-		{
-			g_engine.m_coordinator.GetSystem<PlayerControllerSystem>()->Hitchhike(m_entity); // force hitchhike
-			m_statsComponent->SetIsPatrolling(true);
 		}
 	}
 }

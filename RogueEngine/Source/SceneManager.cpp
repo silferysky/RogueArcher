@@ -112,6 +112,7 @@ namespace Rogue
 		}
 
 		//Setting up
+		PLAYER_STATUS.SetLastLevel(getCurrentFileName());
 		setCurrentFileName(fileName);
 		ClearAllEntities();
 
@@ -129,9 +130,61 @@ namespace Rogue
 		if (it == m_loadedLevels.end())
 			m_loadedLevels.push_back(std::string(fileName));
 
-		//m_objectFactory->Clone("")
+		/*Entity player = MAX_ENTITIES;
+		
+		if (fileName != "Level 20.json")
+			player = m_objectFactory->Clone("FinalPlayer", true, false);
 
-		PLAYER_STATUS.SetLastLevel(fileName);
+		if (player != MAX_ENTITIES)
+			if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(player))
+			{
+				std::string lastLevelLoaded = PLAYER_STATUS.GetLastLevel().data();
+				//std::cout << lastLevelLoaded << std::endl;
+
+				//For Tutorial Level to Hub
+				if (lastLevelLoaded == "Level 10.json")
+				{
+					//Do as per normal
+					trans->get().setPosition(PLAYER_STATUS.GetStartingPos());
+				}
+				//For Forest Level to Hub
+				else if (lastLevelLoaded == "Level 15.json")
+				{
+					trans->get().setPosition(Vec2(1670.0f, -290.0f));
+				}
+				//For Mine Level to hub
+				else if (lastLevelLoaded == "Level 17.json")
+				{
+					trans->get().setPosition(Vec2(-1050.0f, -400.0f));
+				}
+				//For Coral level to Hub
+				else if (lastLevelLoaded == "Level 18.json")
+				{
+					trans->get().setPosition(Vec2(-40.0f, -400.0f));
+				}
+				//From Main Menu to Tutorial
+				else if (lastLevelLoaded == "Level 20.json")
+				{
+					trans->get().setPosition(Vec2(-3532.46f, 756.053f));
+				}
+
+				Entity firstChild = g_engine.m_coordinator.GetHierarchyInfo(player).m_children.front();
+				TransformComponent& childTrans = g_engine.m_coordinator.GetComponent<TransformComponent>(firstChild);
+				std::cout << "FIRST CHILD TRANS " << childTrans.GetPosition().x << "," << childTrans.GetPosition().y << std::endl;
+
+				HierarchyInfo& playerInfo = g_engine.m_coordinator.GetHierarchyInfo(player);
+				for (auto entity : playerInfo.m_children)
+				{
+					if (auto child = g_engine.m_coordinator.TryGetComponent<ChildComponent>(entity))
+					{
+						child->get().SetGlobalDirty();
+						child->get().ResetLocalDirty();
+						g_engine.m_coordinator.ApplyParentChildCorrection(entity);
+					}
+				}
+				std::cout << "FIRST CHILD TRANS AFTER UPDATE" << childTrans.GetPosition().x << "," << childTrans.GetPosition().y << std::endl;
+			}*/
+
 		//std::shared_ptr<MenuControllerSystem> menuControl = g_engine.m_coordinator.GetSystem<MenuControllerSystem>();
 		//menuControl->InitPauseMenu();
 
