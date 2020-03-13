@@ -22,6 +22,7 @@ namespace Rogue
 
 			auto& animation = g_engine.m_coordinator.GetComponent<AnimationComponent>(m_entity);
 			animation.setFrames(5);
+			animation.setCurrentFrame(0);
 			animation.setEndFrame(4);
 			animation.setIsLooping(false); // play the animation only once
 

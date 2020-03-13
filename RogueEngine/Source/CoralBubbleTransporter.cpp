@@ -116,6 +116,9 @@ namespace Rogue
 
 			m_delay = m_patrolDelay;
 		}
+
+		if (false)
+			m_statsComponent->SetIsPatrolling(false);
 	}
 
 	void CoralBubbleTransporter::AIActiveStateUpdate()
@@ -123,7 +126,8 @@ namespace Rogue
 		if (!g_engine.m_coordinator.GameIsActive())
 			return;
 
-		//m_logicComponent->SetActiveStateBit(static_cast<size_t>(AIState::AIState_Patrol));
+		//if (m_statsComponent->GetIsPatrolling())
+			m_logicComponent->SetActiveStateBit(static_cast<size_t>(AIState::AIState_Patrol));
 		m_logicComponent->SetActiveStateBit(static_cast<size_t>(AIState::AIState_Idle));
 	}
 
@@ -137,7 +141,7 @@ namespace Rogue
 		if (other == PLAYER_STATUS.GetPlayerEntity())
 		{
 			g_engine.m_coordinator.GetSystem<PlayerControllerSystem>()->Hitchhike(m_entity); // force hitchhike
-			m_logicComponent->SetActiveStateBit(static_cast<size_t>(AIState::AIState_Patrol));
+			m_statsComponent->SetIsPatrolling(true);
 		}
 	}
 }
