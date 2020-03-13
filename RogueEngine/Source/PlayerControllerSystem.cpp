@@ -472,7 +472,7 @@ namespace Rogue
 				else if (keycode == KeyPress::KeyEsc)
 				{
 					g_engine.m_coordinator.SetPauseState(true);
-					g_engine.m_coordinator.GetSystem<MenuControllerSystem>()->ToggleUIMenuObjs();
+					g_engine.m_coordinator.GetSystem<MenuControllerSystem>()->HandleMenuObjs();
 					PLAYER_STATUS.SetIndicatorStatus(PLAYER_STATUS.ShowIndicator());
 					//If Indicator is no longer hidden
 					if (!PLAYER_STATUS.ShowIndicator())
@@ -805,6 +805,9 @@ namespace Rogue
 			//	//std::cout << "No Transform" << std::endl;
 			//	return;
 			//}
+
+			if (!g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(PLAYER_STATUS.GetPlayerEntity()))
+				return;
 
 			PlayerControllerComponent& playerCtrl = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(PLAYER_STATUS.GetPlayerEntity());
 			playerCtrl.SetMoveState(MoveState::e_stop);

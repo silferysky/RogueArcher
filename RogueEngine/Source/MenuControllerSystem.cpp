@@ -31,7 +31,8 @@ namespace Rogue
 		m_confirmQuitEnt{ std::vector<Entity>() },
 		m_confirmQuit{ false },
 		m_toMainMenu{ false },
-		m_showControlMenu{ false }
+		m_showControlMenu{ false },
+		m_showingUI{ false }
 	{
 	}
 
@@ -356,6 +357,8 @@ namespace Rogue
 		m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("YesBtn", true, false));
 		m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("NoBtn", true, false));
 
+		m_menuObjsTransforms.clear();
+
 		for (auto& menuEnt : m_menuObjs)
 		{
 			if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(menuEnt))
@@ -397,65 +400,6 @@ namespace Rogue
 
 	void MenuControllerSystem::ToggleUIMenuObjs()
 	{
-		bool movingToPos = true;
-		if (m_menuObjs.size())
-			if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(*m_menuObjs.begin()))
-			{
-				movingToPos = sprite->get().m_componentIsActive;
-			}
-
-		auto itr = m_menuObjsTransforms.begin();
-
-		for (Entity ent : m_menuObjs)
-		{
-			//Safety check
-			auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(ent);
-
-			if (!sprite)
-				continue;
-
-			if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(ent))
-			{
-				if (movingToPos)
-				{
-					trans->get().setPosition(Vec2((*itr).x - CAMERA_MANAGER.GetCameraPos().x, (*itr).y - CAMERA_MANAGER.GetCameraPos().y));
-					*itr = trans->get().GetPosition();
-					++itr;
-				}
-				else
-				{
-					trans->get().setPosition(Vec2((*itr).x + CAMERA_MANAGER.GetCameraPos().x, (*itr).y + CAMERA_MANAGER.GetCameraPos().y));
-					*itr = trans->get().GetPosition();
-					++itr;
-				}
-			}
-		
-			//Do not do last item (ControlHelp)
-			if (ent == m_menuObjs.back())
-				continue;
-
-			sprite->get().m_componentIsActive = !sprite->get().m_componentIsActive;
-
-			if (auto ui = g_engine.m_coordinator.TryGetComponent<UIComponent>(ent))
-			{
-				ui->get().setIsActive(!ui->get().getIsActive());
-			}
-		}
-
-		for (Entity ent : m_confirmQuitEnt)
-		{
-			if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(ent))
-			{
-				if (movingToPos)
-				{
-					trans->get().setPosition(Vec2(trans->get().GetPosition().x - CAMERA_MANAGER.GetCameraPos().x, trans->get().GetPosition().y - CAMERA_MANAGER.GetCameraPos().y));
-				}
-				else
-				{
-					trans->get().setPosition(Vec2(trans->get().GetPosition().x + CAMERA_MANAGER.GetCameraPos().x, trans->get().GetPosition().y + CAMERA_MANAGER.GetCameraPos().y));
-				}
-			}
-		}
 	}
 
 	void MenuControllerSystem::SetUIMenuObjs(bool newActive)
@@ -529,6 +473,58 @@ namespace Rogue
 
 	void MenuControllerSystem::HandleMenuObjs()
 	{
+		bool movingToPos = m_showingUI = !m_showingUI;
+
+		auto itr = m_menuObjsTransforms.begin();
+
+		if (m_menuObjs.size() < 2)
+			return;
+		std::cout << "First Entity before Translate X" << g_engine.m_coordinator.GetComponent<TransformComponent>(m_menuObjs.front() +1).GetPosition().x << std::endl;
+		std::cout << "First Entity before Translate Y" << g_engine.m_coordinator.GetComponent<TransformComponent>(m_menuObjs.front() +1).GetPosition().y << std::endl;
+		for (Entity ent : m_menuObjs)
+		{
+			//Safety check
+			auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(ent);
+
+			if (!sprite)
+				continue;
+
+			if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(ent))
+			{
+				if (movingToPos)
+				{
+					trans->get().setPosition(Vec2((*itr).x + CAMERA_MANAGER.GetCameraPos().x, (*itr).y + CAMERA_MANAGER.GetCameraPos().y));
+					*itr = trans->get().GetPosition();
+					++itr;
+				}
+				else
+				{
+					trans->get().setPosition(Vec2((*itr).x - CAMERA_MANAGER.GetCameraPos().x, (*itr).y - CAMERA_MANAGER.GetCameraPos().y));
+					*itr = trans->get().GetPosition();
+					++itr;
+				}
+			}
+		}
+
+		for (Entity ent : m_confirmQuitEnt)
+		{
+			if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(ent))
+			{
+				if (movingToPos)
+				{
+					trans->get().setPosition(Vec2(trans->get().GetPosition().x + CAMERA_MANAGER.GetCameraPos().x, trans->get().GetPosition().y + CAMERA_MANAGER.GetCameraPos().y));
+				}
+				else
+				{
+					trans->get().setPosition(Vec2(trans->get().GetPosition().x - CAMERA_MANAGER.GetCameraPos().x, trans->get().GetPosition().y - CAMERA_MANAGER.GetCameraPos().y));
+				}
+			}
+		}
+
+
+		std::cout << "First Entity after Translate X" << g_engine.m_coordinator.GetComponent<TransformComponent>(m_menuObjs.front()+1).GetPosition().x << std::endl;
+		std::cout << "First Entity after Translate Y" << g_engine.m_coordinator.GetComponent<TransformComponent>(m_menuObjs.front()+1).GetPosition().y << std::endl;
+
 		//If Game is Running
 		if (g_engine.GetGameIsRunning())
 		{
