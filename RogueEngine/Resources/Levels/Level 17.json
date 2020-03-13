@@ -360,7 +360,7 @@
     "Entity172": "Name{Deco}|Tag{}|Sprite{Resources\\Assets\\Crystal2_New.png;0.843137;0.475541;0.380238;1;}||Transform{-537;1042;100;100;8.9;10}|||||||||||||||||||||||",
     "Entity173": "Name{Deco}|Tag{}|Sprite{Resources\\Assets\\Crystal2_New.png;0.769298;0.779412;0.435554;1;}||Transform{241;1165;100;100;10.2;10}|||||||||||||||||||||||",
     "Entity174": "Name{Deco}|Tag{}|Sprite{Resources\\Assets\\Crystal2_New.png;0.140571;0.735294;0.367965;1;}||Transform{-10;598;100;100;5.8;10}|||||||||||||||||||||||",
-    "Entity175": "Name{Deco}|Tag{}|Sprite{Resources\\Assets\\Crystal2_New.png;0.709284;0.439663;0.838235;1;}||Transform{-414;-1103;100;100;0.6;10}|||||||||||||||||||||||",
+    "Entity175": "Name{Deco}|Tag{}|Sprite{Resources\\Assets\\Crystal_New.png;0.709284;0.439663;0.838235;1;}||Transform{-413;-1114;143;149;0.6;10}|||||||||||||||||||||||",
     "EntityParent0": 65535,
     "EntityParent1": 65535,
     "EntityParent2": 65535,
