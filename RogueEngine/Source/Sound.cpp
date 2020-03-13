@@ -71,9 +71,9 @@ namespace Rogue
 	{
 		m_soundOn = true;
 		m_result = m_system->playSound(m_fmodSound, 0, false, &m_channel);
-		FmodErrorCheck(m_result);
+		//FmodErrorCheck(m_result);
 		m_result = m_channel->setVolume(volume);
-		FmodErrorCheck(m_result);
+		//FmodErrorCheck(m_result);
 	}
 
 	void Sound::Update()
