@@ -22,7 +22,7 @@ Technology is prohibited.
 namespace Rogue
 {
 	CrystalMole::CrystalMole(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent)
-		: ScriptComponent(entity, logicComponent, statsComponent), m_currentPointIndex{0}
+		: ScriptComponent(entity, logicComponent, statsComponent), m_currentPointIndex{ 0 }, m_goingToEnd{ false }
 	{
 		LogicInit();
 	}
@@ -85,7 +85,13 @@ namespace Rogue
 		{
 			m_delay -= g_engine.GetTimeScale() * g_deltaTime;
 			if (m_delay < 0.0f)
+			{
 				m_delay = 0.0f;
+				if (m_goingToEnd && PLAYER_STATUS.GetHitchhikedEntity() == m_entity)
+				{
+					g_engine.m_coordinator.GetSystem<PlayerControllerSystem>()->Hitchhike(MAX_ENTITIES);
+				}
+			}
 			return;
 		}
 
@@ -100,6 +106,26 @@ namespace Rogue
 		EventDispatcher::instance().AddEvent(event);
 
 		TransformComponent& aiTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(m_entity);
+		
+		//To determine which waypoint to go to
+
+		//If Player is on Mole
+		if (PLAYER_STATUS.GetHitchhikedEntity() == m_entity)
+		{
+			if (m_nextPoint.size() > 0)
+				m_nextPoint.pop();
+
+			m_nextPoint.push(m_waypoints[m_waypoints.size() - 1]);
+			m_goingToEnd = true;
+		}
+		else //If Player is not on mole, it goes to starting point
+		{
+			if (m_nextPoint.size() > 0)
+				m_nextPoint.pop();
+
+			m_nextPoint.push(m_waypoints[0]);
+			m_goingToEnd = false;
+		}
 
 		//Always move
 		Vec2 travelDistance, travelDistValue;
@@ -128,16 +154,6 @@ namespace Rogue
 		//If within a certain radius, assign next point
 		if (Vec2SqDistance(aiTransform.GetPosition(), m_nextPoint.front()) < m_statsComponent->getSightRange() * m_statsComponent->getSightRange())
 		{
-			m_nextPoint.pop();
-
-			if (m_waypoints.size() == 1)
-				return;
-
-			if (++m_currentPointIndex >= m_waypoints.size())
-				m_currentPointIndex = 0;
-
-			m_nextPoint.push(m_waypoints[m_currentPointIndex]);
-
 			m_delay = m_patrolDelay;
 		}
 	}
