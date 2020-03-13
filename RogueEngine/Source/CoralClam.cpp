@@ -21,6 +21,8 @@ namespace Rogue
 	{
 		auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_entity);
 		auto& animation = g_engine.m_coordinator.GetComponent<AnimationComponent>(m_entity);
+
+		//auto& soul = *(g_engine.m_coordinator.GetHierarchyInfo(m_entity).m_children.begin());
 		auto& boxCollider = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(m_entity);
 
 		m_timer += g_deltaTime * g_engine.GetTimeScale();

@@ -1,28 +1,13 @@
-/* Start Header ************************************************************************/
-/*!
-\file           PatrolAI.cpp
-\project        Exale
-\author         Chan Wai Kit Terence, c.terence, 440005918 (100%)
-\par            c.terence\@digipen.edu
-\date           1 December,2019
-\brief          This file contains the function definitions for PatrolAI
-
-All content (C) 2019 DigiPen (SINGAPORE) Corporation, all rights
-reserved.
-
-Reproduction or disclosure of this file or its contents
-without the prior written consent of DigiPen Institute of
-Technology is prohibited.
-*/
-/* End Header **************************************************************************/
 #include "Precompiled.h"
 #include "CoralElementBubble.h"
+#include "PlayerStatusManager.h"
 #include "ParentEvent.h"
+//#include "Main.h"	//For g_deltaTime and coordinator
 
 namespace Rogue
 {
 	CoralElementBubble::CoralElementBubble(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent)
-		: ScriptComponent(entity, logicComponent, statsComponent), m_currentPointIndex{0}
+		: ScriptComponent(entity, logicComponent, statsComponent), m_currentPointIndex{ 0 }
 	{
 		LogicInit();
 	}
@@ -59,17 +44,32 @@ namespace Rogue
 			g_engine.m_coordinator.GetComponent<RigidbodyComponent>(m_entity).setIsStatic(true);
 		}
 
+		if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(m_entity))
+		{
+			if (auto collider = g_engine.m_coordinator.TryGetComponent<ColliderComponent>(m_entity))
+			{
+				if (collider->get().GetCollisionCat() == Light)
+				{
+					auto filter = sprite->get().getFilter();
+					filter.r = 249.0f / 255.0f;
+					filter.g = 238.0f / 255.0f;
+					filter.b = 59.0f /255.0f;
+					sprite->get().setFilter(filter);
+				}
+				else
+				{
+					auto filter = sprite->get().getFilter();
+					filter.r = 132.0f / 255.0f;
+					filter.g = 24.0f / 255.0f;
+					filter.b = 249.0f / 255.0f;
+					sprite->get().setFilter(filter);
+				}
+			}
+		}
+
 		m_patrolDelay = 2.0f;
 		m_delay = 0.0f;
-	}
-
-	void CoralElementBubble::AIActiveStateUpdate()
-	{
-		if (!g_engine.m_coordinator.GameIsActive())
-			return;
-
-		m_logicComponent->SetActiveStateBit(static_cast<size_t>(AIState::AIState_Patrol));
-		m_logicComponent->SetActiveStateBit(static_cast<size_t>(AIState::AIState_Idle));
+		m_statsComponent->SetIsPatrolling(false);
 	}
 
 	void CoralElementBubble::AIPatrolUpdate()
@@ -90,7 +90,7 @@ namespace Rogue
 		}
 
 		//Check if Transform component and Rigidbody exist
-		if (!(g_engine.m_coordinator.ComponentExists<TransformComponent>(m_entity) && 
+		if (!(g_engine.m_coordinator.ComponentExists<TransformComponent>(m_entity) &&
 			g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(m_entity) &&
 			m_statsComponent != nullptr))
 			return;
@@ -103,7 +103,7 @@ namespace Rogue
 
 		//Always move
 		Vec2 travelDistance, travelDistValue;
-		
+
 		if (m_nextPoint.size())
 			travelDistValue = m_nextPoint.front() - aiTransform.GetPosition();
 		else if (m_waypoints.size())
@@ -128,17 +128,56 @@ namespace Rogue
 		//If within a certain radius, assign next point
 		if (Vec2SqDistance(aiTransform.GetPosition(), m_nextPoint.front()) < m_statsComponent->getSightRange() * m_statsComponent->getSightRange())
 		{
-			m_nextPoint.pop();
-
+			//If only 1 waypoint, no need to pop and replace
 			if (m_waypoints.size() == 1)
 				return;
 
+			m_nextPoint.pop();
+
+			//At the very last waypoint
 			if (++m_currentPointIndex >= m_waypoints.size())
-				m_currentPointIndex = 0;
+			{
+				g_engine.m_coordinator.GetSystem<PlayerControllerSystem>()->Hitchhike(MAX_ENTITIES);
+				//g_engine.m_coordinator.AddToDeleteQueue(m_entity);
+				m_statsComponent->SetIsPatrolling(false);
+				m_currentPointIndex = 1;
+
+				if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(m_entity))
+				{
+					trans->get().setPosition(m_waypoints[0]);
+				}
+			}
 
 			m_nextPoint.push(m_waypoints[m_currentPointIndex]);
 
 			m_delay = m_patrolDelay;
+		}
+	}
+
+	void CoralElementBubble::AIActiveStateUpdate()
+	{
+		if (!g_engine.m_coordinator.GameIsActive())
+			return;
+
+		if (m_statsComponent->GetIsPatrolling())
+			m_logicComponent->SetActiveStateBit(static_cast<size_t>(AIState::AIState_Patrol));
+		m_logicComponent->SetActiveStateBit(static_cast<size_t>(AIState::AIState_Idle));
+	}
+
+	void CoralElementBubble::OnTriggerEnter(Entity other)
+	{
+		if (other == PLAYER_STATUS.GetPlayerEntity())
+		{
+			//Checking for if type mismatch
+			auto aiCollision = g_engine.m_coordinator.TryGetComponent<ColliderComponent>(m_entity);
+			auto playerCollision = g_engine.m_coordinator.TryGetComponent<ColliderComponent>(PLAYER_STATUS.GetPlayerEntity());
+			
+			//If AI has no collider, or player has no collider or AI Collider is same as player collider
+			if (!aiCollision || !playerCollision || aiCollision->get().GetCollisionCat() == playerCollision->get().GetCollisionCat())
+				return;
+
+			g_engine.m_coordinator.GetSystem<PlayerControllerSystem>()->Hitchhike(m_entity); // force hitchhike
+			m_statsComponent->SetIsPatrolling(true);
 		}
 	}
 }

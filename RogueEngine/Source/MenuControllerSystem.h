@@ -30,6 +30,7 @@ namespace Rogue
 		bool m_confirmQuit;
 		bool m_toMainMenu;
 		bool m_showControlMenu;
+		bool m_showingUI;
 
 		std::vector<Vec2> m_menuObjsTransforms;
 	public:
@@ -52,6 +53,7 @@ namespace Rogue
 		size_t GetUIMenuObjsSize();
 		void ResumeGame();
 
+		void MoveMenuObjs();
 		void HandleMenuObjs();
 	};
 }

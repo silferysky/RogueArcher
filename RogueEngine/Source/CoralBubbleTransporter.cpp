@@ -46,6 +46,7 @@ namespace Rogue
 
 		m_patrolDelay = 2.0f;
 		m_delay = 0.0f;
+		m_statsComponent->SetIsPatrolling(false);
 	}
 
 	void CoralBubbleTransporter::AIPatrolUpdate()
@@ -104,23 +105,29 @@ namespace Rogue
 		//If within a certain radius, assign next point
 		if (Vec2SqDistance(aiTransform.GetPosition(), m_nextPoint.front()) < m_statsComponent->getSightRange() * m_statsComponent->getSightRange())
 		{
-			m_nextPoint.pop();
-
+			//If only 1 waypoint, no need to pop and replace
 			if (m_waypoints.size() == 1)
 				return;
 
+			m_nextPoint.pop();
+
+			//At the very last waypoint
 			if (++m_currentPointIndex >= m_waypoints.size())
-				m_currentPointIndex = 0;
+			{
+				g_engine.m_coordinator.GetSystem<PlayerControllerSystem>()->Hitchhike(MAX_ENTITIES);
+				//g_engine.m_coordinator.AddToDeleteQueue(m_entity);
+				m_statsComponent->SetIsPatrolling(false);
+				m_currentPointIndex = 1;
+				
+				if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(m_entity))
+				{
+					trans->get().setPosition(m_waypoints[0]);
+				}
+			}
 
 			m_nextPoint.push(m_waypoints[m_currentPointIndex]);
 
 			m_delay = m_patrolDelay;
-		}
-
-		if (false) // eject player and delete itself
-		{
-			g_engine.m_coordinator.GetSystem<PlayerControllerSystem>()->Hitchhike(MAX_ENTITIES);
-			g_engine.m_coordinator.AddToDeleteQueue(m_entity);
 		}
 	}
 
@@ -131,7 +138,8 @@ namespace Rogue
 
 		if (m_statsComponent->GetIsPatrolling())
 			m_logicComponent->SetActiveStateBit(static_cast<size_t>(AIState::AIState_Patrol));
-		m_logicComponent->SetActiveStateBit(static_cast<size_t>(AIState::AIState_Idle));
+
+		//m_logicComponent->SetActiveStateBit(static_cast<size_t>(AIState::AIState_Idle));
 	}
 
 	void CoralBubbleTransporter::AIIdleUpdate()
