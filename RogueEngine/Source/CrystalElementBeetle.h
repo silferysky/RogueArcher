@@ -30,6 +30,9 @@ namespace Rogue
 		virtual void AIActiveStateUpdate() override;
 		virtual void AIPatrolUpdate() override;
 	protected:
+
+		void SetCollisionColor();
+
 		std::vector<Vec2> m_waypoints;
 		size_t m_currentPointIndex;
 		float m_patrolDelay;

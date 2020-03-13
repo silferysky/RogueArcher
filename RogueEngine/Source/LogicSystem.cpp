@@ -55,6 +55,7 @@ Technology is prohibited.
 #include "CoralClam.h"
 #include "CoralBubbleTransporter.h"
 #include "CoralElementBubble.h"
+#include "CrystalElementBeetle.h"
 
 namespace Rogue
 {
@@ -383,6 +384,12 @@ namespace Rogue
 				{
 					CoralElementBubble newAI(entities, logicComponent, statsComponent);
 					AddLogicInterface(entities, std::make_shared<CoralElementBubble>(newAI));
+					break;
+				}
+				case AIType::Crystal_ElementBeetle:
+				{
+					CrystalElementBeetle newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<CrystalElementBeetle>(newAI));
 					break;
 				}
 				case AIType::AI_Static:

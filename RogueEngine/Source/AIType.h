@@ -56,6 +56,7 @@ namespace Rogue
 		Coral_Clam,
 		Coral_BubbleTransporter,
 		Coral_ElementBubble,
+		Crystal_ElementBeetle,
 
 		AI_Last
 	};

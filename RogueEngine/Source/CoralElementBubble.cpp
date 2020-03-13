@@ -48,7 +48,13 @@ namespace Rogue
 		{
 			if (auto collider = g_engine.m_coordinator.TryGetComponent<ColliderComponent>(m_entity))
 			{
-				if (collider->get().GetCollisionCat() == Light)
+				int lightPos = -1;
+				int darkPos = -1;
+
+				lightPos = LayerManager::instance().GetLayerCategory("Light");
+				darkPos = LayerManager::instance().GetLayerCategory("Dark");
+
+				if (collider->get().GetCollisionMask().test(lightPos))
 				{
 					auto filter = sprite->get().getFilter();
 					filter.r = 249.0f / 255.0f;
