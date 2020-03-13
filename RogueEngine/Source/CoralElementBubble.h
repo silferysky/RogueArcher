@@ -29,6 +29,7 @@ namespace Rogue
 		virtual void LogicInit() override;
 		virtual void AIActiveStateUpdate() override;
 		virtual void AIPatrolUpdate() override;
+		virtual void OnTriggerEnter(Entity other) override;
 		
 	protected:
 		std::vector<Vec2> m_waypoints;
