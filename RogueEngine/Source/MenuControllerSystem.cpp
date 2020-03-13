@@ -235,6 +235,7 @@ namespace Rogue
 					m_confirmQuit = false;
 					g_engine.m_coordinator.SetPauseState(false);
 					g_engine.SetTimeScale(1.0f);
+					MoveMenuObjs();
 					HandleMenuObjs();
 				}
 				//Exit to Main menu
@@ -259,8 +260,16 @@ namespace Rogue
 				}
 				else if (hierarchyObj.m_objectName == "YesBtn")
 				{
-					if (m_confirmQuit)
+					if (m_confirmQuit && SceneManager::instance().getCurrentFileName() == "Level 20.json")
 						g_engine.SetGameIsRunning(false);
+					else
+					{
+						g_engine.m_coordinator.SetTransitionLevel("Level 20.json", 0.0f);
+						FadeEvent ev = FadeEvent(MAX_ENTITIES, 0.5f);
+						ev.SetSystemReceivers(static_cast<int>(SystemID::id_GRAPHICSSYSTEM));
+						EventDispatcher::instance().AddEvent(ev);
+						PLAYER_STATUS.SetIndicatorStatus(false);
+					}
 
 				}
 				else if (hierarchyObj.m_objectName == "NoBtn")
@@ -471,37 +480,45 @@ namespace Rogue
 		HandleMenuObjs();
 	}
 
-	void MenuControllerSystem::HandleMenuObjs()
+	void MenuControllerSystem::MoveMenuObjs()
 	{
 		bool movingToPos = m_showingUI = !m_showingUI;
 
 		auto itr = m_menuObjsTransforms.begin();
 
-		if (m_menuObjs.size() < 2)
-			return;
-		std::cout << "First Entity before Translate X" << g_engine.m_coordinator.GetComponent<TransformComponent>(m_menuObjs.front() +1).GetPosition().x << std::endl;
-		std::cout << "First Entity before Translate Y" << g_engine.m_coordinator.GetComponent<TransformComponent>(m_menuObjs.front() +1).GetPosition().y << std::endl;
 		for (Entity ent : m_menuObjs)
 		{
-			//Safety check
-			auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(ent);
-
-			if (!sprite)
-				continue;
-
 			if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(ent))
 			{
 				if (movingToPos)
 				{
-					trans->get().setPosition(Vec2((*itr).x + CAMERA_MANAGER.GetCameraPos().x, (*itr).y + CAMERA_MANAGER.GetCameraPos().y));
-					*itr = trans->get().GetPosition();
-					++itr;
+					if (SceneManager::instance().getCurrentFileName() == "Level 16.json")
+					{
+						trans->get().setPosition(Vec2((*itr).x - CAMERA_MANAGER.GetCameraPos().x, (*itr).y - CAMERA_MANAGER.GetCameraPos().y));
+						*itr = trans->get().GetPosition();
+						++itr;
+					}
+					else
+					{
+						trans->get().setPosition(Vec2((*itr).x + CAMERA_MANAGER.GetCameraPos().x, (*itr).y + CAMERA_MANAGER.GetCameraPos().y));
+						*itr = trans->get().GetPosition();
+						++itr;
+					}
 				}
 				else
 				{
-					trans->get().setPosition(Vec2((*itr).x - CAMERA_MANAGER.GetCameraPos().x, (*itr).y - CAMERA_MANAGER.GetCameraPos().y));
-					*itr = trans->get().GetPosition();
-					++itr;
+					if (SceneManager::instance().getCurrentFileName() == "Level 16.json")
+					{
+						trans->get().setPosition(Vec2((*itr).x + CAMERA_MANAGER.GetCameraPos().x, (*itr).y + CAMERA_MANAGER.GetCameraPos().y));
+						*itr = trans->get().GetPosition();
+						++itr;
+					}
+					else
+					{
+						trans->get().setPosition(Vec2((*itr).x - CAMERA_MANAGER.GetCameraPos().x, (*itr).y - CAMERA_MANAGER.GetCameraPos().y));
+						*itr = trans->get().GetPosition();
+						++itr;
+					}
 				}
 			}
 		}
@@ -512,19 +529,40 @@ namespace Rogue
 			{
 				if (movingToPos)
 				{
-					trans->get().setPosition(Vec2(trans->get().GetPosition().x + CAMERA_MANAGER.GetCameraPos().x, trans->get().GetPosition().y + CAMERA_MANAGER.GetCameraPos().y));
+					if (SceneManager::instance().getCurrentFileName() == "Level 16.json")
+					{
+						trans->get().setPosition(Vec2((*itr).x - CAMERA_MANAGER.GetCameraPos().x, (*itr).y - CAMERA_MANAGER.GetCameraPos().y));
+						*itr = trans->get().GetPosition();
+						++itr;
+					}
+					else
+					{
+						trans->get().setPosition(Vec2((*itr).x + CAMERA_MANAGER.GetCameraPos().x, (*itr).y + CAMERA_MANAGER.GetCameraPos().y));
+						*itr = trans->get().GetPosition();
+						++itr;
+					}
 				}
 				else
 				{
-					trans->get().setPosition(Vec2(trans->get().GetPosition().x - CAMERA_MANAGER.GetCameraPos().x, trans->get().GetPosition().y - CAMERA_MANAGER.GetCameraPos().y));
+					if (SceneManager::instance().getCurrentFileName() == "Level 16.json")
+					{
+						trans->get().setPosition(Vec2((*itr).x + CAMERA_MANAGER.GetCameraPos().x, (*itr).y + CAMERA_MANAGER.GetCameraPos().y));
+						*itr = trans->get().GetPosition();
+						++itr;
+					}
+					else
+					{
+						trans->get().setPosition(Vec2((*itr).x - CAMERA_MANAGER.GetCameraPos().x, (*itr).y - CAMERA_MANAGER.GetCameraPos().y));
+						*itr = trans->get().GetPosition();
+						++itr;
+					}
 				}
 			}
 		}
+	}
 
-
-		std::cout << "First Entity after Translate X" << g_engine.m_coordinator.GetComponent<TransformComponent>(m_menuObjs.front()+1).GetPosition().x << std::endl;
-		std::cout << "First Entity after Translate Y" << g_engine.m_coordinator.GetComponent<TransformComponent>(m_menuObjs.front()+1).GetPosition().y << std::endl;
-
+	void MenuControllerSystem::HandleMenuObjs()
+	{
 		//If Game is Running
 		if (g_engine.GetGameIsRunning())
 		{

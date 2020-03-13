@@ -472,6 +472,7 @@ namespace Rogue
 				else if (keycode == KeyPress::KeyEsc)
 				{
 					g_engine.m_coordinator.SetPauseState(true);
+					g_engine.m_coordinator.GetSystem<MenuControllerSystem>()->MoveMenuObjs();
 					g_engine.m_coordinator.GetSystem<MenuControllerSystem>()->HandleMenuObjs();
 					PLAYER_STATUS.SetIndicatorStatus(PLAYER_STATUS.ShowIndicator());
 					//If Indicator is no longer hidden

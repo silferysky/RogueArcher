@@ -53,6 +53,7 @@ namespace Rogue
 		size_t GetUIMenuObjsSize();
 		void ResumeGame();
 
+		void MoveMenuObjs();
 		void HandleMenuObjs();
 	};
 }
