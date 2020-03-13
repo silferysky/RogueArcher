@@ -35,9 +35,8 @@ namespace Rogue
 			PLAYER_STATUS.SetIndicatorStatus(false);
 			g_engine.m_coordinator.SetTransitionLevel(m_levelToLoad.c_str(), 0.0f); //2nd value doesn't matter anymore probably
 
-			FadeEvent ev = FadeEvent(m_entity, 0.5f);
+			FadeEvent ev = FadeEvent(MAX_ENTITIES, 0.5f);
 			ev.SetSystemReceivers(static_cast<int>(SystemID::id_GRAPHICSSYSTEM));
-			ev.SetSystemReceivers(static_cast<int>(SystemID::id_FADESYSTEM));
 			EventDispatcher::instance().AddEvent(ev);
 		}
 	}

@@ -263,41 +263,41 @@ namespace Rogue
 
 		glUniformMatrix4fv(m_transformLocation, 1, GL_FALSE, glm::value_ptr(transformMat));
 		
-		//if (g_engine.m_coordinator.IsTransitFinish())
-		//{
-		//	if (m_isFading)
-		//	{
-		//		//std::cout << "Current Fade Factor" << m_currentFadeFactor << std::endl;
-		//		auto tempFilter = sprite.getFilter();
-		//		tempFilter.a *= m_currentFadeFactor;
-		//		glUniform4fv(m_filterLocation, 1, glm::value_ptr(tempFilter));
-		//
-		//		//Split to make sure it still prints one more frame when currentFadeFactor is < 0
-		//		if (m_isFadingOut && m_currentFadeFactor < 0.0f)
-		//		{
-		//			m_isFadingOut = false;
-		//			if (m_transitingAfterFade)
-		//			{
-		//				g_engine.m_coordinator.SetTransition(true);
-		//				m_transitingAfterFade = false;
-		//				g_engine.m_coordinator.ResumeMenuButtons();
-		//			}
-		//		}
-		//		else if (m_isFadingOut)
-		//		{
-		//			m_currentFadeFactor -= m_fadeFactor * g_deltaTime;
-		//		}
-		//		else
-		//		{
-		//			m_currentFadeFactor += m_fadeFactor * g_deltaTime;
-		//			if (m_currentFadeFactor > 1.0f)
-		//				m_isFading = false;
-		//		}
-		//	}
-		//	else
+		if (g_engine.m_coordinator.IsTransitFinish())
+		{
+			if (m_isFading)
+			{
+				//std::cout << "Current Fade Factor" << m_currentFadeFactor << std::endl;
+				auto tempFilter = sprite.getFilter();
+				tempFilter.a *= m_currentFadeFactor;
+				glUniform4fv(m_filterLocation, 1, glm::value_ptr(tempFilter));
+
+				//Split to make sure it still prints one more frame when currentFadeFactor is < 0
+				if (m_isFadingOut && m_currentFadeFactor < 0.0f)
+				{
+					m_isFadingOut = false;
+					if (m_transitingAfterFade)
+					{
+						g_engine.m_coordinator.SetTransition(true);
+						m_transitingAfterFade = false;
+						g_engine.m_coordinator.ResumeMenuButtons();
+					}
+				}
+				else if (m_isFadingOut)
+				{
+					m_currentFadeFactor -= m_fadeFactor * g_deltaTime;
+				}
+				else
+				{
+					m_currentFadeFactor += m_fadeFactor * g_deltaTime;
+					if (m_currentFadeFactor > 1.0f)
+						m_isFading = false;
+				}
+			}
+			else
 				// rgb filtering
 				glUniform4fv(m_filterLocation, 1, glm::value_ptr(sprite.getFilter()));
-		//}
+		}
 
 		// Draw the Mesh
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
@@ -329,41 +329,41 @@ namespace Rogue
 		glUniform2f(m_foregrounduvOffsetLocation, sprite.getTexCoordOffset().x, sprite.getTexCoordOffset().y);
 		glUniformMatrix4fv(m_foregroundTransformLocation, 1, GL_FALSE, glm::value_ptr(transformMat));
 
-		//if (g_engine.m_coordinator.IsTransitFinish())
-		//{
-		//	if (m_isFading)
-		//	{
-		//		//std::cout << "Current Fade Factor" << m_currentFadeFactor << std::endl;
-		//		auto tempFilter = sprite.getFilter();
-		//		tempFilter.a *= m_currentFadeFactor;
-		//		glUniform4fv(m_filterLocation, 1, glm::value_ptr(tempFilter));
-		//
-		//		//Split to make sure it still prints one more frame when currentFadeFactor is < 0
-		//		if (m_isFadingOut && m_currentFadeFactor < 0.0f)
-		//		{
-		//			m_isFadingOut = false;
-		//			if (m_transitingAfterFade)
-		//			{
-		//				g_engine.m_coordinator.SetTransition(true);
-		//				m_transitingAfterFade = false;
-		//				g_engine.m_coordinator.ResumeMenuButtons();
-		//			}
-		//		}
-		//		else if (m_isFadingOut)
-		//		{
-		//			m_currentFadeFactor -= m_fadeFactor * g_deltaTime;
-		//		}
-		//		else
-		//		{
-		//			m_currentFadeFactor += m_fadeFactor * g_deltaTime;
-		//			if (m_currentFadeFactor > 1.0f)
-		//				m_isFading = false;
-		//		}
-		//	}
-		//	else
+		if (g_engine.m_coordinator.IsTransitFinish())
+		{
+			if (m_isFading)
+			{
+				//std::cout << "Current Fade Factor" << m_currentFadeFactor << std::endl;
+				auto tempFilter = sprite.getFilter();
+				tempFilter.a *= m_currentFadeFactor;
+				glUniform4fv(m_filterLocation, 1, glm::value_ptr(tempFilter));
+
+				//Split to make sure it still prints one more frame when currentFadeFactor is < 0
+				if (m_isFadingOut && m_currentFadeFactor < 0.0f)
+				{
+					m_isFadingOut = false;
+					if (m_transitingAfterFade)
+					{
+						g_engine.m_coordinator.SetTransition(true);
+						m_transitingAfterFade = false;
+						g_engine.m_coordinator.ResumeMenuButtons();
+					}
+				}
+				else if (m_isFadingOut)
+				{
+					m_currentFadeFactor -= m_fadeFactor * g_deltaTime;
+				}
+				else
+				{
+					m_currentFadeFactor += m_fadeFactor * g_deltaTime;
+					if (m_currentFadeFactor > 1.0f)
+						m_isFading = false;
+				}
+			}
+			else
 				// rgb filtering
 				glUniform4fv(m_foregroundFilterLocation, 1, glm::value_ptr(sprite.getFilter()));
-		//}
+		}
 
 		// Draw the Mesh
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
