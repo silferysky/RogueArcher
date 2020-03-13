@@ -23,6 +23,8 @@ Technology is prohibited.
 #include "CameraManager.h"
 #include "PlayerStatusManager.h"
 
+#define MENU_MAX_POSITION 10000.0f
+
 namespace Rogue
 {
 	MenuControllerSystem::MenuControllerSystem()
@@ -481,14 +483,12 @@ namespace Rogue
 				{
 					if (SceneManager::instance().getCurrentFileName() == "Level 16.json")
 					{
-						trans->get().setPosition(Vec2((*itr).x - CAMERA_MANAGER.GetCameraPos().x, (*itr).y - CAMERA_MANAGER.GetCameraPos().y));
-						*itr = trans->get().GetPosition();
+						trans->get().setPosition(Vec2((*itr).x + CAMERA_MANAGER.GetCameraPos().x, (*itr).y + CAMERA_MANAGER.GetCameraPos().y));
 						++itr;
 					}
 					else
 					{
 						trans->get().setPosition(Vec2((*itr).x + CAMERA_MANAGER.GetCameraPos().x, (*itr).y + CAMERA_MANAGER.GetCameraPos().y));
-						*itr = trans->get().GetPosition();
 						++itr;
 					}
 				}
@@ -496,14 +496,12 @@ namespace Rogue
 				{
 					if (SceneManager::instance().getCurrentFileName() == "Level 16.json")
 					{
-						trans->get().setPosition(Vec2((*itr).x + CAMERA_MANAGER.GetCameraPos().x, (*itr).y + CAMERA_MANAGER.GetCameraPos().y));
-						*itr = trans->get().GetPosition();
+						trans->get().setPosition(Vec2(MENU_MAX_POSITION, MENU_MAX_POSITION));
 						++itr;
 					}
 					else
 					{
-						trans->get().setPosition(Vec2((*itr).x - CAMERA_MANAGER.GetCameraPos().x, (*itr).y - CAMERA_MANAGER.GetCameraPos().y));
-						*itr = trans->get().GetPosition();
+						trans->get().setPosition(Vec2(MENU_MAX_POSITION, MENU_MAX_POSITION));
 						++itr;
 					}
 				}
@@ -522,14 +520,12 @@ namespace Rogue
 				{
 					if (SceneManager::instance().getCurrentFileName() == "Level 16.json")
 					{
-						trans->get().setPosition(Vec2((*itr).x - CAMERA_MANAGER.GetCameraPos().x, (*itr).y - CAMERA_MANAGER.GetCameraPos().y));
-						*itr = trans->get().GetPosition();
+						trans->get().setPosition(Vec2((*itr).x + CAMERA_MANAGER.GetCameraPos().x, (*itr).y + CAMERA_MANAGER.GetCameraPos().y));
 						++itr;
 					}
 					else
 					{
 						trans->get().setPosition(Vec2((*itr).x + CAMERA_MANAGER.GetCameraPos().x, (*itr).y + CAMERA_MANAGER.GetCameraPos().y));
-						*itr = trans->get().GetPosition();
 						++itr;
 					}
 				}
@@ -537,14 +533,12 @@ namespace Rogue
 				{
 					if (SceneManager::instance().getCurrentFileName() == "Level 16.json")
 					{
-						trans->get().setPosition(Vec2((*itr).x + CAMERA_MANAGER.GetCameraPos().x, (*itr).y + CAMERA_MANAGER.GetCameraPos().y));
-						*itr = trans->get().GetPosition();
+						trans->get().setPosition(Vec2(MENU_MAX_POSITION, MENU_MAX_POSITION));
 						++itr;
 					}
 					else
 					{
-						trans->get().setPosition(Vec2((*itr).x - CAMERA_MANAGER.GetCameraPos().x, (*itr).y - CAMERA_MANAGER.GetCameraPos().y));
-						*itr = trans->get().GetPosition();
+						trans->get().setPosition(Vec2(MENU_MAX_POSITION, MENU_MAX_POSITION));
 						++itr;
 					}
 				}
