@@ -64,51 +64,51 @@ namespace Rogue
 		{
 			PLAYER_STATUS.SetPlayerEntity(*m_entities.begin());
 
-			//if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(PLAYER_STATUS.GetPlayerEntity()))
-			//{	
-			//	//For Hub level
-			//	if (SceneManager::instance().getCurrentFileName() == "Level 16.json")
-			//	{
-			//		std::string lastLevelLoaded = PLAYER_STATUS.GetLastLevel().data();
-			//		//For Tutorial Level to Hub
-			//		if (lastLevelLoaded == "Level 10.json")
-			//		{
-			//			//Do as per normal
-			//			//trans->get().setPosition(PLAYER_STATUS.GetStartingPos());
-			//		}
-			//		//For Forest Level to Hub
-			//		else if (lastLevelLoaded == "Level 15.json")
-			//		{
-			//			trans->get().setPosition(Vec2(1670.0f, -290.0f));
-			//		}
-			//		//For Mine Level to hub
-			//		else if (lastLevelLoaded == "Level 17.json")
-			//		{
-			//			trans->get().setPosition(Vec2(-1050.0f, -400.0f));
-			//		}
-			//		//For Coral level to Hub
-			//		else if (lastLevelLoaded == "Level 18.json")
-			//		{
-			//			trans->get().setPosition(Vec2(-40.0f, -400.0f));
-			//		}
-			//	}
-			//	//From Main Menu to Tutorial
-			//	/*else if (lastLevelLoaded == "Level 20.json")
-			//	{
-			//		trans->get().setPosition(Vec2(-3350.0f, 890.0f));
-			//	}*/
+			if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(PLAYER_STATUS.GetPlayerEntity()))
+			{	
+				//For Hub level
+				if (SceneManager::instance().getCurrentFileName() == "Level 16.json")
+				{
+					std::string lastLevelLoaded = PLAYER_STATUS.GetLastLevel().data();
+					//For Tutorial Level to Hub
+					if (lastLevelLoaded == "Level 10.json")
+					{
+						//Do as per normal
+						//trans->get().setPosition(PLAYER_STATUS.GetStartingPos());
+					}
+					//For Forest Level to Hub
+					else if (lastLevelLoaded == "Level 15.json")
+					{
+						trans->get().setPosition(Vec2(1670.0f, -290.0f));
+					}
+					//For Mine Level to hub
+					else if (lastLevelLoaded == "Level 17.json")
+					{
+						trans->get().setPosition(Vec2(-1050.0f, -400.0f));
+					}
+					//For Coral level to Hub
+					else if (lastLevelLoaded == "Level 18.json")
+					{
+						trans->get().setPosition(Vec2(-40.0f, -400.0f));
+					}
+				}
+				//From Main Menu to Tutorial
+				/*else if (lastLevelLoaded == "Level 20.json")
+				{
+					trans->get().setPosition(Vec2(-3350.0f, 890.0f));
+				}*/
 
-			//	HierarchyInfo& playerInfo = g_engine.m_coordinator.GetHierarchyInfo(PLAYER_STATUS.GetPlayerEntity());
-			//	for (auto entity : playerInfo.m_children)
-			//	{
-			//		if (auto child = g_engine.m_coordinator.TryGetComponent<ChildComponent>(entity))
-			//		{
-			//			child->get().SetGlobalDirty();
-			//			child->get().ResetLocalDirty();
-			//			g_engine.m_coordinator.ApplyParentChildCorrection(entity);
-			//		}
-			//	}
-			//}
+				HierarchyInfo& playerInfo = g_engine.m_coordinator.GetHierarchyInfo(PLAYER_STATUS.GetPlayerEntity());
+				for (auto entity : playerInfo.m_children)
+				{
+					if (auto child = g_engine.m_coordinator.TryGetComponent<ChildComponent>(entity))
+					{
+						child->get().SetGlobalDirty();
+						child->get().ResetLocalDirty();
+						g_engine.m_coordinator.ApplyParentChildCorrection(entity);
+					}
+				}
+			}
 		}
 
 		//std::cout << "Freeze Timer: " << PLAYER_STATUS.GetFreezeControlTimer() << std::endl;

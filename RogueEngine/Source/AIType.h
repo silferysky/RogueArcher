@@ -55,6 +55,7 @@ namespace Rogue
 		Vegetation_Breakable,
 		Coral_Clam,
 		Coral_BubbleTransporter,
+		Coral_ElementBubble,
 
 		AI_Last
 	};
