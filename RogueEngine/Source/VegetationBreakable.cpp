@@ -21,6 +21,7 @@ namespace Rogue
 			CameraShakeEvent shake(5.0f);
 			shake.SetSystemReceivers(static_cast<int>(SystemID::id_CAMERASYSTEM));
 			EventDispatcher::instance().AddEvent(shake);
+			g_engine.m_coordinator.GetSystem<CameraSystem>()->setIsActive(false);
 		}
 	}
 }
