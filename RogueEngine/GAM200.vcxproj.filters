@@ -755,6 +755,9 @@
     <ClInclude Include="Source\CoralElementBubble.h">
       <Filter>RogueEngine\Systems\AI\Script Types\Game\Amethyst Seas</Filter>
     </ClInclude>
+    <ClInclude Include="Source\GameLevels.h">
+      <Filter>RogueEngine\Data</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">

@@ -170,6 +170,16 @@ namespace Rogue
 		return m_emojiTexture;
 	}
 
+	void StatsComponent::setLevel(LEVEL level)
+	{
+		m_level = level;
+	}
+
+	LEVEL StatsComponent::getLevel() const
+	{
+		return m_level;
+	}
+
 	std::string StatsComponent::Serialize()
 	{
 		//Health, speed, attack range, sight range
@@ -260,6 +270,13 @@ namespace Rogue
 		ImGui::Checkbox("Component Active", &m_componentIsActive);
 		ImGui::PushItemWidth(75);
 		ImGui::DragInt("Health", &m_health, 1.0f, 0, 10);
+
+		const char* levelNames[] = { "Crystal Caverns", "Amethyst Seas", "Verdant Forest" };
+		int tempInt = static_cast<int>(m_level);
+
+		//For Levels
+		ImGui::Combo("Level", &tempInt, levelNames, IM_ARRAYSIZE(levelNames));
+		m_level = (LEVEL)tempInt;
 
 		ImGui::PushItemWidth(75);
 		ImGui::DragFloat("Speed", &m_speed, 1.0f, 0.0f, 10.0f);

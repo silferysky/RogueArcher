@@ -33,6 +33,13 @@ namespace Rogue
 		m_infiniteJumps{ false },
 		m_triggerOnce(false)
 	{
+		m_souls.insert(std::make_pair(LEVEL::CRYSTAL, 0));
+		m_souls.insert(std::make_pair(LEVEL::CORAL, 0));
+		m_souls.insert(std::make_pair(LEVEL::VEGETATION, 0));
+
+		m_totalSouls.insert(std::make_pair(LEVEL::CRYSTAL, 1));
+		m_totalSouls.insert(std::make_pair(LEVEL::CORAL, 1));
+		m_totalSouls.insert(std::make_pair(LEVEL::VEGETATION, 1));
 	}
 
 	void PlayerStatusManager::Reset()
@@ -314,14 +321,54 @@ namespace Rogue
 
 	}
 
-	unsigned PlayerStatusManager::GetSoulsCollected() const
+	/* unsigned PlayerStatusManager::GetSoulsCollected() const
 	{
 		return m_soulsCollected;
+	} */
+
+	std::map<LEVEL, unsigned>& PlayerStatusManager::GetSoulsCollected()
+	{
+		return m_souls;
+	}
+
+	std::map<LEVEL, unsigned>& PlayerStatusManager::GetTotalSouls()
+	{
+		return m_totalSouls;
+	}
+
+	unsigned PlayerStatusManager::GetSoulsCollected(LEVEL level) const
+	{
+		auto itr = m_souls.find(level);
+
+		if (itr != m_souls.end()) // level exists
+			return itr->second;
+		else
+			return 0;
+	}
+
+	unsigned PlayerStatusManager::GetTotalSouls(LEVEL level) const
+	{
+		auto itr = m_totalSouls.find(level);
+
+		if (itr != m_totalSouls.end()) // level exists
+			return itr->second;
+		else
+			return 0;
 	}
 
 	void PlayerStatusManager::IncrementSoulsCollected()
 	{
 		++m_soulsCollected;
+	}
+
+	void PlayerStatusManager::IncrementSoulsCollected(LEVEL level)
+	{
+		auto itr = m_souls.find(level);
+
+		if (itr != m_souls.end()) // level exists
+		{
+			++(itr->second);
+		}
 	}
 
 	void PlayerStatusManager::SetLastLevel(std::string_view str)

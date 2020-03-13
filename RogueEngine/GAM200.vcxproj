@@ -46,6 +46,7 @@
     <ClInclude Include="Source\EmojiAndZoomScript.h" />
     <ClInclude Include="Source\EmojiScript.h" />
     <ClInclude Include="Source\ForegroundComponent.h" />
+    <ClInclude Include="Source\GameLevels.h" />
     <ClInclude Include="Source\GamePlayEnding.h" />
     <ClInclude Include="Source\HoverOverButton.h" />
     <ClInclude Include="Source\IntegerPairHasher.h" />

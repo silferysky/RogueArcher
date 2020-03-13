@@ -25,7 +25,11 @@ namespace Rogue
 
 	void ProgressBar::AIIdleUpdate()
 	{
-		float completionPercentage = PlayerStatusManager::instance().GetSoulsCollected() / 4.0f;
+		LEVEL level = static_cast<LEVEL>(atoi(SceneManager::instance().getCurrentFileName().substr(6, 2).c_str()));
+
+		float completionPercentage = PlayerStatusManager::instance().GetSoulsCollected(level) / PlayerStatusManager::instance().GetTotalSouls(level);
+
+		//std::cout << m_statsComponent->getLevel() << std::endl;
 
 		if (m_oldScale != completionPercentage)
 		{
