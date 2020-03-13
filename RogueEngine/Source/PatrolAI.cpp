@@ -131,27 +131,31 @@ namespace Rogue
 		//If within a certain radius, assign next point
 		if (Vec2SqDistance(aiTransform.GetPosition(), m_nextPoint.front()) < m_statsComponent->getSightRange() * m_statsComponent->getSightRange())
 		{
-			m_nextPoint.pop();
-
+			//If only 1 waypoint, no need to pop and replace
 			if (m_waypoints.size() == 1)
 				return;
+
+			float xChange = m_nextPoint.front().x;
+			float yChange = m_nextPoint.front().y;
+
+			m_nextPoint.pop();
 
 			if (++m_currentPointIndex >= m_waypoints.size())
 				m_currentPointIndex = 0;
 
 			m_nextPoint.push(m_waypoints[m_currentPointIndex]);
 
-			//If facing right and moving left or facing left and moving right, flip
-			//if ((travelDistance.x < 0.5f && aiTransform.GetScale().x > 0.0f) || 
-			//	(travelDistance.x > 0.5f && aiTransform.GetScale().x < 0.0f))
-			//	aiTransform.setScale(Vec2(aiTransform.GetScale().x, aiTransform.GetScale().y));
+			xChange = m_nextPoint.front().x - xChange;
+			yChange = m_nextPoint.front().x - yChange;
 
-			//If facing up and moving down or facing down and moving up, flip
-			//if ((travelDistance.y < 0.5f && aiTransform.GetScale().y > 0.0f) ||
-			//	(travelDistance.y > 0.5f && aiTransform.GetScale().y < 0.0f))
-			//{
-			//	aiTransform.setScale(Vec2(-1 * aiTransform.GetScale().x, aiTransform.GetScale().y));
-			//}
+			if (xChange > 0.0f)
+			{
+				aiTransform.setScale(Vec2(std::abs(aiTransform.GetScale().x), aiTransform.GetScale().y));
+			}
+			else
+			{
+				aiTransform.setScale(Vec2(-1.0f * std::abs(aiTransform.GetScale().x), aiTransform.GetScale().y));
+			}
 
 			m_delay = m_patrolDelay;
 		}
