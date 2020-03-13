@@ -28,8 +28,6 @@ namespace Rogue
 		std::vector<Entity> m_menuObjs;
 		std::vector<Entity> m_confirmQuitEnt;
 		bool m_confirmQuit;
-		bool m_toMainMenu;
-		bool m_showControlMenu;
 
 		std::vector<Vec2> m_menuObjsTransforms;
 	public:
@@ -44,15 +42,14 @@ namespace Rogue
 		void Shutdown() override;
 
 		//Menu UI Control
-
 		void ClearMenuObjs();
 		void InitPauseMenu();
+		void ToggleControlHelpMenu();
 		void ToggleUIMenuObjs();
 		void SetUIMenuObjs(bool newActive);
+		void ToggleQuitButtonObj();
 		size_t GetUIMenuObjsSize();
 		void ResumeGame();
-
-		void HandleMenuObjs();
 	};
 }
 
