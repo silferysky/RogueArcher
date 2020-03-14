@@ -112,6 +112,8 @@ namespace Rogue
 		//If Player is on Mole
 		if (PLAYER_STATUS.GetHitchhikedEntity() == m_entity)
 		{
+			g_engine.m_coordinator.GetComponent<AnimationComponent>(m_entity).setIsAnimating(false);
+
 			if (m_nextPoint.size() > 0)
 				m_nextPoint.pop();
 
@@ -120,6 +122,8 @@ namespace Rogue
 		}
 		else //If Player is not on mole, it goes to starting point
 		{
+			g_engine.m_coordinator.GetComponent<AnimationComponent>(m_entity).setIsAnimating(true);
+
 			if (m_nextPoint.size() > 0)
 				m_nextPoint.pop();
 
