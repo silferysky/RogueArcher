@@ -31,6 +31,7 @@ namespace Rogue
 		m_isEnding{ false },
 		m_infiniteJumps{ false },
 		m_triggerOnce(false),
+		m_endTrigger{ false },
 		m_currLevel{ LEVEL::TUTORIAL }
 	{
 
@@ -54,9 +55,6 @@ namespace Rogue
 		m_startingPos = { 0.0f, 0.0f };
 		m_checkpoint = { 0.0f, 0.0f };
 		m_souls.clear();
-		m_souls.insert(std::make_pair(LEVEL::CRYSTAL, std::make_shared<std::vector<Soul>>()));
-		m_souls.insert(std::make_pair(LEVEL::CORAL, std::make_shared<std::vector<Soul>>()));
-		m_souls.insert(std::make_pair(LEVEL::VEGETATION, std::make_shared<std::vector<Soul>>()));
 
 		++m_runCount;
 	}
@@ -322,7 +320,7 @@ namespace Rogue
 
 		// If didn't exist, inserts the level, returns nullptr
 		if (m_souls[m_currLevel] == nullptr)
-			return 15;
+			return 0;
 
 		for (Soul& soul : *m_souls[m_currLevel])
 		{
@@ -352,13 +350,18 @@ namespace Rogue
 	{
 		// If didn't exist, inserts the level, returns nullptr
 		if (m_souls[m_currLevel] == nullptr)
-			return 1;
-
+		{
+			std::cout << "Total Souls: Level " << m_currLevel << " not registered!" << std::endl;
+			return 0;
+		}
 		return m_souls[m_currLevel]->size();
 	}
 
 	size_t PlayerStatusManager::GetTotalSoulsInLevel(LEVEL level)
 	{
+		if(m_souls[m_currLevel] == nullptr)
+			std::cout << "Total Souls: Level " << level << " not registered!" << std::endl;
+		
 		return m_souls[m_currLevel]->size();
 	}
 
@@ -366,7 +369,7 @@ namespace Rogue
 	{
 		if (m_souls[m_currLevel] == nullptr)
 		{
-			std::cout << "Curr level not in map!" << std::endl;
+			std::cout << "Curr level " << m_currLevel << " not in map!" << std::endl;
 			return;
 		}
 
@@ -394,6 +397,18 @@ namespace Rogue
 		 std::pair<std::map<LEVEL, std::shared_ptr<std::vector<Soul>>>::iterator, bool> it =  m_souls.insert(std::make_pair(level, std::make_shared<std::vector<Soul>>()));
 		 
 		 return it.second;
+	}
+
+	void PlayerStatusManager::RemoveCollectedSouls()
+	{
+		if (m_souls[m_currLevel] == nullptr)
+			return;
+
+		for (Soul& soul : *m_souls[m_currLevel])
+		{
+			if (soul.m_collected && g_engine.m_coordinator.ComponentExists<SoulComponent>(soul.m_entity))
+				g_engine.m_coordinator.AddToDeleteQueue(soul.m_entity);
+		}
 	}
 
 	//================================================================
@@ -442,6 +457,14 @@ namespace Rogue
 	bool PlayerStatusManager::GetInfiniteJumps() const
 	{
 		return m_infiniteJumps;
+	}	void PlayerStatusManager::SetEndTrigger(bool willTrigger)
+	{
+		m_endTrigger = willTrigger;
+	}
+
+	bool PlayerStatusManager::GetEndTrigger() const
+	{
+		return m_endTrigger;
 	}
 
 	void PlayerStatusManager::ChangePlayerSprite()

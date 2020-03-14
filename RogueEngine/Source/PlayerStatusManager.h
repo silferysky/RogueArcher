@@ -93,6 +93,7 @@ namespace Rogue
 		void CollectSoul(Entity entity);
 		void AddSoul(Entity entity);
 		bool RegisterLevel(LEVEL level);
+		void RemoveCollectedSouls();
 
 		//Transition
 		void SetLastLevel(std::string_view str);
@@ -108,6 +109,8 @@ namespace Rogue
 		//Cheats
 		void SetInfiniteJumps(bool infinite = true);
 		bool GetInfiniteJumps() const;
+		void SetEndTrigger(bool willTrigger = true);
+		bool GetEndTrigger() const;
 
 	private:
 		size_t m_runCount;
@@ -160,5 +163,7 @@ namespace Rogue
 		bool m_infiniteJumps;
 
 		bool m_triggerOnce;
+
+		bool m_endTrigger;
 	};
 }

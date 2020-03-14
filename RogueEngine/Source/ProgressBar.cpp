@@ -29,7 +29,7 @@ namespace Rogue
 
 		// guard against 0 division
 		if (PLAYER_STATUS.GetTotalSoulsInLevel())
-			completionPercentage = PLAYER_STATUS.GetCollectedSoulsInLevel() / PLAYER_STATUS.GetTotalSoulsInLevel();
+			completionPercentage = PLAYER_STATUS.GetCollectedSoulsInLevel() / static_cast<float>(PLAYER_STATUS.GetTotalSoulsInLevel());
 
 		std::stringstream ss;
 		ss << "completionPercentage: " << completionPercentage
