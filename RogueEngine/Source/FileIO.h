@@ -79,11 +79,11 @@ namespace Rogue
 			}
 
 			std::ofstream ofs{ FileName };
-			if (!ofs.is_open())
-			{
-				std::cerr << "Could not open file for writing!\n";
-				return EXIT_FAILURE;
-			}
+			//if (!ofs.is_open())
+			//{
+			//	std::cerr << "Could not open file for writing!\n";
+			//	return EXIT_FAILURE;
+			//}
 
 			rapidjson::OStreamWrapper osw{ ofs };
 			rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer2{ osw };
