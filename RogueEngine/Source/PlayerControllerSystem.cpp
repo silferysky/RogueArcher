@@ -513,6 +513,84 @@ namespace Rogue
 						g_engine.m_coordinator.AddToDeleteQueue(PLAYER_STATUS.GetHitchhikedEntity());
 					}
 				}
+
+				// Skip level
+				else if (keycode == KeyPress::KeyI)
+				{
+					if (PLAYER_STATUS.GetPlayerEntity() != MAX_ENTITIES)
+						if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(PLAYER_STATUS.GetPlayerEntity()))
+						{
+							//Tutorial
+							if (SceneManager::instance().getCurrentFileName() == "Level 10.json")
+							{
+								trans->get().setPosition(Vec2(2130.0f, 300.0f));
+							}
+							//Forest
+							else if (SceneManager::instance().getCurrentFileName() == "Level 15.json")
+							{
+								trans->get().setPosition(Vec2(-555.0f, 850.0f));
+							}
+							//Coral
+							else if (SceneManager::instance().getCurrentFileName() == "Level 18.json")
+							{
+								trans->get().setPosition(Vec2(-650.0f, -1175.0f));
+							}
+							//Mine
+							else if (SceneManager::instance().getCurrentFileName() == "Level 17.json")
+							{
+								trans->get().setPosition(Vec2(-650.0f, -1175.0f));
+							}
+							HierarchyInfo& playerInfo = g_engine.m_coordinator.GetHierarchyInfo(PLAYER_STATUS.GetPlayerEntity());
+							for (auto entity : playerInfo.m_children)
+							{
+								if (auto child = g_engine.m_coordinator.TryGetComponent<ChildComponent>(entity))
+								{
+									child->get().SetGlobalDirty();
+									child->get().ResetLocalDirty();
+									g_engine.m_coordinator.ApplyParentChildCorrection(entity);
+								}
+							}
+						}
+				}
+				// Reset level
+				else if (keycode == KeyPress::KeyO)
+				{
+					if (PLAYER_STATUS.GetPlayerEntity() != MAX_ENTITIES)
+						if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(PLAYER_STATUS.GetPlayerEntity()))
+						{
+							//Tutorial
+							if (SceneManager::instance().getCurrentFileName() == "Level 10.json")
+							{
+								trans->get().setPosition(Vec2(-3583.0f, 672.0f));
+							}
+							//Forest
+							else if (SceneManager::instance().getCurrentFileName() == "Level 15.json")
+							{
+								trans->get().setPosition(Vec2(-1565.0f, 440.0f));
+							}
+							//Coral
+							else if (SceneManager::instance().getCurrentFileName() == "Level 18.json")
+							{
+								trans->get().setPosition(Vec2(-865.0f, 950.0f));
+							}
+							//Mine
+							else if (SceneManager::instance().getCurrentFileName() == "Level 17.json")
+							{
+								trans->get().setPosition(Vec2(1535.0f, 500.0f));
+							}
+
+							HierarchyInfo& playerInfo = g_engine.m_coordinator.GetHierarchyInfo(PLAYER_STATUS.GetPlayerEntity());
+							for (auto entity : playerInfo.m_children)
+							{
+								if (auto child = g_engine.m_coordinator.TryGetComponent<ChildComponent>(entity))
+								{
+									child->get().SetGlobalDirty();
+									child->get().ResetLocalDirty();
+									g_engine.m_coordinator.ApplyParentChildCorrection(entity);
+								}
+							}
+						}
+				}
 			}
 			return;
 
@@ -555,82 +633,6 @@ namespace Rogue
 							EventDispatcher::instance().AddEvent(ev);
 							PLAYER_STATUS.SetMoveLeft(false);
 							MovingPlayer();
-						}
-
-						// Skip level
-						else if (keycode == KeyPress::KeyI)
-						{
-							if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(*iEntity))
-							{
-								//Tutorial
-								if (SceneManager::instance().getCurrentFileName() == "Level 10.json")
-								{
-									trans->get().setPosition(Vec2(2130.0f, 300.0f));
-								}
-								//Forest
-								else if (SceneManager::instance().getCurrentFileName() == "Level 15.json")
-								{
-									trans->get().setPosition(Vec2(-1565.0f, 440.0f));
-								}
-								//Coral
-								else if (SceneManager::instance().getCurrentFileName() == "Level 18.json")
-								{
-									trans->get().setPosition(Vec2(-650.0f, -1175.0f));
-								}
-								//Mine
-								else if (SceneManager::instance().getCurrentFileName() == "Level 18.json")
-								{
-									trans->get().setPosition(Vec2(1180.0f, -735.0f));
-								}
-								HierarchyInfo& playerInfo = g_engine.m_coordinator.GetHierarchyInfo(PLAYER_STATUS.GetPlayerEntity());
-								for (auto entity : playerInfo.m_children)
-								{
-									if (auto child = g_engine.m_coordinator.TryGetComponent<ChildComponent>(entity))
-									{
-										child->get().SetGlobalDirty();
-										child->get().ResetLocalDirty();
-										g_engine.m_coordinator.ApplyParentChildCorrection(entity);
-									}
-								}
-							}
-						}
-						// Reset level
-						else if (keycode == KeyPress::KeyO)
-						{
-							if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(*iEntity))
-							{
-								//Tutorial
-								if (SceneManager::instance().getCurrentFileName() == "Level 10.json")
-								{
-									trans->get().setPosition(Vec2(-3583.0f, 672.0f));
-								}
-								//Forest
-								else if (SceneManager::instance().getCurrentFileName() == "Level 15.json")
-								{
-									trans->get().setPosition(Vec2(-555.0f, 850.0f));
-								}
-								//Coral
-								else if (SceneManager::instance().getCurrentFileName() == "Level 18.json")
-								{
-									trans->get().setPosition(Vec2(-865.0f, 950.0f));
-								}
-								//Mine
-								else if (SceneManager::instance().getCurrentFileName() == "Level 18.json")
-								{
-									trans->get().setPosition(Vec2(-650.0f, -1175.0f));
-								}
-
-								HierarchyInfo& playerInfo = g_engine.m_coordinator.GetHierarchyInfo(PLAYER_STATUS.GetPlayerEntity());
-								for (auto entity : playerInfo.m_children)
-								{
-									if (auto child = g_engine.m_coordinator.TryGetComponent<ChildComponent>(entity))
-									{
-										child->get().SetGlobalDirty();
-										child->get().ResetLocalDirty();
-										g_engine.m_coordinator.ApplyParentChildCorrection(entity);
-									}
-								}
-							}
 						}
 					}
 					
