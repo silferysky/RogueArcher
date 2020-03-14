@@ -31,6 +31,7 @@ namespace Rogue
 		m_isEnding{ false },
 		m_infiniteJumps{ false },
 		m_triggerOnce(false),
+		m_endTrigger{ false },
 		m_currLevel{ LEVEL::TUTORIAL }
 	{
 
@@ -456,6 +457,14 @@ namespace Rogue
 	bool PlayerStatusManager::GetInfiniteJumps() const
 	{
 		return m_infiniteJumps;
+	}	void PlayerStatusManager::SetEndTrigger(bool willTrigger)
+	{
+		m_endTrigger = willTrigger;
+	}
+
+	bool PlayerStatusManager::GetEndTrigger() const
+	{
+		return m_endTrigger;
 	}
 
 	void PlayerStatusManager::ChangePlayerSprite()
