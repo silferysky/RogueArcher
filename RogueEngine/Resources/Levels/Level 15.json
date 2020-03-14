@@ -1,6 +1,6 @@
 {
-    "MaxEntityCount": 261,
-    "EntityCount": 261,
+    "MaxEntityCount": 264,
+    "EntityCount": 264,
     "CameraMinX": -1000.0,
     "CameraMinY": -940.0,
     "CameraMaxX": 1360.0,
@@ -270,6 +270,9 @@
     "Signature258": 5,
     "Signature259": 5,
     "Signature260": 5,
+    "Signature261": 1028,
+    "Signature262": 1028,
+    "Signature263": 1028,
     "Entity0": "Name{Collision9}|Tag{Ground}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-578;-576.495;100;100;0;0}||BoxCollider{0;0;13;247;AWAKE}|||||||||Collider{BOX;1;4294967295;}||||||||||||",
     "Entity1": "Name{Collision10}|Tag{}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-733;-751.495;100;100;0;0}||BoxCollider{0;0;74;32;AWAKE}|||||||||Collider{BOX;1;4294967295;}||||||||||||",
     "Entity2": "Name{Collision11}|Tag{Ground}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-487;-642.495;100;100;0;0}||BoxCollider{0;0;70;10;AWAKE}|||||||||Collider{BOX;1;4294967295;}||||||||||||",
@@ -516,7 +519,7 @@
     "Entity243": "Name{Ela Death Particle}|Tag{}|||Transform{-1565.79;437.917;100;100;0;97}||||LogicComponent{20;0;1;0}|StatsComponent{0;0;0;0;0;;0;0;0;0;0;0;0;}|||||||||Particle Emitter{0;0;25;60;10;10;7;11;1;129;86;2;1;0;0;Resources/Assets/ParticleEla.png;13;0;}|||||||||",
     "Entity244": "Name{TransitHub}|Tag{}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-1827;567;100;100;0;99}||BoxCollider{0;0;72;375;TRIGGER}||LogicComponent{5;0;1;0}|StatsComponent{0;0;0;0;0;Level 16.json;0;0;0;0;0;0;0;}||||||Collider{BOX;1;4294967295;}||||||||||||",
     "Entity245": "Name{AreaTitle}|Tag{}|Sprite{Resources\\Assets\\Forest_Title.png;1;1;1;1;}|Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-1330;626;512;150;0;99}||BoxCollider{-125;0;-292;375;TRIGGER}||LogicComponent{6;0;1;0}|StatsComponent{0;0;0;0;0;;0;0;0;0;0;0;0;}||||||Collider{BOX;1;4294967295;}||||||FADE{1;0;}||||||",
-    "Entity246": "Name{Checkpoint 3}|Tag{}|Sprite{Resources\\Assets\\ObjectiveArrow.png;1;1;1;1;}|Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-1506;460.579;100;100;0;99}||BoxCollider{0;11;18;65;TRIGGER}||LogicComponent{12;0;1;0}|StatsComponent{0;0;0;0;0;;0;0;0;0;0;0;0;}|Animation{8;0;0.1;1;0;1;}|||||Collider{BOX;1;4294967295;}||||||FADE{1;1;}||||||",
+    "Entity246": "Name{Checkpoint 3}|Tag{}|Sprite{Resources\\Assets\\ObjectiveArrow.png;1;1;1;1;}|Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-1407;460.579;100;100;0;99}||BoxCollider{0;11;18;65;TRIGGER}||LogicComponent{12;0;1;0}|StatsComponent{0;0;0;0;0;;0;0;0;0;0;0;0;}|Animation{8;0;0.1;1;0;1;}|||||Collider{BOX;1;4294967295;}||||||FADE{1;1;}||||||",
     "Entity247": "Name{Collision63}|Tag{Ground}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-711.95;-614.416;100;100;0;0}||BoxCollider{0;0;116;81;AWAKE}|||||||||Collider{BOX;1;4294967295;}||||||||||||",
     "Entity248": "Name{Collision64}|Tag{Ground}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-640.95;-659.416;100;100;0;0}||BoxCollider{0;0;116;81;AWAKE}|||||||||Collider{BOX;1;4294967295;}||||||||||||",
     "Entity249": "Name{ProgressFrame}|Tag{}|Sprite{Resources\\Assets\\SoulCollectionUI.png;1;1;1;1;}||Transform{-475;942.57;355;82;0;17}|||||||||UI{1;}||||||||||||||",
@@ -531,6 +534,9 @@
     "Entity258": "Name{Vine1}|Tag{}|Sprite{Resources\\Assets\\FlowerVine2.png;0.321569;0.8;0.219608;1;}||Transform{-574.95;-485.824;200.478;184;0;4}|||||||||||||||||||||||",
     "Entity259": "Name{Vine1}|Tag{}|Sprite{Resources\\Assets\\FlowerVine2.png;0.359716;0.745098;0.277586;1;}||Transform{-725.95;-462.824;200.478;184;0;4}|||||||||||||||||||||||",
     "Entity260": "Name{Vine1}|Tag{}|Sprite{Resources\\Assets\\FlowerVine2.png;0.359716;0.745098;0.277586;1;}||Transform{-281.957;-487.516;200.478;133;0.48;4}|||||||||||||||||||||||",
+    "Entity261": "Name{TeleSFX1}|Tag{}|||Transform{-1564;434;100;100;0;0}||||||||Audio{Resources\\Sounds\\teleport1.ogg;1;0.2;0;1;}|||||||||||||||",
+    "Entity262": "Name{TeleSFX2}|Tag{}|||Transform{-1564;434;100;100;0;0}||||||||Audio{Resources\\Sounds\\Teleport2.ogg;1;0.2;0;1;}|||||||||||||||",
+    "Entity263": "Name{TeleSFX3}|Tag{}|||Transform{-1564;434;100;100;0;0}||||||||Audio{Resources\\Sounds\\Teleport3.ogg;1;0.2;0;1;}|||||||||||||||",
     "EntityParent0": 65535,
     "EntityParent1": 65535,
     "EntityParent2": 65535,
@@ -791,5 +797,8 @@
     "EntityParent257": 65535,
     "EntityParent258": 65535,
     "EntityParent259": 65535,
-    "EntityParent260": 65535
+    "EntityParent260": 65535,
+    "EntityParent261": 234,
+    "EntityParent262": 234,
+    "EntityParent263": 234
 }

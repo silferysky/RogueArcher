@@ -29,11 +29,11 @@ namespace Rogue
 
 			PLAYER_STATUS.CollectSoul(m_entity);
 
-			if (auto audio = g_engine.m_coordinator.TryGetComponent<AudioEmitterComponent>(m_entity))
+			/* if (auto audio = g_engine.m_coordinator.TryGetComponent<AudioEmitterComponent>(m_entity))
 			{
 				audio->get().DestroySound();
 				audio->get().getSound().Unload();
-			}
+			} */
 			g_engine.m_coordinator.AddToDeleteQueue(m_entity);
 		}
 	}

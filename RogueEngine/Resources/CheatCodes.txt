@@ -1,3 +1,3 @@
-'I' - Teleports to end of stage
-'O' - Teleports to start of stage
-'0' - Infinite Teleport Ability
+'I' - Teleports to end of stage (All levels except Hub)
+'O' - Teleports to start of stage (All levels except Hub)
+'0' - Infinite Teleport Ability (Resets on entering new level)

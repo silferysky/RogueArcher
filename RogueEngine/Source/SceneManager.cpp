@@ -114,7 +114,8 @@ namespace Rogue
 		}
 
 		//Setting up
-		PLAYER_STATUS.SetLastLevel(getCurrentFileName());
+		if (getCurrentFileName() != "Level 16.json")
+			PLAYER_STATUS.SetLastLevel(getCurrentFileName());
 		setCurrentFileName(fileName);
 		ClearAllEntities();
 
