@@ -28,11 +28,11 @@ namespace Rogue
 			g_engine.m_coordinator.loadSound("Resources/Sounds/soul_pickup.ogg", 0.3f, false).Play();
 			PlayerStatusManager::instance().IncrementSoulsCollected(static_cast<LEVEL>(level));
 
-			if (auto audio = g_engine.m_coordinator.TryGetComponent<AudioEmitterComponent>(m_entity))
+			/* if (auto audio = g_engine.m_coordinator.TryGetComponent<AudioEmitterComponent>(m_entity))
 			{
 				audio->get().DestroySound();
 				audio->get().getSound().Unload();
-			}
+			} */
 			g_engine.m_coordinator.AddToDeleteQueue(m_entity);
 		}
 	}
