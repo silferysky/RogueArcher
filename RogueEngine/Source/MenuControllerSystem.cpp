@@ -467,7 +467,7 @@ namespace Rogue
 
 	void MenuControllerSystem::MoveMenuObjs()
 	{
-		bool movingToPos = m_showingUI = !m_showingUI;
+		bool movingToPos = true;// m_showingUI = !m_showingUI;
 
 		auto itr = m_menuObjsTransforms.begin();
 
