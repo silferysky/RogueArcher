@@ -113,6 +113,8 @@ namespace Rogue
 		bool GetInfiniteJumps() const;
 		void SetEndTrigger(bool willTrigger = true);
 		bool GetEndTrigger() const;
+		void SetTrueEndTrigger(bool willTrigger = true);
+		bool GetTrueEndTrigger() const;
 
 	private:
 		size_t m_runCount;
@@ -167,5 +169,6 @@ namespace Rogue
 		bool m_triggerOnce;
 
 		bool m_endTrigger;
+		bool m_trueEndTrigger;
 	};
 }

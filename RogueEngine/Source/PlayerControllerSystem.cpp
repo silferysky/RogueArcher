@@ -345,6 +345,9 @@ namespace Rogue
 			PLAYER_STATUS.SetIndicatorStatus();
 			PLAYER_STATUS.UnfreezeControls();
 
+			//Disable cheats on reset
+			PLAYER_STATUS.SetEndTrigger(false);
+			PLAYER_STATUS.SetTrueEndTrigger(false);
 			////Safety check to make sure level exists
 			//if (!PLAYER_STATUS.GetRunCount())
 			//{
@@ -582,6 +585,15 @@ namespace Rogue
 							}
 						}
 				}
+				else if (keycode == KeyPress::KeyP)
+				{
+					PLAYER_STATUS.SetEndTrigger(true);
+				}
+				else if (keycode == KeyPress::KeyL)
+				{
+					PLAYER_STATUS.SetTrueEndTrigger(true);
+				}
+
 			}
 			return;
 
@@ -764,7 +776,7 @@ namespace Rogue
 				if (CollisionManager::instance().DiscreteLineVsLine(finiteRay, colliderEdge))
 				{
 					player.m_grounded = true;
-					PLAYER_STATUS.SetHasJumped(false);	
+					PLAYER_STATUS.SetHasJumped(false);
 				}
 				//else if (infoA.m_tag == "Platform" || infoB.m_tag == "Platform")
 				//{

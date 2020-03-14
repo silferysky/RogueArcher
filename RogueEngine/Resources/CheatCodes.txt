@@ -2,3 +2,6 @@
 'O' - Teleports to start of stage (All levels except Hub)
 '0' - Infinite Teleport Ability (Resets on entering new level)
 'P' - Enables player to trigger end condition (ONLY IF PLAYER IS IN HUB LEVEL)
+'L' - Enables player to trigger true end condition (ONLY IF PLAYER IS IN HUB LEVEL)
+
+Player also slows down time when holding left click
