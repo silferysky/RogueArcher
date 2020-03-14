@@ -1,0 +1,5 @@
+{
+    "Signature": 8663,
+    "Entity": "Name{HitchHike}|Tag{Hitchhike}|Sprite{Resources\\Assets\\VegetationSpider.png;1;1;1;1;}|Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{202;1014;104;300;0;5}||BoxCollider{0;-100;-148;-244;TRIGGER}||LogicComponent{1;0;2;0;2}|StatsComponent{0;5;5;0;1;;2;202;1014;202;838;0;0;0;0;0;0;}|Animation{4;0;0.1;1;0;1;}|||||Collider{BOX;1;4294967295;}||||||||||||",
+    "Children": ""
+}
