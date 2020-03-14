@@ -103,6 +103,7 @@ namespace Rogue
 		std::string_view GetLastLevel() const;
 
 		//Ending
+		void ResetEndGame();
 		void SetEnding(bool ending);
 		bool GetEnding() const;
 

@@ -63,10 +63,10 @@ namespace Rogue
 	void SceneManager::ClearAllEntities()
 	{
 		g_engine.m_coordinator.GetSystem<AudioSystem>()->ShutdownSounds();
-		AudioManager::instance().ClearAudioMap();
-		g_engine.m_coordinator.DestroyAllEntity();
-		ImGuiTileSet::instance().ClearTileset();
 		g_engine.m_coordinator.GetSystem<LogicSystem>()->ClearLogicInterface();
+		AudioManager::instance().ClearAudioMap();
+		ImGuiTileSet::instance().ClearTileset();
+		g_engine.m_coordinator.DestroyAllEntity();
 		//ClearActiveEntities();
 	}
 

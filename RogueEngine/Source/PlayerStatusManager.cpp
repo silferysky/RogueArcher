@@ -381,6 +381,17 @@ namespace Rogue
 		return m_lastLevel;
 	}
 
+	void PlayerStatusManager::ResetEndGame()
+	{
+		SetEnding(false);
+		m_soulsCollected = 0;
+
+		for (auto& it : m_souls)
+		{
+			it.second = 0;
+		}
+	}
+
 	void PlayerStatusManager::SetEnding(bool ending)
 	{
 		m_isEnding = ending;
