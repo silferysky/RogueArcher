@@ -347,7 +347,7 @@
     "Entity107": "Name{Game Object 130}|Tag{}|Sprite{Resources\\Assets\\BonusSoul.png;1;1;1;1;}|Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-574.576;-983.538;51;51;0;99}||BoxCollider{-1;-2;-25;-7;TRIGGER}||LogicComponent{13;0;1;0}|StatsComponent{0;0;0;0;0;;0;0;0;0;0;0;0;}|Animation{8;0;0.1;1;1;1;}||Audio{Resources/Sounds/soul_hum.ogg;755;0.2;1;1;}|||Collider{BOX;1;4294967295;}||||||FADE{1;1;}|||||||",
     "Entity108": "Name{MineBG2}|Tag{}|Sprite{Resources\\Assets\\MineBG.png;0.588235;0.588235;0.588235;1;}||Transform{-526.541;-192.359;798;145;0;10}||||||||||||||||||||||||",
     "Entity109": "Name{MineBG3}|Tag{}|Sprite{Resources\\Assets\\MineBG.png;0.588235;0.588235;0.588235;1;}||Transform{334.185;806.052;1404.92;520;0;10}||||||||||||||||||||||||",
-    "Entity110": "Name{MineBG4}|Tag{}|Sprite{Resources\\Assets\\MineBG.png;0.588235;0.588235;0.588235;1;}||Transform{-979.571;-910.783;1457.93;520;0;10}||||||||||||||||||||||||",
+    "Entity110": "Name{MineBG4}|Tag{}|Sprite{Resources\\Assets\\MineBG.png;0.588235;0.588235;0.588235;1;}||Transform{-1055.571;-912.783;1457.93;1400;0;10}||||||||||||||||||||||||",
     "Entity111": "Name{MineBG5}|Tag{}|Sprite{Resources\\Assets\\MineBG.png;0.588235;0.588235;0.588235;1;}||Transform{1058.24;-870.039;1545.41;551.2;0;10}||||||||||||||||||||||||",
     "Entity112": "Name{MineColor1}|Tag{}|Sprite{Resources\\Assets\\VegetationColor.png;0.180392;0.227451;0.239216;1;}||Transform{-828.888;459.759;2000;1253.35;0;0}||||||||||||||||||||||||",
     "Entity113": "Name{MineColor2}|Tag{}|Sprite{Resources\\Assets\\VegetationColor.png;0.181324;0.228078;0.240196;1;}||Transform{1002.52;483.043;1664.2;1481.24;0;0}||||||||||||||||||||||||",
