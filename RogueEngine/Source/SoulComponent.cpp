@@ -14,17 +14,19 @@ namespace Rogue
 
 	void SoulComponent::DisplayOnInspector()
 	{
-		ImGui::TextColored({ 0.23f, 0.75f, 0.92f, 1.0f }, "Number of souls in level: %d", PLAYER_STATUS.GetTotalSoulsInLevel());
-		ImGui::NewLine();
-		ImGui::TextColored({ 0.23f, 0.75f, 0.92f, 1.0f }, "Number of collected souls in level: %d", PLAYER_STATUS.GetCollectedSoulsInLevel());
-		ImGui::NewLine();
-		ImGui::TextColored({ 0.23f, 0.75f, 0.92f, 1.0f }, "Completion in level: %.1f%%", PLAYER_STATUS.GetCollectedSoulsInLevel() / static_cast<float>(PLAYER_STATUS.GetTotalSoulsInLevel()) * 100.0f);
+		ImGui::Text("Collected souls in level: ");
+		ImGui::TextColored({ 0.23f, 0.75f, 0.92f, 1.0f }, "%d", PLAYER_STATUS.GetCollectedSoulsInLevel());
+		ImGui::Text("Souls in level: "); 
+		ImGui::TextColored({ 0.23f, 0.75f, 0.92f, 1.0f }, "%d", PLAYER_STATUS.GetTotalSoulsInLevel());
+		ImGui::Text("Completion in level: ");
+		ImGui::TextColored({ 0.23f, 0.75f, 0.92f, 1.0f }, "%.1f%%", PLAYER_STATUS.GetCollectedSoulsInLevel() / static_cast<float>(PLAYER_STATUS.GetTotalSoulsInLevel()) * 100.0f);
 		ImGui::NewLine();
 
-		ImGui::TextColored({ 0.93f, 0.07f, 0.37f, 1.0f }, "Number of souls in game: %d", PLAYER_STATUS.GetTotalSoulsInGame());
-		ImGui::NewLine();
-		ImGui::TextColored({ 0.93f, 0.07f, 0.37f, 1.0f }, "Number of collected souls in game: %d", PLAYER_STATUS.GetCollectedSoulsInGame());
-		ImGui::NewLine();
-		ImGui::TextColored({ 0.93f, 0.07f, 0.37f, 1.0f }, "Completion in game: %.1f%%", PLAYER_STATUS.GetCollectedSoulsInGame() / static_cast<float>(PLAYER_STATUS.GetTotalSoulsInGame()) * 100.0f);
+		ImGui::Text("Collected souls in game: ");
+		ImGui::TextColored({ 1.0f, 0.47f, 0.65f, 1.0f }, "%d", PLAYER_STATUS.GetCollectedSoulsInGame());
+		ImGui::Text("Souls in game:  ");
+		ImGui::TextColored({ 1.0f, 0.47f, 0.65f, 1.0f }, "%d", PLAYER_STATUS.GetTotalSoulsInGame());
+		ImGui::Text("Completion in game : ");
+		ImGui::TextColored({ 1.0f, 0.47f, 0.65f, 1.0f }, "%.1f%%", PLAYER_STATUS.GetCollectedSoulsInGame() / static_cast<float>(PLAYER_STATUS.GetTotalSoulsInGame()) * 100.0f);
 	}
 }
