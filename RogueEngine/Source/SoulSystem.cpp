@@ -22,12 +22,21 @@ namespace Rogue
 	void SoulSystem::TrueInit()
 	{
 		PLAYER_STATUS.SetCurrLevel(static_cast<LEVEL>(atoi(SceneManager::instance().getCurrentFileName().substr(6, 2).c_str())));
-		PLAYER_STATUS.RegisterLevel(PLAYER_STATUS.GetCurrLevel());
-
-		for (Entity entity : m_entities)
+		
+		// If level successfully registered
+		if (PLAYER_STATUS.RegisterLevel(PLAYER_STATUS.GetCurrLevel()))
 		{
-			PLAYER_STATUS.AddSoul(entity);
+			// Add all souls into vector for this level
+			for (Entity entity : m_entities)
+			{
+				PLAYER_STATUS.AddSoul(entity);
+			}
 		}
+		else // If level has already been registered
+		{
+			PLAYER_STATUS.RemoveCollectedSouls();
+		}
+
 
 	}
 

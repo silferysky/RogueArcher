@@ -93,6 +93,7 @@ namespace Rogue
 		void CollectSoul(Entity entity);
 		void AddSoul(Entity entity);
 		bool RegisterLevel(LEVEL level);
+		void RemoveCollectedSouls();
 
 		//Transition
 		void SetLastLevel(std::string_view str);

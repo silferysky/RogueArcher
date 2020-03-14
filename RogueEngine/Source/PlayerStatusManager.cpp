@@ -396,6 +396,18 @@ namespace Rogue
 		 return it.second;
 	}
 
+	void PlayerStatusManager::RemoveCollectedSouls()
+	{
+		if (m_souls[m_currLevel] == nullptr)
+			return;
+
+		for (Soul& soul : *m_souls[m_currLevel])
+		{
+			if (soul.m_collected && g_engine.m_coordinator.ComponentExists<SoulComponent>(soul.m_entity))
+				g_engine.m_coordinator.AddToDeleteQueue(soul.m_entity);
+		}
+	}
+
 	//================================================================
 
 	void PlayerStatusManager::SetLastLevel(std::string_view str)
