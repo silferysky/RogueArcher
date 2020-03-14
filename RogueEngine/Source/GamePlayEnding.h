@@ -14,6 +14,8 @@ namespace Rogue
 		bool m_finalInput;
 		bool m_endingAPressed;
 		bool m_endingDPressed;
+		bool m_trueEnding;
+		bool m_finalSpriteSet;
 		Entity m_finalSprite;
 	public:
 		GamePlayEnding(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent);

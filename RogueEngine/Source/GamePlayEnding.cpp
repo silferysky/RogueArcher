@@ -13,7 +13,7 @@ namespace Rogue
 {
 	GamePlayEnding::GamePlayEnding(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent)
 		: ScriptComponent(entity, logicComponent, statsComponent), m_souls{ 0 }, m_timer{ 0.0f }, m_activated{ false }
-		, m_movement{ 15.0f }, m_moveleft{ false }, m_moveright{ false }, m_finalInput{ false }, m_endingAPressed{ false }, m_endingDPressed{ false }
+		, m_movement{ 15.0f }, m_moveleft{ false }, m_moveright{ false }, m_finalInput{ false }, m_endingAPressed{ false }, m_endingDPressed{ false },m_finalSpriteSet{false}
 		, m_finalSprite { MAX_ENTITIES }
 	{
 	}
@@ -33,6 +33,13 @@ namespace Rogue
 			g_engine.m_coordinator.GetSystem<CameraSystem>()->setIsActive(true);
 
 			m_timer += g_deltaTime * g_engine.GetTimeScale();
+			if (PLAYER_STATUS.GetCollectedSoulsInLevel(LEVEL::CORAL) == PLAYER_STATUS.GetTotalSoulsInLevel(LEVEL::CORAL) &&
+				PLAYER_STATUS.GetCollectedSoulsInLevel(LEVEL::CRYSTAL) == PLAYER_STATUS.GetTotalSoulsInLevel(LEVEL::CRYSTAL) &&
+				PLAYER_STATUS.GetCollectedSoulsInLevel(LEVEL::VEGETATION) == PLAYER_STATUS.GetTotalSoulsInLevel(LEVEL::VEGETATION))
+			{
+				m_trueEnding = true;
+			}
+
 			//Zoom out slightly
 			if (CameraManager::instance().GetCameraZoom() < 1.3f)
 			{
@@ -115,14 +122,17 @@ namespace Rogue
 			}
 			else if (m_timer > 9.0f && m_timer < 12.0f)
 			{
-				for (HierarchyInfo& info : g_engine.m_coordinator.GetHierarchyInfoArray())
+				if (!m_trueEnding)
 				{
-					if (info.m_tag == "Sacrifice")
+					for (HierarchyInfo& info : g_engine.m_coordinator.GetHierarchyInfoArray())
 					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(info.m_Entity);
-						sprite.setFilter(glm::vec4(sprite.getFilter().r, sprite.getFilter().g, sprite.getFilter().b, sprite.getFilter().a + filterchange * g_deltaTime));
-					}
+						if (info.m_tag == "Sacrifice")
+						{
+							auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(info.m_Entity);
+							sprite.setFilter(glm::vec4(sprite.getFilter().r, sprite.getFilter().g, sprite.getFilter().b, sprite.getFilter().a + filterchange * g_deltaTime));
+						}
 
+					}
 				}
 			}
 			else if (m_timer > 12.0f && m_timer < 15.0f)
@@ -168,7 +178,7 @@ namespace Rogue
 							auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(info.m_Entity);
 							UI.setIsActive(true);
 						}
-						
+
 					}
 					if (info.m_tag == "ExaA")
 					{
@@ -238,42 +248,237 @@ namespace Rogue
 						animation.setFrames(4);
 					}
 
-					if (info.m_tag == "AKey")
+					if (!m_trueEnding)
 					{
-						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
-						transform.setZ(102);
-					}
+						if (info.m_tag == "AKey")
+						{
+							auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+							transform.setZ(102);
+						}
 
-					if (info.m_tag == "DKey")
-					{
-						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
-						transform.setZ(102);
+						if (info.m_tag == "DKey")
+						{
+							auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+							transform.setZ(102);
+						}
 					}
 				}
 			}
 			else if (m_timer > 18.0f)
 			{
-				if(!m_finalInput)
+				if (!m_trueEnding)
 				{
-					if (g_engine.m_coordinator.GetSystem<InputManager>()->KeyDown(KeyPress::KeyA))
+					if (!m_finalInput)
 					{
-						if (!m_endingAPressed)
+						if (g_engine.m_coordinator.GetSystem<InputManager>()->KeyDown(KeyPress::KeyA))
 						{
-							m_timer = 18.0f;
-							m_endingAPressed = true;
-							m_finalInput = true;
+							if (!m_endingAPressed)
+							{
+								m_timer = 18.0f;
+								m_endingAPressed = true;
+								m_finalInput = true;
+							}
 						}
-					}
-					else if (g_engine.m_coordinator.GetSystem<InputManager>()->KeyDown(KeyPress::KeyD))
-					{
-						if (!m_endingDPressed)
+						else if (g_engine.m_coordinator.GetSystem<InputManager>()->KeyDown(KeyPress::KeyD))
 						{
-							m_timer = 18.0f;
-							m_endingDPressed = true;
-							m_finalInput = true;
+							if (!m_endingDPressed)
+							{
+								m_timer = 18.0f;
+								m_endingDPressed = true;
+								m_finalInput = true;
+							}
 						}
 					}
 				}
+
+				if (m_trueEnding)
+				{
+					for (HierarchyInfo& info : g_engine.m_coordinator.GetHierarchyInfoArray())
+					{
+						if (info.m_tag == "ExaTitle")
+						{
+							if (g_engine.m_coordinator.ComponentExists<UIComponent>(info.m_Entity))
+							{
+								auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(info.m_Entity);
+								UI.setIsActive(false);
+							}
+						}
+
+						if (info.m_tag == "ElaTitle")
+						{
+							if (g_engine.m_coordinator.ComponentExists<UIComponent>(info.m_Entity))
+							{
+								auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(info.m_Entity);
+								UI.setIsActive(false);
+							}
+						}
+
+						if (info.m_tag == "ElaA")
+						{
+							if (g_engine.m_coordinator.ComponentExists<UIComponent>(info.m_Entity))
+							{
+								auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(info.m_Entity);
+								UI.setIsActive(false);
+							}
+						}
+
+						if (info.m_tag == "ExaA")
+						{
+							if (g_engine.m_coordinator.ComponentExists<UIComponent>(info.m_Entity))
+							{
+								auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(info.m_Entity);
+								UI.setIsActive(false);
+							}
+						}
+
+						if (!m_finalSpriteSet)
+						{
+							if (info.m_tag == "EndingSprite")
+							{
+								if (!g_engine.m_coordinator.ComponentExists<UIComponent>(info.m_Entity))
+								{
+									g_engine.m_coordinator.AddComponent(info.m_Entity, UIComponent());
+									auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(info.m_Entity);
+									UI.setIsActive(true);
+								}
+								auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+								auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(info.m_Entity);
+								sprite.setTexturePath("Resources/Assets/True1.png");
+								m_finalSprite = info.m_Entity;
+								transform.setZ(1000);
+								m_finalSpriteSet = true;
+							}
+						}
+					}
+
+					if (m_timer > 19.0f && m_timer < 20.0f)
+					{
+						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+						sprite.setTexturePath("Resources/Assets/True2.png");
+					}
+
+					if (m_timer > 20.0f && m_timer < 21.0f)
+					{
+						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+						sprite.setTexturePath("Resources/Assets/True3.png");
+					}
+
+					if (m_timer > 21.0f && m_timer < 22.0f)
+					{
+						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+						sprite.setTexturePath("Resources/Assets/True4.png");
+					}
+
+					if (m_timer > 22.0f && m_timer < 23.0f)
+					{
+						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+						sprite.setTexturePath("Resources/Assets/True5.png");
+					}
+
+					if (m_timer > 23.0f && m_timer < 24.0f)
+					{
+						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+						sprite.setTexturePath("Resources/Assets/True6.png");
+					}
+
+					if (m_timer > 24.0f && m_timer < 25.0f)
+					{
+						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+						sprite.setTexturePath("Resources/Assets/True7.png");
+					}
+
+					if (m_timer > 25.0f && m_timer < 26.0f)
+					{
+						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+						sprite.setTexturePath("Resources/Assets/True8.png");
+					}
+
+					if (m_timer > 26.0f && m_timer < 26.5f)
+					{
+						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+						sprite.setTexturePath("Resources/Assets/True9.png");
+					}
+
+					if (m_timer > 26.5f && m_timer < 27.0f)
+					{
+						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+						sprite.setTexturePath("Resources/Assets/True10.png");
+					}
+
+					if (m_timer > 27.0f && m_timer < 27.5f)
+					{
+						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+						sprite.setTexturePath("Resources/Assets/True11.png");
+					}
+
+					if (m_timer > 27.5f && m_timer < 28.0f)
+					{
+						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+						sprite.setTexturePath("Resources/Assets/True12.png");
+					}
+
+					if (m_timer > 28.0f && m_timer < 28.5f)
+					{
+						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+						sprite.setTexturePath("Resources/Assets/True13.png");
+					}
+
+					if (m_timer > 28.5f && m_timer < 29.0f)
+					{
+						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+						sprite.setTexturePath("Resources/Assets/True14.png");
+					}
+
+					if (m_timer > 29.0f && m_timer < 29.5f)
+					{
+						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+						sprite.setTexturePath("Resources/Assets/True15.png");
+					}
+
+					if (m_timer > 29.5f && m_timer < 30.0f)
+					{
+						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+						sprite.setTexturePath("Resources/Assets/True16.png");
+					}
+
+					if (m_timer > 30.0f && m_timer < 30.5f)
+					{
+						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+						sprite.setTexturePath("Resources/Assets/True17.png");
+					}
+
+					if (m_timer > 30.5f && m_timer < 31.0f)
+					{
+						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+						sprite.setTexturePath("Resources/Assets/True18.png");
+					}
+
+					if (m_timer > 31.0f && m_timer < 31.5f)
+					{
+						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+						sprite.setTexturePath("Resources/Assets/True19.png");
+					}
+
+					if (m_timer > 31.5f && m_timer < 32.0f)
+					{
+						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+						sprite.setTexturePath("Resources/Assets/True20.png");
+					}
+
+					if (m_timer > 32.0f && m_timer < 32.5f)
+					{
+						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+						sprite.setTexturePath("Resources/Assets/True21.png");
+					}
+					if (m_timer > 38.0f)
+					{
+						PLAYER_STATUS.ResetEndGame();
+						g_engine.m_coordinator.SetTransitionLevel("Level 19.json", 0.0f); //2nd value doesn't matter anymore probably
+						g_engine.m_coordinator.SetTransition(true);
+					}
+
+				}
+
 				if (m_endingAPressed)
 				{
 					if (m_timer > 18.0f && m_timer < 19.0f)
@@ -316,21 +521,25 @@ namespace Rogue
 								}
 							}
 
-							if (info.m_tag == "EndingSprite")
+							if (!m_finalSpriteSet)
 							{
-								if (!g_engine.m_coordinator.ComponentExists<UIComponent>(info.m_Entity))
+								if (info.m_tag == "EndingSprite")
 								{
-									g_engine.m_coordinator.AddComponent(info.m_Entity, UIComponent());
-									auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(info.m_Entity);
-									UI.setIsActive(true);
+									if (!g_engine.m_coordinator.ComponentExists<UIComponent>(info.m_Entity))
+									{
+										g_engine.m_coordinator.AddComponent(info.m_Entity, UIComponent());
+										auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(info.m_Entity);
+										UI.setIsActive(true);
+									}
+									auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+									auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(info.m_Entity);
+									sprite.setTexturePath("Resources/Assets/ExaS1.png");
+									m_finalSprite = info.m_Entity;
+									transform.setZ(1000);
+									m_finalSpriteSet = true;
 								}
-								auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
-								auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(info.m_Entity);
-								sprite.setTexturePath("Resources/Assets/ExaS1.png");
-								m_finalSprite = info.m_Entity;
-								transform.setZ(1000);
 							}
-
+							
 						}
 					}
 
@@ -358,19 +567,19 @@ namespace Rogue
 						sprite.setTexturePath("Resources/Assets/ExaS5.png");
 					}
 
-					if (m_timer > 24.0f && m_timer < 25.0f)
+					if (m_timer > 23.0f && m_timer < 24.0f)
 					{
 						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
 						sprite.setTexturePath("Resources/Assets/ExaS6.png");
 					}
 
-					if (m_timer > 25.0f && m_timer < 25.5f)
+					if (m_timer > 24.0f && m_timer < 25.0f)
 					{
 						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
 						sprite.setTexturePath("Resources/Assets/ExaS7.png");
 					}
 
-					if (m_timer > 25.5f && m_timer < 26.0f)
+					if (m_timer > 25.0f && m_timer < 26.0f)
 					{
 						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
 						sprite.setTexturePath("Resources/Assets/ExaS8.png");
@@ -473,19 +682,23 @@ namespace Rogue
 								}
 							}
 
-							if (info.m_tag == "EndingSprite")
+							if (!m_finalSpriteSet)
 							{
-								if (!g_engine.m_coordinator.ComponentExists<UIComponent>(info.m_Entity))
+								if (info.m_tag == "EndingSprite")
 								{
-									g_engine.m_coordinator.AddComponent(info.m_Entity, UIComponent());
-									auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(info.m_Entity);
-									UI.setIsActive(true);
+									if (!g_engine.m_coordinator.ComponentExists<UIComponent>(info.m_Entity))
+									{
+										g_engine.m_coordinator.AddComponent(info.m_Entity, UIComponent());
+										auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(info.m_Entity);
+										UI.setIsActive(true);
+									}
+									auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+									auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(info.m_Entity);
+									sprite.setTexturePath("Resources/Assets/ElaS1.png");
+									m_finalSprite = info.m_Entity;
+									transform.setZ(1000);
+									m_finalSpriteSet = true;
 								}
-								auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
-								auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(info.m_Entity);
-								sprite.setTexturePath("Resources/Assets/ElaS1.png");
-								m_finalSprite = info.m_Entity;
-								transform.setZ(1000);
 							}
 						}
 					}
@@ -515,83 +728,82 @@ namespace Rogue
 						sprite.setTexturePath("Resources/Assets/ElaS5.png");
 					}
 
-					if (m_timer > 24.0f && m_timer < 25.0f)
+					if (m_timer > 23.0f && m_timer < 24.0f)
 					{
 						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
 						sprite.setTexturePath("Resources/Assets/ElaS6.png");
 					}
 
-					if (m_timer > 25.0f && m_timer < 25.5f)
+					if (m_timer > 24.0f && m_timer < 24.5f)
 					{
 						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
 						sprite.setTexturePath("Resources/Assets/ElaS7.png");
 					}
 
-					if (m_timer > 25.5f && m_timer < 26.0f)
+					if (m_timer > 24.5f && m_timer < 25.0f)
 					{
 						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
 						sprite.setTexturePath("Resources/Assets/ElaS8.png");
 					}
 
-					if (m_timer > 26.0f && m_timer < 26.5f)
+					if (m_timer > 25.0f && m_timer < 25.5f)
 					{
 						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
 						sprite.setTexturePath("Resources/Assets/ElaS9.png");
 					}
 
-					if (m_timer > 26.5f && m_timer < 27.0f)
+					if (m_timer > 25.5f && m_timer < 26.0f)
 					{
 						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
 						sprite.setTexturePath("Resources/Assets/ElaS10.png");
 					}
 
-					if (m_timer > 27.0f && m_timer < 27.5f)
+					if (m_timer > 26.0f && m_timer < 26.5f)
 					{
 						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
 						sprite.setTexturePath("Resources/Assets/ElaS11.png");
 					}
 
-					if (m_timer > 27.5f && m_timer < 28.0f)
+					if (m_timer > 26.5f && m_timer < 27.0f)
 					{
 						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
 						sprite.setTexturePath("Resources/Assets/ElaS12.png");
 					}
 
-					if (m_timer > 28.0f && m_timer < 28.5f)
+					if (m_timer > 27.0f && m_timer < 27.5f)
 					{
 						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
 						sprite.setTexturePath("Resources/Assets/ElaS13.png");
 					}
 
-					if (m_timer > 28.5f && m_timer < 29.0f)
+					if (m_timer > 27.5f && m_timer < 28.0f)
 					{
 						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
 						sprite.setTexturePath("Resources/Assets/ElaS14.png");
 					}
 
-					if (m_timer > 29.0f && m_timer < 29.5f)
+					if (m_timer > 28.0f && m_timer < 28.5f)
 					{
 						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
 						sprite.setTexturePath("Resources/Assets/ElaS15.png");
 					}
 
-					if (m_timer > 29.5f && m_timer < 30.0f)
+					if (m_timer > 28.5f && m_timer < 29.0f)
 					{
 						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
 						sprite.setTexturePath("Resources/Assets/ElaS16.png");
 					}
 
-					if (m_timer > 35.0f)
+					if (m_timer > 34.0f)
 					{
 						PLAYER_STATUS.ResetEndGame();
 						g_engine.m_coordinator.SetTransitionLevel("Level 19.json", 0.0f); //2nd value doesn't matter anymore probably
 						g_engine.m_coordinator.SetTransition(true);
 					}
 				}
-			}						
+			}
 		}
 	}
-
 	void GamePlayEnding::OnTriggerEnter(Entity other)
 	{
 		if (!g_engine.m_coordinator.GameIsActive())
@@ -605,7 +817,7 @@ namespace Rogue
 			//Freeze Player Controls			
 			m_timer = 0.0f;
 
-			if (PLAYER_STATUS.GetEndTrigger() || PLAYER_STATUS.GetCollectedSoulsInLevel(LEVEL::CORAL) > 2)
+			if (PLAYER_STATUS.GetEndTrigger())
 			{
 				PLAYER_STATUS.FreezeControls();
 				auto playerEnt = PlayerStatusManager::instance().GetPlayerEntity();
