@@ -42,10 +42,10 @@ namespace Rogue
 
 	void SoulSystem::Update()
 	{
-		std::cout << "Total Souls in Level: " << PLAYER_STATUS.GetTotalSoulsInLevel()
-			<< " Collected Souls in Level: " << PLAYER_STATUS.GetCollectedSoulsInLevel()
-			<< " Current Level: " << PLAYER_STATUS.GetCurrLevel()
-			<< std::endl;
+		//std::cout << "Total Souls in Level: " << PLAYER_STATUS.GetTotalSoulsInLevel()
+		//	<< " Collected Souls in Level: " << PLAYER_STATUS.GetCollectedSoulsInLevel()
+		//	<< " Current Level: " << PLAYER_STATUS.GetCurrLevel()
+		//	<< std::endl;
 
 		//for (Entity entity : m_entities)
 		//{

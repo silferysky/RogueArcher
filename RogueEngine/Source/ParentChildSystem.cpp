@@ -36,26 +36,21 @@ namespace Rogue
 			{
 				childComponent.SetPosition(transComponent.GetPosition() - parentTransformComponent.GetPosition());
 				childComponent.SetPositionZ(transComponent.GetZ() - parentTransformComponent.GetZ());
-				childComponent.SetScale(Vec2(transComponent.GetScale().x / parentTransformComponent.GetScale().x, transComponent.GetScale().y / parentTransformComponent.GetScale().y));
 				childComponent.SetRotation(transComponent.GetRotation() - parentTransformComponent.GetRotation());
-				//If grandparent don't exists
-				//g_engine.m_coordinator.GetComponent<ChildComponent>(childComponent.GetParent()).GetParent() == MAX_ENTITIES;
-				//if (!g_engine.m_coordinator.ComponentExists<ChildComponent>(childComponent.GetParent()))
-				//{
-				//	//Calculate position based on global transform
-				//	//No need to do in depth value change because no extra parent to calculate
-				//	childComponent.SetPosition(transComponent.GetPosition() - parentTransformComponent.GetPosition());
-				//	childComponent.SetPositionZ(transComponent.GetZ() - parentTransformComponent.GetZ());
-				//	childComponent.SetScale(Vec2(transComponent.GetScale().x / parentTransformComponent.GetScale().x, transComponent.GetScale().y / parentTransformComponent.GetScale().y));
-				//	childComponent.SetRotation(transComponent.GetRotation() - parentTransformComponent.GetRotation());
-				//}
-				//else
-				//{
-				//	childComponent.SetPosition(transComponent.GetPosition() - parentTransformComponent.GetPosition());
-				//	childComponent.SetPositionZ(transComponent.GetZ() - parentTransformComponent.GetZ());
-				//	childComponent.SetScale(Vec2(transComponent.GetScale().x / parentTransformComponent.GetScale().x, transComponent.GetScale().y / parentTransformComponent.GetScale().y));
-				//	childComponent.SetRotation(transComponent.GetRotation() - parentTransformComponent.GetRotation());
-				//}
+
+				// Special case for player, don't flip scale.
+				if (entity == PLAYER_STATUS.GetPlayerEntity())
+				{
+					float x = 1.0f;
+
+					if (parentTransformComponent.GetScale().x < 0.0f)
+						x = -1.0f;
+
+					g_engine.m_coordinator.GetSystem<GraphicsSystem>()->SetPlayerX(x);
+				}
+				else
+					childComponent.SetScale(Vec2(transComponent.GetScale().x / parentTransformComponent.GetScale().x, transComponent.GetScale().y / parentTransformComponent.GetScale().y));
+				
 				childComponent.ResetLocalDirty();
 			}
 
@@ -64,8 +59,21 @@ namespace Rogue
 			{
 				transComponent.setPosition(childComponent.GetPosition() + parentTransformComponent.GetPosition());
 				transComponent.setZ(childComponent.GetPositionZ() + parentTransformComponent.GetZ());
-				transComponent.setScale(Vec2(childComponent.GetScale().x * parentTransformComponent.GetScale().x, childComponent.GetScale().y * parentTransformComponent.GetScale().y));
 				transComponent.setRotation(childComponent.GetRotation() + parentTransformComponent.GetRotation());
+
+				// Special case for player, don't flip scale.
+				if (entity == PLAYER_STATUS.GetPlayerEntity())
+				{
+					float x = 1.0f;
+
+					if (parentTransformComponent.GetScale().x < 0.0f)
+						x = -1.0f;
+
+					g_engine.m_coordinator.GetSystem<GraphicsSystem>()->SetPlayerX(x);
+				}
+				else
+					transComponent.setScale(Vec2(childComponent.GetScale().x * parentTransformComponent.GetScale().x, childComponent.GetScale().y * parentTransformComponent.GetScale().y));
+			
 
 				std::vector<Entity> toUpdate;
 				AddChildToVector(toUpdate, entity);
@@ -81,8 +89,21 @@ namespace Rogue
 			{
 				transComponent.setPosition(childComponent.GetPosition() + parentTransformComponent.GetPosition());
 				transComponent.setZ(childComponent.GetPositionZ() + parentTransformComponent.GetZ());
-				transComponent.setScale(Vec2(childComponent.GetScale().x * parentTransformComponent.GetScale().x, childComponent.GetScale().y * parentTransformComponent.GetScale().y));
 				transComponent.setRotation(childComponent.GetRotation() + parentTransformComponent.GetRotation());
+
+				// Special case for player, don't flip scale.
+				if (entity == PLAYER_STATUS.GetPlayerEntity())
+				{
+					float x = 1.0f;
+
+					if (parentTransformComponent.GetScale().x < 0.0f)
+						x = -1.0f;
+					
+					g_engine.m_coordinator.GetSystem<GraphicsSystem>()->SetPlayerX(x);
+				}
+				else
+					transComponent.setScale(Vec2(childComponent.GetScale().x * parentTransformComponent.GetScale().x, childComponent.GetScale().y * parentTransformComponent.GetScale().y));
+				
 			}
 
 			if (transComponent.GetScale().x == 0.0f)

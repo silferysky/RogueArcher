@@ -159,7 +159,6 @@ namespace Rogue
 
 				//Resetting some values
 				PLAYER_STATUS.SetInfiniteJumps(false);
-				PLAYER_STATUS.SetEndTrigger(false);
 			}
 			else
 			{
@@ -191,11 +190,6 @@ namespace Rogue
 						dir *= -1;
 					if (transform.GetScale().x > 0)
 						dir *= -1;
-					if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(PLAYER_STATUS.GetPlayerEntity()))
-					{
-						if (trans->get().GetScale().x < 0)
-							dir *= -1;
-					}
 
 					transform.setScale(Vec2(dir * transform.GetScale().x, transform.GetScale().y));
 
@@ -242,12 +236,6 @@ namespace Rogue
 				}
 			}
 		}
-
-		if (PLAYER_STATUS.GetHitchhikedEntity() == MAX_ENTITIES)
-			if (auto playerTrans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(PLAYER_STATUS.GetPlayerEntity()))
-			{
-				playerTrans->get().setScale(Vec2(std::abs(playerTrans->get().GetScale().x), playerTrans->get().GetScale().y));
-			}
 
 		//if (PLAYER_STATUS.GetPlayerEntity() != MAX_ENTITIES)
 		//{
@@ -591,10 +579,6 @@ namespace Rogue
 								}
 							}
 						}
-				}
-				else if (keycode == KeyPress::KeyP)
-				{
-					PLAYER_STATUS.SetEndTrigger(true);
 				}
 			}
 			return;
