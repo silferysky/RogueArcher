@@ -86,21 +86,19 @@ namespace Rogue
 		void SetTriggerOnce(bool trigger);
 
 		//Collectibles
-		void SetSoulsCollected(unsigned soulsCollected);
-		//unsigned GetSoulsCollected() const;
-		void IncrementSoulsCollected();
-
-		std::map<LEVEL, unsigned>& GetSoulsCollected();
-		std::map<LEVEL, unsigned>& GetTotalSouls();
-
-		unsigned GetSoulsCollected(LEVEL level) const;
-		void IncrementSoulsCollected(LEVEL level);
-
-		unsigned GetTotalSouls(LEVEL level) const;
+		size_t GetCollectedSoulsInLevel();
+		size_t GetCollectedSoulsInLevel(LEVEL level);
+		size_t GetTotalSoulsInLevel();
+		size_t GetTotalSoulsInLevel(LEVEL level);
+		void CollectSoul(Entity entity);
+		void AddSoul(Entity entity);
+		bool RegisterLevel(LEVEL level);
 
 		//Transition
 		void SetLastLevel(std::string_view str);
 		std::string_view GetLastLevel() const;
+		void SetCurrLevel(LEVEL level);
+		LEVEL GetCurrLevel() const;
 
 		//Ending
 		void ResetEndGame();
@@ -112,9 +110,6 @@ namespace Rogue
 		bool GetInfiniteJumps() const;
 
 	private:
-		std::map<LEVEL, unsigned> m_souls;
-		std::map<LEVEL, unsigned> m_totalSouls;
-
 		size_t m_runCount;
 
 		Entity m_entity;
@@ -153,10 +148,11 @@ namespace Rogue
 		Vec2 m_startingPos;
 
 		// Collectibles
-		unsigned m_soulsCollected;
+		std::map<LEVEL, std::shared_ptr<std::vector<Soul>>> m_souls;
 
 		//Level Transition
 		std::string m_lastLevel;
+		LEVEL m_currLevel;
 
 		//ending
 		bool m_isEnding;

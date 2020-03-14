@@ -27,19 +27,13 @@ namespace Rogue
 		m_teleportDelayTimer{ 0.0f },
 		m_startingPos{ 0.0f, 0.0f },
 		m_checkpoint{ 0.0f, 0.0f },
-		m_soulsCollected{ 0 },
 		m_lastLevel { "None"},
 		m_isEnding{ false },
 		m_infiniteJumps{ false },
-		m_triggerOnce(false)
+		m_triggerOnce(false),
+		m_currLevel{ LEVEL::TUTORIAL }
 	{
-		m_souls.insert(std::make_pair(LEVEL::CRYSTAL, 0));
-		m_souls.insert(std::make_pair(LEVEL::CORAL, 0));
-		m_souls.insert(std::make_pair(LEVEL::VEGETATION, 0));
 
-		m_totalSouls.insert(std::make_pair(LEVEL::CRYSTAL, 1));
-		m_totalSouls.insert(std::make_pair(LEVEL::CORAL, 1));
-		m_totalSouls.insert(std::make_pair(LEVEL::VEGETATION, 1));
 	}
 
 	void PlayerStatusManager::Reset()
@@ -59,7 +53,10 @@ namespace Rogue
 		m_teleportDelayTimer = 0.0f;
 		m_startingPos = { 0.0f, 0.0f };
 		m_checkpoint = { 0.0f, 0.0f };
-		m_soulsCollected = 0;
+		m_souls.clear();
+		m_souls.insert(std::make_pair(LEVEL::CRYSTAL, std::make_shared<std::vector<Soul>>()));
+		m_souls.insert(std::make_pair(LEVEL::CORAL, std::make_shared<std::vector<Soul>>()));
+		m_souls.insert(std::make_pair(LEVEL::VEGETATION, std::make_shared<std::vector<Soul>>()));
 
 		++m_runCount;
 	}
@@ -315,61 +312,91 @@ namespace Rogue
 		m_triggerOnce = trigger;
 	}
 
-	void PlayerStatusManager::SetSoulsCollected(unsigned soulsCollected)
+	//================================================================
+	//							SOUL COLLECTIBLE
+	//================================================================
+
+	size_t PlayerStatusManager::GetCollectedSoulsInLevel()
 	{
-		m_soulsCollected = soulsCollected;
+		size_t collected = 0;
 
-	}
+		// If didn't exist, inserts the level, returns nullptr
+		if (m_souls[m_currLevel] == nullptr)
+			return 15;
 
-	/* unsigned PlayerStatusManager::GetSoulsCollected() const
-	{
-		return m_soulsCollected;
-	} */
-
-	std::map<LEVEL, unsigned>& PlayerStatusManager::GetSoulsCollected()
-	{
-		return m_souls;
-	}
-
-	std::map<LEVEL, unsigned>& PlayerStatusManager::GetTotalSouls()
-	{
-		return m_totalSouls;
-	}
-
-	unsigned PlayerStatusManager::GetSoulsCollected(LEVEL level) const
-	{
-		auto itr = m_souls.find(level);
-
-		if (itr != m_souls.end()) // level exists
-			return itr->second;
-		else
-			return 0;
-	}
-
-	unsigned PlayerStatusManager::GetTotalSouls(LEVEL level) const
-	{
-		auto itr = m_totalSouls.find(level);
-
-		if (itr != m_totalSouls.end()) // level exists
-			return itr->second;
-		else
-			return 0;
-	}
-
-	void PlayerStatusManager::IncrementSoulsCollected()
-	{
-		++m_soulsCollected;
-	}
-
-	void PlayerStatusManager::IncrementSoulsCollected(LEVEL level)
-	{
-		auto itr = m_souls.find(level);
-
-		if (itr != m_souls.end()) // level exists
+		for (Soul& soul : *m_souls[m_currLevel])
 		{
-			++(itr->second);
+			if (soul.m_collected)
+				++collected;
+		}
+		return collected;
+	}
+
+	size_t PlayerStatusManager::GetCollectedSoulsInLevel(LEVEL level)
+	{
+		size_t collected = 0;
+		
+		// If didn't exist, inserts the level, returns nullptr
+		if (m_souls[level] == nullptr)
+			return 0;
+
+		for (Soul& soul : *m_souls[level])
+		{
+			if (soul.m_collected)
+				++collected;
+		}
+		return collected;
+	}
+
+	size_t PlayerStatusManager::GetTotalSoulsInLevel()
+	{
+		// If didn't exist, inserts the level, returns nullptr
+		if (m_souls[m_currLevel] == nullptr)
+			return 1;
+
+		return m_souls[m_currLevel]->size();
+	}
+
+	size_t PlayerStatusManager::GetTotalSoulsInLevel(LEVEL level)
+	{
+		return m_souls[m_currLevel]->size();
+	}
+
+	void PlayerStatusManager::CollectSoul(Entity entity)
+	{
+		if (m_souls[m_currLevel] == nullptr)
+		{
+			std::cout << "Curr level not in map!" << std::endl;
+			return;
+		}
+
+		for (Soul& soul : *m_souls[m_currLevel])
+		{
+			std::stringstream ss;
+			ss << " Soul entity: " << entity << " Current soul: " << soul.m_entity << std::boolalpha << "Collected? " << soul.m_collected;
+			RE_INFO(ss.str());
+
+			if (entity == soul.m_entity)
+				soul.m_collected = true;
 		}
 	}
+
+	void PlayerStatusManager::AddSoul(Entity entity)
+	{
+		if (m_souls[m_currLevel] == nullptr)
+			return;
+
+		m_souls[m_currLevel]->emplace_back(Soul(entity));
+	}
+
+	bool PlayerStatusManager::RegisterLevel(LEVEL level)
+	{
+		 std::pair<std::map<LEVEL, std::shared_ptr<std::vector<Soul>>>::iterator, bool> it =  m_souls.insert(std::make_pair(level, std::make_shared<std::vector<Soul>>()));
+		 
+		 return it.second;
+	}
+
+	//================================================================
 
 	void PlayerStatusManager::SetLastLevel(std::string_view str)
 	{
@@ -381,15 +408,20 @@ namespace Rogue
 		return m_lastLevel;
 	}
 
+	void PlayerStatusManager::SetCurrLevel(LEVEL level)
+	{
+		m_currLevel = level;
+	}
+
+	LEVEL PlayerStatusManager::GetCurrLevel() const
+	{
+		return m_currLevel;
+	}
+
 	void PlayerStatusManager::ResetEndGame()
 	{
 		SetEnding(false);
-		m_soulsCollected = 0;
-
-		for (auto& it : m_souls)
-		{
-			it.second = 0;
-		}
+		m_souls.clear();
 	}
 
 	void PlayerStatusManager::SetEnding(bool ending)

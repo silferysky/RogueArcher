@@ -57,6 +57,7 @@ Technology is prohibited.
 #include "MaskingSystem.h"
 #include "FadeSystem.h"
 #include "LightingSystem.h"
+#include "SoulSystem.h"
 
 namespace Rogue
 {
@@ -70,6 +71,7 @@ namespace Rogue
 		// Order of system updates will be manually set in SystemManager.h
 		m_coordinator.RegisterSystem<InputManager>();
 		m_coordinator.RegisterSystem<LogicSystem>();
+		m_coordinator.RegisterSystem<SoulSystem>();
 		m_coordinator.RegisterSystem<ParticleSystem>();
 		m_coordinator.RegisterSystem<ParticleEmitterSystem>();
 		m_coordinator.RegisterSystem<CursorSystem>();
@@ -118,6 +120,7 @@ namespace Rogue
 		m_coordinator.RegisterComponent<FadeComponent>();
 		m_coordinator.RegisterComponent<LightComponent>();
 		m_coordinator.RegisterComponent<ForegroundComponent>();
+		m_coordinator.RegisterComponent<SoulComponent>();
 
 		//This is a component that isn't directly serialized/deserialized
 		m_coordinator.RegisterComponent<TileMapComponent>();

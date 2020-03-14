@@ -145,6 +145,8 @@
     <ClInclude Include="Source\ScriptComponent.h" />
     <ClInclude Include="Source\Shader.h" />
     <ClInclude Include="Source\ShaderManager.h" />
+    <ClInclude Include="Source\SoulComponent.h" />
+    <ClInclude Include="Source\SoulSystem.h" />
     <ClInclude Include="Source\Sound.h" />
     <ClInclude Include="Source\SpecialEntity.h" />
     <ClInclude Include="Source\StatsComponent.h" />
@@ -311,6 +313,8 @@
     <ClCompile Include="Source\CoralClam.cpp" />
     <ClCompile Include="Source\Shader.cpp" />
     <ClCompile Include="Source\FontSystem.cpp" />
+    <ClCompile Include="Source\SoulComponent.cpp" />
+    <ClCompile Include="Source\SoulSystem.cpp" />
     <ClCompile Include="Source\Sound.cpp" />
     <ClCompile Include="Source\BackgroundComponent.cpp" />
     <ClCompile Include="Source\PickingManager.cpp" />

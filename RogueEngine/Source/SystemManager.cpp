@@ -84,6 +84,7 @@ namespace Rogue
 		// System updates that are before fixed updates are placed here.
 		UpdateSystem(SystemID::id_INPUTMANAGER);
 		UpdateSystem(SystemID::id_LOGICSYSTEM);
+		UpdateSystem(SystemID::id_SOULSYSTEM);
 		UpdateSystem(SystemID::id_PLAYERCONTROLLERSYSTEM);
 		UpdateSystem(SystemID::id_CURSORSYSTEM);
 		UpdateSystem(SystemID::id_PICKINGSYSTEM);
