@@ -1147,6 +1147,7 @@ namespace Rogue
 		{
 			playerOpt->get().SetMoveState(MoveState::e_stop);
 		}
+		g_engine.SetTimeScale(1.0f);
 	}
 
 	void PlayerControllerSystem::UnfreezeControlComponentUpdates()

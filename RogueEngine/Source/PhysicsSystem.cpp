@@ -28,9 +28,7 @@ Technology is prohibited.
 #include "Logger.h"
 #include "REEngine.h"
 
-#ifndef MOVE_WITH_FORCE
-	#define MOVE_WITH_FORCE
-#endif
+#define MOVE_WITH_FORCE 1
 
 namespace Rogue
 {
@@ -52,7 +50,7 @@ namespace Rogue
 		transform.offSetPosition(rigidbody.getVelocity() * simulationTime); // Velocity -> Position
 	}
 
-	Vec2 PhysicsSystem::PlayerMoveByForce(PlayerControllerComponent& playerCtrl, RigidbodyComponent& rigidbody, const Vec2& moveDir)
+	Vec2 PhysicsSystem::PlayerMoveByForce(PlayerControllerComponent& playerCtrl, RigidbodyComponent& rigidbody, Vec2 moveDir)
 	{
 		float playerSpeed = playerCtrl.GetMoveSpeed();
 		float forceMultiplier = playerCtrl.GetMoveForceMultiplier(); // How fast the player accelerates
@@ -122,6 +120,33 @@ namespace Rogue
 	{
 		// Add relevant forces to each rigidbody
 		ForceManager::instance().ApplyAllForces();
+		
+		if (auto playerCtrlOpt = g_engine.m_coordinator.TryGetComponent<PlayerControllerComponent>(PLAYER_STATUS.GetPlayerEntity()))
+		{
+			PlayerControllerComponent& playerCtrl = playerCtrlOpt->get();
+			RigidbodyComponent& rigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(PLAYER_STATUS.GetPlayerEntity());
+
+			float x = 0.0f;
+
+			if (playerCtrl.GetMoveState() == MoveState::e_left)
+				x = -1.0f;
+			else if (playerCtrl.GetMoveState() == MoveState::e_right)
+				x = 1.0f;
+
+			if (playerCtrl.GetMoveState() != MoveState::e_stop)
+			{
+#if MOVE_WITH_FORCE
+				Vec2 force = PlayerMoveByForce(playerCtrl, rigidbody, Vec2(x, 0.0f));
+
+				for (int steps = 0; steps < g_engine.GetStepCount(); steps++)
+				{
+					ForceManager::instance().RegisterForce(PLAYER_STATUS.GetPlayerEntity(), force);
+				}
+#else
+				PlayerMoveByVelocity(playerCtrl, rigidbody, vecMovement);
+#endif
+			}
+		}
 
 		// For all entities
 		std::set<Entity>::iterator iEntity;
@@ -175,7 +200,7 @@ namespace Rogue
 			return;
 		}
 		case EventType::EvEntityMove:
-		{
+		{/*
 			EntMoveEvent& EvEntMove = dynamic_cast<EntMoveEvent&>(ev);
 
 			Entity player = EvEntMove.GetEntityID();
@@ -197,7 +222,7 @@ namespace Rogue
 			}
 #else
 			PlayerMoveByVelocity(playerCtrl, rigidbody, vecMovement);
-#endif
+#endif*/
 
 			return;
 		}

@@ -40,7 +40,7 @@ namespace Rogue
 		bool allowGravity;
 
 		// Temporary place to store movement script
-		Vec2 PlayerMoveByForce(PlayerControllerComponent& playerCtrl, RigidbodyComponent& rigidbody, const Vec2& vecDir);
+		Vec2 PlayerMoveByForce(PlayerControllerComponent& playerCtrl, RigidbodyComponent& rigidbody, Vec2 vecDir);
 		void PlayerMoveByVelocity(PlayerControllerComponent& playerCtrl, RigidbodyComponent& rigidbody, const Vec2& vecDir);
 	public:
 		PhysicsSystem(Vec2 gravity = { 0.0f, -9.81f });
@@ -55,5 +55,7 @@ namespace Rogue
 		void setToggleGravity(bool gravity);
 		void setGravity(const Vec2& gravity);
 		const Vec2& getGravity() const;
+
+		int m_playerMove;
 	};
 }

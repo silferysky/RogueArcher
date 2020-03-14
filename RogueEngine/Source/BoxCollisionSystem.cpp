@@ -68,10 +68,9 @@ namespace Rogue
 		for (iEntity = m_entities.begin(); iEntity != m_entities.end(); ++iEntity)
 		{
 			auto currColliderOpt = g_engine.m_coordinator.TryGetComponent<ColliderComponent>(*iEntity);
-#if 1
+
 			RE_ASSERT(static_cast<bool>(currColliderOpt), "Entity doesn't have ColliderComponent");
 
-#endif
 			auto& currCollider = currColliderOpt->get();
 			auto& currRigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iEntity);
 			auto& currTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*iEntity);
@@ -84,10 +83,9 @@ namespace Rogue
 			for (++iNextEntity; iNextEntity != m_entities.end(); ++iNextEntity)
 			{
 				auto nextColliderOpt = g_engine.m_coordinator.TryGetComponent<ColliderComponent>(*iNextEntity);
-#if 1
+
 				RE_ASSERT(static_cast<bool>(nextColliderOpt), "Entity doesn't have ColliderComponent");
-				
-#endif
+
 				auto& nextCollider = nextColliderOpt->get();
 
 				// Filter colliders
@@ -97,10 +95,14 @@ namespace Rogue
 
 				auto& nextRigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*iNextEntity);
 				
-				// Skip if both static.
-				if (currRigidbody.getIsStatic() && nextRigidbody.getIsStatic())
-					continue;
-				
+				// If the bodies are not player
+				if (*iEntity != PLAYER_STATUS.GetPlayerEntity() && *iNextEntity != PLAYER_STATUS.GetPlayerEntity())
+				{
+					// Skip if both static.
+					if (currRigidbody.getIsStatic() && nextRigidbody.getIsStatic())
+						continue;
+				}
+
 				auto& nextBoxCollider = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(*iNextEntity);
 				
 				// Skip asleep colliders.
