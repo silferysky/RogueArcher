@@ -104,6 +104,9 @@ namespace Rogue
 		void UseFrameBuffer();
 		void UpdateFrameBuffer();
 
+		float GetPlayerX() const { return m_playerX; }
+		void SetPlayerX(float x) { m_playerX = x; }
+
 		bool FadeAllEntities();
 
 		GLuint& getFBO();
