@@ -820,9 +820,10 @@ namespace Rogue
 			//Freeze Player Controls			
 			m_timer = 0.0f;
 
-			if (PLAYER_STATUS.GetCollectedSoulsInLevel(LEVEL::CRYSTAL) > PLAYER_STATUS.GetTotalSoulsInLevel(LEVEL::CRYSTAL) * 0.8 &&
+			if ((PLAYER_STATUS.GetCollectedSoulsInLevel(LEVEL::CRYSTAL) > PLAYER_STATUS.GetTotalSoulsInLevel(LEVEL::CRYSTAL) * 0.8 &&
 				PLAYER_STATUS.GetCollectedSoulsInLevel(LEVEL::CORAL) > PLAYER_STATUS.GetTotalSoulsInLevel(LEVEL::CORAL) * 0.8 &&
-				PLAYER_STATUS.GetCollectedSoulsInLevel(LEVEL::VEGETATION) > PLAYER_STATUS.GetTotalSoulsInLevel(LEVEL::VEGETATION) * 0.8)
+				PLAYER_STATUS.GetCollectedSoulsInLevel(LEVEL::VEGETATION) > PLAYER_STATUS.GetTotalSoulsInLevel(LEVEL::VEGETATION) * 0.8) 
+				|| PLAYER_STATUS.GetEndTrigger() || PLAYER_STATUS.GetTrueEndTrigger())
 			{
 				PLAYER_STATUS.FreezeControls();
 				auto playerEnt = PlayerStatusManager::instance().GetPlayerEntity();
