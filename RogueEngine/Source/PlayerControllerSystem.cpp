@@ -159,6 +159,7 @@ namespace Rogue
 
 				//Resetting some values
 				PLAYER_STATUS.SetInfiniteJumps(false);
+				PLAYER_STATUS.SetEndTrigger(false);
 			}
 			else
 			{
@@ -590,6 +591,10 @@ namespace Rogue
 								}
 							}
 						}
+				}
+				else if (keycode == KeyPress::KeyP)
+				{
+					PLAYER_STATUS.SetEndTrigger(true);
 				}
 			}
 			return;

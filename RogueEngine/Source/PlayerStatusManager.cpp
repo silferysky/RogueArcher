@@ -31,6 +31,7 @@ namespace Rogue
 		m_isEnding{ false },
 		m_infiniteJumps{ false },
 		m_triggerOnce(false),
+		m_endTrigger{ false },
 		m_currLevel{ LEVEL::TUTORIAL }
 	{
 
@@ -54,9 +55,9 @@ namespace Rogue
 		m_startingPos = { 0.0f, 0.0f };
 		m_checkpoint = { 0.0f, 0.0f };
 		m_souls.clear();
-		m_souls.insert(std::make_pair(LEVEL::CRYSTAL, std::make_shared<std::vector<Soul>>()));
-		m_souls.insert(std::make_pair(LEVEL::CORAL, std::make_shared<std::vector<Soul>>()));
-		m_souls.insert(std::make_pair(LEVEL::VEGETATION, std::make_shared<std::vector<Soul>>()));
+		//m_souls.insert(std::make_pair(LEVEL::CRYSTAL, std::make_shared<std::vector<Soul>>()));
+		//m_souls.insert(std::make_pair(LEVEL::CORAL, std::make_shared<std::vector<Soul>>()));
+		//m_souls.insert(std::make_pair(LEVEL::VEGETATION, std::make_shared<std::vector<Soul>>()));
 
 		++m_runCount;
 	}
@@ -454,6 +455,14 @@ namespace Rogue
 	bool PlayerStatusManager::GetInfiniteJumps() const
 	{
 		return m_infiniteJumps;
+	}	void PlayerStatusManager::SetEndTrigger(bool willTrigger)
+	{
+		m_endTrigger = willTrigger;
+	}
+
+	bool PlayerStatusManager::GetEndTrigger() const
+	{
+		return m_endTrigger;
 	}
 
 	void PlayerStatusManager::ChangePlayerSprite()
