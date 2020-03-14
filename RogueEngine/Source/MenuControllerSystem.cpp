@@ -360,7 +360,7 @@ namespace Rogue
 		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("MainMenu_Bg", true, false));
 		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("PausedTexture", true, false));
 		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("HowToPlayBtn", true, false));
-		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("MainMenu_Btn", true, false));
+		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("MainMenu_Btn", true, false)); //This is useless now
 		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("Resume", true, false));
 		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("QuitBtn", true, false));
 		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("HowToPlay", true, false));
