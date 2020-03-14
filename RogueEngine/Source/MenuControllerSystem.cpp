@@ -297,8 +297,10 @@ namespace Rogue
 			KeyTriggeredEvent& keytriggeredevent = dynamic_cast<KeyTriggeredEvent&>(ev);
 			KeyPress keycode = keytriggeredevent.GetKeyCode();
 
+#if DEMO_MODE
 			if (keycode == KeyPress::KeyF5)
 				g_engine.m_coordinator.ToggleEditorIsRunning();
+#endif
 
 			if (keycode == KeyPress::KeyF6)
 				g_engine.ToggleVSync();
