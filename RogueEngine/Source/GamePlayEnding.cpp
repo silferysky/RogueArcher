@@ -364,81 +364,73 @@ namespace Rogue
 						sprite.setTexturePath("Resources/Assets/ExaS6.png");
 					}
 
-					if (m_timer > 25.0f && m_timer < 26.0f)
+					if (m_timer > 25.0f && m_timer < 25.5f)
 					{
 						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
 						sprite.setTexturePath("Resources/Assets/ExaS7.png");
 					}
 
-					if (m_timer > 26.0f && m_timer < 27.0f)
+					if (m_timer > 25.5f && m_timer < 26.0f)
 					{
 						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
 						sprite.setTexturePath("Resources/Assets/ExaS8.png");
 					}
 
-					if (m_timer > 27.0f && m_timer < 28.0f)
+					if (m_timer > 26.0f && m_timer < 26.5f)
 					{
 						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
 						sprite.setTexturePath("Resources/Assets/ExaS9.png");
 					}
 
-					if (m_timer > 28.0f && m_timer < 29.0f)
+					if (m_timer > 26.5f && m_timer < 27.0f)
 					{
 						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
 						sprite.setTexturePath("Resources/Assets/ExaS10.png");
 					}
 
-					if (m_timer > 29.0f && m_timer < 30.0f)
+					if (m_timer > 27.0f && m_timer < 27.5f)
 					{
 						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
 						sprite.setTexturePath("Resources/Assets/ExaS11.png");
 					}
 
-					if (m_timer > 30.0f && m_timer < 31.0f)
+					if (m_timer > 27.5f && m_timer < 28.0f)
 					{
 						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
 						sprite.setTexturePath("Resources/Assets/ExaS12.png");
 					}
 
-					if (m_timer > 31.0f && m_timer < 32.0f)
+					if (m_timer > 28.0f && m_timer < 28.5f)
 					{
 						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
 						sprite.setTexturePath("Resources/Assets/ExaS13.png");
 					}
 
-					if (m_timer > 32.0f && m_timer < 33.0f)
+					if (m_timer > 28.5f && m_timer < 29.0f)
 					{
 						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
 						sprite.setTexturePath("Resources/Assets/ExaS14.png");
 					}
 
-					if (m_timer > 33.0f && m_timer < 34.0f)
+					if (m_timer > 29.0f && m_timer < 29.5f)
 					{
 						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
 						sprite.setTexturePath("Resources/Assets/ExaS15.png");
 					}
 
-					if (m_timer > 34.0f && m_timer < 35.0f)
+					if (m_timer > 29.5f && m_timer < 30.0f)
 					{
 						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
 						sprite.setTexturePath("Resources/Assets/ExaS16.png");
 					}
 
-					if (m_timer > 40.0f)
+					if (m_timer > 35.0f)
 					{
 						PLAYER_STATUS.ResetEndGame();
 						g_engine.m_coordinator.SetTransitionLevel("Level 19.json", 0.0f); //2nd value doesn't matter anymore probably
 						g_engine.m_coordinator.SetTransition(true);
-						//SceneManager::instance().LoadLevel("Level 20.json");
-
-						//g_engine.m_coordinator.SetTransitionLevel("Level 20.json", 0.0f); //2nd value doesn't matter anymore probably
-						
-						//adeEvent ev = FadeEvent(MAX_ENTITIES, 1.0f);
-						//v.SetSystemReceivers(static_cast<int>(SystemID::id_GRAPHICSSYSTEM));
-						//ventDispatcher::instance().AddEvent(ev);
 					}
 				}
-
 				if (m_endingDPressed)
 				{
 					if (m_timer > 18.0f && m_timer < 19.0f)
@@ -529,67 +521,67 @@ namespace Rogue
 						sprite.setTexturePath("Resources/Assets/ElaS6.png");
 					}
 
-					if (m_timer > 25.0f && m_timer < 26.0f)
+					if (m_timer > 25.0f && m_timer < 25.5f)
 					{
 						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
 						sprite.setTexturePath("Resources/Assets/ElaS7.png");
 					}
 
-					if (m_timer > 26.0f && m_timer < 27.0f)
+					if (m_timer > 25.5f && m_timer < 26.0f)
 					{
 						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
 						sprite.setTexturePath("Resources/Assets/ElaS8.png");
 					}
 
-					if (m_timer > 27.0f && m_timer < 28.0f)
+					if (m_timer > 26.0f && m_timer < 26.5f)
 					{
 						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
 						sprite.setTexturePath("Resources/Assets/ElaS9.png");
 					}
 
-					if (m_timer > 28.0f && m_timer < 29.0f)
+					if (m_timer > 26.5f && m_timer < 27.0f)
 					{
 						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
 						sprite.setTexturePath("Resources/Assets/ElaS10.png");
 					}
 
-					if (m_timer > 29.0f && m_timer < 30.0f)
+					if (m_timer > 27.0f && m_timer < 27.5f)
 					{
 						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
 						sprite.setTexturePath("Resources/Assets/ElaS11.png");
 					}
 
-					if (m_timer > 30.0f && m_timer < 31.0f)
+					if (m_timer > 27.5f && m_timer < 28.0f)
 					{
 						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
 						sprite.setTexturePath("Resources/Assets/ElaS12.png");
 					}
 
-					if (m_timer > 31.0f && m_timer < 32.0f)
+					if (m_timer > 28.0f && m_timer < 28.5f)
 					{
 						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
 						sprite.setTexturePath("Resources/Assets/ElaS13.png");
 					}
 
-					if (m_timer > 32.0f && m_timer < 33.0f)
+					if (m_timer > 28.5f && m_timer < 29.0f)
 					{
 						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
 						sprite.setTexturePath("Resources/Assets/ElaS14.png");
 					}
 
-					if (m_timer > 33.0f && m_timer < 34.0f)
+					if (m_timer > 29.0f && m_timer < 29.5f)
 					{
 						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
 						sprite.setTexturePath("Resources/Assets/ElaS15.png");
 					}
 
-					if (m_timer > 34.0f && m_timer < 35.0f)
+					if (m_timer > 29.5f && m_timer < 30.0f)
 					{
 						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
 						sprite.setTexturePath("Resources/Assets/ElaS16.png");
 					}
 
-					if (m_timer > 40.0f)
+					if (m_timer > 35.0f)
 					{
 						PLAYER_STATUS.ResetEndGame();
 						g_engine.m_coordinator.SetTransitionLevel("Level 19.json", 0.0f); //2nd value doesn't matter anymore probably
@@ -613,7 +605,7 @@ namespace Rogue
 			//Freeze Player Controls			
 			m_timer = 0.0f;
 
-			if (PLAYER_STATUS.GetCollectedSoulsInLevel(LEVEL::CORAL) > 2)
+			if (1)
 			{
 				PLAYER_STATUS.FreezeControls();
 				auto playerEnt = PlayerStatusManager::instance().GetPlayerEntity();
