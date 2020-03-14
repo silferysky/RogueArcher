@@ -846,7 +846,7 @@ namespace Rogue
 		else if (PLAYER_STATUS.GetTeleportCharge() == 1)
 			AudioManager::instance().loadSound("Resources/Sounds/Teleport2.ogg", 0.3f, false).Play();
 		else
-			AudioManager::instance().loadSound("Resources/Sounds/teleport1.ogg", 0.3f, false).Play();		
+			AudioManager::instance().loadSound("Resources/Sounds/Teleport1.ogg", 0.3f, false).Play();		
 		//AudioManager::instance().loadSound("Resources/Sounds/[Shoot Projectile]SCI-FI-WHOOSH_GEN-HDF-20864.ogg", 0.86f, false).Play();
 		//AudioManager::instance().loadSound("Resources/Sounds/[Ela Appear]SCI-FI-WHOOSH_GEN-HDF-20870.ogg", 0.3f, false).Play();
 
