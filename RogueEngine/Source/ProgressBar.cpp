@@ -35,15 +35,13 @@ namespace Rogue
 		ss << "completionPercentage: " << completionPercentage
 			<< " Curr level: " << PLAYER_STATUS.GetCurrLevel();
 		//RE_INFO(ss.str());
-
-		if (m_oldScale != completionPercentage)
+		// player - camera -> should - now
+		if (auto transform = g_engine.m_coordinator.TryGetComponent<TransformComponent>(m_entity))
 		{
-			if (auto transform = g_engine.m_coordinator.TryGetComponent<TransformComponent>(m_entity))
+			if (m_oldScale != completionPercentage)
 			{
-				auto positon = transform->get().GetPosition();
 
-				// 282.5 is the scale of the full bar
-				transform->get().setScale(Vec2(282.5f * completionPercentage, transform->get().GetScale().y));
+				auto positon = transform->get().GetPosition();
 
 				// recenter the bar by reverting the changes to position
 				if (m_difference < 0)
@@ -64,6 +62,14 @@ namespace Rogue
 
 				m_oldScale = completionPercentage; // keep track of old scale
 			}
-		}
+
+		float scaleX = transform->get().GetScale().x;
+
+		float deltaX = (282.5f * completionPercentage) - scaleX;
+		scaleX += static_cast<int>(deltaX) * 1.6f * g_fixedDeltaTime;
+
+		// 282.5 is the scale of the full bar
+		transform->get().setScale(Vec2(scaleX, transform->get().GetScale().y));
+	}
 	}
 }
