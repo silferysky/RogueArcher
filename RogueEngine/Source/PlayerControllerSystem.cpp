@@ -578,9 +578,9 @@ namespace Rogue
 									trans->get().setPosition(Vec2(-650.0f, -1175.0f));
 								}
 								//Mine
-								else if (SceneManager::instance().getCurrentFileName() == "Level 18.json")
+								else if (SceneManager::instance().getCurrentFileName() == "Level 17.json")
 								{
-									trans->get().setPosition(Vec2(1180.0f, -735.0f));
+									trans->get().setPosition(Vec2(-650.0f, -1175.0f));
 								}
 								HierarchyInfo& playerInfo = g_engine.m_coordinator.GetHierarchyInfo(PLAYER_STATUS.GetPlayerEntity());
 								for (auto entity : playerInfo.m_children)
@@ -615,9 +615,9 @@ namespace Rogue
 									trans->get().setPosition(Vec2(-865.0f, 950.0f));
 								}
 								//Mine
-								else if (SceneManager::instance().getCurrentFileName() == "Level 18.json")
+								else if (SceneManager::instance().getCurrentFileName() == "Level 17.json")
 								{
-									trans->get().setPosition(Vec2(-650.0f, -1175.0f));
+									trans->get().setPosition(Vec2(1535.0f, 500.0f));
 								}
 
 								HierarchyInfo& playerInfo = g_engine.m_coordinator.GetHierarchyInfo(PLAYER_STATUS.GetPlayerEntity());
