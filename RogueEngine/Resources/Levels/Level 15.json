@@ -457,7 +457,7 @@
     "Entity188": "Name{Game Object 211}|Tag{}|Sprite{Resources\\Assets\\Deathpithands.png;0.462745;0.0392157;0.0392157;1;}||Transform{-406.342;-1136.74;100;100;0;101}||||||Animation{4;0;0.1;1;0;1;}|||||||||||||||||",
     "Entity189": "Name{Game Object 212}|Tag{}|Sprite{Resources\\Assets\\Deathpithands.png;0.462745;0.0392157;0.0392157;1;}||Transform{-498.426;-1136.74;100;100;0;101}||||||Animation{4;0;0.1;1;0;1;}|||||||||||||||||",
     "Entity190": "Name{Game Object 213}|Tag{}|Sprite{Resources\\Assets\\Deathpithands.png;0.462745;0.0392157;0.0392157;1;}||Transform{-179.308;-1138.38;100;100;0;101}||||||Animation{4;0;0.1;1;0;1;}|||||||||||||||||",
-    "Entity191": "Name{cOLLISION\\}|Tag{Ground}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-731.409;-1130.08;100;100;0;0}||BoxCollider{0;0;320;247;AWAKE}|||||||||Collider{BOX;1;4294967295;}||||||||||||",
+    "Entity191": "Name{cOLLISION\\}|Tag{}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-731.409;-1130.08;100;100;0;0}||BoxCollider{0;0;320;247;AWAKE}|||||||||Collider{BOX;1;4294967295;}||||||||||||",
     "Entity192": "Name{Game Object 215}|Tag{}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-1018.99;-983.703;100;100;0;0}||BoxCollider{0;0;526;247;AWAKE}|||||||||Collider{BOX;1;4294967295;}||||||||||||",
     "Entity193": "Name{DeathBox3}|Tag{}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{842.351;-1089.22;107;99;0;5}||BoxCollider{-20;-42;144;-16;TRIGGER}||LogicComponent{11;0;1;0}|StatsComponent{0;0;0;0;0;;0;0;0;0;0;0;0;}||||||Collider{BOX;1;4294967295;}||||||||||||",
     "Entity194": "Name{Game Object 217}|Tag{}|Sprite{Resources\\Assets\\Deathpithands.png;0.462745;0.0392157;0.0392157;1;}||Transform{730.415;-1131.18;100;100;0;101}||||||Animation{4;0;0.1;1;0;1;}|||||||||||||||||",
