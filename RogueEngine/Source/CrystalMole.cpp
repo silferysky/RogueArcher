@@ -25,8 +25,6 @@ namespace Rogue
 		: ScriptComponent(entity, logicComponent, statsComponent), m_currentPointIndex{ 0 }, m_goingToEnd{ false }
 	{
 		LogicInit();
-		g_engine.m_coordinator.GetComponent<AnimationComponent>(m_entity).setIsAnimating(false);
-
 	}
 
 	void CrystalMole::LogicInit()
@@ -114,8 +112,7 @@ namespace Rogue
 		//If Player is on Mole
 		if (PLAYER_STATUS.GetHitchhikedEntity() == m_entity)
 		{
-			g_engine.m_coordinator.GetComponent<AnimationComponent>(m_entity).setIsAnimating(true);
-			g_engine.m_coordinator.GetComponent<AnimationComponent>(m_entity).setIsNotReversed(true);
+			g_engine.m_coordinator.GetComponent<AnimationComponent>(m_entity).setIsAnimating(false);
 
 			if (m_nextPoint.size() > 0)
 				m_nextPoint.pop();
@@ -126,7 +123,6 @@ namespace Rogue
 		else //If Player is not on mole, it goes to starting point
 		{
 			g_engine.m_coordinator.GetComponent<AnimationComponent>(m_entity).setIsAnimating(true);
-			g_engine.m_coordinator.GetComponent<AnimationComponent>(m_entity).setIsNotReversed(false);
 
 			if (m_nextPoint.size() > 0)
 				m_nextPoint.pop();
