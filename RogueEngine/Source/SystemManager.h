@@ -246,6 +246,7 @@ namespace Rogue
 		bool m_gameIsPaused = false;
 		bool m_stepOnce = false;
 		bool m_gameModeChanged = false;
+		bool m_repeatLoad = false;
 
 #if INIT_EDITOR
 		bool m_editorIsRunning = true;
