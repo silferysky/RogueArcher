@@ -346,6 +346,21 @@ namespace Rogue
 		return collected;
 	}
 
+	size_t PlayerStatusManager::GetCollectedSoulsInGame()
+	{
+		size_t collected = 0;
+
+		for (auto& pair : m_souls)
+		{
+			for (Soul& soul : *pair.second)
+			{
+				if (soul.m_collected)
+					++collected;
+			}
+		}
+		return collected;
+	}
+
 	size_t PlayerStatusManager::GetTotalSoulsInLevel()
 	{
 		// If didn't exist, inserts the level, returns nullptr
@@ -363,6 +378,16 @@ namespace Rogue
 			std::cout << "Total Souls: Level " << level << " not registered!" << std::endl;
 		
 		return m_souls[m_currLevel]->size();
+	}
+
+	size_t PlayerStatusManager::GetTotalSoulsInGame()
+	{
+		size_t numSouls = 0;
+
+		for (auto& pair : m_souls)
+			numSouls += pair.second->size();
+
+		return numSouls;
 	}
 
 	void PlayerStatusManager::CollectSoul(Entity entity)

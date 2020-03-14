@@ -88,8 +88,10 @@ namespace Rogue
 		//Collectibles
 		size_t GetCollectedSoulsInLevel();
 		size_t GetCollectedSoulsInLevel(LEVEL level);
+		size_t GetCollectedSoulsInGame();
 		size_t GetTotalSoulsInLevel();
 		size_t GetTotalSoulsInLevel(LEVEL level);
+		size_t GetTotalSoulsInGame();
 		void CollectSoul(Entity entity);
 		void AddSoul(Entity entity);
 		bool RegisterLevel(LEVEL level);

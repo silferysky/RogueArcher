@@ -421,6 +421,19 @@ namespace Rogue
 						}
 					}
 
+					if (g_engine.m_coordinator.ComponentExists<SoulComponent>(i))
+					{
+						if (ImGui::CollapsingHeader("Soul"))
+						{
+							auto& soul = g_engine.m_coordinator.GetComponent<SoulComponent>(i);
+							soul.DisplayOnInspector();
+							if (ImGui::Button("Remove Component"))
+							{
+								g_engine.m_coordinator.RemoveComponent<SoulComponent>(i);
+							}
+						}
+					}
+
 					ImGui::Separator();
 
 					if (ImGui::Button("Add Component"))
