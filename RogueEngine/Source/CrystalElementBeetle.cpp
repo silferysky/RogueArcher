@@ -79,9 +79,10 @@ namespace Rogue
 			{
 				m_delay = 0.0f;
 
-				if (m_swapping)
+				if (m_swapping && m_currentPointIndex == m_waypoints.size() - 1)
 				{
-					g_engine.m_coordinator.GetSystem<PlayerControllerSystem>()->Hitchhike(MAX_ENTITIES);
+					if (PLAYER_STATUS.GetHitchhikedEntity() == m_entity)
+						g_engine.m_coordinator.GetSystem<PlayerControllerSystem>()->Hitchhike(MAX_ENTITIES);
 
 					if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(m_entity))
 					{
@@ -143,8 +144,7 @@ namespace Rogue
 			//At the very last waypoint
 			if (++m_currentPointIndex >= m_waypoints.size())
 			{
-				m_currentPointIndex = 1;
-
+				m_currentPointIndex = 0;
 				m_swapping = true;
 			}
 
