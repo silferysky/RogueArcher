@@ -142,7 +142,7 @@ namespace Rogue
 		(void)freopen("CONOUT$", "w", stderr);
 #endif
 #if INIT_CURSOR
-		ShowCursor(true);
+		//ShowCursor(true);
 #else
 		ShowCursor(false);
 #endif
