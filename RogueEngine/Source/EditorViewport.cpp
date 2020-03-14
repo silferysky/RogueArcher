@@ -47,13 +47,13 @@ namespace Rogue
 				CameraManager::instance().SetCameraPos(glm::vec3(PLAYER_STATUS.GetStartingPos().x, PLAYER_STATUS.GetStartingPos().y, CameraManager::instance().GetCameraPos().z));
 				//SceneManager::instance().SaveAndLoadLevel();
 				g_engine.m_coordinator.SetGameState(true);
-				ShowCursor(false);
+				//ShowCursor(false);
 			}
 			else //If game is running, just stop and reload old data
 			{
 				//Loads last iteration and pauses game
 				SceneManager::instance().ReloadLevel();
-				ShowCursor(true);
+				//ShowCursor(true);
 			}
 		}
 		if (ImGui::IsItemHovered())
