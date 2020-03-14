@@ -79,7 +79,7 @@ namespace Rogue
 			{
 				m_delay = 0.0f;
 
-				if (m_swapping && m_currentPointIndex == m_waypoints.size() - 1)
+				if (m_swapping)
 				{
 					if (PLAYER_STATUS.GetHitchhikedEntity() == m_entity)
 						g_engine.m_coordinator.GetSystem<PlayerControllerSystem>()->Hitchhike(MAX_ENTITIES);
@@ -141,16 +141,18 @@ namespace Rogue
 
 			m_nextPoint.pop();
 
+			//std::cout << "Before Waypoint " << m_currentPointIndex << std::endl;
 			//At the very last waypoint
 			if (++m_currentPointIndex >= m_waypoints.size())
 			{
-				m_currentPointIndex = 0;
+				m_currentPointIndex = 1;
 				m_swapping = true;
+				m_delay = m_patrolDelay;
 			}
 
+			//std::cout << "Next Waypoint " << m_currentPointIndex << std::endl;
 			m_nextPoint.push(m_waypoints[m_currentPointIndex]);
 
-			m_delay = m_patrolDelay;
 		}
 	}
 
