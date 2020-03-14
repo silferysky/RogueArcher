@@ -226,6 +226,9 @@ namespace Rogue
 		if (g_engine.m_coordinator.ComponentExists<UIComponent>(entity) && !g_engine.m_coordinator.GetComponent<UIComponent>(entity).getIsActive())
 			return;
 
+		if (!g_engine.m_coordinator.GetComponent<SpriteComponent>(entity).m_componentIsActive)
+			return;
+
 		auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(entity);
 		auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
 
@@ -308,6 +311,9 @@ namespace Rogue
 		if (g_engine.m_coordinator.ComponentExists<UIComponent>(entity) && !g_engine.m_coordinator.GetComponent<UIComponent>(entity).getIsActive())
 			return;
 
+		if (!g_engine.m_coordinator.GetComponent<SpriteComponent>(entity).m_componentIsActive)
+			return;
+
 		auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(entity);
 		auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
 
@@ -376,6 +382,9 @@ namespace Rogue
 
 	void GraphicsSystem::drawTilemap(Entity& entity)
 	{
+		if (!g_engine.m_coordinator.GetComponent<SpriteComponent>(entity).m_componentIsActive)
+			return;
+
 		auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(entity);
 		auto texture = sprite.getTexture();
 		glBindTexture(GL_TEXTURE_2D, texture.m_texture);
