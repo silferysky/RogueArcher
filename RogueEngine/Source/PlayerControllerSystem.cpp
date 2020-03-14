@@ -593,6 +593,16 @@ namespace Rogue
 				{
 					PLAYER_STATUS.SetTrueEndTrigger(true);
 				}
+				else if (keycode == KeyPress::KeyK)
+				{
+					if (PLAYER_STATUS.GetPlayerEntity() != MAX_ENTITIES)
+					{
+						if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(PLAYER_STATUS.GetPlayerEntity()))
+						{
+							trans->get().setPosition(PLAYER_STATUS.GetCheckpoint());
+						}
+					}
+				}
 
 			}
 			return;
