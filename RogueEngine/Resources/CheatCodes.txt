@@ -1,4 +1,4 @@
 'I' - Teleports to end of stage (All levels except Hub)
 'O' - Teleports to start of stage (All levels except Hub)
 '0' - Infinite Teleport Ability (Resets on entering new level)
-'P' - Enables player to trigger end condition (ONLY IF HE IS IN HUB LEVEL)
+'P' - Enables player to trigger end condition (ONLY IF PLAYER IS IN HUB LEVEL)
