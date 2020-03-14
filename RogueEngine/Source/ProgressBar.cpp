@@ -25,13 +25,11 @@ namespace Rogue
 
 	void ProgressBar::AIIdleUpdate()
 	{
-		size_t totalSouls = PLAYER_STATUS.GetTotalSoulsInLevel();
-		float completionPercentage;
+		float completionPercentage = 0.0f;
 
-		if(totalSouls)
-			completionPercentage = PLAYER_STATUS.GetCollectedSoulsInLevel() / static_cast<float>(totalSouls);
-		else
-			completionPercentage = 0.0f;
+		// guard against 0 division
+		if (PLAYER_STATUS.GetTotalSoulsInLevel())
+			completionPercentage = PLAYER_STATUS.GetCollectedSoulsInLevel() / static_cast<float>(PLAYER_STATUS.GetTotalSoulsInLevel());
 
 		std::stringstream ss;
 		ss << "completionPercentage: " << completionPercentage
