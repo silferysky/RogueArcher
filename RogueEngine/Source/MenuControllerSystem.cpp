@@ -418,10 +418,10 @@ namespace Rogue
 				//}
 			}
 
-			if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(ent))
-			{
-				sprite->get().m_componentIsActive = newActive;
-			}
+			//if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(ent))
+			//{
+			//	sprite->get().m_componentIsActive = newActive;
+			//}
 		}
 
 		for (Entity ent : m_confirmQuitEnt)
@@ -552,7 +552,7 @@ namespace Rogue
 		if (g_engine.GetGameIsRunning())
 		{
 			//If it isn't paused, and not in main menu
-			if (!g_engine.m_coordinator.GetPauseState() && SceneManager::instance().getCurrentFileName() != "Level 20.json")
+			if (!g_engine.m_coordinator.GetPauseState() && SceneManager::instance().getCurrentFileName() != "Level 20.json" && SceneManager::instance().getCurrentFileName() != "Level 19.json")
 			{
 				for (auto& menuObj : m_menuObjs)
 				{
@@ -578,7 +578,7 @@ namespace Rogue
 					}
 				}
 			}
-			else if (!g_engine.m_coordinator.GetPauseState() && SceneManager::instance().getCurrentFileName() == "Level 20.json")
+			else if (!g_engine.m_coordinator.GetPauseState() && (SceneManager::instance().getCurrentFileName() == "Level 20.json" || SceneManager::instance().getCurrentFileName() == "Level 19.json"))
 			{
 				for (auto& menuObj : m_menuObjs)
 				{
@@ -588,7 +588,8 @@ namespace Rogue
 
 					if (auto ui = g_engine.m_coordinator.TryGetComponent<UIComponent>(menuObj))
 					{
-						if (m_menuObjs.size() > 1 && menuObj == m_menuObjs.front() + 1)
+						//Background
+						if (m_menuObjs.size() > 1 && menuObj == (m_menuObjs.front() + 1))
 						{
 							ui->get().setIsActive(m_confirmQuit);
 						}
