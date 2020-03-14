@@ -1,6 +1,6 @@
 {
-    "MaxEntityCount": 176,
-    "EntityCount": 176,
+    "MaxEntityCount": 178,
+    "EntityCount": 178,
     "CameraMinX": -1130.0,
     "CameraMinY": -900.0,
     "CameraMaxX": 990.0,
@@ -185,6 +185,8 @@
     "Signature173": 5,
     "Signature174": 5,
     "Signature175": 5,
+    "Signature176": 2053,
+    "Signature177": 2245,
     "Entity0": "Name{Collision1}|Tag{Ground}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{1393;367;100;100;0;0}||BoxCollider{0;0;784;66;AWAKE}|||||||||Collider{BOX;1;4294967295;}||||||||||||",
     "Entity1": "Name{Collision2}|Tag{}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{1514;796;100;100;0;0}||BoxCollider{0;0;784;66;AWAKE}|||||||||Collider{BOX;1;4294967295;}||||||||||||",
     "Entity2": "Name{Collision3}|Tag{}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{1332;913;100;100;0;0}||BoxCollider{0;0;784;66;AWAKE}|||||||||Collider{BOX;1;4294967295;}||||||||||||",
@@ -361,6 +363,8 @@
     "Entity173": "Name{Deco}|Tag{}|Sprite{Resources\\Assets\\Crystal2_New.png;0.769298;0.779412;0.435554;1;}||Transform{241;1165;100;100;10.2;10}|||||||||||||||||||||||",
     "Entity174": "Name{Deco}|Tag{}|Sprite{Resources\\Assets\\Crystal2_New.png;0.140571;0.735294;0.367965;1;}||Transform{-10;598;100;100;5.8;10}|||||||||||||||||||||||",
     "Entity175": "Name{Deco}|Tag{}|Sprite{Resources\\Assets\\Crystal_New.png;0.709284;0.439663;0.838235;1;}||Transform{-413;-1114;143;149;0.6;10}|||||||||||||||||||||||",
+    "Entity176": "Name{ProgressFrame}|Tag{}|Sprite{Resources\\Assets\\SoulCollectionUI.png;1;1;1;1;}||Transform{1564;1044;355;82;0;17}|||||||||UI{1;}||||||||||||||",
+    "Entity177": "Name{ProgressBar}|Tag{}|Sprite{Resources\\Assets\\SoulCollectionBar.png;1;1;1;1;}||Transform{1564;1022.92;0;14.5;0;8}||||LogicComponent{23;0;1;0}|StatsComponent{0;0;0;0;0;;0;0;0;0;0;0;0;}||||UI{1;}||||||||||||||",
     "EntityParent0": 65535,
     "EntityParent1": 65535,
     "EntityParent2": 65535,
@@ -536,5 +540,7 @@
     "EntityParent172": 65535,
     "EntityParent173": 65535,
     "EntityParent174": 65535,
-    "EntityParent175": 65535
+    "EntityParent175": 65535,
+    "EntityParent176": 65535,
+    "EntityParent177": 65535
 }
