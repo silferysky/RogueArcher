@@ -36,7 +36,7 @@ namespace Rogue
 			if (auto transform = g_engine.m_coordinator.TryGetComponent<TransformComponent>(PLAYER_STATUS.GetPlayerEntity()))
 			{
 				transform->get().setPosition(PLAYER_STATUS.GetCheckpoint());
-				transform->get().setZ(m_playerZ); // Prefab player's Z value.
+				transform->get().setZ(104); // Prefab player's Z value.
 			}
 
 			// Reenable camera lerping after shake
