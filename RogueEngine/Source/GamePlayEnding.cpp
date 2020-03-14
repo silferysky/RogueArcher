@@ -40,6 +40,9 @@ namespace Rogue
 				m_trueEnding = true;
 			}
 
+			if (PLAYER_STATUS.GetTrueEndTrigger())
+				m_trueEnding = true;
+
 			//Zoom out slightly
 			if (CameraManager::instance().GetCameraZoom() < 1.3f)
 			{
@@ -914,6 +917,11 @@ namespace Rogue
 
 				if (CrystalComplete && CoralComplete && VegetationComplete) // all levels finished
 					PlayerStatusManager::instance().SetEnding(true);
+
+				if (PLAYER_STATUS.GetTrueEndTrigger() || PLAYER_STATUS.GetEndTrigger())
+				{
+					PLAYER_STATUS.SetEnding(true);
+				}
 
 				m_activated = true;
 			}
