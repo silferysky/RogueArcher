@@ -306,7 +306,7 @@ namespace Rogue
 
 			if (g_engine.GetIsFocused())
 			{
-#if DEMO_MODE
+#if !DEMO_MODE
 				if (keycode == KeyPress::KeyF5)
 					g_engine.m_coordinator.ToggleEditorIsRunning();
 #endif
