@@ -631,11 +631,35 @@ namespace Rogue
 						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
 						transform.setZ(0);
 					}
-					if (info.m_tag == "slots")
+					if (info.m_tag == "slots1")
 					{
-						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
-						//show slots
-						transform.setZ(100);
+						if (PLAYER_STATUS.GetCollectedSoulsInLevel(LEVEL::CRYSTAL) > PLAYER_STATUS.GetTotalSoulsInLevel(LEVEL::CRYSTAL) * 0.8)
+						{
+							auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+							//show slots
+							transform.setZ(100);
+							CrystalComplete = true;
+						}
+					}
+					if (info.m_tag == "slots2")
+					{
+						if (PLAYER_STATUS.GetCollectedSoulsInLevel(LEVEL::CORAL) > PLAYER_STATUS.GetTotalSoulsInLevel(LEVEL::CORAL) * 0.8)
+						{
+							auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+							//show slots
+							transform.setZ(100);
+							CoralComplete = true;
+						}
+					}
+					if (info.m_tag == "slots3")
+					{
+						if (PLAYER_STATUS.GetCollectedSoulsInLevel(LEVEL::VEGETATION) > PLAYER_STATUS.GetTotalSoulsInLevel(LEVEL::VEGETATION) * 0.8)
+						{
+							auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+							//show slots
+							transform.setZ(100);
+							VegetationComplete = true;
+						}
 					}
 
 					if (info.m_tag == "Player")
@@ -675,7 +699,10 @@ namespace Rogue
 					//	transform.setZ(102);
 					//}
 				}
-				PlayerStatusManager::instance().SetEnding(true);
+
+				if (CrystalComplete && CoralComplete && VegetationComplete) // all levels finished
+					PlayerStatusManager::instance().SetEnding(true);
+
 				m_activated = true;
 			}
 			
