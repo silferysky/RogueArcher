@@ -613,7 +613,7 @@ namespace Rogue
 			//Freeze Player Controls			
 			m_timer = 0.0f;
 			m_souls = PLAYER_STATUS.GetSoulsCollected()[CRYSTAL];
-			if (m_souls > 2)
+			if (1) //m_souls > 2)
 			{
 				PLAYER_STATUS.FreezeControls();
 				auto playerEnt = PlayerStatusManager::instance().GetPlayerEntity();
