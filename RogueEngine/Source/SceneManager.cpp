@@ -101,7 +101,9 @@ namespace Rogue
 
 	void SceneManager::LoadLevel(const std::string& fileName)
 	{
+#if ENABLE_CORE_LOGGING
 		auto start = Timer::instance().GetCurrTime();
+#endif
 
 		if (PLAYER_STATUS.GetPlayerEntity() != MAX_ENTITIES)
 		{
@@ -112,7 +114,8 @@ namespace Rogue
 		}
 
 		//Setting up
-		PLAYER_STATUS.SetLastLevel(getCurrentFileName());
+		if (getCurrentFileName() != "Level 16.json")
+			PLAYER_STATUS.SetLastLevel(getCurrentFileName());
 		setCurrentFileName(fileName);
 		ClearAllEntities();
 
@@ -192,15 +195,14 @@ namespace Rogue
 		g_engine.m_coordinator.GetSystem<AudioSystem>()->TrueInit();
 		//g_engine.m_coordinator.ResetEvents();
 
+#if ENABLE_CORE_LOGGING
 		auto end = Timer::instance().GetCurrTime();
-
 		float duration = Timer::instance().CalculateDuration(start, end);
-
-
 		std::stringstream ss;
 		ss << "Time taken to load scene: " << duration << "s";
 		RE_CORE_INFO(ss.str());
 		CLEARSTRING(ss);
+#endif
 	}
 
 	void SceneManager::SaveLevel(const char* fileName)

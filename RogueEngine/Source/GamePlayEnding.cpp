@@ -427,7 +427,7 @@ namespace Rogue
 					if (m_timer > 40.0f)
 					{
 						PLAYER_STATUS.ResetEndGame();
-						g_engine.m_coordinator.SetTransitionLevel("Level 20.json", 0.0f); //2nd value doesn't matter anymore probably
+						g_engine.m_coordinator.SetTransitionLevel("Level 19.json", 0.0f); //2nd value doesn't matter anymore probably
 						g_engine.m_coordinator.SetTransition(true);
 						//SceneManager::instance().LoadLevel("Level 20.json");
 
@@ -592,7 +592,7 @@ namespace Rogue
 					if (m_timer > 40.0f)
 					{
 						PLAYER_STATUS.ResetEndGame();
-						g_engine.m_coordinator.SetTransitionLevel("Level 20.json", 0.0f); //2nd value doesn't matter anymore probably
+						g_engine.m_coordinator.SetTransitionLevel("Level 19.json", 0.0f); //2nd value doesn't matter anymore probably
 						g_engine.m_coordinator.SetTransition(true);
 					}
 				}
@@ -612,8 +612,8 @@ namespace Rogue
 		{
 			//Freeze Player Controls			
 			m_timer = 0.0f;
-			m_souls = PLAYER_STATUS.GetSoulsCollected()[CRYSTAL];
-			if (1) //m_souls > 2)
+
+			if (PLAYER_STATUS.GetCollectedSoulsInLevel(LEVEL::CORAL) > 2)
 			{
 				PLAYER_STATUS.FreezeControls();
 				auto playerEnt = PlayerStatusManager::instance().GetPlayerEntity();

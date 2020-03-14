@@ -40,6 +40,7 @@ Technology is prohibited.
 #include "EditorSettings.h"
 #include "PickingSystem.h"
 #include "ParentChildSystem.h"
+#include "SoulSystem.h"
 
 namespace Rogue
 {
@@ -75,9 +76,8 @@ namespace Rogue
 		void SystemInits()
 		{
 			GetSystem<AudioSystem>()->TrueInit();
-			//GetSystem<AudioSystem>()->InitSounds();
-
 			GetSystem<AnimationSystem>()->InitAnimations();
+			GetSystem<SoulSystem>()->TrueInit();
 		}
 
 		void Update()

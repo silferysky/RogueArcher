@@ -4,7 +4,9 @@ namespace Rogue
 {
 	enum LEVEL
 	{
-		DEFAULT = 0,
+		DEFAULT = 20,
+		TUTORIAL = 10,
+		HUB = 16,
 		CRYSTAL = 17,
 		CORAL = 18,
 		VEGETATION = 15,

@@ -859,6 +859,10 @@ namespace Rogue
 						g_engine.m_coordinator.LoadComponent<LightComponent>(curEnt, readstr);
 						break;
 					}
+					case static_cast<int>(SOUL) :
+					{
+						g_engine.m_coordinator.LoadComponent<SoulComponent>(curEnt, readstr);
+					}
 					default:
 					{
 #if ENABLE_LOGGER

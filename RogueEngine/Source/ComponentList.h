@@ -40,6 +40,7 @@ Technology is prohibited.
 #include "FadeComponent.h"
 #include "LightComponent.h"
 #include "ForegroundComponent.h"
+#include "SoulComponent.h"
 #include "ChildComponent.h" // THis is not to be initialized by ObjectFactory
 #include "TileMapComponent.h" // Same ^
 #include "SaveComponent.h"
@@ -70,6 +71,7 @@ namespace Rogue
 		FADE,
 		LIGHT,
 		FOREGROUND,
+		SOUL,
 		
 		CHILD,
 		TILE, 

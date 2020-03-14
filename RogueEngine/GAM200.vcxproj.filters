@@ -758,6 +758,12 @@
     <ClInclude Include="Source\GameLevels.h">
       <Filter>RogueEngine\Data</Filter>
     </ClInclude>
+    <ClInclude Include="Source\SoulComponent.h">
+      <Filter>RogueEngine\Systems\AI\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SoulSystem.h">
+      <Filter>RogueEngine\Systems\AI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -1207,6 +1213,12 @@
     </ClCompile>
     <ClCompile Include="Source\CoralElementBubble.cpp">
       <Filter>RogueEngine\Systems\AI\Script Types\Game\Amethyst Seas</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SoulComponent.cpp">
+      <Filter>RogueEngine\Systems\AI\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SoulSystem.cpp">
+      <Filter>RogueEngine\Systems\AI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

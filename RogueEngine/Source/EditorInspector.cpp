@@ -499,6 +499,11 @@ namespace Rogue
 								g_engine.m_coordinator.AddComponent(i, LightComponent());
 							}
 
+							if (ImGui::MenuItem("Soul Component", nullptr, false, !g_engine.m_coordinator.ComponentExists<SoulComponent>(i)))
+							{
+								g_engine.m_coordinator.AddComponent(i, SoulComponent());
+							}
+
 							ImGui::EndMenu();
 						}
 						if (ImGui::BeginMenu("Colliders"))
@@ -655,6 +660,11 @@ namespace Rogue
 						if (ImGui::MenuItem("Text", nullptr, false, g_engine.m_coordinator.ComponentExists<TextComponent>(i)))
 						{
 							g_engine.m_coordinator.RemoveComponent<TextComponent>(i);
+						}
+
+						if (ImGui::MenuItem("Soul", nullptr, false, g_engine.m_coordinator.ComponentExists<SoulComponent>(i)))
+						{
+							g_engine.m_coordinator.RemoveComponent<SoulComponent>(i);
 						}
 
 						ImGui::EndPopup();

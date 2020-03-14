@@ -40,7 +40,11 @@ namespace Rogue
 		{
 			ImGuiTileSet::instance().ClearTileset();
 			SceneManager::instance().LoadLevel(m_transitionString.c_str());
-			m_transitionLevel = false;
+
+			if (!m_repeatLoad)
+				m_transitionLevel = false;
+			else
+				m_repeatLoad = false;
 			
 			return;
 		}
@@ -84,6 +88,7 @@ namespace Rogue
 		// System updates that are before fixed updates are placed here.
 		UpdateSystem(SystemID::id_INPUTMANAGER);
 		UpdateSystem(SystemID::id_LOGICSYSTEM);
+		UpdateSystem(SystemID::id_SOULSYSTEM);
 		UpdateSystem(SystemID::id_PLAYERCONTROLLERSYSTEM);
 		UpdateSystem(SystemID::id_CURSORSYSTEM);
 		UpdateSystem(SystemID::id_PICKINGSYSTEM);
@@ -165,6 +170,7 @@ namespace Rogue
 	void SystemManager::SetTransition(bool transition)
 	{
 		m_transitionLevel = transition;
+		m_repeatLoad = true;
 	}
 
 	bool SystemManager::TransitFinish() const

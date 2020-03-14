@@ -1,5 +1,5 @@
 {
-    "Signature": 2053,
-    "Entity": "Name{Quit}|Tag{}|Sprite{Resources\\Assets\\MenuButtonQuit.png;1;1;1;100}||Transform{162;-251;131;169;0;1002}|||||||||UI{0;}|||||||",
+    "Signature": 2245,
+    "Entity": "Name{Quit}|Tag{}|Sprite{Resources\\Assets\\MenuButtonQuit.png;1;1;1;100}||Transform{162;-251;131;169;0;1002}||||LogicComponent{22;0;1;0}|StatsComponent{0;0;0;0;0;;0;0;0;0;0;0;0;}||||UI{0;}|||||||",
 		"Children": ""
 }
