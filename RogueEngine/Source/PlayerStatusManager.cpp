@@ -319,9 +319,13 @@ namespace Rogue
 	{
 		size_t collected = 0;
 
+#if ENABLE_ASSERT
+		std::stringstream ss;
+		ss << "Level " << m_currLevel << " doesn't exist!";
+
 		// If didn't exist, inserts the level, returns nullptr
-		if (m_souls[m_currLevel] == nullptr)
-			return 0;
+		RE_ASSERT(m_souls[m_currLevel] != nullptr, ss.str().c_str());
+#endif
 
 		for (Soul& soul : *m_souls[m_currLevel])
 		{
@@ -335,9 +339,13 @@ namespace Rogue
 	{
 		size_t collected = 0;
 		
+#if ENABLE_ASSERT
+		std::stringstream ss;
+		ss << "Level " << level << " doesn't exist!";
+
 		// If didn't exist, inserts the level, returns nullptr
-		if (m_souls[level] == nullptr)
-			return 0;
+		RE_ASSERT(m_souls[level] != nullptr, ss.str().c_str());
+#endif
 
 		for (Soul& soul : *m_souls[level])
 		{
@@ -364,20 +372,24 @@ namespace Rogue
 
 	size_t PlayerStatusManager::GetTotalSoulsInLevel()
 	{
-		// If didn't exist, inserts the level, returns nullptr
-		if (m_souls[m_currLevel] == nullptr)
-		{
-			std::cout << "Total Souls: Level " << m_currLevel << " not registered!" << std::endl;
-		}
+#if ENABLE_ASSERT
+		std::stringstream ss;
+		ss << "Level " << m_currLevel << " doesn't exist!";
+		RE_ASSERT(m_souls[m_currLevel] != nullptr, ss.str().c_str());
+#endif
+
 		return m_souls[m_currLevel]->size();
 	}
 
 	size_t PlayerStatusManager::GetTotalSoulsInLevel(LEVEL level)
 	{
-		if(m_souls[m_currLevel] == nullptr)
-			std::cout << "Total Souls: Level " << level << " not registered!" << std::endl;
-		
-		return m_souls[m_currLevel]->size();
+#if ENABLE_ASSERT
+		std::stringstream ss;
+		ss << "Level " << level << " doesn't exist!";
+		RE_ASSERT(m_souls[level] != nullptr, ss.str().c_str());
+#endif
+
+		return m_souls[level]->size();
 	}
 
 	size_t PlayerStatusManager::GetTotalSoulsInGame()
@@ -397,11 +409,12 @@ namespace Rogue
 		ss << "Curr level " << m_currLevel << " not in map!";
 		RE_ASSERT(m_souls[m_currLevel] != nullptr, ss.str().c_str());
 #endif
+
 		for (Soul& soul : *m_souls[m_currLevel])
 		{
 #if ENABLE_LOGGER
 			std::stringstream ss;
-			ss << " Soul entity: " << entity << " Current soul: " << soul.m_entity << std::boolalpha << "Collected? " << soul.m_collected;
+			ss << " Soul entity: " << entity << " Current soul: " << soul.m_entity << soul.m_collected ? " Collected." : " Not collected.";
 			RE_INFO(ss.str());
 #endif
 			if (entity == soul.m_entity)
@@ -410,6 +423,8 @@ namespace Rogue
 				return;
 			}
 		}
+
+		RE_ASSERT(0, "Entity of collected soul not found in level! (Wrong entity)");
 	}
 
 	void PlayerStatusManager::AddSoul(Entity entity)
@@ -424,6 +439,12 @@ namespace Rogue
 		 std::pair<std::map<LEVEL, std::unique_ptr<std::vector<Soul>>>::iterator, bool> it
 			 =  m_souls.insert(std::make_pair(level, std::make_unique<std::vector<Soul>>()));
 		 
+#if ENABLE_LOGGER
+		 std::stringstream ss;
+		 ss << "Registering level " << level << "... " << it.second ? "Registered!" : "Already exists, registration not required.";
+		 RE_INFO(ss.str());
+#endif
+
 		 // If level has been visited before, it would be registered and this returns false (Failed to register).
 		 // Else, level has not been visited before, register the level and return true (Registration successful).
 		 return it.second;
