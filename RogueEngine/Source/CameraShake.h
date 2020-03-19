@@ -33,12 +33,14 @@ namespace Rogue
 		//PerlinNoise m_pn;
 
 		Vec2 m_shakeOffset;
+		float m_shakeAngle;
 	public:
 		CameraShake();
 		void Update();
 
 		void SetShake(float magnitude);
 		float GetShake() const;
+		float GetShakeAngle() const;
 
 		Vec2 getOffset() const;
 	};

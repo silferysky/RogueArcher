@@ -18,11 +18,12 @@ Technology is prohibited.
 #include "Precompiled.h"
 #include "CameraShake.h"
 #include "Main.h"
+#include "ParticleEmitterSystem.h"
 #define PI 3.141592
 
 namespace Rogue
 {
-	CameraShake::CameraShake() : m_shakeAngleMagnitude{ 180 }, m_shakeInterval{ 0.05f }, m_currentShakeMagnitude{ 0.0f }, m_currentShakeAngle{ rand() % 360 }, m_duration{ 0 }, m_shakeOffset{ 0, 0 }
+	CameraShake::CameraShake() : m_shakeAngleMagnitude{ 180 }, m_shakeInterval{ 0.05f }, m_currentShakeMagnitude{ 0.0f }, m_currentShakeAngle{ rand() % 360 }, m_duration{ 0 }, m_shakeOffset{ 0, 0 }, m_shakeAngle { 0 }
 	{}
 
 	void CameraShake::Update()
@@ -35,7 +36,9 @@ namespace Rogue
 			m_duration = 0;
 
 			m_currentShakeMagnitude *= 0.9f; //diminish radius each frame
-			m_currentShakeAngle += (180 + (-(m_shakeAngleMagnitude / 2) + /* int(m_pn.noise(0.45, 0.8, 0.55)) */ rand() % m_shakeAngleMagnitude)); //pick new angle 
+			m_currentShakeAngle += (180 + (-(m_shakeAngleMagnitude / 2) + /* int(m_pn.noise(0.45, 0.8, 0.55)) */ rand() % m_shakeAngleMagnitude)); //pick new angle
+
+			m_shakeAngle = glm::radians((m_shakeAngleMagnitude / 8) * m_currentShakeMagnitude * RandFloat(-1.0f, 1.0f) * 0.005f);
 
 			m_shakeOffset.x = static_cast<float>(sin(m_currentShakeAngle) * m_currentShakeMagnitude);
 			m_shakeOffset.y = static_cast<float>(cos(m_currentShakeAngle) * m_currentShakeMagnitude);
@@ -43,6 +46,7 @@ namespace Rogue
 			//Don't micro shake the screen, also returns the screen back to centre after shaking is done
 			if (m_currentShakeMagnitude < 0.2f) 
 			{
+				m_shakeAngle = 0;
 				m_currentShakeMagnitude = 0;
 				m_shakeOffset = { 0,0 };
 				g_engine.m_coordinator.GetSystem<CameraSystem>()->setIsActive(true);
@@ -58,6 +62,11 @@ namespace Rogue
 	float CameraShake::GetShake() const
 	{
 		return m_currentShakeMagnitude;
+	}
+
+	float CameraShake::GetShakeAngle() const
+	{
+		return static_cast<float>(m_shakeAngle);
 	}
 
 	Vec2 CameraShake::getOffset() const
