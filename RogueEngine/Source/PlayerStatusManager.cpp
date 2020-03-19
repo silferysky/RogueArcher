@@ -368,7 +368,6 @@ namespace Rogue
 		if (m_souls[m_currLevel] == nullptr)
 		{
 			std::cout << "Total Souls: Level " << m_currLevel << " not registered!" << std::endl;
-			return 0;
 		}
 		return m_souls[m_currLevel]->size();
 	}
@@ -420,15 +419,19 @@ namespace Rogue
 
 	bool PlayerStatusManager::RegisterLevel(LEVEL level)
 	{
-		 std::pair<std::map<LEVEL, std::shared_ptr<std::vector<Soul>>>::iterator, bool> it =  m_souls.insert(std::make_pair(level, std::make_shared<std::vector<Soul>>()));
+		 std::pair<std::map<LEVEL, std::shared_ptr<std::vector<Soul>>>::iterator, bool> it
+			 =  m_souls.insert(std::make_pair(level, std::make_shared<std::vector<Soul>>()));
 		 
 		 return it.second;
 	}
 
 	void PlayerStatusManager::RemoveCollectedSouls()
 	{
-		if (m_souls[m_currLevel] == nullptr)
-			return;
+		auto it = m_souls.find(m_currLevel);
+
+		std::stringstream ss;
+		ss << "Current Level (" << m_currLevel << ") doesn't have a soul vector!";
+		RE_ASSERT(it != m_souls.end(), ss.str().c_str());
 
 		for (Soul& soul : *m_souls[m_currLevel])
 		{
