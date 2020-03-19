@@ -64,7 +64,7 @@ namespace Rogue
 	{
 		g_engine.m_coordinator.GetSystem<AudioSystem>()->ShutdownSounds();
 		g_engine.m_coordinator.GetSystem<LogicSystem>()->ClearLogicInterface();
-		AudioManager::instance().ClearAudioMap();
+		//AudioManager::instance().ClearAudioMap();
 		ImGuiTileSet::instance().ClearTileset();
 		g_engine.m_coordinator.DestroyAllEntity();
 		//ClearActiveEntities();
