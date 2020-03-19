@@ -13,5 +13,6 @@ namespace Rogue
 		virtual void AIIdleUpdate() override;
 	private:
 		bool m_isLightMode = true;
+		bool m_isTeleporting = false;
 	};
 }

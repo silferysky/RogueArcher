@@ -60,6 +60,8 @@ namespace Rogue
 		void DecrementTeleportDelay(float duration);
 		void SetTeleportDelay(float duration);
 		float GetTeleportDelay() const;
+		void SetIsTeleporting(bool isTeleporting);
+		bool GetIsTeleporting() const;
 
 		//Light/Dark mode
 		void ToggleLightStatus();
@@ -124,6 +126,7 @@ namespace Rogue
 		Vec2 m_playerStartPos;
 		bool m_moveLeft;
 		bool m_isActive;
+		bool m_isTeleporting;
 
 		//Controls
 		float m_freezeControlDuration;

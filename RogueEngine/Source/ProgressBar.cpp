@@ -63,13 +63,38 @@ namespace Rogue
 				m_oldScale = completionPercentage; // keep track of old scale
 			}
 
-		float scaleX = transform->get().GetScale().x;
 
-		float deltaX = (282.5f * completionPercentage) - scaleX;
-		scaleX += static_cast<int>(deltaX) * 1.6f * g_fixedDeltaTime;
+			/* auto position = transform->get().GetPosition();
+			float deltaPosX = 0.0f;
 
-		// 282.5 is the scale of the full bar
-		transform->get().setScale(Vec2(scaleX, transform->get().GetScale().y));
-	}
+			// recenter the bar by reverting the changes to position
+			if (m_difference < 0)
+				deltaPosX = -m_difference;
+			else if (m_difference > 0)
+				deltaPosX = m_difference;
+
+			position.x += deltaPosX * 1.6f * g_fixedDeltaTime;
+
+			// translate by half of (1 - completionPercentage)
+			m_difference = 282.5f * 0.5f * (1 - completionPercentage);
+
+			// Bar offset
+			if (m_difference > 0)
+				deltaPosX = -m_difference;
+			else if (m_difference < 0)
+				deltaPosX = m_difference;
+
+			position.x += deltaPosX * 1.6f * g_fixedDeltaTime;
+
+			transform->get().setPosition(position); */
+
+			float scaleX = transform->get().GetScale().x;
+
+			float deltaX = (282.5f * completionPercentage) - scaleX;
+			scaleX += static_cast<int>(deltaX) * 1.6f * g_fixedDeltaTime;
+
+			// 282.5 is the scale of the full bar
+			transform->get().setScale(Vec2(scaleX, transform->get().GetScale().y));
+		}
 	}
 }

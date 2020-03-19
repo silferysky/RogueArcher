@@ -20,6 +20,24 @@ namespace Rogue
 
 	void ActivateOnEla::AIIdleUpdate()
 	{
+		if (m_isTeleporting != PlayerStatusManager::instance().GetIsTeleporting())
+		{
+			m_isTeleporting = PlayerStatusManager::instance().GetIsTeleporting();
+
+			if (auto particle = g_engine.m_coordinator.TryGetComponent<ParticleEmitterComponent>(m_entity))
+			{
+				if (!m_isLightMode && !m_isTeleporting)
+				{
+					particle->get().SetIsActive(true);
+				}
+				else if (particle->get().GetIsActive())
+					// active
+				{
+					particle->get().SetIsActive(false);
+				}
+			}
+		}
+
 		if (m_isLightMode != PlayerStatusManager::instance().GetLightStatus())
 		{
 			m_isLightMode = PlayerStatusManager::instance().GetLightStatus();

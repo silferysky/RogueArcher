@@ -33,7 +33,8 @@ namespace Rogue
 		m_triggerOnce(false),
 		m_endTrigger{ false },
 		m_trueEndTrigger{ false },
-		m_currLevel{ LEVEL::TUTORIAL }
+		m_currLevel{ LEVEL::TUTORIAL },
+		m_isTeleporting{ false }
 	{
 
 	}
@@ -174,6 +175,16 @@ namespace Rogue
 	bool PlayerStatusManager::GetDeath() const
 	{
 		return m_death;
+	}
+
+	void PlayerStatusManager::SetIsTeleporting(bool isTeleporting)
+	{
+		m_isTeleporting = isTeleporting;
+	}
+
+	bool PlayerStatusManager::GetIsTeleporting() const
+	{
+		return m_isTeleporting;
 	}
 
 	void PlayerStatusManager::SetMoveLeft(bool isLeft)
