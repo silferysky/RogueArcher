@@ -392,36 +392,40 @@ namespace Rogue
 
 	void PlayerStatusManager::CollectSoul(Entity entity)
 	{
-		if (m_souls[m_currLevel] == nullptr)
-		{
-			std::cout << "Curr level " << m_currLevel << " not in map!" << std::endl;
-			return;
-		}
-
+#if ENABLE_ASSERT
+		std::stringstream ss;
+		ss << "Curr level " << m_currLevel << " not in map!";
+		RE_ASSERT(m_souls[m_currLevel] != nullptr, ss.str().c_str());
+#endif
 		for (Soul& soul : *m_souls[m_currLevel])
 		{
+#if ENABLE_LOGGER
 			std::stringstream ss;
 			ss << " Soul entity: " << entity << " Current soul: " << soul.m_entity << std::boolalpha << "Collected? " << soul.m_collected;
 			RE_INFO(ss.str());
-
+#endif
 			if (entity == soul.m_entity)
+			{
 				soul.m_collected = true;
+				return;
+			}
 		}
 	}
 
 	void PlayerStatusManager::AddSoul(Entity entity)
 	{
-		if (m_souls[m_currLevel] == nullptr)
-			return;
+		RE_ASSERT(m_souls[m_currLevel] != nullptr, "Soul vector doesn't exist in this level!");
 
 		m_souls[m_currLevel]->emplace_back(Soul(entity));
 	}
 
 	bool PlayerStatusManager::RegisterLevel(LEVEL level)
 	{
-		 std::pair<std::map<LEVEL, std::shared_ptr<std::vector<Soul>>>::iterator, bool> it
-			 =  m_souls.insert(std::make_pair(level, std::make_shared<std::vector<Soul>>()));
+		 std::pair<std::map<LEVEL, std::unique_ptr<std::vector<Soul>>>::iterator, bool> it
+			 =  m_souls.insert(std::make_pair(level, std::make_unique<std::vector<Soul>>()));
 		 
+		 // If level has been visited before, it would be registered and this returns false (Failed to register).
+		 // Else, level has not been visited before, register the level and return true (Registration successful).
 		 return it.second;
 	}
 
@@ -429,10 +433,11 @@ namespace Rogue
 	{
 		auto it = m_souls.find(m_currLevel);
 
+#if ENABLE_ASSERT
 		std::stringstream ss;
 		ss << "Current Level (" << m_currLevel << ") doesn't have a soul vector!";
 		RE_ASSERT(it != m_souls.end(), ss.str().c_str());
-
+#endif
 		for (Soul& soul : *m_souls[m_currLevel])
 		{
 			if (soul.m_collected && g_engine.m_coordinator.ComponentExists<SoulComponent>(soul.m_entity))

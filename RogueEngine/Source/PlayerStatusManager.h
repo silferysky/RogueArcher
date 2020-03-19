@@ -155,7 +155,7 @@ namespace Rogue
 		Vec2 m_startingPos;
 
 		// Collectibles
-		std::map<LEVEL, std::shared_ptr<std::vector<Soul>>> m_souls;
+		std::map<LEVEL, std::unique_ptr<std::vector<Soul>>> m_souls;
 
 		//Level Transition
 		std::string m_lastLevel;
