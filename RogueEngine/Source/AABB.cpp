@@ -59,6 +59,18 @@ namespace Rogue
 		return *this;
 	}
 
+	AABB& AABB::operator+=(const float rhs)
+	{
+		// extend the AABB
+		m_min.x -= rhs;
+		m_min.y -= rhs;
+
+		m_max.x += rhs;
+		m_max.y += rhs;
+
+		return *this;
+	}
+
 	Vec2 AABB::getMin() const
 	{
 		return m_min;

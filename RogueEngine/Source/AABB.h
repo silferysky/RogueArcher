@@ -35,6 +35,7 @@ namespace Rogue
 		AABB(AABB&& rhs) noexcept;
 		AABB& operator=(const AABB& rhs);
 		AABB& operator=(AABB&& rhs) noexcept;
+		AABB& operator+=(const float rhs);
 
 		Vec2 getMin() const;
 		Vec2 getMax() const;

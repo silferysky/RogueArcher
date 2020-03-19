@@ -34,6 +34,10 @@ namespace Rogue
 		AABB m_pickArea;
 
 		bool m_modified;
+
+		// for culling
+		bool m_invalidated;
+		bool m_AABBGenerated;
 	public:
 		TransformComponent(const Vec2& pos = { 0.0f, 0.0f }, const Vec2& scale = { 1.0f, 1.0f },
 			float rot = 0.0f, int Z = 0, const AABB& aabb = AABB{}, bool modified = false);
@@ -51,9 +55,11 @@ namespace Rogue
 		Vec2 GetPosition() const;
 		Vec2 GetScale() const;
 		float GetRotation() const;
-		const AABB& GetPickArea() const;
+		const AABB& GetPickArea();
 		int GetZ() const;
 		bool GetIsModified() const;
+		bool GetIsInvalidated() const;
+		bool GetIsAABBGenerated() const;
 
 		std::string Serialize() override;
 		void Deserialize(std::string_view toDeserialize) override;

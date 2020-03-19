@@ -18,6 +18,7 @@ Technology is prohibited.
 #include "Precompiled.h"
 #include "TransformComponent.h"
 #include "REMath.h"
+#include "PickingManager.h"
 
 namespace Rogue
 {
@@ -85,8 +86,15 @@ namespace Rogue
 		return m_rotation;
 	}
 
-	const AABB& TransformComponent::GetPickArea() const
+	const AABB& TransformComponent::GetPickArea()
 	{
+		if (m_invalidated || !m_AABBGenerated)
+		{
+			PickingManager::instance().GenerateMeshAABB(*this);
+			m_invalidated = false;
+			m_AABBGenerated = true;
+		}
+
 		return m_pickArea;
 	}
 
@@ -98,6 +106,16 @@ namespace Rogue
 	bool TransformComponent::GetIsModified() const
 	{
 		return m_modified;
+	}
+
+	bool TransformComponent::GetIsInvalidated() const
+	{
+		return m_invalidated;
+	}
+
+	bool TransformComponent::GetIsAABBGenerated() const
+	{
+		return m_AABBGenerated;
 	}
 
 	std::string TransformComponent::Serialize()

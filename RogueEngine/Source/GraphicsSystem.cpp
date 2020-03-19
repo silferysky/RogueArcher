@@ -26,6 +26,8 @@ Technology is prohibited.
 #include "FontSystem.h"
 #include "LightingSystem.h"
 #include "EditorTileSet.h"
+#include "PickingManager.h"
+#include "CollisionManager.h"
 
 namespace Rogue
 {
@@ -138,12 +140,17 @@ namespace Rogue
 
 		m_drawQueue.clear();
 
+		AABB viewPort = PickingManager::instance().GetViewPortArea();
+
+		//viewPort += 100.0f;
+
 		// For all entities
 		for (auto entity : m_entities)
 		{
-			auto priority = g_engine.m_coordinator.GetComponent<TransformComponent>(entity).GetZ();
+			auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
 
-			m_drawQueue.insert(std::make_pair(priority, entity));
+			//if (CollisionManager::instance().DiscreteAABBvsAABB(transform.GetPickArea(), viewPort))
+				m_drawQueue.insert(std::make_pair(transform.GetZ(), entity));
 		}
 
 		glBindFramebuffer(GL_FRAMEBUFFER, m_FBO);
