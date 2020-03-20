@@ -59,7 +59,7 @@ namespace Rogue
 		if (other == PLAYER_STATUS.GetPlayerEntity())
 		{
 			// Shake camera
-			CameraShakeEvent shake(50.0f);
+			CameraShakeEvent shake(23.0f);
 			shake.SetSystemReceivers(static_cast<int>(SystemID::id_CAMERASYSTEM));
 			EventDispatcher::instance().AddEvent(shake);
 			g_engine.m_coordinator.GetSystem<CameraSystem>()->setIsActive(false);

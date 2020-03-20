@@ -35,8 +35,25 @@ namespace Rogue
 					sprite->get().setFilter(colourFilter);
 
 					// make player transparent
-					TransformComponent& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetPlayerEntity());
-					trans.setZ(-9999);
+					SpriteComponent& pSprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(PLAYER_STATUS.GetPlayerEntity());
+					colourFilter = pSprite.getFilter();
+					colourFilter.a = 0.0f;
+					pSprite.setFilter(colourFilter);
+
+					for (auto child : g_engine.m_coordinator.GetHierarchyInfo(PLAYER_STATUS.GetPlayerEntity()).m_children)
+					{
+						if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(child))
+						{
+							if (g_engine.m_coordinator.GetHierarchyInfo(PLAYER_STATUS.GetPlayerEntity()).m_tag == "tele")
+								continue;
+							else
+							{
+								colourFilter = sprite->get().getFilter();
+								colourFilter.a = 0.0f;
+								sprite->get().setFilter(colourFilter);
+							}
+						}
+					}
 
 					// freeze camera
 					g_engine.m_coordinator.GetSystem<CameraSystem>()->setIsActive(false);
@@ -59,23 +76,41 @@ namespace Rogue
 					glm::vec4 colourFilter = sprite->get().getFilter();
 					colourFilter.a = 0.0f;
 					sprite->get().setFilter(colourFilter);
+
+					// make player reappear
+					SpriteComponent& pSprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(PLAYER_STATUS.GetPlayerEntity());
+					colourFilter = pSprite.getFilter();
+					colourFilter.a = 1.0f;
+					pSprite.setFilter(colourFilter);
+
+					for (auto child : g_engine.m_coordinator.GetHierarchyInfo(PLAYER_STATUS.GetPlayerEntity()).m_children)
+					{
+						if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(child))
+						{
+							if (g_engine.m_coordinator.GetHierarchyInfo(PLAYER_STATUS.GetPlayerEntity()).m_tag == "tele")
+								continue;
+							else
+							{
+								colourFilter = sprite->get().getFilter();
+								colourFilter.a = 1.0f;
+								sprite->get().setFilter(colourFilter);
+							}
+						}
+					}
+
+					PLAYER_STATUS.SetIsTeleporting(false);
 				}
 			}
 		}
 
-		if (m_timer > 0.2f)
+		if (m_timer > 0.1f)
 		{
 			m_timerActive = false;
 			m_timer = 0.0f;
-			PLAYER_STATUS.SetIsTeleporting(false);
 			PLAYER_STATUS.UnfreezeControls();
 
 			// unfreeze camera
 			g_engine.m_coordinator.GetSystem<CameraSystem>()->setIsActive(true);
-
-			// make player reappear
-			TransformComponent& trans = g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetPlayerEntity());
-			trans.setZ(104);
 		}
 
 		m_teleCharge = PlayerStatusManager::instance().GetTeleportCharge();

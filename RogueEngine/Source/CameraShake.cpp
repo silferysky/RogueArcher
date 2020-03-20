@@ -38,7 +38,7 @@ namespace Rogue
 			m_currentShakeMagnitude *= 0.9f; //diminish radius each frame
 			m_currentShakeAngle += (180 + (-(m_shakeAngleMagnitude / 2) + /* int(m_pn.noise(0.45, 0.8, 0.55)) */ rand() % m_shakeAngleMagnitude)); //pick new angle
 
-			m_shakeAngle = glm::radians((m_shakeAngleMagnitude / 8) * m_currentShakeMagnitude * RandFloat(-1.0f, 1.0f) * 0.005f);
+			m_shakeAngle = glm::radians((m_shakeAngleMagnitude / 10) * m_currentShakeMagnitude * RandFloat(-1.0f, 1.0f) * 0.005f);
 
 			m_shakeOffset.x = static_cast<float>(sin(m_currentShakeAngle) * m_currentShakeMagnitude);
 			m_shakeOffset.y = static_cast<float>(cos(m_currentShakeAngle) * m_currentShakeMagnitude);
