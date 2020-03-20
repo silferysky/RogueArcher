@@ -21,8 +21,8 @@ namespace Rogue
 
 	void SoulSystem::TrueInit()
 	{
-		PLAYER_STATUS.SetCurrLevel(static_cast<LEVEL>(atoi(SceneManager::instance().getCurrentFileName().substr(6, 2).c_str())));
-		
+		// Current level is set in Coordinator::SystemInits()
+
 		// If level successfully registered
 		if (PLAYER_STATUS.RegisterLevel(PLAYER_STATUS.GetCurrLevel()))
 		{
@@ -33,11 +33,7 @@ namespace Rogue
 			}
 		}
 		else // If level has already been registered
-		{
 			PLAYER_STATUS.RemoveCollectedSouls();
-		}
-
-
 	}
 
 	void SoulSystem::Update()

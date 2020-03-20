@@ -75,6 +75,8 @@ namespace Rogue
 
 		void SystemInits()
 		{
+			PLAYER_STATUS.SetCurrLevel(static_cast<LEVEL>(std::atoi(SceneManager::instance().getCurrentFileName().substr(6, 2).c_str())));
+
 			GetSystem<AudioSystem>()->TrueInit();
 			GetSystem<AnimationSystem>()->InitAnimations();
 			GetSystem<SoulSystem>()->TrueInit();

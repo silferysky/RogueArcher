@@ -102,6 +102,8 @@ namespace Rogue
 		//Transition
 		void SetLastLevel(std::string_view str);
 		std::string_view GetLastLevel() const;
+
+		// For soul mapping
 		void SetCurrLevel(LEVEL level);
 		LEVEL GetCurrLevel() const;
 

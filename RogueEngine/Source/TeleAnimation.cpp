@@ -37,7 +37,7 @@ namespace Rogue
 					// make player transparent
 					SpriteComponent& pSprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(PLAYER_STATUS.GetPlayerEntity());
 					colourFilter = pSprite.getFilter();
-					colourFilter.a = 0.0f;
+					colourFilter.a = 0.5f;
 					pSprite.setFilter(colourFilter);
 
 					for (auto child : g_engine.m_coordinator.GetHierarchyInfo(PLAYER_STATUS.GetPlayerEntity()).m_children)
@@ -70,8 +70,8 @@ namespace Rogue
 					} */
 
 				}
-				else if (!animation->get().getIsAnimating() && sprite->get().getFilter().a)
-					// not animating and not transparent
+				else if (!animation->get().getIsAnimating() && !sprite->get().getFilter().a)
+					// not animating and transparent
 				{
 					glm::vec4 colourFilter = sprite->get().getFilter();
 					colourFilter.a = 0.0f;
