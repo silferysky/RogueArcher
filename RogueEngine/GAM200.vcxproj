@@ -60,6 +60,7 @@
     <ClInclude Include="Source\LightComponent.h" />
     <ClInclude Include="Source\LightingSystem.h" />
     <ClInclude Include="Source\LightsFlicker.h" />
+    <ClInclude Include="Source\PerlinNoise.h" />
     <ClInclude Include="Source\ProgressBar.h" />
     <ClInclude Include="Source\SaveComponent.h" />
     <ClInclude Include="Source\SoulCollectible.h" />

@@ -764,6 +764,9 @@
     <ClInclude Include="Source\SoulSystem.h">
       <Filter>RogueEngine\Systems\AI</Filter>
     </ClInclude>
+    <ClInclude Include="Source\PerlinNoise.h">
+      <Filter>RogueEngine\Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">

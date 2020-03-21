@@ -17,7 +17,7 @@ Technology is prohibited.
 /* End Header **************************************************************************/
 #pragma once
 #include "Vector2D.h"
-//#include "PerlinNoise.h"
+#include "PerlinNoise.h"
 
 namespace Rogue
 {
@@ -30,7 +30,7 @@ namespace Rogue
 		float m_currentShakeMagnitude;
 		float m_duration;
 
-		//PerlinNoise m_pn;
+		PerlinNoise m_pn;
 
 		Vec2 m_shakeOffset;
 		float m_shakeAngle;
