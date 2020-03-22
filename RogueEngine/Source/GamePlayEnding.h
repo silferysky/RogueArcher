@@ -23,6 +23,9 @@ namespace Rogue
 		virtual void AIIdleUpdate() override;
 		virtual void OnTriggerEnter(Entity other) override;
 
+		void TrueEnding();
+		void ExaEnding();
+		void ElaEnding();
 		bool CrystalComplete;
 		bool CoralComplete;
 		bool VegetationComplete;
