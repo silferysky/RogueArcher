@@ -326,6 +326,12 @@ namespace Rogue
 		{
 			ResetGameEvent& reset = dynamic_cast<ResetGameEvent&>(ev);
 
+			//If in dark mode
+			if (!PLAYER_STATUS.GetLightStatus())
+			{
+				ToggleMode();
+			}
+
 			PLAYER_STATUS.SetPlayerEntity(MAX_ENTITIES);
 			PLAYER_STATUS.SetHitchhikedEntity(MAX_ENTITIES);
 
