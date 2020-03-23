@@ -9,6 +9,23 @@
 #define propstransform 50.0f
 #define filterchange 10.0f
 #define clonetransformx 100.0f
+#define frame1 m_timer > 19.0f && m_timer < 20.0f
+#define frame2 m_timer > 20.0f && m_timer < 21.0f
+#define frame3 m_timer > 21.0f && m_timer < 22.0f
+#define frame4 m_timer > 22.0f && m_timer < 23.0f
+#define frame5 m_timer > 23.0f && m_timer < 24.0f
+#define frame6 m_timer > 24.0f && m_timer < 25.0f
+#define frame7 m_timer > 25.0f && m_timer < 26.0f
+#define frame8 m_timer > 26.0f && m_timer < 27.0f
+#define frame9 m_timer > 27.0f && m_timer < 28.0f
+#define frame10 m_timer > 28.0f && m_timer < 29.0f
+#define frame11 m_timer > 29.0f && m_timer < 30.0f
+#define frame12 m_timer > 30.0f && m_timer < 30.5f
+#define frame13 m_timer > 30.5f && m_timer < 31.0f
+#define frame14 m_timer > 31.0f && m_timer < 31.5f
+#define frame15 m_timer > 31.5f && m_timer < 32.0f
+#define frame16 m_timer > 32.0f && m_timer < 32.5f
+
 namespace Rogue
 {
 	GamePlayEnding::GamePlayEnding(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent)
@@ -296,513 +313,16 @@ namespace Rogue
 
 				if (m_trueEnding)
 				{
-					for (HierarchyInfo& info : g_engine.m_coordinator.GetHierarchyInfoArray())
-					{
-						if (info.m_tag == "ExaTitle")
-						{
-							if (g_engine.m_coordinator.ComponentExists<UIComponent>(info.m_Entity))
-							{
-								auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(info.m_Entity);
-								UI.setIsActive(false);
-							}
-						}
-
-						if (info.m_tag == "ElaTitle")
-						{
-							if (g_engine.m_coordinator.ComponentExists<UIComponent>(info.m_Entity))
-							{
-								auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(info.m_Entity);
-								UI.setIsActive(false);
-							}
-						}
-
-						if (info.m_tag == "ElaA")
-						{
-							if (g_engine.m_coordinator.ComponentExists<UIComponent>(info.m_Entity))
-							{
-								auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(info.m_Entity);
-								UI.setIsActive(false);
-							}
-						}
-
-						if (info.m_tag == "ExaA")
-						{
-							if (g_engine.m_coordinator.ComponentExists<UIComponent>(info.m_Entity))
-							{
-								auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(info.m_Entity);
-								UI.setIsActive(false);
-							}
-						}
-
-						if (!m_finalSpriteSet)
-						{
-							if (info.m_tag == "EndingSprite")
-							{
-								if (!g_engine.m_coordinator.ComponentExists<UIComponent>(info.m_Entity))
-								{
-									g_engine.m_coordinator.AddComponent(info.m_Entity, UIComponent());
-									auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(info.m_Entity);
-									UI.setIsActive(true);
-								}
-								auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
-								auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(info.m_Entity);
-								sprite.setTexturePath("Resources/Assets/True1.png");
-								m_finalSprite = info.m_Entity;
-								transform.setZ(1000);
-								m_finalSpriteSet = true;
-							}
-						}
-					}
-
-					if (m_timer > 19.0f && m_timer < 20.0f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/True2.png");
-					}
-
-					if (m_timer > 20.0f && m_timer < 21.0f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/True3.png");
-					}
-
-					if (m_timer > 21.0f && m_timer < 22.0f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/True4.png");
-					}
-
-					if (m_timer > 22.0f && m_timer < 23.0f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/True5.png");
-					}
-
-					if (m_timer > 23.0f && m_timer < 24.0f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/True6.png");
-					}
-
-					if (m_timer > 24.0f && m_timer < 25.0f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/True7.png");
-					}
-
-					if (m_timer > 25.0f && m_timer < 26.0f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/True8.png");
-					}
-
-					if (m_timer > 26.0f && m_timer < 26.5f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/True9.png");
-					}
-
-					if (m_timer > 26.5f && m_timer < 27.0f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/True10.png");
-					}
-
-					if (m_timer > 27.0f && m_timer < 27.5f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/True11.png");
-					}
-
-					if (m_timer > 27.5f && m_timer < 28.0f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/True12.png");
-					}
-
-					if (m_timer > 28.0f && m_timer < 28.5f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/True13.png");
-					}
-
-					if (m_timer > 28.5f && m_timer < 29.0f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/True14.png");
-					}
-
-					if (m_timer > 29.0f && m_timer < 29.5f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/True15.png");
-					}
-
-					if (m_timer > 29.5f && m_timer < 30.0f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/True16.png");
-					}
-
-					if (m_timer > 30.0f && m_timer < 30.5f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/True17.png");
-					}
-
-					if (m_timer > 30.5f && m_timer < 31.0f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/True18.png");
-					}
-
-					if (m_timer > 31.0f && m_timer < 31.5f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/True19.png");
-					}
-
-					if (m_timer > 31.5f && m_timer < 32.0f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/True20.png");
-					}
-
-					if (m_timer > 32.0f && m_timer < 32.5f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/True21.png");
-					}
-					if (m_timer > 38.0f)
-					{
-						PLAYER_STATUS.ResetEndGame();
-						g_engine.m_coordinator.SetTransitionLevel("Level 19.json", 0.0f); //2nd value doesn't matter anymore probably
-						g_engine.m_coordinator.SetTransition(true);
-					}
-
+					TrueEnding();
 				}
 
 				if (m_endingAPressed)
 				{
-					if (m_timer > 18.0f && m_timer < 19.0f)
-					{
-						for (HierarchyInfo& info : g_engine.m_coordinator.GetHierarchyInfoArray())
-						{
-							if (info.m_tag == "ExaTitle")
-							{
-								if (g_engine.m_coordinator.ComponentExists<UIComponent>(info.m_Entity))
-								{
-									auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(info.m_Entity);
-									UI.setIsActive(false);
-								}
-							}
-
-							if (info.m_tag == "ElaTitle")
-							{
-								if (g_engine.m_coordinator.ComponentExists<UIComponent>(info.m_Entity))
-								{
-									auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(info.m_Entity);
-									UI.setIsActive(false);
-								}
-							}
-
-							if (info.m_tag == "ElaA")
-							{
-								if (g_engine.m_coordinator.ComponentExists<UIComponent>(info.m_Entity))
-								{
-									auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(info.m_Entity);
-									UI.setIsActive(false);
-								}
-							}
-
-							if (info.m_tag == "ExaA")
-							{
-								if (g_engine.m_coordinator.ComponentExists<UIComponent>(info.m_Entity))
-								{
-									auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(info.m_Entity);
-									UI.setIsActive(false);
-								}
-							}
-
-							if (!m_finalSpriteSet)
-							{
-								if (info.m_tag == "EndingSprite")
-								{
-									if (!g_engine.m_coordinator.ComponentExists<UIComponent>(info.m_Entity))
-									{
-										g_engine.m_coordinator.AddComponent(info.m_Entity, UIComponent());
-										auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(info.m_Entity);
-										UI.setIsActive(true);
-									}
-									auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
-									auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(info.m_Entity);
-									sprite.setTexturePath("Resources/Assets/ExaS1.png");
-									m_finalSprite = info.m_Entity;
-									transform.setZ(1000);
-									m_finalSpriteSet = true;
-								}
-							}
-							
-						}
-					}
-
-					if (m_timer > 19.0f && m_timer < 20.0f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/ExaS2.png");
-					}
-
-					if (m_timer > 20.0f && m_timer < 21.0f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/ExaS3.png");
-					}
-
-					if (m_timer > 21.0f && m_timer < 22.0f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/ExaS4.png");
-					}
-
-					if (m_timer > 22.0f && m_timer < 23.0f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/ExaS5.png");
-					}
-
-					if (m_timer > 23.0f && m_timer < 24.0f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/ExaS6.png");
-					}
-
-					if (m_timer > 24.0f && m_timer < 25.0f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/ExaS7.png");
-					}
-
-					if (m_timer > 25.0f && m_timer < 26.0f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/ExaS8.png");
-					}
-
-					if (m_timer > 26.0f && m_timer < 26.5f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/ExaS9.png");
-					}
-
-					if (m_timer > 26.5f && m_timer < 27.0f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/ExaS10.png");
-					}
-
-					if (m_timer > 27.0f && m_timer < 27.5f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/ExaS11.png");
-					}
-
-					if (m_timer > 27.5f && m_timer < 28.0f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/ExaS12.png");
-					}
-
-					if (m_timer > 28.0f && m_timer < 28.5f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/ExaS13.png");
-					}
-
-					if (m_timer > 28.5f && m_timer < 29.0f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/ExaS14.png");
-					}
-
-					if (m_timer > 29.0f && m_timer < 29.5f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/ExaS15.png");
-					}
-
-					if (m_timer > 29.5f && m_timer < 30.0f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/ExaS16.png");
-					}
-
-					if (m_timer > 35.0f)
-					{
-						PLAYER_STATUS.ResetEndGame();
-						g_engine.m_coordinator.SetTransitionLevel("Level 19.json", 0.0f); //2nd value doesn't matter anymore probably
-						g_engine.m_coordinator.SetTransition(true);
-					}
+					ExaEnding();
 				}
 				if (m_endingDPressed)
 				{
-					if (m_timer > 18.0f && m_timer < 19.0f)
-					{
-						for (HierarchyInfo& info : g_engine.m_coordinator.GetHierarchyInfoArray())
-						{
-							if (info.m_tag == "ExaTitle")
-							{
-								if (g_engine.m_coordinator.ComponentExists<UIComponent>(info.m_Entity))
-								{
-									auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(info.m_Entity);
-									UI.setIsActive(false);
-								}
-							}
-
-							if (info.m_tag == "ElaTitle")
-							{
-								if (g_engine.m_coordinator.ComponentExists<UIComponent>(info.m_Entity))
-								{
-									auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(info.m_Entity);
-									UI.setIsActive(false);
-								}
-							}
-
-							if (info.m_tag == "ElaA")
-							{
-								if (g_engine.m_coordinator.ComponentExists<UIComponent>(info.m_Entity))
-								{
-									auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(info.m_Entity);
-									UI.setIsActive(false);
-								}
-							}
-
-							if (info.m_tag == "ExaA")
-							{
-								if (g_engine.m_coordinator.ComponentExists<UIComponent>(info.m_Entity))
-								{
-									auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(info.m_Entity);
-									UI.setIsActive(false);
-								}
-							}
-
-							if (!m_finalSpriteSet)
-							{
-								if (info.m_tag == "EndingSprite")
-								{
-									if (!g_engine.m_coordinator.ComponentExists<UIComponent>(info.m_Entity))
-									{
-										g_engine.m_coordinator.AddComponent(info.m_Entity, UIComponent());
-										auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(info.m_Entity);
-										UI.setIsActive(true);
-									}
-									auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
-									auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(info.m_Entity);
-									sprite.setTexturePath("Resources/Assets/ElaS1.png");
-									m_finalSprite = info.m_Entity;
-									transform.setZ(1000);
-									m_finalSpriteSet = true;
-								}
-							}
-						}
-					}
-
-
-					if (m_timer > 19.0f && m_timer < 20.0f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/ElaS2.png");
-					}
-
-					if (m_timer > 20.0f && m_timer < 21.0f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/ElaS3.png");
-					}
-
-					if (m_timer > 21.0f && m_timer < 22.0f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/ElaS4.png");
-					}
-
-					if (m_timer > 22.0f && m_timer < 23.0f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/ElaS5.png");
-					}
-
-					if (m_timer > 23.0f && m_timer < 24.0f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/ElaS6.png");
-					}
-
-					if (m_timer > 24.0f && m_timer < 24.5f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/ElaS7.png");
-					}
-
-					if (m_timer > 24.5f && m_timer < 25.0f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/ElaS8.png");
-					}
-
-					if (m_timer > 25.0f && m_timer < 25.5f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/ElaS9.png");
-					}
-
-					if (m_timer > 25.5f && m_timer < 26.0f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/ElaS10.png");
-					}
-
-					if (m_timer > 26.0f && m_timer < 26.5f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/ElaS11.png");
-					}
-
-					if (m_timer > 26.5f && m_timer < 27.0f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/ElaS12.png");
-					}
-
-					if (m_timer > 27.0f && m_timer < 27.5f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/ElaS13.png");
-					}
-
-					if (m_timer > 27.5f && m_timer < 28.0f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/ElaS14.png");
-					}
-
-					if (m_timer > 28.0f && m_timer < 28.5f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/ElaS15.png");
-					}
-
-					if (m_timer > 28.5f && m_timer < 29.0f)
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-						sprite.setTexturePath("Resources/Assets/ElaS16.png");
-					}
-
-					if (m_timer > 34.0f)
-					{
-						PLAYER_STATUS.ResetEndGame();
-						g_engine.m_coordinator.SetTransitionLevel("Level 19.json", 0.0f); //2nd value doesn't matter anymore probably
-						g_engine.m_coordinator.SetTransition(true);
-					}
+					ElaEnding();
 				}
 			}
 		}
@@ -851,33 +371,21 @@ namespace Rogue
 					}
 					if (info.m_tag == "slots1")
 					{
-						if (PLAYER_STATUS.GetCollectedSoulsInLevel(LEVEL::CRYSTAL) > PLAYER_STATUS.GetTotalSoulsInLevel(LEVEL::CRYSTAL) * 0.8)
-						{
-							auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
-							//show slots
-							transform.setZ(100);
-							CrystalComplete = true;
-						}
+						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+						//show slots
+						transform.setZ(100);
 					}
 					if (info.m_tag == "slots2")
 					{
-						if (PLAYER_STATUS.GetCollectedSoulsInLevel(LEVEL::CORAL) > PLAYER_STATUS.GetTotalSoulsInLevel(LEVEL::CORAL) * 0.8)
-						{
-							auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
-							//show slots
-							transform.setZ(100);
-							CoralComplete = true;
-						}
+						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+						//show slots
+						transform.setZ(100);
 					}
 					if (info.m_tag == "slots3")
 					{
-						if (PLAYER_STATUS.GetCollectedSoulsInLevel(LEVEL::VEGETATION) > PLAYER_STATUS.GetTotalSoulsInLevel(LEVEL::VEGETATION) * 0.8)
-						{
-							auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
-							//show slots
-							transform.setZ(100);
-							VegetationComplete = true;
-						}
+						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+						//show slots
+						transform.setZ(100);
 					}
 
 					if (info.m_tag == "Player")
@@ -929,6 +437,521 @@ namespace Rogue
 				m_activated = true;
 			}
 			
+		}
+	}
+	void GamePlayEnding::TrueEnding()
+	{
+		for (HierarchyInfo& info : g_engine.m_coordinator.GetHierarchyInfoArray())
+		{
+			if (info.m_tag == "ExaTitle")
+			{
+				if (g_engine.m_coordinator.ComponentExists<UIComponent>(info.m_Entity))
+				{
+					auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(info.m_Entity);
+					UI.setIsActive(false);
+				}
+			}
+
+			if (info.m_tag == "ElaTitle")
+			{
+				if (g_engine.m_coordinator.ComponentExists<UIComponent>(info.m_Entity))
+				{
+					auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(info.m_Entity);
+					UI.setIsActive(false);
+				}
+			}
+
+			if (info.m_tag == "ElaA")
+			{
+				if (g_engine.m_coordinator.ComponentExists<UIComponent>(info.m_Entity))
+				{
+					auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(info.m_Entity);
+					UI.setIsActive(false);
+				}
+			}
+
+			if (info.m_tag == "ExaA")
+			{
+				if (g_engine.m_coordinator.ComponentExists<UIComponent>(info.m_Entity))
+				{
+					auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(info.m_Entity);
+					UI.setIsActive(false);
+				}
+			}
+
+			if (!m_finalSpriteSet)
+			{
+				if (info.m_tag == "EndingSprite")
+				{
+					if (!g_engine.m_coordinator.ComponentExists<UIComponent>(info.m_Entity))
+					{
+						g_engine.m_coordinator.AddComponent(info.m_Entity, UIComponent());
+						auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(info.m_Entity);
+						UI.setIsActive(true);
+					}
+					auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+					auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(info.m_Entity);
+					sprite.setTexturePath("Resources/Assets/True1.png");
+					m_finalSprite = info.m_Entity;
+					transform.setZ(1000);
+					m_finalSpriteSet = true;
+				}
+			}
+		}
+
+		if (frame1)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/True2.png");
+		}
+
+		if (frame2)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/True3.png");
+		}
+
+		if (frame3)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/True4.png");
+		}
+
+		if (frame4)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/True5.png");
+		}
+
+		if (frame5)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/True6.png");
+		}
+
+		if (frame6)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/True7.png");
+		}
+
+		if (frame7)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/True8.png");
+		}
+
+		if (frame8)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/True9.png");
+		}
+
+		if (frame9)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/True10.png");
+		}
+
+		if (frame10)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/True11.png");
+		}
+
+		if (frame11)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/True12.png");
+		}
+
+		if (frame12)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/True13.png");
+		}
+
+		if (frame13)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/True14.png");
+		}
+
+		if (m_timer > 31.0f && m_timer < 32.0f)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/True15.png");
+		}
+
+		if (m_timer > 32.0f && m_timer < 33.0f)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/True16.png");
+		}
+
+		if (m_timer > 33.0f && m_timer < 34.0f)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/True17.png");
+		}
+
+		if (m_timer > 34.0f && m_timer < 35.0f)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/True18.png");
+		}
+
+		if (m_timer > 35.0f && m_timer < 36.0f)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/True19.png");
+		}
+
+		if (m_timer > 36.0f && m_timer < 37.0f)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/True20.png");
+		}
+
+		if (m_timer > 37.0f && m_timer < 38.0f)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/True21.png");
+		}
+		if (m_timer > 42.0f)
+		{
+			PLAYER_STATUS.ResetEndGame();
+			g_engine.m_coordinator.SetTransitionLevel("Level 19.json", 0.0f); //2nd value doesn't matter anymore probably
+			g_engine.m_coordinator.SetTransition(true);
+		}
+	}
+
+
+	void GamePlayEnding::ExaEnding()
+	{
+		if (frame1)
+		{
+			for (HierarchyInfo& info : g_engine.m_coordinator.GetHierarchyInfoArray())
+			{
+				if (info.m_tag == "ExaTitle")
+				{
+					if (g_engine.m_coordinator.ComponentExists<UIComponent>(info.m_Entity))
+					{
+						auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(info.m_Entity);
+						UI.setIsActive(false);
+					}
+				}
+
+				if (info.m_tag == "ElaTitle")
+				{
+					if (g_engine.m_coordinator.ComponentExists<UIComponent>(info.m_Entity))
+					{
+						auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(info.m_Entity);
+						UI.setIsActive(false);
+					}
+				}
+
+				if (info.m_tag == "ElaA")
+				{
+					if (g_engine.m_coordinator.ComponentExists<UIComponent>(info.m_Entity))
+					{
+						auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(info.m_Entity);
+						UI.setIsActive(false);
+					}
+				}
+
+				if (info.m_tag == "ExaA")
+				{
+					if (g_engine.m_coordinator.ComponentExists<UIComponent>(info.m_Entity))
+					{
+						auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(info.m_Entity);
+						UI.setIsActive(false);
+					}
+				}
+
+				if (!m_finalSpriteSet)
+				{
+					if (info.m_tag == "EndingSprite")
+					{
+						if (!g_engine.m_coordinator.ComponentExists<UIComponent>(info.m_Entity))
+						{
+							g_engine.m_coordinator.AddComponent(info.m_Entity, UIComponent());
+							auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(info.m_Entity);
+							UI.setIsActive(true);
+						}
+						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(info.m_Entity);
+						sprite.setTexturePath("Resources/Assets/ExaS1.png");
+						m_finalSprite = info.m_Entity;
+						transform.setZ(1000);
+						m_finalSpriteSet = true;
+					}
+				}
+			}
+		}
+
+		if (frame2)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/ExaS2.png");
+		}
+
+		if (frame3)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/ExaS3.png");
+		}
+
+		if (frame4)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/ExaS4.png");
+		}
+
+		if (frame5)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/ExaS5.png");
+		}
+
+		if (frame6)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/ExaS6.png");
+		}
+
+		if (frame7)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/ExaS7.png");
+		}
+
+		if (frame8)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/ExaS8.png");
+		}
+
+		if (frame9)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/ExaS9.png");
+		}
+
+		if (frame10)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/ExaS10.png");
+		}
+
+		if (frame11)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/ExaS11.png");
+		}
+
+		if (frame12)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/ExaS12.png");
+		}
+
+		if (frame13)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/ExaS13.png");
+		}
+
+		if (frame14)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/ExaS14.png");
+		}
+
+		if (frame15)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/ExaS15.png");
+		}
+
+		if (frame16)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/ExaS16.png");
+		}
+
+		if (m_timer > 35.0f)
+		{
+			PLAYER_STATUS.ResetEndGame();
+			g_engine.m_coordinator.SetTransitionLevel("Level 19.json", 0.0f); //2nd value doesn't matter anymore probably
+			g_engine.m_coordinator.SetTransition(true);
+		}
+	}
+
+
+
+
+	void GamePlayEnding::ElaEnding()
+	{
+		if (frame1)
+		{
+			for (HierarchyInfo& info : g_engine.m_coordinator.GetHierarchyInfoArray())
+			{
+				if (info.m_tag == "ExaTitle")
+				{
+					if (g_engine.m_coordinator.ComponentExists<UIComponent>(info.m_Entity))
+					{
+						auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(info.m_Entity);
+						UI.setIsActive(false);
+					}
+				}
+
+				if (info.m_tag == "ElaTitle")
+				{
+					if (g_engine.m_coordinator.ComponentExists<UIComponent>(info.m_Entity))
+					{
+						auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(info.m_Entity);
+						UI.setIsActive(false);
+					}
+				}
+
+				if (info.m_tag == "ElaA")
+				{
+					if (g_engine.m_coordinator.ComponentExists<UIComponent>(info.m_Entity))
+					{
+						auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(info.m_Entity);
+						UI.setIsActive(false);
+					}
+				}
+
+				if (info.m_tag == "ExaA")
+				{
+					if (g_engine.m_coordinator.ComponentExists<UIComponent>(info.m_Entity))
+					{
+						auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(info.m_Entity);
+						UI.setIsActive(false);
+					}
+				}
+
+				if (!m_finalSpriteSet)
+				{
+					if (info.m_tag == "EndingSprite")
+					{
+						if (!g_engine.m_coordinator.ComponentExists<UIComponent>(info.m_Entity))
+						{
+							g_engine.m_coordinator.AddComponent(info.m_Entity, UIComponent());
+							auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(info.m_Entity);
+							UI.setIsActive(true);
+						}
+						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(info.m_Entity);
+						sprite.setTexturePath("Resources/Assets/ElaS1.png");
+						m_finalSprite = info.m_Entity;
+						transform.setZ(1000);
+						m_finalSpriteSet = true;
+					}
+				}
+			}
+		}
+
+
+
+		if (frame2)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/ElaS2.png");
+		}
+
+		if (frame3)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/ElaS3.png");
+		}
+
+		if (frame4)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/ElaS4.png");
+		}
+
+		if (frame5)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/ElaS5.png");
+		}
+
+		if (frame6)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/ElaS6.png");
+		}
+
+		if (frame7)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/ElaS7.png");
+		}
+
+		if (frame8)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/ElaS8.png");
+		}
+
+		if (frame9)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/ElaS9.png");
+		}
+
+		if (frame10)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/ElaS10.png");
+		}
+
+		if (frame11)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/ElaS11.png");
+		}
+
+		if (frame12)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/ElaS12.png");
+		}
+
+		if (frame13)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/ElaS13.png");
+		}
+
+		if (frame14)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/ElaS14.png");
+		}
+
+		if (frame15)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/ElaS15.png");
+		}
+
+		if (frame16)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/ElaS16.png");
+		}
+
+
+		if (m_timer > 34.0f)
+		{
+			PLAYER_STATUS.ResetEndGame();
+			g_engine.m_coordinator.SetTransitionLevel("Level 19.json", 0.0f); //2nd value doesn't matter anymore probably
+			g_engine.m_coordinator.SetTransition(true);
 		}
 	}
 }

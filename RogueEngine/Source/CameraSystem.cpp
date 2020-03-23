@@ -165,7 +165,7 @@ namespace Rogue
 							if (deltaY < 0) // player is falling
 								position.y += static_cast<int>(deltaY)* m_cameraLerp * 3.0f * g_fixedDeltaTime;
 							else
-								position.y += static_cast<int>(deltaY)* m_cameraLerp * 0.5f * g_fixedDeltaTime;
+								position.y += static_cast<int>(deltaY)* m_cameraLerp * 0.75f * g_fixedDeltaTime;
 						}
 						//}
 					}

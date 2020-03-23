@@ -151,7 +151,7 @@
     "Entity8": "Name{Collision18}|Tag{}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-924;1106;100;100;0;0}||BoxCollider{0;0;695;942;AWAKE}|||||||||Collider{BOX;1;4294967295;}|||||||||||||",
     "Entity9": "Name{Collision19}|Tag{}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{317;1973;100;100;0;0}||BoxCollider{0;0;2285;568;AWAKE}|||||||||Collider{BOX;1;4294967295;}|||||||||||||",
     "Entity10": "Name{Collision20}|Tag{}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-1888;1045;100;100;0;0}||BoxCollider{0;0;1036;942;AWAKE}|||||||||Collider{BOX;1;4294967295;}|||||||||||||",
-    "Entity11": "Name{Collision21}|Tag{}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-1964.56;400.301;100;100;0;0}||BoxCollider{0;0;251;264;AWAKE}|||||||||Collider{BOX;1;4294967295;}|||||||||||||",
+    "Entity11": "Name{Collision21}|Tag{}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-1774.56;400.301;100;100;0;0}||BoxCollider{0;0;251;264;AWAKE}|||||||||Collider{BOX;1;4294967295;}|||||||||||||",
     "Entity12": "Name{Collision22}|Tag{}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-1863;-275;100;100;0;0}||BoxCollider{0;0;251;264;AWAKE}|||||||||Collider{BOX;1;4294967295;}|||||||||||||",
     "Entity13": "Name{Collision23}|Tag{}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{328;-1010;100;100;0;0}||BoxCollider{0;0;504;116;AWAKE}|||||||||Collider{BOX;1;4294967295;}|||||||||||||",
     "Entity14": "Name{BG1}|Tag{}|Sprite{Resources\\Assets\\HubBG.png;1;1;1;1;}||Transform{905.831;899.267;554.839;1498.84;0;80}||||||||||||||||||||||||",

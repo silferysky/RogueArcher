@@ -47,13 +47,13 @@ namespace Rogue
 			m_shakeOffset.y = static_cast<float>(cos(m_currentShakeAngle) * m_currentShakeMagnitude);
 
 			//Don't micro shake the screen, also returns the screen back to centre after shaking is done
-			if (m_currentShakeMagnitude < 0.2f) 
+			/*if (m_currentShakeMagnitude < 0.2f) 
 			{
-				m_shakeAngle = 0;
-				m_currentShakeMagnitude = 0;
-				m_shakeOffset = { 0,0 };
-				g_engine.m_coordinator.GetSystem<CameraSystem>()->setIsActive(true);
-			}
+				//m_shakeAngle = 0;
+				//m_currentShakeMagnitude = 0;
+				//m_shakeOffset = { 0,0 };
+				//g_engine.m_coordinator.GetSystem<CameraSystem>()->setIsActive(true);
+			} */
 		}
 	}
 
