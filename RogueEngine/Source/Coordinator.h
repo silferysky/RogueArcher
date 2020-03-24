@@ -50,15 +50,13 @@ namespace Rogue
 		std::unique_ptr<EntityManager> m_entityManager;
 		std::unique_ptr<SystemManager> m_systemManager;
 		std::vector<Entity> m_deleteQueue;
-		std::vector<Entity> m_deletedQueue;
 
 	public:
 		Coordinator() :
 			m_entityManager{ std::make_unique<EntityManager>() },
 			m_componentManager{ std::make_unique<ComponentManager>() },
 			m_systemManager{ std::make_unique<SystemManager>() },
-			m_deleteQueue{},
-			m_deletedQueue{}
+			m_deleteQueue{}
 		{}
 
 		void Init()
@@ -303,9 +301,6 @@ namespace Rogue
 			std::vector<Entity> childrenToDelete;
 			for (auto& entity : m_deleteQueue)
 			{
-				//Add to list of deleted objects
-				m_deletedQueue.push_back(entity);
-
 				//Removing Children
 				HierarchyInfo& entInfo = GetHierarchyInfo(entity);
 				for (auto& child : entInfo.m_children)
@@ -340,16 +335,6 @@ namespace Rogue
 			{
 				m_deleteQueue.push_back(child);
 			}
-		}
-
-		std::vector<Entity> GetDeletedEntities() const
-		{
-			return m_deletedQueue;
-		}
-
-		void ClearDeletedEntities()
-		{
-			m_deletedQueue.clear();
 		}
 
 		EntityManager& GetEntityManager() const

@@ -58,9 +58,6 @@ namespace Rogue
 		CameraManager::instance().SetCameraZoom(cameraZoom);
 		//CameraManager::instance().SetCameraPos(glm::vec3(0.0f, 0.0f, 0.0f));
 
-		//Clearing Deleted Entities
-		g_engine.m_coordinator.ClearDeletedEntities();
-
 		//For Entity Count
 		m_maxEntityCount = level["MaxEntityCount"].GetInt();
 		Entity entCount = level["EntityCount"].GetInt();
@@ -138,7 +135,6 @@ namespace Rogue
 		{
 			Entity firstLoadedEnt = loadedQueue.front();
 			m_firstLoadedEntity = firstLoadedEnt;
-
 			while (loadedQueue.size())
 			{
 				Entity loadedEnt = loadedQueue.front();
@@ -234,13 +230,6 @@ namespace Rogue
 		
 		entCount = 0; //Reset entCount for saving loop
 
-		std::vector<Entity> tempDeletedEntities{};
-
-		for (Entity e : g_engine.m_coordinator.GetDeletedEntities())
-		{
-			tempDeletedEntities.push_back(e);
-		}
-
 		for (Entity& curEntity : g_engine.m_coordinator.GetActiveObjects())
 		{
 			//Skip all entities without save component
@@ -249,7 +238,6 @@ namespace Rogue
 
 			HierarchyInfo& curHierarchy = g_engine.m_coordinator.GetHierarchyInfo(curEntity);
 
-			//Signature Serialization
 			Signature currentSignature = em->GetSignature(curEntity);
 			currentSignature.reset(COMPONENTID::CHILD);
 			currentSignature.reset(COMPONENTID::TILE);
@@ -261,7 +249,6 @@ namespace Rogue
 			intVar = static_cast<int>(currentSignature.to_ulong());
 			RESerialiser::WriteToFile(fileName, cstr, &intVar);
 
-			//Entity Serialization
 			CLEARSTR(strstream);
 			strstream << SerializeComponents(curHierarchy);
 			SETSSTOSTR(strstream);
@@ -269,7 +256,6 @@ namespace Rogue
 			strstream << "Entity" << entCount;
 			RESerialiser::WriteToFile(fileName, strstream.str().c_str(), cstr);
 
-			//Parent Serialization
 			CLEARSTR(strstream);
 			strstream << "EntityParent" << entCount;
 			SETSSTOSTR(strstream);
@@ -277,27 +263,13 @@ namespace Rogue
 			int parent = static_cast<int>(parentValue);
 			if (parentValue != MAX_ENTITIES)
 			{
-				size_t deletedCounter = 0;
-				auto it = tempDeletedEntities.begin();
-
-				while (it != tempDeletedEntities.end())
-				{
-					if (*it < parentValue)
-					{
-						++deletedCounter;
-					}
-					++it;
-				}
-
-				parentValue -= m_firstLoadedEntity + deletedCounter;
+				parentValue -= m_firstLoadedEntity;//static_cast<size_t>(firstEnt) + g_engine.m_coordinator.GetSystem<MenuControllerSystem>()->GetUIMenuObjsSize();
 				parent = static_cast<int>(parentValue);
 			}
 			RESerialiser::WriteToFile(fileName, strstream.str().c_str(), &parent);
 
 			++entCount;
 		}
-
-		tempDeletedEntities.clear();
 #if ENABLE_LOGGER
 		RE_INFO("LEVEL SAVED");
 #endif
