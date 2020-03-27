@@ -947,7 +947,6 @@ namespace Rogue
 		}
 
 		//Always do this
-		ForceManager::instance().ResetPhysics(PLAYER_STATUS.GetPlayerEntity());
 		PLAYER_STATUS.ChangePlayerSprite();
 	}
 
@@ -1211,6 +1210,7 @@ namespace Rogue
 			parentReset.SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
 			EventDispatcher::instance().AddEvent(parentReset);
 			PLAYER_STATUS.SetHitchhikedEntity(MAX_ENTITIES);
+			ForceManager::instance().ResetPhysics(PLAYER_STATUS.GetPlayerEntity());
 		}
 	}
 
