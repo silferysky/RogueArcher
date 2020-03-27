@@ -35,5 +35,8 @@ namespace Rogue
 		float m_patrolDelay;
 		float m_delay;
 		bool m_goingToEnd;
+
+		Entity m_startDisplay;
+		Entity m_endDisplay;
 	};
 }

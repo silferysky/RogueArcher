@@ -22,7 +22,7 @@ Technology is prohibited.
 namespace Rogue
 {
 	CrystalMole::CrystalMole(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent)
-		: ScriptComponent(entity, logicComponent, statsComponent), m_currentPointIndex{ 0 }, m_goingToEnd{ false }
+		: ScriptComponent(entity, logicComponent, statsComponent), m_currentPointIndex{ 0 }, m_goingToEnd{ false }, m_startDisplay{ MAX_ENTITIES }, m_endDisplay{MAX_ENTITIES}
 	{
 		LogicInit();
 	}
@@ -57,6 +57,18 @@ namespace Rogue
 		if (g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(m_entity))
 		{
 			g_engine.m_coordinator.GetComponent<RigidbodyComponent>(m_entity).setIsStatic(true);
+		}
+
+		m_startDisplay = g_engine.m_coordinator.CloneArchetypes("CaveMole", true, false);
+		m_endDisplay = g_engine.m_coordinator.CloneArchetypes("CaveMole", true, false);
+
+		if (auto start = g_engine.m_coordinator.TryGetComponent<TransformComponent>(m_startDisplay))
+		{
+			start->get().setPosition(m_waypoints[0]);
+		}
+		if (auto end = g_engine.m_coordinator.TryGetComponent<TransformComponent>(m_endDisplay))
+		{
+			end->get().setPosition(m_waypoints[m_waypoints.size() - 1]);
 		}
 
 		m_patrolDelay = 2.0f;
