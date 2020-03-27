@@ -65,6 +65,7 @@ namespace Rogue
 		if (auto start = g_engine.m_coordinator.TryGetComponent<TransformComponent>(m_startDisplay))
 		{
 			start->get().setPosition(m_waypoints[0]);
+			start->get().setScale(Vec2(start->get().GetScale().x, -1 * start->get().GetScale().y));
 		}
 		if (auto end = g_engine.m_coordinator.TryGetComponent<TransformComponent>(m_endDisplay))
 		{
