@@ -946,6 +946,8 @@ namespace Rogue
 			}
 		}
 
+		//Always do this
+		ForceManager::instance().ResetPhysics(PLAYER_STATUS.GetPlayerEntity());
 		PLAYER_STATUS.ChangePlayerSprite();
 	}
 
