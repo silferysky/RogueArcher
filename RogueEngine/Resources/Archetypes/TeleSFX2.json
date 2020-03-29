@@ -1,5 +1,5 @@
 {
     "Signature": 1028,
-    "Entity": "Name{TeleSFX2}|Tag{}|||Transform{-2.54004;-10.053;100;100;0;99}||||||||Audio{Resources\\Sounds\\Teleport2.ogg;1;0.2;0;1;}||||||||||||||||",
+    "Entity": "Name{TeleSFX2}|Tag{}|||Transform{-2.54004;-10.053;100;100;0;99}||||||||Audio{Resources\\Sounds\\Teleport2.ogg;1;0.2;0;1;}|||||||||||||||",
     "Children": ""
 }
