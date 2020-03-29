@@ -22,7 +22,7 @@ Technology is prohibited.
 namespace Rogue
 {
 	CrystalMole::CrystalMole(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent)
-		: ScriptComponent(entity, logicComponent, statsComponent), m_currentPointIndex{ 0 }, m_goingToEnd{ false }, m_startDisplay{ MAX_ENTITIES }, m_endDisplay{MAX_ENTITIES}
+		: ScriptComponent(entity, logicComponent, statsComponent), m_currentPointIndex{ 0 }, m_goingToEnd{ false }, m_startDisplay{ MAX_ENTITIES }, m_endDisplay{ MAX_ENTITIES }, m_startAnimEnded{ true }, m_endAnimEnded{ true }
 	{
 		LogicInit();
 	}
@@ -116,14 +116,40 @@ namespace Rogue
 				if (m_goingToEnd && PLAYER_STATUS.GetHitchhikedEntity() == m_entity)
 				{
 					g_engine.m_coordinator.GetSystem<PlayerControllerSystem>()->Hitchhike(MAX_ENTITIES);			
-					if (auto anim = g_engine.m_coordinator.TryGetComponent<AnimationComponent>(m_startDisplay))
+					if (auto anim = g_engine.m_coordinator.TryGetComponent<AnimationComponent>(m_endDisplay))
 					{
-						anim->get().setIsAnimating(true);
 						anim->get().setCurrentFrame(anim->get().getFrames() - 1);
+						anim->get().setEndFrame(0);
+						anim->get().setIsNotReversed(false);
+						anim->get().setIsAnimating(true);
+						m_endAnimEnded = false;
 					}
 				}
 			}
 			return;
+		}
+
+		if (auto anim = g_engine.m_coordinator.TryGetComponent<AnimationComponent>(m_endDisplay))
+		{
+			if (!m_endAnimEnded && anim->get().getCurrentFrame() == anim->get().getEndFrame())
+			{
+				anim->get().setEndFrame(anim->get().getFrames() - 1);
+				anim->get().setIsNotReversed(true);
+				anim->get().setIsAnimating(true);
+				m_endAnimEnded = true;
+			}
+		}
+
+		//Resetting to show it once animation is completed
+		if (auto anim = g_engine.m_coordinator.TryGetComponent<AnimationComponent>(m_startDisplay))
+		{
+			if (!m_startAnimEnded && anim->get().getCurrentFrame() == anim->get().getEndFrame())
+			{
+				anim->get().setEndFrame(0);
+				anim->get().setIsNotReversed(false);
+				anim->get().setIsAnimating(true);
+				m_startAnimEnded = true;
+			}
 		}
 
 		//Check if Transform component and Rigidbody exist
@@ -143,14 +169,20 @@ namespace Rogue
 		//If Player is on Mole
 		if (PLAYER_STATUS.GetHitchhikedEntity() == m_entity)
 		{
-
-			
-
 			if (m_nextPoint.size() > 0)
 				m_nextPoint.pop();
 
 			m_nextPoint.push(m_waypoints[m_waypoints.size() - 1]);
 			m_goingToEnd = true;
+
+			if (m_startAnimEnded == true)
+				if (auto anim = g_engine.m_coordinator.TryGetComponent<AnimationComponent>(m_startDisplay))
+				{
+					anim->get().setEndFrame(anim->get().getFrames() - 1);
+					anim->get().setIsNotReversed(true);
+					anim->get().setIsAnimating(true);
+					m_startAnimEnded = false;
+				}
 		}
 		else //If Player is not on mole, it goes to starting point
 		{
@@ -194,11 +226,6 @@ namespace Rogue
 		if (Vec2SqDistance(aiTransform.GetPosition(), m_nextPoint.front()) < m_statsComponent->getSightRange() * m_statsComponent->getSightRange())
 		{
 			m_delay = m_patrolDelay;
-			if (auto anim = g_engine.m_coordinator.TryGetComponent<AnimationComponent>(m_endDisplay))
-			{
-				anim->get().setIsAnimating(true);
-				anim->get().setEndFrame(anim->get().getFrames() - 1);
-			}
 		}
 	}
 }
