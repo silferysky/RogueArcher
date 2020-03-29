@@ -1,5 +1,5 @@
 {
     "Signature": 453,
-    "Entity": "Name{Exa-Ela Animation}|Tag{}|Sprite{Resources/Assets/Exa-Ela.png;1;1;1;1;}||Transform{0;0;61;61;0;115}||||LogicComponent{16;0;1;0}|StatsComponent{0;0;0;0;0;;0;0;0;0;0;0;0;}|Animation{6;0;0.02;0;0;1;}|||||||||||||||||",
+    "Entity": "Name{Exa-Ela Animation}|Tag{}|Sprite{Resources/Assets/Exa-Ela.png;1;1;1;1;}||Transform{0;0;61;61;0;115}||||LogicComponent{16;0;1;0}|StatsComponent{0;0;0;0;0;;0;0;0;0;0;0;0;}|Animation{6;0;0.02;0;0;1;}||||||||||||||||||",
     "Children": ""
 }
