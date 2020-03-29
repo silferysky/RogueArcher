@@ -62,6 +62,7 @@ namespace Rogue
 		m_startDisplay = g_engine.m_coordinator.CloneArchetypes("CaveMole", true, false);
 		m_endDisplay = g_engine.m_coordinator.CloneArchetypes("CaveMole", true, false);
 
+		//Setting transform
 		if (auto start = g_engine.m_coordinator.TryGetComponent<TransformComponent>(m_startDisplay))
 		{
 			start->get().setPosition(m_waypoints[0]);
@@ -72,6 +73,18 @@ namespace Rogue
 			end->get().setPosition(m_waypoints[m_waypoints.size() - 1]);
 		}
 
+		//Setting animation
+		if (auto start = g_engine.m_coordinator.TryGetComponent<AnimationComponent>(m_startDisplay))
+		{
+			//start->get().setIsAnimating(false);
+			start->get().setIsLooping(false);
+			start->get().setEndFrame(0);
+		}
+		if (auto end = g_engine.m_coordinator.TryGetComponent<AnimationComponent>(m_endDisplay))
+		{
+			//end->get().setIsAnimating(false);
+			end->get().setIsLooping(false);
+		}
 		m_patrolDelay = 2.0f;
 		m_delay = 0.0f;
 	}
@@ -102,7 +115,12 @@ namespace Rogue
 				m_delay = 0.0f;
 				if (m_goingToEnd && PLAYER_STATUS.GetHitchhikedEntity() == m_entity)
 				{
-					g_engine.m_coordinator.GetSystem<PlayerControllerSystem>()->Hitchhike(MAX_ENTITIES);
+					g_engine.m_coordinator.GetSystem<PlayerControllerSystem>()->Hitchhike(MAX_ENTITIES);			
+					if (auto anim = g_engine.m_coordinator.TryGetComponent<AnimationComponent>(m_startDisplay))
+					{
+						anim->get().setIsAnimating(true);
+						anim->get().setCurrentFrame(anim->get().getFrames() - 1);
+					}
 				}
 			}
 			return;
@@ -125,11 +143,7 @@ namespace Rogue
 		//If Player is on Mole
 		if (PLAYER_STATUS.GetHitchhikedEntity() == m_entity)
 		{
-			if (auto anim = g_engine.m_coordinator.TryGetComponent<AnimationComponent>(m_entity))
-			{
-				anim->get().setIsAnimating(false);
-				anim->get().setCurrentFrame(anim->get().getFrames() - 1);
-			}
+
 			
 
 			if (m_nextPoint.size() > 0)
@@ -180,6 +194,11 @@ namespace Rogue
 		if (Vec2SqDistance(aiTransform.GetPosition(), m_nextPoint.front()) < m_statsComponent->getSightRange() * m_statsComponent->getSightRange())
 		{
 			m_delay = m_patrolDelay;
+			if (auto anim = g_engine.m_coordinator.TryGetComponent<AnimationComponent>(m_endDisplay))
+			{
+				anim->get().setIsAnimating(true);
+				anim->get().setEndFrame(anim->get().getFrames() - 1);
+			}
 		}
 	}
 }
