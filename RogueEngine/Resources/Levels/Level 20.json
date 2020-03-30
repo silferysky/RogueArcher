@@ -28,7 +28,7 @@
     "Entity4": "Name{CreditsText}|Tag{}|Sprite{Resources\\Assets\\MenuButtonCredits.png;1;1;1;1;}||Transform{13.2052;-344.912;129;47.895;0;14}|||||||||UI{1;}|||||||||||||||",
     "Entity5": "Name{QuitText}|Tag{}|Sprite{Resources\\Assets\\MenuButtonQuit.png;1;1;1;1;}||Transform{231.803;-263.471;129;47.895;0;10}|||||||||UI{1;}|||||||||||||||",
     "Entity6": "Name{BGM}|Tag{}|||Transform{0;0;100;100;0;0}||||||||Audio{Resources\\Sounds\\[BGM]ANCIENT RUINS - NewAge MSCNEW2_33.ogg;1;0.8;1;0;}||||||||||||||||",
-    "Entity7": "Name{Credits}|Tag{}|Sprite{Resources/Assets/Credits.png;1;1;1;1;}||Transform{-3;0;1600;900;0;0}|||||||||UI{0;}|||||||||||||||",
+    "Entity7": "Name{Credits}|Tag{}|Sprite{Resources/Assets/Credits.png;1;1;1;1;}||Transform{-3;0;1600;900;0;62}|||||||||UI{0;}|||||||||||||||",
     "Entity8": "Name{StartText}|Tag{}|Sprite{Resources/Assets/MenuButtonStart.png;1;1;1;1;}||Transform{20.7677;-96.7795;100;47.895;0;0}|||||||||UI{1;}|||||||||||||||",
     "Entity9": "Name{ControlsBtn}|Tag{}|Sprite{Resources/Assets/MenuButtonBase.png;1;1;1;1;}||Transform{-223.643;-238.133;239;309;0;0}||||LogicComponent{22;0;1;0}|StatsComponent{0;0;0;0;0;;0;0;0;0;0;0;0;}|Animation{5;4;0.1;1;0;1;}|||UI{1;}|||||||||||||||",
     "Entity10": "Name{CreditsBtn}|Tag{}|Sprite{Resources/Assets/MenuButtonBase.png;1;1;1;1;}||Transform{13.205;-321.912;239;309;0;0}||||LogicComponent{22;0;1;0}|StatsComponent{0;0;0;0;0;;0;0;0;0;0;0;0;}|Animation{5;4;0.1;1;0;1;}|||UI{1;}|||||||||||||||",
