@@ -125,25 +125,22 @@ namespace Rogue
 						case 3: //HowToPlayBtn
 							hierarchyObj.m_objectName = "HowToPlayBtn";
 							break;
-						case 4: //MainMenu_Btn
-							hierarchyObj.m_objectName = "MainMenu_Btn";
-							break;
-						case 5: //Resume
+						case 4: //Resume
 							hierarchyObj.m_objectName = "Resume";
 							break;
-						case 6: //QuitBtn
+						case 5: //QuitBtn
 							hierarchyObj.m_objectName = "Quit";
 							break;
-						case 7: //HowToPlay
+						case 6: //HowToPlay
 							hierarchyObj.m_objectName = "ControlHelp";
 							break;
-						case 8: //ExitGame
+						case 7: //ExitGame
 							hierarchyObj.m_objectName = "ExitGame";
 							break;
-						case 9: //YesBtn
+						case 8: //YesBtn
 							hierarchyObj.m_objectName = "YesBtn";
 							break;
-						case 10: //NoBtn
+						case 9: //NoBtn
 							hierarchyObj.m_objectName = "NoBtn";
 							break;
 						}
@@ -362,7 +359,6 @@ namespace Rogue
 		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("MainMenu_Bg", true, false));
 		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("PausedTexture", true, false));
 		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("HowToPlayBtn", true, false));
-		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("MainMenu_Btn", true, false)); //This is useless now
 		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("Resume", true, false));
 		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("QuitBtn", true, false));
 		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("HowToPlay", true, false));
