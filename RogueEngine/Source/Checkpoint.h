@@ -11,5 +11,6 @@ namespace Rogue
 
 		virtual void OnTriggerEnter(Entity other) override;
 	private:
+		bool m_collected = false;
 	};
 }

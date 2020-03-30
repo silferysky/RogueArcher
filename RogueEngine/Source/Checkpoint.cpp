@@ -6,7 +6,7 @@
 namespace Rogue
 {
 	Checkpoint::Checkpoint(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent)
-		: ScriptComponent(entity, logicComponent, statsComponent)
+		: ScriptComponent(entity, logicComponent, statsComponent), m_collected{false}
 	{
 	}
 
@@ -27,7 +27,7 @@ namespace Rogue
 			if (auto transform = g_engine.m_coordinator.TryGetComponent<TransformComponent>(m_entity))
 				PlayerStatusManager::instance().SetCheckpoint(transform->get().GetPosition());
 
-			g_engine.m_coordinator.AddToDeleteQueue(m_entity);
+			m_collected = true;
 		}
 	}
 }
