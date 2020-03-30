@@ -13,5 +13,6 @@ namespace Rogue
 
 	private:
 		std::vector<Entity> m_teleportVFXArray;
+		std::vector<float> m_timers;
 	};
 }

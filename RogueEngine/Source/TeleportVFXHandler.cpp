@@ -4,6 +4,8 @@
 #define VFX_PER_TELEPORT 3
 #define VFX_MOVESPEED 4.0f
 #define VFX_MAX_DIST 5.0f
+#define VFX_BASE_TIMER 1.0f
+#define VFX_BASE_TIMER_MOD 1.0f
 
 namespace Rogue
 {
@@ -28,7 +30,8 @@ namespace Rogue
 		auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetPlayerEntity());
 
 		//For handling all current teleportVFX
-		for (auto entIt = std::begin(m_teleportVFXArray); entIt != std::end(m_teleportVFXArray); ++entIt)
+		size_t count = 0;
+		for (auto entIt = std::begin(m_teleportVFXArray); entIt != std::end(m_teleportVFXArray); ++entIt, ++count)
 		{
 			//If player is dead, cut all VFXs
 			if (PLAYER_STATUS.GetDeath())
@@ -37,16 +40,30 @@ namespace Rogue
 				auto tempIt = entIt--;
 				PLAYER_STATUS.IncrementTeleportCount(-1);
 				m_teleportVFXArray.erase(tempIt);
+				m_timers.clear();
 				continue;
 			}
-
+			
+			std::vector<float>::iterator timer = std::begin(m_timers);
+			//Safety check for count
+			if (m_timers.size() > count)
+			{
+				//To iterate through the timers
+				for (size_t it = 0; it != count && timer != std::end(m_timers); ++it, ++timer);
+				*timer += g_deltaTime * g_engine.GetTimeScale();
+			}
+			
 			if (auto entTrans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(*entIt))
 			{
 				Vec2 diff = transform.GetPosition() - entTrans->get().GetPosition();
 
 				if (Vec2SqLength(diff) > VFX_MAX_DIST* VFX_MAX_DIST)
 				{
-					entTrans->get().setPosition(entTrans->get().GetPosition() + diff * g_deltaTime * VFX_MOVESPEED);
+					float modification = (VFX_BASE_TIMER + *timer) * VFX_BASE_TIMER_MOD * g_deltaTime * VFX_MOVESPEED;
+					if (modification > 1.0f)
+						modification = 1.0f;
+
+					entTrans->get().setPosition(entTrans->get().GetPosition() + diff * modification);
 
 					Vec2 entScale = entTrans->get().GetScale();
 	
@@ -71,6 +88,7 @@ namespace Rogue
 					auto tempIt = entIt--;
 					PLAYER_STATUS.IncrementTeleportCount(-1);
 					m_teleportVFXArray.erase(tempIt);
+					m_timers.erase(timer);
 				}
 			}
 		}
@@ -95,6 +113,7 @@ namespace Rogue
 				}
 
 				m_teleportVFXArray.push_back(newVFX);
+				m_timers.push_back(0.0f);
 			}
 		}
 	}
