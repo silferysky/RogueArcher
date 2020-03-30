@@ -1,5 +1,5 @@
 {
     "Signature": 9015,
     "Entity": "Name{FinalPlayer}|Tag{Player}|Sprite{Resources\\Assets\\ExaIdle.png;1;1;1;1;}|Rigidbody{0;0;0;0;1;1;0;1;0.5;0.1;0.01;}|Transform{0;0;61;61;0;101}||BoxCollider{0;-2;-15;-5;AWAKE}|PlayerController{0;0.2;350;10;}|||Animation{8;0;0.1;1;0;1;}|Camera{0;0;1;100;1;}||||Collider{BOX;2;4294967293;}||||||||||||",
-    "Children": "TeleCharge1;TeleCharge2;TeleCharge3;Exa-Ela Animation;Ela-Exa Animation;Exa Particle Emitter;Ela Particle Emitter;Exa Death Particle;Ela Death Particle;TeleSFX1;TeleSFX2;TeleSFX3;"
+    "Children": "Exa-Ela Animation;Ela-Exa Animation;Exa Particle Emitter;Ela Particle Emitter;Exa Death Particle;Ela Death Particle;TeleSFX1;TeleSFX2;TeleSFX3;"
 }
