@@ -2,7 +2,7 @@
 #include "TeleportVFXHandler.h"
 
 #define VFX_PER_TELEPORT 3
-#define VFX_MOVESPEED 4.0f
+#define VFX_MOVESPEED 15.0f
 #define VFX_MAX_DIST 5.0f
 #define VFX_BASE_TIMER 1.0f
 #define VFX_BASE_TIMER_MOD 1.0f
