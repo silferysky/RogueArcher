@@ -62,7 +62,12 @@ namespace Rogue
 		float GetTeleportDelay() const;
 		void SetIsTeleporting(bool isTeleporting);
 		bool GetIsTeleporting() const;
-
+		void IncrementTeleportCount();
+		void SetTeleportCount(size_t count);
+		size_t GetTeleportCount() const;
+		void SetPreTeleportLoc(Vec2 oldLoc);
+		Vec2 GetPreTeleportLoc() const;
+		
 		//Light/Dark mode
 		void ToggleLightStatus();
 		void SetLightStatus(bool isLight);
@@ -146,6 +151,8 @@ namespace Rogue
 		float m_teleportCharge;
 		float m_maxTeleportCharge;
 		float m_teleportDelayTimer;
+		size_t m_teleportCount;
+		Vec2 m_preTeleportLoc;
 
 		//Light/Dark mode mechanic
 		bool m_isLightMode;

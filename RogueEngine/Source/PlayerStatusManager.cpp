@@ -25,6 +25,7 @@ namespace Rogue
 		m_maxTeleportCharge{ 3.0f },
 		m_teleportCharge{ 3.0f },
 		m_teleportDelayTimer{ 0.0f },
+		m_teleportCount{ 0 },
 		m_startingPos{ 0.0f, 0.0f },
 		m_checkpoint{ 0.0f, 0.0f },
 		m_lastLevel { "None"},
@@ -54,6 +55,7 @@ namespace Rogue
 		m_inLightDur = 0.0f;
 		m_teleportCharge = 3.0f;
 		m_teleportDelayTimer = 0.0f;
+		m_teleportCount = 0;
 		m_startingPos = { 0.0f, 0.0f };
 		m_checkpoint = { 0.0f, 0.0f };
 		m_souls.clear();
@@ -185,6 +187,31 @@ namespace Rogue
 	bool PlayerStatusManager::GetIsTeleporting() const
 	{
 		return m_isTeleporting;
+	}
+
+	void PlayerStatusManager::IncrementTeleportCount()
+	{
+		++m_teleportCount;
+	}
+
+	void PlayerStatusManager::SetTeleportCount(size_t count)
+	{
+		m_teleportCount = count;
+	}
+
+	size_t PlayerStatusManager::GetTeleportCount() const
+	{
+		return m_teleportCount;
+	}
+
+	void PlayerStatusManager::SetPreTeleportLoc(Vec2 oldLoc)
+	{
+		m_preTeleportLoc = oldLoc;
+	}
+
+	Vec2 PlayerStatusManager::GetPreTeleportLoc() const
+	{
+		return m_preTeleportLoc;
 	}
 
 	void PlayerStatusManager::SetMoveLeft(bool isLeft)

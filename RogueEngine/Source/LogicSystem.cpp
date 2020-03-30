@@ -32,6 +32,7 @@ Technology is prohibited.
 #include "TeleCharge1.h"
 #include "TeleCharge2.h"
 #include "TeleCharge3.h"
+#include "TeleportVFXHandler.h"
 #include "HoverOverButton.h"
 #include "ProgressBar.h"
 #include "AppearOnCollide.h"
@@ -237,6 +238,12 @@ namespace Rogue
 				{
 					DisappearOnCollide newAI(entities, logicComponent, statsComponent);
 					AddLogicInterface(entities, std::make_shared<DisappearOnCollide>(newAI));
+					break;
+				}
+				case AIType::TeleportVFX:
+				{
+					TeleportVFXHandler newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<TeleportVFXHandler>(newAI));
 					break;
 				}
 				case AIType::UI_TeleCharge1:

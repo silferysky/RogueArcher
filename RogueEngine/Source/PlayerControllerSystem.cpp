@@ -844,6 +844,12 @@ namespace Rogue
 			!g_engine.m_coordinator.ComponentExists<ColliderComponent>(*m_entities.begin()))
 			return;
 
+		if (auto loc = g_engine.m_coordinator.TryGetComponent<TransformComponent>(PLAYER_STATUS.GetPlayerEntity()))
+		{
+			PLAYER_STATUS.SetPreTeleportLoc(loc->get().GetPosition());
+		}
+
+		PLAYER_STATUS.IncrementTeleportCount();
 		PLAYER_STATUS.IncrementTeleportCharge(-1.0f);
 		g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(*m_entities.begin()).m_grounded = false;
 

@@ -767,6 +767,9 @@
     <ClInclude Include="Source\PerlinNoise.h">
       <Filter>RogueEngine\Math</Filter>
     </ClInclude>
+    <ClInclude Include="Source\TeleportVFXHandler.h">
+      <Filter>RogueEngine\Systems\AI\Script Types\Game\Exa/Ela</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -1222,6 +1225,9 @@
     </ClCompile>
     <ClCompile Include="Source\SoulSystem.cpp">
       <Filter>RogueEngine\Systems\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TeleportVFXHandler.cpp">
+      <Filter>RogueEngine\Systems\AI\Script Types\Game\Exa/Ela</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
