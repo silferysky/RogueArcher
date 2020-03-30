@@ -7,23 +7,23 @@
 class PerlinNoise 
 {
 	// The permutation vector
-	std::vector<int> p;
+	std::vector<int> m_perlin;
 public:
 	PerlinNoise(unsigned int seed = 0)
 	{
-		p.resize(256);
+		m_perlin.resize(256);
 
 		// Fill p with values from 0 to 255
-		std::iota(p.begin(), p.end(), 0);
+		std::iota(m_perlin.begin(), m_perlin.end(), 0);
 
 		// Initialize a random engine with seed
 		std::default_random_engine engine(seed);
 
 		// Suffle  using the above random engine
-		std::shuffle(p.begin(), p.end(), engine);
+		std::shuffle(m_perlin.begin(), m_perlin.end(), engine);
 
 		// Duplicate the permutation vector
-		p.insert(p.end(), p.begin(), p.end());
+		m_perlin.insert(m_perlin.end(), m_perlin.begin(), m_perlin.end());
 	}
 
 	double noise(double x, double y, double z)
@@ -33,7 +33,7 @@ public:
 		int Y = (int)floor(y) & 255;
 		int Z = (int)floor(z) & 255;
 
-		// Find relative x, y,z of point in cube
+		// Find relative x, y, z of point in cube
 		x -= floor(x);
 		y -= floor(y);
 		z -= floor(z);
@@ -44,15 +44,19 @@ public:
 		double w = fade(z);
 
 		// Hash coordinates of the 8 cube corners
-		int A = p[X] + Y;
-		int AA = p[A] + Z;
-		int AB = p[A + 1] + Z;
-		int B = p[X + 1] + Y;
-		int BA = p[B] + Z;
-		int BB = p[B + 1] + Z;
+		int A = m_perlin[X] + Y;
+		int AA = m_perlin[A] + Z;
+		int AB = m_perlin[A + 1] + Z;
+		int B = m_perlin[X + 1] + Y;
+		int BA = m_perlin[B] + Z;
+		int BB = m_perlin[B + 1] + Z;
 
 		// Add blended results from 8 corners of cube
-		double res = lerp(w, lerp(v, lerp(u, grad(p[AA], x, y, z), grad(p[BA], x - 1, y, z)), lerp(u, grad(p[AB], x, y - 1, z), grad(p[BB], x - 1, y - 1, z))), lerp(v, lerp(u, grad(p[AA + 1], x, y, z - 1), grad(p[BA + 1], x - 1, y, z - 1)), lerp(u, grad(p[AB + 1], x, y - 1, z - 1), grad(p[BB + 1], x - 1, y - 1, z - 1))));
+		double res = lerp(w, lerp(v, lerp(u, grad(m_perlin[AA], x, y, z), grad(m_perlin[BA], x - 1, y, z)), 
+									 lerp(u, grad(m_perlin[AB], x, y - 1, z), grad(m_perlin[BB], x - 1, y - 1, z))), 
+			         lerp(v, lerp(u, grad(m_perlin[AA + 1], x, y, z - 1), grad(m_perlin[BA + 1], x - 1, y, z - 1)), 
+						             lerp(u, grad(m_perlin[AB + 1], x, y - 1, z - 1), grad(m_perlin[BB + 1], x - 1, y - 1, z - 1))));
+
 		return (res + 1.0) / 2.0;
 	}
 private:
