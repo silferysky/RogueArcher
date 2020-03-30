@@ -34,6 +34,7 @@ namespace Rogue
 		std::stringstream ss;
 		ss << "completionPercentage: " << completionPercentage
 			<< " Curr level: " << PLAYER_STATUS.GetCurrLevel();
+
 		//RE_INFO(ss.str());
 		// player - camera -> should - now
 		if (auto transform = g_engine.m_coordinator.TryGetComponent<TransformComponent>(m_entity))

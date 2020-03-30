@@ -35,6 +35,7 @@ Technology is prohibited.
 #include "TeleportVFXHandler.h"
 #include "HoverOverButton.h"
 #include "ProgressBar.h"
+#include "ProgressCheckpoint.h"
 #include "AppearOnCollide.h"
 #include "DisappearOnCollide.h"
 #include "DeathBox.h"
@@ -274,6 +275,12 @@ namespace Rogue
 				{
 					ProgressBar newAI(entities, logicComponent, statsComponent);
 					AddLogicInterface(entities, std::make_shared<ProgressBar>(newAI));
+					break;
+				}
+				case AIType::UI_ProgressCheckpoint:
+				{
+					ProgressCheckpoint newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<ProgressCheckpoint>(newAI));
 					break;
 				}
 				case AIType::Gameplay_DeathBox:

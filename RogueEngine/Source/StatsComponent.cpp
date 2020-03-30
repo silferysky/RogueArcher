@@ -279,7 +279,7 @@ namespace Rogue
 		m_level = (LEVEL)tempInt;
 
 		ImGui::PushItemWidth(75);
-		ImGui::DragFloat("Speed", &m_speed, 1.0f, 0.0f, 10.0f);
+		ImGui::DragFloat("Speed", &m_speed, 1.0f, 0.0f, 200.0f);
 
 		ImGui::PushItemWidth(75);
 		ImGui::DragInt("Attack Range", &m_attackRange, 1.0f, 0, 1000);

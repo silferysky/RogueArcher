@@ -770,6 +770,9 @@
     <ClInclude Include="Source\TeleportVFXHandler.h">
       <Filter>RogueEngine\Systems\AI\Script Types\Game\Exa/Ela</Filter>
     </ClInclude>
+    <ClInclude Include="Source\ProgressCheckpoint.h">
+      <Filter>RogueEngine\Systems\AI\Script Types\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -1228,6 +1231,9 @@
     </ClCompile>
     <ClCompile Include="Source\TeleportVFXHandler.cpp">
       <Filter>RogueEngine\Systems\AI\Script Types\Game\Exa/Ela</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ProgressCheckpoint.cpp">
+      <Filter>RogueEngine\Systems\AI\Script Types\UI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

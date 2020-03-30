@@ -59,6 +59,7 @@ namespace Rogue
 		Crystal_ElementBeetle,
 		Crystal_Mole,
 		TeleportVFX,
+		UI_ProgressCheckpoint,
 
 		AI_Last
 	};

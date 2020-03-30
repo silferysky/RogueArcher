@@ -62,6 +62,7 @@
     <ClInclude Include="Source\LightsFlicker.h" />
     <ClInclude Include="Source\PerlinNoise.h" />
     <ClInclude Include="Source\ProgressBar.h" />
+    <ClInclude Include="Source\ProgressCheckpoint.h" />
     <ClInclude Include="Source\SaveComponent.h" />
     <ClInclude Include="Source\SoulCollectible.h" />
     <ClInclude Include="Source\LayerManager.h" />
@@ -307,6 +308,7 @@
     <ClCompile Include="Source\PlayerControllerSystem.cpp" />
     <ClCompile Include="Source\Polygon.cpp" />
     <ClCompile Include="Source\ProgressBar.cpp" />
+    <ClCompile Include="Source\ProgressCheckpoint.cpp" />
     <ClCompile Include="Source\RigidbodyComponent.cpp" />
     <ClCompile Include="Source\RotatableComponent.cpp" />
     <ClCompile Include="Source\SaveComponent.cpp" />
