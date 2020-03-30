@@ -30,6 +30,16 @@ namespace Rogue
 		//For handling all current teleportVFX
 		for (auto entIt = std::begin(m_teleportVFXArray); entIt != std::end(m_teleportVFXArray); ++entIt)
 		{
+			//If player is dead, cut all VFXs
+			if (PLAYER_STATUS.GetDeath())
+			{
+				g_engine.m_coordinator.AddToDeleteQueue(*entIt);
+				auto tempIt = entIt--;
+				PLAYER_STATUS.IncrementTeleportCount(-1);
+				m_teleportVFXArray.erase(tempIt);
+				continue;
+			}
+
 			if (auto entTrans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(*entIt))
 			{
 				Vec2 diff = transform.GetPosition() - entTrans->get().GetPosition();
