@@ -1,5 +1,5 @@
 {
-    "Signature": 2245,
-    "Entity": "Name{NoBtn}|Tag{}|Sprite{Resources\\Assets\\MenuButtonNo.png;1;1;1;1001}||Transform{164;-158;131;169;0;1001}||||LogicComponent{22;0;1;0}|StatsComponent{0;0;0;0;0;;0;0;0;0;0;0;0;}||||UI{0;}|||||||",
-		"Children": ""
+    "Signature": 2501,
+    "Entity": "Name{NoBtn}|Tag{}|Sprite{Resources\\Assets\\MenuButtonNo.png;1;1;1;1001;}||Transform{183.402;-166;239;309;0;1001}||||LogicComponent{22;0;1;0}|StatsComponent{0;0;0;0;0;;0;0;0;0;0;0;0;}|Animation{5;4;0.1;1;0;1;}|||UI{1;}|||||||||||||||",
+    "Children": ""
 }
