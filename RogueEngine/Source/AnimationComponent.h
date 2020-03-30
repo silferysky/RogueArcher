@@ -35,6 +35,7 @@ namespace Rogue
 		bool m_isAnimating = true;
 		bool m_isLooping = false;
 		bool m_isNotReversed = true;
+		bool m_playAnimWhilePaused = false;
 	public:
 		AnimationComponent() = default;
 		~AnimationComponent() = default;
@@ -69,6 +70,9 @@ namespace Rogue
 
 		void setIsNotReversed(const bool& isNotReversed);
 		bool getIsNotReversed() const;
+
+		void setPlayAnimWhilePaused(const bool& playWhilePaused);
+		bool getPlayAnimWhilePaused() const;
 
 		void DisplayOnInspector();
 		//Serialize

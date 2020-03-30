@@ -25,6 +25,7 @@ namespace Rogue
 	{
 		if (isUndo)
 		{
+			return;
 			EditorEvent& editorEv = m_undoStack.back();
 			editorEv.SetIsUndo(true);
 			

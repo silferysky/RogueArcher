@@ -113,7 +113,12 @@ namespace Rogue
 				FixedUpdateSystem(SystemID::id_PARTICLESYSTEM, "Particle System");
 				FixedUpdateSystem(SystemID::id_PARTICLEEMITTERSYSTEM, "Particle Emitter System");
 				FixedUpdateSystem(SystemID::id_FADESYSTEM, "Fade System");
-				FixedUpdateSystem(SystemID::id_ANIMATIONSYSTEM, "Animation System");
+			}
+
+			FixedUpdateSystem(SystemID::id_ANIMATIONSYSTEM, "Animation System");
+
+			if (!m_gameIsPaused && m_gameIsRunning)
+			{
 				FixedUpdateSystem(SystemID::id_UISYSTEM, "UI System");
 				FixedUpdateSystem(SystemID::id_PHYSICSSYSTEM, "Physics System");
 			}

@@ -114,6 +114,16 @@ namespace Rogue
 
 				m_teleportVFXArray.push_back(newVFX);
 				m_timers.push_back(0.0f);
+
+				if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(newVFX))
+				{
+					if (auto animate = g_engine.m_coordinator.TryGetComponent<AnimationComponent>(newVFX))
+					{
+						sprite->get().setTexCoordOffsetX(static_cast<float>(animate->get().getStartFrame() / animate->get().getFrames()));
+						sprite->get().setTexCoordScaleX(static_cast<float>(1.0f / animate->get().getFrames()));
+						animate->get().setCurrentFrame(animate->get().getStartFrame());
+					}
+				}
 			}
 		}
 	}

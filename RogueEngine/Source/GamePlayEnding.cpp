@@ -50,15 +50,6 @@ namespace Rogue
 			g_engine.m_coordinator.GetSystem<CameraSystem>()->setIsActive(true);
 
 			m_timer += g_deltaTime * g_engine.GetTimeScale();
-			if (PLAYER_STATUS.GetCollectedSoulsInLevel(LEVEL::CORAL) == PLAYER_STATUS.GetTotalSoulsInLevel(LEVEL::CORAL) &&
-				PLAYER_STATUS.GetCollectedSoulsInLevel(LEVEL::CRYSTAL) == PLAYER_STATUS.GetTotalSoulsInLevel(LEVEL::CRYSTAL) &&
-				PLAYER_STATUS.GetCollectedSoulsInLevel(LEVEL::VEGETATION) == PLAYER_STATUS.GetTotalSoulsInLevel(LEVEL::VEGETATION))
-			{
-				m_trueEnding = true;
-			}
-
-			if (PLAYER_STATUS.GetTrueEndTrigger())
-				m_trueEnding = true;
 
 			//Zoom out slightly
 			if (CameraManager::instance().GetCameraZoom() < 1.3f)
@@ -316,17 +307,18 @@ namespace Rogue
 					TrueEnding();
 				}
 
-				if (m_endingAPressed)
+				else if (m_endingAPressed)
 				{
 					ExaEnding();
 				}
-				if (m_endingDPressed)
+				else if (m_endingDPressed)
 				{
 					ElaEnding();
 				}
 			}
 		}
 	}
+
 	void GamePlayEnding::OnTriggerEnter(Entity other)
 	{
 		if (!g_engine.m_coordinator.GameIsActive())
@@ -426,12 +418,17 @@ namespace Rogue
 					//}
 				}
 
-				if (CrystalComplete && CoralComplete && VegetationComplete) // all levels finished
-					PlayerStatusManager::instance().SetEnding(true);
+				PlayerStatusManager::instance().SetEnding(true);
 
-				if (PLAYER_STATUS.GetTrueEndTrigger() || PLAYER_STATUS.GetEndTrigger())
+				if ((PLAYER_STATUS.GetCollectedSoulsInLevel(LEVEL::CORAL) == PLAYER_STATUS.GetTotalSoulsInLevel(LEVEL::CORAL) &&
+					PLAYER_STATUS.GetCollectedSoulsInLevel(LEVEL::CRYSTAL) == PLAYER_STATUS.GetTotalSoulsInLevel(LEVEL::CRYSTAL) &&
+					PLAYER_STATUS.GetCollectedSoulsInLevel(LEVEL::VEGETATION) == PLAYER_STATUS.GetTotalSoulsInLevel(LEVEL::VEGETATION) &&
+					PLAYER_STATUS.GetCollectedSoulsInLevel(LEVEL::CORAL) != 0 &&
+					PLAYER_STATUS.GetCollectedSoulsInLevel(LEVEL::CRYSTAL) != 0 &&
+					PLAYER_STATUS.GetCollectedSoulsInLevel(LEVEL::VEGETATION) != 0) || 
+					PLAYER_STATUS.GetTrueEndTrigger())
 				{
-					PLAYER_STATUS.SetEnding(true);
+					m_trueEnding = true;
 				}
 
 				m_activated = true;
@@ -439,6 +436,7 @@ namespace Rogue
 			
 		}
 	}
+
 	void GamePlayEnding::TrueEnding()
 	{
 		for (HierarchyInfo& info : g_engine.m_coordinator.GetHierarchyInfoArray())
@@ -626,7 +624,6 @@ namespace Rogue
 		}
 	}
 
-
 	void GamePlayEnding::ExaEnding()
 	{
 		if (frame1)
@@ -787,9 +784,6 @@ namespace Rogue
 			g_engine.m_coordinator.SetTransition(true);
 		}
 	}
-
-
-
 
 	void GamePlayEnding::ElaEnding()
 	{
