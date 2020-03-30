@@ -1,5 +1,5 @@
 {
     "Signature": 2501,
-    "Entity": "Name{YesBtn}|Tag{}|Sprite{Resources\\Assets\\MenuButtonYes.png;1;1;1;1001}||Transform{-156;-166;239;309;0;1001}||||LogicComponent{22;0;1;0}|StatsComponent{0;0;0;0;0;;0;0;0;0;0;0;0;}|Animation{5;4;0.1;1;0;1;}|||UI{0;}|||||||",
+    "Entity": "Name{YesBtn}|Tag{}|Sprite{Resources\\Assets\\MenuButtonYes.png;1;1;1;1001}||Transform{-156;-166;239;309;0;1001}||||LogicComponent{22;0;1;0}|StatsComponent{0;0;0;0;0;;0;0;0;0;0;0;0;}|Animation{5;4;0.1;1;0;1;1;}|||UI{0;}|||||||",
 		"Children": ""
 }

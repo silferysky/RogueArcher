@@ -126,6 +126,16 @@ namespace Rogue
 		return m_isNotReversed;
 	}
 
+	void AnimationComponent::setPlayAnimWhilePaused(const bool& playWhilePaused)
+	{
+		m_playAnimWhilePaused = playWhilePaused;
+	}
+
+	bool AnimationComponent::getPlayAnimWhilePaused() const
+	{
+		return m_playAnimWhilePaused;
+	}
+
 	void AnimationComponent::DisplayOnInspector()
 	{
 		ImGui::Checkbox("Component Active", &m_componentIsActive);
@@ -160,6 +170,7 @@ namespace Rogue
 		ss << m_isLooping << ";";
 		ss << m_startFrame << ";";
 		ss << m_isNotReversed << ";";
+		ss << m_playAnimWhilePaused << ";";
 		return ss.str();
 	}
 
@@ -190,6 +201,9 @@ namespace Rogue
 				break;
 			case 5:
 				setIsNotReversed(std::stoi(s1));
+				break;
+			case 6:
+				setPlayAnimWhilePaused(std::stoi(s1));
 				break;
 			default:
 				break;

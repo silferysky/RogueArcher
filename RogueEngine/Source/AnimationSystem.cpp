@@ -48,6 +48,9 @@ namespace Rogue
 			if (animate.getIsAnimating() == false)
 				continue;
 
+			if (!animate.getPlayAnimWhilePaused() && (g_engine.m_coordinator.GetPauseState() || !g_engine.m_coordinator.GetGameState()))
+				continue;
+
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(entity);
 			
 			if (animate.getIsNotReversed())
