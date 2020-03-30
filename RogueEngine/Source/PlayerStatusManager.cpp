@@ -189,9 +189,11 @@ namespace Rogue
 		return m_isTeleporting;
 	}
 
-	void PlayerStatusManager::IncrementTeleportCount()
+	void PlayerStatusManager::IncrementTeleportCount(size_t count)
 	{
-		++m_teleportCount;
+		m_teleportCount += count;
+		if (m_teleportCount > 9999)
+			m_teleportCount = 0;
 	}
 
 	void PlayerStatusManager::SetTeleportCount(size_t count)

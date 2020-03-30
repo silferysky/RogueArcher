@@ -62,7 +62,7 @@ namespace Rogue
 		float GetTeleportDelay() const;
 		void SetIsTeleporting(bool isTeleporting);
 		bool GetIsTeleporting() const;
-		void IncrementTeleportCount();
+		void IncrementTeleportCount(size_t count = 1);
 		void SetTeleportCount(size_t count);
 		size_t GetTeleportCount() const;
 		void SetPreTeleportLoc(Vec2 oldLoc);

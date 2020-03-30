@@ -354,23 +354,8 @@ namespace Rogue
 			//Disable cheats on reset
 			PLAYER_STATUS.SetEndTrigger(false);
 			PLAYER_STATUS.SetTrueEndTrigger(false);
-			////Safety check to make sure level exists
-			//if (!PLAYER_STATUS.GetRunCount())
-			//{
-			//	//PLAYER_STATUS.SetRunCount(1);
-			//	PLAYER_STATUS.Reset();
-			//	return;
-			//}
 
-			//Deleting entity
-			//for (auto entity : m_entities)
-			//	g_engine.m_coordinator.AddToDeleteQueue(entity);
-
-			//If more than 1 player entity
-			//if (m_entities.size() > 1)
-			//	g_engine.m_coordinator.AddToDeleteQueue(*m_entities.begin());
-
-			//PLAYER_STATUS.Reset();
+			PLAYER_STATUS.SetTeleportCount(0);
 			break;
 		}
 
@@ -849,7 +834,7 @@ namespace Rogue
 			PLAYER_STATUS.SetPreTeleportLoc(loc->get().GetPosition());
 		}
 
-		PLAYER_STATUS.IncrementTeleportCount();
+		PLAYER_STATUS.IncrementTeleportCount(3);
 		PLAYER_STATUS.IncrementTeleportCharge(-1.0f);
 		g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(*m_entities.begin()).m_grounded = false;
 

@@ -2,15 +2,16 @@
 #include "TeleportVFXHandler.h"
 
 #define VFX_PER_TELEPORT 3
-#define VFX_MOVESPEED 0.02f
-#define VFX_MAX_DIST 10.0f
+#define VFX_MOVESPEED 4.0f
+#define VFX_MAX_DIST 5.0f
 
 namespace Rogue
 {
 	TeleportVFXHandler::TeleportVFXHandler(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent)
-		: ScriptComponent(entity, logicComponent, statsComponent), m_teleportVFXArray{ std::vector<Entity>() }, m_timer{ 0.0f }, m_delay{ 0.3f }
+		: ScriptComponent(entity, logicComponent, statsComponent), m_teleportVFXArray{ std::vector<Entity>() }
 	{
 	}
+
 	void TeleportVFXHandler::AIActiveStateUpdate()
 	{
 		if (!g_engine.m_coordinator.GameIsActive())
@@ -27,28 +28,41 @@ namespace Rogue
 		auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(PLAYER_STATUS.GetPlayerEntity());
 
 		//For handling all current teleportVFX
-		for (Entity ent : m_teleportVFXArray)
+		for (auto entIt = std::begin(m_teleportVFXArray); entIt != std::end(m_teleportVFXArray); ++entIt)
 		{
-			if (auto entTrans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(ent))
+			if (auto entTrans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(*entIt))
 			{
 				Vec2 diff = transform.GetPosition() - entTrans->get().GetPosition();
 
 				if (Vec2SqLength(diff) > VFX_MAX_DIST* VFX_MAX_DIST)
-					entTrans->get().setPosition(entTrans->get().GetPosition());
+				{
+					entTrans->get().setPosition(entTrans->get().GetPosition() + diff * g_deltaTime * VFX_MOVESPEED);
+
+					Vec2 entScale = entTrans->get().GetScale();
+	
+					//Checking for direction
+
+					//If facing right and need to turn left
+					if (diff.x < 0.0f && entScale.x > 0.0f)
+					{
+						entScale.x *= -1.0f;
+						entTrans->get().setScale(entScale);
+					}
+					//If facing left and need to turn right
+					else if (diff.x > 0.0f && entScale.x < 0.0f)
+					{
+						entScale.x *= -1.0f;
+						entTrans->get().setScale(entScale);
+					}
+				}
+				else
+				{
+					g_engine.m_coordinator.AddToDeleteQueue(*entIt);
+					auto tempIt = entIt--;
+					PLAYER_STATUS.IncrementTeleportCount(-1);
+					m_teleportVFXArray.erase(tempIt);
+				}
 			}
-		}
-		
-		if (m_teleportVFXArray.size())
-			m_timer += g_engine.GetTimeScale() * g_deltaTime;
-		if (m_timer > m_delay)
-		{
-			for (Entity ent : m_teleportVFXArray)
-			{
-				g_engine.m_coordinator.AddToDeleteQueue(ent);
-			}
-			m_teleportVFXArray.clear();
-			PLAYER_STATUS.SetTeleportCount(0);
-			m_timer = 0.0f;
 		}
 
 		//For creating more teleport VFX
