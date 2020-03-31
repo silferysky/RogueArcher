@@ -124,13 +124,13 @@ namespace Rogue
 						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(info.m_Entity);
 						sprite.setFilter(glm::vec4(sprite.getFilter().r, sprite.getFilter().g, sprite.getFilter().b, sprite.getFilter().a + filterchange * g_deltaTime));
 					}
-					if (info.m_tag == "ExaA")
-					{
-						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(info.m_Entity);
-						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
-						sprite.setFilter(glm::vec4(sprite.getFilter().r, sprite.getFilter().g, sprite.getFilter().b, sprite.getFilter().a + filterchange * g_deltaTime));
-						//transform.setZ(101);
-					}
+					//if (info.m_tag == "ExaA")
+					//{
+					//	auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(info.m_Entity);
+					//	auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+					//	sprite.setFilter(glm::vec4(sprite.getFilter().r, sprite.getFilter().g, sprite.getFilter().b, sprite.getFilter().a + filterchange * g_deltaTime));
+					//	//transform.setZ(101);
+					//}
 				}
 			}
 			else if (m_timer > 9.0f && m_timer < 12.0f)
@@ -169,18 +169,18 @@ namespace Rogue
 							UI.setIsActive(true);
 						}
 					}
-					if (info.m_tag == "ElaA")
-					{
-						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
-						transform.setPosition(Vec2{ transform.GetPosition().x + propstransform * g_deltaTime,transform.GetPosition().y });
-						if (!g_engine.m_coordinator.ComponentExists<UIComponent>(info.m_Entity))
-						{
-							g_engine.m_coordinator.AddComponent(info.m_Entity, UIComponent());
-							auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(info.m_Entity);
-							UI.setIsActive(true);
-						}
-						transform.setZ(101);
-					}
+					//if (info.m_tag == "ElaA")
+					//{
+					//	auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+					//	transform.setPosition(Vec2{ transform.GetPosition().x + propstransform * g_deltaTime,transform.GetPosition().y });
+					//	if (!g_engine.m_coordinator.ComponentExists<UIComponent>(info.m_Entity))
+					//	{
+					//		g_engine.m_coordinator.AddComponent(info.m_Entity, UIComponent());
+					//		auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(info.m_Entity);
+					//		UI.setIsActive(true);
+					//	}
+					//	transform.setZ(101);
+					//}
 					if (info.m_tag == "ExaTitle")
 					{
 						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
@@ -193,18 +193,18 @@ namespace Rogue
 						}
 
 					}
-					if (info.m_tag == "ExaA")
-					{
-						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
-						transform.setPosition(Vec2{ transform.GetPosition().x - propstransform * g_deltaTime,transform.GetPosition().y });
-						if (!g_engine.m_coordinator.ComponentExists<UIComponent>(info.m_Entity))
-						{
-							g_engine.m_coordinator.AddComponent(info.m_Entity, UIComponent());
-							auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(info.m_Entity);
-							UI.setIsActive(true);
-						}
-						transform.setZ(101);
-					}
+					//if (info.m_tag == "ExaA")
+					//{
+					//	auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+					//	transform.setPosition(Vec2{ transform.GetPosition().x - propstransform * g_deltaTime,transform.GetPosition().y });
+					//	if (!g_engine.m_coordinator.ComponentExists<UIComponent>(info.m_Entity))
+					//	{
+					//		g_engine.m_coordinator.AddComponent(info.m_Entity, UIComponent());
+					//		auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(info.m_Entity);
+					//		UI.setIsActive(true);
+					//	}
+					//	transform.setZ(101);
+					//}
 					if (info.m_tag == "ExaClone")
 					{
 						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
@@ -230,22 +230,30 @@ namespace Rogue
 						sprite.setTexturePath("Resources/Assets/EndingEventEla.png");
 						//sprite.setFilter(glm::vec4(255, 255, 255, sprite.getFilter().a + 0.1f));
 					}
-					if (info.m_tag == "ElaA")
+
+					if (info.m_tag == "ExaTitle")
 					{
-						//auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(info.m_Entity);
-						auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
-						transform.setZ(-100);
-						auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(info.m_Entity);
-						UI.setIsActive(false);
+						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(info.m_Entity);
+						sprite.setTexturePath("Resources/Assets/EndingEventExa.png");
+						//sprite.setFilter(glm::vec4(255, 255, 255, sprite.getFilter().a + 0.1f));
 					}
 
-					if (info.m_tag == "ExaA")
-					{
-						//auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(info.m_Entity);
-
-						//auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
-						//transform.setZ(-100);
-					}
+					//if (info.m_tag == "ElaA")
+					//{
+					//	//auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(info.m_Entity);
+					//	auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+					//	transform.setZ(-100);
+					//	auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(info.m_Entity);
+					//	UI.setIsActive(false);
+					//}
+					//
+					//if (info.m_tag == "ExaA")
+					//{
+					//	//auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(info.m_Entity);
+					//
+					//	//auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+					//	//transform.setZ(-100);
+					//}
 					if (info.m_tag == "ExaClone")
 					{
 						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(info.m_Entity);
