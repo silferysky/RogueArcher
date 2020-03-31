@@ -8,6 +8,7 @@
 #include "InputManager.h"
 #define propstransform 50.0f
 #define filterchange 10.0f
+#define backgroundfilterchange 0.6f
 #define clonetransformx 100.0f
 #define frame1 m_timer > 19.0f && m_timer < 20.0f
 #define frame2 m_timer > 20.0f && m_timer < 21.0f
@@ -20,18 +21,19 @@
 #define frame9 m_timer > 27.0f && m_timer < 28.0f
 #define frame10 m_timer > 28.0f && m_timer < 29.0f
 #define frame11 m_timer > 29.0f && m_timer < 30.0f
-#define frame12 m_timer > 30.0f && m_timer < 30.5f
-#define frame13 m_timer > 30.5f && m_timer < 31.0f
-#define frame14 m_timer > 31.0f && m_timer < 31.5f
-#define frame15 m_timer > 31.5f && m_timer < 32.0f
-#define frame16 m_timer > 32.0f && m_timer < 32.5f
+#define frame12 m_timer > 30.0f && m_timer < 31.0f
+#define frame13 m_timer > 31.0f && m_timer < 31.5f
+#define frame14 m_timer > 31.5f && m_timer < 32.0f
+#define frame15 m_timer > 32.0f && m_timer < 32.5f
+#define frame16 m_timer > 32.5f && m_timer < 33.0f
+#define frame17 m_timer > 33.0f && m_timer < 33.5f
 
 namespace Rogue
 {
 	GamePlayEnding::GamePlayEnding(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent)
 		: ScriptComponent(entity, logicComponent, statsComponent), m_souls{ 0 }, m_timer{ 0.0f }, m_activated{ false }
 		, m_movement{ 15.0f }, m_moveleft{ false }, m_moveright{ false }, m_finalInput{ false }, m_endingAPressed{ false }, m_endingDPressed{ false },m_finalSpriteSet{false}
-		, m_finalSprite { MAX_ENTITIES }
+		, m_finalSprite { MAX_ENTITIES },m_finalSpriteBackground{MAX_ENTITIES}
 	{
 	}
 
@@ -410,6 +412,8 @@ namespace Rogue
 						camera.setIsActive(true);
 					}
 
+
+
 					//if (info.m_tag == "ElaClone")
 					//{
 					//	auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
@@ -491,9 +495,14 @@ namespace Rogue
 					auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(info.m_Entity);
 					sprite.setTexturePath("Resources/Assets/True1.png");
 					m_finalSprite = info.m_Entity;
-					transform.setZ(1000);
+					transform.setZ(103);
 					m_finalSpriteSet = true;
 				}
+			}
+
+			if (info.m_tag == "EndingBackground")
+			{
+				m_finalSpriteBackground = info.m_Entity;
 			}
 		}
 
@@ -523,99 +532,123 @@ namespace Rogue
 
 		if (frame5)
 		{
-			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-			sprite.setTexturePath("Resources/Assets/True6.png");
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSpriteBackground);
+			auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(m_finalSpriteBackground);
+			for (HierarchyInfo& info : g_engine.m_coordinator.GetHierarchyInfoArray())
+			{
+				if (info.m_tag == "EndingBackground")
+				{
+					if (!g_engine.m_coordinator.ComponentExists<UIComponent>(info.m_Entity))
+					{
+						g_engine.m_coordinator.AddComponent(info.m_Entity, UIComponent());
+						auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(info.m_Entity);
+						UI.setIsActive(true);
+					}
+					auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+					transform.setZ(1001);
+				}
+			}
+			sprite.setFilter(glm::vec4(sprite.getFilter().r, sprite.getFilter().g, sprite.getFilter().b, sprite.getFilter().a + backgroundfilterchange * g_deltaTime));
 		}
 
 		if (frame6)
 		{
+			auto& spritebackground = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSpriteBackground);
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-			sprite.setTexturePath("Resources/Assets/True7.png");
+			spritebackground.setFilter(glm::vec4(spritebackground.getFilter().r, spritebackground.getFilter().g, spritebackground.getFilter().b, spritebackground.getFilter().a - backgroundfilterchange * g_deltaTime));
+			sprite.setTexturePath("Resources/Assets/True6.png");
 		}
 
 		if (frame7)
 		{
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-			sprite.setTexturePath("Resources/Assets/True8.png");
+			sprite.setTexturePath("Resources/Assets/True7.png");
 		}
 
 		if (frame8)
 		{
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-			sprite.setTexturePath("Resources/Assets/True9.png");
+			sprite.setTexturePath("Resources/Assets/True8.png");
 		}
 
 		if (frame9)
 		{
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-			sprite.setTexturePath("Resources/Assets/True10.png");
+			sprite.setTexturePath("Resources/Assets/True9.png");
 		}
 
 		if (frame10)
 		{
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-			sprite.setTexturePath("Resources/Assets/True11.png");
+			sprite.setTexturePath("Resources/Assets/True10.png");
 		}
 
 		if (frame11)
 		{
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-			sprite.setTexturePath("Resources/Assets/True12.png");
+			sprite.setTexturePath("Resources/Assets/True11.png");
 		}
 
 		if (frame12)
 		{
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-			sprite.setTexturePath("Resources/Assets/True13.png");
+			sprite.setTexturePath("Resources/Assets/True12.png");
 		}
 
 		if (frame13)
 		{
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-			sprite.setTexturePath("Resources/Assets/True14.png");
+			sprite.setTexturePath("Resources/Assets/True13.png");
 		}
 
 		if (m_timer > 31.0f && m_timer < 32.0f)
 		{
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-			sprite.setTexturePath("Resources/Assets/True15.png");
+			sprite.setTexturePath("Resources/Assets/True14.png");
 		}
 
 		if (m_timer > 32.0f && m_timer < 33.0f)
 		{
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-			sprite.setTexturePath("Resources/Assets/True16.png");
+			sprite.setTexturePath("Resources/Assets/True15.png");
 		}
 
 		if (m_timer > 33.0f && m_timer < 34.0f)
 		{
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-			sprite.setTexturePath("Resources/Assets/True17.png");
+			sprite.setTexturePath("Resources/Assets/True16.png");
 		}
 
 		if (m_timer > 34.0f && m_timer < 35.0f)
 		{
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-			sprite.setTexturePath("Resources/Assets/True18.png");
+			sprite.setTexturePath("Resources/Assets/True17.png");
 		}
 
 		if (m_timer > 35.0f && m_timer < 36.0f)
 		{
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-			sprite.setTexturePath("Resources/Assets/True19.png");
+			sprite.setTexturePath("Resources/Assets/True18.png");
 		}
 
 		if (m_timer > 36.0f && m_timer < 37.0f)
 		{
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-			sprite.setTexturePath("Resources/Assets/True20.png");
+			sprite.setTexturePath("Resources/Assets/True19.png");
 		}
 
 		if (m_timer > 37.0f && m_timer < 38.0f)
 		{
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/True20.png");
+		}
+
+		if (m_timer > 38.0f && m_timer < 39.0f)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
 			sprite.setTexturePath("Resources/Assets/True21.png");
 		}
+
 		if (m_timer > 42.0f)
 		{
 			PLAYER_STATUS.ResetEndGame();
@@ -680,9 +713,14 @@ namespace Rogue
 						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(info.m_Entity);
 						sprite.setTexturePath("Resources/Assets/ExaS1.png");
 						m_finalSprite = info.m_Entity;
-						transform.setZ(1000);
+						transform.setZ(103);
 						m_finalSpriteSet = true;
 					}
+				}
+
+				if (info.m_tag == "EndingBackground")
+				{
+					m_finalSpriteBackground = info.m_Entity;
 				}
 			}
 		}
@@ -713,65 +751,88 @@ namespace Rogue
 
 		if (frame6)
 		{
-			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-			sprite.setTexturePath("Resources/Assets/ExaS6.png");
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSpriteBackground);
+			auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(m_finalSpriteBackground);
+			for (HierarchyInfo& info : g_engine.m_coordinator.GetHierarchyInfoArray())
+			{
+				if (info.m_tag == "EndingBackground")
+				{
+					if (!g_engine.m_coordinator.ComponentExists<UIComponent>(info.m_Entity))
+					{
+						g_engine.m_coordinator.AddComponent(info.m_Entity, UIComponent());
+						auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(info.m_Entity);
+						UI.setIsActive(true);
+					}
+					auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+					transform.setZ(1001);
+				}
+			}
+			sprite.setFilter(glm::vec4(sprite.getFilter().r, sprite.getFilter().g , sprite.getFilter().b , sprite.getFilter().a + backgroundfilterchange * g_deltaTime));
 		}
 
 		if (frame7)
 		{
+			auto& spritebackground = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSpriteBackground);
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-			sprite.setTexturePath("Resources/Assets/ExaS7.png");
+			spritebackground.setFilter(glm::vec4(spritebackground.getFilter().r, spritebackground.getFilter().g, spritebackground.getFilter().b, spritebackground.getFilter().a - backgroundfilterchange * g_deltaTime));
+			sprite.setTexturePath("Resources/Assets/ExaS6.png");
 		}
 
 		if (frame8)
 		{
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-			sprite.setTexturePath("Resources/Assets/ExaS8.png");
+			sprite.setTexturePath("Resources/Assets/ExaS7.png");
 		}
 
 		if (frame9)
 		{
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-			sprite.setTexturePath("Resources/Assets/ExaS9.png");
+			sprite.setTexturePath("Resources/Assets/ExaS8.png");
 		}
 
 		if (frame10)
 		{
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-			sprite.setTexturePath("Resources/Assets/ExaS10.png");
+			sprite.setTexturePath("Resources/Assets/ExaS9.png");
 		}
 
 		if (frame11)
 		{
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-			sprite.setTexturePath("Resources/Assets/ExaS11.png");
+			sprite.setTexturePath("Resources/Assets/ExaS10.png");
 		}
 
 		if (frame12)
 		{
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-			sprite.setTexturePath("Resources/Assets/ExaS12.png");
+			sprite.setTexturePath("Resources/Assets/ExaS11.png");
 		}
 
 		if (frame13)
 		{
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-			sprite.setTexturePath("Resources/Assets/ExaS13.png");
+			sprite.setTexturePath("Resources/Assets/ExaS12.png");
 		}
 
 		if (frame14)
 		{
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-			sprite.setTexturePath("Resources/Assets/ExaS14.png");
+			sprite.setTexturePath("Resources/Assets/ExaS13.png");
 		}
 
 		if (frame15)
 		{
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-			sprite.setTexturePath("Resources/Assets/ExaS15.png");
+			sprite.setTexturePath("Resources/Assets/ExaS14.png");
 		}
 
 		if (frame16)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/ExaS15.png");
+		}
+
+		if (frame17)
 		{
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
 			sprite.setTexturePath("Resources/Assets/ExaS16.png");
@@ -841,9 +902,14 @@ namespace Rogue
 						auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(info.m_Entity);
 						sprite.setTexturePath("Resources/Assets/ElaS1.png");
 						m_finalSprite = info.m_Entity;
-						transform.setZ(1000);
+						transform.setZ(103);
 						m_finalSpriteSet = true;
 					}
+				}
+
+				if (info.m_tag == "EndingBackground")
+				{
+					m_finalSpriteBackground = info.m_Entity;
 				}
 			}
 		}
@@ -876,72 +942,95 @@ namespace Rogue
 
 		if (frame6)
 		{
-			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-			sprite.setTexturePath("Resources/Assets/ElaS6.png");
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSpriteBackground);
+			auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(m_finalSpriteBackground);
+			for (HierarchyInfo& info : g_engine.m_coordinator.GetHierarchyInfoArray())
+			{
+				if (info.m_tag == "EndingBackground")
+				{
+					if (!g_engine.m_coordinator.ComponentExists<UIComponent>(info.m_Entity))
+					{
+						g_engine.m_coordinator.AddComponent(info.m_Entity, UIComponent());
+						auto& UI = g_engine.m_coordinator.GetComponent<UIComponent>(info.m_Entity);
+						UI.setIsActive(true);
+					}
+					auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+					transform.setZ(1001);
+				}
+			}
+			sprite.setFilter(glm::vec4(sprite.getFilter().r, sprite.getFilter().g, sprite.getFilter().b, sprite.getFilter().a + backgroundfilterchange * g_deltaTime));
 		}
 
 		if (frame7)
 		{
+			auto& spritebackground = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSpriteBackground);
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-			sprite.setTexturePath("Resources/Assets/ElaS7.png");
+			spritebackground.setFilter(glm::vec4(spritebackground.getFilter().r, spritebackground.getFilter().g, spritebackground.getFilter().b, spritebackground.getFilter().a - backgroundfilterchange * g_deltaTime));
+			sprite.setTexturePath("Resources/Assets/ElaS6.png");
 		}
 
 		if (frame8)
 		{
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-			sprite.setTexturePath("Resources/Assets/ElaS8.png");
+			sprite.setTexturePath("Resources/Assets/ElaS7.png");
 		}
 
 		if (frame9)
 		{
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-			sprite.setTexturePath("Resources/Assets/ElaS9.png");
+			sprite.setTexturePath("Resources/Assets/ElaS8.png");
 		}
 
 		if (frame10)
 		{
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-			sprite.setTexturePath("Resources/Assets/ElaS10.png");
+			sprite.setTexturePath("Resources/Assets/ElaS9.png");
 		}
 
 		if (frame11)
 		{
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-			sprite.setTexturePath("Resources/Assets/ElaS11.png");
+			sprite.setTexturePath("Resources/Assets/ElaS10.png");
 		}
 
 		if (frame12)
 		{
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-			sprite.setTexturePath("Resources/Assets/ElaS12.png");
+			sprite.setTexturePath("Resources/Assets/ElaS11.png");
 		}
 
 		if (frame13)
 		{
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-			sprite.setTexturePath("Resources/Assets/ElaS13.png");
+			sprite.setTexturePath("Resources/Assets/ElaS12.png");
 		}
 
 		if (frame14)
 		{
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-			sprite.setTexturePath("Resources/Assets/ElaS14.png");
+			sprite.setTexturePath("Resources/Assets/ElaS13.png");
 		}
 
 		if (frame15)
 		{
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
-			sprite.setTexturePath("Resources/Assets/ElaS15.png");
+			sprite.setTexturePath("Resources/Assets/ElaS14.png");
 		}
 
 		if (frame16)
+		{
+			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
+			sprite.setTexturePath("Resources/Assets/ElaS15.png");
+		}
+
+		if (frame17)
 		{
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
 			sprite.setTexturePath("Resources/Assets/ElaS16.png");
 		}
 
 
-		if (m_timer > 34.0f)
+		if (m_timer > 35.0f)
 		{
 			PLAYER_STATUS.ResetEndGame();
 			g_engine.m_coordinator.SetTransitionLevel("Level 19.json", 0.0f); //2nd value doesn't matter anymore probably

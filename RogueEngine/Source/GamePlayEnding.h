@@ -17,6 +17,7 @@ namespace Rogue
 		bool m_trueEnding;
 		bool m_finalSpriteSet;
 		Entity m_finalSprite;
+		Entity m_finalSpriteBackground;
 	public:
 		GamePlayEnding(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent);
 		virtual void AIActiveStateUpdate() override;
