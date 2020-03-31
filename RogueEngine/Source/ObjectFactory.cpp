@@ -58,16 +58,17 @@ namespace Rogue
 		CameraManager::instance().SetCameraZoom(cameraZoom);
 		//CameraManager::instance().SetCameraPos(glm::vec3(0.0f, 0.0f, 0.0f));
 
-		float reverbRadius = abs(cameraMin.y);
+		const FMOD_VECTOR center{ cameraMin.x + (cameraMax.x - cameraMin.x) / 2, cameraMin.y + (cameraMax.y - cameraMin.y) / 2 };
+		float reverbRadius = center.y - cameraMin.y;
 
-		if (abs(cameraMin.x) > reverbRadius)
-			reverbRadius = abs(cameraMin.x);
-		else if (abs(cameraMax.x) > reverbRadius)
-			reverbRadius = abs(cameraMax.x);
-		else if (abs(cameraMax.y) > reverbRadius)
-			reverbRadius = abs(cameraMax.y);
+		if (center.x - cameraMin.x > reverbRadius)
+			reverbRadius = center.x - cameraMin.x;
+		else if (cameraMax.x - center.x > reverbRadius)
+			reverbRadius = cameraMax.x - center.x;
+		else if (cameraMax.y - center.y > reverbRadius)
+			reverbRadius = cameraMax.y - center.y;
 
-		AudioManager::instance().getReverb()->set3DAttributes(0, 0.0f, reverbRadius);
+		AudioManager::instance().getReverb()->set3DAttributes(&center, 0.0f, reverbRadius);
 
 		//Clearing Deleted Entities
 		g_engine.m_coordinator.ClearDeletedEntities();
