@@ -79,6 +79,7 @@ namespace Rogue
 			{
 				m_delay = 0.0f;
 
+				//This is when bug reaches absolute end and needs to reset to first waypoint
 				if (m_swapping)
 				{
 					if (PLAYER_STATUS.GetHitchhikedEntity() == m_entity)
@@ -87,6 +88,11 @@ namespace Rogue
 					if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(m_entity))
 					{
 						trans->get().setPosition(m_waypoints[0]);
+					}
+
+					if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(m_entity))
+					{
+						sprite->get().setTexturePath("Resources/Assets/CaveBugPush.png");
 					}
 
 					SwapCollisionType();
@@ -140,6 +146,12 @@ namespace Rogue
 				return;
 
 			m_nextPoint.pop();
+			
+			//Always set to flying, since it will be reset to Push if max point index
+			if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(m_entity))
+			{
+				sprite->get().setTexturePath("Resources/Assets/CaveBugFly.png");
+			}
 
 			//std::cout << "Before Waypoint " << m_currentPointIndex << std::endl;
 			//At the very last waypoint
