@@ -67,6 +67,11 @@ namespace Rogue
 			return audioMap;
 		}
 
+		FMOD::Reverb3D* getReverb()
+		{
+			return m_reverb;
+		}
+
 		Sound& loadSound(std::string audio, float volume, bool looping)
 		{
 			//audio = directory + audio;
