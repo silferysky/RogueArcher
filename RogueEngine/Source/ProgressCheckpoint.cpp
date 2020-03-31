@@ -32,6 +32,10 @@ namespace Rogue
 
 		if (completionPercentage >= m_statsComponent->getSpeed()/100) // completed
 		{
+			if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(m_entity))
+			{
+				sprite->get().setFilter(glm::vec4(1.0f, 1.0f, 1.0f, 0.0f));
+			}
 			if (auto fade = g_engine.m_coordinator.TryGetComponent<FadeComponent>(m_entity))
 			{
 				fade->get().setIsActive(true);
