@@ -20,12 +20,17 @@ namespace Rogue
 	{
 		m_timer += g_deltaTime * g_engine.GetTimeScale();
 
-		if (m_timer > static_cast <float> (rand()) / static_cast <float> (RAND_MAX/ m_statsComponent->getSpeed()))
+		if (m_timer > static_cast <float> (rand()) / static_cast <float> (RAND_MAX/(m_statsComponent->getSpeed()/100.0f)))
 		{
 			if (auto light = g_engine.m_coordinator.TryGetComponent<LightComponent>(m_entity))
 			{
-				light->get().setAmbientFactor(static_cast<float>(rand() / (RAND_MAX / m_statsComponent->getHealth())));
-				light->get().setSpecularFactor(static_cast<float>(rand() / (RAND_MAX / m_statsComponent->getHealth())));
+				float random = (RAND_MAX / m_statsComponent->getHealth());
+
+				if (random) // guard against division by 0
+				{
+					light->get().setAmbientFactor(static_cast<float>(rand() / random));
+					light->get().setSpecularFactor(static_cast<float>(rand() / random));
+				}
 
 				m_timer = 0.0f;
 			}
