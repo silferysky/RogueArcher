@@ -21,7 +21,7 @@ namespace Rogue
 		size_t m_currentPointIndex;
 		float m_patrolDelay;
 		float m_delay;
-		bool m_isMoving;
+		bool m_isPopping;
 	};
 }
 
