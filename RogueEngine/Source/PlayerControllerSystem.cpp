@@ -1185,6 +1185,7 @@ namespace Rogue
 		parent.SetSystemReceivers((int)SystemID::id_PARENTCHILDSYSTEM);
 		EventDispatcher::instance().AddEvent(parent);
 		PLAYER_STATUS.SetHitchhikedEntity(newParent);
+		g_engine.m_coordinator.loadSound("Resources/Sounds/hitchhike4.ogg", 0.3f, false).Play();
 	}
 
 	void PlayerControllerSystem::ResetPlayerParent()

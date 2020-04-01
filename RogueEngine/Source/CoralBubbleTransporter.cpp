@@ -152,6 +152,7 @@ namespace Rogue
 		if (other == PLAYER_STATUS.GetPlayerEntity())
 		{
 			g_engine.m_coordinator.GetSystem<PlayerControllerSystem>()->Hitchhike(m_entity); // force hitchhike
+			g_engine.m_coordinator.loadSound("Resources/Sounds/bubblewaterdrop.ogg", 0.3f, false).Play();
 			m_statsComponent->SetIsPatrolling(true);
 		}
 	}
