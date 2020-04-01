@@ -9,7 +9,7 @@
     "Tileset": "",
     "StartPosX": 0.0,
     "StartPosY": 0.0,
-    "Signature0": 5,
-    "Entity0": "Name{TeamLogo}|Tag{}|Sprite{Resources\\Assets\\TeamLogo.png;1;1;1;1;}||Transform{0;0;1204.75;351.55;0;0}||||||||||||||||||||||||",
+    "Signature0": 197,
+    "Entity0": "Name{TeamLogo}|Tag{}|Sprite{Resources\\Assets\\TeamLogo.png;1;1;1;1;}||Transform{0;0;1204.75;351.55;0;0}||||LogicComponent{38;0;1;0}|StatsComponent{4;0;0;0;0;Level 20.json;0;0;0;0;0;0;0;}|||||||||||||||||||",
     "EntityParent0": 65535
 }

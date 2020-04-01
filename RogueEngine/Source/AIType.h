@@ -60,6 +60,7 @@ namespace Rogue
 		Crystal_Mole,
 		TeleportVFX,
 		UI_ProgressCheckpoint,
+		UI_Transition,
 
 		AI_Last
 	};
