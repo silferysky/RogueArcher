@@ -131,16 +131,22 @@ namespace Rogue
 						case 5: //QuitBtn
 							hierarchyObj.m_objectName = "Quit";
 							break;
-						case 6: //HowToPlay
+						case 6: //MainMenuBtn
+							hierarchyObj.m_objectName = "MainMenuBtn";
+							break;
+						case 7: //HowToPlay
 							hierarchyObj.m_objectName = "ControlHelp";
 							break;
-						case 7: //ExitGame
+						case 8: //ExitGame
 							hierarchyObj.m_objectName = "ExitGame";
 							break;
-						case 8: //YesBtn
+						case 9: //To Main Menu
+							hierarchyObj.m_objectName = "MainMenu";
+							break;
+						case 10: //YesBtn
 							hierarchyObj.m_objectName = "YesBtn";
 							break;
-						case 9: //NoBtn
+						case 11: //NoBtn
 							hierarchyObj.m_objectName = "NoBtn";
 							break;
 						}
@@ -232,24 +238,17 @@ namespace Rogue
 					//ResumeGame();
 					PLAYER_STATUS.SetIndicatorStatus(true);
 					m_confirmQuit = false;
+					m_toMainMenu = false;
 					g_engine.m_coordinator.SetPauseState(false);
 					g_engine.SetTimeScale(1.0f);
 					MoveMenuObjs();
 					HandleMenuObjs();
 				}
 				//Exit to Main menu
-				else if (hierarchyObj.m_objectName == "MainMenu_Btn")
+				else if (hierarchyObj.m_objectName == "MainMenuBtn")
 				{
-					g_engine.m_coordinator.SetTransitionLevel("Level 20.json", 0.0f);
-					FadeEvent ev = FadeEvent(MAX_ENTITIES, 0.5f);
-					ev.SetSystemReceivers(static_cast<int>(SystemID::id_GRAPHICSSYSTEM));
-					EventDispatcher::instance().AddEvent(ev);
-					//SceneManager& sceneManager = SceneManager::instance();
-					//sceneManager.LoadLevel("Level 1.json");
-
-					//Now done in Graphics after loading fin
-					//ResumeGame();
-					PLAYER_STATUS.SetIndicatorStatus(false);
+					m_toMainMenu = true;
+					HandleMenuObjs();
 				}
 				//For quit logic
 				else if (hierarchyObj.m_objectName == "Quit" || hierarchyObj.m_objectName == "QuitBtn") 
@@ -259,9 +258,9 @@ namespace Rogue
 				}
 				else if (hierarchyObj.m_objectName == "YesBtn")
 				{
-					if (m_confirmQuit && SceneManager::instance().getCurrentFileName() == "Level 20.json")
+					if (m_confirmQuit)
 						g_engine.SetGameIsRunning(false);
-					else
+					else if (m_toMainMenu)
 					{
 						g_engine.m_coordinator.SetTransitionLevel("Level 20.json", 0.0f);
 						FadeEvent ev = FadeEvent(MAX_ENTITIES, 0.5f);
@@ -274,6 +273,7 @@ namespace Rogue
 				else if (hierarchyObj.m_objectName == "NoBtn")
 				{
 					m_confirmQuit = false;
+					m_toMainMenu = false;
 					m_showControlMenu = false;
 					HandleMenuObjs();
 				}
@@ -361,9 +361,11 @@ namespace Rogue
 		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("HowToPlayBtn", true, false));
 		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("Resume", true, false));
 		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("QuitBtn", true, false));
+		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("MainMenuBtn", true, false));
 		m_menuObjs.push_back(g_engine.m_coordinator.CloneArchetypes("HowToPlay", true, false));
 
 		m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("ExitBtn", true, false));
+		m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("MainMenuTitle", true, false));
 		m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("YesBtn", true, false));
 		m_confirmQuitEnt.push_back(g_engine.m_coordinator.CloneArchetypes("NoBtn", true, false));
 
@@ -456,6 +458,7 @@ namespace Rogue
 	{
 		g_engine.m_coordinator.SetPauseState(false);
 		g_engine.SetTimeScale(1.0f);
+		m_toMainMenu = false;
 		m_confirmQuit = false;
 
 		m_showControlMenu = false;
@@ -589,7 +592,7 @@ namespace Rogue
 						//Background
 						if (m_menuObjs.size() > 1 && menuObj == (m_menuObjs.front() + 1))
 						{
-							ui->get().setIsActive(m_confirmQuit);
+							ui->get().setIsActive(m_confirmQuit || m_toMainMenu);
 						}
 						else if (menuObj != m_menuObjs.back())
 						{
@@ -605,13 +608,18 @@ namespace Rogue
 				{
 					if (auto ui = g_engine.m_coordinator.TryGetComponent<UIComponent>(menuObj))
 					{
-						ui->get().setIsActive(m_confirmQuit);
+						if (menuObj == *m_confirmQuitEnt.begin())
+							ui->get().setIsActive(m_confirmQuit);
+						else if (menuObj == *(m_confirmQuitEnt.begin() + 1))
+							ui->get().setIsActive(m_toMainMenu);
+						else
+							ui->get().setIsActive(m_confirmQuit || m_toMainMenu);
 					}
 				}
 			}
 			else //If it is paused
 			{
-				if (!m_confirmQuit) //If not in confirmation to quit screen
+				if (!m_confirmQuit && !m_toMainMenu) //If not in confirmation to quit screen or to main menu screen
 				{
 					for (auto& menuObj : m_menuObjs)
 					{
@@ -653,7 +661,12 @@ namespace Rogue
 					{
 						if (auto ui = g_engine.m_coordinator.TryGetComponent<UIComponent>(menuObj))
 						{
-							ui->get().setIsActive(true);
+							if (menuObj == *(m_confirmQuitEnt.begin()))
+								ui->get().setIsActive(m_confirmQuit);
+							else if (menuObj == *(m_confirmQuitEnt.begin() + 1))
+								ui->get().setIsActive(m_toMainMenu);
+							else
+								ui->get().setIsActive(true);
 						}
 					}
 				}
@@ -662,6 +675,7 @@ namespace Rogue
 		else //If Game not running
 		{
 			m_confirmQuit = false;
+			m_toMainMenu = false;
 			for (auto& menuObj : m_menuObjs)
 			{
 				//Ignore crosshair
