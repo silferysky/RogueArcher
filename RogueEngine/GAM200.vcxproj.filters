@@ -773,6 +773,9 @@
     <ClInclude Include="Source\ProgressCheckpoint.h">
       <Filter>RogueEngine\Systems\AI\Script Types\UI</Filter>
     </ClInclude>
+    <ClInclude Include="Source\TransitionScreen.h">
+      <Filter>RogueEngine\Systems\AI\Script Types\Trigger</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -1234,6 +1237,9 @@
     </ClCompile>
     <ClCompile Include="Source\ProgressCheckpoint.cpp">
       <Filter>RogueEngine\Systems\AI\Script Types\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TransitionScreen.cpp">
+      <Filter>RogueEngine\Systems\AI\Script Types\Trigger</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

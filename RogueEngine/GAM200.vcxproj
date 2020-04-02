@@ -193,6 +193,7 @@
     <ClInclude Include="Source\SystemManager.h" />
     <ClInclude Include="Source\Timer.h" />
     <ClInclude Include="Source\TransitionObject.h" />
+    <ClInclude Include="Source\TransitionScreen.h" />
     <ClInclude Include="Source\TriggerAI.h" />
     <ClInclude Include="Source\AppearOnCollide.h" />
     <ClInclude Include="Source\TriggerZoom.h" />
@@ -352,6 +353,7 @@
     <ClCompile Include="Source\SpriteComponent.cpp" />
     <ClCompile Include="Source\Timer.cpp" />
     <ClCompile Include="Source\TransitionObject.cpp" />
+    <ClCompile Include="Source\TransitionScreen.cpp" />
     <ClCompile Include="Source\TriggerAI.cpp" />
     <ClCompile Include="Source\AppearOnCollide.cpp" />
     <ClCompile Include="Source\TriggerZoom.cpp" />

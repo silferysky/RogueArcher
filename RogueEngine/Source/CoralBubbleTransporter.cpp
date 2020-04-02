@@ -7,7 +7,7 @@
 namespace Rogue
 {
 	CoralBubbleTransporter::CoralBubbleTransporter(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent)
-		: ScriptComponent(entity, logicComponent, statsComponent), m_currentPointIndex{ 0 }
+		: ScriptComponent(entity, logicComponent, statsComponent), m_currentPointIndex{ 0 }, m_isPopping {false}
 	{
 		LogicInit();
 	}
@@ -63,7 +63,38 @@ namespace Rogue
 			m_delay -= g_engine.GetTimeScale() * g_deltaTime;
 			if (m_delay < 0.0f)
 				m_delay = 0.0f;
+
+			//Safety check
+			if (m_patrolDelay <= 0.0f)
+				return;
+
+			if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(m_entity))
+			{
+				auto filter = sprite->get().getFilter();
+				filter.a = m_delay / m_patrolDelay;
+				sprite->get().setFilter(filter);
+			}
+
 			return;
+		}
+		else if (m_isPopping)
+		{
+			if (PLAYER_STATUS.GetHitchhikedEntity() == m_entity)
+				g_engine.m_coordinator.GetSystem<PlayerControllerSystem>()->Hitchhike(MAX_ENTITIES);
+			if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(m_entity))
+			{
+				trans->get().setPosition(m_waypoints[0]);
+			}
+
+			if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(m_entity))
+			{
+				auto filter = sprite->get().getFilter();
+				filter.a = 1.0f;
+				sprite->get().setFilter(filter);
+			}
+
+			m_statsComponent->SetIsPatrolling(false);
+			m_isPopping = false;
 		}
 
 		//Check if Transform component and Rigidbody exist
@@ -114,20 +145,14 @@ namespace Rogue
 			//At the very last waypoint
 			if (++m_currentPointIndex >= m_waypoints.size())
 			{
-				g_engine.m_coordinator.GetSystem<PlayerControllerSystem>()->Hitchhike(MAX_ENTITIES);
 				//g_engine.m_coordinator.AddToDeleteQueue(m_entity);
-				m_statsComponent->SetIsPatrolling(false);
 				m_currentPointIndex = 1;
-				
-				if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(m_entity))
-				{
-					trans->get().setPosition(m_waypoints[0]);
-				}
+				m_delay = m_patrolDelay;
+				m_isPopping = true;
 			}
 
 			m_nextPoint.push(m_waypoints[m_currentPointIndex]);
 
-			m_delay = m_patrolDelay;
 		}
 	}
 
@@ -152,6 +177,7 @@ namespace Rogue
 		if (other == PLAYER_STATUS.GetPlayerEntity())
 		{
 			g_engine.m_coordinator.GetSystem<PlayerControllerSystem>()->Hitchhike(m_entity); // force hitchhike
+			g_engine.m_coordinator.loadSound("Resources/Sounds/bubblewaterdrop.ogg", 0.3f, false).Play();
 			m_statsComponent->SetIsPatrolling(true);
 		}
 	}
