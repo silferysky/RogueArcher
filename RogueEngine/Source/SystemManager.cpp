@@ -40,6 +40,7 @@ namespace Rogue
 		{
 			ImGuiTileSet::instance().ClearTileset();
 			SceneManager::instance().LoadLevel(m_transitionString.c_str());
+			g_engine.m_coordinator.ResumeMenuButtons();
 
 			if (!m_repeatLoad)
 				m_transitionLevel = false;
