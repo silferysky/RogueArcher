@@ -28,7 +28,7 @@ namespace Rogue
 		if (PLAYER_STATUS.GetTotalSoulsInLevel())
 			completionPercentage = PLAYER_STATUS.GetCollectedSoulsInLevel() / static_cast<float>(PLAYER_STATUS.GetTotalSoulsInLevel());
 
-		std::cout << "Completion:" << completionPercentage << std::endl;
+		//std::cout << "Completion:" << completionPercentage << std::endl;
 
 		if (completionPercentage >= m_statsComponent->getSpeed()/100) // completed
 		{
