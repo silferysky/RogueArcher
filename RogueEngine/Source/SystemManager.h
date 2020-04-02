@@ -260,7 +260,6 @@ namespace Rogue
 #endif
 
 		bool m_transitionLevel = false;
-		float m_transitionTime = 0.0f;
 		std::string m_transitionString = "";
 
 		size_t m_stepFrames = 1;
