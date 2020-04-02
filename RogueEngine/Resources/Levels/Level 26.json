@@ -1,6 +1,6 @@
 {
-    "MaxEntityCount": 1,
-    "EntityCount": 1,
+    "MaxEntityCount": 2,
+    "EntityCount": 2,
     "CameraMinX": 0.0,
     "CameraMinY": 0.0,
     "CameraMaxX": 0.0,
@@ -10,6 +10,9 @@
     "StartPosX": 0.0,
     "StartPosY": 0.0,
     "Signature0": 197,
+    "Signature1": 1028,
     "Entity0": "Name{TeamLogo}|Tag{}|Sprite{Resources\\Assets\\TeamLogo.png;1;1;1;1;}||Transform{0;0;1204.75;351.55;0;0}||||LogicComponent{38;0;1;0}|StatsComponent{4;0;0;0;0;Level 20.json;0;0;0;0;0;0;0;}|||||||||||||||||||",
-    "EntityParent0": 65535
+    "Entity1": "Name{SFX2}|Tag{}|||Transform{0;0;100;100;0;0}||||||||Audio{Resources\\Sounds\\[Water Ambience]WATER-CAVE_GEN-HDF-25449.ogg;1;0.4;1;0;}||||||||||||||||",
+    "EntityParent0": 65535,
+    "EntityParent1": 65535
 }
