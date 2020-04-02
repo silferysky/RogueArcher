@@ -19,11 +19,29 @@ Technology is prohibited.
 #include "TransitionObject.h"
 //#include "Main.h"
 #include "GraphicsEvent.h"
+#include "CameraManager.h"
 
 namespace Rogue
 {
 	TransitionObject::TransitionObject(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent, TransformComponent& transComponent, const std::string& levelToLoad)
-		: ScriptComponent(entity, logicComponent, statsComponent), m_levelToLoad{ levelToLoad }, m_trans{ transComponent } {}
+		: ScriptComponent(entity, logicComponent, statsComponent), m_levelToLoad{ levelToLoad }, m_trans{ transComponent }, m_black{ MAX_ENTITIES } {}
+
+	void TransitionObject::AIActiveStateUpdate()
+	{
+		if (!g_engine.m_coordinator.GameIsActive())
+			return;
+
+		m_logicComponent->SetActiveStateBit(static_cast<size_t>(AIState::AIState_Patrol));
+		m_logicComponent->SetActiveStateBit(static_cast<size_t>(AIState::AIState_Idle));
+
+		if (m_black >= MAX_ENTITIES)
+			return;
+
+		auto& fade = g_engine.m_coordinator.GetComponent<FadeComponent>(m_black);
+
+		if (fade.getIsActive() == false)
+			g_engine.m_coordinator.SetTransition(true);
+	}
 
 	void TransitionObject::OnTriggerEnter(Entity other)
 	{
@@ -35,21 +53,22 @@ namespace Rogue
 			PLAYER_STATUS.SetIndicatorStatus(false);
 			g_engine.m_coordinator.SetTransitionLevel(m_levelToLoad.c_str(), 0.0f); //2nd value doesn't matter anymore probably
 
-			FadeEvent ev = FadeEvent(MAX_ENTITIES, 0.5f);
-			ev.SetSystemReceivers(static_cast<int>(SystemID::id_GRAPHICSSYSTEM));
-			EventDispatcher::instance().AddEvent(ev);
+			//FadeEvent ev = FadeEvent(MAX_ENTITIES, 0.5f);
+			//ev.SetSystemReceivers(static_cast<int>(SystemID::id_GRAPHICSSYSTEM));
+			//EventDispatcher::instance().AddEvent(ev);
 
-			Entity blackEntity = g_engine.m_coordinator.CreateEntity();
-			auto& sprite = g_engine.m_coordinator.CreateComponent<SpriteComponent>(blackEntity);
-			auto& trans = g_engine.m_coordinator.CreateComponent<TransformComponent>(blackEntity);
-			auto& fade = g_engine.m_coordinator.CreateComponent<FadeComponent>(blackEntity);
+			m_black = g_engine.m_coordinator.CreateEntity();
+			auto& sprite = g_engine.m_coordinator.CreateComponent<SpriteComponent>(m_black);
+			auto& trans = g_engine.m_coordinator.CreateComponent<TransformComponent>(m_black);
+			auto& fade = g_engine.m_coordinator.CreateComponent<FadeComponent>(m_black);
 
 			sprite.setTexture("Resources/Assets/Black.png");
 			auto& rgba = sprite.getFilter();
 			rgba.a = 0.0f;
 			sprite.setFilter(rgba);
-			trans.setPosition(m_trans.GetPosition());
-			trans.setScale(Vec2(3000.0f, 2000.0f));
+			glm::vec3 cameraPos = CameraManager::instance().GetCameraPos();
+			trans.setPosition(Vec2(cameraPos.x, cameraPos.y));
+			trans.setScale(Vec2(30000.0f, 20000.0f));
 			trans.setZ(10000.0f);
 			fade.setIsActive(true);
 			fade.setIsFadingIn(true);

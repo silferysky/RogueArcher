@@ -26,7 +26,8 @@ namespace Rogue
 	{
 	public:
 		TransitionObject(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent, TransformComponent& transComponent, const std::string& levelToLoad = "Level 1.json");
-
+		
+		void AIActiveStateUpdate() override;
 		virtual void OnTriggerEnter(Entity other) override;
 
 		std::string& GetTransitionLevelName();
@@ -35,5 +36,6 @@ namespace Rogue
 	private:
 		std::string m_levelToLoad;
 		TransformComponent& m_trans;
+		Entity m_black;
 	};
 }
