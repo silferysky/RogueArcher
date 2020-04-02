@@ -49,7 +49,7 @@ namespace Rogue
 		void Hitchhike(Entity ent);
 	private:
 		void Teleport();
-		Vec2 GetTeleportRaycast();
+		Vec2 GetTeleportRaycast(bool isActuallyTeleporting = false);
 		Entity HitchhikeRaycast();
 		void ToggleMode();
 

@@ -838,7 +838,7 @@ namespace Rogue
 		PLAYER_STATUS.IncrementTeleportCharge(-1.0f);
 		g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(*m_entities.begin()).m_grounded = false;
 
-		Vec2 calculatedPos = GetTeleportRaycast();
+		Vec2 calculatedPos = GetTeleportRaycast(true);
 
 		CreateTeleportEvent(calculatedPos);
 		ResetPlayerParent();
@@ -941,8 +941,11 @@ namespace Rogue
 		PLAYER_STATUS.ChangePlayerSprite();
 	}
 
-	Vec2 PlayerControllerSystem::GetTeleportRaycast()
+	Vec2 PlayerControllerSystem::GetTeleportRaycast(bool isActuallyTeleporting)
 	{
+		if (m_entities.size() == 0)
+			return Vec2();
+
 		TransformComponent& playerTransform = g_engine.m_coordinator.GetComponent<TransformComponent>(*m_entities.begin());
 		Vec2 initialPos = playerTransform.GetPosition();
 		Vec2 endPos = PickingManager::instance().GetWorldCursor();
@@ -976,9 +979,6 @@ namespace Rogue
 				continue;
 
 			BoxCollider2DComponent& boxCollider = g_engine.m_coordinator.GetComponent<BoxCollider2DComponent>(entity);
-			if (boxCollider.GetCollisionMode() != CollisionMode::e_awake)
-				continue;
-
 			ColliderComponent& boxGCollider = g_engine.m_coordinator.GetComponent<ColliderComponent>(entity);
 
 			if (!CollisionManager::instance().FilterColliders(playerGCollider.GetCollisionMask(), boxGCollider.GetCollisionCat()) ||
@@ -992,26 +992,48 @@ namespace Rogue
 
 			if (CollisionManager::instance().DiscreteLineVsAABB(teleportLine, boxCollider.m_aabb))
 			{
-				Vec2 boxPos = CollisionManager::instance().GetColliderPosition(boxCollider.m_aabb, boxTrans);
 
-				std::array<LineSegment, 4> edges = CollisionManager::instance().GenerateEdges(boxCollider.m_aabb);
-
-				float smallestT = 1.0f;
-				float t = smallestT;
-
-				for (LineSegment edge : edges)
+				if (boxCollider.GetCollisionMode() == CollisionMode::e_awake)
 				{
-					t = Vec2DotProduct(Vec2(edge.m_pt0 - playerTransform.GetPosition()), edge.m_normal) /
-						Vec2DotProduct(teleportVec, edge.m_normal);
+					Vec2 boxPos = CollisionManager::instance().GetColliderPosition(boxCollider.m_aabb, boxTrans);
 
-					if (t > 0.0f && t < smallestT)
-						smallestT = t;
+					std::array<LineSegment, 4> edges = CollisionManager::instance().GenerateEdges(boxCollider.m_aabb);
+
+					float smallestT = 1.0f;
+					float t = smallestT;
+
+					for (LineSegment edge : edges)
+					{
+						t = Vec2DotProduct(Vec2(edge.m_pt0 - playerTransform.GetPosition()), edge.m_normal) /
+							Vec2DotProduct(teleportVec, edge.m_normal);
+
+						if (t > 0.0f && t < smallestT)
+							smallestT = t;
+					}
+
+					calculatedPos = playerTransform.GetPosition() + smallestT * teleportVec;
+
+					teleportLine = LineSegment(playerTransform.GetPosition(), calculatedPos);
+					teleportVec = calculatedPos - playerTransform.GetPosition();
 				}
 
-				calculatedPos = playerTransform.GetPosition() + smallestT * teleportVec;
+				else if (isActuallyTeleporting)
+					if (auto soul = g_engine.m_coordinator.TryGetComponent<SoulComponent>(entity))
+					{
+						//If no BoxCollider, Rigidbody or Transform for new entity, ignore it
+						if (!g_engine.m_coordinator.ComponentExists<BoxCollider2DComponent>(entity) || !g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(entity) || !g_engine.m_coordinator.ComponentExists<TransformComponent>(entity))
+							continue;
+						if (!g_engine.m_coordinator.ComponentExists<RigidbodyComponent>(*m_entities.begin()))
+							continue;
 
-				teleportLine = LineSegment(playerTransform.GetPosition(), calculatedPos);
-				teleportVec = calculatedPos - playerTransform.GetPosition();
+						RigidbodyComponent& boxRigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(entity);
+						RigidbodyComponent& playerRigidbody = g_engine.m_coordinator.GetComponent<RigidbodyComponent>(*m_entities.begin());
+						CollisionInfo<BoxCollider2DComponent> infoA(entity, boxCollider, boxRigidbody , boxTrans);
+						CollisionInfo<BoxCollider2DComponent> infoB(PLAYER_STATUS.GetPlayerEntity(), playerCollider, playerRigidbody, playerTransform);
+						EntTriggerEnterEvent<BoxCollider2DComponent, BoxCollider2DComponent> ev{ infoA, infoB };
+						ev.SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
+						EventDispatcher::instance().AddEvent(ev);
+					}
 			}
 		}
 		return calculatedPos;
