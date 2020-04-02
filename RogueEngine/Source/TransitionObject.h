@@ -25,7 +25,7 @@ namespace Rogue
 		: public ScriptComponent
 	{
 	public:
-		TransitionObject(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent, const std::string& levelToLoad = "Level 1.json");
+		TransitionObject(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent, TransformComponent& transComponent, const std::string& levelToLoad = "Level 1.json");
 
 		virtual void OnTriggerEnter(Entity other) override;
 
@@ -34,5 +34,6 @@ namespace Rogue
 
 	private:
 		std::string m_levelToLoad;
+		TransformComponent& m_trans;
 	};
 }
