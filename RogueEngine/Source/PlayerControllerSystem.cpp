@@ -31,6 +31,7 @@ Technology is prohibited.
 #include "PlayerStatusManager.h"
 #include "BoxCollisionSystem.h"
 #include "CollisionManager.h"
+#include "CameraManager.h"
 
 namespace Rogue
 {
@@ -80,16 +81,19 @@ namespace Rogue
 					else if (lastLevelLoaded == "Level 15.json")
 					{
 						trans->get().setPosition(Vec2(1670.0f, -290.0f));
+						CAMERA_MANAGER.SetCameraPos({ 1470.0f, -290.0f, 0.0f });
 					}
 					//For Mine Level to hub
 					else if (lastLevelLoaded == "Level 17.json")
 					{
 						trans->get().setPosition(Vec2(-1050.0f, -400.0f));
+						CAMERA_MANAGER.SetCameraPos({ -850.0f, -400.0f, 0.0f });
 					}
 					//For Coral level to Hub
 					else if (lastLevelLoaded == "Level 18.json")
 					{
 						trans->get().setPosition(Vec2(-40.0f, -400.0f));
+						CAMERA_MANAGER.SetCameraPos({ -40.0f, -500.0f, 0.0f });
 					}
 				}
 				//From Main Menu to Tutorial
