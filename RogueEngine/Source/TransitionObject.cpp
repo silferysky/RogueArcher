@@ -33,7 +33,7 @@ namespace Rogue
 		if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(other))
 		{
 			PLAYER_STATUS.SetIndicatorStatus(false);
-			g_engine.m_coordinator.SetTransitionLevel(m_levelToLoad.c_str(), 0.0f); //2nd value doesn't matter anymore probably
+			g_engine.m_coordinator.SetTransitionLevel(m_levelToLoad.c_str());
 
 			FadeEvent ev = FadeEvent(MAX_ENTITIES, 0.5f);
 			ev.SetSystemReceivers(static_cast<int>(SystemID::id_GRAPHICSSYSTEM));

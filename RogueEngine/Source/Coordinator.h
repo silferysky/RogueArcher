@@ -456,9 +456,9 @@ namespace Rogue
 			return m_systemManager->GetStepFrames();
 		}
 
-		void SetTransitionLevel(std::string_view levelName, float transitTime)
+		void SetTransitionLevel(std::string_view levelName)
 		{
-			m_systemManager->SetTransitionLevel(levelName, transitTime);
+			m_systemManager->SetTransitionLevel(levelName);
 		}
 
 		void SetTransition(bool transition = true)

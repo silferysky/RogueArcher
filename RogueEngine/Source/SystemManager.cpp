@@ -36,7 +36,7 @@ namespace Rogue
 		//std::cout << "Is Transiting: " << m_transitionLevel << std::endl;
 		//std::cout << "Transition Time Left " << m_transitionTime << std::endl;
 		
-		if (m_transitionLevel && m_transitionTime <= 0.0f)
+		if (m_transitionLevel)
 		{
 			ImGuiTileSet::instance().ClearTileset();
 			SceneManager::instance().LoadLevel(m_transitionString.c_str());
@@ -46,11 +46,6 @@ namespace Rogue
 			else
 				m_repeatLoad = false;
 			
-			return;
-		}
-		else if (m_transitionLevel)
-		{
-			m_transitionTime -= g_deltaTime; //* g_engine.GetTimeScale();
 			return;
 		}
 
@@ -166,10 +161,9 @@ namespace Rogue
 		g_engine.m_coordinator.EndTimeSystem(systemName);
 	}
 
-	void SystemManager::SetTransitionLevel(std::string_view levelName, float transitionTime)
+	void SystemManager::SetTransitionLevel(std::string_view levelName)
 	{
 		m_transitionString = levelName.data();
-		m_transitionTime = transitionTime;
 	}
 
 	void SystemManager::SetTransition(bool transition)

@@ -19,7 +19,7 @@ namespace Rogue
 
 		if (m_timer >= m_statsComponent->getHealth() || g_engine.m_coordinator.GetSystem<InputManager>()->KeyDown(KeyPress::MB1))
 		{
-			g_engine.m_coordinator.SetTransitionLevel(m_levelToLoad.c_str(), 0.0f); //2nd value doesn't matter anymore probably
+			g_engine.m_coordinator.SetTransitionLevel(m_levelToLoad.c_str());
 
 			FadeEvent ev = FadeEvent(MAX_ENTITIES, 0.5f);
 			ev.SetSystemReceivers(static_cast<int>(SystemID::id_GRAPHICSSYSTEM));
