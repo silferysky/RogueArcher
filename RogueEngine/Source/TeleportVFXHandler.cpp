@@ -1,3 +1,21 @@
+/* Start Header ************************************************************************/
+/*!
+\file           TeleportVFXHandler.cpp
+\project        Exale
+\author         Chan Wai Kit Terence, c.terence, 440005918 (100%)
+\par            c.terence\@digipen.edu
+\date           3 April,2020
+\brief          This file contains the functions definitions for TeleportVFXHandler
+
+All content (C) 2020 DigiPen (SINGAPORE) Corporation, all rights
+reserved.
+
+Reproduction or disclosure of this file or its contents
+without the prior written consent of DigiPen Institute of
+Technology is prohibited.
+*/
+/* End Header **************************************************************************/
+
 #include "Precompiled.h"
 #include "TeleportVFXHandler.h"
 

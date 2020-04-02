@@ -5,7 +5,7 @@
 \author         Javier Foo, javier.foo, 440002318 (100%)
 \par            javier.foo\@digipen.edu
 \date           1 Decembe, 2019
-\brief          This file contains the function declarations for MaskingSystem
+\brief          This file contains the function definitions for MaskingSystem
 
 All content (C) 2020 DigiPen (SINGAPORE) Corporation, all rights
 reserved.
