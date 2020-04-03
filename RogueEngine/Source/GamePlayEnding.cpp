@@ -866,7 +866,7 @@ namespace Rogue
 		if (m_timer > 35.0f)
 		{
 			PLAYER_STATUS.ResetEndGame();
-			g_engine.m_coordinator.SetTransitionLevel("Level 27.json", 0.0f); //2nd value doesn't matter anymore probably
+			g_engine.m_coordinator.SetTransitionLevel("Level 28.json", 0.0f); //2nd value doesn't matter anymore probably
 			g_engine.m_coordinator.SetTransition(true);
 		}
 	}
@@ -1058,7 +1058,7 @@ namespace Rogue
 		if (m_timer > 35.0f)
 		{
 			PLAYER_STATUS.ResetEndGame();
-			g_engine.m_coordinator.SetTransitionLevel("Level 28.json", 0.0f); //2nd value doesn't matter anymore probably
+			g_engine.m_coordinator.SetTransitionLevel("Level 27.json", 0.0f); //2nd value doesn't matter anymore probably
 			g_engine.m_coordinator.SetTransition(true);
 		}
 	}
