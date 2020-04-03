@@ -152,7 +152,10 @@ namespace Rogue
 		{
 			auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
 
-			if (g_engine.m_coordinator.ComponentExists<TileMapComponent>(entity) ||CollisionManager::instance().DiscreteAABBvsAABB(transform.GetPickArea(), viewPort))
+			if  (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(entity) 
+				|| g_engine.m_coordinator.ComponentExists<TileMapComponent>(entity)
+				|| g_engine.m_coordinator.ComponentExists<UIComponent>(entity)
+				|| CollisionManager::instance().DiscreteAABBvsAABB(transform.GetPickArea(), viewPort))
 				m_drawQueue.insert(std::make_pair(transform.GetZ(), entity));
 		}
 
