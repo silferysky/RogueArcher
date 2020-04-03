@@ -69,7 +69,7 @@ namespace Rogue
 			glm::vec3 cameraPos = CameraManager::instance().GetCameraPos();
 			trans.setPosition(Vec2(cameraPos.x, cameraPos.y));
 			trans.setScale(Vec2(30000.0f, 20000.0f));
-			trans.setZ(10000.0f);
+			trans.setZ(10000);
 			fade.setIsActive(true);
 			fade.setIsFadingIn(true);
 			fade.setFadeVelocity(1.0f);
