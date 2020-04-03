@@ -22,7 +22,7 @@ Technology is prohibited.
 #define VFX_PER_TELEPORT 3
 #define VFX_MOVESPEED 10.0f
 #define VFX_MAX_DIST 5.0f
-#define VFX_BASE_TIMER 0.5f
+#define VFX_BASE_TIMER 1.0f
 #define VFX_BASE_TIMER_MOD 1.5f
 
 namespace Rogue
@@ -77,7 +77,7 @@ namespace Rogue
 
 				if (Vec2SqLength(diff) > VFX_MAX_DIST* VFX_MAX_DIST)
 				{
-					float modification = (VFX_BASE_TIMER + *timer * VFX_BASE_TIMER_MOD * VFX_BASE_TIMER_MOD) * g_deltaTime * VFX_MOVESPEED;
+					float modification = (VFX_BASE_TIMER + *timer) * VFX_BASE_TIMER_MOD * g_deltaTime * VFX_MOVESPEED;
 					if (modification > 1.0f)
 						modification = 1.0f;
 
