@@ -553,7 +553,11 @@ namespace Rogue
 		if (g_engine.GetGameIsRunning())
 		{
 			//If it isn't paused, and not in main menu
-			if (!g_engine.m_coordinator.GetPauseState() && SceneManager::instance().getCurrentFileName() != "Level 20.json" && SceneManager::instance().getCurrentFileName() != "Level 19.json")
+			if (!g_engine.m_coordinator.GetPauseState() && 
+				SceneManager::instance().getCurrentFileName() != "Level 20.json" && 
+				SceneManager::instance().getCurrentFileName() != "Level 19.json" &&
+				SceneManager::instance().getCurrentFileName() != "Level 27.json" &&
+				SceneManager::instance().getCurrentFileName() != "Level 28.json")
 			{
 				for (auto& menuObj : m_menuObjs)
 				{
@@ -579,7 +583,11 @@ namespace Rogue
 					}
 				}
 			}
-			else if (!g_engine.m_coordinator.GetPauseState() && (SceneManager::instance().getCurrentFileName() == "Level 20.json" || SceneManager::instance().getCurrentFileName() == "Level 19.json"))
+			else if (!g_engine.m_coordinator.GetPauseState() && 
+					(SceneManager::instance().getCurrentFileName() == "Level 20.json" || 
+					 SceneManager::instance().getCurrentFileName() == "Level 19.json" ||
+					 SceneManager::instance().getCurrentFileName() == "Level 27.json" ||
+					 SceneManager::instance().getCurrentFileName() == "Level 28.json"))
 			{
 				for (auto& menuObj : m_menuObjs)
 				{
