@@ -302,7 +302,7 @@ namespace Rogue
 					++it;
 				}
 
-				parentValue -= m_firstLoadedEntity + deletedCounter;
+				parentValue -= m_firstLoadedEntity + (Entity)deletedCounter;
 				parent = static_cast<int>(parentValue);
 			}
 			RESerialiser::WriteToFile(fileName, strstream.str().c_str(), &parent);
