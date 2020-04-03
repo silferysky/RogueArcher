@@ -110,6 +110,8 @@ namespace Rogue
 
 		AABB viewPort = PickingManager::instance().GetViewPortArea();
 
+		viewPort += 50;
+
 		// For all entities
 		for (auto entity : m_entities)
 		{
@@ -118,7 +120,7 @@ namespace Rogue
 
 			auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
 
-			if (!CollisionManager::instance().DiscreteAABBvsAABB(transform.GetPosition(), viewPort))
+			if (!CollisionManager::instance().DiscretePointVsAABB(transform.GetPosition(), viewPort))
 				ClearLight();
 			else
 				UpdateShader(entity);

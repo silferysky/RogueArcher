@@ -152,7 +152,7 @@ namespace Rogue
 		{
 			auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
 
-			if (g_engine.m_coordinator.ComponentExists<TileMapComponent>(entity) ||CollisionManager::instance().DiscreteAABBvsAABB(transform.GetPosition(), viewPort))
+			if (g_engine.m_coordinator.ComponentExists<TileMapComponent>(entity) ||CollisionManager::instance().DiscreteAABBvsAABB(transform.GetPickArea(), viewPort))
 				m_drawQueue.insert(std::make_pair(transform.GetZ(), entity));
 		}
 
