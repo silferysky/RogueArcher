@@ -95,6 +95,45 @@ namespace Rogue
 						trans->get().setPosition(Vec2(-40.0f, -400.0f));
 						CAMERA_MANAGER.SetCameraPos({ -40.0f, -500.0f, 0.0f });
 					}
+
+					if (PLAYER_STATUS.GetCollectedSoulsInLevel(LEVEL::CRYSTAL) > PLAYER_STATUS.GetTotalSoulsInLevel(LEVEL::CRYSTAL) * 0.8)
+					{
+						for (HierarchyInfo& info : g_engine.m_coordinator.GetHierarchyInfoArray())
+						{
+							if (info.m_tag == "slots1")
+							{
+								auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+								//show slots
+								transform.setZ(100);
+							}
+						}
+					}
+
+					if (PLAYER_STATUS.GetCollectedSoulsInLevel(LEVEL::CORAL) > PLAYER_STATUS.GetTotalSoulsInLevel(LEVEL::CORAL) * 0.8)
+					{
+						for (HierarchyInfo& info : g_engine.m_coordinator.GetHierarchyInfoArray())
+						{
+							if (info.m_tag == "slots2")
+							{
+								auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+								//show slots
+								transform.setZ(100);
+							}
+						}
+					}
+
+					if (PLAYER_STATUS.GetCollectedSoulsInLevel(LEVEL::VEGETATION) > PLAYER_STATUS.GetTotalSoulsInLevel(LEVEL::VEGETATION) * 0.8)
+					{
+						for (HierarchyInfo& info : g_engine.m_coordinator.GetHierarchyInfoArray())
+						{
+							if (info.m_tag == "slots3")
+							{
+								auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(info.m_Entity);
+								//show slots
+								transform.setZ(100);
+							}
+						}
+					}
 				}
 				//From Main Menu to Tutorial
 				/*else if (lastLevelLoaded == "Level 20.json")
