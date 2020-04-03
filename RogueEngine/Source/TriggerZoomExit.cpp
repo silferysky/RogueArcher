@@ -16,27 +16,27 @@ Technology is prohibited.
 */
 /* End Header **************************************************************************/
 #include "Precompiled.h"
-#include "TriggerZoom.h"
+#include "TriggerZoomExit.h"
 #include "CameraManager.h"
-//#include "Main.h"
 
 namespace Rogue
 {
-	TriggerZoom::TriggerZoom(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent)
-		: ScriptComponent(entity, logicComponent, statsComponent), 
-			m_isZooming {false},
-			m_returning {false},
-			m_doCount { statsComponent.GetZoomCount()},
-			m_zoomValueFinal{ statsComponent.GetZoomValue() }, 
-			m_zoomValueInit {0.0f},
-			m_zoomDuration{ statsComponent.GetZoomDuration() },
-			m_zoomTimer{ statsComponent.GetZoomDelay()},
-			m_zoomDelay { statsComponent.GetZoomDelay() },
-			m_zoomFactor {0.001f}
+	TriggerZoomExit::TriggerZoomExit(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent)
+		: ScriptComponent(entity, logicComponent, statsComponent),
+		m_isZooming{ false },
+		m_startZooming{ false },
+		m_returning{ false },
+		m_doCount{ statsComponent.GetZoomCount() },
+		m_zoomValueFinal{ statsComponent.GetZoomValue() },
+		m_zoomValueInit{ 0.0f },
+		m_zoomDuration{ statsComponent.GetZoomDuration() },
+		m_zoomTimer{ statsComponent.GetZoomDelay() },
+		m_zoomDelay{ statsComponent.GetZoomDelay() },
+		m_zoomFactor{ 0.001f }
 	{}
-			
 
-	void TriggerZoom::AIIdleUpdate()
+
+	void TriggerZoomExit::AIIdleUpdate()
 	{
 		if (!g_engine.m_coordinator.GameIsActive())
 			return;
@@ -45,22 +45,17 @@ namespace Rogue
 			return;
 
 		float cameraZoom = CameraManager::instance().GetCameraZoom();
-		//std::cout << "Zoom Timer: " << m_zoomDelay - m_zoomTimer << std::endl;
-		//std::cout << "Zoom Delay: " << m_zoomDelay << std::endl;
 
-		//If waiting for delay
-		if (m_zoomTimer < m_zoomDelay)
-		{
-			m_zoomTimer += g_deltaTime;
-		}
-		else//if (m_zoomTimer >= m_zoomDelay)
+		if(m_startZooming)
 		{
 			//If the zoom is at the end
 			if ((m_zoomFactor < 0.0f && cameraZoom < m_zoomValueFinal) || (m_zoomFactor > 0.0f && cameraZoom > m_zoomValueFinal))
 			{
 				CameraManager::instance().SetCameraZoom(m_zoomValueFinal);
-				
-				if(m_returning)
+
+				m_startZooming = false;
+
+				if (m_returning)
 					--m_doCount;
 
 				if (m_doCount <= 0)
@@ -84,16 +79,28 @@ namespace Rogue
 		}
 	}
 
-	void TriggerZoom::OnTriggerEnter(Entity otherEnt)
+	void TriggerZoomExit::OnTriggerEnter(Entity otherEnt)
 	{
 		if (!g_engine.m_coordinator.GameIsActive())
 			return;
 
 		if (otherEnt != PLAYER_STATUS.GetPlayerEntity())
 			return;
-		
+
 		m_isZooming = true;
+		m_startZooming = true;
 		m_zoomValueInit = CameraManager::instance().GetCameraZoom();
 		m_zoomFactor = (m_zoomValueFinal - m_zoomValueInit) / m_zoomDuration * g_deltaTime;
+	}
+
+	void TriggerZoomExit::OnTriggerExit(Entity otherEnt)
+	{
+		if (!g_engine.m_coordinator.GameIsActive())
+			return;
+
+		if (otherEnt != PLAYER_STATUS.GetPlayerEntity())
+			return;
+
+		m_startZooming = true;
 	}
 }

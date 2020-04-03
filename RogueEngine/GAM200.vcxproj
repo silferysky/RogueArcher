@@ -197,6 +197,7 @@
     <ClInclude Include="Source\TriggerAI.h" />
     <ClInclude Include="Source\AppearOnCollide.h" />
     <ClInclude Include="Source\TriggerZoom.h" />
+    <ClInclude Include="Source\TriggerZoomExit.h" />
     <ClInclude Include="Source\Types.h" />
     <ClInclude Include="Source\UIComponent.h" />
     <ClInclude Include="Source\UISystem.h" />
@@ -326,6 +327,7 @@
     <ClCompile Include="Source\FadeComponent.cpp" />
     <ClCompile Include="Source\SoulCollectible.cpp" />
     <ClCompile Include="Source\AnimateOnEla.cpp" />
+    <ClCompile Include="Source\TriggerZoomExit.cpp" />
     <ClCompile Include="Source\StatsComponent.cpp" />
     <ClCompile Include="Source\SystemManager.cpp" />
     <ClCompile Include="Source\TeleCharge1.cpp" />

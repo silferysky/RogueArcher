@@ -60,6 +60,7 @@ Technology is prohibited.
 #include "CoralElementBubble.h"
 #include "CrystalElementBeetle.h"
 #include "CrystalMole.h"
+#include "TriggerZoomExit.h"
 
 namespace Rogue
 {
@@ -373,6 +374,12 @@ namespace Rogue
 				{
 					TriggerZoom newAI(entities, logicComponent, statsComponent);
 					AddLogicInterface(entities, std::make_shared<TriggerZoom>(newAI));
+					break;
+				}
+				case AIType::Trigger_Zoom_Exit:
+				{
+					TriggerZoomExit newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<TriggerZoomExit>(newAI));
 					break;
 				}
 				case AIType::EmojiScript:

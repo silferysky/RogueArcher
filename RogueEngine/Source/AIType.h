@@ -61,6 +61,7 @@ namespace Rogue
 		TeleportVFX,
 		UI_ProgressCheckpoint,
 		UI_Transition,
+		Trigger_Zoom_Exit,
 
 		AI_Last
 	};

@@ -1,8 +1,8 @@
 /* Start Header ************************************************************************/
 /*!
-\file           TriggerZoom.h
+\file           TriggerZoomExit.h
 \project        Exale
-\author         Chan Wai Kit Terence, c.terence, 440005918 (100%)
+\author         Lim Jia Hao, l.jiahao, 390006518  (100%)
 \par            c.terence\@digipen.edu
 \date           3 April,2020
 \brief          This file contains the functions definitions for TriggerZoom
@@ -20,15 +20,16 @@ Technology is prohibited.
 
 namespace Rogue
 {
-	class TriggerZoom
+	class TriggerZoomExit
 		: public ScriptComponent
 	{
 	public:
-		TriggerZoom(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent);
+		TriggerZoomExit(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent);
 
 		void AIIdleUpdate() override;
 
 		void OnTriggerEnter(Entity otherEnt) override;
+		void OnTriggerExit(Entity otherEnt) override;
 
 	private:
 		bool m_isZooming;			//Whether zooming is in effect or not
@@ -40,5 +41,6 @@ namespace Rogue
 		float m_zoomTimer;			//Self timer
 		float m_zoomDelay;			//Delay between Zooming in and out
 		float m_zoomFactor;			//Zoom value per frame
+		bool m_startZooming;
 	};
 }
