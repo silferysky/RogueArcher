@@ -1,6 +1,6 @@
 {
-    "MaxEntityCount": 234,
-    "EntityCount": 234,
+    "MaxEntityCount": 235,
+    "EntityCount": 235,
     "CameraMinX": -2410.0,
     "CameraMinY": -1300.0,
     "CameraMaxX": 420.0,
@@ -243,6 +243,7 @@
     "Signature231": 261,
     "Signature232": 261,
     "Signature233": 261,
+    "Signature234": 4728279,
     "Entity0": "Name{Game Object 12}|Tag{}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-271.021;1242.37;700.23;318.283;0;0}||BoxCollider{0;0;12;16;AWAKE}|||||||||Collider{BOX;1;4294967295;}|||||||||||||",
     "Entity1": "Name{Game Object 13}|Tag{}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{943.554;1238.92;700.23;318.283;0;0}||BoxCollider{0;0;0;0;AWAKE}|||||||||Collider{BOX;1;4294967295;}|||||||||||||",
     "Entity2": "Name{Game Object 14}|Tag{}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{380.974;1294.14;700.23;318.283;0;0}||BoxCollider{0;0;0;0;AWAKE}|||||||||Collider{BOX;1;4294967295;}|||||||||||||",
@@ -309,7 +310,7 @@
     "Entity63": "Name{Game Object 86}|Tag{}|Sprite{Resources\\Assets\\BonusSoul.png;1;1;1;1;}|Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-1915.76;866.312;51;51;0;57}||BoxCollider{-1;-2;-25;-7;TRIGGER}||LogicComponent{13;0;1;0}|StatsComponent{0;0;0;0;0;;0;0;0;0;0;0;0;}|Animation{8;0;0.1;1;1;1;0;}||Audio{Resources/Sounds/soul_hum.ogg;755;0.2;1;1;}|||Collider{BOX;1;4294967295;}||||||FADE{1;1;}|||||||",
     "Entity64": "Name{Game Object 87}|Tag{}|Sprite{Resources\\Assets\\BonusSoul.png;1;1;1;1;}|Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-1371.57;551.404;51;51;0;57}||BoxCollider{-1;-2;-25;-7;TRIGGER}||LogicComponent{13;0;1;0}|StatsComponent{0;0;0;0;0;;0;0;0;0;0;0;0;}|Animation{8;0;0.1;1;1;1;0;}||Audio{Resources/Sounds/soul_hum.ogg;755;0.2;1;1;}|||Collider{BOX;1;4294967295;}||||||FADE{1;1;}|||||||",
     "Entity65": "Name{Game Object 88}|Tag{}|Sprite{Resources\\Assets\\BonusSoul.png;1;1;1;1;}|Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-2926.68;420.41;51;51;0;57}||BoxCollider{-1;-2;-25;-7;TRIGGER}||LogicComponent{13;0;1;0}|StatsComponent{0;0;0;0;0;;0;0;0;0;0;0;0;}|Animation{8;0;0.1;1;1;1;0;}||Audio{Resources/Sounds/soul_hum.ogg;755;0.2;1;1;}|||Collider{BOX;1;4294967295;}||||||FADE{1;1;}|||||||",
-    "Entity66": "Name{Game Object 89}|Tag{}|Sprite{Resources\\Assets\\BonusSoul.png;1;1;1;1;}|Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-1598.54;502.846;51;51;0;57}||BoxCollider{-1;-2;-25;-7;TRIGGER}||LogicComponent{13;0;1;0}|StatsComponent{0;0;0;0;0;;0;0;0;0;0;0;0;}|Animation{8;0;0.1;1;1;1;0;}||Audio{Resources/Sounds/soul_hum.ogg;755;0.2;1;1;}|||Collider{BOX;1;4294967295;}||||||FADE{1;1;}|||||||",
+    "Entity66": "Name{Game Object 89}|Tag{}|Sprite{Resources\\Assets\\BonusSoul.png;1;1;1;1;}|Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-1505.54;128.846;51;51;0;57}||BoxCollider{-1;-2;-25;-7;TRIGGER}||LogicComponent{13;0;1;0}|StatsComponent{0;0;0;0;0;;0;0;0;0;0;0;0;}|Animation{8;0;0.1;1;1;1;0;}||Audio{Resources/Sounds/soul_hum.ogg;755;0.2;1;1;}|||Collider{BOX;1;4294967295;}||||||FADE{1;1;}|||||||",
     "Entity67": "Name{Game Object 91}|Tag{}|Sprite{Resources\\Assets\\BonusSoul.png;1;1;1;1;}|Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-2368.59;466.71;51;51;0;57}||BoxCollider{-1;-2;-25;-7;TRIGGER}||LogicComponent{13;0;1;0}|StatsComponent{0;0;0;0;0;;0;0;0;0;0;0;0;}|Animation{8;0;0.1;1;1;1;0;}||Audio{Resources/Sounds/soul_hum.ogg;755;0.2;1;1;}|||Collider{BOX;1;4294967295;}||||||FADE{1;1;}|||||||",
     "Entity68": "Name{Game Object 92}|Tag{}|Sprite{Resources\\Assets\\BonusSoul.png;1;1;1;1;}|Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-2366.21;302.967;51;51;0;57}||BoxCollider{-1;-2;-25;-7;TRIGGER}||LogicComponent{13;0;1;0}|StatsComponent{0;0;0;0;0;;0;0;0;0;0;0;0;}|Animation{8;0;0.1;1;1;1;0;}||Audio{Resources/Sounds/soul_hum.ogg;755;0.2;1;1;}|||Collider{BOX;1;4294967295;}||||||FADE{1;1;}|||||||",
     "Entity69": "Name{Game Object 93}|Tag{}|Sprite{Resources\\Assets\\BonusSoul.png;1;1;1;1;}|Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-2597.94;440.737;51;51;0;57}||BoxCollider{-1;-2;-25;-7;TRIGGER}||LogicComponent{13;0;1;0}|StatsComponent{0;0;0;0;0;;0;0;0;0;0;0;0;}|Animation{8;0;0.1;1;1;1;0;}||Audio{Resources/Sounds/soul_hum.ogg;755;0.2;1;1;}|||Collider{BOX;1;4294967295;}||||||FADE{1;1;}|||||||",
@@ -477,6 +478,7 @@
     "Entity231": "Name{SeaWeed}|Tag{}|Sprite{Resources\\Assets\\CoralSeaweed.png;1;1;1;1;}||Transform{376;547;80;214;0;50}||||||Animation{4;0;0.2;1;0;0;0;}||||||||||||||||||",
     "Entity232": "Name{SeaWeed}|Tag{}|Sprite{Resources\\Assets\\CoralSeaweed.png;1;1;1;1;}||Transform{-111;656;80;214;0;103}||||||Animation{4;0;0.2;1;0;0;0;}||||||||||||||||||",
     "Entity233": "Name{SeaWeed}|Tag{}|Sprite{Resources\\Assets\\CoralSeaweed.png;1;1;1;1;}||Transform{53;656;80;214;0;103}||||||Animation{4;0;0.2;1;0;0;0;}||||||||||||||||||",
+    "Entity234": "Name{Game Object 89}|Tag{}|Sprite{Resources\\Assets\\BonusSoul.png;1;1;1;1;}|Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{-1598.54;502.846;51;51;0;57}||BoxCollider{-1;-2;-25;-7;TRIGGER}||LogicComponent{13;0;1;0}|StatsComponent{0;0;0;0;0;;0;0;0;0;0;0;0;}|Animation{8;0;0.1;1;1;1;0;}||Audio{Resources/Sounds/soul_hum.ogg;755;0.2;1;1;}|||Collider{BOX;1;4294967295;}||||||FADE{1;1;}|||||||",
     "EntityParent0": 65535,
     "EntityParent1": 65535,
     "EntityParent2": 65535,
@@ -710,5 +712,6 @@
     "EntityParent230": 65535,
     "EntityParent231": 65535,
     "EntityParent232": 65535,
-    "EntityParent233": 65535
+    "EntityParent233": 65535,
+    "EntityParent234": 65535
 }
