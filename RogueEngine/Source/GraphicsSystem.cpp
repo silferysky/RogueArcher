@@ -28,6 +28,7 @@ Technology is prohibited.
 #include "EditorTileSet.h"
 #include "PickingManager.h"
 #include "CollisionManager.h"
+#include "CameraManager.h"
 
 namespace Rogue
 {
@@ -142,6 +143,7 @@ namespace Rogue
 
 		AABB viewPort = PickingManager::instance().GetViewPortArea();
 
+		PickingManager::instance().GenerateViewPortAABB(CameraManager::instance().GetCameraPos(), CameraManager::instance().GetCameraZoom());
 		//viewPort += 100.0f;
 
 		// For all entities
@@ -149,14 +151,8 @@ namespace Rogue
 		{
 			auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
 
-			//if (g_engine.m_coordinator.ComponentExists<LightComponent>(entity))
-			//	if (!CollisionManager::instance().DiscreteAABBvsAABB(transform.GetPickArea(), viewPort))
-				//{
-					//std::cout << "Culled!" << std::endl;
-					//continue;
-				//}
-		
-			m_drawQueue.insert(std::make_pair(transform.GetZ(), entity));
+			if (g_engine.m_coordinator.ComponentExists<TileMapComponent>(entity) ||CollisionManager::instance().DiscreteAABBvsAABB(transform.GetPosition(), viewPort))
+				m_drawQueue.insert(std::make_pair(transform.GetZ(), entity));
 		}
 
 		glBindFramebuffer(GL_FRAMEBUFFER, m_FBO);

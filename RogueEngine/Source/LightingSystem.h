@@ -65,6 +65,7 @@ namespace Rogue
 		void draw(Entity& entity);
 		void AddLights(Entity& entity);
 		void UpdateShader(Entity& entity);
+		void ClearLight();
 	public:
 		LightingSystem();
 		~LightingSystem() = default;
