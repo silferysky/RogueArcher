@@ -40,5 +40,8 @@ namespace Rogue
 		Entity m_endDisplay;
 		bool m_startAnimEnded;
 		bool m_endAnimEnded;
+
+		float m_timer;
+		bool m_timerActive;
 	};
 }

@@ -22,7 +22,9 @@ Technology is prohibited.
 namespace Rogue
 {
 	CrystalMole::CrystalMole(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent)
-		: ScriptComponent(entity, logicComponent, statsComponent), m_currentPointIndex{ 0 }, m_goingToEnd{ false }, m_startDisplay{ MAX_ENTITIES }, m_endDisplay{ MAX_ENTITIES }, m_startAnimEnded{ true }, m_endAnimEnded{ true }
+		: ScriptComponent(entity, logicComponent, statsComponent), m_currentPointIndex{ 0 }, m_goingToEnd{ false }, 
+		m_startDisplay{ MAX_ENTITIES }, m_endDisplay{ MAX_ENTITIES }, 
+		m_startAnimEnded{ true }, m_endAnimEnded{ true }, m_timer{0.0f}, m_timerActive{false}
 	{
 		LogicInit();
 	}
@@ -100,6 +102,9 @@ namespace Rogue
 
 	void CrystalMole::AIPatrolUpdate()
 	{
+		if (m_timerActive)
+			m_timer += g_deltaTime * g_engine.GetTimeScale();
+
 		//Only can do waypoint patrol if 2 waypoints exist
 		//if (m_waypoints.size() < 2)
 			//return;
@@ -169,6 +174,8 @@ namespace Rogue
 		//If Player is on Mole
 		if (PLAYER_STATUS.GetHitchhikedEntity() == m_entity)
 		{
+			PLAYER_STATUS.FreezeControls(); // freeze control to stop player from flying out halfway
+
 			if (m_nextPoint.size() > 0)
 				m_nextPoint.pop();
 
@@ -186,6 +193,8 @@ namespace Rogue
 		}
 		else //If Player is not on mole, it goes to starting point
 		{
+			PLAYER_STATUS.UnfreezeControls();
+
 			if (auto anim = g_engine.m_coordinator.TryGetComponent<AnimationComponent>(m_entity))
 			{
 				anim->get().setIsAnimating(true);
