@@ -149,8 +149,14 @@ namespace Rogue
 		{
 			auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
 
-			//if (CollisionManager::instance().DiscreteAABBvsAABB(transform.GetPickArea(), viewPort))
-				m_drawQueue.insert(std::make_pair(transform.GetZ(), entity));
+			//if (g_engine.m_coordinator.ComponentExists<LightComponent>(entity))
+			//	if (!CollisionManager::instance().DiscreteAABBvsAABB(transform.GetPickArea(), viewPort))
+				//{
+					//std::cout << "Culled!" << std::endl;
+					//continue;
+				//}
+		
+			m_drawQueue.insert(std::make_pair(transform.GetZ(), entity));
 		}
 
 		glBindFramebuffer(GL_FRAMEBUFFER, m_FBO);
