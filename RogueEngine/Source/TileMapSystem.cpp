@@ -1,3 +1,20 @@
+/* Start Header ************************************************************************/
+/*!
+\file           TileMapSystem.cpp
+\project        Exale
+\author         Loh Kai Yi,kaiyi.loh,390002918 (100%)
+\par            kaiyi.loh\@digipen.edu
+\date           4 April,2020
+\brief          This file contains the functions for TileMapSystem
+
+All content (C) 2020 DigiPen (SINGAPORE) Corporation, all rights
+reserved.
+
+Reproduction or disclosure of this file or its contents
+without the prior written consent of DigiPen Institute of
+Technology is prohibited.
+*/
+/* End Header **************************************************************************/
 #include "Precompiled.h"
 #include "TileMapSystem.h"
 #include "EventDispatcher.h"

@@ -1,3 +1,20 @@
+/* Start Header ************************************************************************/
+/*!
+\file           GamePlayEnding.cpp
+\project        Exale
+\author         Loh Kai Yi, kaiyi.loh, 390002918 (100%)
+\par            kaiyi.loh\@digipen.edu
+\date           3 April,2020
+\brief          This file contains the functions definitions for GamePlayEnding
+
+All content (C) 2020 DigiPen (SINGAPORE) Corporation, all rights
+reserved.
+
+Reproduction or disclosure of this file or its contents
+without the prior written consent of DigiPen Institute of
+Technology is prohibited.
+*/
+/* End Header **************************************************************************/
 #include "Precompiled.h"
 #include "GamePlayEnding.h"
 #include "PlayerStatusManager.h"
@@ -10,23 +27,23 @@
 #define filterchange 10.0f
 #define backgroundfilterchange 0.6f
 #define clonetransformx 100.0f
-#define frame1 m_timer > 19.0f && m_timer < 20.0f
-#define frame2 m_timer > 20.0f && m_timer < 21.0f
-#define frame3 m_timer > 21.0f && m_timer < 22.0f
-#define frame4 m_timer > 22.0f && m_timer < 23.0f
-#define frame5 m_timer > 23.0f && m_timer < 24.0f
-#define frame6 m_timer > 24.0f && m_timer < 25.0f
-#define frame7 m_timer > 25.0f && m_timer < 26.0f
-#define frame8 m_timer > 26.0f && m_timer < 27.0f
-#define frame9 m_timer > 27.0f && m_timer < 28.0f
-#define frame10 m_timer > 28.0f && m_timer < 29.0f
-#define frame11 m_timer > 29.0f && m_timer < 30.0f
-#define frame12 m_timer > 30.0f && m_timer < 31.0f
-#define frame13 m_timer > 31.0f && m_timer < 31.5f
-#define frame14 m_timer > 31.5f && m_timer < 32.0f
-#define frame15 m_timer > 32.0f && m_timer < 32.5f
-#define frame16 m_timer > 32.5f && m_timer < 33.0f
-#define frame17 m_timer > 33.0f && m_timer < 33.5f
+#define frame1 m_timer > 17.0f && m_timer < 18.0f
+#define frame2 m_timer > 18.0f && m_timer < 19.0f
+#define frame3 m_timer > 19.0f && m_timer < 20.0f
+#define frame4 m_timer > 20.0f && m_timer < 21.0f
+#define frame5 m_timer > 21.0f && m_timer < 22.0f
+#define frame6 m_timer > 22.0f && m_timer < 23.0f
+#define frame7 m_timer > 23.0f && m_timer < 24.0f
+#define frame8 m_timer > 24.0f && m_timer < 25.0f
+#define frame9 m_timer > 25.0f && m_timer < 26.0f
+#define frame10 m_timer > 26.0f && m_timer < 27.0f
+#define frame11 m_timer > 27.0f && m_timer < 28.0f
+#define frame12 m_timer > 28.0f && m_timer < 29.0f
+#define frame13 m_timer > 29.0f && m_timer < 30.0f
+#define frame14 m_timer > 30.0f && m_timer < 31.0f
+#define frame15 m_timer > 31.0f && m_timer < 31.5f
+#define frame16 m_timer > 31.5f && m_timer < 32.0f
+#define frame17 m_timer > 32.0f && m_timer < 32.5f
 
 namespace Rogue
 {
@@ -220,7 +237,7 @@ namespace Rogue
 
 				}
 			}
-			else if (m_timer > 15.0f && m_timer < 18.0f)
+			else if (m_timer > 15.0f && m_timer < 16.0f)
 			{
 				for (HierarchyInfo& info : g_engine.m_coordinator.GetHierarchyInfoArray())
 				{
@@ -285,7 +302,7 @@ namespace Rogue
 					}
 				}
 			}
-			else if (m_timer > 18.0f)
+			else if (m_timer > 16.0f)
 			{
 				if (!m_trueEnding)
 				{
@@ -295,7 +312,7 @@ namespace Rogue
 						{
 							if (!m_endingAPressed)
 							{
-								m_timer = 18.0f;
+								m_timer = 17.0f;
 								m_endingAPressed = true;
 								m_finalInput = true;
 							}
@@ -304,7 +321,7 @@ namespace Rogue
 						{
 							if (!m_endingDPressed)
 							{
-								m_timer = 18.0f;
+								m_timer = 17.0f;
 								m_endingDPressed = true;
 								m_finalInput = true;
 							}
@@ -609,55 +626,55 @@ namespace Rogue
 			sprite.setTexturePath("Resources/Assets/True13.png");
 		}
 
-		if (m_timer > 31.0f && m_timer < 32.0f)
+		if (m_timer > 30.0f && m_timer < 31.0f)
 		{
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
 			sprite.setTexturePath("Resources/Assets/True14.png");
 		}
 
-		if (m_timer > 32.0f && m_timer < 33.0f)
+		if (m_timer > 31.0f && m_timer < 32.0f)
 		{
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
 			sprite.setTexturePath("Resources/Assets/True15.png");
 		}
 
-		if (m_timer > 33.0f && m_timer < 34.0f)
+		if (m_timer > 32.0f && m_timer < 33.0f)
 		{
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
 			sprite.setTexturePath("Resources/Assets/True16.png");
 		}
 
-		if (m_timer > 34.0f && m_timer < 35.0f)
+		if (m_timer > 33.0f && m_timer < 34.0f)
 		{
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
 			sprite.setTexturePath("Resources/Assets/True17.png");
 		}
 
-		if (m_timer > 35.0f && m_timer < 36.0f)
+		if (m_timer > 34.0f && m_timer < 35.0f)
 		{
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
 			sprite.setTexturePath("Resources/Assets/True18.png");
 		}
 
-		if (m_timer > 36.0f && m_timer < 37.0f)
+		if (m_timer > 35.0f && m_timer < 36.0f)
 		{
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
 			sprite.setTexturePath("Resources/Assets/True19.png");
 		}
 
-		if (m_timer > 37.0f && m_timer < 38.0f)
+		if (m_timer > 36.0f && m_timer < 37.0f)
 		{
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
 			sprite.setTexturePath("Resources/Assets/True20.png");
 		}
 
-		if (m_timer > 38.0f && m_timer < 39.0f)
+		if (m_timer > 37.0f && m_timer < 38.0f)
 		{
 			auto& sprite = g_engine.m_coordinator.GetComponent<SpriteComponent>(m_finalSprite);
 			sprite.setTexturePath("Resources/Assets/True21.png");
 		}
 
-		if (m_timer > 42.0f)
+		if (m_timer > 41.0f)
 		{
 			PLAYER_STATUS.ResetEndGame();
 			g_engine.m_coordinator.SetTransitionLevel("Level 19.json", 0.0f); //2nd value doesn't matter anymore probably
