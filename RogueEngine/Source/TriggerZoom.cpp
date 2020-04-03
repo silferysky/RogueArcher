@@ -75,7 +75,7 @@ namespace Rogue
 				float tempZoom = m_zoomValueFinal;
 				m_zoomValueFinal = m_zoomValueInit;
 				m_zoomValueInit = tempZoom;
-				m_zoomFactor = (m_zoomValueFinal - m_zoomValueInit) / m_zoomDuration / 60.0f;
+				m_zoomFactor = (m_zoomValueFinal - m_zoomValueInit) / m_zoomDuration * g_deltaTime;
 			}
 			else
 			{

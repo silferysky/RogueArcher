@@ -41,6 +41,5 @@ namespace Rogue
 		float m_zoomTimer;			//Self timer
 		float m_zoomDelay;			//Delay between Zooming in and out
 		float m_zoomFactor;			//Zoom value per frame
-		bool m_startZooming;
 	};
 }
