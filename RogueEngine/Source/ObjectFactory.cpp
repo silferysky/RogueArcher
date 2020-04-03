@@ -205,7 +205,7 @@ namespace Rogue
 		//Set at end to ensure no weird camera panning
 		CAMERA_MANAGER.SetCameraPos({ level["StartPosX"].GetFloat(), level["StartPosY"].GetFloat(), 0.0f });
 		g_engine.m_coordinator.GetSystem<UISystem>()->SetOldCameraPos(CAMERA_MANAGER.GetCameraPos());
-		g_engine.m_coordinator.GetSystem<CameraSystem>()->setIsActive(g_engine.m_coordinator.GetGameState());
+		g_engine.m_coordinator.GetSystem<CameraSystem>()->setIsActive(true);
 
 #if ENABLE_LOGGER
 		RE_INFO("LEVEL LOADED");
