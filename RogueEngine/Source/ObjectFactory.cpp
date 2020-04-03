@@ -310,6 +310,7 @@ namespace Rogue
 		}
 
 		tempDeletedEntities.clear();
+		g_engine.m_coordinator.GetSystem<CameraSystem>()->setIsActive(g_engine.m_coordinator.GetGameState());
 #if ENABLE_LOGGER
 		RE_INFO("LEVEL SAVED");
 #endif

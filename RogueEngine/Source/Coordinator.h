@@ -397,8 +397,6 @@ namespace Rogue
 		void SetGameState(bool newGameState)
 		{
 			m_systemManager->SetGameState(newGameState);
-			if (!newGameState)
-				GetSystem<CameraSystem>()->setIsActive(newGameState);
 		}
 
 		void ToggleEditorIsRunning()
