@@ -98,4 +98,15 @@ namespace Rogue
 		m_zoomFactor = (m_zoomValueFinal - m_zoomValueInit) / m_zoomDuration * g_deltaTime;
 		//m_zoomTimer = m_zoomDelay;
 	}
+
+	void TriggerZoom::OnTriggerExit(Entity otherEnt)
+	{
+		if (!g_engine.m_coordinator.GameIsActive())
+			return;
+
+		if (otherEnt != PLAYER_STATUS.GetPlayerEntity())
+			return;
+		
+		m_zoomTimer = m_zoomDelay;
+	}
 }

@@ -29,6 +29,7 @@ namespace Rogue
 		void AIIdleUpdate() override;
 
 		void OnTriggerEnter(Entity otherEnt) override;
+		void OnTriggerExit(Entity otherEnt) override;
 
 	private:
 		bool m_isZooming;			//Whether zooming is in effect or not
