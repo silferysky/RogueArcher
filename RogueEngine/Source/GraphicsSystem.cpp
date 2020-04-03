@@ -141,9 +141,10 @@ namespace Rogue
 
 		m_drawQueue.clear();
 
+		PickingManager::instance().GenerateViewPortAABB(CameraManager::instance().GetCameraPos(), CameraManager::instance().GetCameraZoom());
+
 		AABB viewPort = PickingManager::instance().GetViewPortArea();
 
-		PickingManager::instance().GenerateViewPortAABB(CameraManager::instance().GetCameraPos(), CameraManager::instance().GetCameraZoom());
 		//viewPort += 100.0f;
 
 		// For all entities
