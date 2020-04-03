@@ -6,10 +6,8 @@
 \par            javier.foo\@digipen.edu
 \date           1 December,2019
 \brief          This file contains the function definitions for GraphicsSystem
-
 All content (C) 2019 DigiPen (SINGAPORE) Corporation, all rights
 reserved.
-
 Reproduction or disclosure of this file or its contents
 without the prior written consent of DigiPen Institute of
 Technology is prohibited.
@@ -117,12 +115,10 @@ namespace Rogue
 		glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, 4 * vec4Size, (void*)(2 * vec4Size));
 		glEnableVertexAttribArray(6);
 		glVertexAttribPointer(6, 4, GL_FLOAT, GL_FALSE, 4 * vec4Size, (void*)(3 * vec4Size));
-
 		glVertexAttribDivisor(3, 1);
 		glVertexAttribDivisor(4, 1);
 		glVertexAttribDivisor(5, 1);
 		glVertexAttribDivisor(6, 1);
-
 		glBindVertexArray(0); */
 
 		auto handle = g_engine.GetWindowHandler();
@@ -142,6 +138,7 @@ namespace Rogue
 		m_drawQueue.clear();
 
 		PickingManager::instance().GenerateViewPortAABB(CameraManager::instance().GetCameraPos(), CameraManager::instance().GetCameraZoom());
+
 		AABB viewPort = PickingManager::instance().GetViewPortArea();
 
 		//viewPort += 100.0f;
@@ -151,11 +148,11 @@ namespace Rogue
 		{
 			auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
 
-			if (g_engine.m_coordinator.ComponentExists<TileMapComponent>(entity) || g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(entity)
+			if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(entity)
+				|| g_engine.m_coordinator.ComponentExists<TileMapComponent>(entity)
+				|| g_engine.m_coordinator.ComponentExists<UIComponent>(entity)
 				|| CollisionManager::instance().DiscreteAABBvsAABB(transform.GetPickArea(), viewPort))
-			{
 				m_drawQueue.insert(std::make_pair(transform.GetZ(), entity));
-			}
 		}
 
 		glBindFramebuffer(GL_FRAMEBUFFER, m_FBO);
@@ -207,7 +204,7 @@ namespace Rogue
 		for (auto pair : m_drawQueue)
 		{
 			auto& entity = pair.second;
-		
+
 			if (g_engine.m_coordinator.ComponentExists<UIComponent>(entity))
 				drawInstanced(entity);
 		}
@@ -273,11 +270,11 @@ namespace Rogue
 		else
 			viewMat = m_pCamera->GetViewMatrix(); */
 
-		// model to world, world to view, view to projection
-		// glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(viewMat));
+			// model to world, world to view, view to projection
+			// glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(viewMat));
 
 		glUniformMatrix4fv(m_transformLocation, 1, GL_FALSE, glm::value_ptr(transformMat));
-		
+
 		if (g_engine.m_coordinator.IsTransitFinish())
 		{
 			if (m_isFading)
