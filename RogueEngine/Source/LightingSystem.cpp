@@ -104,9 +104,9 @@ namespace Rogue
 		glUseProgram(m_graphicsShader.GetShader());
 		glUniform1i(m_totalLightsLocation, totalLights);
 
-		PickingManager::instance().GenerateViewPortAABB(CameraManager::instance().GetCameraPos(), CameraManager::instance().GetCameraZoom());
+		//PickingManager::instance().GenerateViewPortAABB(CameraManager::instance().GetCameraPos(), CameraManager::instance().GetCameraZoom());
 
-		AABB viewPort = PickingManager::instance().GetViewPortArea();
+		//AABB viewPort = PickingManager::instance().GetViewPortArea();
 
 		// For all entities
 		for (auto entity : m_entities)
@@ -115,10 +115,10 @@ namespace Rogue
 
 			auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
 
-			if (CollisionManager::instance().DiscretePointVsAABB(transform.GetPosition(), viewPort))
+			//if (CollisionManager::instance().DiscretePointVsAABB(transform.GetPosition(), viewPort))
 				UpdateShader(entity);
-			else
-				ClearLight();
+			//else
+				//ClearLight();
 		}
 
 		glUseProgram(0);
