@@ -23,6 +23,7 @@ Technology is prohibited.
 
 namespace Rogue
 {
+
 	PlayerStatusManager::PlayerStatusManager() :
 		m_runCount{ 0 },
 		m_entity{ MAX_ENTITIES },
@@ -45,7 +46,7 @@ namespace Rogue
 		m_teleportDelayTimer{ 0.0f },
 		m_teleportCount{ 0 },
 		m_startingPos{ 0.0f, 0.0f },
-		m_checkpoint{std::vector<Vec2>()},
+		m_checkpoint{std::vector<Checkpoint>()},
 		m_lastLevel { "None"},
 		m_isEnding{ false },
 		m_infiniteJumps{ false },
@@ -343,7 +344,7 @@ namespace Rogue
 
 	void PlayerStatusManager::SetCheckpoint(Vec2 checkpoint)
 	{
-		m_checkpoint.push_back(checkpoint);
+		m_checkpoint.push_back(Checkpoint(checkpoint, SceneManager::instance().getCurrentFileName()));
 	}
 
 	Vec2 PlayerStatusManager::GetCheckpoint() const
@@ -358,18 +359,27 @@ namespace Rogue
 			playerPos = trans->get().GetPosition();
 		}
 
-		Vec2 checkpoint = m_checkpoint.front();
-		float distance = Vec2SqDistance(checkpoint, playerPos);
+		Vec2 checkpoint = m_startingPos;
+		float distance = 999999999.9f;
 		
 		for (auto check : m_checkpoint)
 		{
-			if (distance > Vec2SqDistance(check, playerPos))
+			if (check.level != SceneManager::instance().getCurrentFileName())
+				continue;
+
+			//std::cout << check.level << std::endl;
+			//std::cout << "Checkpoint Position: " << check.position.x << "," << check.position.y << std::endl;
+			//std::cout << "Checkpoint Distance: " << Vec2SqDistance(check.position, playerPos) << std::endl;
+
+			if (distance > Vec2SqDistance(check.position, playerPos))
 			{
-				distance = Vec2SqDistance(check, playerPos);
-				checkpoint = check;
+				distance = Vec2SqDistance(check.position, playerPos);
+				checkpoint = check.position;
 			}
 		}
 
+		//std::cout << "Final Checkpoint Position: " << checkpoint.x << "," << checkpoint.y << std::endl;
+		//std::cout << "Final Checkpoint Distance: " << distance;
 		return checkpoint;
 	}
 

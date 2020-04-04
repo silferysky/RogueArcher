@@ -27,6 +27,15 @@ namespace Rogue
 	{
 	public:
 
+		struct Checkpoint
+		{
+			Vec2 position;
+			std::string level;
+
+			Checkpoint(Vec2 pos, std::string_view lvl)
+				: position{ pos }, level{ lvl.data() }{}
+		};
+
 		static PlayerStatusManager& instance()
 		{
 			static PlayerStatusManager instance;
@@ -185,7 +194,7 @@ namespace Rogue
 		Entity m_hitchhikeIndicator;
 
 		//Checkpoint
-		std::vector<Vec2> m_checkpoint;
+		std::vector<Checkpoint> m_checkpoint;
 		Vec2 m_startingPos;
 
 		// Collectibles
