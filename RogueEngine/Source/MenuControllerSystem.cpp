@@ -34,8 +34,7 @@ namespace Rogue
 		m_confirmQuit{ false },
 		m_toMainMenu{ false },
 		m_showControlMenu{ false },
-		m_showingUI{ false },
-		m_fadeTransitioning{ false }
+		m_showingUI{ false }
 	{
 	}
 
@@ -169,12 +168,12 @@ namespace Rogue
 					ClearMenuObjs();
 					g_engine.m_coordinator.SetTransitionLevel("Level 10.json", 0.0f);
 
-					if (!m_fadeTransitioning)
+					if (!PLAYER_STATUS.GetMenuFadeTransition())
 					{
 						FadeEvent ev = FadeEvent(MAX_ENTITIES, 0.5f);
 						ev.SetSystemReceivers(static_cast<int>(SystemID::id_GRAPHICSSYSTEM));
 						EventDispatcher::instance().AddEvent(ev);
-						m_fadeTransitioning = true;
+						PLAYER_STATUS.SetMenuFadeTransition(true);
 					}
 					g_engine.m_coordinator.SetGameState(true);
 					PLAYER_STATUS.SetIndicatorStatus(true);

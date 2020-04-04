@@ -31,7 +31,6 @@ namespace Rogue
 		bool m_toMainMenu;
 		bool m_showControlMenu;
 		bool m_showingUI;
-		bool m_fadeTransitioning;
 
 		std::vector<Vec2> m_menuObjsTransforms;
 	public:

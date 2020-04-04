@@ -56,6 +56,7 @@ namespace Rogue
 		m_currLevel{ LEVEL::TUTORIAL },
 		m_isTeleporting{ false },
 		m_fadeTransition{true},
+		m_menuFadeTransition{ false },
 #if DEMO_MODE
 		m_allowTeleport{ false }
 #else
@@ -86,6 +87,7 @@ namespace Rogue
 		m_souls.clear();
 		m_fadeTransition = true;
 		m_allowTeleport = false;
+		m_menuFadeTransition = false;
 
 		++m_runCount;
 	}
@@ -610,6 +612,16 @@ namespace Rogue
 		return black;
   }
 
+	bool PlayerStatusManager::GetMenuFadeTransition() const
+	{
+		return m_menuFadeTransition;
+	}
+
+	void PlayerStatusManager::SetMenuFadeTransition(bool state)
+	{
+		m_menuFadeTransition = state;
+	}
+
 	// ONLY Coordinator::SystemInits() should call this.
 	void PlayerStatusManager::SetCurrLevel(LEVEL level)
 	{
@@ -623,8 +635,8 @@ namespace Rogue
 
 	void PlayerStatusManager::ResetEndGame()
 	{
+		Reset();
 		SetEnding(false);
-		m_souls.clear();
 	}
 
 	void PlayerStatusManager::SetEnding(bool ending)

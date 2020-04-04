@@ -138,8 +138,9 @@ namespace Rogue
 		void SetFadeTransition(bool set = true);
 		bool GetFadeTransition() const;
 		Entity CreateFadeObject(bool fadeIn) const;
-		//Entity GetFadeObject() const;
-		//void ResetFadeObject();
+		bool GetMenuFadeTransition() const;
+		void SetMenuFadeTransition(bool state);
+		
 
 		// For soul mapping
 		void SetCurrLevel(LEVEL level);
@@ -207,6 +208,7 @@ namespace Rogue
 		std::string m_lastLevel;
 		LEVEL m_currLevel;
 		bool m_fadeTransition; 
+		bool m_menuFadeTransition;
 
 		//ending
 		bool m_isEnding;
