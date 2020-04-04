@@ -180,7 +180,7 @@ namespace Rogue
 		Entity m_hitchhikeIndicator;
 
 		//Checkpoint
-		Vec2 m_checkpoint;
+		std::vector<Vec2> m_checkpoint;
 		Vec2 m_startingPos;
 
 		// Collectibles
