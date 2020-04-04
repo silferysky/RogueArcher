@@ -31,7 +31,8 @@ namespace Rogue
 		m_zoomDuration{ statsComponent.GetZoomDuration() },
 		m_zoomTimer{ 0.0f },
 		m_zoomDelay{ statsComponent.GetZoomDelay() },
-		m_zoomFactor{ 0.001f }
+		m_zoomFactor{ 0.001f },
+		m_triggered{ false }
 	{}
 
 
@@ -41,8 +42,15 @@ namespace Rogue
 			return;
 
 		if (!m_isZooming)
-			return;
-
+		{
+			if (m_triggered)
+			{
+				ComputeZoomValues();
+				m_triggered = false;
+			}
+			else
+				return;
+		}
 		float cameraZoom = CameraManager::instance().GetCameraZoom();
 
 		//If the zoom is at the end
@@ -69,10 +77,7 @@ namespace Rogue
 		if (otherEnt != PLAYER_STATUS.GetPlayerEntity())
 			return;
 
-		m_zoomTimer = 0.0f;
-		m_isZooming = true;
-		m_zoomValueInit = CameraManager::instance().GetCameraZoom();
-		m_zoomFactor = (m_zoomValueFinal - m_zoomValueInit) / m_zoomDuration * g_deltaTime;
+		m_triggered = !m_triggered;
 	}
 
 	void TriggerZoomExit::OnTriggerExit(Entity otherEnt)
@@ -83,6 +88,11 @@ namespace Rogue
 		if (otherEnt != PLAYER_STATUS.GetPlayerEntity())
 			return;
 
+		m_triggered = !m_triggered;
+	}
+
+	void TriggerZoomExit::ComputeZoomValues()
+	{
 		m_zoomTimer = 0.0f;
 		m_isZooming = true;
 		m_zoomValueInit = CameraManager::instance().GetCameraZoom();
