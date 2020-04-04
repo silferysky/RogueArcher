@@ -24,6 +24,8 @@ Technology is prohibited.
 #include "KeyEvent.h"
 #include "Timer.h"
 
+#define SWITCH_TIME 0.2f;
+
 //AI Types
 #include "FinderAI.h"
 #include "PlatformAI.h" //Also includes PatrolAI
@@ -114,6 +116,34 @@ namespace Rogue
 		//	return;
 		//}
 
+		//Switch Timer
+		if (m_switch)
+		{
+			m_switchTimer -= g_deltaTime * g_engine.GetTimeScale();
+			if (m_switchTimer < 0.0f)
+			{
+				m_switch = false;
+				for (Entity i : m_entities)
+				{
+					HierarchyInfo info = g_engine.m_coordinator.GetHierarchyInfo(i);
+					if (info.m_objectName != "TeleportVFXHandler")
+						continue;
+
+					for (std::shared_ptr<ScriptComponent> ai : m_entityLogicMap[i])
+					{
+						try
+						{
+							std::shared_ptr<TeleportVFXHandler> vfxHandler = std::dynamic_pointer_cast<TeleportVFXHandler>(ai);
+							vfxHandler->ConvertVFXElement();
+						}
+						catch (...)
+						{
+						}
+					}
+				}
+			}
+		}
+
 		//Pre AI Update
 
 		//Reset all LogicComponent's active state bit
@@ -164,6 +194,16 @@ namespace Rogue
 			}
 			return;
 		}
+		default:
+			switch (ev.GetEventType())
+			{
+			case EvVFXChange:
+			{
+				m_switch = true;
+				m_switchTimer = SWITCH_TIME;
+				return;
+			}
+			}
 		}
 	}
 
