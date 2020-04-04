@@ -1182,9 +1182,19 @@ namespace Rogue
 		PLAYER_STATUS.ToggleLightStatus();
 
 		if (PLAYER_STATUS.GetLightStatus())
+		{
 			AudioManager::instance().loadSound("Resources/Sounds/LightChange.ogg", 0.3f, false).Play();
+			ChangeVFXEvent ev{};
+			ev.SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
+			EventDispatcher::instance().AddEvent(ev);
+		}
 		else
+		{
 			AudioManager::instance().loadSound("Resources/Sounds/DarkChange.ogg", 0.3f, false).Play();
+			ChangeVFXEvent ev{};
+			ev.SetSystemReceivers((int)SystemID::id_LOGICSYSTEM);
+			EventDispatcher::instance().AddEvent(ev);
+		}
 
 		for (Entity player : m_entities)
 		{

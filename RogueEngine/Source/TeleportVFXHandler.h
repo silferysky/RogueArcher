@@ -28,6 +28,8 @@ namespace Rogue
 		virtual void AIActiveStateUpdate() override;
 		virtual void AIIdleUpdate() override;
 
+		void ConvertVFXElement();
+
 	private:
 		std::vector<Entity> m_teleportVFXArray;
 		std::vector<float> m_timers;

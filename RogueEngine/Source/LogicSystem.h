@@ -57,6 +57,9 @@ namespace Rogue
 
 	private:
 		std::map<Entity, std::vector<std::shared_ptr<ScriptComponent>>> m_entityLogicMap;
+
+		bool m_switch;
+		float m_switchTimer;
 	};
 
 }

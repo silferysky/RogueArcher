@@ -45,7 +45,7 @@ namespace Rogue
 		m_teleportDelayTimer{ 0.0f },
 		m_teleportCount{ 0 },
 		m_startingPos{ 0.0f, 0.0f },
-		m_checkpoint{ 0.0f, 0.0f },
+		m_checkpoint{std::vector<Vec2>()},
 		m_lastLevel { "None"},
 		m_isEnding{ false },
 		m_infiniteJumps{ false },
@@ -76,7 +76,7 @@ namespace Rogue
 		m_teleportDelayTimer = 0.0f;
 		m_teleportCount = 0;
 		m_startingPos = { 0.0f, 0.0f };
-		m_checkpoint = { 0.0f, 0.0f };
+		m_checkpoint.clear();
 		m_souls.clear();
 		m_fadeTransition = true;
 
@@ -343,12 +343,34 @@ namespace Rogue
 
 	void PlayerStatusManager::SetCheckpoint(Vec2 checkpoint)
 	{
-		m_checkpoint = checkpoint;
+		m_checkpoint.push_back(checkpoint);
 	}
 
 	Vec2 PlayerStatusManager::GetCheckpoint() const
 	{
-		return m_checkpoint;
+		if (!m_checkpoint.size() || m_entity == MAX_ENTITIES)
+			return m_startingPos;
+
+		Vec2 playerPos{};
+
+		if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(m_entity))
+		{
+			playerPos = trans->get().GetPosition();
+		}
+
+		Vec2 checkpoint = m_checkpoint.front();
+		float distance = Vec2SqDistance(checkpoint, playerPos);
+		
+		for (auto check : m_checkpoint)
+		{
+			if (distance > Vec2SqDistance(check, playerPos))
+			{
+				distance = Vec2SqDistance(check, playerPos);
+				checkpoint = check;
+			}
+		}
+
+		return checkpoint;
 	}
 
 	void PlayerStatusManager::SetStartingPos(Vec2 startingPos)

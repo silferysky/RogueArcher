@@ -338,4 +338,13 @@ namespace Rogue
 		UnfreezeControlEvent(Entity _id)
 			: EntityEvent(_id) {}
 	};
+
+	class ChangeVFXEvent : public Event
+	{
+	public:
+		SET_EVENT_TYPE(EvVFXChange);
+
+		ChangeVFXEvent() {}
+
+	};
 }

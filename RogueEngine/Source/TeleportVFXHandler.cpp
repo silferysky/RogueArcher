@@ -61,7 +61,7 @@ namespace Rogue
 				m_timers.clear();
 				continue;
 			}
-			
+
 			std::vector<float>::iterator timer = std::begin(m_timers);
 			//Safety check for count
 			if (m_timers.size() > count)
@@ -141,6 +141,24 @@ namespace Rogue
 						sprite->get().setTexCoordScaleX(static_cast<float>(1.0f / animate->get().getFrames()));
 						animate->get().setCurrentFrame(animate->get().getStartFrame());
 					}
+				}
+			}
+		}
+	}
+
+	void TeleportVFXHandler::ConvertVFXElement()
+	{
+		for (auto entIt = std::begin(m_teleportVFXArray); entIt != std::end(m_teleportVFXArray); ++entIt)
+		{
+			if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(*entIt))
+			{
+				if (PLAYER_STATUS.GetLightStatus())
+				{
+					sprite->get().setTexturePath("Resources/Assets/ExaIdleHitch.png");
+				}
+				else
+				{
+					sprite->get().setTexturePath("Resources/Assets/ElaIdleHitch.png");
 				}
 			}
 		}
