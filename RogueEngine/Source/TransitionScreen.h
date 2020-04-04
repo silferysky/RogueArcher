@@ -35,5 +35,6 @@ namespace Rogue
 	private:
 		std::string m_levelToLoad;
 		float m_timer = 0.0f;
+		bool m_transitioning;
 	};
 }

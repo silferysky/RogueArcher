@@ -26,6 +26,15 @@ namespace Rogue
 		: System(SystemID::id_FADESYSTEM)
 	{}
 
+	void FadeSystem::TrueInit()
+	{
+		if (PLAYER_STATUS.GetFadeTransition())
+		{
+			PLAYER_STATUS.CreateFadeObject(false);
+			PLAYER_STATUS.SetFadeTransition(false);
+		}
+	}
+
 	void FadeSystem::Init()
 	{
 		REGISTER_LISTENER(SystemID::id_FADESYSTEM, FadeSystem::Receive);
@@ -74,6 +83,7 @@ namespace Rogue
 			sprite.setFilter(colourFilter);
 
 		}
+		std::cout << std::endl;
 	}
 
 	void FadeSystem::Shutdown()

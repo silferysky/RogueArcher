@@ -172,6 +172,7 @@ namespace Rogue
 					ev.SetSystemReceivers(static_cast<int>(SystemID::id_GRAPHICSSYSTEM));
 					EventDispatcher::instance().AddEvent(ev);
 
+
 					g_engine.m_coordinator.SetGameState(true);
 					PLAYER_STATUS.SetIndicatorStatus(true);
 					HandleMenuObjs();

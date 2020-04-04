@@ -28,7 +28,7 @@ namespace Rogue
 		TransitionObject(Entity entity, LogicComponent& logicComponent, StatsComponent& statsComponent, TransformComponent& transComponent, const std::string& levelToLoad = "Level 1.json");
 		
 		void AIActiveStateUpdate() override;
-		virtual void OnTriggerEnter(Entity other) override;
+		void OnTriggerEnter(Entity other) override;
 
 		std::string& GetTransitionLevelName();
 		void SetTransitionLevelName(std::string name);

@@ -124,6 +124,11 @@ namespace Rogue
 		//Transition
 		void SetLastLevel(std::string_view str);
 		std::string_view GetLastLevel() const;
+		void SetFadeTransition(bool set = true);
+		bool GetFadeTransition() const;
+		Entity CreateFadeObject(bool fadeIn) const;
+		//Entity GetFadeObject() const;
+		//void ResetFadeObject();
 
 		// For soul mapping
 		void SetCurrLevel(LEVEL level);
@@ -189,6 +194,7 @@ namespace Rogue
 		//Level Transition
 		std::string m_lastLevel;
 		LEVEL m_currLevel;
+		bool m_fadeTransition; 
 
 		//ending
 		bool m_isEnding;

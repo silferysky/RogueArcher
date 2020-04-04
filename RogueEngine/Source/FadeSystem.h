@@ -32,6 +32,8 @@ namespace Rogue
 		FadeSystem();
 		~FadeSystem() = default;
 
+		void TrueInit();
+
 		void Init() override;
 		void Update() override;
 		void Shutdown() override;

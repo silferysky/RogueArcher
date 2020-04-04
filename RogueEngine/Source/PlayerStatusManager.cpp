@@ -19,6 +19,7 @@ Technology is prohibited.
 #include "PlayerStatusManager.h"
 #include "GameEvent.h"
 #include "EventDispatcher.h"
+#include "CameraManager.h"
 
 namespace Rogue
 {
@@ -52,7 +53,8 @@ namespace Rogue
 		m_endTrigger{ false },
 		m_trueEndTrigger{ false },
 		m_currLevel{ LEVEL::TUTORIAL },
-		m_isTeleporting{ false }
+		m_isTeleporting{ false },
+		m_fadeTransition{true}
 	{
 
 	}
@@ -76,6 +78,7 @@ namespace Rogue
 		m_startingPos = { 0.0f, 0.0f };
 		m_checkpoint = { 0.0f, 0.0f };
 		m_souls.clear();
+		m_fadeTransition = true;
 
 		++m_runCount;
 	}
@@ -523,6 +526,41 @@ namespace Rogue
 	{
 		return m_lastLevel;
 	}
+
+  void PlayerStatusManager::SetFadeTransition(bool set)
+  {
+		m_fadeTransition = set;
+  }
+
+	bool PlayerStatusManager::GetFadeTransition() const
+	{
+		return m_fadeTransition;
+	}
+
+  Entity PlayerStatusManager::CreateFadeObject(bool fadeIn) const
+  {
+		Entity black = g_engine.m_coordinator.CreateEntity();
+		auto& sprite = g_engine.m_coordinator.CreateComponent<SpriteComponent>(black);
+		auto& trans = g_engine.m_coordinator.CreateComponent<TransformComponent>(black);
+		auto& fade = g_engine.m_coordinator.CreateComponent<FadeComponent>(black);
+
+		sprite.setTexture("Resources/Assets/Black.png");
+		
+		auto& rgba = sprite.getFilter();
+		
+		rgba.a = fadeIn ? 0.0f : 1.0f;
+		
+		sprite.setFilter(rgba);
+		glm::vec3 cameraPos = CameraManager::instance().GetCameraPos();
+		trans.setPosition(Vec2(-870.0f, 348.0f));
+		trans.setScale(Vec2(30000.0f, 20000.0f));
+		trans.setZ(10000);
+		fade.setIsActive(true);
+		fade.setIsFadingIn(fadeIn);
+		fade.setFadeVelocity(2.0f);
+
+		return black;
+  }
 
 	// ONLY Coordinator::SystemInits() should call this.
 	void PlayerStatusManager::SetCurrLevel(LEVEL level)

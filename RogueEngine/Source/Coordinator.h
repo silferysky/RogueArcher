@@ -41,6 +41,7 @@ Technology is prohibited.
 #include "PickingSystem.h"
 #include "ParentChildSystem.h"
 #include "SoulSystem.h"
+#include "FadeSystem.h"
 
 namespace Rogue
 {
@@ -82,6 +83,7 @@ namespace Rogue
 			GetSystem<AudioSystem>()->TrueInit();
 			GetSystem<AnimationSystem>()->InitAnimations();
 			GetSystem<SoulSystem>()->TrueInit();
+			GetSystem<FadeSystem>()->TrueInit();
 		}
 
 		void Update()

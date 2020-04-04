@@ -33,20 +33,24 @@ namespace Rogue
 	// Note: Debug draw system currently doesn't update here.
 	void SystemManager::UpdateSystems()
 	{
-		//std::cout << "Is Transiting: " << m_transitionLevel << std::endl;
-		//std::cout << "Transition Time Left " << m_transitionTime << std::endl;
-		
 		if (m_transitionLevel && m_transitionTime <= 0.0f)
 		{
+			bool fadeTransition = PLAYER_STATUS.GetFadeTransition();
+
 			ImGuiTileSet::instance().ClearTileset();
 			SceneManager::instance().LoadLevel(m_transitionString.c_str());
+
 			g_engine.m_coordinator.ResumeMenuButtons();
 
 			if (!m_repeatLoad)
 				m_transitionLevel = false;
 			else
+			{
 				m_repeatLoad = false;
-			
+				
+				if (fadeTransition)
+					PLAYER_STATUS.SetFadeTransition(true);
+			}
 			return;
 		}
 		else if (m_transitionLevel)
