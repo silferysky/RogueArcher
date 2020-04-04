@@ -36,7 +36,10 @@ namespace Rogue
 			if (auto fade = g_engine.m_coordinator.TryGetComponent<FadeComponent>(m_black))
 			{
 				if (fade->get().getIsActive() == false)
+				{
 					g_engine.m_coordinator.SetTransition(true);
+					PLAYER_STATUS.UnfreezeControls();
+				}
 			}
 		}
 	}
@@ -53,6 +56,8 @@ namespace Rogue
 			
 			m_black = PLAYER_STATUS.CreateFadeObject(true);
 			PLAYER_STATUS.SetFadeTransition(true);
+
+			PLAYER_STATUS.FreezeControls();
 		}
 	}
 	std::string& TransitionObject::GetTransitionLevelName()

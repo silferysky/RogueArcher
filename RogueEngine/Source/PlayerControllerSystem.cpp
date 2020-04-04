@@ -458,7 +458,7 @@ namespace Rogue
 
 			if (g_engine.GetIsFocused())
 			{
-				if (PLAYER_STATUS.GetFreezeControlTimer() > 0.0f)
+				if (PLAYER_STATUS.GetFreezeControlTimer() > 0.0f || PLAYER_STATUS.GetDeath())
 				{
 					return;
 				}
@@ -482,7 +482,8 @@ namespace Rogue
 						auto& PlayerControllable = g_engine.m_coordinator.GetComponent<PlayerControllerComponent>(entity);
 						if (!PlayerControllable.m_grounded /*&& !PLAYER_STATUS.ShowIndicator()*/)
 						{
-							g_engine.SetTimeScale(PlayerControllable.GetSlowTime());
+							if(PLAYER_STATUS.GetAllowTeleport())
+								g_engine.SetTimeScale(PlayerControllable.GetSlowTime());
 						}
 						//PLAYER_STATUS.SetIndicatorStatus();
 					}
@@ -545,6 +546,8 @@ namespace Rogue
 				// Skip level
 				else if (keycode == KeyPress::KeyI)
 				{
+					PLAYER_STATUS.SetAllowTeleport(true);
+
 					if (PLAYER_STATUS.GetPlayerEntity() != MAX_ENTITIES)
 						if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(PLAYER_STATUS.GetPlayerEntity()))
 						{
@@ -583,6 +586,8 @@ namespace Rogue
 				// Reset level
 				else if (keycode == KeyPress::KeyO)
 				{
+					PLAYER_STATUS.SetAllowTeleport(true);
+
 					if (PLAYER_STATUS.GetPlayerEntity() != MAX_ENTITIES)
 						if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(PLAYER_STATUS.GetPlayerEntity()))
 						{
@@ -621,14 +626,17 @@ namespace Rogue
 				}
 				else if (keycode == KeyPress::KeyP)
 				{
+					PLAYER_STATUS.SetAllowTeleport(true);
 					PLAYER_STATUS.SetEndTrigger(true);
 				}
 				else if (keycode == KeyPress::KeyL)
 				{
+					PLAYER_STATUS.SetAllowTeleport(true);
 					PLAYER_STATUS.SetTrueEndTrigger(true);
 				}
 				else if (keycode == KeyPress::KeyK)
 				{
+					PLAYER_STATUS.SetAllowTeleport(true);
 					if (PLAYER_STATUS.GetPlayerEntity() != MAX_ENTITIES)
 					{
 						if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(PLAYER_STATUS.GetPlayerEntity()))
@@ -644,7 +652,7 @@ namespace Rogue
 		} //End KeyTriggered
 		case EventType::EvKeyPressed:
 		{
-			if (PLAYER_STATUS.GetFreezeControlTimer() > 0.0f)
+			if (PLAYER_STATUS.GetFreezeControlTimer() > 0.0f || PLAYER_STATUS.GetDeath())
 			{
 				return;
 			}
@@ -696,7 +704,7 @@ namespace Rogue
 			if (!g_engine.m_coordinator.GameIsActive())
 				return;
 
-			if (PLAYER_STATUS.GetFreezeControlTimer() > 0.0f)
+			if (PLAYER_STATUS.GetFreezeControlTimer() > 0.0f || PLAYER_STATUS.GetDeath())
 			{
 				return;
 			}
@@ -864,7 +872,7 @@ namespace Rogue
 	void PlayerControllerSystem::Teleport()
 	{
 		// In case player doesn't even exist lmao
-		if (m_entities.begin() == m_entities.end())
+		if (m_entities.begin() == m_entities.end() || PLAYER_STATUS.GetAllowTeleport() == false)
 			return;
     
 		// In case player doesn't have a box collider
@@ -1179,6 +1187,9 @@ namespace Rogue
 
 	void PlayerControllerSystem::ToggleMode()
 	{
+		if (PLAYER_STATUS.GetAllowTeleport() == false)
+			return;
+
 		PLAYER_STATUS.ToggleLightStatus();
 
 		if (PLAYER_STATUS.GetLightStatus())

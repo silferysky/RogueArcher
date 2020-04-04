@@ -55,7 +55,12 @@ namespace Rogue
 		m_trueEndTrigger{ false },
 		m_currLevel{ LEVEL::TUTORIAL },
 		m_isTeleporting{ false },
-		m_fadeTransition{true}
+		m_fadeTransition{true},
+#if DEMO_MODE
+		m_allowTeleport{ false }
+#else
+		m_allowTeleport{ true }
+#endif
 	{
 
 	}
@@ -80,6 +85,7 @@ namespace Rogue
 		m_checkpoint.clear();
 		m_souls.clear();
 		m_fadeTransition = true;
+		m_allowTeleport = false;
 
 		++m_runCount;
 	}
@@ -235,6 +241,16 @@ namespace Rogue
 	Vec2 PlayerStatusManager::GetPreTeleportLoc() const
 	{
 		return m_preTeleportLoc;
+	}
+
+	void PlayerStatusManager::SetAllowTeleport(bool state)
+	{
+		m_allowTeleport = state;
+	}
+
+	bool PlayerStatusManager::GetAllowTeleport() const
+	{
+		return m_allowTeleport;
 	}
 
 	void PlayerStatusManager::SetMoveLeft(bool isLeft)

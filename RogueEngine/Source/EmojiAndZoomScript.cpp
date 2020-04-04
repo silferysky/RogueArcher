@@ -122,5 +122,6 @@ namespace Rogue
 		m_activated = true;
 		m_timer = m_statsComponent->GetZoomDuration();			//Set to Zoom duration so wait for zoom to be finished
 		PLAYER_STATUS.FreezeControls();
+		PLAYER_STATUS.SetAllowTeleport(true);
 	}
 }
