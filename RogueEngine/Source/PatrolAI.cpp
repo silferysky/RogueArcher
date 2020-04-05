@@ -44,6 +44,8 @@ namespace Rogue
 				if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(m_entity))
 				{
 					trans->get().setPosition(*stats.getWaypoints().begin());
+					if (auto sound = g_engine.m_coordinator.TryGetComponent<AudioEmitterComponent>(m_entity))
+						sound->get().getSound().Set3DLocation(trans->get().GetPosition());
 				}
 
 				if (stats.getWaypoints().size() > 1)
@@ -122,6 +124,9 @@ namespace Rogue
 
 		Vec2Normalize(travelDistance, travelDistValue);
 		aiTransform.setPosition(aiTransform.GetPosition() + travelDistance * m_statsComponent->getSpeed() * DT_TRANSFORM_MODIFIER);
+
+		if (auto sound = g_engine.m_coordinator.TryGetComponent<AudioEmitterComponent>(m_entity))
+			sound->get().getSound().Set3DLocation(aiTransform.GetPosition());
 
 		for (auto& child : g_engine.m_coordinator.GetHierarchyInfo(m_entity).m_children)
 		{
