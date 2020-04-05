@@ -68,6 +68,11 @@ namespace Rogue
 
 	void PlayerStatusManager::Reset()
 	{
+		if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(PLAYER_STATUS.GetPlayerEntity()))
+		{
+			trans->get().setPosition(Vec2());
+		}
+
 		m_entity = MAX_ENTITIES;
 		m_indicator = MAX_ENTITIES;
 		m_isActive = true;
