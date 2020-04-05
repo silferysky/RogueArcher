@@ -61,6 +61,11 @@ namespace Rogue
 			g_engine.m_coordinator.GetComponent<RigidbodyComponent>(m_entity).setIsStatic(true);
 		}
 
+		if (auto sound = g_engine.m_coordinator.TryGetComponent<AudioEmitterComponent>(m_entity))
+		{
+			sound->get().getSound().SetVolume(0.0f);//Pause(true);
+		}
+
 		m_startDisplay = g_engine.m_coordinator.CloneArchetypes("CaveMole", true, false);
 		m_endDisplay = g_engine.m_coordinator.CloneArchetypes("CaveMole", true, false);
 
@@ -128,6 +133,8 @@ namespace Rogue
 		{
 			g_engine.m_coordinator.GetSystem<PlayerControllerSystem>()->Hitchhike(MAX_ENTITIES);
 			m_timerActive = false;
+			m_timer = 0.0f;
+
 			if (auto anim = g_engine.m_coordinator.TryGetComponent<AnimationComponent>(m_endDisplay))
 			{
 				anim->get().setCurrentFrame(anim->get().getFrames() - 1);
@@ -135,6 +142,11 @@ namespace Rogue
 				anim->get().setIsNotReversed(false);
 				anim->get().setIsAnimating(true);
 				m_endAnimEnded = false;
+			}
+
+			if (auto sound = g_engine.m_coordinator.TryGetComponent<AudioEmitterComponent>(m_entity))
+			{
+				sound->get().getSound().SetVolume(0.0f);
 			}
 		}
 
@@ -228,6 +240,11 @@ namespace Rogue
 		{
 			Vec2Normalize(travelDistance, travelDistValue);
 			aiTransform.setPosition(aiTransform.GetPosition() + travelDistance * m_statsComponent->getSpeed() * DT_TRANSFORM_MODIFIER);
+
+			if (auto sound = g_engine.m_coordinator.TryGetComponent<AudioEmitterComponent>(m_entity))
+			{
+				sound->get().getSound().SetVolume(1.0f);
+			}
 		}
 
 		for (auto& child : g_engine.m_coordinator.GetHierarchyInfo(m_entity).m_children)
