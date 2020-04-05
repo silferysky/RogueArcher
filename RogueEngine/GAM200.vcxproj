@@ -21,6 +21,7 @@
     <ClInclude Include="Source\AnimationComponent.h" />
     <ClInclude Include="Source\AnimationSystem.h" />
     <ClInclude Include="Source\AudioEmitterComponent.h" />
+    <ClInclude Include="Source\AudioFade.h" />
     <ClInclude Include="Source\AudioManager.h" />
     <ClInclude Include="Source\AudioSystem.h" />
     <ClInclude Include="Source\BackgroundComponent.h" />
@@ -216,6 +217,7 @@
     <ClCompile Include="Source\AnimationComponent.cpp" />
     <ClCompile Include="Source\AnimationSystem.cpp" />
     <ClCompile Include="Source\AudioEmitterComponent.cpp" />
+    <ClCompile Include="Source\AudioFade.cpp" />
     <ClCompile Include="Source\AudioSystem.cpp" />
     <ClCompile Include="Source\BoxCollider2DComponent.cpp" />
     <ClCompile Include="Source\CameraComponent.cpp" />

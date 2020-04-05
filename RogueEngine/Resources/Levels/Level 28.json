@@ -15,19 +15,19 @@
     "Signature3": 2501,
     "Signature4": 2053,
     "Signature5": 5,
-	"Signature6": 1028,
+    "Signature6": 1220,
     "Entity0": "Name{Thank you}|Tag{}|Sprite{Resources\\Assets\\EndingEventThanks.png;1;1;1;1;}||Transform{0;-85;502;47;0;0}||||||||||||||||||||||||",
     "Entity1": "Name{MenuTitle}|Tag{}|Sprite{Resources\\Assets\\MenuTitle.png;1;1;1;1;}||Transform{0;200;624;329;0;0}||||||Animation{4;0;0.15;1;0;1;0;}||||||||||||||||||",
     "Entity2": "Name{CreditsBtn}|Tag{}|Sprite{Resources\\Assets\\MenuButtonCredits.png;1;1;1;1;}||Transform{-300;-300;239;309;0;0}||||LogicComponent{22;0;1;0}|StatsComponent{0;0;0;0;0;;0;0;0;0;0;0;0;}|Animation{5;4;0.1;1;0;1;0;}|||UI{1;}|||||||||||||||",
     "Entity3": "Name{MainMenuBtn}|Tag{}|Sprite{Resources/Assets/MenuButtonMainMenu.png;1;1;1;1;}||Transform{300;-300;239;309;0;0}||||LogicComponent{22;0;1;0}|StatsComponent{0;0;0;0;0;;0;0;0;0;0;0;0;}|Animation{5;4;0.1;1;0;1;0;}|||UI{1;}|||||||||||||||",
     "Entity4": "Name{Credits}|Tag{}|Sprite{Resources\\Assets\\Credits.png;1;1;1;1;}||Transform{-3;0;1600;900;0;0}|||||||||UI{0;}|||||||||||||||",
     "Entity5": "Name{EndingText}|Tag{}|Sprite{Resources\\Assets\\Ending2Text.png;1;1;1;1;}||Transform{0;1;638;71;0;0}||||||||||||||||||||||||",
-    "Entity6": "Name{Ambience}|Tag{}|||Transform{0;0;100;100;0;0}||||||||Audio{Resources\\Sounds\\exhale.ogg;100000;0.3;1;0;}||||||||||||||||",
+    "Entity6": "Name{Ambience}|Tag{}|||Transform{0;0;100;100;0;0}||||LogicComponent{40;0;1;0}|StatsComponent{0;0;0;0;0;;0;0;0;0;0;0;0;}|||Audio{Resources\\Sounds\\exhale.ogg;100000;0.3;1;0;}||||||||||||||||",
     "EntityParent0": 65535,
     "EntityParent1": 65535,
     "EntityParent2": 65535,
     "EntityParent3": 65535,
     "EntityParent4": 65535,
     "EntityParent5": 65535,
-	"EntityParent6": 65535
+    "EntityParent6": 65535
 }

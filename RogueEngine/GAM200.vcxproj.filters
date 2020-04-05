@@ -779,6 +779,9 @@
     <ClInclude Include="Source\TriggerZoomExit.h">
       <Filter>RogueEngine\Systems\AI\Script Types\Trigger</Filter>
     </ClInclude>
+    <ClInclude Include="Source\AudioFade.h">
+      <Filter>RogueEngine\Systems\AI\Script Types</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputManager.cpp">
@@ -1246,6 +1249,9 @@
     </ClCompile>
     <ClCompile Include="Source\TriggerZoomExit.cpp">
       <Filter>RogueEngine\Systems\AI\Script Types\Trigger</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AudioFade.cpp">
+      <Filter>RogueEngine\Systems\AI\Script Types</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

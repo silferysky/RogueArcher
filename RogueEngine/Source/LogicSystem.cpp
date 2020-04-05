@@ -63,6 +63,7 @@ Technology is prohibited.
 #include "CrystalElementBeetle.h"
 #include "CrystalMole.h"
 #include "TriggerZoomExit.h"
+#include "AudioFade.h"
 
 namespace Rogue
 {
@@ -471,6 +472,12 @@ namespace Rogue
 				{
 					CrystalMole newAI(entities, logicComponent, statsComponent);
 					AddLogicInterface(entities, std::make_shared<CrystalMole>(newAI));
+					break;
+				}
+				case AIType::Audio_Fade:
+				{
+					AudioFade newAI(entities, logicComponent, statsComponent);
+					AddLogicInterface(entities, std::make_shared<AudioFade>(newAI));
 					break;
 				}
 				case AIType::AI_Static:

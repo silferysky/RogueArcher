@@ -62,6 +62,7 @@ namespace Rogue
 		UI_ProgressCheckpoint,
 		UI_Transition,
 		Trigger_Zoom_Exit,
+		Audio_Fade,
 
 		AI_Last
 	};

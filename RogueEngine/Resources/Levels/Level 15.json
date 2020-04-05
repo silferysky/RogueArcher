@@ -413,7 +413,7 @@
     "Entity132": "Name{Game Object 163}|Tag{}|Sprite{Resources\\Assets\\VegetationSunflowerDeco.png;1;1;1;1;}||Transform{844.768;267.21;65;100;0;5}||||||||||||||||||||||||",
     "Entity133": "Name{Game Object 164}|Tag{}|Sprite{Resources\\Assets\\VegetationRoseDeco.png;1;1;1;1;}||Transform{1354;275.947;65;100;0;5}||||||||||||||||||||||||",
     "Entity134": "Name{Game Object 165}|Tag{}|Sprite{Resources\\Assets\\VegetationRoseDeco.png;1;1;1;1;}||Transform{-1077.17;340.744;65;100;0;5}||||||||||||||||||||||||",
-    "Entity135": "Name{ForestSFX}|Tag{}|||Transform{0;0;100;100;0;0}||||||||Audio{Resources\\Sounds\\JungleAmbience.ogg;1000000;0.3;1;0;}||||||||||||||||",
+    "Entity135": "Name{ForestSFX}|Tag{}|||Transform{0;0;100;100;0;0}||||||||Audio{Resources\\Sounds\\JungleAmbience.ogg;1000000;0.05;1;0;}||||||||||||||||",
 	"Entity136": "Name{Game Object 159}|Tag{}|Sprite{Resources\\Assets\\VegetationRoseDeco.png;1;1;1;1;}||Transform{-387.368;-588.034;65;100;0;5}||||||||||||||||||||||||",
     "Entity137": "Name{Game Object 160}|Tag{}|Sprite{Resources\\Assets\\VegetationSunflowerDeco.png;1;1;1;1;}||Transform{844.768;267.21;65;100;0;5}||||||||||||||||||||||||",
     "Entity138": "Name{Game Object 161}|Tag{}|Sprite{Resources\\Assets\\VegetationSunflowerDeco.png;1;1;1;1;}||Transform{-265.033;-467.678;-65;100;0;5}||||||||||||||||||||||||",
