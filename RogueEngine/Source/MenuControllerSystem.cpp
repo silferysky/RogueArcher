@@ -265,11 +265,11 @@ namespace Rogue
 						g_engine.SetGameIsRunning(false);
 					else if (m_toMainMenu)
 					{
-						g_engine.m_coordinator.SetTransitionLevel("Level 20.json", 0.0f);
-						FadeEvent ev = FadeEvent(MAX_ENTITIES, 0.5f);
-						ev.SetSystemReceivers(static_cast<int>(SystemID::id_GRAPHICSSYSTEM));
-						EventDispatcher::instance().AddEvent(ev);
 						PLAYER_STATUS.SetIndicatorStatus(false);
+						PLAYER_STATUS.ResetEndGame();
+						g_engine.m_coordinator.SetTransitionLevel("Level 20.json", 0.0f);
+						g_engine.m_coordinator.SetTransition(true);
+						m_toMainMenu = false;
 					}
 
 				}
