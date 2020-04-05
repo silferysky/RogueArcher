@@ -88,12 +88,12 @@ namespace Rogue
 
 	const AABB& TransformComponent::GetPickArea()
 	{
-		if (m_invalidated || !m_AABBGenerated)
-		{
+		//if (m_invalidated || !m_AABBGenerated)
+		//{
 			PickingManager::instance().GenerateMeshAABB(*this);
-			m_invalidated = false;
-			m_AABBGenerated = true;
-		}
+			//m_invalidated = false;
+			//m_AABBGenerated = true;
+		//}
 
 		return m_pickArea;
 	}
