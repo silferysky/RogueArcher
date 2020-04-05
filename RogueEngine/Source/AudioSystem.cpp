@@ -49,7 +49,7 @@ namespace Rogue
 		auto front = cameraSys->GetCameraFront();
 		auto up = cameraSys->GetCameraUp();
 
-		listenerFront = { front.x, front.x, front.z };
+		listenerFront = { front.x, front.y, front.z };
 		listenerUp = { up.x, up.y, up.z };
 	}
 

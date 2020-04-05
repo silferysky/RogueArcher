@@ -37,6 +37,9 @@ namespace Rogue
 
 	void AudioFade::AIIdleUpdate()
 	{
+		if (!g_engine.m_coordinator.GameIsActive())
+			return;
+
 		m_timer += g_deltaTime;
 
 		if (auto sound = g_engine.m_coordinator.TryGetComponent<AudioEmitterComponent>(m_entity))
