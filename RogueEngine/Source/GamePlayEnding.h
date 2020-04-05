@@ -33,6 +33,7 @@ namespace Rogue
 		bool m_endingDPressed;
 		bool m_trueEnding;
 		bool m_finalSpriteSet;
+		bool m_soundloaded;
 		Entity m_finalSprite;
 		Entity m_finalSpriteBackground;
 	public:
