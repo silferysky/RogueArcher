@@ -124,26 +124,18 @@ namespace Rogue
 		if (!m_statsComponent->GetIsPatrolling())
 			return;
 
-		if (m_delay > 0.0f)
+		if (m_timer > 4.95f && m_goingToEnd && PLAYER_STATUS.GetHitchhikedEntity() == m_entity)
 		{
-			m_delay -= g_engine.GetTimeScale() * g_deltaTime;
-			if (m_delay < 0.0f)
+			g_engine.m_coordinator.GetSystem<PlayerControllerSystem>()->Hitchhike(MAX_ENTITIES);
+			m_timerActive = false;
+			if (auto anim = g_engine.m_coordinator.TryGetComponent<AnimationComponent>(m_endDisplay))
 			{
-				m_delay = 0.0f;
-				if (m_goingToEnd && PLAYER_STATUS.GetHitchhikedEntity() == m_entity)
-				{
-					g_engine.m_coordinator.GetSystem<PlayerControllerSystem>()->Hitchhike(MAX_ENTITIES);			
-					if (auto anim = g_engine.m_coordinator.TryGetComponent<AnimationComponent>(m_endDisplay))
-					{
-						anim->get().setCurrentFrame(anim->get().getFrames() - 1);
-						anim->get().setEndFrame(0);
-						anim->get().setIsNotReversed(false);
-						anim->get().setIsAnimating(true);
-						m_endAnimEnded = false;
-					}
-				}
+				anim->get().setCurrentFrame(anim->get().getFrames() - 1);
+				anim->get().setEndFrame(0);
+				anim->get().setIsNotReversed(false);
+				anim->get().setIsAnimating(true);
+				m_endAnimEnded = false;
 			}
-			return;
 		}
 
 		if (auto anim = g_engine.m_coordinator.TryGetComponent<AnimationComponent>(m_endDisplay))
@@ -193,6 +185,12 @@ namespace Rogue
 
 			m_nextPoint.push(m_waypoints[m_waypoints.size() - 1]);
 			m_goingToEnd = true;
+
+			if (!m_timerActive)
+			{
+				m_timerActive = true;
+				m_timer = 0.0f;
+			}
 		}
 		else //If Player is not on mole, it goes to starting point
 		{
@@ -226,18 +224,15 @@ namespace Rogue
 		else
 			return;
 
-		Vec2Normalize(travelDistance, travelDistValue);
-		aiTransform.setPosition(aiTransform.GetPosition() + travelDistance * m_statsComponent->getSpeed() * DT_TRANSFORM_MODIFIER);
+		if (m_timer > 0.6f)
+		{
+			Vec2Normalize(travelDistance, travelDistValue);
+			aiTransform.setPosition(aiTransform.GetPosition() + travelDistance * m_statsComponent->getSpeed() * DT_TRANSFORM_MODIFIER);
+		}
 
 		for (auto& child : g_engine.m_coordinator.GetHierarchyInfo(m_entity).m_children)
 		{
 			g_engine.m_coordinator.GetComponent<ChildComponent>(child).SetGlobalDirty();
-		}
-
-		//If within a certain radius, assign next point
-		if (Vec2SqDistance(aiTransform.GetPosition(), m_nextPoint.front()) < m_statsComponent->getSightRange() * m_statsComponent->getSightRange())
-		{
-			m_delay = m_patrolDelay;
 		}
 	}
 }
