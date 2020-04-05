@@ -137,21 +137,21 @@ namespace Rogue
 
 		m_drawQueue.clear();
 
-		//PickingManager::instance().GenerateViewPortAABB(CameraManager::instance().GetCameraPos(), CameraManager::instance().GetCameraZoom());
+		PickingManager::instance().GenerateViewPortAABB(CameraManager::instance().GetCameraPos(), CameraManager::instance().GetCameraZoom());
 
-		//AABB viewPort = PickingManager::instance().GetViewPortArea();
+		AABB viewPort = PickingManager::instance().GetViewPortArea();
 
-		//viewPort += 100.0f;
+		//viewPort += -100.0f;
 
 		// For all entities
 		for (auto entity : m_entities)
 		{
 			auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(entity);
 
-			//if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(entity)
-				//|| g_engine.m_coordinator.ComponentExists<TileMapComponent>(entity)
-				//|| g_engine.m_coordinator.ComponentExists<UIComponent>(entity)
-				//|| CollisionManager::instance().DiscreteAABBvsAABB(transform.GetPickArea(), viewPort))
+			if (g_engine.m_coordinator.ComponentExists<PlayerControllerComponent>(entity)
+				|| g_engine.m_coordinator.ComponentExists<TileMapComponent>(entity)
+				|| g_engine.m_coordinator.ComponentExists<UIComponent>(entity)
+				|| CollisionManager::instance().DiscreteAABBvsAABB(transform.GetPickArea(), viewPort))
 				m_drawQueue.insert(std::make_pair(transform.GetZ(), entity));
 		}
 
@@ -223,8 +223,6 @@ namespace Rogue
 		g_engine.SwapBuffer();
 
 		UseFrameBuffer();
-
-		//entityCount = 0;
 
 		g_engine.m_coordinator.EndTimeSystem("Graphics System");
 	}

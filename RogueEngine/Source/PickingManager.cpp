@@ -59,7 +59,7 @@ namespace Rogue
 		Vec2 cameraPos{ cameraPos3D.x, cameraPos3D.y };
 		Vec2 worldDimensions = g_engine.GetWorldDimensions();
 		
-		//std::cout << "Camera: " << cameraPos << ". Dimensions: " << worldDimensions << std::endl;
+		std::cout << "Camera: " << cameraPos << ". Dimensions: " << worldDimensions << std::endl;
 		
 		m_viewportArea.setMin(cameraPos - worldDimensions);
 		m_viewportArea.setMax(cameraPos + worldDimensions);

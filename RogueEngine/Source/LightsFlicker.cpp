@@ -41,6 +41,9 @@ namespace Rogue
 		{
 			if (auto light = g_engine.m_coordinator.TryGetComponent<LightComponent>(m_entity))
 			{
+				if (m_statsComponent->getHealth() == 0)
+					m_statsComponent->setHealth(1);
+					
 				float random = static_cast<float>(RAND_MAX / m_statsComponent->getHealth());
 
 				if (random) // guard against division by 0
