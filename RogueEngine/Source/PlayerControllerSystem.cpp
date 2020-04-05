@@ -498,7 +498,7 @@ namespace Rogue
 					}
 				}
 
-				else if (keycode == KeyPress::MB2 || keycode == KeyPress::KeyShift || keycode == KeyPress::KeyE)
+				else if (keycode == KeyPress::MB2)
 				{
 					ToggleMode();
 				}

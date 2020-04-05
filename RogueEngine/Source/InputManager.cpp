@@ -75,6 +75,9 @@ namespace Rogue
 
 	void InputManager::Update()
 	{
+		if (!g_engine.GetIsFocused())
+			return;
+
 		Timer TimerSystem;
 		g_engine.m_coordinator.InitTimeSystem("Input System");
 		//Always do this first
