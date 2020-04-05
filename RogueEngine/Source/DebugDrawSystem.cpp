@@ -256,8 +256,10 @@ Technology is prohibited.
 		    
 			if (g_engine.GetIsFocused())
 			{
+#if !DEMO_MODE
 				if (keycode == Rogue::KeyPress::KeyF3)
 					m_isActive = !m_isActive;
+#endif
 			}
 			return;
 		} //End KeyTriggered
