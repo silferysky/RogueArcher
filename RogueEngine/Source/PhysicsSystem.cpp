@@ -58,12 +58,12 @@ namespace Rogue
 		
 		Vec2 force{}; // The force to apply on the player
 
-		if (moveDir.y == 0)
+		//if (moveDir.y == 0)
 			force.x = (targetVel.x - rigidbody.getVelocity().x) * forceMultiplier;
-		else if (moveDir.x == 0)
-			force.y = targetVel.y - rigidbody.getVelocity().y * forceMultiplier;
-		else
-			force = Vec2(targetVel - rigidbody.getVelocity()) * forceMultiplier;
+		//else if (moveDir.x == 0)
+		//	force.y = targetVel.y - rigidbody.getVelocity().y * forceMultiplier;
+		//else
+		//	force = Vec2(targetVel - rigidbody.getVelocity()) * forceMultiplier;
 
 #if 0
 		const float maxForce = playerSpeed / g_fixedDeltaTime; // An arbitruary number to limit the max force
@@ -118,9 +118,6 @@ namespace Rogue
 
 	void PhysicsSystem::Update()
 	{
-		// Add relevant forces to each rigidbody
-		ForceManager::instance().ApplyAllForces();
-		
 		if (auto playerCtrlOpt = g_engine.m_coordinator.TryGetComponent<PlayerControllerComponent>(PLAYER_STATUS.GetPlayerEntity()))
 		{
 			PlayerControllerComponent& playerCtrl = playerCtrlOpt->get();
@@ -147,6 +144,9 @@ namespace Rogue
 #endif
 			}
 		}
+
+		// Add relevant forces to each rigidbody
+		ForceManager::instance().ApplyAllForces();
 
 		// For all entities
 		std::set<Entity>::iterator iEntity;
