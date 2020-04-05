@@ -692,6 +692,13 @@ namespace Rogue
 
 	void GamePlayEnding::ExaEnding()
 	{
+		auto sound = g_engine.m_coordinator.loadSound("Resources/Sounds/exhale.ogg");
+		if (!m_soundloaded)
+		{
+			sound.Play();
+			m_soundloaded = !m_soundloaded;
+		}
+
 		if (frame1)
 		{
 			for (HierarchyInfo& info : g_engine.m_coordinator.GetHierarchyInfoArray())
@@ -873,6 +880,7 @@ namespace Rogue
 
 		if (m_timer > 35.0f)
 		{
+			sound.Unload();
 			PLAYER_STATUS.ResetEndGame();
 			g_engine.m_coordinator.SetTransitionLevel("Level 28.json", 0.0f); //2nd value doesn't matter anymore probably
 			g_engine.m_coordinator.SetTransition(true);
@@ -881,6 +889,13 @@ namespace Rogue
 
 	void GamePlayEnding::ElaEnding()
 	{
+		auto sound = g_engine.m_coordinator.loadSound("Resources/Sounds/exhale.ogg");
+		if (!m_soundloaded)
+		{
+			sound.Play();
+			m_soundloaded = !m_soundloaded;
+		}
+
 		if (frame1)
 		{
 			for (HierarchyInfo& info : g_engine.m_coordinator.GetHierarchyInfoArray())
@@ -1065,6 +1080,7 @@ namespace Rogue
 
 		if (m_timer > 35.0f)
 		{
+			sound.Unload();
 			PLAYER_STATUS.ResetEndGame();
 			g_engine.m_coordinator.SetTransitionLevel("Level 27.json", 0.0f); //2nd value doesn't matter anymore probably
 			g_engine.m_coordinator.SetTransition(true);
