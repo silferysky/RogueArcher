@@ -43,6 +43,7 @@ namespace Rogue
 			animation.setEndFrame(4);
 			animation.setIsLooping(false); // play the animation only once
 
+			PLAYER_STATUS.FreezeControls();
 
 			m_logicComponent->SetActiveStateBit(static_cast<size_t>(AIState::AIState_Idle));
 		}
@@ -59,6 +60,8 @@ namespace Rogue
 		{
 			if (m_entity == PLAYER_STATUS.GetHitchhikedEntity()) // if player is still attached
 				g_engine.m_coordinator.GetSystem<PlayerControllerSystem>()->Hitchhike(MAX_ENTITIES); // Proper way to get out of hitchhike
+
+			PLAYER_STATUS.UnfreezeControls();
 
 			g_engine.m_coordinator.AddToDeleteQueue(m_entity);
 		}
