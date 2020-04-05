@@ -87,7 +87,7 @@ namespace Rogue
 			//end->get().setIsAnimating(false);
 			end->get().setIsLooping(false);
 		}
-		m_patrolDelay = 2.0f;
+		m_patrolDelay = 1.5f;
 		m_delay = 0.0f;
 	}
 
@@ -104,6 +104,16 @@ namespace Rogue
 	{
 		if (m_timerActive)
 			m_timer += g_deltaTime * g_engine.GetTimeScale();
+
+
+		if (m_startAnimEnded && PLAYER_STATUS.GetHitchhikedEntity() == m_entity)
+			if (auto anim = g_engine.m_coordinator.TryGetComponent<AnimationComponent>(m_startDisplay))
+			{
+				anim->get().setEndFrame(anim->get().getFrames());
+				anim->get().setIsNotReversed(true);
+				anim->get().setIsAnimating(true);
+				m_startAnimEnded = false;
+			}
 
 		//Only can do waypoint patrol if 2 waypoints exist
 		//if (m_waypoints.size() < 2)
@@ -181,15 +191,6 @@ namespace Rogue
 
 			m_nextPoint.push(m_waypoints[m_waypoints.size() - 1]);
 			m_goingToEnd = true;
-
-			if (m_startAnimEnded == true)
-				if (auto anim = g_engine.m_coordinator.TryGetComponent<AnimationComponent>(m_startDisplay))
-				{
-					anim->get().setEndFrame(anim->get().getFrames() - 1);
-					anim->get().setIsNotReversed(true);
-					anim->get().setIsAnimating(true);
-					m_startAnimEnded = false;
-				}
 		}
 		else //If Player is not on mole, it goes to starting point
 		{
