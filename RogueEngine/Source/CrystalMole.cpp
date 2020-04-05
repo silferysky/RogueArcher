@@ -107,6 +107,7 @@ namespace Rogue
 
 
 		if (m_startAnimEnded && PLAYER_STATUS.GetHitchhikedEntity() == m_entity)
+		{
 			if (auto anim = g_engine.m_coordinator.TryGetComponent<AnimationComponent>(m_startDisplay))
 			{
 				anim->get().setEndFrame(anim->get().getFrames());
@@ -114,6 +115,9 @@ namespace Rogue
 				anim->get().setIsAnimating(true);
 				m_startAnimEnded = false;
 			}
+			if (auto sound = g_engine.m_coordinator.TryGetComponent<AudioEmitterComponent>(m_entity))
+				sound->get().getSound().Play();
+		}
 
 		//Only can do waypoint patrol if 2 waypoints exist
 		//if (m_waypoints.size() < 2)
@@ -139,6 +143,9 @@ namespace Rogue
 						anim->get().setIsAnimating(true);
 						m_endAnimEnded = false;
 					}
+
+					if (auto sound = g_engine.m_coordinator.TryGetComponent<AudioEmitterComponent>(m_entity))
+						sound->get().getSound().Pause(true);
 				}
 			}
 			return;
