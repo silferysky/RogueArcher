@@ -91,7 +91,11 @@ namespace Rogue
 		m_checkpoint.clear();
 		m_souls.clear();
 		m_fadeTransition = true;
+#if DEMO_MODE
 		m_allowTeleport = false;
+#else
+		m_allowTeleport = true;
+#endif
 		m_menuFadeTransition = false;
 
 		++m_runCount;
