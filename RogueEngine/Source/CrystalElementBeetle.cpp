@@ -43,6 +43,8 @@ namespace Rogue
 				if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(m_entity))
 				{
 					trans->get().setPosition(*stats.getWaypoints().begin());
+					if (auto sound = g_engine.m_coordinator.TryGetComponent<AudioEmitterComponent>(m_entity))
+						sound->get().getSound().Set3DLocation(trans->get().GetPosition());
 				}
 
 				if (stats.getWaypoints().size() > 1)
@@ -105,6 +107,8 @@ namespace Rogue
 					if (auto trans = g_engine.m_coordinator.TryGetComponent<TransformComponent>(m_entity))
 					{
 						trans->get().setPosition(m_waypoints[0]);
+						if (auto sound = g_engine.m_coordinator.TryGetComponent<AudioEmitterComponent>(m_entity))
+							sound->get().getSound().Set3DLocation(trans->get().GetPosition());
 					}
 
 					if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(m_entity))
@@ -150,6 +154,9 @@ namespace Rogue
 		Vec2Normalize(travelDistance, travelDistValue);
 		aiTransform.setPosition(aiTransform.GetPosition() + travelDistance * m_statsComponent->getSpeed() * DT_TRANSFORM_MODIFIER);
 
+		if (auto sound = g_engine.m_coordinator.TryGetComponent<AudioEmitterComponent>(m_entity))
+			sound->get().getSound().Set3DLocation(aiTransform.GetPosition());
+
 		for (auto& child : g_engine.m_coordinator.GetHierarchyInfo(m_entity).m_children)
 		{
 			g_engine.m_coordinator.GetComponent<ChildComponent>(child).SetGlobalDirty();
@@ -168,6 +175,7 @@ namespace Rogue
 			if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(m_entity))
 			{
 				sprite->get().setTexturePath("Resources/Assets/CaveBugFly.png");
+				g_engine.m_coordinator.loadSound("Resources/Sounds/insectflying.ogg").Play();
 			}
 
 			//std::cout << "Before Waypoint " << m_currentPointIndex << std::endl;
