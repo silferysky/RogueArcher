@@ -56,7 +56,7 @@ namespace Rogue
 		pickArea.setMin(Vec2{ pos.x - scale.x * 0.5f, pos.y - scale.y * 0.5f });
 		pickArea.setMax(Vec2{ pos.x + scale.x * 0.5f, pos.y + scale.y * 0.5f });
 
-		trans.setPickArea(std::move(pickArea));
+		trans.setPickArea(pickArea);
 	}
 
 	void PickingManager::GenerateViewPortAABB(const glm::vec3& cameraPos3D, float zoom)

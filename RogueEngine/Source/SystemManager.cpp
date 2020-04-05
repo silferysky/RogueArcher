@@ -134,6 +134,7 @@ namespace Rogue
 			FixedUpdateSystem(SystemID::id_CAMERASYSTEM, "Camera System");
 		}
 		
+#if !DEMO_MODE
 		if (!m_gameIsPaused && m_gameIsRunning)
 		{
 			Timer::instance().GetSystemTimes()["Physics System"] *= step;
@@ -149,6 +150,7 @@ namespace Rogue
 		Timer::instance().GetSystemTimes()["Parent Child System"] *= step;
 		//Timer::instance().GetSystemTimes()["Collision System"] *= step;
 		Timer::instance().GetSystemTimes()["Camera System"] *= step;
+#endif
 	}
 
 	void SystemManager::Update()
@@ -166,9 +168,14 @@ namespace Rogue
 
 	void SystemManager::FixedUpdateSystem(SystemID id, const char* systemName)
 	{
+#if !DEMO_MODE
+		UNREFERENCED_PARAMETER(systemName);
 		g_engine.m_coordinator.InitTimeSystem(systemName);
+#endif
 		UpdateSystem(id);
+#if!DEMO_MODE
 		g_engine.m_coordinator.EndTimeSystem(systemName);
+#endif
 	}
 
 	void SystemManager::SetTransitionLevel(std::string_view levelName, float transitionTime)
