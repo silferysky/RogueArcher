@@ -50,7 +50,7 @@ namespace Rogue
 		auto up = cameraSys->GetCameraUp();
 
 		listenerFront = { front.x, front.y, front.z };
-		listenerUp = { up.x, up.y, up.z };
+		listenerUp = { up.x, -up.y, up.z };
 	}
 
 	void AudioSystem::Update()
