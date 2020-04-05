@@ -1,6 +1,6 @@
 {
-    "MaxEntityCount": 239,
-    "EntityCount": 239,
+    "MaxEntityCount": 240,
+    "EntityCount": 240,
     "CameraMinX": -1130.0,
     "CameraMinY": -900.0,
     "CameraMaxX": 990.0,
@@ -248,6 +248,7 @@
     "Signature236": 199,
     "Signature237": 199,
     "Signature238": 5,
+    "Signature239": 1028,
     "Entity0": "Name{Collision1}|Tag{Ground}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{1393;367;100;100;0;0}||BoxCollider{0;0;784;66;AWAKE}|||||||||Collider{BOX;1;4294967295;}|||||||||||||",
     "Entity1": "Name{Collision2}|Tag{}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{1514;796;100;100;0;0}||BoxCollider{0;0;784;66;AWAKE}|||||||||Collider{BOX;1;4294967295;}|||||||||||||",
     "Entity2": "Name{Collision3}|Tag{}||Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{1332;913;100;100;0;0}||BoxCollider{0;0;784;66;AWAKE}|||||||||Collider{BOX;1;4294967295;}|||||||||||||",
@@ -487,6 +488,7 @@
     "Entity236": "Name{FloatingCrystal}|Tag{}|Sprite{Resources\\Assets\\MineBGRocks.png;0.737255;0.633172;0.633172;1;}|Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{1038;156;-145.499;229.237;0;0}||||LogicComponent{1;0;2;0;2}|StatsComponent{0;0.5;5;0;1;;2;1038;156;1038;-130;0;0;0;0;0;0;}|||||||||||||||||||",
     "Entity237": "Name{FloatingCrystal}|Tag{}|Sprite{Resources\\Assets\\MineBGRocks.png;0.737255;0.633172;0.633172;1;}|Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{92;209;254.623;401.165;0;0}||||LogicComponent{1;0;2;0;2}|StatsComponent{0;0.5;5;0;1;;2;92;209;92;-508;0;0;0;0;0;0;}|||||||||||||||||||",
     "Entity238": "Name{Stalagmites}|Tag{}|Sprite{Resources\\Assets\\Stalagmite.png;1;1;1;1;}||Transform{1559;-998;195;355;0;103}||||||||||||||||||||||||",
+    "Entity239": "Name{Ambience}|Tag{}|||Transform{0;0;100;100;0;0}||||||||Audio{Resources\\Sounds\\cave.ogg;100000;0.3;1;0;}||||||||||||||||",
     "EntityParent0": 65535,
     "EntityParent1": 65535,
     "EntityParent2": 65535,
@@ -725,5 +727,6 @@
     "EntityParent235": 65535,
     "EntityParent236": 65535,
     "EntityParent237": 65535,
-    "EntityParent238": 65535
+    "EntityParent238": 65535,
+    "EntityParent239": 65535
 }
