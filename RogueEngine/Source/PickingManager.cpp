@@ -56,7 +56,7 @@ namespace Rogue
 		pickArea.setMin(Vec2{ pos.x - scale.x * 0.5f, pos.y - scale.y * 0.5f });
 		pickArea.setMax(Vec2{ pos.x + scale.x * 0.5f, pos.y + scale.y * 0.5f });
 
-		trans.setPickArea(pickArea);
+		trans.setPickArea(std::move(pickArea));
 	}
 
 	void PickingManager::GenerateViewPortAABB(const glm::vec3& cameraPos3D, float zoom)
@@ -64,7 +64,7 @@ namespace Rogue
 		Vec2 cameraPos{ cameraPos3D.x, cameraPos3D.y };
 		Vec2 worldDimensions = g_engine.GetWorldDimensions();
 		
-		std::cout << "Camera: " << cameraPos << ". Dimensions: " << worldDimensions << std::endl;
+		//std::cout << "Camera: " << cameraPos << ". Dimensions: " << worldDimensions << std::endl;
 		
 		m_viewportArea.setMin(cameraPos - worldDimensions);
 		m_viewportArea.setMax(cameraPos + worldDimensions);

@@ -43,8 +43,10 @@ namespace Rogue
 
 	void PickingSystem::Update()
 	{
+#if !DEMO_MODE
 		g_engine.m_coordinator.InitTimeSystem("Picking System");
 		g_engine.m_coordinator.EndTimeSystem("Picking System");
+#endif
 	}
 
 	void PickingSystem::Shutdown()

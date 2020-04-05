@@ -97,8 +97,9 @@ namespace Rogue
 
 	void LogicSystem::Update()
 	{
+#if !DEMO_MODE
 		g_engine.m_coordinator.InitTimeSystem("Logic System");
-
+#endif
 		//Check if any new AI needs to be added
 		if (m_entities.size() > m_entityLogicMap.size())
 		{
@@ -166,7 +167,9 @@ namespace Rogue
 			for (std::shared_ptr<ScriptComponent> ai : it.second)
 				ai->LogicUpdate();
 		}
+#if !DEMO_MODE
 		g_engine.m_coordinator.EndTimeSystem("Logic System");
+#endif
 	}
 
 	void LogicSystem::Receive(Event& ev)

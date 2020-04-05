@@ -207,6 +207,9 @@ namespace Rogue
 
 			m_accumulatedTime += g_deltaTime;
 
+#if INIT_CONSOLE
+			std::cout << "FPS: " << 1 / g_deltaTime << std::endl;
+#endif
 			while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
 			{
 				TranslateMessage(&msg);

@@ -55,8 +55,9 @@ namespace Rogue
 
 	void AudioSystem::Update()
 	{
+#if !DEMO_MODE
 		g_engine.m_coordinator.InitTimeSystem("Audio System");
-
+#endif
 		if (!g_engine.GetIsFocused())
 		{
 			m_muted = true;
@@ -102,7 +103,9 @@ namespace Rogue
 			pair.second.Update();
 		}
 
+#if !DEMO_MODE
 		g_engine.m_coordinator.EndTimeSystem("Audio System");
+#endif
 	}
 
 	void AudioSystem::Receive(Event& ev)

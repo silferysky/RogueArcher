@@ -247,12 +247,16 @@ namespace Rogue
 
 		void InitTimeSystem(const char* system)
 		{
+#if !DEMO_MODE
 			Timer::instance().TimerInit(system);
+#endif
 		}
 
 		void EndTimeSystem(const char* system)
 		{
+#if !DEMO_MODE
 			Timer::instance().TimerEnd(system);
+#endif
 		}
 
 		const std::map<const char*, float>& GetSystemTimes()

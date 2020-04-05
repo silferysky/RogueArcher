@@ -133,8 +133,9 @@ namespace Rogue
 
 	void GraphicsSystem::Update()
 	{
+#if !DEMO_MODE
 		g_engine.m_coordinator.InitTimeSystem("Graphics System");
-
+#endif
 		m_drawQueue.clear();
 
 		PickingManager::instance().GenerateViewPortAABB(CameraManager::instance().GetCameraPos(), CameraManager::instance().GetCameraZoom());
@@ -152,7 +153,7 @@ namespace Rogue
 				|| g_engine.m_coordinator.ComponentExists<TileMapComponent>(entity)
 				|| g_engine.m_coordinator.ComponentExists<UIComponent>(entity)
 				|| CollisionManager::instance().DiscreteAABBvsAABB(transform.GetPickArea(), viewPort))
-				m_drawQueue.insert(std::make_pair(transform.GetZ(), entity));
+				m_drawQueue.emplace(std::make_pair(transform.GetZ(), entity));
 		}
 
 		glBindFramebuffer(GL_FRAMEBUFFER, m_FBO);
@@ -224,7 +225,9 @@ namespace Rogue
 
 		UseFrameBuffer();
 
+#if !DEMO_MODE
 		g_engine.m_coordinator.EndTimeSystem("Graphics System");
+#endif
 	}
 
 	void GraphicsSystem::draw(Entity& entity)
