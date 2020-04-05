@@ -115,8 +115,6 @@ namespace Rogue
 				anim->get().setIsAnimating(true);
 				m_startAnimEnded = false;
 			}
-			if (auto sound = g_engine.m_coordinator.TryGetComponent<AudioEmitterComponent>(m_entity))
-				sound->get().getSound().Play();
 		}
 
 		//Only can do waypoint patrol if 2 waypoints exist
@@ -143,9 +141,6 @@ namespace Rogue
 						anim->get().setIsAnimating(true);
 						m_endAnimEnded = false;
 					}
-
-					if (auto sound = g_engine.m_coordinator.TryGetComponent<AudioEmitterComponent>(m_entity))
-						sound->get().getSound().Pause(true);
 				}
 			}
 			return;
