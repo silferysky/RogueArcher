@@ -44,7 +44,7 @@ namespace Rogue
 			if (m_timer < MAX_TIMER)
 			{
 				sound->get().setVolume(m_originalVolume * m_timer / MAX_TIMER);
-				std::cout << "AUDIO VOLUME" << m_originalVolume * m_timer / MAX_TIMER << std::endl;
+				std::cout << "AUDIO VOLUME" << sound->get().getVolume() << std::endl;
 			}
 			else
 				sound->get().setVolume(m_originalVolume);

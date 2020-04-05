@@ -29,10 +29,9 @@ namespace Rogue
 	void AudioEmitterComponent::DisplayOnInspector()
 	{
 		ImGui::Checkbox("Component Active", &m_componentIsActive);
-		float m_volume = getVolume();
-		ImGui::DragFloat("Volume", &m_volume, 0.02f, 0.0f, 10.0f);
-		setVolume(m_volume);
-		m_sound.SetVolume(m_volume);
+		ImGui::DragFloat("Volume", &m_sound.m_volume, 0.02f, 0.0f, 10.0f);
+		setVolume(m_sound.m_volume);
+		m_sound.SetVolume(m_sound.m_volume);
 
 		bool m_isLooping = getIsLooping();
 
