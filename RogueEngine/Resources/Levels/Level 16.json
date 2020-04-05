@@ -296,7 +296,7 @@
     "Entity137": "Name{WaterfallReflect}|Tag{}|Sprite{Resources\\Assets\\HubWaterfallShine.png;1;1;1;0.207843;}|Rigidbody{0;0;0;0;1;1;1;1;0.5;0.1;0.01;}|Transform{1464;-276;155.066;343.74;0;103}||||LogicComponent{1;0;2;0;2}|StatsComponent{0;0.05;5;0;1;;2;1464;-276;1464;-780;0;0;0;0;0;0;}|Animation{4;0;0.15;1;0;0;0;}||||||||||||||||||",
     "Entity138": "Name{WaterfallSpatial2}|Tag{}|||Transform{1464;-698;100;100;0;0}||||||||Audio{Resources\\Sounds\\waterfall.ogg;1200;0.3;1;1;}||||||||||||||||",
     "Entity139": "Name{WaterfallSpatial3}|Tag{}|||Transform{-783;-694;100;100;0;0}||||||||Audio{Resources\\Sounds\\waterfall2.ogg;1200;0.3;1;1;}||||||||||||||||",
-    "Entity140": "Name{ForestSFX}|Tag{}|||Transform{2516;-352;100;100;0;0}||||||||Audio{Resources\\Sounds\\JungleAmbience.ogg;600;0.3;1;1;}||||||||||||||||",
+    "Entity140": "Name{ForestSFX}|Tag{}|||Transform{2516;-352;100;100;0;0}||||||||Audio{Resources\\Sounds\\JungleAmbience2.ogg;600;0.3;1;1;}||||||||||||||||",
     "Entity141": "Name{CaveSFX}|Tag{}|||Transform{-1813;-360;100;100;0;0}||||||||Audio{Resources/Sounds/cave.ogg;600;0.3;1;1;}||||||||||||||||",
     "Entity142": "Name{CoralSFX}|Tag{}|||Transform{337;-757;100;100;0;0}||||||||Audio{Resources/Sounds/corals.ogg;1000;0.3;1;1;}||||||||||||||||",
     "Entity143": "Name{WaterfallSpatial3}|Tag{}|||Transform{-783;-694;100;100;0;0}||||||||Audio{Resources\\Sounds\\waterfall2.ogg;1200;0.3;1;1;}||||||||||||||||",
