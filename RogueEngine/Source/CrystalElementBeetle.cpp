@@ -175,7 +175,6 @@ namespace Rogue
 			if (auto sprite = g_engine.m_coordinator.TryGetComponent<SpriteComponent>(m_entity))
 			{
 				sprite->get().setTexturePath("Resources/Assets/CaveBugFly.png");
-				g_engine.m_coordinator.loadSound("Resources/Sounds/insectflying.ogg").Play();
 			}
 
 			//std::cout << "Before Waypoint " << m_currentPointIndex << std::endl;

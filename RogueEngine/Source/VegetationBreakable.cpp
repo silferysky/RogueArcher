@@ -62,6 +62,8 @@ namespace Rogue
 			EventDispatcher::instance().AddEvent(shake);
 			g_engine.m_coordinator.GetSystem<CameraSystem>()->setIsActive(false);
 			m_triggered = true;
+
+			g_engine.m_coordinator.loadSound("Resources/Sounds/woodbreak.ogg").Play();
 		}
 	}
 }
