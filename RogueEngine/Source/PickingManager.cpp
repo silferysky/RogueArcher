@@ -45,7 +45,12 @@ namespace Rogue
 		AABB pickArea;
 		Vec2 pos = trans.GetPosition();
 		Vec2 scale = trans.GetScale();
-		
+
+		if (REAbs(trans.GetRotation()) > RE_EPSILON)
+		{
+			float maxScale = REMax(scale.x, scale.y);
+			scale = Vec2(maxScale, maxScale);
+		}
 		scale.x = REAbs(scale.x);
 		scale.y = REAbs(scale.y);
 		pickArea.setMin(Vec2{ pos.x - scale.x * 0.5f, pos.y - scale.y * 0.5f });
