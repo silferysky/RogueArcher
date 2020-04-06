@@ -90,7 +90,7 @@ namespace Rogue
 				transform.offSetPosition(Vec2(-130.0f * g_deltaTime, 0.0f));
 			}
 
-			if(m_timer > 2.0f && m_timer < 3.0f)
+			if(m_timer > 2.5f && m_timer < 3.0f)
 			{
 				if (m_trueEnding)
 				{
