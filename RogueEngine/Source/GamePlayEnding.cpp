@@ -700,12 +700,12 @@ namespace Rogue
 
 	void GamePlayEnding::ExaEnding()
 	{
-		/* auto sound = g_engine.m_coordinator.loadSound("Resources/Sounds/exhale.ogg");
+		auto sound = g_engine.m_coordinator.loadSound("Resources/Sounds/Exale_Normal_Ending.ogg");
 		if (!m_soundloaded)
 		{
 			sound.Play();
 			m_soundloaded = !m_soundloaded;
-		} */
+		}
 
 		if (frame1)
 		{
@@ -899,12 +899,12 @@ namespace Rogue
 
 	void GamePlayEnding::ElaEnding()
 	{
-		/* auto sound = g_engine.m_coordinator.loadSound("Resources/Sounds/exhale.ogg");
+		auto sound = g_engine.m_coordinator.loadSound("Resources/SoundsResources/Sounds/Exale_Normal_Ending.ogg.ogg");
 		if (!m_soundloaded)
 		{
 			sound.Play();
 			m_soundloaded = !m_soundloaded;
-		} */
+		}
 
 		if (frame1)
 		{
