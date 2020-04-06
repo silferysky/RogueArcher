@@ -71,22 +71,6 @@ namespace Rogue
 
 			m_timer += g_deltaTime * g_engine.GetTimeScale();
 
-			Sound sound;
-			if (m_trueEnding)
-			{
-				sound = g_engine.m_coordinator.loadSound("Resources/Sounds/Exale_Ending.ogg");
-				if (!m_soundloaded)
-				{
-					sound.Play();
-					m_soundloaded = !m_soundloaded;
-				}
-
-				auto playerEnt = PlayerStatusManager::instance().GetPlayerEntity();
-				auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(playerEnt);
-
-				transform.setPosition(Vec2(CameraManager::instance().GetCameraPos().x, CameraManager::instance().GetCameraPos().y));
-			}
-
 			//Zoom out slightly
 			if (CameraManager::instance().GetCameraZoom() < 1.3f)
 			{
@@ -139,6 +123,17 @@ namespace Rogue
 			//9. < Fade in 3 secs, display choice input statement on top of the camera >
 			else if (m_timer > 6.0f && m_timer < 9.0f)
 			{
+				Sound sound;
+				if (m_trueEnding)
+				{
+					sound = g_engine.m_coordinator.loadSound("Resources/Sounds/Exale_Ending.ogg");
+					if (!m_soundloaded)
+					{
+						sound.Play();
+						m_soundloaded = !m_soundloaded;
+					}
+				}
+
 				for (HierarchyInfo& info : g_engine.m_coordinator.GetHierarchyInfoArray())
 				{
 					if (info.m_tag == "ElaTitle")
@@ -485,6 +480,11 @@ namespace Rogue
 
 	void GamePlayEnding::TrueEnding(Sound& sound)
 	{
+		auto playerEnt = PlayerStatusManager::instance().GetPlayerEntity();
+		auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(playerEnt);
+
+		transform.setPosition(Vec2(CameraManager::instance().GetCameraPos().x, CameraManager::instance().GetCameraPos().y));
+		
 		for (HierarchyInfo& info : g_engine.m_coordinator.GetHierarchyInfoArray())
 		{
 			if (info.m_tag == "ExaTitle")
