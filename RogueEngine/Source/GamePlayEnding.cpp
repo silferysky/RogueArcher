@@ -52,6 +52,7 @@ namespace Rogue
 		, m_movement{ 15.0f }, m_moveleft{ false }, m_moveright{ false }, m_finalInput{ false }, m_endingAPressed{ false }, m_endingDPressed{ false },m_finalSpriteSet{false}
 		, m_soundloaded{ false }, m_finalSprite{ MAX_ENTITIES }, m_finalSpriteBackground{ MAX_ENTITIES }
 	{
+		
 	}
 
 	void GamePlayEnding::AIActiveStateUpdate()
@@ -69,7 +70,7 @@ namespace Rogue
 			g_engine.m_coordinator.GetSystem<CameraSystem>()->setIsActive(true);
 
 			m_timer += g_deltaTime * g_engine.GetTimeScale();
-			
+
 			//Zoom out slightly
 			if (CameraManager::instance().GetCameraZoom() < 1.3f)
 			{
@@ -468,12 +469,12 @@ namespace Rogue
 
 	void GamePlayEnding::TrueEnding()
 	{
-		//auto sound = g_engine.m_coordinator.loadSound("Resources/Sounds/exhale.ogg");
-		//if (!m_soundloaded)
-		//{
-		//	sound.Play();
-		//	m_soundloaded = !m_soundloaded;	
-		//}
+		auto sound = g_engine.m_coordinator.loadSound("Resources/Sounds/Exale_Ending.ogg");
+		if (!m_soundloaded)
+		{
+			sound.Play();
+			m_soundloaded = !m_soundloaded;	
+		}
 		
 		for (HierarchyInfo& info : g_engine.m_coordinator.GetHierarchyInfoArray())
 		{
@@ -683,8 +684,9 @@ namespace Rogue
 
 		if (m_timer > 41.0f)
 		{
-			//sound.Pause(true);
-			//m_soundloaded = !m_soundloaded;
+			sound.Pause(true);
+			sound.Unload();
+			m_soundloaded = !m_soundloaded;
 			PLAYER_STATUS.ResetEndGame();
 			g_engine.m_coordinator.SetTransitionLevel("Level 19.json", 0.0f); //2nd value doesn't matter anymore probably
 			g_engine.m_coordinator.SetTransition(true);
@@ -693,12 +695,12 @@ namespace Rogue
 
 	void GamePlayEnding::ExaEnding()
 	{
-		//auto sound = g_engine.m_coordinator.loadSound("Resources/Sounds/exhale.ogg");
-		//if (!m_soundloaded)
-		//{
-		//	sound.Play();
-		//	m_soundloaded = !m_soundloaded;
-		//}
+		/* auto sound = g_engine.m_coordinator.loadSound("Resources/Sounds/exhale.ogg");
+		if (!m_soundloaded)
+		{
+			sound.Play();
+			m_soundloaded = !m_soundloaded;
+		} */
 
 		if (frame1)
 		{
@@ -882,6 +884,7 @@ namespace Rogue
 		if (m_timer > 35.0f)
 		{
 			//sound.Pause(true);
+			//sound.Unload();
 			//m_soundloaded = !m_soundloaded;
 			PLAYER_STATUS.ResetEndGame();
 			g_engine.m_coordinator.SetTransitionLevel("Level 28.json", 0.0f); //2nd value doesn't matter anymore probably
@@ -891,12 +894,12 @@ namespace Rogue
 
 	void GamePlayEnding::ElaEnding()
 	{
-		//auto sound = g_engine.m_coordinator.loadSound("Resources/Sounds/exhale.ogg");
-		//if (!m_soundloaded)
-		//{
-		//	sound.Play();
-		//	m_soundloaded = !m_soundloaded;
-		//}
+		/* auto sound = g_engine.m_coordinator.loadSound("Resources/Sounds/exhale.ogg");
+		if (!m_soundloaded)
+		{
+			sound.Play();
+			m_soundloaded = !m_soundloaded;
+		} */
 
 		if (frame1)
 		{
@@ -1083,7 +1086,9 @@ namespace Rogue
 		if (m_timer > 35.0f)
 		{
 			//sound.Pause(true);
+			//sound.Unload();
 			//m_soundloaded = !m_soundloaded;
+
 			PLAYER_STATUS.ResetEndGame();
 			g_engine.m_coordinator.SetTransitionLevel("Level 27.json", 0.0f); //2nd value doesn't matter anymore probably
 			g_engine.m_coordinator.SetTransition(true);

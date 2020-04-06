@@ -31,14 +31,11 @@ namespace Rogue
 		ImGui::Checkbox("Component Active", &m_componentIsActive);
 		ImGui::DragFloat("Volume", &m_sound.m_volume, 0.02f, 0.0f, 10.0f);
 		setVolume(m_sound.m_volume);
-		m_sound.SetVolume(m_sound.m_volume);
-
-		bool m_isLooping = getIsLooping();
 
 		ImGui::PushItemWidth(75);
-		ImGui::Checkbox("Audio Looping", &m_isLooping);
-		setIsLooping(m_isLooping);
-		m_sound.Pause(!m_isLooping);
+		ImGui::Checkbox("Audio Looping", &m_sound.m_isLooping);
+		setIsLooping(m_sound.m_isLooping);
+		//m_sound.Pause(!m_sound.m_isLooping);
 
 		bool m_isScaling = getIsScaling();
 
@@ -77,8 +74,9 @@ namespace Rogue
 		}
 
 		ImGui::DragFloat("Maximum Distance", &m_maxDistance, 10.0f, 0.0f, 10000.0f);
-		setMaxDistance(m_maxDistance);
-		m_sound.Set3DMaxDistance(m_maxDistance);
+		if (m_isScaling)
+			setMaxDistance(m_maxDistance);
+		//m_sound.Set3DMaxDistance(m_maxDistance);
 
 		if (ImGui::IsItemHovered())
 		{
@@ -131,7 +129,7 @@ namespace Rogue
 
 	void AudioEmitterComponent::CreateSound()
 	{
-		m_sound = g_engine.m_coordinator.loadSound(getSoundPath());
+		m_sound = g_engine.m_coordinator.loadSound(getSoundPath(), m_volume, m_isLooping);
 	}
 
 	Sound AudioEmitterComponent::getSound()
@@ -141,6 +139,7 @@ namespace Rogue
 
 	void AudioEmitterComponent::setIsLooping(bool isLooping)
 	{
+		m_isLooping = isLooping;
 		m_sound.m_isLooping = isLooping;
 	}
 
@@ -171,6 +170,7 @@ namespace Rogue
 
 	void AudioEmitterComponent::setVolume(const float volume)
 	{
+		m_volume = volume;
 		m_sound.m_volume = volume;
 	}
 
@@ -184,8 +184,8 @@ namespace Rogue
 		std::ostringstream ss;
 		ss << m_soundPath << ";";
 		ss << m_maxDistance << ";";
-		ss << m_sound.m_volume << ";";
-		ss << m_sound.m_isLooping << ";";
+		ss << m_volume << ";";
+		ss << m_isLooping << ";";
 		ss << m_isScaling << ";";
 		return ss.str();
 	}

@@ -29,6 +29,9 @@ namespace Rogue
 
 		bool m_isScaling;
 		float m_maxDistance = 1.0f;
+
+		bool m_isLooping;
+		float m_volume;
 	public:
 		AudioEmitterComponent() = default;
 		~AudioEmitterComponent() = default;
