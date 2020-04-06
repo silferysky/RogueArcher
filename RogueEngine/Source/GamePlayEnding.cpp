@@ -899,7 +899,7 @@ namespace Rogue
 
 	void GamePlayEnding::ElaEnding()
 	{
-		auto sound = g_engine.m_coordinator.loadSound("Resources/SoundsResources/Sounds/Exale_Normal_Ending.ogg.ogg");
+		auto sound = g_engine.m_coordinator.loadSound("Resources/Sounds/Exale_Normal_Ending.ogg");
 		if (!m_soundloaded)
 		{
 			sound.Play();
