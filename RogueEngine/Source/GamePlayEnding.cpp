@@ -67,6 +67,8 @@ namespace Rogue
 	{
 		if (PlayerStatusManager::instance().GetEnding())
 		{
+			Sound sound;
+
 			g_engine.m_coordinator.GetSystem<CameraSystem>()->setIsActive(true);
 
 			m_timer += g_deltaTime * g_engine.GetTimeScale();
@@ -123,7 +125,6 @@ namespace Rogue
 			//9. < Fade in 3 secs, display choice input statement on top of the camera >
 			else if (m_timer > 6.0f && m_timer < 9.0f)
 			{
-				Sound sound;
 				if (m_trueEnding)
 				{
 					sound = g_engine.m_coordinator.loadSound("Resources/Sounds/Exale_Ending.ogg");
