@@ -74,9 +74,10 @@ namespace Rogue
 		}
 
 		ImGui::DragFloat("Maximum Distance", &m_maxDistance, 10.0f, 0.0f, 10000.0f);
-		if (m_isScaling)
-			setMaxDistance(m_maxDistance);
-		//m_sound.Set3DMaxDistance(m_maxDistance);
+		//if (m_isScaling)
+		//	setMaxDistance(m_maxDistance);
+		setMaxDistance(m_maxDistance);
+		m_sound.Set3DMaxDistance(m_maxDistance);
 
 		if (ImGui::IsItemHovered())
 		{
@@ -129,7 +130,7 @@ namespace Rogue
 
 	void AudioEmitterComponent::CreateSound()
 	{
-		m_sound = g_engine.m_coordinator.loadSound(getSoundPath(), m_volume, m_isLooping);
+		m_sound = g_engine.m_coordinator.loadSound(getSoundPath());
 	}
 
 	Sound AudioEmitterComponent::getSound()
@@ -139,7 +140,6 @@ namespace Rogue
 
 	void AudioEmitterComponent::setIsLooping(bool isLooping)
 	{
-		m_isLooping = isLooping;
 		m_sound.m_isLooping = isLooping;
 	}
 
@@ -170,7 +170,6 @@ namespace Rogue
 
 	void AudioEmitterComponent::setVolume(const float volume)
 	{
-		m_volume = volume;
 		m_sound.m_volume = volume;
 	}
 
