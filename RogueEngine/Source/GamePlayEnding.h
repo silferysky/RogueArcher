@@ -42,7 +42,7 @@ namespace Rogue
 		virtual void AIIdleUpdate() override;
 		virtual void OnTriggerEnter(Entity other) override;
 
-		void TrueEnding();
+		void TrueEnding(Sound& sound);
 		void ExaEnding();
 		void ElaEnding();
 		bool CrystalComplete;

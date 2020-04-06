@@ -71,6 +71,17 @@ namespace Rogue
 
 			m_timer += g_deltaTime * g_engine.GetTimeScale();
 
+			Sound sound;
+			if (m_trueEnding)
+			{
+				sound = g_engine.m_coordinator.loadSound("Resources/Sounds/Exale_Ending.ogg");
+				if (!m_soundloaded)
+				{
+					sound.Play();
+					m_soundloaded = !m_soundloaded;
+				}
+			}
+
 			//Zoom out slightly
 			if (CameraManager::instance().GetCameraZoom() < 1.3f)
 			{
@@ -332,7 +343,7 @@ namespace Rogue
 
 				if (m_trueEnding)
 				{
-					TrueEnding();
+					TrueEnding(sound);
 				}
 
 				else if (m_endingAPressed)
@@ -467,14 +478,8 @@ namespace Rogue
 		}
 	}
 
-	void GamePlayEnding::TrueEnding()
+	void GamePlayEnding::TrueEnding(Sound& sound)
 	{
-		auto sound = g_engine.m_coordinator.loadSound("Resources/Sounds/Exale_Ending.ogg");
-		if (!m_soundloaded)
-		{
-			sound.Play();
-			m_soundloaded = !m_soundloaded;	
-		}
 		
 		for (HierarchyInfo& info : g_engine.m_coordinator.GetHierarchyInfoArray())
 		{
