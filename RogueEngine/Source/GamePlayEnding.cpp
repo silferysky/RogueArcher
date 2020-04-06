@@ -480,6 +480,10 @@ namespace Rogue
 
 	void GamePlayEnding::TrueEnding(Sound& sound)
 	{
+		auto playerEnt = PlayerStatusManager::instance().GetPlayerEntity();
+		auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(playerEnt);
+
+		transform.setPosition(Vec2(CameraManager::instance().GetCameraPos().x, CameraManager::instance().GetCameraPos().y));
 		
 		for (HierarchyInfo& info : g_engine.m_coordinator.GetHierarchyInfoArray())
 		{
@@ -690,7 +694,8 @@ namespace Rogue
 		if (m_timer > 41.0f)
 		{
 			sound.Pause(true);
-			sound.Unload();
+			//sound.Unload();
+			AudioManager::instance().getAudioMap().erase("Resources/Sounds/Exale_Ending.ogg");
 			m_soundloaded = !m_soundloaded;
 			PLAYER_STATUS.ResetEndGame();
 			g_engine.m_coordinator.SetTransitionLevel("Level 19.json", 0.0f); //2nd value doesn't matter anymore probably
@@ -700,6 +705,11 @@ namespace Rogue
 
 	void GamePlayEnding::ExaEnding()
 	{
+		auto playerEnt = PlayerStatusManager::instance().GetPlayerEntity();
+		auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(playerEnt);
+
+		transform.setPosition(Vec2(CameraManager::instance().GetCameraPos().x, CameraManager::instance().GetCameraPos().y));
+
 		auto sound = g_engine.m_coordinator.loadSound("Resources/Sounds/Exale_Normal_Ending.ogg");
 		if (!m_soundloaded)
 		{
@@ -888,9 +898,10 @@ namespace Rogue
 
 		if (m_timer > 35.0f)
 		{
-			//sound.Pause(true);
+			sound.Pause(true);
 			//sound.Unload();
-			//m_soundloaded = !m_soundloaded;
+			AudioManager::instance().getAudioMap().erase("Resources/Sounds/Exale_Normal_Ending.ogg");
+			m_soundloaded = !m_soundloaded;
 			PLAYER_STATUS.ResetEndGame();
 			g_engine.m_coordinator.SetTransitionLevel("Level 28.json", 0.0f); //2nd value doesn't matter anymore probably
 			g_engine.m_coordinator.SetTransition(true);
@@ -899,6 +910,11 @@ namespace Rogue
 
 	void GamePlayEnding::ElaEnding()
 	{
+		auto playerEnt = PlayerStatusManager::instance().GetPlayerEntity();
+		auto& transform = g_engine.m_coordinator.GetComponent<TransformComponent>(playerEnt);
+
+		transform.setPosition(Vec2(CameraManager::instance().GetCameraPos().x, CameraManager::instance().GetCameraPos().y));
+
 		auto sound = g_engine.m_coordinator.loadSound("Resources/Sounds/Exale_Normal_Ending.ogg");
 		if (!m_soundloaded)
 		{
@@ -1090,9 +1106,10 @@ namespace Rogue
 
 		if (m_timer > 35.0f)
 		{
-			//sound.Pause(true);
+			sound.Pause(true);
 			//sound.Unload();
-			//m_soundloaded = !m_soundloaded;
+			AudioManager::instance().getAudioMap().erase("Resources/Sounds/Exale_Normal_Ending.ogg");
+			m_soundloaded = !m_soundloaded;
 
 			PLAYER_STATUS.ResetEndGame();
 			g_engine.m_coordinator.SetTransitionLevel("Level 27.json", 0.0f); //2nd value doesn't matter anymore probably
