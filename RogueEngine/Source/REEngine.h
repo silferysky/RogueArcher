@@ -23,12 +23,12 @@ Technology is prohibited.
 /* End Header **************************************************************************/
 #pragma once
 
-#define DEMO_MODE 0
+#define DEMO_MODE 1
 
 #if DEMO_MODE
 	#define INIT_FULLSCREEN 1
 	#define INIT_VSYNC 1
-	#define INIT_CONSOLE 0
+	#define INIT_CONSOLE 1
 	#define INIT_CURSOR 0
 	#define INIT_EDITOR 0
 	#define INIT_PLAY 1
