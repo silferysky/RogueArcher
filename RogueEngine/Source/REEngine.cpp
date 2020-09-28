@@ -173,10 +173,10 @@ namespace Rogue
 		SetWindowPos(hWnd, HWND_TOP, 0, 0, GetSystemMetrics(SM_CXSCREEN),
 			GetSystemMetrics(SM_CYSCREEN), SWP_FRAMECHANGED);
 #endif
-		//LPRECT appBorders = nullptr;
-		//GetWindowRect(hWnd, appBorders);
-		//
-		//ClipCursor(appBorders);
+		RECT appBorders;
+		GetWindowRect(hWnd, &appBorders);
+		
+		ClipCursor(&appBorders);
 
 #if INIT_VSYNC
 		setVSync(true);
