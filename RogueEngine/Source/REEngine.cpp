@@ -149,6 +149,7 @@ namespace Rogue
 #else
 		ShowCursor(false);
 #endif
+
 		hWnd = CreateOpenGLWindow(const_cast<char*>(config.GetTitle().c_str()), config.GetX(), config.GetY(),
 			config.GetWidth(), config.GetHeight(), 0, config.GetFlags());
 
@@ -172,6 +173,11 @@ namespace Rogue
 		SetWindowPos(hWnd, HWND_TOP, 0, 0, GetSystemMetrics(SM_CXSCREEN),
 			GetSystemMetrics(SM_CYSCREEN), SWP_FRAMECHANGED);
 #endif
+		//LPRECT appBorders = nullptr;
+		//GetWindowRect(hWnd, appBorders);
+		//
+		//ClipCursor(appBorders);
+
 #if INIT_VSYNC
 		setVSync(true);
 #else
@@ -239,6 +245,7 @@ namespace Rogue
 
 	void REEngine::Shutdown()
 	{
+		ClipCursor(NULL);
 		m_coordinator.Shutdown();
 		wglMakeCurrent(NULL, NULL);
 		ReleaseDC(hWnd, hDC);

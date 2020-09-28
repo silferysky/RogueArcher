@@ -70,12 +70,22 @@ namespace Rogue
 				{
 					SetWindowLongPtr(hWnd, GWL_STYLE, WS_VISIBLE | WS_OVERLAPPEDWINDOW);
 					SetWindowPos(hWnd, NULL, 0, 0, 1024, 720, SWP_FRAMECHANGED);
+
+					RECT appBorders;
+					GetWindowRect(hWnd, &appBorders);
+
+					ClipCursor(&appBorders);
 				}
 				else
 				{ // set full screen
 					SetWindowLongPtr(hWnd, GWL_STYLE, WS_VISIBLE | WS_POPUP);
 					SetWindowPos(hWnd, HWND_TOP, 0, 0, GetSystemMetrics(SM_CXSCREEN),
 						GetSystemMetrics(SM_CYSCREEN), SWP_FRAMECHANGED);
+
+					RECT appBorders;
+					GetWindowRect(hWnd, &appBorders);
+
+					ClipCursor(&appBorders);
 				}
 			}
 			return 0;
@@ -86,11 +96,18 @@ namespace Rogue
 			if (wParam == WA_INACTIVE)
 			{
 				g_engine.SetIsFocused(false);
+				ClipCursor(NULL);
 				g_engine.SetTimeScale(0.0f);
 			}
 			else if (wParam == WA_ACTIVE || wParam == WA_CLICKACTIVE)
 			{
 				g_engine.SetIsFocused(true);
+
+				RECT appBorders;
+				GetWindowRect(hWnd, &appBorders);
+
+				ClipCursor(&appBorders);
+
 				g_engine.SetTimeScale(1.0f);
 			}
 
