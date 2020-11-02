@@ -37,74 +37,74 @@ namespace Rogue
 		signature.set(g_engine.m_coordinator.GetComponentType<TransformComponent>());
 		g_engine.m_coordinator.SetSystemSignature<FontSystem>(signature);
 
-		FT_Library ft;
-		FT_Face face;
-		FT_Error ftError = FT_Init_FreeType(&ft);
-		FT_Error faceError = FT_New_Face(ft, "Fonts/Pokemon Solid.ttf", 0, &face);
+		//FT_Library ft;
+		//FT_Face face;
+		//FT_Error ftError = FT_Init_FreeType(&ft);
+		////FT_Error faceError = FT_New_Face(ft, "Fonts/Pokemon Solid.ttf", 0, &face);
 
-		RE_ASSERT(!ftError, "ERROR - Could not init FreeType Library");
+		//RE_ASSERT(!ftError, "ERROR - Could not init FreeType Library");
 
-		RE_ASSERT(!faceError, "ERROR - Failed to load font");
+		//RE_ASSERT(!faceError, "ERROR - Failed to load font");
 
-		FT_Set_Pixel_Sizes(face, 0, 48);
+		//FT_Set_Pixel_Sizes(face, 0, 48);
 
-		glPixelStorei(GL_UNPACK_ALIGNMENT, 1); // Disable byte-alignment restriction
+		//glPixelStorei(GL_UNPACK_ALIGNMENT, 1); // Disable byte-alignment restriction
 
-		for (GLubyte c = 0; c < 128; c++)
-		{
-			// Load character glyph 
-			if (FT_Load_Char(face, c, FT_LOAD_RENDER))
-			{
-				std::cout << "ERROR - Failed to load Glyph" << std::endl;
-				continue;
-			}
+		//for (GLubyte c = 0; c < 128; c++)
+		//{
+		//	// Load character glyph 
+		//	if (FT_Load_Char(face, c, FT_LOAD_RENDER))
+		//	{
+		//		std::cout << "ERROR - Failed to load Glyph" << std::endl;
+		//		continue;
+		//	}
 
-			// Generate texture
-			GLuint texture;
-			glGenTextures(1, &texture);
-			glBindTexture(GL_TEXTURE_2D, texture);
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, face->glyph->bitmap.width, face->glyph->bitmap.rows, 0, GL_RED, GL_UNSIGNED_BYTE, face->glyph->bitmap.buffer);
+		//	// Generate texture
+		//	GLuint texture;
+		//	glGenTextures(1, &texture);
+		//	glBindTexture(GL_TEXTURE_2D, texture);
+		//	glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, face->glyph->bitmap.width, face->glyph->bitmap.rows, 0, GL_RED, GL_UNSIGNED_BYTE, face->glyph->bitmap.buffer);
 
-			// Set texture options
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		//	// Set texture options
+		//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-			// Insert character into map
-			Character character = 
-			{
-				texture,
-				glm::ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
-				glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
-				static_cast<GLuint>(face->glyph->advance.x)
-			};
-			Characters.insert(std::pair<GLchar, Character>(c, character));
-		}
+		//	// Insert character into map
+		//	Character character = 
+		//	{
+		//		texture,
+		//		glm::ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
+		//		glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
+		//		static_cast<GLuint>(face->glyph->advance.x)
+		//	};
+		//	Characters.insert(std::pair<GLchar, Character>(c, character));
+		//}
 
-		FT_Done_Face(face);
-		FT_Done_FreeType(ft);
+		//FT_Done_Face(face);
+		//FT_Done_FreeType(ft);
 
-		m_shader = g_engine.m_coordinator.loadShader("Font Shader");
+		//m_shader = g_engine.m_coordinator.loadShader("Font Shader");
 
-		glUseProgram(m_shader.GetShader());
-		m_uniformBlockIndex = glGetUniformBlockIndex(m_shader.GetShader(), "Matrices");
-		glUniformBlockBinding(m_shader.GetShader(), m_uniformBlockIndex, 0);
-		m_uboMatrices = g_engine.m_coordinator.GetSystem<Rogue::GraphicsSystem>()->getUBOMatrices();
+		//glUseProgram(m_shader.GetShader());
+		//m_uniformBlockIndex = glGetUniformBlockIndex(m_shader.GetShader(), "Matrices");
+		//glUniformBlockBinding(m_shader.GetShader(), m_uniformBlockIndex, 0);
+		//m_uboMatrices = g_engine.m_coordinator.GetSystem<Rogue::GraphicsSystem>()->getUBOMatrices();
 
-		m_pCamera = g_engine.m_coordinator.GetSystem<CameraSystem>();
+		//m_pCamera = g_engine.m_coordinator.GetSystem<CameraSystem>();
 
-		// configure buffers
-		glGenVertexArrays(1, &m_VAO);
-		glGenBuffers(1, &m_VBO);
-		glBindVertexArray(m_VAO);
-		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 6 * 4, NULL, GL_DYNAMIC_DRAW);
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), 0);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		glBindVertexArray(0);
-		glUseProgram(0);
+		//// configure buffers
+		//glGenVertexArrays(1, &m_VAO);
+		//glGenBuffers(1, &m_VBO);
+		//glBindVertexArray(m_VAO);
+		//glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+		//glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 6 * 4, NULL, GL_DYNAMIC_DRAW);
+		//glEnableVertexAttribArray(0);
+		//glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), 0);
+		//glBindBuffer(GL_ARRAY_BUFFER, 0);
+		//glBindVertexArray(0);
+		//glUseProgram(0);
 	}
 
 	void FontSystem::Update()

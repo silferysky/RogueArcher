@@ -562,7 +562,8 @@ namespace Rogue
 				SceneManager::instance().getCurrentFileName() != "Level 20.json" && 
 				SceneManager::instance().getCurrentFileName() != "Level 19.json" &&
 				SceneManager::instance().getCurrentFileName() != "Level 27.json" &&
-				SceneManager::instance().getCurrentFileName() != "Level 28.json")
+				SceneManager::instance().getCurrentFileName() != "Level 28.json" &&
+				SceneManager::instance().getCurrentFileName() != "Level 30.json")
 			{
 				for (auto& menuObj : m_menuObjs)
 				{
@@ -592,7 +593,8 @@ namespace Rogue
 					(SceneManager::instance().getCurrentFileName() == "Level 20.json" || 
 					 SceneManager::instance().getCurrentFileName() == "Level 19.json" ||
 					 SceneManager::instance().getCurrentFileName() == "Level 27.json" ||
-					 SceneManager::instance().getCurrentFileName() == "Level 28.json"))
+					 SceneManager::instance().getCurrentFileName() == "Level 28.json" ||
+					 SceneManager::instance().getCurrentFileName() == "Level 30.json"))
 			{
 				for (auto& menuObj : m_menuObjs)
 				{
