@@ -14,6 +14,7 @@ Team Members:
 [RTIS]  Loh Kai Yi		- Tools Programmer, Architecture, Quality Assurance
 [BAGD]  Darren Ang Jun Kai	- Art Lead, Mechanics Design
 [BAGD]  Chong Teck Hsun		- Design Lead, Level Design
+[BAGD]  Abigail Sng		- Content Design, Level Design, Sound Design
 
 Special Thanks to:
 	*President Claude Comair
